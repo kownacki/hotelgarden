@@ -6,6 +6,12 @@
   "hosting": {
     "public": "src",
     "ignore": [
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
     ]
   },
   "storage": {
