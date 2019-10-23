@@ -3,7 +3,7 @@ import 'https://unpkg.com/@material/mwc-button@^0.9.1/mwc-button.js?module';
 import 'https://unpkg.com/@polymer/app-route@^3.0.2/app-location.js?module';
 import 'https://unpkg.com/@polymer/app-route@^3.0.2/app-route.js?module';
 import 'https://unpkg.com/@polymer/app-layout@^3.1.0/app-layout.js?module';
-import './hg-menu.js';
+import './hg-menu/hg-menu.js';
 
 class HgApp extends LitElement {
   static get properties() {
