@@ -29,6 +29,15 @@ class HgMenu extends LitElement {
         --mdc-theme-primary: red;
         --mdc-theme-on-primary: yellow;
       }
+      hg-menu-main {
+        flex-grow: 1;
+        max-width: 700px;
+      }
+      @media all and (max-width: 840px) {
+        hg-menu-nav {
+          display: none;
+        }
+      }
     `;
   }
   render(){

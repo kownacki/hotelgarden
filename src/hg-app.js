@@ -21,19 +21,25 @@ class HgApp extends LitElement {
   static get styles() {
     return css`
       :host {
-        /*position: absolute;*/
-        /*top: 0;*/
-        /*right: 0;*/
-        /*bottom: 0;*/
-        /*left: 0;*/
+        display: block;
+      }
+      iron-image {
+        display: block;
+        height: 100vh;
+        position: static;
       }
       app-header {
         background: white;
+      }
+      .content {
+        margin: auto;
+        max-width: 1300px;
       }
     `;
   }
   render(){
     return html`
+      <iron-image src="/images/fullpage.jpg" sizing="cover"></iron-image>
       <app-header-layout>
         <app-header slot="header" reveals>
           <hg-header></hg-header>
@@ -42,7 +48,7 @@ class HgApp extends LitElement {
           <app-location @route-changed=${(event) => this._page = event.detail.value.path}></app-location>
 
           ${this._page === '/'
-            ? html`<div name="landing"><hg-menu></hg-menu></div>`
+            ? html`<div name="landing" class="content"><hg-menu></hg-menu></div>`
             : html`<div name="kupa">Page 1</div>`}
         </div>
       </app-header-layout>

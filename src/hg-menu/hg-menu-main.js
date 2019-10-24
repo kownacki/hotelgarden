@@ -14,11 +14,14 @@ class HgMenuMain extends LitElement {
     return css`
       :host {
         padding-right: 20px;
-        width: 700px;
       }
       ul {
         padding: 0;
         list-style: none
+      }
+      iron-image {
+        display: block;
+        height: 170px;
       }
     `;
   }
@@ -32,7 +35,7 @@ class HgMenuMain extends LitElement {
     return html`
       ${_.isEmpty(this.categories) ? html`diema kategorii` : html`
         <h2>${this.category.name}</h2>
-        <iron-image src="https://u.profitroom.pl/2017.airporthotel.pl/thumb/700x170/uploads/Restauracja_Mirage_Potrawy/Beznazwy-1_2.jpg"></iron-image>
+        <iron-image sizing="cover" src="https://u.profitroom.pl/2017.airporthotel.pl/thumb/700x170/uploads/Restauracja_Mirage_Potrawy/Beznazwy-1_2.jpg"></iron-image>
         <ul>
           ${_.map.convert({cap: false})((item, index) =>
             html`<li>
