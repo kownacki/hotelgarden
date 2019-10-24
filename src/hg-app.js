@@ -28,9 +28,6 @@ class HgApp extends LitElement {
         height: 100vh;
         position: static;
       }
-      app-header {
-        background: white;
-      }
       .content {
         margin: auto;
         max-width: 1300px;
@@ -41,7 +38,7 @@ class HgApp extends LitElement {
     return html`
       <iron-image src="/images/fullpage.jpg" sizing="cover"></iron-image>
       <app-header-layout>
-        <app-header slot="header" reveals>
+        <app-header slot="header" fixed>
           <hg-header></hg-header>
         </app-header>
         <div>

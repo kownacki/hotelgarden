@@ -38,11 +38,28 @@ const links = [
 class HgHeader extends LitElement {
   static get properties() {
     return {
+      scrolledDown: Boolean,
     };
+  }
+  constructor() {
+    super();
+    window.onscroll = () => this.scrolledDown = window.pageYOffset > this.offsetHeight;
   }
   static get styles() {
     return css`
+      :host {
+        display: block;
+      }
+      nav {
+        transition: background-color 0.5s ease;
+        display: block;
+        background: transparent;
+      }
+      nav.scrolled-down {
+        background: white;
+      }
       ul {
+        margin: 0;
         display: flex;
       }
       li {
@@ -63,7 +80,7 @@ class HgHeader extends LitElement {
   }
   render() {
     return html`
-      <nav>
+      <nav class=${this.scrolledDown ? 'scrolled-down' : ''}>
         <ul>
           ${_.map((link) => html`
             <li>
