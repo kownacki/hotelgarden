@@ -36,7 +36,7 @@ class HgApp extends LitElement {
   }
   render(){
     return html`
-      <iron-image src="/images/fullpage.jpg" sizing="cover"></iron-image>
+      <iron-image src="https://picsum.photos/id/174/1920/980" sizing="cover"></iron-image>
       <app-header-layout>
         <app-header slot="header" fixed>
           <hg-header></hg-header>
