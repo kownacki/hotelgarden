@@ -21,6 +21,7 @@ class HgMenuAddCategory extends LitElement {
     `;
   }
   render() {
+    //todo Is it performant to place helper functions in render()?
     const addCategory = () => {
       this.shadowRoot.getElementById('dialog').close();
       this.categories.push({
