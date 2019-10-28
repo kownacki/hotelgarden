@@ -46,7 +46,6 @@ class HgMenu extends LitElement {
       <hg-menu-nav
         .selectedCategory=${this.selectedCategory}
         .categories=${this.categories}
-        @request-delete=${(event) => {console.log('123123123123123')}}
         @selected-category-changed=${(event) => {
           this.selectedCategory = event.detail;
           // update in case if selectedCategory index unchanged but category object did

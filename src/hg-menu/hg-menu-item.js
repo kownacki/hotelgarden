@@ -2,7 +2,7 @@ import {LitElement, html, css} from 'https://unpkg.com/lit-element@^2.2.1/lit-el
 import 'https://unpkg.com/@polymer/paper-icon-button@^3.0.2/paper-icon-button.js?module';
 import 'https://unpkg.com/@polymer/iron-icons@^3.0.1/iron-icons.js?module';
 import './hg-menu-edit-item.js';
-import './hg-menu-delete-item.js';
+import '../edit/hg-delete-item.js';
 
 class HgMenuItem extends LitElement {
   static get properties() {
@@ -63,7 +63,7 @@ class HgMenuItem extends LitElement {
           .item=${this.item}
           @item-edited=${() => this.requestUpdate()}>
         </hg-menu-edit-item>
-        <hg-menu-delete-item .item=${this.item}></hg-menu-delete-item>
+        <hg-delete-item .name=${this.item.name}></hg-delete-item>
       </div>
     `;
   }

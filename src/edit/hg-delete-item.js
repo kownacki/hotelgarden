@@ -5,10 +5,11 @@ import 'https://unpkg.com/@polymer/iron-icons@^3.0.1/iron-icons.js?module';
 import 'https://unpkg.com/@material/mwc-button@^0.9.1/mwc-button.js?module';
 import 'https://unpkg.com/@polymer/paper-styles@^3.0.1/color.js?module';
 
-class HgMenuDeleteItem extends LitElement {
+class HgDeleteItem extends LitElement {
   static get properties() {
     return {
-      item: Object,
+      name: String,
+      'dialog-opened': {type: Boolean, reflect: true},
     };
   }
   static get styles() {
@@ -39,10 +40,10 @@ class HgMenuDeleteItem extends LitElement {
         @click=${() => this.shadowRoot.getElementById('dialog').open()}>
       </paper-icon-button>
       
-      <paper-dialog id="dialog">
+      <paper-dialog id="dialog" @opened-changed=${function(event) { this['dialog-opened'] = event.target.opened}}>
         <div class="warning">
           <iron-icon icon="warning"></iron-icon>
-          Czy na pewno usunąć pozycję "${this.item.name}"? 
+          Czy na pewno usunąć "${this.name}"? 
           Usunięte dane nie mogą być przywrócone.
         </div>
         <mwc-button raised label="Usuń" @click=${deleteItem}></mwc-button>
@@ -50,4 +51,4 @@ class HgMenuDeleteItem extends LitElement {
     `;
   }
 }
-customElements.define('hg-menu-delete-item', HgMenuDeleteItem);
+customElements.define('hg-delete-item', HgDeleteItem);

@@ -1,17 +1,21 @@
-import { LitElement, html, css } from 'https://unpkg.com/lit-element@^2.2.1/lit-element.js?module';
+import {LitElement, html, css} from 'https://unpkg.com/lit-element@^2.2.1/lit-element.js?module';
+import {repeat} from 'https://unpkg.com/lit-html@^1.0.0/directives/repeat.js?module';
 import 'https://unpkg.com/@polymer/iron-image@^3.0.2/iron-image.js?module';
+import './edit/hg-delete-item.js';
 
 class HgGallery extends LitElement {
   static get properties() {
     return {
-      urls: Array,
+      images: Array,
     };
   }
   constructor() {
     super();
     (async () => {
-      const storageItems = (await firebase.storage().ref('gallery').listAll()).items;
-      this.urls = await Promise.all(_.map(_.method('getDownloadURL'), storageItems));
+      this.images = await Promise.all(_.map(async (item) => ({
+        name: item.name,
+        url: await item.getDownloadURL(),
+      }), _.reverse((await firebase.storage().ref('gallery').listAll()).items)));
     })();
   }
   static get styles() {
@@ -25,28 +29,57 @@ class HgGallery extends LitElement {
         display: flex;
         flex-wrap: wrap;
       }
-      iron-image {
-        margin: 1px;
+      .image {
         width: calc(50% - 2px);
-        padding-bottom: 30%;
+        margin: 1px;
+        position: relative;
+      }
+      iron-image {
+        display: block;
+        padding-bottom: 60%;
+      }
+      hg-delete-item {
+        background: white;
+        position: absolute;
+        right: 0;
+        top: 0;
+      }
+      .image:not(:hover) hg-delete-item:not([dialog-opened]) {
+        display: none;
       }
     `;
   }
   render() {
     return html`
       <input type="file"
-        id="avatar" name="avatar"
         accept="image/png, image/jpeg"
         @change=${async (event) => {
           const file = event.target.files[0];
           event.target.value = '';
-          const ref = firebase.storage().ref('gallery/' + Date.now());
+          const image = {name: Date.now()};
+          // First unshift to 'images' and then asynchronously set url to prevent from 
+          // race condition when another image is added immediately
+          this.images.unshift(image);
+          this.requestUpdate();
+          const ref = firebase.storage().ref('gallery/' + image.name);
           await ref.put(file);
-          this.urls.push(await ref.getDownloadURL());
+          image.url = await ref.getDownloadURL();
           this.requestUpdate();
         }}>
         <div class="images">
-          ${_.map((url) => html`<iron-image src="${url}" sizing="cover"></iron-image>`, _.reverse(this.urls))}
+          ${repeat(this.images, _.get('name'), (image, index) => html`
+            <div class="image">
+              <iron-image src="${image.url}" sizing="cover"></iron-image>
+              <hg-delete-item
+                .name=${image.name}
+                @request-delete=${() => {
+                  firebase.storage().ref('gallery/' + image.name).delete();
+                  this.images.splice(index, 1);
+                  this.requestUpdate();
+                }}>
+              </hg-delete-item>
+            </div>
+          `)}
         </div>
     `;
   }
