@@ -5,6 +5,7 @@ import 'https://unpkg.com/@polymer/app-route@^3.0.2/app-route.js?module';
 import 'https://unpkg.com/@polymer/app-layout@^3.1.0/app-layout.js?module';
 import './hg-header.js';
 import './hg-menu/hg-menu.js';
+import './hg-gallery.js';
 
 class HgApp extends LitElement {
   static get properties() {
@@ -46,6 +47,8 @@ class HgApp extends LitElement {
 
           ${this._page === '/'
             ? html`<div name="landing" class="content"><hg-menu></hg-menu></div>`
+            : this._page === '/galeria'
+            ? html`<hg-gallery></hg-gallery>`
             : html`<div name="kupa">Page 1</div>`}
         </div>
       </app-header-layout>

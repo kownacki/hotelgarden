@@ -32,6 +32,9 @@ const links = [
       {name: 'Grill Garden', path: '/grill-garden'},
       {name: 'Catering', path: '/catering'},
     ],
+  }, {
+    name: 'Galeria',
+    path: '/galeria',
   },
 ];
 
