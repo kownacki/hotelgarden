@@ -39,7 +39,7 @@ class HgApp extends LitElement {
     return html`
       <iron-image src="https://picsum.photos/id/174/1920/980" sizing="cover"></iron-image>
       <app-header-layout>
-        <app-header slot="header" fixed>
+        <app-header id="header" slot="header" fixed>
           <hg-header></hg-header>
         </app-header>
         <div>
@@ -48,7 +48,7 @@ class HgApp extends LitElement {
           ${this._page === '/'
             ? html`<div name="landing" class="content"><hg-menu></hg-menu></div>`
             : this._page === '/galeria'
-            ? html`<hg-gallery></hg-gallery>`
+            ? html`<hg-gallery @hide-header=${() => this.shadowRoot.getElementById('header').style.display = 'none'}></hg-gallery>`
             : html`<div name="kupa">Page 1</div>`}
         </div>
       </app-header-layout>

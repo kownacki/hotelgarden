@@ -1,7 +1,10 @@
 import {LitElement, html, css} from 'https://unpkg.com/lit-element@^2.2.1/lit-element.js?module';
 import {repeat} from 'https://unpkg.com/lit-html@^1.0.0/directives/repeat.js?module';
+import 'https://unpkg.com/@polymer/paper-icon-button@^3.0.2/paper-icon-button.js?module';
+import 'https://unpkg.com/@polymer/iron-icons@^3.0.1/iron-icons.js?module';
 import 'https://unpkg.com/@polymer/iron-image@^3.0.2/iron-image.js?module';
 import './edit/hg-delete-item.js';
+import './hg-gallery-carousel.js';
 
 class HgGallery extends LitElement {
   static get properties() {
@@ -44,6 +47,9 @@ class HgGallery extends LitElement {
         right: 0;
         top: 0;
       }
+      .image:hover {
+        cursor: pointer;
+      }
       .image:not(:hover) hg-delete-item:not([dialog-opened]) {
         display: none;
       }
@@ -65,11 +71,18 @@ class HgGallery extends LitElement {
           await ref.put(file);
           image.url = await ref.getDownloadURL();
           this.requestUpdate();
+          this.shadowRoot.getElementById('carousel').requestUpdate();
         }}>
         <div class="images">
           ${repeat(this.images, _.get('name'), (image, index) => html`
             <div class="image">
-              <iron-image src="${image.url}" sizing="cover"></iron-image>
+              <iron-image
+                src="${image.url}" 
+                sizing="cover"
+                @click=${() => {
+                  this.shadowRoot.getElementById('carousel').open(index);
+                }}>
+              </iron-image>
               <hg-delete-item
                 .name=${image.name}
                 @request-delete=${() => {
@@ -81,6 +94,7 @@ class HgGallery extends LitElement {
             </div>
           `)}
         </div>
+        <hg-gallery-carousel id="carousel" .images=${this.images}></hg-gallery-carousel>
     `;
   }
 }
