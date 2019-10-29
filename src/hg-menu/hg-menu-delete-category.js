@@ -5,7 +5,7 @@ import 'https://unpkg.com/@polymer/iron-icons@^3.0.1/iron-icons.js?module';
 import 'https://unpkg.com/@material/mwc-button@^0.9.1/mwc-button.js?module';
 import 'https://unpkg.com/@polymer/paper-styles@^3.0.1/color.js?module';
 
-class HgMenuDeleteCategory extends LitElement {
+customElements.define('hg-menu-delete-category', class extends LitElement {
   static get properties() {
     return {
       category: Object,
@@ -49,5 +49,4 @@ class HgMenuDeleteCategory extends LitElement {
       </paper-dialog>
     `;
   }
-}
-customElements.define('hg-menu-delete-category', HgMenuDeleteCategory);
+});

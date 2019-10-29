@@ -7,7 +7,7 @@ import './hg-header.js';
 import './hg-menu/hg-menu.js';
 import './hg-gallery/hg-gallery.js';
 
-class HgApp extends LitElement {
+customElements.define('hg-app', class extends LitElement {
   static get properties() {
     return {
       _route: Object,
@@ -56,5 +56,4 @@ class HgApp extends LitElement {
       </app-header-layout>
     `;
   }
-}
-customElements.define('hg-app', HgApp);
+});

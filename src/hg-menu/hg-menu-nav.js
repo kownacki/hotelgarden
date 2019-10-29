@@ -5,7 +5,7 @@ import 'https://unpkg.com/@polymer/iron-icons@^3.0.1/iron-icons.js?module';
 import './hg-menu-nav-item.js';
 import './hg-menu-add-category.js';
 
-class HgMenuNav extends LitElement {
+customElements.define('hg-menu-nav', class extends LitElement {
   static get properties() {
     return {
       selectedCategory: {
@@ -72,5 +72,4 @@ class HgMenuNav extends LitElement {
       </hg-menu-add-category>
     `;
   }
-}
-customElements.define('hg-menu-nav', HgMenuNav);
+});

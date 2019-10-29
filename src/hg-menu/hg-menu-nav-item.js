@@ -6,7 +6,7 @@ import 'https://unpkg.com/@polymer/paper-styles@^3.0.1/color.js?module';
 import './hg-menu-delete-category.js';
 import './hg-menu-rename-category.js';
 
-class HgMenuNavItem extends LitElement {
+customElements.define('hg-menu-nav-item', class extends LitElement {
   static get properties() {
     return {
       categories: Array,
@@ -71,5 +71,4 @@ class HgMenuNavItem extends LitElement {
       </div>
     `;
   }
-}
-customElements.define('hg-menu-nav-item', HgMenuNavItem);
+});

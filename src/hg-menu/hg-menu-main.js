@@ -3,7 +3,7 @@ import 'https://unpkg.com/@polymer/iron-image@^3.0.2/iron-image.js?module';
 import './hg-menu-item.js';
 import './hg-menu-add-item.js';
 
-class HgMenuMain extends LitElement {
+customElements.define('hg-menu-main', class extends LitElement {
   static get properties() {
     return {
       category: Object,
@@ -62,5 +62,4 @@ class HgMenuMain extends LitElement {
       `}
     `;
   }
-}
-customElements.define('hg-menu-main', HgMenuMain);
+});

@@ -7,7 +7,7 @@ import '../edit/hg-delete-item.js';
 import './hg-gallery-upload.js';
 import './hg-gallery-carousel.js';
 
-class HgGallery extends LitElement {
+customElements.define('hg-gallery', class extends LitElement {
   static get properties() {
     return {
       images: Array,
@@ -87,5 +87,4 @@ class HgGallery extends LitElement {
       <hg-gallery-carousel id="carousel" .images=${this.images}></hg-gallery-carousel>
     `;
   }
-}
-customElements.define('hg-gallery', HgGallery);
+});

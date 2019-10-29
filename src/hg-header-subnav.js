@@ -1,6 +1,6 @@
 import { LitElement, html, css } from 'https://unpkg.com/lit-element@^2.2.1/lit-element.js?module';
 
-class HgHeaderSubnav extends LitElement {
+customElements.define('hg-header-subnav', class extends LitElement {
   static get properties() {
     return {
       links: Array,
@@ -29,5 +29,4 @@ class HgHeaderSubnav extends LitElement {
       </ul>
     `;
   }
-}
-customElements.define('hg-header-subnav', HgHeaderSubnav);
+});

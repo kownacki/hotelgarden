@@ -3,7 +3,7 @@ import 'https://unpkg.com/@material/mwc-button@^0.9.1/mwc-button.js?module';
 import './hg-menu-main.js';
 import './hg-menu-nav.js';
 
-class HgMenu extends LitElement {
+customElements.define('hg-menu', class extends LitElement {
   static get properties() {
     return {
       categories: Array,
@@ -57,5 +57,4 @@ class HgMenu extends LitElement {
       </hg-menu-nav>
     `;
   }
-}
-customElements.define('hg-menu', HgMenu);
+});

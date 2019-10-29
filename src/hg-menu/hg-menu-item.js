@@ -4,7 +4,7 @@ import 'https://unpkg.com/@polymer/iron-icons@^3.0.1/iron-icons.js?module';
 import './hg-menu-edit-item.js';
 import '../edit/hg-delete-item.js';
 
-class HgMenuItem extends LitElement {
+customElements.define('hg-menu-item', class extends LitElement {
   static get properties() {
     return {
       itemsLength: Number,
@@ -67,5 +67,4 @@ class HgMenuItem extends LitElement {
       </div>
     `;
   }
-}
-customElements.define('hg-menu-item', HgMenuItem);
+});

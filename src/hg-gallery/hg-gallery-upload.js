@@ -2,7 +2,7 @@ import {LitElement, html, css} from 'https://unpkg.com/lit-element@^2.2.1/lit-el
 import 'https://unpkg.com/@polymer/paper-icon-button@^3.0.2/paper-icon-button.js?module';
 import 'https://unpkg.com/@polymer/iron-icons@^3.0.1/iron-icons.js?module';
 
-class HgGalleryUpload extends LitElement {
+customElements.define('hg-gallery-upload', class extends LitElement {
   static get properties() {
     return {
       images: Array,
@@ -40,5 +40,4 @@ class HgGalleryUpload extends LitElement {
       }}>
     `;
   }
-}
-customElements.define('hg-gallery-upload', HgGalleryUpload);
+});

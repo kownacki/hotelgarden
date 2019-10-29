@@ -4,7 +4,7 @@ import {repeat} from 'https://unpkg.com/lit-html@^1.0.0/directives/repeat.js?mod
 const next = (arr, index) => index === arr.length - 1 ? 0 : index + 1;
 const prev = (arr, index) => index === 0 ? arr.length - 1 : index - 1;
 
-class HgGalleryCarousel extends LitElement {
+customElements.define('hg-gallery-carousel', class extends LitElement {
   static get properties() {
     return {
       _selected: Number,
@@ -100,5 +100,4 @@ class HgGalleryCarousel extends LitElement {
       </paper-icon-button>
     `;
   }
-}
-customElements.define('hg-gallery-carousel', HgGalleryCarousel);
+});

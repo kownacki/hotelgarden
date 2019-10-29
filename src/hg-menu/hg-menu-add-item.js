@@ -5,7 +5,7 @@ import 'https://unpkg.com/@polymer/iron-icons@^3.0.1/iron-icons.js?module';
 import 'https://unpkg.com/@material/mwc-button@^0.9.1/mwc-button.js?module';
 import 'https://unpkg.com/@material/mwc-textfield@^0.9.1/mwc-textfield.js?module';
 
-class HgMenuAddItem extends LitElement {
+customElements.define('hg-menu-add-item', class extends LitElement {
   static get properties() {
     return {
       items: Array,
@@ -45,5 +45,4 @@ class HgMenuAddItem extends LitElement {
       </paper-dialog>
     `;
   }
-}
-customElements.define('hg-menu-add-item', HgMenuAddItem);
+});

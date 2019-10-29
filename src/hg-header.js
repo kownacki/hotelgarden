@@ -38,7 +38,7 @@ const links = [
   },
 ];
 
-class HgHeader extends LitElement {
+customElements.define('hg-header', class extends LitElement {
   static get properties() {
     return {
       scrolledDown: Boolean,
@@ -95,5 +95,4 @@ class HgHeader extends LitElement {
       </nav>
     `;
   }
-}
-customElements.define('hg-header', HgHeader);
+});

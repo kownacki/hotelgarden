@@ -5,7 +5,7 @@ import 'https://unpkg.com/@polymer/iron-icons@^3.0.1/iron-icons.js?module';
 import 'https://unpkg.com/@material/mwc-button@^0.9.1/mwc-button.js?module';
 import 'https://unpkg.com/@polymer/paper-styles@^3.0.1/color.js?module';
 
-class HgDeleteItem extends LitElement {
+customElements.define('hg-delete-item', class extends LitElement {
   static get properties() {
     return {
       name: String,
@@ -50,5 +50,4 @@ class HgDeleteItem extends LitElement {
       </paper-dialog>
     `;
   }
-}
-customElements.define('hg-delete-item', HgDeleteItem);
+});
