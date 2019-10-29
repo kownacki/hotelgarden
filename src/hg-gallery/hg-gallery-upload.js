@@ -1,4 +1,6 @@
 import {LitElement, html, css} from 'https://unpkg.com/lit-element@^2.2.1/lit-element.js?module';
+import firebase from 'firebase/app';
+import 'firebase/storage';
 import 'https://unpkg.com/@polymer/paper-icon-button@^3.0.2/paper-icon-button.js?module';
 import 'https://unpkg.com/@polymer/iron-icons@^3.0.1/iron-icons.js?module';
 
