@@ -1,7 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
 import firebase from 'firebase/app';
 
-import '@material/mwc-button';
 import '@polymer/app-route/app-location';
 import '@polymer/iron-icons';
 import '@polymer/iron-image';
