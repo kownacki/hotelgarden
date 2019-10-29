@@ -7,11 +7,19 @@ customElements.define('hg-landing', class extends LitElement {
     };
   }
   static get styles() {
-    return css`      
+    return css`
+      :host {
+      }
+      iron-image {
+        display: block;
+        height: 100vh;
+        position: static;
+      }
     `;
   }
   render(){
     return html`
+      <iron-image src="https://picsum.photos/id/174/1920/980" sizing="cover"></iron-image>
     `;
   }
 });

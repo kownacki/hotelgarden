@@ -52,6 +52,9 @@ customElements.define('hg-header', class extends LitElement {
     return css`
       :host {
         display: block;
+        position: fixed;
+        width: 100%;
+        z-index: 1;
       }
       nav {
         transition: background-color 0.5s ease;
@@ -83,16 +86,18 @@ customElements.define('hg-header', class extends LitElement {
   }
   render() {
     return html`
-      <nav class=${this.scrolledDown ? 'scrolled-down' : ''}>
-        <ul>
-          ${_.map((link) => html`
-            <li>
-              <a href="${link.path}">${link.name}</a>
-              ${link.sublinks ? html`<hg-header-subnav .links=${link.sublinks}></hg-header-subnav>` : ''}
-            </li>
-          `, links)}   
-        </ul>
-      </nav>
+      <header>
+        <nav class=${this.scrolledDown ? 'scrolled-down' : ''}>
+          <ul>
+            ${_.map((link) => html`
+              <li>
+                <a href="${link.path}">${link.name}</a>
+                ${link.sublinks ? html`<hg-header-subnav .links=${link.sublinks}></hg-header-subnav>` : ''}
+              </li>
+            `, links)}   
+          </ul>
+        </nav>
+      </header>
     `;
   }
 });
