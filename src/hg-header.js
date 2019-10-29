@@ -25,7 +25,7 @@ const links = [
     ],
   }, {
     name: 'Kuchnia',
-    path: '/',
+    path: '/kuchnia',
     sublinks: [
       {name: 'O naszej kuchni', path: '/o-naszej-kuchni'},
       {name: 'Restauracja Magnolia', path: '/restauracja-magnolia'},

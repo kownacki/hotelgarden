@@ -46,10 +46,12 @@ class HgApp extends LitElement {
           <app-location @route-changed=${(event) => this._page = event.detail.value.path}></app-location>
 
           ${this._page === '/'
-            ? html`<div name="landing" class="content"><hg-menu></hg-menu></div>`
+            ? html`<div class="content"><hg-landing></hg-landing></div>`
             : this._page === '/galeria'
             ? html`<hg-gallery @hide-header=${() => this.shadowRoot.getElementById('header').style.display = 'none'}></hg-gallery>`
-            : html`<div name="kupa">Page 1</div>`}
+            :  this._page === '/kuchnia'
+            ? html`<div class="content"><hg-menu></hg-menu></div>`
+            : html`<div>Page 1</div>`}
         </div>
       </app-header-layout>
     `;
