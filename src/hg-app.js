@@ -53,14 +53,30 @@ customElements.define('hg-app', class extends LitElement {
   }
   render(){
     return html`
-      <hg-header id="header"></hg-header>
       <app-location @route-changed=${(event) => this._page = event.detail.value.path}></app-location>
+      <hg-header id="header" .selected=${this._page}></hg-header>
       ${this._page === '/'
         ? html`<hg-landing></hg-landing>`
+        : this._page === '/pokoje'
+        ? html`<hg-banner 
+          .src=${'https://picsum.photos/id/514/1920/980'}
+          .heading=${'Pokoje'}
+          .subheading=${'Lorem ipsum dolor sit amet consectetur adipiscing elit'}>
+        </hg-banner>`
+        : this._page === '/konferencje' 
+        ? html`<hg-banner 
+          .src=${'https://picsum.photos/id/3/1920/980'}
+          .heading=${'Konferencje'}
+          .subheading=${'Lorem ipsum dolor sit amet consectetur adipiscing elit'}>
+        </hg-banner>`
+        : this._page === '/kuchnia'
+        ? html`<hg-menu></hg-menu>`
         : this._page === '/galeria'
-        ? html`<hg-gallery @hide-header=${() => this.shadowRoot.getElementById('header').style.display = 'none'}></hg-gallery>`
-        :  this._page === '/kuchnia'
-        ? html`<div class="content"><hg-menu></hg-menu></div>`
+        ? html`<hg-banner 
+          .src=${'https://picsum.photos/id/802/1920/980'}
+          .heading=${'Galeria'}
+          .subheading=${'Lorem ipsum dolor sit amet consectetur adipiscing elit'}>
+        </hg-banner><hg-gallery @hide-header=${() => this.shadowRoot.getElementById('header').style.display = 'none'}></hg-gallery>`
         : html`<div>Page 1</div>`}
     `;
   }

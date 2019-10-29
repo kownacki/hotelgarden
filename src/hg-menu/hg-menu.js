@@ -23,6 +23,8 @@ customElements.define('hg-menu', class extends LitElement {
   static get styles() {
     return css`
       :host {
+      }
+      section {
         display: flex;
       }
       mwc-button {
@@ -42,19 +44,26 @@ customElements.define('hg-menu', class extends LitElement {
   }
   render(){
     return html`
-      <hg-menu-main id="main" .category=${this.categories[this.selectedCategory]} .categories=${this.categories}></hg-menu-main>
-      <hg-menu-nav
-        .selectedCategory=${this.selectedCategory}
-        .categories=${this.categories}
-        @selected-category-changed=${(event) => {
-          this.selectedCategory = event.detail;
-          // update in case if selectedCategory index unchanged but category object did
-          //todo think if more elegant solution
-          this.shadowRoot.getElementById('main').requestUpdate();
-          this.requestUpdate();
-        }}
-        @category-renamed=${() => this.shadowRoot.getElementById('main').requestUpdate()}>
-      </hg-menu-nav>
+      <hg-banner 
+        .src=${'https://picsum.photos/id/75/1920/980'}
+        .heading=${'Kuchnia'}
+        .subheading=${'Lorem ipsum dolor sit amet consectetur adipiscing elit'}>
+      </hg-banner>
+      <section>
+        <hg-menu-main id="main" .category=${this.categories[this.selectedCategory]} .categories=${this.categories}></hg-menu-main>
+        <hg-menu-nav
+          .selectedCategory=${this.selectedCategory}
+          .categories=${this.categories}
+          @selected-category-changed=${(event) => {
+            this.selectedCategory = event.detail;
+            // update in case if selectedCategory index unchanged but category object did
+            //todo think if more elegant solution
+            this.shadowRoot.getElementById('main').requestUpdate();
+            this.requestUpdate();
+          }}
+          @category-renamed=${() => this.shadowRoot.getElementById('main').requestUpdate()}>
+        </hg-menu-nav>
+      </section>
     `;
   }
 });

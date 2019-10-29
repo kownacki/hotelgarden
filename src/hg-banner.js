@@ -11,6 +11,7 @@ customElements.define('hg-banner', class extends LitElement {
   static get styles() {
     return css`
       :host {
+        box-shadow: inset 0 50px 50px rgba(80, 80, 80, 0.50);
         height: 100vh;
         display: flex;
       }
@@ -23,7 +24,7 @@ customElements.define('hg-banner', class extends LitElement {
         z-index: -1;
       }
       .heading {
-        background: rgba(20, 44, 60, 0.75);
+        background: rgba(64, 49, 52, 0.57);
         padding: 20px;
         width: 1000px;
         max-width: 100%;
@@ -33,12 +34,12 @@ customElements.define('hg-banner', class extends LitElement {
         text-transform: uppercase;
       }
       h1 {
-        font-weight: normal;
         font-size: 50px;
         margin: 10px;
+        font-weight: 300;
       }
       p {
-        font-size: 20px;
+        font-size: 18px;
         margin: 10px;
       }
     `;

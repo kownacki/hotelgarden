@@ -10,13 +10,37 @@ customElements.define('hg-header-subnav', class extends LitElement {
     return css`
       :host {
         display: block;
-        background: white;
+        width: 200px;
+        background: var(--secondary-color);
+      }
+      :host::before {
+        border-right: 7px solid transparent;
+        border-bottom: 7px solid var(--secondary-color);
+        border-left: 7px solid transparent;
+        content: '';
+        top: -7px;
+        left: 25px;
+        width: 0;
+        height: 0;
+        margin: 0 auto;
+        position: absolute;
       }
       ul {
-        padding: 0;
+        padding: 10px 0;
+        margin: 0;
       }
       li {
         list-style-type: none;
+      }
+      a {
+        display: block;
+        padding: 8px 16px;
+        color: white;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      a:hover {
+        background: rgba(var(--primary-color-rgb), 85%);
       }
     `;
   }
