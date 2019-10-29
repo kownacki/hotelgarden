@@ -52,7 +52,7 @@ customElements.define('hg-app', class extends LitElement {
   }
   render(){
     return html`
-      <hg-header></hg-header>
+      <hg-header id="header"></hg-header>
       <app-location @route-changed=${(event) => this._page = event.detail.value.path}></app-location>
       ${this._page === '/'
         ? html`<hg-landing></hg-landing>`
