@@ -1,5 +1,4 @@
-import {LitElement, html, css} from 'https://unpkg.com/lit-element@^2.2.1/lit-element.js?module';
-import 'https://unpkg.com/@polymer/iron-image@^3.0.2/iron-image.js?module';
+import {LitElement, html, css} from 'lit-element';
 import './hg-menu-item.js';
 import './hg-menu-add-item.js';
 

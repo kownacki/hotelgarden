@@ -1,6 +1,4 @@
-import {LitElement, html, css} from 'https://unpkg.com/lit-element@^2.2.1/lit-element.js?module';
-import 'https://unpkg.com/@polymer/paper-icon-button@^3.0.2/paper-icon-button.js?module';
-import 'https://unpkg.com/@polymer/iron-icons@^3.0.1/iron-icons.js?module';
+import {LitElement, html, css} from 'lit-element';
 import './hg-menu-edit-item.js';
 import '../edit/hg-delete-item.js';
 

@@ -1,10 +1,8 @@
-import {LitElement, html, css} from 'https://unpkg.com/lit-element@^2.2.1/lit-element.js?module';
-import {repeat} from 'https://unpkg.com/lit-html@^1.0.0/directives/repeat.js?module';
+import {LitElement, html, css} from 'lit-element';
+import {repeat} from 'lit-html/directives/repeat';
 import firebase from 'firebase/app';
 import 'firebase/storage';
-import 'https://unpkg.com/@polymer/paper-icon-button@^3.0.2/paper-icon-button.js?module';
-import 'https://unpkg.com/@polymer/iron-icons@^3.0.1/iron-icons.js?module';
-import 'https://unpkg.com/@polymer/iron-image@^3.0.2/iron-image.js?module';
+
 import '../edit/hg-delete-item.js';
 import './hg-gallery-upload.js';
 import './hg-gallery-carousel.js';

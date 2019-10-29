@@ -1,5 +1,5 @@
-import {LitElement, html, css} from 'https://unpkg.com/lit-element@^2.2.1/lit-element.js?module';
-import {repeat} from 'https://unpkg.com/lit-html@^1.0.0/directives/repeat.js?module';
+import {LitElement, html, css} from 'lit-element';
+import {repeat} from 'lit-html/directives/repeat';
 
 const next = (arr, index) => index === arr.length - 1 ? 0 : index + 1;
 const prev = (arr, index) => index === 0 ? arr.length - 1 : index - 1;

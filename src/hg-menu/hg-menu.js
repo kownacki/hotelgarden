@@ -1,7 +1,6 @@
-import { LitElement, html, css } from 'https://unpkg.com/lit-element@^2.2.1/lit-element.js?module';
+import {LitElement, html, css} from 'lit-element';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
-import 'https://unpkg.com/@material/mwc-button@^0.9.1/mwc-button.js?module';
 import './hg-menu-main.js';
 import './hg-menu-nav.js';
 

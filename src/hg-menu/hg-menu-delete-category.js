@@ -1,9 +1,4 @@
-import { LitElement, html, css } from 'https://unpkg.com/lit-element@^2.2.1/lit-element.js?module';
-import 'https://unpkg.com/@polymer/paper-dialog@^3.0.1/paper-dialog.js?module';
-import 'https://unpkg.com/@polymer/paper-icon-button@^3.0.2/paper-icon-button.js?module';
-import 'https://unpkg.com/@polymer/iron-icons@^3.0.1/iron-icons.js?module';
-import 'https://unpkg.com/@material/mwc-button@^0.9.1/mwc-button.js?module';
-import 'https://unpkg.com/@polymer/paper-styles@^3.0.1/color.js?module';
+import {LitElement, html, css} from 'lit-element';
 
 customElements.define('hg-menu-delete-category', class extends LitElement {
   static get properties() {

@@ -1,8 +1,16 @@
-import { LitElement, html, css } from 'https://unpkg.com/lit-element@^2.2.1/lit-element.js?module';
+import {LitElement, html, css} from 'lit-element';
 import firebase from 'firebase/app';
-import 'https://unpkg.com/@material/mwc-button@^0.9.1/mwc-button.js?module';
-import 'https://unpkg.com/@polymer/app-route@^3.0.2/app-location.js?module';
-import 'https://unpkg.com/@polymer/app-route@^3.0.2/app-route.js?module';
+
+import '@material/mwc-button';
+import '@polymer/app-route/app-location';
+import '@polymer/iron-icons';
+import '@polymer/iron-image';
+import '@polymer/paper-icon-button';
+import '@polymer/paper-dialog';
+import '@material/mwc-button';
+import '@material/mwc-textfield';
+import '@polymer/paper-styles/color';
+
 import './hg-header.js';
 import './hg-landing.js';
 import './hg-menu/hg-menu.js';

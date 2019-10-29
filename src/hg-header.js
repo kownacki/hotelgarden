@@ -1,4 +1,4 @@
-import { LitElement, html, css } from 'https://unpkg.com/lit-element@^2.2.1/lit-element.js?module';
+import {LitElement, html, css} from 'lit-element';
 import './hg-header-subnav.js';
 
 //todo flat vs hierarchical url structure
