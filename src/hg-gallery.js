@@ -4,6 +4,7 @@ import 'https://unpkg.com/@polymer/paper-icon-button@^3.0.2/paper-icon-button.js
 import 'https://unpkg.com/@polymer/iron-icons@^3.0.1/iron-icons.js?module';
 import 'https://unpkg.com/@polymer/iron-image@^3.0.2/iron-image.js?module';
 import './edit/hg-delete-item.js';
+import './hg-gallery-upload.js';
 import './hg-gallery-carousel.js';
 
 class HgGallery extends LitElement {
@@ -57,44 +58,33 @@ class HgGallery extends LitElement {
   }
   render() {
     return html`
-      <input type="file"
-        accept="image/png, image/jpeg"
-        @change=${async (event) => {
-          const file = event.target.files[0];
-          event.target.value = '';
-          const image = {name: Date.now()};
-          // First unshift to 'images' and then asynchronously set url to prevent from 
-          // race condition when another image is added immediately
-          this.images.unshift(image);
-          this.requestUpdate();
-          const ref = firebase.storage().ref('gallery/' + image.name);
-          await ref.put(file);
-          image.url = await ref.getDownloadURL();
-          this.requestUpdate();
-          this.shadowRoot.getElementById('carousel').requestUpdate();
-        }}>
-        <div class="images">
-          ${repeat(this.images, _.get('name'), (image, index) => html`
-            <div class="image">
-              <iron-image
-                src="${image.url}" 
-                sizing="cover"
-                @click=${() => {
-                  this.shadowRoot.getElementById('carousel').open(index);
-                }}>
-              </iron-image>
-              <hg-delete-item
-                .name=${image.name}
-                @request-delete=${() => {
-                  firebase.storage().ref('gallery/' + image.name).delete();
-                  this.images.splice(index, 1);
-                  this.requestUpdate();
-                }}>
-              </hg-delete-item>
-            </div>
-          `)}
-        </div>
-        <hg-gallery-carousel id="carousel" .images=${this.images}></hg-gallery-carousel>
+      <hg-gallery-upload 
+        .images=${this.images}
+        @upload-started=${() => this.requestUpdate()}
+        @upload-finished=${() => {this.requestUpdate(); this.shadowRoot.getElementById('carousel').requestUpdate()}}>
+      </hg-gallery-upload>
+      <div class="images">
+        ${repeat(this.images, _.get('name'), (image, index) => html`
+          <div class="image">
+            <iron-image
+              src="${image.url}" 
+              sizing="cover"
+              @click=${() => {
+                this.shadowRoot.getElementById('carousel').open(index);
+              }}>
+            </iron-image>
+            <hg-delete-item
+              .name=${image.name}
+              @request-delete=${() => {
+                firebase.storage().ref('gallery/' + image.name).delete();
+                this.images.splice(index, 1);
+                this.requestUpdate();
+              }}>
+            </hg-delete-item>
+          </div>
+        `)}
+      </div>
+      <hg-gallery-carousel id="carousel" .images=${this.images}></hg-gallery-carousel>
     `;
   }
 }
