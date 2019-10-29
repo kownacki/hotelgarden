@@ -1,6 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
 import firebase from 'firebase/app';
-import 'firebase/firestore';
 import './hg-menu-main.js';
 import './hg-menu-nav.js';
 

@@ -1,6 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
 import firebase from 'firebase/app';
-import 'firebase/firestore';
 
 customElements.define('hg-article', class extends LitElement {
   static get properties() {

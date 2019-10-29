@@ -1,5 +1,7 @@
 import {LitElement, html, css} from 'lit-element';
 import firebase from 'firebase/app';
+import 'firebase/firestore';
+import 'firebase/storage';
 
 import '@polymer/app-route/app-location';
 import '@polymer/iron-icons';
