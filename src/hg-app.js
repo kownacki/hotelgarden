@@ -5,7 +5,7 @@ import 'https://unpkg.com/@polymer/app-route@^3.0.2/app-route.js?module';
 import 'https://unpkg.com/@polymer/app-layout@^3.1.0/app-layout.js?module';
 import './hg-header.js';
 import './hg-menu/hg-menu.js';
-import './hg-gallery.js';
+import './hg-gallery/hg-gallery.js';
 
 class HgApp extends LitElement {
   static get properties() {
