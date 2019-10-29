@@ -35,7 +35,7 @@ customElements.define('hg-app', class extends LitElement {
       <hg-header></hg-header>
       <app-location @route-changed=${(event) => this._page = event.detail.value.path}></app-location>
       ${this._page === '/'
-        ? html`<div class="content"><hg-landing></hg-landing></div>`
+        ? html`<hg-landing></hg-landing>`
         : this._page === '/galeria'
         ? html`<hg-gallery @hide-header=${() => this.shadowRoot.getElementById('header').style.display = 'none'}></hg-gallery>`
         :  this._page === '/kuchnia'
