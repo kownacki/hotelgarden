@@ -67,7 +67,7 @@ customElements.define('hg-gallery-carousel', class extends LitElement {
     const nextImage = _.curry(next, this.images);
     const prevImage = _.curry(prev, this.images);
     return html`
-      ${repeat([nextImage(this.images, this._selected), this.images[this._selected], nextImage(this._selected)], _.get('name'), (image, index) => html`
+      ${_.isEmpty(this.images) ? '' : repeat([nextImage(this.images, this._selected), this.images[this._selected], nextImage(this._selected)], _.get('name'), (image, index) => html`
         <iron-image
           src="${image.url}" 
           sizing="contain">
