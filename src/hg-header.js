@@ -67,6 +67,7 @@ customElements.define('hg-header', class extends LitElement {
         text-shadow: none;
         background: white;
         color: var(--primary-color);
+        box-shadow: 2px 4px 10px rgba(0,0,0,.2);
       }
       ul {
         margin: 0;
