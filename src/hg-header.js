@@ -102,7 +102,7 @@ customElements.define('hg-header', class extends LitElement {
         transition: background-color 0.3s ease;
       }
       a:hover, a[selected] {
-        background: rgba(var(--primary-color-rgb), 85%);
+        background: rgba(var(--primary-color-rgb), 90%);
         color: white;
       }
     `;

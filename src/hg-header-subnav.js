@@ -11,11 +11,11 @@ customElements.define('hg-header-subnav', class extends LitElement {
       :host {
         display: block;
         width: 200px;
-        background: var(--secondary-color);
+        background: rgba(var(--secondary-color-rgb), 90%);
       }
       :host::before {
         border-right: 7px solid transparent;
-        border-bottom: 7px solid var(--secondary-color);
+        border-bottom: 7px solid rgba(var(--secondary-color-rgb), 90%);
         border-left: 7px solid transparent;
         content: '';
         top: -7px;
@@ -40,7 +40,7 @@ customElements.define('hg-header-subnav', class extends LitElement {
         transition: background-color 0.3s ease;
       }
       a:hover {
-        background: rgba(var(--primary-color-rgb), 85%);
+        background: rgba(var(--primary-color-rgb), 90%);
       }
     `;
   }
