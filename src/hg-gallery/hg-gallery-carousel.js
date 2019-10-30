@@ -8,6 +8,7 @@ customElements.define('hg-gallery-carousel', class extends LitElement {
   static get properties() {
     return {
       _selected: Number,
+      _transitionGoing: Boolean,
       images: Array,
     };
   }
@@ -42,13 +43,16 @@ customElements.define('hg-gallery-carousel', class extends LitElement {
         top: 0;
         right: 0;
       }
-      paper-icon-button.left {
-        left: 0;
+      paper-icon-button#left, paper-icon-button#right {
+        height: 45px;
+        width: 45px;
         top: calc(50% - 20px);
       }
-      paper-icon-button.right {
+      paper-icon-button#left {
+        left: 0;
+      }
+      paper-icon-button#right {
         right: 0;
-        top: calc(50% - 20px);
       }
     `;
   }
@@ -63,11 +67,22 @@ customElements.define('hg-gallery-carousel', class extends LitElement {
     this.requestUpdate();
     this.dispatchEvent(new CustomEvent('hide-header', {composed: true}))
   }
+  move(direction) {
+    this.style.right = direction === 'right' ? '0': '-200%';
+    this.style.transition = 'all 0.3s ease';
+    this._transitionGoing = true;
+    _.delay(300, () => {
+      this._transitionGoing = false;
+      this.style.transition = 'none';
+      this.style.right = '-100%';
+      this._selected = (direction === 'right' ? next : prev)(this.images, this._selected);
+    });
+  }
   render() {
-    const nextImage = _.curry(next, this.images);
-    const prevImage = _.curry(prev, this.images);
+    const nextImage = (index) => this.images[next(this.images, index)];
+    const prevImage = (index) => this.images[prev(this.images, index)];
     return html`
-      ${_.isEmpty(this.images) ? '' : repeat([nextImage(this.images, this._selected), this.images[this._selected], nextImage(this._selected)], _.get('name'), (image, index) => html`
+      ${_.isEmpty(this.images) ? '' : repeat([prevImage(this._selected), this.images[this._selected], nextImage(this._selected)], _.get('name'), (image, index) => html`
         <iron-image
           src="${image.url}" 
           sizing="contain">
@@ -79,25 +94,21 @@ customElements.define('hg-gallery-carousel', class extends LitElement {
         icon="close" 
         @click=${() => {
           document.body.style.overflow = 'auto';
-          this.style.display = 'none'
+          this.style.display = 'none';
           this.dispatchEvent(new CustomEvent('show-header', {composed: true}));
         }}>
       </paper-icon-button>
       <paper-icon-button
-        ?disabled=${this.images.length === 1}
-        class="left"
+        ?disabled=${this._transitionGoing || this.images.length === 1}
+        id="left"
         icon="chevron-left"
-        @click=${() => {
-          this._selected = prev(this.images, this._selected);
-        }}>
+        @click=${() => this.move('left')}>
       </paper-icon-button>
       <paper-icon-button
-        ?disabled=${this.images.length === 1}
-        class="right"
+        ?disabled=${this._transitionGoing || this.images.length === 1}
+        id="right"
         icon="chevron-right"
-        @click=${() => {
-          this._selected = next(this.images, this._selected);
-        }}>
+        @click=${() => this.move('right')}>
       </paper-icon-button>
     `;
   }
