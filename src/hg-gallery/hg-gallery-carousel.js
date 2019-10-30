@@ -80,6 +80,7 @@ customElements.define('hg-gallery-carousel', class extends LitElement {
         @click=${() => {
           document.body.style.overflow = 'auto';
           this.style.display = 'none'
+          this.dispatchEvent(new CustomEvent('show-header', {composed: true}));
         }}>
       </paper-icon-button>
       <paper-icon-button

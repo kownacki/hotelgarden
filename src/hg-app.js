@@ -76,7 +76,10 @@ customElements.define('hg-app', class extends LitElement {
           .src=${'https://picsum.photos/id/802/1920/980'}
           .heading=${'Galeria'}
           .subheading=${'Lorem ipsum dolor sit amet consectetur adipiscing elit'}>
-        </hg-banner><hg-gallery @hide-header=${() => this.shadowRoot.getElementById('header').style.display = 'none'}></hg-gallery>`
+        </hg-banner><hg-gallery 
+          @hide-header=${() => this.shadowRoot.getElementById('header').style.display = 'none'}
+          @show-header=${() => this.shadowRoot.getElementById('header').style.display = 'block'}>
+        </hg-gallery>`
         : html`<div>Page 1</div>`}
     `;
   }
