@@ -1,6 +1,7 @@
 import {LitElement, html, css} from 'lit-element';
 import './hg-banner.js';
 import './hg-article.js';
+import './hg-icons.js';
 
 customElements.define('hg-landing', class extends LitElement {
   static get properties() {
@@ -21,6 +22,7 @@ customElements.define('hg-landing', class extends LitElement {
         .subheading=${'Lorem ipsum dolor sit amet consectetur adipiscing elit'}>
       </hg-banner>
       <hg-article .uid=${'landing'}></hg-article>
+      <hg-icons></hg-icons>
     `;
   }
 });

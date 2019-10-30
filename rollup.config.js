@@ -18,6 +18,7 @@ export default {
         {
           src: [
             'src/fonts',
+            'src/icons',
             'src/images',
             'src/styles.css',
           ],

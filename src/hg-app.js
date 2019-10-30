@@ -5,6 +5,7 @@ import 'firebase/storage';
 
 import '@polymer/app-route/app-location';
 import '@polymer/iron-icons';
+import '@polymer/iron-icon';
 import '@polymer/iron-image';
 import '@polymer/paper-icon-button';
 import '@polymer/paper-dialog';
