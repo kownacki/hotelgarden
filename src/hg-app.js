@@ -57,7 +57,10 @@ customElements.define('hg-app', class extends LitElement {
       <app-location @route-changed=${(event) => this._page = event.detail.value.path}></app-location>
       <hg-header id="header" .selected=${this._page}></hg-header>
       ${this._page === '/'
-        ? html`<hg-landing></hg-landing>`
+        ? html`<hg-landing 
+          @hide-header=${() => this.shadowRoot.getElementById('header').style.display = 'none'}
+          @show-header=${() => this.shadowRoot.getElementById('header').style.display = 'block'}>
+        </hg-landing>`
         : this._page === '/pokoje'
         ? html`<hg-banner 
           .src=${'https://picsum.photos/id/514/1920/980'}
