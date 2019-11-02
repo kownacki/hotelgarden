@@ -24,7 +24,7 @@ customElements.define('hg-banner', class extends LitElement {
         z-index: -1;
       }
       .heading {
-        background: rgba(64, 49, 52, 0.57);
+        background: rgba(var(--secondary-color-rgb), 0.30);
         padding: 20px;
         width: 1000px;
         max-width: 100%;
@@ -34,11 +34,12 @@ customElements.define('hg-banner', class extends LitElement {
         text-transform: uppercase;
       }
       h1 {
+        font-weight: 300;
         font-size: 50px;
         margin: 10px;
-        font-weight: 300;
       }
       p {
+        font-weight: 300;
         font-size: 18px;
         margin: 10px;
       }

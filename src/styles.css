@@ -1,6 +1,5 @@
 body {
   font-family: 'Lato', sans-serif;
-  font-weight: 300;
   --primary-color: #847850;
   --primary-color-rgb: 132, 120, 80;
   --primary-color-filter: invert(52%) sepia(3%) saturate(4587%) hue-rotate(9deg) brightness(88%) contrast(88%);
