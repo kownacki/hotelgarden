@@ -4,7 +4,7 @@ import firebase from 'firebase/app';
 customElements.define('hg-article', class extends LitElement {
   static get properties() {
     return {
-      uid: String,
+      uid: Number,
       _text: String,
     };
   }

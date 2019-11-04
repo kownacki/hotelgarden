@@ -19,6 +19,7 @@ import './hg-landing.js';
 import './hg-menu/hg-menu.js';
 import './hg-gallery/hg-gallery.js';
 import './hg-events.js';
+import './hg-event.js';
 
 firebase.initializeApp({
   apiKey: "AIzaSyDvamIugzBC3k3WA52KpHeINrfDHfkvnSs",
@@ -92,6 +93,8 @@ customElements.define('hg-app', class extends LitElement {
           .heading=${'Wydarzenia'}
           .subheading=${'Lorem ipsum dolor sit amet consectetur adipiscing elit'}>
         </hg-banner><hg-events></hg-events>`
+        : _.startsWith('/wydarzenia/', this._page)
+        ? html`<hg-event .uid=${_.replace('/wydarzenia/', '', this._page)}></hg-event>`
         : html`<div>brak strony</div>`}
     `;
   }
