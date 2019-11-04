@@ -35,6 +35,9 @@ const links = [
   }, {
     name: 'Galeria',
     path: '/galeria',
+  }, {
+    name: 'Wydarzenia',
+    path: '/wydarzenia',
   },
 ];
 

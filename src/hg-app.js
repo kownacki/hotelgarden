@@ -17,6 +17,7 @@ import './hg-header.js';
 import './hg-landing.js';
 import './hg-menu/hg-menu.js';
 import './hg-gallery/hg-gallery.js';
+import './hg-events.js';
 
 firebase.initializeApp({
   apiKey: "AIzaSyDvamIugzBC3k3WA52KpHeINrfDHfkvnSs",
@@ -84,7 +85,13 @@ customElements.define('hg-app', class extends LitElement {
           @hide-header=${() => this.shadowRoot.getElementById('header').style.display = 'none'}
           @show-header=${() => this.shadowRoot.getElementById('header').style.display = 'block'}>
         </hg-gallery>`
-        : html`<div>Page 1</div>`}
+        : this._page === '/wydarzenia'
+        ? html`<hg-banner 
+          .src=${'https://picsum.photos/id/590/1920/980'}
+          .heading=${'Wydarzenia'}
+          .subheading=${'Lorem ipsum dolor sit amet consectetur adipiscing elit'}>
+        </hg-banner><hg-events></hg-events>`
+        : html`<div>brak strony</div>`}
     `;
   }
 });
