@@ -7,6 +7,7 @@ customElements.define('hg-event', class extends LitElement {
     return {
       uid: String,
       _event: Object,
+      _content: String,
     };
   }
   constructor() {
@@ -19,7 +20,8 @@ customElements.define('hg-event', class extends LitElement {
   }
   async updated(changedProperties) {
     if (changedProperties.has('uid')) {
-      this._event = (await firebase.firestore().collection("events").doc(this.uid).get()).data();
+      firebase.firestore().collection('events').doc(this.uid).get().then((snapshot) => this._event = snapshot.data());
+      this._content = (await firebase.firestore().collection('eventsContents').doc(this.uid).get()).get('content');
     }
   }
   render() {
@@ -28,7 +30,7 @@ customElements.define('hg-event', class extends LitElement {
         .src=${this._event.image}
         .heading=${this._event.title}>
       </hg-banner>
-      ${this._event.content}
+      ${this._content}
     `;
   }
 });

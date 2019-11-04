@@ -73,8 +73,7 @@ customElements.define('hg-events-card', class extends LitElement {
         <div class="content">
           <div class="header">
             <h2>${this.event.title}</h2>
-            <div class="date">${this.event.date}
-            </div>
+            <div class="date">${this.event.date.day} / ${this.event.date.month} / ${this.event.date.year}</div>
           </div>
           <p>${this.event.description}</p>
           <div class="more">Zobacz więcej <iron-icon icon="add"></iron-icon></div>
