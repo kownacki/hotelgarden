@@ -5,13 +5,13 @@ import './hg-header-subnav.js';
 const links = [
   {
     name: 'Hotel',
-    path: '/',
+    path: '/hotel',
     sublinks: [
-      {name: 'O hotelu', path: '/'},
-      {name: 'Villa Garden', path: '/'},
-      {name: 'Oleśnica i okolice', path: '/'},
-      {name: 'Opinie ', path: '/'},
-      {name: 'FAQ ', path: '/'},
+      {name: 'O hotelu', path: '/hotel'},
+      {name: 'Villa Garden', path: '/hotel'},
+      {name: 'Oleśnica i okolice', path: '/hotel'},
+      {name: 'Opinie ', path: '/hotel'},
+      {name: 'FAQ ', path: '/hotel'},
     ],
   }, {
     name: 'Pokoje',
@@ -117,7 +117,7 @@ customElements.define('hg-header', class extends LitElement {
           <ul>
             ${_.map((link) => html`
               <li>
-                <a href="${link.path}" ?selected=${this.selected === link.path}>${link.name}</a>
+                <a href="${link.path}" ?selected=${_.startsWith(link.path, this.selected)}>${link.name}</a>
                 ${link.sublinks ? html`<hg-header-subnav .links=${link.sublinks}></hg-header-subnav>` : ''}
               </li>
             `, links)}   

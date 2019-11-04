@@ -13,6 +13,7 @@ import '@material/mwc-button';
 import '@material/mwc-textfield';
 import '@polymer/paper-styles/color';
 
+import './hg-banner.js';
 import './hg-header.js';
 import './hg-landing.js';
 import './hg-menu/hg-menu.js';
@@ -57,8 +58,8 @@ customElements.define('hg-app', class extends LitElement {
     return html`
       <app-location @route-changed=${(event) => this._page = event.detail.value.path}></app-location>
       <hg-header id="header" .selected=${this._page}></hg-header>
-      ${this._page === '/'
-        ? html`<hg-landing 
+      ${this._page === '/hotel'
+        ? html`<hg-landing
           @hide-header=${() => this.shadowRoot.getElementById('header').style.display = 'none'}
           @show-header=${() => this.shadowRoot.getElementById('header').style.display = 'block'}>
         </hg-landing>`
