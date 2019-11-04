@@ -19,7 +19,7 @@ customElements.define('hg-events-card', class extends LitElement {
     return css`
       :host {
         display: block;
-        margin: 20px;
+        margin: 20px 0;
         background: rgba(var(--secondary-color-rgb), 0.075);
         transition: background 0.3s ease;
       }
@@ -73,7 +73,7 @@ customElements.define('hg-events-card', class extends LitElement {
         <div class="content">
           <div class="header">
             <h2>${this.event.title}</h2>
-            <div class="date">${this.event.date.day} / ${this.event.date.month} / ${this.event.date.year}</div>
+            <div class="date">${this.event.date.substring(0, 4)} / ${this.event.date.substring(4, 6)} / ${this.event.date.substring(6)}</div>
           </div>
           <p>${this.event.description}</p>
           <div class="more">Zobacz więcej <iron-icon icon="add"></iron-icon></div>
