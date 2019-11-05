@@ -1,13 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
-
-const hyphenate = (string) => {
-  return _.flow(
-    _.replace(/'/g, ''),
-    _.toLower,
-    _.words,
-    _.join('-')
-  )(string);
-};
+import {hyphenate} from './utils.js'
 
 customElements.define('hg-events-card', class extends LitElement {
   static get properties() {
