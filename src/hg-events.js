@@ -2,7 +2,7 @@ import {LitElement, html, css} from 'lit-element';
 import {repeat} from 'lit-html/directives/repeat';
 import './hg-events-card.js';
 import firebase from "firebase";
-import sharedStyles from './shared-styles.js';
+import sharedStyles from './sharedStyles.js';
 
 customElements.define('hg-events', class extends LitElement {
   static get properties() {
