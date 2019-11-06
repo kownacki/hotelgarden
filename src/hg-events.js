@@ -16,7 +16,7 @@ customElements.define('hg-events', class extends LitElement {
     super();
     (async () => {
       const allEevents = _.map(_.method('data'), (await firebase.firestore().collection("events").get()).docs);
-      const today = `${new Date().getFullYear()}${_.padStart(2, new Date().getMonth() + 1)}${_.padStart(2, new Date().getDate())}`;
+      const today = `${new Date().getFullYear()}${String(new Date().getMonth() + 1).padStart(2, '0')}${String(new Date().getDate()).padStart(2, '0')}`;
       this._upcoming = _.flow([
         _.filter((event) => event.date >= today),
         _.sortBy('date'),
