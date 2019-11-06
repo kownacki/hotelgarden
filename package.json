@@ -22,6 +22,7 @@
     "@polymer/iron-image": "^3.0.2",
     "@polymer/paper-dialog": "^3.0.1",
     "@polymer/paper-icon-button": "^3.0.2",
+    "@polymer/paper-input": "^3.0.2",
     "@polymer/paper-styles": "^3.0.1",
     "@webcomponents/webcomponentsjs": "^2.3.0",
     "firebase": "^7.2.2",

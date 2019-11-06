@@ -1,8 +1,9 @@
 import {LitElement, html, css} from 'lit-element';
 import {repeat} from 'lit-html/directives/repeat';
-import './hg-events-card.js';
 import firebase from "firebase";
 import sharedStyles from './sharedStyles.js';
+import './hg-events-card.js';
+import './hg-events-add.js';
 
 customElements.define('hg-events', class extends LitElement {
   static get properties() {
@@ -46,6 +47,7 @@ customElements.define('hg-events', class extends LitElement {
   }
   render() {
     return html`
+      <hg-events-add></hg-events-add>
       <h2>Nadchodzące wydarzenia</h2>
       ${_.isEmpty(this._upcoming) ? '' : repeat(this._upcoming, _.get('uid'), (event) => html`
         <hg-events-card .event=${event}></hg-events-card>

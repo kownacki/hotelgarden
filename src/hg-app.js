@@ -8,6 +8,7 @@ import '@polymer/iron-icons';
 import '@polymer/iron-icon';
 import '@polymer/iron-image';
 import '@polymer/paper-icon-button';
+import '@polymer/paper-input/paper-input';
 import '@polymer/paper-dialog';
 import '@material/mwc-button';
 import '@material/mwc-textfield';
