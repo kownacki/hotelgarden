@@ -33,6 +33,11 @@ customElements.define('hg-events-add', class extends LitElement {
       .address {
         font-family: monospace;
       }
+      .tip {
+        background: rgba(var(--secondary-color-rgb), 20%);
+        padding-top: 10px;
+        padding-bottom: 10px;
+      }
     `;
   }
   render() {
@@ -58,7 +63,13 @@ customElements.define('hg-events-add', class extends LitElement {
       </paper-icon-button>
       
       <paper-dialog id="dialog">
-        <div>Dodaj wydarzenie</div> 
+        <div>Dodaj wydarzenie</div>
+        <p class="tip">
+          <span style="color: var(--primary-color)">Podpowiedź:</span> 
+          Gdy dodajesz cykliczne wydarzenie, umieść w nazwie rok lub edycję wydarzenia. Np "Sylwester 2020", 
+          "Open Mic vol. V". Dzięki temu unikniesz konfliktu nazw, a twoje wydarzenie będzie łatwiej znaleźć.<br><br>
+           <span style="color: red">Uwaga:</span> Zmiana nazwy wydarzenia po utworzeniu będzie skutkować zmianą adresu URL.
+        </p>
         <paper-input id="name" label="Nazwa" @value-changed=${(event) => {
           this._typing = true;
           this._name = event.detail.value;
