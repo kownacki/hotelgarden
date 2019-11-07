@@ -90,7 +90,7 @@ customElements.define('hg-events-add', class extends LitElement {
             this._date = event.target.value;
             this._dateCorrect = !_.isEmpty(this._date) && this._date >= moment().format('YYYY-MM-DD');
           }}> 
-        <span style="color: red">${this._date && !this._dateCorrect ? 'Wybierz poprawną datę' : ''}</span>
+        <span style="color: red">${this._date && !this._dateCorrect ? 'Data nie może być miniona' : ''}</span>
         <paper-input 
           id="name" 
           .label=${'Nazwa'}
