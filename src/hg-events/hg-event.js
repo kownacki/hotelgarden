@@ -1,5 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
 import firebase from "firebase";
+import moment from 'moment';
 import '../hg-banner.js';
 import './hg-events-sidebar.js';
 
@@ -13,7 +14,6 @@ customElements.define('hg-event', class extends LitElement {
   }
   constructor() {
     super();
-    this._event = {};
   }
   static get styles() {
     return css`
@@ -26,7 +26,18 @@ customElements.define('hg-event', class extends LitElement {
       .content {
         flex: 1;
       }
+      .date {
+        font-size: 20px;
+        color: var(--secondary-color);
+        margin-bottom: 10px;
+      }
+      .divider {
+        height: 1px;
+        background: rgba(var(--secondary-color-rgb), 30%);
+        margin-bottom: 10px;
+      }
       hg-events-sidebar {
+        margin-left: 20px;
       }
     `;
   }
@@ -38,15 +49,25 @@ customElements.define('hg-event', class extends LitElement {
     }
   }
   render() {
-    return html`
+    return this._event ? html`
       <hg-banner
         .src=${this._event.image}
         .heading=${this._event.title}>
       </hg-banner>
       <div class="container">
-        <div class="content">${this._content}</div>
+        <div class="content"> 
+          <div class="date">
+            ${moment().isBefore(this._event.date, 'day') 
+              ? 'Odbędzie się'
+              : moment().isSame(this._event.date, 'day') 
+              ? 'Dzisiaj'
+              : 'Odbyło się'}
+            ${moment(this._event.date).format('D MMMM YYYY')}</div>
+          <div class="divider"></div>
+          ${this._content}
+        </div>
         <hg-events-sidebar .selected=${this._event.address}></hg-events-sidebar>
       </div>
-    `;
+    ` : '';
   }
 });

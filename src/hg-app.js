@@ -2,6 +2,9 @@ import {LitElement, html, css} from 'lit-element';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/storage';
+import moment from 'moment';
+import 'moment/src/locale/pl';
+moment.locale('pl');
 
 import '@polymer/app-route/app-location';
 import '@polymer/iron-icons';
