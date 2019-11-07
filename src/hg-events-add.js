@@ -91,18 +91,20 @@ customElements.define('hg-events-add', class extends LitElement {
             this._dateCorrect = !_.isEmpty(this._date) && this._date >= moment().format('YYYY-MM-DD');
           }}> 
         <span style="color: red">${this._date && !this._dateCorrect ? 'Wybierz poprawną datę' : ''}</span>
-        <paper-input id="name" label="Nazwa" @value-changed=${(event) => {
-          this._typing = true;
-          this._title = event.detail.value;
-          this._address = hyphenate(this._title);
-          this._checkIfAddressTaken();
-        }}>
+        <paper-input 
+          id="name" 
+          .label=${'Nazwa'}
+          ?invalid=${this._title && !this._address}
+          error-message="Tytuł wydarzenia musi zawierać litery lub cyfry"
+          @value-changed=${(event) => {
+            this._typing = true;
+            this._title = event.detail.value;
+            this._address = hyphenate(this._title);
+            this._checkIfAddressTaken();
+          }}>
         </paper-input>
         <p ?hidden=${!this._address} class="address">
           hotelgarden.pl/wydarzenia/${this._address}
-        </p>
-        <p ?hidden=${!this._title || this._address} style="color: red">
-          Tytuł wydarzenia musi zawierać litery lub liczby
         </p>
         <p ?hidden=${!this._loading}>Ładowanie...</p>
         <p ?hidden=${!this._address || this._typing || this._loading}>
