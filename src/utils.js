@@ -8,11 +8,11 @@ export const hyphenate = _.flow(
 );
 export const splitEvents = (events) => [
   _.flow([
-    _.filter((event) => event.date >= moment().format('YYYY-MM-DD')),
+    _.filter((event) => moment().isSameOrBefore(event.date, 'day')),
     _.sortBy('date'),
   ])(events),
   _.flow([
-    _.filter((event) => event.date < moment().format('YYYY-MM-DD')),
+    _.filter((event) => moment().isAfter(event.date, 'day')),
     _.sortBy('date'),
   ])(events)
 ];
