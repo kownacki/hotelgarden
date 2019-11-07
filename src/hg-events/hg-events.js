@@ -3,6 +3,7 @@ import {repeat} from 'lit-html/directives/repeat';
 import firebase from "firebase";
 import moment from 'moment';
 import sharedStyles from '../sharedStyles.js';
+import {splitEvents} from '../utils.js';
 import './hg-events-card.js';
 import './hg-events-add.js';
 
@@ -16,17 +17,8 @@ customElements.define('hg-events', class extends LitElement {
   constructor() {
     super();
     (async () => {
-      const allEevents = _.map(_.method('data'), (await firebase.firestore().collection("events").get()).docs);
-      const today = moment().format('YYYY-MM-DD');
-      this._upcoming = _.flow([
-        _.filter((event) => event.date >= today),
-        _.sortBy('date'),
-      ])(allEevents);
-      this._past = _.flow([
-        _.filter((event) => event.date < today),
-        _.sortBy('date'),
-        _.reverse,
-      ])(allEevents);
+      const allEvents = _.map((snapshot) => ({...snapshot.data(), address: snapshot.id}), (await firebase.firestore().collection("events").get()).docs);
+      [this._upcoming, this._past] = splitEvents(allEvents);
     })();
   }
   static get styles() {
@@ -61,7 +53,7 @@ customElements.define('hg-events', class extends LitElement {
       </mwc-button>
       <div id="past" hidden>
         <h2>Minione wydarzenia</h2>
-        ${_.isEmpty(this._past) ? '' : repeat(this._past, _.get('uid'), (event) => html`
+        ${_.isEmpty(this._past) ? '' : repeat(this._past.reverse(), _.get('uid'), (event) => html`
           <hg-events-card .event=${event}></hg-events-card>
         `)} 
       </div>
