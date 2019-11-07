@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
-import './hg-banner.js';
+import '../hg-banner.js';
 import firebase from "firebase";
 
 customElements.define('hg-event', class extends LitElement {

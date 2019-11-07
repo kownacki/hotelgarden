@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit-element';
 import firebase from 'firebase';
 import moment from 'moment';
-import {hyphenate} from './utils.js';
+import {hyphenate} from '../utils.js';
 
 customElements.define('hg-events-add', class extends LitElement {
   static get properties() {

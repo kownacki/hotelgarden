@@ -2,7 +2,7 @@ import {LitElement, html, css} from 'lit-element';
 import {repeat} from 'lit-html/directives/repeat';
 import firebase from "firebase";
 import moment from 'moment';
-import sharedStyles from './sharedStyles.js';
+import sharedStyles from '../sharedStyles.js';
 import './hg-events-card.js';
 import './hg-events-add.js';
 

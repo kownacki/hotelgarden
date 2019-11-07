@@ -15,12 +15,12 @@ import '@material/mwc-textfield';
 import '@polymer/paper-styles/color';
 
 import './hg-banner.js';
-import './hg-header.js';
+import './hg-header/hg-header.js';
 import './hg-landing.js';
 import './hg-menu/hg-menu.js';
 import './hg-gallery/hg-gallery.js';
-import './hg-events.js';
-import './hg-event.js';
+import './hg-events/hg-events.js';
+import './hg-events/hg-event.js';
 
 firebase.initializeApp({
   apiKey: "AIzaSyDvamIugzBC3k3WA52KpHeINrfDHfkvnSs",
