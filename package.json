@@ -2,11 +2,13 @@
   "name": "hotelgarden",
   "scripts": {
     "build": "rollup --config",
-    "dev": "es-dev-server --app-index index.html --node-resolve"
+    "dev": "es-dev-server --app-index index.html --node-resolve",
+    "deploy": "firebase deploy --only hosting"
   },
   "private": true,
   "devDependencies": {
     "es-dev-server": "^1.19.0",
+    "firebase-tools": "^7.6.2",
     "rollup": "^1.26.0",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-copy": "^3.1.0",

@@ -18,5 +18,5 @@ $ npm run build
 
 ## Deployment
 ```
-$ firebase deploy
+$ npm run deploy
 ```
