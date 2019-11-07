@@ -1,6 +1,7 @@
 import {LitElement, html, css} from 'lit-element';
 import {repeat} from 'lit-html/directives/repeat';
 import firebase from "firebase";
+import moment from 'moment';
 import sharedStyles from './sharedStyles.js';
 import './hg-events-card.js';
 import './hg-events-add.js';
@@ -16,7 +17,7 @@ customElements.define('hg-events', class extends LitElement {
     super();
     (async () => {
       const allEevents = _.map(_.method('data'), (await firebase.firestore().collection("events").get()).docs);
-      const today = `${new Date().getFullYear()}${String(new Date().getMonth() + 1).padStart(2, '0')}${String(new Date().getDate()).padStart(2, '0')}`;
+      const today = moment().format('YYYY-MM-DD');
       this._upcoming = _.flow([
         _.filter((event) => event.date >= today),
         _.sortBy('date'),

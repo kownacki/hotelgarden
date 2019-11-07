@@ -1,13 +1,16 @@
 import {LitElement, html, css} from 'lit-element';
 import firebase from 'firebase';
+import moment from 'moment';
 import {hyphenate} from './utils.js';
 
 customElements.define('hg-events-add', class extends LitElement {
   static get properties() {
     return {
-      _name: String,
-      _hyphenatedName: String,
+      _title: String,
+      _address: String,
       _addressTaken: Boolean,
+      _date: String,
+      _dateCorrect: Boolean,
       _typing: Boolean,
       _loading: Boolean,
     };
@@ -16,13 +19,13 @@ customElements.define('hg-events-add', class extends LitElement {
     super();
     this._checkIfAddressTaken = _.debounce(500, async () => {
       this._typing = false;
-      if (this._hyphenatedName) {
+      if (this._address) {
         this._loading = true;
-        const name = this._name;
-        const dbResult = (await firebase.firestore().collection('events').doc(this._hyphenatedName).get()).exists;
+        const title = this._title;
+        const dbResult = (await firebase.firestore().collection('events').doc(this._address).get()).exists;
         this._loading = false;
-        // Avoid race condition. Name could change while db query was going. Only use result if it's still relevant.
-        if (name === this._name) {
+        // Avoid race condition. Title could change while db query was going. Only use result if it's still relevant.
+        if (title === this._title) {
           this._addressTaken = dbResult;
         }
       }
@@ -38,21 +41,29 @@ customElements.define('hg-events-add', class extends LitElement {
         padding-top: 10px;
         padding-bottom: 10px;
       }
+      paper-input {
+        margin: 0;
+      }
+      #date {
+        margin: 0 24px;
+        padding: 0 2px;
+      }
     `;
   }
   render() {
     //todo Is it performant to place helper functions in render()?
     const addEvent = async () => {
-      const name = this._name;
-      const hyphenatedName = this._hyphenatedName;
+      const title = this._title;
+      const date = this._date;
+      const address = this._address;
       const colRef = firebase.firestore().collection('events');
-      if (!hyphenatedName || (await colRef.doc(hyphenatedName).get()).exists) {
-        alert(`Operacja nie powiodła się. Adres "${hyphenatedName}" jest zajęty lub nieprawidłowy.`);
+      if (!address || (await colRef.doc(address).get()).exists) {
+        alert(`Operacja nie powiodła się. Adres "${address}" jest zajęty lub nieprawidłowy.`);
         this._checkIfAddressTaken();
       } else {
         // todo transaction to avoid race condition
-        colRef.doc(hyphenatedName).set({name});
-        window.history.pushState(null, null, '/wydarzenia/' + hyphenatedName);
+        colRef.doc(address).set({title, date});
+        window.history.pushState(null, null, '/wydarzenia/' + address);
         this.dispatchEvent(new CustomEvent('location-changed', {composed: true, bubbles: true}));
       }
     };
@@ -70,28 +81,38 @@ customElements.define('hg-events-add', class extends LitElement {
           "Open Mic vol. V". Dzięki temu unikniesz konfliktu nazw, a twoje wydarzenie będzie łatwiej znaleźć.<br><br>
            <span style="color: red">Uwaga:</span> Zmiana nazwy wydarzenia po utworzeniu będzie skutkować zmianą adresu URL.
         </p>
+        <input 
+          type="date"
+          name="date" 
+          id="date" 
+          min="${moment().format('YYYY-MM-DD')}"
+          @input=${(event) => {
+            this._date = event.target.value;
+            this._dateCorrect = !_.isEmpty(this._date) && this._date >= moment().format('YYYY-MM-DD');
+          }}> 
+        <span style="color: red">${this._date && !this._dateCorrect ? 'Wybierz poprawną datę' : ''}</span>
         <paper-input id="name" label="Nazwa" @value-changed=${(event) => {
           this._typing = true;
-          this._name = event.detail.value;
-          this._hyphenatedName = hyphenate(this._name);
+          this._title = event.detail.value;
+          this._address = hyphenate(this._title);
           this._checkIfAddressTaken();
         }}>
         </paper-input>
-        <p ?hidden=${!this._hyphenatedName} class="address">
-          hotelgarden.pl/wydarzenia/${this._hyphenatedName}
+        <p ?hidden=${!this._address} class="address">
+          hotelgarden.pl/wydarzenia/${this._address}
         </p>
-        <p ?hidden=${!this._name || this._hyphenatedName} style="color: red">
+        <p ?hidden=${!this._title || this._address} style="color: red">
           Tytuł wydarzenia musi zawierać litery lub liczby
         </p>
         <p ?hidden=${!this._loading}>Ładowanie...</p>
-        <p ?hidden=${!this._hyphenatedName || this._typing || this._loading}>
+        <p ?hidden=${!this._address || this._typing || this._loading}>
           Adres wydarzenia 
           ${this._addressTaken
             ? html`<span style="color: red">zajęty</span>`
             : html`<span style="color: green">dostępny</span>`}<br>
         </p>
         <mwc-button raised label="Dodaj" @click=${addEvent} 
-          ?disabled=${!this._hyphenatedName || this._addressTaken || this._typing || this._loading}>
+          ?disabled=${!this._address || !this._dateCorrect || this._addressTaken || this._typing || this._loading}>
         </mwc-button>
       </paper-dialog>
     `;
