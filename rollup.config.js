@@ -17,15 +17,8 @@ export default {
     copy({
       targets: [
         {src: 'index.html', dest: 'dist'},
-        {
-          src: [
-            'src/fonts',
-            'src/icons',
-            'src/images',
-            'src/styles.css',
-          ],
-          dest: 'dist/src',
-        },
+        {src: 'src/styles.css', dest: 'dist/src'},
+        {src: 'resources', dest: 'dist'},
       ],
     }),
     terser(),

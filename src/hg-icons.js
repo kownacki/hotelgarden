@@ -9,11 +9,11 @@ customElements.define('hg-icons', class extends LitElement {
   constructor() {
     super();
     this.icons = [
-      {src: '/src/icons/icons8-cafe-50.png', text: 'Ut a lorem at'},
-      {src: '/src/icons/icons8-cocktail-50.png', text: 'Justo dapibus'},
-      {src: '/src/icons/icons8-confectionery-50.png', text: 'Facilisis nec nec sapien'},
-      {src: '/src/icons/icons8-organization-chart-people-50.png', text: 'Sed id pretium mauris'},
-      {src: '/src/icons/icons8-prawn-50.png', text: 'Duis blandit in dolor'},
+      {src: '/resources/icons/icons8-cafe-50.png', text: 'Ut a lorem at'},
+      {src: '/resources/icons/icons8-cocktail-50.png', text: 'Justo dapibus'},
+      {src: '/resources/icons/icons8-confectionery-50.png', text: 'Facilisis nec nec sapien'},
+      {src: '/resources/icons/icons8-organization-chart-people-50.png', text: 'Sed id pretium mauris'},
+      {src: '/resources/icons/icons8-prawn-50.png', text: 'Duis blandit in dolor'},
     ];
   }
   static get styles() {
