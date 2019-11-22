@@ -48,6 +48,7 @@ customElements.define('hg-events-sidebar', class extends LitElement {
       li a span {
         position: relative;
       }
+      /* todo bug multiline breaks */
       li a span::before {
         content: "";
         position: absolute;
