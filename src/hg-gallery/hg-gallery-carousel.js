@@ -4,6 +4,7 @@ import {repeat} from 'lit-html/directives/repeat';
 const next = (arr, index) => index === arr.length - 1 ? 0 : index + 1;
 const prev = (arr, index) => index === 0 ? arr.length - 1 : index - 1;
 
+//todo bug clicking go back when image is displayed breaks website
 customElements.define('hg-gallery-carousel', class extends LitElement {
   static get properties() {
     return {
