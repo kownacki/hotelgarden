@@ -1,4 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
+import firebase from 'firebase/app';
+import './hg-icons-add.js';
 
 customElements.define('hg-icons', class extends LitElement {
   static get properties() {
@@ -8,13 +10,6 @@ customElements.define('hg-icons', class extends LitElement {
   }
   constructor() {
     super();
-    this.icons = [
-      {src: '/resources/icons/icons8-cafe-50.png', text: 'Ut a lorem at'},
-      {src: '/resources/icons/icons8-cocktail-50.png', text: 'Justo dapibus'},
-      {src: '/resources/icons/icons8-confectionery-50.png', text: 'Facilisis nec nec sapien'},
-      {src: '/resources/icons/icons8-organization-chart-people-50.png', text: 'Sed id pretium mauris'},
-      {src: '/resources/icons/icons8-prawn-50.png', text: 'Duis blandit in dolor'},
-    ];
   }
   static get styles() {
     return css`
@@ -30,8 +25,8 @@ customElements.define('hg-icons', class extends LitElement {
       iron-icon {
         display: block;
         margin: auto;
-        width: 50px;
-        height: 50px;
+        width: 60px;
+        height: 60px;
         filter: var(--primary-color-filter)
       }
       p {
@@ -47,6 +42,7 @@ customElements.define('hg-icons', class extends LitElement {
           <p>${icon.text}</p>
         </div>
       `, this.icons)}
+      <hg-icons-add .icons=${this.icons} @icon-added=${() => {}}></hg-icons-add>
     `;
   }
 });

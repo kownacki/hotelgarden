@@ -10,6 +10,7 @@ import '@polymer/app-route/app-location';
 import '@polymer/iron-icons';
 import '@polymer/iron-icon';
 import '@polymer/iron-image';
+import '@polymer/paper-button';
 import '@polymer/paper-icon-button';
 import '@polymer/paper-input/paper-input';
 import '@polymer/paper-dialog';
@@ -24,6 +25,9 @@ import './hg-menu/hg-menu.js';
 import './hg-gallery/hg-gallery.js';
 import './hg-events/hg-events.js';
 import './hg-events/hg-event.js';
+
+// for testing in console
+window.firebase = firebase;
 
 firebase.initializeApp({
   apiKey: "AIzaSyDvamIugzBC3k3WA52KpHeINrfDHfkvnSs",

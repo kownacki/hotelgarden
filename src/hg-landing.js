@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit-element';
 import './hg-banner.js';
 import './hg-article.js';
-import './hg-icons.js';
+import './hg-icons/hg-icons.js';
 import './hg-content-carousel.js';
 
 customElements.define('hg-landing', class extends LitElement {
