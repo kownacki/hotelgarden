@@ -6,21 +6,23 @@ import firebase from "firebase";
 customElements.define('hg-icons-add', class extends LitElement {
   static get properties() {
     return {
+      uid: Number,
       icons: Array,
-      categories: Array,
-      selected: String,
-      loading: Boolean,
+      _availableIcons: Array,
+      _categories: Array,
+      _selected: String,
+      _loading: Boolean,
     };
   }
   constructor() {
     super();
     (async () => {
-      this.categories = _.map('name', (await firebase.storage().ref('icons').listAll()).prefixes);
-      this.categories = _.remove(_.isEqual('other'), this.categories);
-      this.categories.push('other');
+      this._categories = _.map('name', (await firebase.storage().ref('icons').listAll()).prefixes);
+      this._categories = _.remove(_.isEqual('other'), this._categories);
+      this._categories.push('other');
 
       // odtwórz icons w firestore na podstawie icons w storage
-      // this.categories.map(async (category) => {
+      // this._categories.map(async (category) => {
       //   const iconsRefs = (await firebase.storage().ref(`icons/${category}`).listAll()).items;
       //   const urls = await Promise.all(_.map(_.method('getDownloadURL'), iconsRefs));
       //   Promise.all(_.map.convert({cap: false})((url, index) => {
@@ -51,41 +53,56 @@ customElements.define('hg-icons-add', class extends LitElement {
     `;
   }
   async updated(changedProperties) {
-    if (changedProperties.has('selected') && this.selected) {
-      this.loading = true;
-      const selected = this.selected;
+    if (changedProperties.has('_selected') && this._selected) {
+      this._loading = true;
+      const selected = this._selected;
       const iconsRefs = (await firebase.firestore().collection('icons').where('category', "==", selected).get()).docs;
       const icons = _.map(_.method('data'), iconsRefs);
       // Avoid race condition. Title could change while query was going. Only use result if it's still relevant.
-      if (selected === this.selected) {
-        this.icons = icons;
-        this.loading = false;
+      if (selected === this._selected) {
+        this._availableIcons = icons;
+        this._loading = false;
       }
     }
   }
+  addIcon(event) {
+    this.shadowRoot.getElementById('dialog').close();
+    const icon = {text: this.shadowRoot.getElementById('text').value, url: event.target.src};
+    firebase.firestore().doc('iconBlocks/' + this.uid).update({[this.icons.length]: icon});
+    this.icons.push(icon);
+    this.dispatchEvent(new CustomEvent('icon-added'));
+  };
   render() {
     return html`
       <paper-icon-button 
         icon="icons:add"
         @click=${() => {
           this.shadowRoot.getElementById('dialog').open(); 
-          this.selected = null;
+          this._selected = null;
         }}>
       </paper-icon-button>
       <paper-dialog id="dialog">
         <div>Dodaj ikonę</div>
+        <paper-input
+          id="text"
+          .label=${'Tekst pod ikoną'}>
+        </paper-input>
         <div>
           ${_.map((category) => html`
-            <paper-button raised @click=${() => this.selected = category} ?selected=${category === this.selected}>
+            <paper-button raised @click=${() => this._selected = category} ?selected=${category === this._selected}>
               ${_.replace('-', ' ', category)}
             </paper-button>
-          `, this.categories)}
+          `, this._categories)}
         </div>
         <div>
           <!--todo This can lag a bit due to how many images are rendered. Optimize. -->
-          ${this.loading ? 'loading...' : !this.selected ? '' : _.map((icon) => html`
-            <paper-icon-button .src=${icon.url} title="${icon.name}"></paper-icon-button>
-          `, this.icons)}
+          ${this._loading ? 'loading...' : !this._selected ? '' : _.map((icon) => html`
+            <paper-icon-button 
+              title="${icon.name}" 
+              .src=${icon.url}
+              @click=${this.addIcon}>
+            </paper-icon-button>
+          `, this._availableIcons)}
         </div>
       </paper-dialog>
     `;

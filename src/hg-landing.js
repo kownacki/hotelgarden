@@ -23,7 +23,7 @@ customElements.define('hg-landing', class extends LitElement {
         .subheading=${'Lorem ipsum dolor sit amet consectetur adipiscing elit'}>
       </hg-banner>
       <hg-article .uid=${'landing'}></hg-article>
-      <hg-icons></hg-icons>
+      <hg-icons .uid=${'landing'}></hg-icons>
       <hg-content-carousel></hg-content-carousel>
     `;
   }

@@ -5,11 +5,16 @@ import './hg-icons-add.js';
 customElements.define('hg-icons', class extends LitElement {
   static get properties() {
     return {
-      icons: Array,
+      uid: Number,
+      _icons: Array,
     };
   }
   constructor() {
     super();
+    (async () => {
+      await this.updateComplete;
+      this._icons = _.toArray((await firebase.firestore().collection("iconBlocks").doc(this.uid).get()).data());
+    })();
   }
   static get styles() {
     return css`
@@ -38,11 +43,13 @@ customElements.define('hg-icons', class extends LitElement {
     return html`
       ${_.map((icon) => html`
         <div class="block">
-          <iron-icon .src="${icon.src}"></iron-icon>
+          <iron-icon .src="${icon.url}"></iron-icon>
           <p>${icon.text}</p>
         </div>
-      `, this.icons)}
-      <hg-icons-add .icons=${this.icons} @icon-added=${() => {}}></hg-icons-add>
+      `, this._icons)}
+      <hg-icons-add .icons=${this._icons} .uid=${this.uid} @icon-added=${() => {
+        this.requestUpdate();
+      }}></hg-icons-add>
     `;
   }
 });
