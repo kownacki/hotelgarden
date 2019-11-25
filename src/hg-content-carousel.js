@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
-import firebase from "firebase";
 import {repeat} from "lit-html/directives/repeat";
+import {storage} from "./utils.js";
 
 const next = (arr, index) => index === arr.length - 1 ? 0 : index + 1;
 const prev = (arr, index) => index === 0 ? arr.length - 1 : index - 1;
@@ -20,7 +20,7 @@ customElements.define('hg-content-carousel', class extends LitElement {
       this.images = await Promise.all(_.map(async (item) => ({
         name: item.name,
         url: await item.getDownloadURL(),
-      }), _.reverse((await firebase.storage().ref('gallery').listAll()).items)));
+      }), _.reverse((await storage.ref('gallery').listAll()).items)));
     })();
   }
   static get styles() {

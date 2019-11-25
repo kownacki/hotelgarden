@@ -1,7 +1,4 @@
 import {LitElement, html, css} from 'lit-element';
-import firebase from 'firebase/app';
-import 'firebase/firestore';
-import 'firebase/storage';
 import moment from 'moment';
 import 'moment/src/locale/pl';
 moment.locale('pl');
@@ -25,20 +22,6 @@ import './hg-menu/hg-menu.js';
 import './hg-gallery/hg-gallery.js';
 import './hg-events/hg-events.js';
 import './hg-events/hg-event.js';
-
-// for testing in console
-window.firebase = firebase;
-
-firebase.initializeApp({
-  apiKey: "AIzaSyDvamIugzBC3k3WA52KpHeINrfDHfkvnSs",
-  authDomain: "pl-hotelgarden.firebaseapp.com",
-  databaseURL: "https://pl-hotelgarden.firebaseio.com",
-  projectId: "pl-hotelgarden",
-  storageBucket: "pl-hotelgarden.appspot.com",
-  messagingSenderId: "439170507609",
-  appId: "1:439170507609:web:d50495f3bf9c9613702248",
-  measurementId: "G-T7DQCNYLP2"
-});
 
 customElements.define('hg-app', class extends LitElement {
   static get properties() {

@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
-import firebase from 'firebase/app';
+import {db} from "./utils.js";
 
 customElements.define('hg-article', class extends LitElement {
   static get properties() {
@@ -12,7 +12,7 @@ customElements.define('hg-article', class extends LitElement {
     super();
     (async () => {
       await this.updateComplete;
-      this._text = (await firebase.firestore().collection("articles").doc(this.uid).get()).data().text;
+      this._text = (await db.collection("articles").doc(this.uid).get()).data().text;
     })();
   }
   static get styles() {

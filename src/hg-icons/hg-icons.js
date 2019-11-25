@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
-import firebase from 'firebase/app';
+import {db} from "../utils.js";
 import './hg-icons-add.js';
 
 customElements.define('hg-icons', class extends LitElement {
@@ -13,7 +13,7 @@ customElements.define('hg-icons', class extends LitElement {
     super();
     (async () => {
       await this.updateComplete;
-      this._icons = _.toArray((await firebase.firestore().collection("iconBlocks").doc(this.uid).get()).data());
+      this._icons = _.toArray((await db.collection("iconBlocks").doc(this.uid).get()).data());
     })();
   }
   static get styles() {

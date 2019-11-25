@@ -1,7 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
 import {repeat} from 'lit-html/directives/repeat';
-import firebase from 'firebase/app';
-
+import {storage} from "../utils.js";
 import '../edit/hg-delete-item.js';
 import './hg-gallery-upload.js';
 import './hg-gallery-carousel.js';
@@ -18,7 +17,7 @@ customElements.define('hg-gallery', class extends LitElement {
       this.images = await Promise.all(_.map(async (item) => ({
         name: item.name,
         url: await item.getDownloadURL(),
-      }), _.reverse((await firebase.storage().ref('gallery').listAll()).items)));
+      }), _.reverse((await storage.ref('gallery').listAll()).items)));
     })();
   }
   static get styles() {
@@ -75,7 +74,7 @@ customElements.define('hg-gallery', class extends LitElement {
             <hg-delete-item
               .name=${image.name}
               @request-delete=${() => {
-                firebase.storage().ref('gallery/' + image.name).delete();
+                storage.ref('gallery/' + image.name).delete();
                 this.images.splice(index, 1);
                 this.requestUpdate();
               }}>

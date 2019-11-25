@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
-import firebase from 'firebase/app';
+import {storage} from "../utils.js";
 
 customElements.define('hg-gallery-upload', class extends LitElement {
   static get properties() {
@@ -32,7 +32,7 @@ customElements.define('hg-gallery-upload', class extends LitElement {
           // race condition when another image is added immediately
           this.images.unshift(image);
           this.dispatchEvent(new CustomEvent('upload-started'));
-          const ref = firebase.storage().ref('gallery/' + image.name);
+          const ref = storage.ref('gallery/' + image.name);
           await ref.put(file);
           image.url = await ref.getDownloadURL();
           this.dispatchEvent(new CustomEvent('upload-finished'));

@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
-import firebase from 'firebase/app';
+import {db} from "../utils.js";
 import './hg-menu-main.js';
 import './hg-menu-nav.js';
 
@@ -15,7 +15,7 @@ customElements.define('hg-menu', class extends LitElement {
     this.categories = [];
     this.selectedCategory = 0;
 
-    firebase.firestore().collection("menu").doc("courses").get()
+    db.collection("menu").doc("courses").get()
       .then((doc) => {
         this.categories = _.toArray(doc.data());
       });

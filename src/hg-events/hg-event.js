@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
-import firebase from "firebase";
 import moment from 'moment';
+import {db} from "../utils.js";
 import '../hg-banner.js';
 import './hg-events-sidebar.js';
 
@@ -43,9 +43,9 @@ customElements.define('hg-event', class extends LitElement {
   }
   async updated(changedProperties) {
     if (changedProperties.has('uid')) {
-      firebase.firestore().collection('events').doc(this.uid).get()
+      db.collection('events').doc(this.uid).get()
         .then((snapshot) => this._event = {...snapshot.data(), address: snapshot.id});
-      this._content = (await firebase.firestore().collection('eventsContents').doc(this.uid).get()).get('content');
+      this._content = (await db.collection('eventsContents').doc(this.uid).get()).get('content');
     }
   }
   render() {

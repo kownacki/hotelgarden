@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
-import firebase from "firebase";
+import {storage, db} from "../utils.js";
 
 //todo dodać link do strony icons8
 
@@ -17,16 +17,16 @@ customElements.define('hg-icons-add', class extends LitElement {
   constructor() {
     super();
     (async () => {
-      this._categories = _.map('name', (await firebase.storage().ref('icons').listAll()).prefixes);
+      this._categories = _.map('name', (await storage.ref('icons').listAll()).prefixes);
       this._categories = _.remove(_.isEqual('other'), this._categories);
       this._categories.push('other');
 
       // odtwórz icons w firestore na podstawie icons w storage
       // this._categories.map(async (category) => {
-      //   const iconsRefs = (await firebase.storage().ref(`icons/${category}`).listAll()).items;
+      //   const iconsRefs = (await storage.ref(`icons/${category}`).listAll()).items;
       //   const urls = await Promise.all(_.map(_.method('getDownloadURL'), iconsRefs));
       //   Promise.all(_.map.convert({cap: false})((url, index) => {
-      //     return firebase.firestore().collection('icons').add({category, url, name: iconsRefs[index].name.replace('.png', '')});
+      //     return db.collection('icons').add({category, url, name: iconsRefs[index].name.replace('.png', '')});
       //   }, urls)).then(() => console.log(category));
       // });
     })();
@@ -56,7 +56,7 @@ customElements.define('hg-icons-add', class extends LitElement {
     if (changedProperties.has('_selected') && this._selected) {
       this._loading = true;
       const selected = this._selected;
-      const iconsRefs = (await firebase.firestore().collection('icons').where('category', "==", selected).get()).docs;
+      const iconsRefs = (await db.collection('icons').where('category', "==", selected).get()).docs;
       const icons = _.map(_.method('data'), iconsRefs);
       // Avoid race condition. Title could change while query was going. Only use result if it's still relevant.
       if (selected === this._selected) {
@@ -68,7 +68,7 @@ customElements.define('hg-icons-add', class extends LitElement {
   addIcon(event) {
     this.shadowRoot.getElementById('dialog').close();
     const icon = {text: this.shadowRoot.getElementById('text').value, url: event.target.src};
-    firebase.firestore().doc('iconBlocks/' + this.uid).update({[this.icons.length]: icon});
+    db.doc('iconBlocks/' + this.uid).update({[this.icons.length]: icon});
     this.icons.push(icon);
     this.dispatchEvent(new CustomEvent('icon-added'));
   };

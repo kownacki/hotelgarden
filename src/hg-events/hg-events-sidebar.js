@@ -1,7 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
 import {repeat} from 'lit-html/directives/repeat';
-import firebase from "firebase";
-import {splitEvents} from '../utils.js';
+import {splitEvents, db} from '../utils.js';
 
 customElements.define('hg-events-sidebar', class extends LitElement {
   static get properties() {
@@ -14,7 +13,7 @@ customElements.define('hg-events-sidebar', class extends LitElement {
   constructor() {
     super();
     (async () => {
-      const docs = (await firebase.firestore().collection("events").get()).docs;
+      const docs = (await db.collection("events").get()).docs;
       const allEvents = _.map((snapshot) => ({...snapshot.data(), address: snapshot.id}), docs);
       [this._upcoming, this._past] = splitEvents(allEvents);
     })();

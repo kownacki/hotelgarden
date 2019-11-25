@@ -1,9 +1,8 @@
 import {LitElement, html, css} from 'lit-element';
 import {repeat} from 'lit-html/directives/repeat';
-import firebase from "firebase";
 import moment from 'moment';
+import {db, splitEvents} from "../utils.js";
 import sharedStyles from '../sharedStyles.js';
-import {splitEvents} from '../utils.js';
 import './hg-events-card.js';
 import './hg-events-add.js';
 
@@ -17,7 +16,7 @@ customElements.define('hg-events', class extends LitElement {
   constructor() {
     super();
     (async () => {
-      const allEvents = _.map((snapshot) => ({...snapshot.data(), address: snapshot.id}), (await firebase.firestore().collection("events").get()).docs);
+      const allEvents = _.map((snapshot) => ({...snapshot.data(), address: snapshot.id}), (await db.collection("events").get()).docs);
       [this._upcoming, this._past] = splitEvents(allEvents);
     })();
   }

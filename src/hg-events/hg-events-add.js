@@ -1,7 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
-import firebase from 'firebase';
 import moment from 'moment';
-import {hyphenate} from '../utils.js';
+import {db, hyphenate} from '../utils.js';
 
 customElements.define('hg-events-add', class extends LitElement {
   static get properties() {
@@ -22,7 +21,7 @@ customElements.define('hg-events-add', class extends LitElement {
       if (this._address) {
         this._loading = true;
         const title = this._title;
-        const dbResult = (await firebase.firestore().collection('events').doc(this._address).get()).exists;
+        const dbResult = (await db.collection('events').doc(this._address).get()).exists;
         this._loading = false;
         // Avoid race condition. Title could change while db query was going. Only use result if it's still relevant.
         if (title === this._title) {
@@ -56,7 +55,7 @@ customElements.define('hg-events-add', class extends LitElement {
       const title = this._title;
       const date = this._date;
       const address = this._address;
-      const colRef = firebase.firestore().collection('events');
+      const colRef = db.collection('events');
       if (!address || (await colRef.doc(address).get()).exists) {
         alert(`Operacja nie powiodła się. Adres "${address}" jest zajęty lub nieprawidłowy.`);
         this._checkIfAddressTaken();
