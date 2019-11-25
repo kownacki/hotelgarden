@@ -1,6 +1,7 @@
 import {LitElement, html, css} from 'lit-element';
 import {db} from "../utils.js";
 import './hg-icons-add.js';
+import './hg-icons-item.js';
 
 customElements.define('hg-icons', class extends LitElement {
   static get properties() {
@@ -23,29 +24,12 @@ customElements.define('hg-icons', class extends LitElement {
         flex-wrap: wrap;
         justify-content: center;
       }
-      .block {
-        width: 130px;
-        margin: 10px;
-      }
-      iron-icon {
-        display: block;
-        margin: auto;
-        width: 60px;
-        height: 60px;
-        filter: var(--primary-color-filter)
-      }
-      p {
-        text-align: center;
-      }
     `;
   }
   render() {
     return html`
       ${_.map((icon) => html`
-        <div class="block">
-          <iron-icon .src="${icon.url}"></iron-icon>
-          <p>${icon.text}</p>
-        </div>
+        <hg-icons-item .icon=${icon}></hg-icons-item>
       `, this._icons)}
       <hg-icons-add .icons=${this._icons} .uid=${this.uid} @icon-added=${() => {
         this.requestUpdate();
