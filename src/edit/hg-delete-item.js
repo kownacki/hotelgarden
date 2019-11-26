@@ -5,6 +5,7 @@ customElements.define('hg-delete-item', class extends LitElement {
     return {
       name: String,
       'dialog-opened': {type: Boolean, reflect: true},
+      disable: Boolean,
     };
   }
   static get styles() {
@@ -31,6 +32,7 @@ customElements.define('hg-delete-item', class extends LitElement {
     };
     return html`
       <paper-icon-button 
+        ?disabled=${this.disable}
         icon="icons:delete"
         @click=${() => this.shadowRoot.getElementById('dialog').open()}>
       </paper-icon-button>

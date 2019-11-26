@@ -6,8 +6,7 @@ import {storage, db} from "../utils.js";
 customElements.define('hg-icons-add', class extends LitElement {
   static get properties() {
     return {
-      uid: Number,
-      icons: Array,
+      disable: Boolean,
       _availableIcons: Array,
       _categories: Array,
       _selected: String,
@@ -68,13 +67,12 @@ customElements.define('hg-icons-add', class extends LitElement {
   addIcon(event) {
     this.shadowRoot.getElementById('dialog').close();
     const icon = {text: this.shadowRoot.getElementById('text').value, url: event.target.src};
-    db.doc('iconBlocks/' + this.uid).update({[this.icons.length]: icon});
-    this.icons.push(icon);
-    this.dispatchEvent(new CustomEvent('icon-added'));
+    this.dispatchEvent(new CustomEvent('request-add', {detail: icon}));
   };
   render() {
     return html`
-      <paper-icon-button 
+      <paper-icon-button
+        ?disabled=${this.disable}
         icon="icons:add"
         @click=${() => {
           this.shadowRoot.getElementById('dialog').open(); 
@@ -97,7 +95,7 @@ customElements.define('hg-icons-add', class extends LitElement {
         <div>
           <!--todo This can lag a bit due to how many images are rendered. Optimize. -->
           ${this._loading ? 'loading...' : !this._selected ? '' : _.map((icon) => html`
-            <paper-icon-button 
+            <paper-icon-button
               title="${icon.name}" 
               .src=${icon.url}
               @click=${this.addIcon}>

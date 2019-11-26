@@ -29,6 +29,8 @@ customElements.define('hg-icons-item', class extends LitElement {
         position: absolute;
         right: 0;
         top: 10px;
+        display: flex;
+        flex-direction: column;
       }
       paper-icon-button {
         width: 24px;
@@ -42,6 +44,7 @@ customElements.define('hg-icons-item', class extends LitElement {
       <iron-icon .src="${this.icon.url}"></iron-icon>
       <p>${this.icon.text}</p>
       <div class="edit">
+        <hg-delete-item .disable=${this.disableEdit} .name=${"ikona"}></hg-delete-item>
         ${this.last ? '' : html`<paper-icon-button
           icon="swap-horiz"
           ?disabled=${this.disableEdit}

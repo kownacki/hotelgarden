@@ -41,13 +41,27 @@ customElements.define('hg-icons', class extends LitElement {
             this.requestUpdate();
             this._processing = false;
           }}
+          @request-delete=${async () => {
+            this._processing = true;
+            this._icons.splice(index, 1);
+            await db.doc('iconBlocks/' + this.uid).set({...this._icons});
+            this.requestUpdate();
+            this._processing = false;
+          }}>
         </hg-icons-item>
       `, this._icons)}
       <hg-icons-add
         .icons=${this._icons}
         .uid=${this.uid}
-        @icon-added=${() => this.requestUpdate()}>
-       </hg-icons-add>
+        .disable=${this._processing}
+        @request-add=${async (event) => {
+          this._processing = true;
+          this._icons.push(event.detail);
+          await db.doc('iconBlocks/' + this.uid).update({[this._icons.length]: event.detail});
+          this.requestUpdate();
+          this._processing = false;
+        }}>
+      </hg-icons-add>
     `;
   }
 });
