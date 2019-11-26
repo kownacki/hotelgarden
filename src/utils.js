@@ -42,4 +42,5 @@ export const swapArrayItems = (index1, index2, arr) => {
   const temp = arr[index1];
   arr[index1] = arr[index2];
   arr[index2] = temp;
+  return arr;
 };

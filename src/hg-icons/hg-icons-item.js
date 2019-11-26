@@ -1,4 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
+import '../edit/hg-delete-item.js';
+import './hg-icons-edit.js';
 
 customElements.define('hg-icons-item', class extends LitElement {
   static get properties() {
@@ -45,6 +47,7 @@ customElements.define('hg-icons-item', class extends LitElement {
       <p>${this.icon.text}</p>
       <div class="edit">
         <hg-delete-item .disable=${this.disableEdit} .name=${"ikona"}></hg-delete-item>
+        <hg-icons-edit .disable=${this.disableEdit} .text=${this.icon.text}></hg-icons-edit>
         ${this.last ? '' : html`<paper-icon-button
           icon="swap-horiz"
           ?disabled=${this.disableEdit}

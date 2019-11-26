@@ -34,17 +34,27 @@ customElements.define('hg-icons', class extends LitElement {
           .icon=${icon}
           .last=${index === this._icons.length - 1}
           .disableEdit=${this._processing}
-          @request-swap=${async () => {
+          @request-delete=${async () => {
             this._processing = true;
-            swapArrayItems(index, index + 1, this._icons);
-            await db.doc('iconBlocks/' + this.uid).set({...this._icons});
+            const newIcons = [...this._icons];
+            newIcons.splice(index, 1);
+            await db.doc('iconBlocks/' + this.uid).set({...newIcons});
+            this._icons = newIcons;
             this.requestUpdate();
             this._processing = false;
           }}
-          @request-delete=${async () => {
+          @request-edit=${async (event) => {
             this._processing = true;
-            this._icons.splice(index, 1);
-            await db.doc('iconBlocks/' + this.uid).set({...this._icons});
+            await db.doc('iconBlocks/' + this.uid).update({[`${index}.text`]: event.detail});
+            icon.text = event.detail;
+            this.requestUpdate();
+            this._processing = false;
+          }}
+          @request-swap=${async () => {
+            this._processing = true;
+            const newIcons = swapArrayItems(index, index + 1, [...this._icons]);
+            await db.doc('iconBlocks/' + this.uid).set({...newIcons});
+            this._icons = newIcons;
             this.requestUpdate();
             this._processing = false;
           }}>
@@ -56,8 +66,8 @@ customElements.define('hg-icons', class extends LitElement {
         .disable=${this._processing}
         @request-add=${async (event) => {
           this._processing = true;
-          this._icons.push(event.detail);
           await db.doc('iconBlocks/' + this.uid).update({[this._icons.length]: event.detail});
+          this._icons.push(event.detail);
           this.requestUpdate();
           this._processing = false;
         }}>
