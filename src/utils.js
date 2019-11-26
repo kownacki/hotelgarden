@@ -26,6 +26,7 @@ export const hyphenate = _.flow(
   _.words,
   _.join('-'),
 );
+
 export const splitEvents = (events) => [
   _.flow([
     _.filter((event) => moment().isSameOrBefore(event.date, 'day')),
@@ -36,3 +37,9 @@ export const splitEvents = (events) => [
     _.sortBy('date'),
   ])(events)
 ];
+
+export const swapArrayItems = (index1, index2, arr) => {
+  const temp = arr[index1];
+  arr[index1] = arr[index2];
+  arr[index2] = temp;
+};

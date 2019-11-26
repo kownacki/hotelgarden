@@ -1,4 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
+import {swapArrayItems} from '../utils.js';
 import './hg-menu-item.js';
 import './hg-menu-add-item.js';
 
@@ -25,12 +26,6 @@ customElements.define('hg-menu-main', class extends LitElement {
     `;
   }
   render(){
-    // COPIED FROM hg-menu-nav.js !! optimise!!
-    const swapArrayItems = (arr, index1, index2) => {
-      const temp = arr[index1];
-      arr[index1] = arr[index2];
-      arr[index2] = temp;
-    };
     return html`
       ${_.isEmpty(this.categories) ? html`diema kategorii` : html`
         <h2>${this.category.name}</h2>
@@ -43,7 +38,7 @@ customElements.define('hg-menu-main', class extends LitElement {
                 .item=${item}
                 .index=${index}
                 @request-move=${(event) => {
-                  swapArrayItems(this.category.items, index, index + event.detail) ; 
+                  swapArrayItems(index, index + event.detail, this.category.items) ; 
                   this.requestUpdate();
                 }}
                 @request-delete=${() => { 

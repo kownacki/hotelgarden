@@ -1,4 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
+import {swapArrayItems} from '../utils.js';
 import './hg-menu-nav-item.js';
 import './hg-menu-add-category.js';
 
@@ -24,13 +25,8 @@ customElements.define('hg-menu-nav', class extends LitElement {
       this.dispatchEvent(new CustomEvent('selected-category-changed', {detail: index}));
       this.requestUpdate();
     };
-    const swapArrayItems = (arr, index1, index2) => {
-      const temp = arr[index1];
-      arr[index1] = arr[index2];
-      arr[index2] = temp;
-    };
     const swapCategories = (index1, index2) => {
-      swapArrayItems(this.categories, index1, index2);
+      swapArrayItems(index1, index2, this.categories);
       if (index1 === this.selectedCategory) {
         selectCategory(index2);
       } else if (index2 === this.selectedCategory) {
