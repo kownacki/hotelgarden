@@ -1,6 +1,7 @@
 import {LitElement, html, css} from 'lit-element';
 import './hg-banner.js';
 import './hg-article.js';
+import './hg-quote.js';
 import './hg-icons/hg-icons.js';
 import './hg-content-carousel.js';
 
@@ -23,6 +24,7 @@ customElements.define('hg-landing', class extends LitElement {
         .subheading=${'Lorem ipsum dolor sit amet consectetur adipiscing elit'}>
       </hg-banner>
       <hg-article .uid=${'landing'}></hg-article>
+      <hg-quote .uid=${'landing'}></hg-quote>
       <hg-icons .uid=${'landing'}></hg-icons>
       <hg-content-carousel></hg-content-carousel>
     `;
