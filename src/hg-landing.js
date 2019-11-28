@@ -3,6 +3,7 @@ import './hg-banner.js';
 import './hg-article.js';
 import './hg-quote.js';
 import './hg-icons/hg-icons.js';
+import './hg-mosaic.js';
 import './hg-content-carousel.js';
 
 customElements.define('hg-landing', class extends LitElement {
@@ -26,6 +27,7 @@ customElements.define('hg-landing', class extends LitElement {
       <hg-article .uid=${'landing'}></hg-article>
       <hg-quote .uid=${'landing'}></hg-quote>
       <hg-icons .uid=${'landing'}></hg-icons>
+      <hg-mosaic .uid=${'landing'}></hg-mosaic>
       <hg-content-carousel></hg-content-carousel>
     `;
   }
