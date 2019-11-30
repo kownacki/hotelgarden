@@ -51,7 +51,7 @@ export const links = [
     name: 'Hotel',
     path: '/',
     sublinks: [
-      {name: 'O hotelu', path: '/'},
+      {name: 'O hotelu', path: '/', image: 'https://picsum.photos/id/1040/500/500'},
       {name: 'Villa Garden', path: '/villa-garden', image: 'https://picsum.photos/id/84/500/500'},
       {name: 'Oleśnica i okolice', path: '/olesnica-i-okolice', image: 'https://picsum.photos/id/608/500/500'},
       {name: 'Opinie ', path: '/opnie', image: 'https://picsum.photos/id/442/500/500'},

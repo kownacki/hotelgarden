@@ -18,6 +18,7 @@ import '@polymer/paper-styles/color';
 import './hg-banner.js';
 import './hg-header/hg-header.js';
 import './hg-landing.js';
+import './hg-villa-garden.js';
 import './hg-menu/hg-menu.js';
 import './hg-gallery/hg-gallery.js';
 import './hg-events/hg-events.js';
@@ -55,6 +56,8 @@ customElements.define('hg-app', class extends LitElement {
           @hide-header=${() => this.shadowRoot.getElementById('header').style.display = 'none'}
           @show-header=${() => this.shadowRoot.getElementById('header').style.display = 'block'}>
         </hg-landing>`
+        : this._page === '/villa-garden' 
+        ? html`<hg-villa-garden></hg-villa-garden>`
         : this._page === '/pokoje'
         ? html`<hg-banner 
           .src=${'https://picsum.photos/id/514/1920/980'}
