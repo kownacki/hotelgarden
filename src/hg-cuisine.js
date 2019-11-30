@@ -18,6 +18,8 @@ customElements.define('hg-cuisine', class extends LitElement {
       </hg-banner>
       <hg-article .uid=${'landing'}></hg-article>
       <hg-icons .uid=${'landing'}></hg-icons>
+      <hg-content-carousel></hg-content-carousel>
+      <hg-mosaic .uid=${'landing'}></hg-mosaic>
       <hg-menu></hg-menu> 
       <hg-links .path=${'/kuchnia'} .superpath=${'/kuchnia'}></hg-links>
     `;
