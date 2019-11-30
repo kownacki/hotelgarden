@@ -1,45 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
 import './hg-header-subnav.js';
-
-//todo flat vs hierarchical url structure
-const links = [
-  {
-    name: 'Hotel',
-    path: '/hotel',
-    sublinks: [
-      {name: 'O hotelu', path: '/hotel'},
-      {name: 'Villa Garden', path: '/hotel'},
-      {name: 'Oleśnica i okolice', path: '/hotel'},
-      {name: 'Opinie ', path: '/hotel'},
-      {name: 'FAQ ', path: '/hotel'},
-    ],
-  }, {
-    name: 'Pokoje',
-    path: '/pokoje',
-  }, {
-    name: 'Konferencje',
-    path: '/konferencje',
-    sublinks: [
-      {name: 'Nasze sale', path: '/konferencje'},
-      {name: 'Wigilie Firmowe', path: '/konferencje'},
-    ],
-  }, {
-    name: 'Kuchnia',
-    path: '/kuchnia',
-    sublinks: [
-      {name: 'O naszej kuchni', path: '/kuchnia'},
-      {name: 'Restauracja Magnolia', path: '/kuchnia'},
-      {name: 'Grill Garden', path: '/kuchnia'},
-      {name: 'Catering', path: '/kuchnia'},
-    ],
-  }, {
-    name: 'Galeria',
-    path: '/galeria',
-  }, {
-    name: 'Wydarzenia',
-    path: '/wydarzenia',
-  },
-];
+import {links} from '../utils.js';
 
 customElements.define('hg-header', class extends LitElement {
   static get properties() {

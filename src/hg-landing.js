@@ -6,6 +6,7 @@ import './hg-icons/hg-icons.js';
 import './hg-mosaic.js';
 import './hg-infographic.js';
 import './hg-content-carousel.js';
+import './hg-links.js';
 
 customElements.define('hg-landing', class extends LitElement {
   static get properties() {
@@ -31,6 +32,7 @@ customElements.define('hg-landing', class extends LitElement {
       <hg-mosaic .uid=${'landing'}></hg-mosaic>
       <hg-infographic></hg-infographic>
       <hg-content-carousel></hg-content-carousel>
+      <hg-links .path=${'/'} .superpath=${'/'}></hg-links>
     `;
   }
 });

@@ -44,3 +44,45 @@ export const swapArrayItems = (index1, index2, arr) => {
   arr[index2] = temp;
   return arr;
 };
+
+//todo flat vs hierarchical url structure
+export const links = [
+  {
+    name: 'Hotel',
+    path: '/',
+    sublinks: [
+      {name: 'O hotelu', path: '/'},
+      {name: 'Villa Garden', path: '/villa-garden', image: 'https://picsum.photos/id/84/500/500'},
+      {name: 'Oleśnica i okolice', path: '/olesnica-i-okolice', image: 'https://picsum.photos/id/608/500/500'},
+      {name: 'Opinie ', path: '/opnie', image: 'https://picsum.photos/id/442/500/500'},
+      {name: 'FAQ ', path: '/faq', image: 'https://picsum.photos/id/471/500/500'},
+    ],
+  }, {
+    name: 'Pokoje',
+    path: '/pokoje',
+  }, {
+    name: 'Konferencje',
+    path: '/konferencje',
+    sublinks: [
+      {name: 'Nasze sale', path: '/konferencje'},
+      {name: 'Wigilie Firmowe', path: '/konferencje'},
+    ],
+  }, {
+    name: 'Kuchnia',
+    path: '/kuchnia',
+    sublinks: [
+      {name: 'O naszej kuchni', path: '/kuchnia'},
+      {name: 'Restauracja Magnolia', path: '/kuchnia'},
+      {name: 'Grill Garden', path: '/kuchnia'},
+      {name: 'Catering', path: '/kuchnia'},
+    ],
+  }, {
+    name: 'Galeria',
+    path: '/galeria',
+  }, {
+    name: 'Wydarzenia',
+    path: '/wydarzenia',
+  },
+];
+
+export const linksMap = _.keyBy('path', links);
