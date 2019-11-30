@@ -22,10 +22,15 @@ customElements.define('hg-menu', class extends LitElement {
   }
   static get styles() {
     return css`
-      :host {
+      h2 {
+        font-size: 40px;
+        text-align: center;
+        text-transform: uppercase;
+        font-weight: 300;
       }
       section {
         display: flex;
+        justify-content: center;
       }
       mwc-button {
         --mdc-theme-primary: red;
@@ -44,6 +49,7 @@ customElements.define('hg-menu', class extends LitElement {
   }
   render(){
     return html`
+      <h2>Menu restauracji</h2>
       <section>
         <hg-menu-main id="main" .category=${this.categories[this.selectedCategory]} .categories=${this.categories}></hg-menu-main>
         <hg-menu-nav

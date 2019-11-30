@@ -19,17 +19,28 @@ customElements.define('hg-menu-main', class extends LitElement {
         padding: 0;
         list-style: none
       }
-      iron-image {
-        display: block;
+      header {
         height: 170px;
+        background: url("https://u.profitroom.pl/2017.airporthotel.pl/thumb/700x170/uploads/Restauracja_Mirage_Potrawy/Beznazwy-1_2.jpg");
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      h3 {
+        text-transform: uppercase;
+        text-align: center;
+        font-weight: 300;
+        font-size: 35px;
+        color: white;
+        text-shadow: 0 0 6px var(--secondary-color);
+        margin: 0;
       }
     `;
   }
-  render(){
+  render() {
     return html`
       ${_.isEmpty(this.categories) ? html`diema kategorii` : html`
-        <h2>${this.category.name}</h2>
-        <iron-image sizing="cover" src="https://u.profitroom.pl/2017.airporthotel.pl/thumb/700x170/uploads/Restauracja_Mirage_Potrawy/Beznazwy-1_2.jpg"></iron-image>
+        <header><h3>${this.category.name}</h3></header>
         <ul>
           ${_.map.convert({cap: false})((item, index) =>
             html`<li>

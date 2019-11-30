@@ -15,7 +15,6 @@ customElements.define('hg-menu-nav', class extends LitElement {
   static get styles() {
     return css`
       :host {
-        margin-top: 66px;
       }
     `;
   }
