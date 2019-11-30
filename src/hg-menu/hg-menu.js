@@ -44,11 +44,6 @@ customElements.define('hg-menu', class extends LitElement {
   }
   render(){
     return html`
-      <hg-banner 
-        .src=${'https://picsum.photos/id/75/1920/980'}
-        .heading=${'Kuchnia'}
-        .subheading=${'Lorem ipsum dolor sit amet consectetur adipiscing elit'}>
-      </hg-banner>
       <section>
         <hg-menu-main id="main" .category=${this.categories[this.selectedCategory]} .categories=${this.categories}></hg-menu-main>
         <hg-menu-nav

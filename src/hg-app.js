@@ -19,7 +19,7 @@ import './hg-banner.js';
 import './hg-header/hg-header.js';
 import './hg-landing.js';
 import './hg-villa-garden.js';
-import './hg-menu/hg-menu.js';
+import './hg-cuisine.js';
 import './hg-gallery/hg-gallery.js';
 import './hg-events/hg-events.js';
 import './hg-events/hg-event.js';
@@ -74,7 +74,7 @@ customElements.define('hg-app', class extends LitElement {
           .subheading=${'Lorem ipsum dolor sit amet consectetur adipiscing elit'}>
         </hg-banner>`
         : this._page === '/kuchnia'
-        ? html`<hg-menu></hg-menu>`
+        ? html`<hg-cuisine></hg-cuisine>`
         : this._page === '/galeria'
         ? html`<hg-banner 
           .src=${'https://picsum.photos/id/802/1920/980'}
