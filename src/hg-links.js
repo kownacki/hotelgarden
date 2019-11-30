@@ -34,7 +34,7 @@ customElements.define('hg-links', class extends LitElement {
       }
       a {
         background: rgba(var(--secondary-color-rgb), 0.075);
-        width: 25%;
+        flex: 1;
         margin: 1px;
         text-decoration: none;
         color: inherit;
