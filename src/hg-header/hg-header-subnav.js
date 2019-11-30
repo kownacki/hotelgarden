@@ -4,6 +4,7 @@ customElements.define('hg-header-subnav', class extends LitElement {
   static get properties() {
     return {
       links: Array,
+      selected: String,
     };
   }
   static get styles() {
@@ -39,7 +40,7 @@ customElements.define('hg-header-subnav', class extends LitElement {
         text-decoration: none;
         transition: background-color 0.3s ease;
       }
-      a:hover {
+      a:hover, a[selected] {
         background: rgba(var(--primary-color-rgb), 90%);
       }
     `;
@@ -48,7 +49,7 @@ customElements.define('hg-header-subnav', class extends LitElement {
     return html`
       <ul>
         ${_.map((link) => html`
-          <li><a href="${link.path}">${link.name}</a></li>
+          <li><a href="${link.path}" ?selected=${link.path === this.selected}>${link.name}</a></li>
         `, this.links)}
       </ul>
     `;
