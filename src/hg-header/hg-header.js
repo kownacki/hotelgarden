@@ -78,7 +78,13 @@ customElements.define('hg-header', class extends LitElement {
           <ul>
             ${_.map((link) => html`
               <li>
-                <a href="${link.path}" ?selected=${_.startsWith(link.path, this.selected)}>${link.name}</a>
+                <a 
+                  href="${link.path}"
+                  ?selected=${link.path === this.selected
+                    || (link.path === '/wydarzenia' && _.startsWith('/wydarzenia', this.selected))
+                    || _.some(['path', this.selected], link.sublinks)}>
+                  ${link.name}
+                </a>
                 ${!link.sublinks ? '' : html`
                   <hg-header-subnav .links=${link.sublinks} .selected=${this.selected}></hg-header-subnav>
                 `}
