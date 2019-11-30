@@ -49,7 +49,10 @@ customElements.define('hg-app', class extends LitElement {
   }
   render(){
     return html`
-      <app-location @route-changed=${(event) => this._page = event.detail.value.path}></app-location>
+      <app-location @route-changed=${(event) => {
+        this._page = event.detail.value.path;
+        window.scrollTo(0, 0);
+      }}></app-location>
       <hg-header id="header" .selected=${this._page}></hg-header>
       ${this._page === '/hotel' || this._page === '/'
         ? html`<hg-landing
