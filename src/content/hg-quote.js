@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
-import {db} from "./utils.js";
+import {db} from "../utils.js";
 
 customElements.define('hg-quote', class extends LitElement {
   static get properties() {

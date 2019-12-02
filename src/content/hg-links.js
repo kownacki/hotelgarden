@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
-import {linksMap} from './utils.js';
-import './hg-heading.js';
+import {linksMap} from '../utils.js';
+import '../hg-heading.js';
 
 customElements.define('hg-links', class extends LitElement {
   static get properties() {

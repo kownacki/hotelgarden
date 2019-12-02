@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
-import {db} from "./utils.js";
-import './hg-heading.js';
+import {db} from "../utils.js";
+import '../hg-heading.js';
 
 customElements.define('hg-text-image', class extends LitElement {
   static get properties() {

@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
-import './hg-heading.js';
+import '../hg-heading.js';
 
 const infographic = [
   {number: _.random(1, 100), image: `https://picsum.photos/id/${_.random(1, 100)}/600/600`, string: 'Viverra justo',},

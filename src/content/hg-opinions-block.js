@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
-import './hg-heading.js';
+import '../hg-heading.js';
 import './hg-scores.js';
 
 customElements.define('hg-opinions-block', class extends LitElement {
