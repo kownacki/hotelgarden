@@ -2,6 +2,7 @@ import {LitElement, html, css} from 'lit-element';
 import {db} from "../utils.js";
 import './hg-menu-main.js';
 import './hg-menu-nav.js';
+import '../hg-heading.js';
 
 customElements.define('hg-menu', class extends LitElement {
   static get properties() {
@@ -14,7 +15,6 @@ customElements.define('hg-menu', class extends LitElement {
     super();
     this.categories = [];
     this.selectedCategory = 0;
-
     db.collection("menu").doc("courses").get()
       .then((doc) => {
         this.categories = _.toArray(doc.data());
@@ -22,12 +22,6 @@ customElements.define('hg-menu', class extends LitElement {
   }
   static get styles() {
     return css`
-      h2 {
-        font-size: 40px;
-        text-align: center;
-        text-transform: uppercase;
-        font-weight: 300;
-      }
       section {
         display: flex;
         justify-content: center;
@@ -49,7 +43,7 @@ customElements.define('hg-menu', class extends LitElement {
   }
   render(){
     return html`
-      <h2>Menu restauracji</h2>
+      <hg-heading .text=${'Menu restauracji'} center></hg-heading>
       <section>
         <hg-menu-main id="main" .category=${this.categories[this.selectedCategory]} .categories=${this.categories}></hg-menu-main>
         <hg-menu-nav

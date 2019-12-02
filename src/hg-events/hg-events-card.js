@@ -36,7 +36,7 @@ customElements.define('hg-events-card', class extends LitElement {
         display: flex;
         align-items: baseline;
       }
-      h2 {
+      h3 {
         flex: 1;
         color: var(--primary-color);
         font-weight: 400;
@@ -64,7 +64,7 @@ customElements.define('hg-events-card', class extends LitElement {
         <iron-image .src=${this.event.image} .sizing=${'cover'}></iron-image>
         <div class="content">
           <div class="header">
-            <h2>${this.event.title}</h2>
+            <h3>${this.event.title}</h3>
             <div class="date">${this.event.date.split('-').reverse().join(' / ')}</div>
           </div>
           <p>${this.event.description}</p>

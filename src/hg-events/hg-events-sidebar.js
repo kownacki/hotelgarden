@@ -26,7 +26,7 @@ customElements.define('hg-events-sidebar', class extends LitElement {
         padding: 20px;
         text-align: center;
       }
-      h3 {
+      h2 {
         color: var(--primary-color);
         font-weight: 400;
         font-size: 25px;
@@ -82,7 +82,7 @@ customElements.define('hg-events-sidebar', class extends LitElement {
   }
   render() {
     return html`
-      <h3>Nadchodzące wydarzenia</h3>
+      <h2>Nadchodzące wydarzenia</h2>
       <nav>
         <ul>
           ${_.isEmpty(this._upcoming) ? '' : repeat(this._upcoming, _.get('uid'), (event) => html`

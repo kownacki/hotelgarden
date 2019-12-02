@@ -1,5 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
 import {db} from "./utils.js";
+import './hg-heading.js';
 
 customElements.define('hg-text-image', class extends LitElement {
   static get properties() {
@@ -23,12 +24,6 @@ customElements.define('hg-text-image', class extends LitElement {
         margin: 30px auto 0;
         padding: 25px;
         display: flex;
-      }
-      h2 {
-        margin-top: 0;
-        font-weight: 300;
-        font-size: 40px;
-        text-transform: uppercase;
       }
       iron-image {
         width: 50%;
@@ -55,7 +50,7 @@ customElements.define('hg-text-image', class extends LitElement {
     return html`
       <iron-image .src=${_.get('image', this._textImage)} .sizing=${'cover'}></iron-image>
       <div class="content">
-        <h2>${_.get('heading', this._textImage)}</h2>
+        <hg-heading .text=${_.get('heading', this._textImage)}></hg-heading>
         <p>${_.get('text', this._textImage)}</p>   
         <div class="buttons">
           <a href="#">Pulvinar</a>

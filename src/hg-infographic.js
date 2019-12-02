@@ -1,4 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
+import './hg-heading.js';
 
 const infographic = [
   {number: _.random(1, 100), image: `https://picsum.photos/id/${_.random(1, 100)}/600/600`, string: 'Viverra justo',},
@@ -20,12 +21,6 @@ customElements.define('hg-infographic', class extends LitElement {
         display: block;
         max-width: 900px;
         margin: 40px auto;
-      }
-      h2 {
-        text-transform: uppercase;
-        text-align: center;
-        font-weight: 300;
-        font-size: 40px;
       }
       .items {
         display: flex;
@@ -101,7 +96,7 @@ customElements.define('hg-infographic', class extends LitElement {
   }
   render() {
     return html`
-      <h2>Hotel Garden w liczbach</h2>
+      <hg-heading .text=${'Hotel Garden w liczbach'} center></hg-heading>
       <div class="items">
         ${_.map((item) => html`
           <div class="item">

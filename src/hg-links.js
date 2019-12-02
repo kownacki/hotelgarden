@@ -1,5 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
 import {linksMap} from './utils.js';
+import './hg-heading.js';
 
 customElements.define('hg-links', class extends LitElement {
   static get properties() {
@@ -22,12 +23,6 @@ customElements.define('hg-links', class extends LitElement {
         display: block;
         max-width: 1202px;
         margin: 60px auto;
-      }
-      h2 {
-        font-size: 40px;
-        text-align: center;
-        text-transform: uppercase;
-        font-weight: 300;
       }
       .links {
         display: flex;
@@ -56,7 +51,7 @@ customElements.define('hg-links', class extends LitElement {
   }
   render() {
     return html`
-      <h2>Zobacz także</h2>
+      <hg-heading .text=${'Zobacz także'} center></hg-heading>
       <div class="links">
         ${_.map((link) => html`
           <a href="${link.path}">

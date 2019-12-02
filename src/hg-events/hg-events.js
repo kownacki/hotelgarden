@@ -1,10 +1,10 @@
 import {LitElement, html, css} from 'lit-element';
 import {repeat} from 'lit-html/directives/repeat';
-import moment from 'moment';
 import {db, splitEvents} from "../utils.js";
 import sharedStyles from '../sharedStyles.js';
 import './hg-events-card.js';
 import './hg-events-add.js';
+import '../hg-heading.js';
 
 customElements.define('hg-events', class extends LitElement {
   static get properties() {
@@ -28,10 +28,6 @@ customElements.define('hg-events', class extends LitElement {
         padding: 0 20px;
         margin: 20px auto;
       }
-      h2 {
-        color: var(--primary-color);
-        font-weight: 300;
-      }
       mwc-button {
         --mdc-theme-primary: var(--primary-color);
       }
@@ -40,7 +36,7 @@ customElements.define('hg-events', class extends LitElement {
   render() {
     return html`
       <hg-events-add></hg-events-add>
-      <h2>Nadchodzące wydarzenia</h2>
+      <hg-heading .text=${'Nadchodzące wydarzenia'}></hg-heading>
       ${_.isEmpty(this._upcoming) ? '' : repeat(this._upcoming, _.get('uid'), (event) => html`
         <hg-events-card .event=${event}></hg-events-card>
       `)}
@@ -51,7 +47,7 @@ customElements.define('hg-events', class extends LitElement {
         }}>
       </mwc-button>
       <div id="past" hidden>
-        <h2>Minione wydarzenia</h2>
+        <hg-heading .text=${'Minione wydarzenia'}></hg-heading>
         ${_.isEmpty(this._past) ? '' : repeat(this._past.reverse(), _.get('uid'), (event) => html`
           <hg-events-card .event=${event}></hg-events-card>
         `)} 

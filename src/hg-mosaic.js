@@ -1,5 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
 import {db} from "./utils.js";
+import './hg-heading.js';
 
 customElements.define('hg-mosaic', class extends LitElement {
   static get properties() {
@@ -34,12 +35,6 @@ customElements.define('hg-mosaic', class extends LitElement {
         width: 60%;
         float: right;
       }
-      h2 {
-        margin-top: 0;
-        font-weight: 300;
-        font-size: 40px;
-        text-transform: uppercase;
-      }
       .content {
         margin: 40px;
       }
@@ -72,7 +67,7 @@ customElements.define('hg-mosaic', class extends LitElement {
     return html`
       <div class="right">
         <div class="content">
-          <h2>${_.get('primary.heading', this._mosaic)}</h2>
+          <hg-heading .text=${_.get('primary.heading', this._mosaic)}></hg-heading>
           <p>${_.get('primary.text', this._mosaic)}</p>   
           <div class="buttons">
             <a href="#">Pulvinar</a>
@@ -83,7 +78,7 @@ customElements.define('hg-mosaic', class extends LitElement {
       <div class="left">
         <img .src=${_.get('primary.image', this._mosaic)}>
         <div class="content">
-          <h2>${_.get('secondary.heading', this._mosaic)}</h2>
+          <hg-heading .text=${_.get('secondary.heading', this._mosaic)}></hg-heading>
           <p>${_.get('secondary.text', this._mosaic)}</p>
           <div class="buttons">
             <a href="#">Arcu dictum varius</a>
