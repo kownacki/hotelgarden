@@ -38,11 +38,17 @@ export const splitEvents = (events) => [
   ])(events)
 ];
 
-export const swapArrayItems = (index1, index2, arr) => {
-  const temp = arr[index1];
-  arr[index1] = arr[index2];
-  arr[index2] = temp;
-  return arr;
+export const array = {
+  swapItems: (index1, index2, arr) => {
+    const temp = arr[index1];
+    arr[index1] = arr[index2];
+    arr[index2] = temp;
+    return arr;
+  },
+  nextIndex: (index, arr) => index === arr.length - 1 ? 0 : index + 1,
+  prevIndex: (index, arr) => index === 0 ? arr.length - 1 : index - 1,
+  nextItem: (index, arr) => arr[array.nextIndex(index, arr)],
+  prevItem: (index, arr) => arr[array.prevIndex(index, arr)],
 };
 
 //todo flat vs hierarchical url structure

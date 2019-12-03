@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
-import {swapArrayItems} from '../utils.js';
+import {array} from '../utils.js';
 import './hg-menu-item.js';
 import './hg-menu-add-item.js';
 
@@ -49,7 +49,7 @@ customElements.define('hg-menu-main', class extends LitElement {
                 .item=${item}
                 .index=${index}
                 @request-move=${(event) => {
-                  swapArrayItems(index, index + event.detail, this.category.items) ; 
+                  array.swapItems(index, index + event.detail, this.category.items) ; 
                   this.requestUpdate();
                 }}
                 @request-delete=${() => { 

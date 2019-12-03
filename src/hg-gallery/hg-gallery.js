@@ -3,7 +3,7 @@ import {repeat} from 'lit-html/directives/repeat';
 import {storage} from "../utils.js";
 import '../edit/hg-delete-item.js';
 import './hg-gallery-upload.js';
-import './hg-gallery-carousel.js';
+import './hg-gallery-slider.js';
 
 customElements.define('hg-gallery', class extends LitElement {
   static get properties() {
@@ -59,7 +59,7 @@ customElements.define('hg-gallery', class extends LitElement {
       <hg-gallery-upload 
         .images=${this.images}
         @upload-started=${() => this.requestUpdate()}
-        @upload-finished=${() => {this.requestUpdate(); this.shadowRoot.getElementById('carousel').requestUpdate()}}>
+        @upload-finished=${() => {this.requestUpdate(); this.shadowRoot.getElementById('slider').requestUpdate()}}>
       </hg-gallery-upload>
       <div class="images">
         ${repeat(this.images, _.get('name'), (image, index) => html`
@@ -68,7 +68,7 @@ customElements.define('hg-gallery', class extends LitElement {
               src="${image.url}" 
               sizing="cover"
               @click=${() => {
-                this.shadowRoot.getElementById('carousel').open(index);
+                this.shadowRoot.getElementById('slider').open(index);
               }}>
             </iron-image>
             <hg-delete-item
@@ -82,7 +82,7 @@ customElements.define('hg-gallery', class extends LitElement {
           </div>
         `)}
       </div>
-      <hg-gallery-carousel id="carousel" .images=${this.images}></hg-gallery-carousel>
+      <hg-gallery-slider id="slider" .images=${this.images}></hg-gallery-slider>
     `;
   }
 });

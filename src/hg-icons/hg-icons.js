@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
-import {db, swapArrayItems} from "../utils.js";
+import {db, array} from "../utils.js";
 import './hg-icons-add.js';
 import './hg-icons-item.js';
 
@@ -52,7 +52,7 @@ customElements.define('hg-icons', class extends LitElement {
           }}
           @request-swap=${async () => {
             this._processing = true;
-            const newIcons = swapArrayItems(index, index + 1, [...this._icons]);
+            const newIcons = array.swapItems(index, index + 1, [...this._icons]);
             await db.doc('iconBlocks/' + this.uid).set({...newIcons});
             this._icons = newIcons;
             this.requestUpdate();

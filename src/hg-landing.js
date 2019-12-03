@@ -7,7 +7,7 @@ import './content/hg-mosaic.js';
 import './content/hg-text-image.js';
 import './content/hg-opinions-block.js';
 import './content/hg-infographic.js';
-import './content/hg-content-carousel.js';
+import './content/hg-content-slider.js';
 import './content/hg-links.js';
 
 customElements.define('hg-landing', class extends LitElement {
@@ -35,7 +35,7 @@ customElements.define('hg-landing', class extends LitElement {
       <hg-text-image .uid=${'landing'}></hg-text-image>
       <hg-opinions-block></hg-opinions-block>
       <hg-infographic></hg-infographic>
-      <hg-content-carousel></hg-content-carousel>
+      <hg-content-slider></hg-content-slider>
       <hg-links .path=${'/'} .superpath=${'/'}></hg-links>
     `;
   }
