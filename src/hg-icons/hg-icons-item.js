@@ -14,7 +14,7 @@ customElements.define('hg-icons-item', class extends LitElement {
     return css`
       :host {
         width: 130px;
-        margin: 10px;
+        padding: 10px;
         position: relative;
       }
       iron-icon {
@@ -31,9 +31,12 @@ customElements.define('hg-icons-item', class extends LitElement {
         position: absolute;
         right: 0;
         top: 10px;
-        display: flex;
+        display: none;
         flex-direction: column;
       }
+      :host(:hover) .edit {
+        display: flex;
+      } 
       paper-icon-button {
         width: 24px;
         height: 24px;
