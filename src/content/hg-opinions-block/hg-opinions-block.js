@@ -1,12 +1,14 @@
 import {LitElement, html, css} from 'lit-element';
-import '../hg-heading.js';
+import {db} from "../../utils.js";
+import '../../hg-heading.js';
 import './hg-scores.js';
-import '../hg-slider.js';
-import {storage} from "../utils";
+import './hg-opinions-slider.js';
 
 customElements.define('hg-opinions-block', class extends LitElement {
   static get properties() {
-    return {};
+    return {
+      _opinions: Array,
+    };
   }
   static get styles() {
     return css`
@@ -17,22 +19,23 @@ customElements.define('hg-opinions-block', class extends LitElement {
         display: flex;
         justify-content: center;
       }
+      hg-scores {
+        margin-right: 40px;
+      }
     `;
+  }
+  constructor() {
+    super();
+    (async () => {
+      this._opinions = await _.map(_.method('data'), _.reverse((await db.collection('opinions').get()).docs));
+    })();
   }
   render() {
     return html`
       <hg-heading .text=${'Nasi goście o nas'} center></hg-heading>
       <div class="container">
         <hg-scores></hg-scores>
-        <hg-slider
-          .items=${this._images}
-          .template=${(image) => html`
-            <iron-image
-              .src=${image.url}
-              .sizing=${'contain'}>
-            </iron-image>
-          `}>
-        </hg-slider>
+        <hg-opinions-slider .opinions=${this._opinions}></hg-opinions-slider>
       </div>
     `;
   }

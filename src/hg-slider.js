@@ -36,6 +36,7 @@ customElements.define('hg-slider', class extends LitElement {
       #slider > * {
         flex: 1;
         height: 100%;
+        box-sizing: border-box;
       }
       .counter {
         background: white;
