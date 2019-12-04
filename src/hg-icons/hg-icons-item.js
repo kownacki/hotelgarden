@@ -8,6 +8,9 @@ customElements.define('hg-icons-item', class extends LitElement {
       icon: Object,
       last: Boolean,
       disableEdit: Boolean,
+      opened: {type: Boolean, reflect: true},
+      _deleteOpened: Boolean,
+      _editOpened: Boolean,
     };
   }
   static get styles() {
@@ -34,7 +37,7 @@ customElements.define('hg-icons-item', class extends LitElement {
         display: none;
         flex-direction: column;
       }
-      :host(:hover) .edit {
+      :host(:hover) .edit, :host([opened]) .edit {
         display: flex;
       } 
       paper-icon-button {
@@ -44,13 +47,26 @@ customElements.define('hg-icons-item', class extends LitElement {
       }
     `;
   }
+  updated(changedProperties) {
+    if (changedProperties.has('_deleteOpened') || changedProperties.has('_editOpened')) {
+      this.opened = this._deleteOpened || this._editOpened;
+    }
+  }
   render() {
     return html`
       <iron-icon .src="${this.icon.url}"></iron-icon>
       <p>${this.icon.text}</p>
       <div class="edit">
-        <hg-delete-item .disable=${this.disableEdit} .name=${"ikona"}></hg-delete-item>
-        <hg-icons-edit .disable=${this.disableEdit} .text=${this.icon.text}></hg-icons-edit>
+        <hg-delete-item 
+          .disable=${this.disableEdit} 
+          .name=${"ikona"} 
+          @opened-changed=${(event) => this._deleteOpened = event.target.opened}>
+        </hg-delete-item>
+        <hg-icons-edit 
+          .disable=${this.disableEdit} 
+          .text=${this.icon.text} 
+          @opened-changed=${(event) => this._editOpened = event.target.opened}>
+        </hg-icons-edit>
         ${this.last ? '' : html`<paper-icon-button
           icon="swap-horiz"
           ?disabled=${this.disableEdit}

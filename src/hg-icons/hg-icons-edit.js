@@ -5,6 +5,7 @@ customElements.define('hg-icons-edit', class extends LitElement {
     return {
       text: String,
       disable: Boolean,
+      opened: {type: Boolean, reflect: true}
     };
   }
   static get styles() {
@@ -26,7 +27,9 @@ customElements.define('hg-icons-edit', class extends LitElement {
         icon="icons:create"
         @click=${() => this.shadowRoot.getElementById('dialog').open()}>
       </paper-icon-button>
-      <paper-dialog id="dialog">
+      <paper-dialog 
+        id="dialog" 
+        @opened-changed=${(event) => {this.opened = event.target.opened; this.dispatchEvent(new CustomEvent('opened-changed'))}}>
         <div>Edytuj tekst "${this.text}"</div>
         <mwc-textfield id="name" label="Nowy tekst" value=${this.text}></mwc-textfield>
         <mwc-button raised label="Zapisz" @click=${() => {

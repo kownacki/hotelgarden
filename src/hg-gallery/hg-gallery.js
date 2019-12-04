@@ -49,7 +49,7 @@ customElements.define('hg-gallery', class extends LitElement {
       .image:hover {
         cursor: pointer;
       }
-      .image:not(:hover) hg-delete-item:not([dialog-opened]) {
+      .image:not(:hover) hg-delete-item:not([opened]) {
         display: none;
       }
     `;

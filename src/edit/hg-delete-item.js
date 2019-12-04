@@ -4,8 +4,8 @@ customElements.define('hg-delete-item', class extends LitElement {
   static get properties() {
     return {
       name: String,
-      'dialog-opened': {type: Boolean, reflect: true},
       disable: Boolean,
+      opened: {type: Boolean, reflect: true},
     };
   }
   static get styles() {
@@ -37,7 +37,9 @@ customElements.define('hg-delete-item', class extends LitElement {
         @click=${() => this.shadowRoot.getElementById('dialog').open()}>
       </paper-icon-button>
       
-      <paper-dialog id="dialog" @opened-changed=${function(event) { this['dialog-opened'] = event.target.opened}}>
+      <paper-dialog 
+        id="dialog" 
+        @opened-changed=${(event) => {this.opened = event.target.opened; this.dispatchEvent(new CustomEvent('opened-changed'))}}>
         <div class="warning">
           <iron-icon icon="warning"></iron-icon>
           Czy na pewno usunąć "${this.name}"? 
