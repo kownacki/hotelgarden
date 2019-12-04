@@ -1,5 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
-import {db} from "../utils.js";
+import {db} from '../utils.js';
+import '../edit/hg-editable-text.js';
 
 customElements.define('hg-quote', class extends LitElement {
   static get properties() {
@@ -12,7 +13,7 @@ customElements.define('hg-quote', class extends LitElement {
     super();
     (async () => {
       await this.updateComplete;
-      this._quote = (await db.collection("quotes").doc(this.uid).get()).data();
+      this._quote = (await db.doc('quotes/' + this.uid).get()).data();
     })();
   }
   static get styles() {
@@ -22,8 +23,6 @@ customElements.define('hg-quote', class extends LitElement {
         margin: 80px auto;
         max-width: 500px;
         padding: 0 100px;
-        font-size: 20px;
-        line-height: 1.5em;
         position: relative;
       }
       :host::before {
@@ -37,10 +36,9 @@ customElements.define('hg-quote', class extends LitElement {
         background-size: 90px 90px;
         filter: opacity(6%);
       }
-      .text {
-        font-style: italic;
-      }
       .author {
+        font-size: 20px;
+        line-height: 1.5em;
         text-align: right;
         font-family: 'Yellowtail', cursive;
         margin-right: 20px;
@@ -49,9 +47,19 @@ customElements.define('hg-quote', class extends LitElement {
   }
   render() {
     return html`
-      <div class="text">
-        ${_.get('text', this._quote)}
-      </div>
+      <hg-editable-text
+        .text=${_.get('text', this._quote)}
+        .css=${html`
+          <style>
+            #text {
+              font-size: 20px;
+              line-height: 1.5em;
+              font-style: italic;
+            }
+          </style>
+        `}
+        @save=${(event) => db.doc('quotes/' + this.uid).update({text: event.detail})}>
+      </hg-editable-text>
       <div class="author">
         ${_.get('author', this._quote)}
       </div>

@@ -43,7 +43,7 @@ customElements.define('hg-article', class extends LitElement {
             }
           </style>
         `}
-        @save=${(event) => db.doc('articles/' + this.uid).set({text: event.detail})}>
+        @save=${(event) => db.doc('articles/' + this.uid).update({text: event.detail})}>
       </hg-editable-text>
     `;
   }
