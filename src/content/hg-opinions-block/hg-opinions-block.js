@@ -14,6 +14,8 @@ customElements.define('hg-opinions-block', class extends LitElement {
     return css`
       :host {
         display: block;
+        max-width: 1000px;
+        margin: auto;
       }
       .container {
         display: flex;
@@ -21,6 +23,9 @@ customElements.define('hg-opinions-block', class extends LitElement {
       }
       hg-scores {
         margin-right: 40px;
+      }
+      hg-opinions-slider {
+        flex: 1;
       }
     `;
   }

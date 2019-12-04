@@ -10,7 +10,6 @@ customElements.define('hg-opinions-slider', class extends LitElement {
   static get styles() {
     return css`
       hg-slider {
-        width: 800px;
         height: 100%;
       }
     `;
