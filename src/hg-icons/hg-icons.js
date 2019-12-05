@@ -29,7 +29,7 @@ customElements.define('hg-icons', class extends LitElement {
       hg-icons-add {
         display: none;
       }
-      :host(:hover) hg-icons-add {
+      :host(:hover) hg-icons-add, hg-icons-add[opened] {
         display: block ;
       }
     `;
