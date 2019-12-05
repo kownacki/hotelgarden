@@ -10,9 +10,9 @@ customElements.define('hg-editable-text', class extends LitElement {
   }
   constructor() {
     super();
+    this._slotted = this.querySelector('*');
     (async () => {
       await this.updateComplete;
-      this._slotted = this.querySelector('*');
       this._slotted.setAttribute('contenteditable', true);
       this._slotted.addEventListener('input', () => this._showControls = true);
     })();
