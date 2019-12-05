@@ -22,7 +22,7 @@ customElements.define('hg-links', class extends LitElement {
       :host {
         display: block;
         max-width: 1202px;
-        margin: 60px auto;
+        margin: 80px auto;
       }
       .links {
         display: flex;

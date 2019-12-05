@@ -21,8 +21,8 @@ customElements.define('hg-text-image', class extends LitElement {
       :host {
         font-size: 20px;
         max-width: 1250px;
-        margin: 30px auto 0;
-        padding: 25px;
+        margin: 60px auto;
+        padding: 0 25px;
         display: flex;
       }
       iron-image {

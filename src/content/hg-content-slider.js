@@ -23,7 +23,7 @@ customElements.define('hg-content-slider', class extends LitElement {
       :host {
         display: block;
         max-width: 1200px;
-        margin: 20px auto;
+        margin: 60px auto;
       }
       hg-slider {
         height: 350px;

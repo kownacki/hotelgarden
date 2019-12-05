@@ -15,7 +15,7 @@ customElements.define('hg-opinions-block', class extends LitElement {
       :host {
         display: block;
         max-width: 1000px;
-        margin: auto;
+        margin: 80px auto;
       }
       .container {
         display: flex;
