@@ -67,7 +67,7 @@ customElements.define('hg-editable-text', class extends LitElement {
           raised
           @click=${() => {
             this.showControls = false;
-            this.text = this._slotted.innerText;
+            this.text = this._slotted.textContent;
             this.dispatchEvent(new CustomEvent('save', {detail: this.text}));
           }}>
           Zapisz
