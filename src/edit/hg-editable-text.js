@@ -36,6 +36,7 @@ customElements.define('hg-editable-text', class extends LitElement {
       .edit {
         margin-top: 10px;
         justify-content: flex-end;
+        flex-wrap: wrap;
       }
       .edit:not([hidden]) {
         display: flex;
