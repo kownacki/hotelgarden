@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
 import '../edit/hg-delete-item.js';
-import './hg-icons-edit.js';
+import '../edit/hg-editable-text.js';
 
 customElements.define('hg-icons-item', class extends LitElement {
   static get properties() {
@@ -55,18 +55,19 @@ customElements.define('hg-icons-item', class extends LitElement {
   render() {
     return html`
       <iron-icon .src="${this.icon.url}"></iron-icon>
-      <p>${this.icon.text}</p>
+      <hg-editable-text
+         id="editable"
+        .disabled=${this.disableEdit && !this.shadowRoot.getElementById('editable').showControls}
+        .text=${this.icon.text}
+        @save=${(event) => this.dispatchEvent(new CustomEvent('request-edit', {detail: event.detail}))}>
+        <p class="text"></p>
+      </hg-editable-text>
       <div class="edit">
         <hg-delete-item 
           .disable=${this.disableEdit} 
           .name=${"ikona"} 
           @opened-changed=${(event) => this._deleteOpened = event.target.opened}>
         </hg-delete-item>
-        <hg-icons-edit 
-          .disable=${this.disableEdit} 
-          .text=${this.icon.text} 
-          @opened-changed=${(event) => this._editOpened = event.target.opened}>
-        </hg-icons-edit>
         ${this.last ? '' : html`<paper-icon-button
           icon="swap-horiz"
           ?disabled=${this.disableEdit}

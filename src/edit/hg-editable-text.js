@@ -4,7 +4,8 @@ customElements.define('hg-editable-text', class extends LitElement {
   static get properties() {
     return {
       text: String,
-      _showControls: Boolean,
+      disabled: Boolean,
+      showControls: Boolean,
       _slotted: Element,
     };
   }
@@ -14,14 +15,15 @@ customElements.define('hg-editable-text', class extends LitElement {
     (async () => {
       await this.updateComplete;
       this._slotted.setAttribute('contenteditable', true);
-      this._slotted.addEventListener('input', () => this._showControls = true);
+      this._slotted.addEventListener('input', () => this.showControls = true);
     })();
   }
   updated(changedProperties) {
-    if (changedProperties.has('_showControls')) {
+    if (changedProperties.has('showControls')) {
+      this.dispatchEvent(new CustomEvent('show-controls-changed', {detail: this.showControls, composed: true}));
       //todo add also when changing location
       //todo multiple onbeforeunload overlapping
-      window.onbeforeunload = !this._showControls ? null : () => {
+      window.onbeforeunload = !this.showControls ? null : () => {
         window.scrollTo(0, this._slotted.offsetTop - 70);
         this._slotted.focus();
         return '';
@@ -29,6 +31,9 @@ customElements.define('hg-editable-text', class extends LitElement {
     }
     if (changedProperties.has('text')) {
       this._slotted.innerHTML = this.text;
+    }
+    if (changedProperties.has('disabled')) {
+      this._slotted.setAttribute('contenteditable', !this.disabled);
     }
   }
   static get styles() {
@@ -46,11 +51,11 @@ customElements.define('hg-editable-text', class extends LitElement {
   render() {
     return html`
       <slot id="text"></slot>
-      <div class="edit" ?hidden=${!this._showControls}>
+      <div class="edit" ?hidden=${!this.showControls}>
         <paper-button
           raised
           @click=${() => {
-            this._showControls = false;
+            this.showControls = false;
             this._slotted.innerHTML = this.text;
           }}>
           Cofnij
@@ -58,7 +63,7 @@ customElements.define('hg-editable-text', class extends LitElement {
         <paper-button
           raised
           @click=${() => {
-            this._showControls = false;
+            this.showControls = false;
             this.text = this._slotted.innerText;
             this.dispatchEvent(new CustomEvent('save', {detail: this.text}));
           }}>

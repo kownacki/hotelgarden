@@ -50,6 +50,9 @@ customElements.define('hg-icons', class extends LitElement {
             this.requestUpdate();
             this._processing = false;
           }}
+          @show-controls-changed=${(event) => {
+            this._processing = event.detail;
+          }}
           @request-swap=${async () => {
             this._processing = true;
             const newIcons = array.swapItems(index, index + 1, [...this._icons]);
