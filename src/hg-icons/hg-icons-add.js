@@ -86,7 +86,11 @@ customElements.define('hg-icons-add', class extends LitElement {
       </paper-icon-button>
       <paper-dialog 
         id="dialog"
-        @opened-changed=${(event) => {this.opened = event.target.opened; this.dispatchEvent(new CustomEvent('opened-changed'))}}>
+        @opened-changed=${(event) => {
+          this.opened = event.target.opened;
+          console.log(this.opened);
+          this.dispatchEvent(new CustomEvent('opened-changed', {detail: this.opened}));
+        }}>
         <div>Dodaj ikonę</div>
         <paper-input
           id="text"

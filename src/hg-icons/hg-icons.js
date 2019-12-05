@@ -75,6 +75,9 @@ customElements.define('hg-icons', class extends LitElement {
         .icons=${this._icons}
         .uid=${this.uid}
         .disable=${this._processing}
+        @opened-changed=${(event) => {
+          this._processing = event.detail;
+        }}
         @request-add=${async (event) => {
           this._processing = true;
           await db.doc('iconBlocks/' + this.uid).update({[this._icons.length]: event.detail});
