@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
 import './hg-menu-edit-item.js';
-import '../edit/hg-delete-item.js';
+import '../../edit/hg-delete-item.js';
 
 customElements.define('hg-menu-item', class extends LitElement {
   static get properties() {

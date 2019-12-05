@@ -1,14 +1,14 @@
 import {LitElement, html, css} from 'lit-element';
-import './hg-banner.js';
-import './content/hg-article.js';
-import './content/hg-quote.js';
-import './hg-icons/hg-icons.js';
-import './content/hg-mosaic.js';
-import './content/hg-text-image.js';
-import './content/hg-opinions-block/hg-opinions-block.js';
-import './content/hg-infographic.js';
-import './content/hg-content-slider.js';
-import './content/hg-links.js';
+import '../hg-banner.js';
+import '../content/hg-article.js';
+import '../content/hg-quote.js';
+import '../content/hg-icons/hg-icons.js';
+import '../content/hg-mosaic.js';
+import '../content/hg-text-image.js';
+import '../content/hg-opinions-block/hg-opinions-block.js';
+import '../content/hg-infographic.js';
+import '../content/hg-content-slider.js';
+import '../content/hg-links.js';
 
 customElements.define('hg-landing', class extends LitElement {
   static get properties() {

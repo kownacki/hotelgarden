@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit-element';
 import moment from 'moment';
-import {db} from "../utils.js";
-import '../hg-banner.js';
+import {db} from "../../utils.js";
+import '../../hg-banner.js';
 import './hg-events-sidebar.js';
 
 customElements.define('hg-event', class extends LitElement {

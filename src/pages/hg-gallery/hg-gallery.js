@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit-element';
 import {repeat} from 'lit-html/directives/repeat';
-import {storage} from "../utils.js";
-import '../edit/hg-delete-item.js';
+import {storage} from "../../utils.js";
+import '../../edit/hg-delete-item.js';
 import './hg-gallery-upload.js';
 import './hg-gallery-slider.js';
 

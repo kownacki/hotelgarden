@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
 import {repeat} from 'lit-html/directives/repeat';
-import {splitEvents, db} from '../utils.js';
+import {splitEvents, db} from '../../utils.js';
 
 customElements.define('hg-events-sidebar', class extends LitElement {
   static get properties() {

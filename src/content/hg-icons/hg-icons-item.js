@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
-import '../edit/hg-delete-item.js';
-import '../edit/hg-editable-text.js';
+import '../../edit/hg-delete-item.js';
+import '../../edit/hg-editable-text.js';
 
 customElements.define('hg-icons-item', class extends LitElement {
   static get properties() {

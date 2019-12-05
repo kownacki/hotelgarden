@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
-import {storage} from "../utils.js";
+import {storage} from "../../utils.js";
 
 customElements.define('hg-gallery-upload', class extends LitElement {
   static get properties() {

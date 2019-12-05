@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
-import '../hg-slider.js';
+import '../../hg-slider.js';
 //todo bug clicking go back when image is displayed breaks website
 customElements.define('hg-gallery-slider', class extends LitElement {
   static get properties() {

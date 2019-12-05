@@ -17,12 +17,12 @@ import '@polymer/paper-styles/color';
 
 import './hg-banner.js';
 import './hg-header/hg-header.js';
-import './hg-landing.js';
-import './hg-villa-garden.js';
-import './hg-cuisine.js';
-import './hg-gallery/hg-gallery.js';
-import './hg-events/hg-events.js';
-import './hg-events/hg-event.js';
+import './pages/hg-landing.js';
+import './pages/hg-villa-garden.js';
+import './pages/hg-cuisine.js';
+import './pages/hg-gallery/hg-gallery.js';
+import './pages/hg-events/hg-events.js';
+import './pages/hg-events/hg-event.js';
 
 customElements.define('hg-app', class extends LitElement {
   static get properties() {

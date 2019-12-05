@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
-import {db, array} from "../utils.js";
+import {db, array} from "../../utils.js";
 import './hg-icons-add.js';
 import './hg-icons-item.js';
 

@@ -1,5 +1,11 @@
 import {LitElement, html, css} from 'lit-element';
-import './hg-menu/hg-menu.js'
+import '../hg-banner.js';
+import '../content/hg-article.js';
+import '../content/hg-icons/hg-icons.js';
+import '../content/hg-content-slider';
+import '../content/hg-mosaic.js';
+import '../content/hg-menu/hg-menu.js'
+import '../content/hg-links.js';
 
 customElements.define('hg-cuisine', class extends LitElement {
   static get properties() {

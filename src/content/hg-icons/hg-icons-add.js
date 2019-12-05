@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
-import {storage, db} from "../utils.js";
+import {storage, db} from "../../utils.js";
 
 //todo dodać link do strony icons8
 
@@ -88,7 +88,6 @@ customElements.define('hg-icons-add', class extends LitElement {
         id="dialog"
         @opened-changed=${(event) => {
           this.opened = event.target.opened;
-          console.log(this.opened);
           this.dispatchEvent(new CustomEvent('opened-changed', {detail: this.opened}));
         }}>
         <div>Dodaj ikonę</div>

@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
-import {array} from '../utils.js';
+import {array} from '../../utils.js';
 import './hg-menu-nav-item.js';
 import './hg-menu-add-category.js';
 
