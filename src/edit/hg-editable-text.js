@@ -4,25 +4,31 @@ customElements.define('hg-editable-text', class extends LitElement {
   static get properties() {
     return {
       text: String,
-      css: Object,
       _showControls: Boolean,
+      _slotted: Element,
     };
   }
   constructor() {
     super();
     (async () => {
       await this.updateComplete;
-      this.shadowRoot.getElementById('text').addEventListener('input', () => this._showControls = true);
+      this._slotted = this.querySelector('*');
+      this._slotted.setAttribute('contenteditable', true);
+      this._slotted.addEventListener('input', () => this._showControls = true);
     })();
   }
   updated(changedProperties) {
     if (changedProperties.has('_showControls')) {
       //todo add also when changing location
+      //todo multiple onbeforeunload overlapping
       window.onbeforeunload = !this._showControls ? null : () => {
-        window.scrollTo(0, this.shadowRoot.getElementById('text').offsetTop - 70);
-        this.shadowRoot.getElementById('text').focus();
+        window.scrollTo(0, this._slotted.offsetTop - 70);
+        this._slotted.focus();
         return '';
       };
+    }
+    if (changedProperties.has('text')) {
+      this._slotted.innerHTML = this.text;
     }
   }
   static get styles() {
@@ -38,14 +44,13 @@ customElements.define('hg-editable-text', class extends LitElement {
   }
   render() {
     return html`
-      ${this.css}
-      <div id="text" contenteditable>${this.text}</div>
+      <slot id="text"></slot>
       <div class="edit" ?hidden=${!this._showControls}>
         <paper-button
           raised
           @click=${() => {
             this._showControls = false;
-            this.shadowRoot.getElementById('text').innerHTML = this.text;
+            this._slotted.innerHTML = this.text;
           }}>
           Cofnij
         </paper-button>
@@ -53,7 +58,7 @@ customElements.define('hg-editable-text', class extends LitElement {
           raised
           @click=${() => {
             this._showControls = false;
-            this.text = this.shadowRoot.getElementById('text').innerText;
+            this.text = this._slotted.innerText;
             this.dispatchEvent(new CustomEvent('save', {detail: this.text}));
           }}>
           Zapisz

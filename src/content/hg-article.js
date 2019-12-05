@@ -24,26 +24,23 @@ customElements.define('hg-article', class extends LitElement {
         max-width: 700px;
         padding: 0 20px;
       }
+      .text {
+        font-size: 20px;
+        line-height: 1.5em;
+      }
+      .text:not(:focus):first-letter {
+        font-size: 3em;
+        float: left;
+        margin: 0.25em 0.15em 0.15em 0;
+      }
     `;
   }
   render() {
     return html`
       <hg-editable-text
         .text=${this._text}
-        .css=${html`
-          <style>
-            #text {
-              font-size: 20px;
-              line-height: 1.5em;
-            }
-            #text:not(:focus):first-letter {
-              font-size: 3em;
-              float: left;
-              margin: 0.25em 0.15em 0.15em 0;
-            }
-          </style>
-        `}
         @save=${(event) => db.doc('articles/' + this.uid).update({text: event.detail})}>
+        <div class="text"></div>
       </hg-editable-text>
     `;
   }

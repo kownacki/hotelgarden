@@ -43,22 +43,19 @@ customElements.define('hg-quote', class extends LitElement {
         font-family: 'Yellowtail', cursive;
         margin-right: 20px;
       }
+      .text {
+        font-size: 20px;
+        line-height: 1.5em;
+        font-style: italic;
+      }
     `;
   }
   render() {
     return html`
       <hg-editable-text
         .text=${_.get('text', this._quote)}
-        .css=${html`
-          <style>
-            #text {
-              font-size: 20px;
-              line-height: 1.5em;
-              font-style: italic;
-            }
-          </style>
-        `}
         @save=${(event) => db.doc('quotes/' + this.uid).update({text: event.detail})}>
+        <div class="text"></div>
       </hg-editable-text>
       <div class="author">
         ${_.get('author', this._quote)}
