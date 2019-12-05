@@ -6,6 +6,7 @@ body {
   --secondary-color-rgb: 117, 117, 117;
   --accent-color: #4f6884;
   --placeholder-color: var(--paper-grey-500);
+  --placeholder-color-rgb: 158, 158, 158;
   font-family: 'Lato', sans-serif;
   color: var(--secondary-color);
 }

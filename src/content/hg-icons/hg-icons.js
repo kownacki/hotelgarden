@@ -7,6 +7,7 @@ customElements.define('hg-icons', class extends LitElement {
   static get properties() {
     return {
       uid: Number,
+      empty: {type: Boolean, reflect: true},
       _processing: Boolean,
       _icons: Array,
     };
@@ -24,7 +25,10 @@ customElements.define('hg-icons', class extends LitElement {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        margin: 80px 20px;
+        margin: 80px auto;
+        padding: 0 20px;
+        min-height: 131px;
+        max-width: 1200px;
       }
       hg-icons-add {
         display: none;
@@ -32,7 +36,15 @@ customElements.define('hg-icons', class extends LitElement {
       :host(:hover) hg-icons-add, hg-icons-add[opened] {
         display: block ;
       }
+      :host([empty]) {
+        background: rgba(var(--placeholder-color-rgb), 0.5);
+      }
     `;
+  }
+  updated(changedProperties) {
+    if (changedProperties.has('_icons')) {
+      this.empty = _.isEmpty(this._icons);
+    }
   }
   render() {
     return html`
@@ -81,7 +93,7 @@ customElements.define('hg-icons', class extends LitElement {
         @request-add=${async (event) => {
           this._processing = true;
           await db.doc('iconBlocks/' + this.uid).update({[this._icons.length]: event.detail});
-          this._icons.push(event.detail);
+          this._icons = [...this._icons, event.detail];
           this.requestUpdate();
           this._processing = false;
         }}>

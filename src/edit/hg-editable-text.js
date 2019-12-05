@@ -50,13 +50,11 @@ customElements.define('hg-editable-text', class extends LitElement {
     return css`
       :host {
         display: block;
-        background: var(--placeholder-color);
-        opacity: 50%;
+        background: rgba(var(--placeholder-color-rgb), 0.5);
         position: relative;
       }
       :host([not-empty]) {
         background: transparent;
-        opacity: initial;
       }
       :host([multiline]) {
         height: 150px;
