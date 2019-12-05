@@ -11,12 +11,12 @@ customElements.define('hg-heading', class extends LitElement {
       :host {
         display: block;
         margin-bottom: 30px;
+        text-transform: uppercase;
       }
       h2 {
         margin: 0;
         font-weight: 300;
         font-size: 40px;
-        text-transform: uppercase;
       }
     `;
   }

@@ -28,6 +28,7 @@ customElements.define('hg-article', class extends LitElement {
         font-size: 20px;
         line-height: 1.5em;
       }
+      /* remove it when edited */
       .text:not(:focus):first-letter {
         font-size: 3em;
         float: left;

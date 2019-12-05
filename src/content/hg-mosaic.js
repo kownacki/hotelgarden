@@ -41,6 +41,9 @@ customElements.define('hg-mosaic', class extends LitElement {
       img {
         width: 100%;
       }
+      hg-heading:focus {
+        text-transform: initial;
+      }
       p {
         font-size: 20px;
       }

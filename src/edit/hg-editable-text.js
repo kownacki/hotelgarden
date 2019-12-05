@@ -65,6 +65,9 @@ customElements.define('hg-editable-text', class extends LitElement {
       ::slotted(*) {
         height: 100%;
       }
+      ::slotted(:focus) {
+        text-transform: initial;
+      }
       .edit {
         margin-top: 10px;
         justify-content: flex-end;

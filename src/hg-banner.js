@@ -43,8 +43,6 @@ customElements.define('hg-banner', class extends LitElement {
         max-width: 100%;
         margin: auto auto 0;
         text-align: center;
-      }
-      h1:not(:focus), p:not(:focus) {
         text-transform: uppercase;
       }
       h1 {
