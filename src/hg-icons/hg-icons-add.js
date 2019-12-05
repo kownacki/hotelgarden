@@ -32,10 +32,14 @@ customElements.define('hg-icons-add', class extends LitElement {
   }
   static get styles() {
     return css`
+      :host {
+        padding: 10px;
+      }
       paper-icon-button {
-        width: 40px;
-        height: 40px;
+        width: 60px;
+        height: 60px;
         padding: 0;
+        margin: 0 34px;
       }
       paper-button {
         min-width: auto;

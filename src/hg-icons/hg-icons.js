@@ -24,6 +24,13 @@ customElements.define('hg-icons', class extends LitElement {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
+        margin: 0 20px 40px;
+      }
+      hg-icons-add {
+        display: none;
+      }
+      :host(:hover) hg-icons-add {
+        display: block ;
       }
     `;
   }
@@ -32,6 +39,7 @@ customElements.define('hg-icons', class extends LitElement {
       ${_.map.convert({cap: false})((icon, index) => html`
         <hg-icons-item 
           .icon=${icon}
+          .first=${index === 0}
           .last=${index === this._icons.length - 1}
           .disableEdit=${this._processing}
           @request-delete=${async () => {
@@ -53,9 +61,9 @@ customElements.define('hg-icons', class extends LitElement {
           @show-controls-changed=${(event) => {
             this._processing = event.detail;
           }}
-          @request-swap=${async () => {
+          @request-swap=${async (event) => {
             this._processing = true;
-            const newIcons = array.swapItems(index, index + 1, [...this._icons]);
+            const newIcons = array.swapItems(index, index + event.detail, [...this._icons]);
             await db.doc('iconBlocks/' + this.uid).set({...newIcons});
             this._icons = newIcons;
             this.requestUpdate();

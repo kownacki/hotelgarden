@@ -6,6 +6,7 @@ customElements.define('hg-icons-item', class extends LitElement {
   static get properties() {
     return {
       icon: Object,
+      first: Boolean,
       last: Boolean,
       disableEdit: Boolean,
       opened: {type: Boolean, reflect: true},
@@ -16,7 +17,7 @@ customElements.define('hg-icons-item', class extends LitElement {
   static get styles() {
     return css`
       :host {
-        width: 130px;
+        width: 128px;
         padding: 10px;
         position: relative;
       }
@@ -30,20 +31,29 @@ customElements.define('hg-icons-item', class extends LitElement {
       p {
         text-align: center;
       }
-      .edit {
+      :host(:hover) hg-delete-item, :host([opened]) hg-delete-item, :host(:hover) paper-icon-button {
+        display: block;
+      }
+      hg-delete-item  {
         position: absolute;
-        right: 0;
+        right: 15px;
         top: 10px;
         display: none;
         flex-direction: column;
       }
-      :host(:hover) .edit, :host([opened]) .edit {
-        display: flex;
-      } 
       paper-icon-button {
+        display: none;
+        position: absolute;
+        top: 28px;
         width: 24px;
         height: 24px;
         padding: 0;
+      }
+      .swap-left {
+        left: -12px;
+      }
+      .swap-right {
+        right: -12px;
       }
     `;
   }
@@ -62,18 +72,23 @@ customElements.define('hg-icons-item', class extends LitElement {
         @save=${(event) => this.dispatchEvent(new CustomEvent('request-edit', {detail: event.detail}))}>
         <p class="text"></p>
       </hg-editable-text>
-      <div class="edit">
-        <hg-delete-item 
-          .disable=${this.disableEdit} 
-          .name=${"ikona"} 
-          @opened-changed=${(event) => this._deleteOpened = event.target.opened}>
-        </hg-delete-item>
-        ${this.last ? '' : html`<paper-icon-button
-          icon="swap-horiz"
-          ?disabled=${this.disableEdit}
-          @click=${() => this.dispatchEvent(new CustomEvent('request-swap'))}>
-        </paper-icon-button>`}
-      </div>
+      <hg-delete-item 
+        .disable=${this.disableEdit} 
+        .name=${"ikona"} 
+        @opened-changed=${(event) => this._deleteOpened = event.target.opened}>
+      </hg-delete-item>
+      ${this.first ? '' : html`<paper-icon-button
+        class="swap-left"
+        icon="swap-horiz"
+        ?disabled=${this.disableEdit}
+        @click=${() => this.dispatchEvent(new CustomEvent('request-swap', {detail: -1}))}>
+      </paper-icon-button>`}
+      ${this.last ? '' : html`<paper-icon-button
+        class="swap-right"
+        icon="swap-horiz"
+        ?disabled=${this.disableEdit}
+        @click=${() => this.dispatchEvent(new CustomEvent('request-swap', {detail: +1}))}>
+      </paper-icon-button>`}
     `;
   }
 });
