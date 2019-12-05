@@ -15,10 +15,11 @@ import '@material/mwc-button';
 import '@material/mwc-textfield';
 import '@polymer/paper-styles/color';
 
-import './hg-banner.js';
 import './hg-header/hg-header.js';
 import './pages/hg-landing.js';
 import './pages/hg-villa-garden.js';
+import './pages/hg-rooms.js';
+import './pages/hg-conferences.js';
 import './pages/hg-cuisine.js';
 import './pages/hg-gallery/hg-gallery.js';
 import './pages/hg-events/hg-events.js';
@@ -62,30 +63,18 @@ customElements.define('hg-app', class extends LitElement {
         : this._page === '/villa-garden' 
         ? html`<hg-villa-garden></hg-villa-garden>`
         : this._page === '/pokoje'
-        ? html`<hg-banner
-          .src=${'https://picsum.photos/id/514/1920/980'}
-          .uid=${'rooms'}>
-        </hg-banner>`
+        ? html`<hg-rooms></hg-rooms>`
         : this._page === '/konferencje' 
-        ? html`<hg-banner
-          .src=${'https://picsum.photos/id/3/1920/980'}
-          .uid=${'conferences'}>
-        </hg-banner>`
+        ? html`<hg-conferences></hg-conferences>`
         : this._page === '/kuchnia'
         ? html`<hg-cuisine></hg-cuisine>`
         : this._page === '/galeria'
-        ? html`<hg-banner 
-          .src=${'https://picsum.photos/id/802/1920/980'}
-          .uid=${'gallery'}>
-        </hg-banner><hg-gallery 
+        ? html`<hg-gallery 
           @hide-header=${() => this.shadowRoot.getElementById('header').style.display = 'none'}
           @show-header=${() => this.shadowRoot.getElementById('header').style.display = 'block'}>
         </hg-gallery>`
         : this._page === '/wydarzenia'
-        ? html`<hg-banner 
-          .src=${'https://picsum.photos/id/590/1920/980'}
-          .uid=${'events'}>
-        </hg-banner><hg-events></hg-events>`
+        ? html`<hg-events></hg-events>`
         : _.startsWith('/wydarzenia/', this._page)
         ? html`<hg-event .uid=${_.replace('/wydarzenia/', '', this._page)}></hg-event>`
         : html`<div>brak strony</div>`}

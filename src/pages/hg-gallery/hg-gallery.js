@@ -1,6 +1,7 @@
 import {LitElement, html, css} from 'lit-element';
 import {repeat} from 'lit-html/directives/repeat';
 import {storage} from "../../utils.js";
+import '../../hg-banner.js';
 import '../../edit/hg-delete-item.js';
 import './hg-gallery-upload.js';
 import './hg-gallery-slider.js';
@@ -56,6 +57,10 @@ customElements.define('hg-gallery', class extends LitElement {
   }
   render() {
     return html`
+      <hg-banner 
+        .src=${'https://picsum.photos/id/802/1920/980'}
+        .uid=${'gallery'}>
+      </hg-banner>
       <hg-gallery-upload 
         .images=${this.images}
         @upload-started=${() => this.requestUpdate()}
