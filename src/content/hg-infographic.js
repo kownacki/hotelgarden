@@ -96,7 +96,7 @@ customElements.define('hg-infographic', class extends LitElement {
   }
   render() {
     return html`
-      <hg-heading .text=${'Hotel Garden w liczbach'} center></hg-heading>
+      <hg-heading center>${'Hotel Garden w liczbach'}</hg-heading>
       <div class="items">
         ${_.map((item) => html`
           <div class="item">

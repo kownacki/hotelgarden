@@ -51,7 +51,7 @@ customElements.define('hg-links', class extends LitElement {
   }
   render() {
     return html`
-      <hg-heading .text=${'Zobacz także'} center></hg-heading>
+      <hg-heading center>${'Zobacz także'}</hg-heading>
       <div class="links">
         ${_.map((link) => html`
           <a href="${link.path}">

@@ -3,7 +3,6 @@ import {LitElement, html, css} from 'lit-element';
 customElements.define('hg-heading', class extends LitElement {
   static get properties() {
     return {
-      text: String,
       center: {type: Boolean},
     };
   }
@@ -22,7 +21,7 @@ customElements.define('hg-heading', class extends LitElement {
   }
   render() {
     return html`
-      <h2 style="text-align: ${this.center ? 'center' : 'initial'}">${this.text}</h2>
+      <h2 style="text-align: ${this.center ? 'center' : 'initial'}"><slot></slot></h2>
     `;
   }
 });

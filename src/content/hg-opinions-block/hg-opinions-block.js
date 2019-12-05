@@ -37,7 +37,7 @@ customElements.define('hg-opinions-block', class extends LitElement {
   }
   render() {
     return html`
-      <hg-heading .text=${'Nasi goście o nas'} center></hg-heading>
+      <hg-heading center>${'Nasi goście o nas'}</hg-heading>
       <div class="container">
         <hg-scores></hg-scores>
         <hg-opinions-slider .opinions=${this._opinions}></hg-opinions-slider>

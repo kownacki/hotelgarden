@@ -43,7 +43,7 @@ customElements.define('hg-menu', class extends LitElement {
   }
   render(){
     return html`
-      <hg-heading .text=${'Menu restauracji'} center></hg-heading>
+      <hg-heading center>${'Menu restauracji'}</hg-heading>
       <section>
         <hg-menu-main id="main" .category=${this.categories[this.selectedCategory]} .categories=${this.categories}></hg-menu-main>
         <hg-menu-nav

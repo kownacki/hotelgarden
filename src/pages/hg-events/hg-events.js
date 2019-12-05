@@ -44,7 +44,7 @@ customElements.define('hg-events', class extends LitElement {
       </hg-banner>
       <div class="events">
         <hg-events-add></hg-events-add>
-        <hg-heading .text=${'Nadchodzące wydarzenia'}></hg-heading>
+        <hg-heading>${'Nadchodzące wydarzenia'}</hg-heading>
         ${_.isEmpty(this._upcoming) ? '' : repeat(this._upcoming, _.get('uid'), (event) => html`
           <hg-events-card .event=${event}></hg-events-card>
         `)}
@@ -55,7 +55,7 @@ customElements.define('hg-events', class extends LitElement {
           }}>
         </mwc-button>
         <div id="past" hidden>
-          <hg-heading .text=${'Minione wydarzenia'}></hg-heading>
+          <hg-heading>${'Minione wydarzenia'}</hg-heading>
           ${_.isEmpty(this._past) ? '' : repeat(this._past.reverse(), _.get('uid'), (event) => html`
             <hg-events-card .event=${event}></hg-events-card>
           `)} 

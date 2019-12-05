@@ -50,7 +50,7 @@ customElements.define('hg-text-image', class extends LitElement {
     return html`
       <iron-image .src=${_.get('image', this._textImage)} .sizing=${'cover'}></iron-image>
       <div class="content">
-        <hg-heading .text=${_.get('heading', this._textImage)}></hg-heading>
+        <hg-heading>${_.get('heading', this._textImage)}</hg-heading>
         <p>${_.get('text', this._textImage)}</p>   
         <div class="buttons">
           <a href="#">Pulvinar</a>
