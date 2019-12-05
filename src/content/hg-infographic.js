@@ -1,19 +1,29 @@
 import {LitElement, html, css} from 'lit-element';
 import '../hg-heading.js';
+import {db} from "../utils";
 
 const infographic = [
-  {number: _.random(1, 100), image: `https://picsum.photos/id/${_.random(1, 100)}/600/600`, string: 'Viverra justo',},
-  {number: _.random(1, 100), image: `https://picsum.photos/id/${_.random(1, 100)}/600/600`, string: 'Habitant morbi tristique senectus et netus et malesuada fames ac'},
-  {number: _.random(1, 100), image: `https://picsum.photos/id/${_.random(1, 100)}/600/600`, string: 'Fames'},
-  {number: _.random(1, 100), image: `https://picsum.photos/id/${_.random(1, 100)}/600/600`, string: 'Pharetra massa massa'},
-  {number: _.random(1, 100), image: `https://picsum.photos/id/${_.random(1, 100)}/600/600`, string: 'Non sodales'},
-  {number: _.random(1, 100), image: `https://picsum.photos/id/${_.random(1, 100)}/600/600`, string: 'Vitae suscipit tellus mauris'},
+  {image: `https://picsum.photos/id/${_.random(1, 100)}/600/600`},
+  {image: `https://picsum.photos/id/${_.random(1, 100)}/600/600`},
+  {image: `https://picsum.photos/id/${_.random(1, 100)}/600/600`},
+  {image: `https://picsum.photos/id/${_.random(1, 100)}/600/600`},
+  {image: `https://picsum.photos/id/${_.random(1, 100)}/600/600`},
+  {image: `https://picsum.photos/id/${_.random(1, 100)}/600/600`},
 ];
 
 customElements.define('hg-infographic', class extends LitElement {
   static get properties() {
     return {
+      uid: String,
+      _infographic: Array,
     };
+  }
+  constructor() {
+    super();
+    (async () => {
+      await this.updateComplete;
+      this._infographic = (await db.doc('infographic/' + this.uid).get()).data();
+    })();
   }
   static get styles() {
     return css`
@@ -66,7 +76,6 @@ customElements.define('hg-infographic', class extends LitElement {
         }
       }
       @media all and (min-width: 400px) and (max-width: 719px) {
-
         .item {
           width: 50%;
         }
@@ -98,15 +107,25 @@ customElements.define('hg-infographic', class extends LitElement {
     return html`
       <hg-heading center>${'Hotel Garden w liczbach'}</hg-heading>
       <div class="items">
-        ${_.map((item) => html`
+        ${_.map.convert({cap: false})((item, index) => html`
           <div class="item">
             <div class="data">
-              <div class="number">${item.number}</div>
-              <div>${item.string}</div>
+              <hg-editable-text
+                float
+                .text=${item.number}
+                @save=${(event) => db.doc('infographic/' + this.uid).update({[index + '.number']: event.detail})}>
+                <div class="number"></div>
+              </hg-editable-text>
+              <hg-editable-text
+                float
+                .text=${item.string}
+                @save=${(event) => db.doc('infographic/' + this.uid).update({[index + '.string']: event.detail})}>
+                <div></div>
+              </hg-editable-text>
             </div>
-            <iron-image .src=${item.image} .sizing=${'cover'}></iron-image>
+            <iron-image .src=${infographic[index].image} .sizing=${'cover'}></iron-image>
           </div>
-        `, infographic)}
+        `, this._infographic)}
       </div>
     `;
   }

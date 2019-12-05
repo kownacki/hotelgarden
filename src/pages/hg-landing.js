@@ -33,7 +33,7 @@ customElements.define('hg-landing', class extends LitElement {
       <hg-mosaic .uid=${'landing'}></hg-mosaic>
       <hg-text-image .uid=${'landing'}></hg-text-image>
       <hg-opinions-block></hg-opinions-block>
-      <hg-infographic></hg-infographic>
+      <hg-infographic .uid=${'landing'}></hg-infographic>
       <hg-content-slider></hg-content-slider>
       <hg-links .path=${'/'} .superpath=${'/'}></hg-links>
     `;

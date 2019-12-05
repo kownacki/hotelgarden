@@ -7,6 +7,7 @@ customElements.define('hg-editable-text', class extends LitElement {
       disabled: Boolean,
       showControls: Boolean,
       multiline: {type: Boolean, reflect: true},
+      float: {type: Boolean, reflect: true},
       _slotted: Element,
     };
   }
@@ -51,6 +52,7 @@ customElements.define('hg-editable-text', class extends LitElement {
         display: block;
         background: var(--placeholder-color);
         opacity: 50%;
+        position: relative;
       }
       :host([not-empty]) {
         background: transparent;
@@ -69,12 +71,18 @@ customElements.define('hg-editable-text', class extends LitElement {
         text-transform: initial;
       }
       .edit {
-        margin-top: 10px;
+        margin-top: 5px;
         justify-content: flex-end;
         flex-wrap: wrap;
       }
       .edit:not([hidden]) {
         display: flex;
+      }
+      :host([float]) .edit {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        z-index: 1;
       }
       paper-button {
         background: white;
