@@ -46,6 +46,9 @@ customElements.define('hg-editable-text', class extends LitElement {
       .edit:not([hidden]) {
         display: flex;
       }
+      paper-button {
+        background: white;
+      }
     `;
   }
   render() {
