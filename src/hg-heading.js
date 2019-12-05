@@ -10,9 +10,10 @@ customElements.define('hg-heading', class extends LitElement {
     return css`
       :host {
         display: block;
+        margin-bottom: 30px;
       }
       h2 {
-        margin-top: 0;
+        margin: 0;
         font-weight: 300;
         font-size: 40px;
         text-transform: uppercase;

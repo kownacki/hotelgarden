@@ -1,6 +1,7 @@
 import {LitElement, html, css} from 'lit-element';
 import {db} from "../utils.js";
 import '../hg-heading.js';
+import '../edit/hg-editable-text.js';
 
 customElements.define('hg-mosaic', class extends LitElement {
   static get properties() {
@@ -13,13 +14,12 @@ customElements.define('hg-mosaic', class extends LitElement {
     super();
     (async () => {
       await this.updateComplete;
-      this._mosaic = (await db.collection("mosaics").doc(this.uid).get()).data();
+      this._mosaic = (await db.doc('mosaics/' + this.uid).get()).data();
     })();
   }
   static get styles() {
     return css`
       :host {
-        font-size: 20px;
         max-width: 1250px;
         margin: 0 auto 30px;
         padding: 25px;
@@ -40,6 +40,9 @@ customElements.define('hg-mosaic', class extends LitElement {
       }
       img {
         width: 100%;
+      }
+      p {
+        font-size: 20px;
       }
       .buttons {
         margin-top: 40px;
@@ -67,8 +70,17 @@ customElements.define('hg-mosaic', class extends LitElement {
     return html`
       <div class="right">
         <div class="content">
-          <hg-heading>${_.get('primary.heading', this._mosaic)}</hg-heading>
-          <p>${_.get('primary.text', this._mosaic)}</p>   
+          <hg-editable-text
+            .text=${_.get('primary.heading', this._mosaic)}
+            @save=${(event) => db.doc('mosaics/' + this.uid).update({'primary.heading': event.detail})}>
+            <hg-heading></hg-heading>
+          </hg-editable-text>
+          <hg-editable-text
+            multiline
+            .text=${_.get('primary.text', this._mosaic)}
+            @save=${(event) => db.doc('mosaics/' + this.uid).update({'primary.text': event.detail})}>
+            <p></p>
+          </hg-editable-text>
           <div class="buttons">
             <a href="#">Pulvinar</a>
             <a href="#">Ante ipsum</a>
@@ -78,8 +90,17 @@ customElements.define('hg-mosaic', class extends LitElement {
       <div class="left">
         <img .src=${_.get('primary.image', this._mosaic)}>
         <div class="content">
-          <hg-heading>${_.get('secondary.heading', this._mosaic)}</hg-heading>
-          <p>${_.get('secondary.text', this._mosaic)}</p>
+           <hg-editable-text
+            .text=${_.get('secondary.heading', this._mosaic)}
+            @save=${(event) => db.doc('mosaics/' + this.uid).update({'secondary.heading': event.detail})}>
+            <hg-heading></hg-heading>
+          </hg-editable-text>
+          <hg-editable-text
+            multiline
+            .text=${_.get('secondary.text', this._mosaic)}
+            @save=${(event) => db.doc('mosaics/' + this.uid).update({'secondary.text': event.detail})}>
+            <p></p>
+          </hg-editable-text>
           <div class="buttons">
             <a href="#">Arcu dictum varius</a>
           </div>
@@ -88,7 +109,6 @@ customElements.define('hg-mosaic', class extends LitElement {
       <div class="right">
         <img .src=${_.get('secondary.image', this._mosaic)}>
       </div>
-
     `;
   }
 });
