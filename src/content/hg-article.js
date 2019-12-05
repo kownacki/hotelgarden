@@ -38,6 +38,7 @@ customElements.define('hg-article', class extends LitElement {
   render() {
     return html`
       <hg-editable-text
+        multiline
         .text=${this._text}
         @save=${(event) => db.doc('articles/' + this.uid).update({text: event.detail})}>
         <div class="text"></div>

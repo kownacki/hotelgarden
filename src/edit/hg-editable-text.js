@@ -6,6 +6,7 @@ customElements.define('hg-editable-text', class extends LitElement {
       text: String,
       disabled: Boolean,
       showControls: Boolean,
+      multiline: {type: Boolean, reflect: true},
       _slotted: Element,
     };
   }
@@ -15,7 +16,10 @@ customElements.define('hg-editable-text', class extends LitElement {
     (async () => {
       await this.updateComplete;
       this._slotted.setAttribute('contenteditable', true);
-      this._slotted.addEventListener('input', () => this.showControls = true);
+      this._slotted.addEventListener('input', () => {
+        this.showControls = true;
+        this.setAttribute('not-empty', '');
+      });
     })();
   }
   updated(changedProperties) {
@@ -31,6 +35,11 @@ customElements.define('hg-editable-text', class extends LitElement {
     }
     if (changedProperties.has('text')) {
       this._slotted.innerHTML = this.text;
+      if (this.text) {
+        this.setAttribute('not-empty', '');
+      } else {
+        this.removeAttribute('not-empty');
+      }
     }
     if (changedProperties.has('disabled')) {
       this._slotted.setAttribute('contenteditable', !this.disabled);
@@ -38,6 +47,24 @@ customElements.define('hg-editable-text', class extends LitElement {
   }
   static get styles() {
     return css`
+      :host {
+        display: block;
+        background: var(--placeholder-color);
+        opacity: 50%;
+      }
+      :host([not-empty]) {
+        background: transparent;
+        opacity: initial;
+      }
+      :host([multiline]) {
+        height: 150px;
+      }
+      :host([multiline][not-empty]) {
+        height: auto;
+      }
+      ::slotted(*) {
+        height: 100%;
+      }
       .edit {
         margin-top: 10px;
         justify-content: flex-end;
@@ -59,7 +86,10 @@ customElements.define('hg-editable-text', class extends LitElement {
           raised
           @click=${() => {
             this.showControls = false;
-            this._slotted.innerHTML = this.text;
+            this._slotted.innerHTML = this.text ? this.text : '';
+            if (!this.text) {
+              this.removeAttribute('not-empty');
+            }
           }}>
           Cofnij
         </paper-button>
@@ -67,7 +97,7 @@ customElements.define('hg-editable-text', class extends LitElement {
           raised
           @click=${() => {
             this.showControls = false;
-            this.text = this._slotted.textContent;
+            this.text = this._slotted.textContent ? this._slotted.textContent : '';
             this.dispatchEvent(new CustomEvent('save', {detail: this.text}));
           }}>
           Zapisz
