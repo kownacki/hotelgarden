@@ -1,12 +1,25 @@
 import {LitElement, html, css} from 'lit-element';
+import {db} from "./utils";
+import './edit/hg-editable-text.js';
 
 customElements.define('hg-banner', class extends LitElement {
   static get properties() {
     return {
+      uid: String,
       src: String,
       heading: String,
       subheading: String,
+      _banner: String,
     };
+  }
+  constructor() {
+    super();
+    (async () => {
+      await this.updateComplete;
+      if (!this.heading) {
+        this._banner = (await db.doc('banners/' + this.uid).get()).data();
+      }
+    })();
   }
   static get styles() {
     return css`
@@ -29,19 +42,22 @@ customElements.define('hg-banner', class extends LitElement {
         width: 1000px;
         max-width: 100%;
         margin: auto auto 0;
-        color: white;
         text-align: center;
+      }
+      h1:not(:focus), p:not(:focus) {
         text-transform: uppercase;
       }
       h1 {
         font-weight: 300;
         font-size: 50px;
         margin: 10px;
+        color: white;
       }
       p {
         font-weight: 300;
         font-size: 18px;
         margin: 10px;
+        color: white;
       }
     `;
   }
@@ -49,8 +65,21 @@ customElements.define('hg-banner', class extends LitElement {
     return html`
       <iron-image .src=${this.src} .sizing=${'cover'}></iron-image>
       <div class="heading">
-        <h1>${this.heading}</h1>
-        <p>${this.subheading}</p>
+        ${this.heading ? html`<h1>${this.heading}</h1>`
+          : html`<hg-editable-text
+            .text=${_.get('heading', this._banner)}
+            @save=${(event) => db.doc('banners/' + this.uid).update({heading: event.detail})}>
+            <h1></h1>
+          </hg-editable-text>
+        `}
+        ${this.heading 
+          ? (this.subheading ? html`<p>${this.subheading}</p>` : '')
+          : html`<hg-editable-text
+            .text=${_.get('subheading', this._banner)}
+            @save=${(event) => db.doc('banners/' + this.uid).update({subheading: event.detail})}>
+            <p></p>
+          </hg-editable-text>
+        `}
       </div>
     `;
   }

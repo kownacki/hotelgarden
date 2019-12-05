@@ -11,10 +11,9 @@ customElements.define('hg-cuisine', class extends LitElement {
   }
   render() {
     return html`
-      <hg-banner 
-        .src=${'https://picsum.photos/id/75/1920/980'}
-        .heading=${'Kuchnia'}
-        .subheading=${'Lorem ipsum dolor sit amet consectetur adipiscing elit'}>
+      <hg-banner
+        .uid=${'cuisine'}
+        .src=${'https://picsum.photos/id/75/1920/980'}>
       </hg-banner>
       <hg-article .uid=${'landing'}></hg-article>
       <hg-icons .uid=${'landing'}></hg-icons>

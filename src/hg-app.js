@@ -62,24 +62,21 @@ customElements.define('hg-app', class extends LitElement {
         : this._page === '/villa-garden' 
         ? html`<hg-villa-garden></hg-villa-garden>`
         : this._page === '/pokoje'
-        ? html`<hg-banner 
+        ? html`<hg-banner
           .src=${'https://picsum.photos/id/514/1920/980'}
-          .heading=${'Pokoje'}
-          .subheading=${'Lorem ipsum dolor sit amet consectetur adipiscing elit'}>
+          .uid=${'rooms'}>
         </hg-banner>`
         : this._page === '/konferencje' 
-        ? html`<hg-banner 
+        ? html`<hg-banner
           .src=${'https://picsum.photos/id/3/1920/980'}
-          .heading=${'Konferencje'}
-          .subheading=${'Lorem ipsum dolor sit amet consectetur adipiscing elit'}>
+          .uid=${'conferences'}>
         </hg-banner>`
         : this._page === '/kuchnia'
         ? html`<hg-cuisine></hg-cuisine>`
         : this._page === '/galeria'
         ? html`<hg-banner 
           .src=${'https://picsum.photos/id/802/1920/980'}
-          .heading=${'Galeria'}
-          .subheading=${'Lorem ipsum dolor sit amet consectetur adipiscing elit'}>
+          .uid=${'gallery'}>
         </hg-banner><hg-gallery 
           @hide-header=${() => this.shadowRoot.getElementById('header').style.display = 'none'}
           @show-header=${() => this.shadowRoot.getElementById('header').style.display = 'block'}>
@@ -87,8 +84,7 @@ customElements.define('hg-app', class extends LitElement {
         : this._page === '/wydarzenia'
         ? html`<hg-banner 
           .src=${'https://picsum.photos/id/590/1920/980'}
-          .heading=${'Wydarzenia'}
-          .subheading=${'Lorem ipsum dolor sit amet consectetur adipiscing elit'}>
+          .uid=${'events'}>
         </hg-banner><hg-events></hg-events>`
         : _.startsWith('/wydarzenia/', this._page)
         ? html`<hg-event .uid=${_.replace('/wydarzenia/', '', this._page)}></hg-event>`

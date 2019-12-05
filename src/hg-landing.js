@@ -23,10 +23,9 @@ customElements.define('hg-landing', class extends LitElement {
   }
   render() {
     return html`
-      <hg-banner 
-        .src=${'https://picsum.photos/id/1040/1920/980'}
-        .heading=${'Hotel Garden'}
-        .subheading=${'Lorem ipsum dolor sit amet consectetur adipiscing elit'}>
+      <hg-banner
+        .uid=${'landing'}
+        .src=${'https://picsum.photos/id/1040/1920/980'}>
       </hg-banner>
       <hg-article .uid=${'landing'}></hg-article>
       <hg-quote .uid=${'landing'}></hg-quote>

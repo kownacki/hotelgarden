@@ -15,8 +15,7 @@ customElements.define('hg-villa-garden', class extends LitElement {
     return html`
       <hg-banner
         .src=${'/resources/images/villa.jpg'}
-        .heading=${'Villa Garden'}
-        .subheading=${'Lorem ipsum dolor sit amet consectetur adipiscing elit'}>
+        .uid=${'villa-garden'}>
       </hg-banner>
       <hg-article .uid=${'landing'}></hg-article>
       <hg-icons .uid=${'landing'}></hg-icons>
