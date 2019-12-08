@@ -22,9 +22,9 @@ customElements.define('hg-villa-garden', class extends LitElement {
         .src=${'/resources/images/villa.jpg'}
         .uid=${'villa-garden'}>
       </hg-banner>
-      <hg-article .uid=${'landing'}></hg-article>
-      <hg-icons .uid=${'landing'}></hg-icons>
-      <hg-mosaic .uid=${'landing'}></hg-mosaic>
+      <hg-article .uid=${'villa-garden'}></hg-article>
+      <hg-icons .uid=${'villa-garden'}></hg-icons>
+      <hg-mosaic .uid=${'villa-garden'}></hg-mosaic>
       <hg-links .path=${'/villa-garden'} .superpath=${'/'}></hg-links>
     `;
   }
