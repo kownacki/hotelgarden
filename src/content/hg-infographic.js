@@ -1,15 +1,8 @@
 import {LitElement, html, css} from 'lit-element';
 import '../hg-heading.js';
-import {db} from "../utils";
-
-const infographic = [
-  {image: `https://picsum.photos/id/${_.random(1, 100)}/600/600`},
-  {image: `https://picsum.photos/id/${_.random(1, 100)}/600/600`},
-  {image: `https://picsum.photos/id/${_.random(1, 100)}/600/600`},
-  {image: `https://picsum.photos/id/${_.random(1, 100)}/600/600`},
-  {image: `https://picsum.photos/id/${_.random(1, 100)}/600/600`},
-  {image: `https://picsum.photos/id/${_.random(1, 100)}/600/600`},
-];
+import {db, updateImage} from "../utils";
+import '../edit/hg-editable-image.js';
+import '../edit/hg-editable-text.js';
 
 customElements.define('hg-infographic', class extends LitElement {
   static get properties() {
@@ -22,7 +15,7 @@ customElements.define('hg-infographic', class extends LitElement {
     super();
     (async () => {
       await this.updateComplete;
-      this._infographic = (await db.doc('infographic/' + this.uid).get()).data();
+      this._infographic = (await db.doc('infographics/' + this.uid).get()).data();
     })();
   }
   static get styles() {
@@ -113,17 +106,28 @@ customElements.define('hg-infographic', class extends LitElement {
               <hg-editable-text
                 float
                 .text=${item.number}
-                @save=${(event) => db.doc('infographic/' + this.uid).update({[index + '.number']: event.detail})}>
+                @save=${(event) => db.doc('infographics/' + this.uid).update({[index + '.number']: event.detail})}>
                 <div class="number"></div>
               </hg-editable-text>
               <hg-editable-text
                 float
                 .text=${item.string}
-                @save=${(event) => db.doc('infographic/' + this.uid).update({[index + '.string']: event.detail})}>
+                @save=${(event) => db.doc('infographics/' + this.uid).update({[index + '.string']: event.detail})}>
                 <div></div>
               </hg-editable-text>
             </div>
-            <iron-image .src=${infographic[index].image} .sizing=${'cover'}></iron-image>
+            <hg-editable-image
+              .src=${_.get('image.url', this._infographic[index])}
+              .sizing=${'cover'}
+              @save=${async (event) => {
+                this._infographic[index].image = await updateImage(
+                  'infographics/' + this.uid, 
+                  `${index}.image`, 
+                  event.detail, 
+                  _.get('image.name', this._infographic[index])
+                );
+              }}>
+            </hg-editable-image>
           </div>
         `, this._infographic)}
       </div>

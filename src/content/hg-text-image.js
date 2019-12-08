@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
-import {db} from "../utils.js";
+import {db, updateData, updateImage} from "../utils.js";
 import '../hg-heading.js';
 
 customElements.define('hg-text-image', class extends LitElement {
@@ -13,7 +13,7 @@ customElements.define('hg-text-image', class extends LitElement {
     super();
     (async () => {
       await this.updateComplete;
-      this._textImage = (await db.doc('textImage/' + this.uid).get()).data();
+      this._textImage = (await db.doc('textImage/' + this.uid).get()).data() || {};
     })();
   }
   static get styles() {
@@ -24,7 +24,7 @@ customElements.define('hg-text-image', class extends LitElement {
         padding: 0 25px;
         display: flex;
       }
-      iron-image {
+      hg-editable-image {
         width: 50%;
         height: 400px;
       }
@@ -48,19 +48,29 @@ customElements.define('hg-text-image', class extends LitElement {
       }
     `;
   }
+  async updateData(path, data) {
+    updateData('textImage/' + this.uid, path, data);
+  }
+  async updateImage(file) {
+    this._textImage.image = await updateImage('textImage/' + this.uid, 'image', file, (_.get('image.name', this._textImage)));
+  }
   render() {
     return html`
-      <iron-image .src=${_.get('image', this._textImage)} .sizing=${'cover'}></iron-image>
+      <hg-editable-image
+        .src=${_.get('image.url', this._textImage)}
+        .sizing=${'cover'}
+        @save=${(event) => this.updateImage(event.detail)}>
+      </hg-editable-image>
       <div class="content">
          <hg-editable-text
           .text=${_.get('heading', this._textImage)}
-          @save=${(event) => db.doc('textImage/' + this.uid).update({'heading': event.detail})}>
+          @save=${(event) => this.updateData('heading', event.detail)}>
           <hg-heading></hg-heading>
         </hg-editable-text>
         <hg-editable-text
           multiline
           .text=${_.get('text', this._textImage)}
-          @save=${(event) => db.doc('textImage/' + this.uid).update({'text': event.detail})}>
+          @save=${(event) => this.updateData('text', event.detail)}>
           <p></p>
         </hg-editable-text>
         <div class="buttons">

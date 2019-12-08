@@ -38,6 +38,21 @@ export const splitEvents = (events) => [
   ])(events)
 ];
 
+export const updateData = (doc, path, data) => {
+  db.doc(doc).set(_.set(path, data, {}), {merge: true});
+};
+export const updateImage = async (doc, path, file, oldImageName) => {
+  const name = `${Date.now()}${_.padCharsStart('0', 9,  _.random(1, 10**9 - 1))}`;
+  if (oldImageName) {
+    storage.ref('images/' + oldImageName).delete();
+  }
+  const storageRef = storage.ref('images/' + name);
+  await storageRef.put(file);
+  const image = {name, url: await storageRef.getDownloadURL()};
+  updateData(doc, path, image);
+  return image;
+};
+
 export const array = {
   swapItems: (index1, index2, arr) => {
     const temp = arr[index1];

@@ -13,7 +13,7 @@ customElements.define('hg-article', class extends LitElement {
     super();
     (async () => {
       await this.updateComplete;
-      this._text = (await db.doc('articles/' + this.uid).get()).data().text;
+      this._text = _.get('text', (await db.doc('articles/' + this.uid).get()).data());
     })();
   }
   static get styles() {
@@ -41,7 +41,7 @@ customElements.define('hg-article', class extends LitElement {
       <hg-editable-text
         multiline
         .text=${this._text}
-        @save=${(event) => db.doc('articles/' + this.uid).update({text: event.detail})}>
+        @save=${(event) => db.doc('articles/' + this.uid).set({text: event.detail}, {merge: true})}>
         <div class="text"></div>
       </hg-editable-text>
     `;

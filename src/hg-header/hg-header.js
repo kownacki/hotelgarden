@@ -19,7 +19,7 @@ customElements.define('hg-header', class extends LitElement {
         display: block;
         position: fixed;
         width: 100%;
-        z-index: 1;
+        z-index: 2;
       }
       nav {
         transition: background-color 0.5s ease, color 0.2s ease, text-shadow 0.5s ease;;

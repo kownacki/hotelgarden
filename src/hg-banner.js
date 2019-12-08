@@ -1,15 +1,15 @@
 import {LitElement, html, css} from 'lit-element';
-import {db} from "./utils";
+import {db, updateImage} from "./utils";
 import './edit/hg-editable-text.js';
 
 customElements.define('hg-banner', class extends LitElement {
   static get properties() {
     return {
       uid: String,
-      src: String,
       heading: String,
       subheading: String,
-      _banner: String,
+      image: String,
+      _banner: Object,
     };
   }
   constructor() {
@@ -17,7 +17,7 @@ customElements.define('hg-banner', class extends LitElement {
     (async () => {
       await this.updateComplete;
       if (!this.heading) {
-        this._banner = (await db.doc('banners/' + this.uid).get()).data();
+        this._banner = (await db.doc('banners/' + this.uid).get()).data() || {};
       }
     })();
   }
@@ -28,13 +28,12 @@ customElements.define('hg-banner', class extends LitElement {
         height: 100vh;
         display: flex;
       }
-      iron-image {
+      hg-editable-image {
         top: 0;
         left: 0;
         bottom: 0;
         right: 0;
         position: absolute;
-        z-index: -1;
       }
       .heading {
         background: rgba(var(--secondary-color-rgb), 0.30);
@@ -44,6 +43,7 @@ customElements.define('hg-banner', class extends LitElement {
         margin: auto auto 0;
         text-align: center;
         text-transform: uppercase;
+        z-index: 1;
       }
       h1 {
         font-weight: 300;
@@ -61,12 +61,19 @@ customElements.define('hg-banner', class extends LitElement {
   }
   render() {
     return html`
-      <iron-image .src=${this.src} .sizing=${'cover'}></iron-image>
+      <hg-editable-image
+        .src=${_.get('image.url', this._banner)}
+        .sizing=${'cover'}
+        @save=${async (event) => {
+          this._banner.image = await updateImage('banners/' + this.uid, 'image', event.detail, (_.get('image.name', this._banner)));
+        }}>
+      </hg-editable-image>
       <div class="heading">
-        ${this.heading ? html`<h1>${this.heading}</h1>`
+        ${this.heading 
+          ? html`<h1>${this.heading}</h1>`
           : html`<hg-editable-text
             .text=${_.get('heading', this._banner)}
-            @save=${(event) => db.doc('banners/' + this.uid).update({heading: event.detail})}>
+            @save=${(event) => db.doc('banners/' + this.uid).set({heading: event.detail}, {merge: true})}>
             <h1></h1>
           </hg-editable-text>
         `}
@@ -74,7 +81,7 @@ customElements.define('hg-banner', class extends LitElement {
           ? (this.subheading ? html`<p>${this.subheading}</p>` : '')
           : html`<hg-editable-text
             .text=${_.get('subheading', this._banner)}
-            @save=${(event) => db.doc('banners/' + this.uid).update({subheading: event.detail})}>
+            @save=${(event) => db.doc('banners/' + this.uid).set({subheading: event.detail}, {merge: true})}>
             <p></p>
           </hg-editable-text>
         `}

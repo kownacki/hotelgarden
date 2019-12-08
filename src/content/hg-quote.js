@@ -54,12 +54,12 @@ customElements.define('hg-quote', class extends LitElement {
     return html`
       <hg-editable-text
         .text=${_.get('text', this._quote)}
-        @save=${(event) => db.doc('quotes/' + this.uid).update({text: event.detail})}>
+        @save=${(event) => db.doc('quotes/' + this.uid).set({text: event.detail}, {merge: true})}>
         <div class="text"></div>
       </hg-editable-text>
       <hg-editable-text
         .text=${_.get('author', this._quote)}
-        @save=${(event) => db.doc('quotes/' + this.uid).update({author: event.detail})}>
+        @save=${(event) => db.doc('quotes/' + this.uid).set({author: event.detail}, {merge: true})}>
         <div class="author"></div>
       </hg-editable-text>
     `;

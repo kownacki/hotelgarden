@@ -5,6 +5,7 @@ moment.locale('pl');
 
 import '@polymer/app-route/app-location';
 import '@polymer/iron-icons';
+import '@polymer/iron-icons/image-icons.js';
 import '@polymer/iron-icon';
 import '@polymer/iron-image';
 import '@polymer/paper-button';

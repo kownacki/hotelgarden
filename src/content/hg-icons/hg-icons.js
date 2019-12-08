@@ -92,7 +92,7 @@ customElements.define('hg-icons', class extends LitElement {
         }}
         @request-add=${async (event) => {
           this._processing = true;
-          await db.doc('iconBlocks/' + this.uid).update({[this._icons.length]: event.detail});
+          await db.doc('iconBlocks/' + this.uid).set({[this._icons.length]: event.detail}, {merge: true});
           this._icons = [...this._icons, event.detail];
           this.requestUpdate();
           this._processing = false;

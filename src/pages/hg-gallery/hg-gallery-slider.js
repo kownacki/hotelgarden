@@ -1,5 +1,7 @@
 import {LitElement, html, css} from 'lit-element';
 import '../../hg-slider.js';
+import '../../edit/hg-editable-image.js';
+
 //todo bug clicking go back when image is displayed breaks website
 customElements.define('hg-gallery-slider', class extends LitElement {
   static get properties() {
@@ -51,10 +53,11 @@ customElements.define('hg-gallery-slider', class extends LitElement {
         .selected=${this._selected}
         .items=${this.images}
         .template=${(image) => html`
-          <iron-image
+          <hg-editable-image
             .src=${image.url}
-            .sizing=${'contain'}>
-          </iron-image>
+            .sizing=${'contain'}
+            @save=${(event) => this.dispatchEvent(new CustomEvent('save', {detail: {image, file: event.detail}}))}>
+          </hg-editable-image>
         `}>
       </hg-slider>
       <paper-icon-button 

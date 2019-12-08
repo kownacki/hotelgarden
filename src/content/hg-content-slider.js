@@ -1,21 +1,21 @@
 import {LitElement, html, css} from 'lit-element';
-import {repeat} from "lit-html/directives/repeat";
-import {storage} from "../utils.js";
+import {db, updateImage} from "../utils.js";
 
 customElements.define('hg-content-slider', class extends LitElement {
   static get properties() {
     return {
+      uid: String,
       _images: Array,
     };
   }
   constructor() {
     super();
     (async () => {
-      this._images = await Promise.all(_.map.convert({cap: false})(async (item, index) => ({
-        name: item.name,
-        url: await item.getDownloadURL(),
-        index,
-      }), _.reverse((await storage.ref('gallery').listAll()).items)));
+      await this.updateComplete;
+      this._images = _.map.convert({cap: false})(
+        (image, index) => ({index, ...image}),
+        (await db.doc('contentSliders/' + this.uid).get()).data()
+      );
     })();
   }
   static get styles() {
@@ -30,13 +30,17 @@ customElements.define('hg-content-slider', class extends LitElement {
       }
     `;
   }
+  async updateImage(image, file) {
+    Object.assign(image, await updateImage('contentSliders/' + this.uid, image.index, file, image.name));
+    this.requestUpdate();
+  }
   render() {
     return html`
       <hg-slider
         id="content-slider"
         double
         .items=${this._images}
-        .template=${(image, index) => html`
+        .template=${(image) => html`
           <iron-image
             .src=${image.url}
             .sizing=${'cover'}
@@ -44,7 +48,11 @@ customElements.define('hg-content-slider', class extends LitElement {
           </iron-image>
         `}>
       </hg-slider>
-      <hg-gallery-slider id="gallery-slider" .images=${this._images}></hg-gallery-slider>
+      <hg-gallery-slider 
+        id="gallery-slider" 
+        .images=${this._images}
+        @save=${(event) => this.updateImage(event.detail.image, event.detail.file)}>
+      </hg-gallery-slider>
     `;
   }
 });

@@ -23,10 +23,7 @@ customElements.define('hg-landing', class extends LitElement {
   }
   render() {
     return html`
-      <hg-banner
-        .uid=${'landing'}
-        .src=${'https://picsum.photos/id/1040/1920/980'}>
-      </hg-banner>
+      <hg-banner .uid=${'landing'}></hg-banner>
       <hg-article .uid=${'landing'}></hg-article>
       <hg-quote .uid=${'landing'}></hg-quote>
       <hg-icons .uid=${'landing'}></hg-icons>
@@ -34,7 +31,7 @@ customElements.define('hg-landing', class extends LitElement {
       <hg-text-image .uid=${'landing'}></hg-text-image>
       <hg-opinions-block></hg-opinions-block>
       <hg-infographic .uid=${'landing'}></hg-infographic>
-      <hg-content-slider></hg-content-slider>
+      <hg-content-slider .uid=${'landing'}></hg-content-slider>
       <hg-links .path=${'/'} .superpath=${'/'}></hg-links>
     `;
   }
