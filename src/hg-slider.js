@@ -74,6 +74,7 @@ customElements.define('hg-slider', class extends LitElement {
       slider.style.transition = 'none';
       slider.style.right = (this.double ? '-50%' : '-100%');
       this.selected = (direction === 'right' ? array.nextIndex : array.prevIndex)(this.selected, this.items);
+      this.dispatchEvent(new CustomEvent('selected-changed', {detail: this.selected}));
     });
   }
   render() {

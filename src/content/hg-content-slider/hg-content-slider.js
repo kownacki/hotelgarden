@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
-import {db, updateImage} from '../../utils.js';
+import {db, updateImage, deleteImageFromStorage} from '../../utils.js';
 import './hg-content-slider-item.js';
 
 customElements.define('hg-content-slider', class extends LitElement {
@@ -55,6 +55,28 @@ customElements.define('hg-content-slider', class extends LitElement {
         .images=${this._images}
         @save=${async (event) => {
           await this.updateImage(event.detail.image, event.detail.file);
+          this.requestUpdate();
+          this.shadowRoot.getElementById('gallery-slider').requestUpdate();
+        }}
+        @request-delete=${async () => {
+          const index = this.shadowRoot.getElementById('gallery-slider').selected;
+          const image = this._images[index];
+          deleteImageFromStorage(image.name);
+          const newImages = _.map.convert({cap: false})(
+            (image, index) => _.set('index', index, image),
+            _.remove((image) => image.index === index, this._images),
+          );
+          db.doc('contentSliders/' + this.uid).set({..._.map(_.omit('index'), newImages)});
+          if (newImages.length === 0) {
+            this.shadowRoot.getElementById('gallery-slider').close();
+          }
+          if (index === newImages.length) {
+            --this.shadowRoot.getElementById('gallery-slider').selected;
+          }
+          if (this.shadowRoot.getElementById('content-slider').selected === newImages.length) {
+            --this.shadowRoot.getElementById('content-slider').selected;
+          }
+          this._images = newImages;
           this.requestUpdate();
           this.shadowRoot.getElementById('gallery-slider').requestUpdate();
         }}>

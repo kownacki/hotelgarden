@@ -15,28 +15,23 @@ customElements.define('hg-delete-item', class extends LitElement {
         padding: 10px;
         background: var(--paper-red-100);
       }
-      mwc-button {
-        float: right;
-      }
       paper-icon-button {
         width: 24px;
         height: 24px;
         padding: 0;
       }
+      .buttons {
+        display: flex;
+      }
     `;
   }
   render() {
-    const deleteItem = () => {
-      this.shadowRoot.getElementById('dialog').close();
-      this.dispatchEvent(new CustomEvent('request-delete', {composed: true}));
-    };
     return html`
       <paper-icon-button 
         ?disabled=${this.disable}
         icon="icons:delete"
         @click=${() => this.shadowRoot.getElementById('dialog').open()}>
       </paper-icon-button>
-      
       <paper-dialog 
         id="dialog" 
         @opened-changed=${(event) => {this.opened = event.target.opened; this.dispatchEvent(new CustomEvent('opened-changed'))}}>
@@ -45,7 +40,13 @@ customElements.define('hg-delete-item', class extends LitElement {
           Czy na pewno usunąć "${this.name}"? 
           Usunięte dane nie mogą być przywrócone.
         </div>
-        <mwc-button raised label="Usuń" @click=${deleteItem}></mwc-button>
+        <div class="buttons">
+          <paper-button raised @click=${() => this.shadowRoot.getElementById('dialog').close()}>Anuluj</paper-button>   
+          <paper-button raised @click=${() => {
+            this.shadowRoot.getElementById('dialog').close();
+            this.dispatchEvent(new CustomEvent('request-delete', {composed: true}));
+          }}>Usuń</paper-button>
+        </div>
       </paper-dialog>
     `;
   }
