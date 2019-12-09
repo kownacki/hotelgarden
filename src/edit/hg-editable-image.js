@@ -39,7 +39,7 @@ customElements.define('hg-editable-image', class extends LitElement {
         position: absolute;
         width: 100%;
         height: 100%;
-        padding: 0 calc(50% - 50px);
+        padding: 0 calc(50% - 24px);
         color: white;
         --paper-icon-button-ink-color: transparent;
       }
