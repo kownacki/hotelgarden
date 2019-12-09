@@ -27,7 +27,7 @@ customElements.define('hg-content-slider', class extends LitElement {
         position: relative;
         display: block;
         max-width: 1200px;
-        margin: 60px auto;
+        margin: 100px auto;
         height: 350px;
         background: rgba(var(--placeholder-color-rgb), 0.5);
       }
