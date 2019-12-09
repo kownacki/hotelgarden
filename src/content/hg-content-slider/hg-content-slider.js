@@ -1,5 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
-import {db, updateImage} from "../utils.js";
+import {db, updateImage} from '../../utils.js';
+import './hg-content-slider-item.js';
 
 customElements.define('hg-content-slider', class extends LitElement {
   static get properties() {
@@ -41,11 +42,10 @@ customElements.define('hg-content-slider', class extends LitElement {
         double
         .items=${this._images}
         .template=${(image) => html`
-          <iron-image
-            .src=${image.url}
-            .sizing=${'cover'}
+          <hg-content-slider-item
+            .url=${image.url}
             @click=${() => !this.shadowRoot.getElementById('content-slider').transitionGoing && this.shadowRoot.getElementById('gallery-slider').open(image.index)}>
-          </iron-image>
+          </hg-content-slider-item>
         `}>
       </hg-slider>
       <hg-gallery-slider 

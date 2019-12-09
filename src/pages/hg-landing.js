@@ -7,7 +7,7 @@ import '../content/hg-mosaic.js';
 import '../content/hg-text-image.js';
 import '../content/hg-opinions-block/hg-opinions-block.js';
 import '../content/hg-infographic.js';
-import '../content/hg-content-slider.js';
+import '../content/hg-content-slider/hg-content-slider.js';
 import '../content/hg-links.js';
 
 customElements.define('hg-landing', class extends LitElement {
