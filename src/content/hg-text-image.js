@@ -63,7 +63,7 @@ customElements.define('hg-text-image', class extends LitElement {
         @save=${(event) => this.updateImage(event.detail)}>
       </hg-editable-image>
       <div class="content">
-         <hg-editable-text
+        <hg-editable-text
           .text=${_.get('heading', this._textImage)}
           @save=${(event) => this.updateData('heading', event.detail)}>
           <hg-heading></hg-heading>

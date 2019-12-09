@@ -8,20 +8,31 @@ customElements.define('hg-editable-text', class extends LitElement {
       showControls: Boolean,
       multiline: {type: Boolean, reflect: true},
       float: {type: Boolean, reflect: true},
-      _slotted: Element,
+      _editable: Element,
     };
   }
   constructor() {
     super();
-    this._slotted = this.querySelector('*');
-    (async () => {
-      await this.updateComplete;
-      this._slotted.setAttribute('contenteditable', true);
-      this._slotted.addEventListener('input', () => {
-        this.showControls = true;
-        this.setAttribute('not-empty', '');
-      });
-    })();
+    setTimeout(() => {
+      if (!this._editable) {
+        this.setEditable();
+      }
+    }, 500);
+  }
+  setEditable() {
+    const slotted = this.querySelector('*');
+    this._editable = (slotted.shadowRoot && slotted.shadowRoot.getElementById('editable')) || slotted;
+    this._editable.setAttribute('contenteditable', true);
+    this._editable.addEventListener('input', () => {
+      this.showControls = true;
+      this.setAttribute('not-empty', '');
+    });
+    this._editable.addEventListener("focus", () => {
+      this._editable.style['text-transform'] = "initial";
+    });
+    this._editable.addEventListener("blur", () => {
+      this._editable.style['text-transform'] = null;
+    });
   }
   updated(changedProperties) {
     if (changedProperties.has('showControls')) {
@@ -29,13 +40,16 @@ customElements.define('hg-editable-text', class extends LitElement {
       //todo add also when changing location
       //todo multiple onbeforeunload overlapping
       window.onbeforeunload = !this.showControls ? null : () => {
-        window.scrollTo(0, this._slotted.offsetTop - 70);
-        this._slotted.focus();
+        window.scrollTo(0, this._editable.offsetTop - 70);
+        this._editable.focus();
         return '';
       };
     }
     if (changedProperties.has('text')) {
-      this._slotted.innerHTML = this.text;
+      if (!this._editable) {
+        this.setEditable();
+      }
+      this._editable.innerHTML = this.text;
       if (this.text) {
         this.setAttribute('not-empty', '');
       } else {
@@ -43,7 +57,7 @@ customElements.define('hg-editable-text', class extends LitElement {
       }
     }
     if (changedProperties.has('disabled')) {
-      this._slotted.setAttribute('contenteditable', !this.disabled);
+      this._editable.setAttribute('contenteditable', !this.disabled);
     }
   }
   static get styles() {
@@ -64,9 +78,6 @@ customElements.define('hg-editable-text', class extends LitElement {
       }
       ::slotted(*) {
         height: 100%;
-      }
-      ::slotted(:focus) {
-        text-transform: initial;
       }
       .edit {
         margin-top: 5px;
@@ -95,7 +106,7 @@ customElements.define('hg-editable-text', class extends LitElement {
           raised
           @click=${() => {
             this.showControls = false;
-            this._slotted.innerHTML = this.text ? this.text : '';
+            this._editable.innerHTML = this.text ? this.text : '';
             if (!this.text) {
               this.removeAttribute('not-empty');
             }
@@ -106,7 +117,7 @@ customElements.define('hg-editable-text', class extends LitElement {
           raised
           @click=${() => {
             this.showControls = false;
-            this.text = this._slotted.textContent ? this._slotted.textContent : '';
+            this.text = this._editable.textContent ? this._editable.textContent : '';
             this.dispatchEvent(new CustomEvent('save', {detail: this.text}));
           }}>
           Zapisz

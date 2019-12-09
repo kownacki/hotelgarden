@@ -22,7 +22,7 @@ customElements.define('hg-heading', class extends LitElement {
   }
   render() {
     return html`
-      <h2 style="text-align: ${this.center ? 'center' : 'initial'}"><slot></slot></h2>
+      <h2 id="editable" style="text-align: ${this.center ? 'center' : 'initial'}"></h2>
     `;
   }
 });
