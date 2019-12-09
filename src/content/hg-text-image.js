@@ -1,11 +1,13 @@
 import {LitElement, html, css} from 'lit-element';
 import {db, updateData, updateImage} from "../utils.js";
 import '../hg-heading.js';
+import '../hg-action-buttons.js';
 
 customElements.define('hg-text-image', class extends LitElement {
   static get properties() {
     return {
       uid: Number,
+      buttons: Number,
       _textImage: Object,
     };
   }
@@ -35,16 +37,8 @@ customElements.define('hg-text-image', class extends LitElement {
       hg-heading, p {
         font-size: 20px;
       }
-      .buttons {
+      hg-action-buttons {
         margin-top: 40px;
-        display: flex;
-      }
-      a {
-        text-decoration: none;
-        color: white;
-        background: var(--accent-color);
-        padding: 10px 20px;
-        margin-right: 30px;
       }
     `;
   }
@@ -74,10 +68,7 @@ customElements.define('hg-text-image', class extends LitElement {
           @save=${(event) => this.updateData('text', event.detail)}>
           <p></p>
         </hg-editable-text>
-        <div class="buttons">
-          <a href="#">Pulvinar</a>
-          <a href="#">Ante ipsum</a>
-        </div>       
+        <hg-action-buttons .buttons=${this.buttons}></hg-action-buttons>
       </div>
     `;
   }
