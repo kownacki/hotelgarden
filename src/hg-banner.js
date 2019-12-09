@@ -36,7 +36,7 @@ customElements.define('hg-banner', class extends LitElement {
         position: absolute;
       }
       .heading {
-        background: rgba(var(--secondary-color-rgb), 0.30);
+        background: rgba(var(--secondary-color-rgb), 0.5);
         padding: 20px;
         width: 1000px;
         max-width: 100%;
