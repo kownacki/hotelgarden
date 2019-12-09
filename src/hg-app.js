@@ -13,6 +13,7 @@ import '@polymer/paper-button';
 import '@polymer/paper-icon-button';
 import '@polymer/paper-input/paper-input';
 import '@polymer/paper-dialog';
+import '@polymer/paper-fab';
 import '@material/mwc-button';
 import '@material/mwc-textfield';
 import '@polymer/paper-styles/color';

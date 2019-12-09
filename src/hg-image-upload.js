@@ -9,8 +9,12 @@ customElements.define('hg-image-upload', class extends LitElement {
       input {
         display: none;
       }
-      paper-button {
+      paper-fab {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
         margin: 2px;
+        --paper-fab-keyboard-focus-background: var(--primary-color);
       }
     `;
   }
@@ -25,11 +29,7 @@ customElements.define('hg-image-upload', class extends LitElement {
           event.target.value = '';
           this.dispatchEvent(new CustomEvent('upload', {detail: file}));
         }}>
-      <paper-button
-        raised
-        @click=${() => this.shadowRoot.getElementById('input').click()}>
-        Dodaj
-      </paper-button>   
+      <paper-fab icon="add" @click=${() => this.shadowRoot.getElementById('input').click()}></paper-fab>
     `;
   }
 });

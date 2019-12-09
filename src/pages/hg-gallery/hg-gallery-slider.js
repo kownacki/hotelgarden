@@ -62,22 +62,13 @@ customElements.define('hg-gallery-slider', class extends LitElement {
         .items=${this.images}
         .template=${(image) => html`
           <hg-editable-image
-            .src=${image.url}
+            .src=${_.get('url', image)}
             .sizing=${'contain'}
             @save=${(event) => this.dispatchEvent(new CustomEvent('save', {detail: {image, file: event.detail}}))}>
           </hg-editable-image>
         `}>
       </hg-slider>
       <div class="controls">
-        <hg-image-upload
-          @upload=${(event) => {
-            this.selected = this.images.length;
-            this.dispatchEvent(new CustomEvent('save', {detail: {
-              image: {index: this.images.length},
-              file: event.detail,
-            }}));
-          }}>
-        </hg-image-upload>
         <hg-delete-item .name=${_.get(this.selected + '/name', this.images)}>
         </hg-delete-item>
         <paper-icon-button
@@ -85,6 +76,15 @@ customElements.define('hg-gallery-slider', class extends LitElement {
           @click=${this.close}>
         </paper-icon-button>
       </div>
+      <hg-image-upload
+        @upload=${(event) => {
+          this.selected = this.images.length;
+          this.dispatchEvent(new CustomEvent('save', {detail: {
+            image: {index: this.images.length},
+            file: event.detail,
+          }}));
+        }}>
+      </hg-image-upload>
     `;
   }
 });

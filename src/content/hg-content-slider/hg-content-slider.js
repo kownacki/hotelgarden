@@ -1,6 +1,7 @@
 import {LitElement, html, css} from 'lit-element';
 import {db, updateImage, deleteImageFromStorage} from '../../utils.js';
 import './hg-content-slider-item.js';
+import '../../hg-image-upload.js';
 
 customElements.define('hg-content-slider', class extends LitElement {
   static get properties() {
@@ -22,34 +23,46 @@ customElements.define('hg-content-slider', class extends LitElement {
   static get styles() {
     return css`
       :host {
+        position: relative;
         display: block;
         max-width: 1200px;
         margin: 60px auto;
+        height: 350px;
+        background: rgba(var(--placeholder-color-rgb), 0.5);
       }
       hg-slider {
-        height: 350px;
+        height: 100%;
       }
     `;
   }
   async updateImage(image, file) {
     if (image.index === this._images.length) {
-      this._images.push(image);
+      this._images = [...this._images, image];
     }
     Object.assign(image, await updateImage('contentSliders/' + this.uid, image.index, file, image.name));
   }
   render() {
     return html`
-      <hg-slider
+      ${_.isEmpty(this._images) ? '' : html`<hg-slider
         id="content-slider"
-        double
+        ?double=${_.size(this._images) >= 2}
         .items=${this._images}
         .template=${(image) => html`
           <hg-content-slider-item
-            .url=${image.url}
+            .url=${_.get('url', image)}
             @click=${() => !this.shadowRoot.getElementById('content-slider').transitionGoing && this.shadowRoot.getElementById('gallery-slider').open(image.index)}>
           </hg-content-slider-item>
         `}>
-      </hg-slider>
+      </hg-slider>`}
+      <hg-image-upload
+        @upload=${async (event) => {
+          const index = this._images.length;
+          await this.updateImage({index}, event.detail);
+          const contentSlider = this.shadowRoot.getElementById('content-slider');
+          contentSlider.selected = contentSlider.double ? index - 1 : index;
+          contentSlider.requestUpdate();
+        }}>
+      </hg-image-upload>
       <hg-gallery-slider 
         id="gallery-slider" 
         .images=${this._images}
