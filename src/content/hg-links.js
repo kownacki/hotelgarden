@@ -7,7 +7,7 @@ customElements.define('hg-links', class extends LitElement {
     return {
       path: String,
       superpath: String,
-      _links: Object,
+      _links: Array,
     };
   }
   constructor() {
@@ -15,7 +15,7 @@ customElements.define('hg-links', class extends LitElement {
     (async () => {
       await this.updateComplete;
       const links = _.filter((link) => link.path !== this.path && link.path !== '/', linksMap[this.superpath].sublinks);
-      const banners = await Promise.all(_.map((link) => db.doc('banners' + link.path).get(), links));
+      const banners = await Promise.all(_.map((link) => db.doc('banners/' + link.uid).get(), links));
       this._links = _.map(([link, banner]) => ({...link, image: _.get('image.url', banner.data())}), _.zip(links, banners));
     })();
   }

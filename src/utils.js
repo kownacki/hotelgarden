@@ -75,11 +75,11 @@ export const links = [
     name: 'Hotel',
     path: '/',
     sublinks: [
-      {name: 'O hotelu', path: '/'},
-      {name: 'Villa Garden', path: '/villa-garden'},
-      {name: 'Oleśnica i okolice', path: '/olesnica-i-okolice'},
-      {name: 'Opinie ', path: '/opnie'},
-      {name: 'FAQ ', path: '/faq'},
+      {name: 'O hotelu', path: '/', uid: 'landing'},
+      {name: 'Villa Garden', path: '/villa-garden', uid: 'villa-garden'},
+      {name: 'Oleśnica i okolice', path: '/olesnica-i-okolice', uid: 'surroundings'},
+      {name: 'Opinie ', path: '/opinie', uid: 'reviews'},
+      {name: 'FAQ ', path: '/faq', uid: 'faq'},
     ],
   }, {
     name: 'Pokoje',
