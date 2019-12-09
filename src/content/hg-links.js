@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
-import {linksMap} from '../utils.js';
+import {db, linksMap} from '../utils.js';
 import '../hg-heading.js';
 
 customElements.define('hg-links', class extends LitElement {
@@ -14,7 +14,9 @@ customElements.define('hg-links', class extends LitElement {
     super();
     (async () => {
       await this.updateComplete;
-      this._links = _.filter((sublink) => sublink.path !== this.path, linksMap[this.superpath].sublinks);
+      const links = _.filter((link) => link.path !== this.path && link.path !== '/', linksMap[this.superpath].sublinks);
+      const banners = await Promise.all(_.map((link) => db.doc('banners' + link.path).get(), links));
+      this._links = _.map(([link, banner]) => ({...link, image: _.get('image.url', banner.data())}), _.zip(links, banners));
     })();
   }
   static get styles() {

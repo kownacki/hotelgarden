@@ -32,7 +32,6 @@ customElements.define('hg-landing', class extends LitElement {
       <hg-opinions-block></hg-opinions-block>
       <hg-infographic .uid=${'landing'}></hg-infographic>
       <hg-content-slider .uid=${'landing'}></hg-content-slider>
-      <hg-links .path=${'/'} .superpath=${'/'}></hg-links>
     `;
   }
 });
