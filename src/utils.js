@@ -84,6 +84,7 @@ export const links = [
   }, {
     name: 'Pokoje',
     path: '/pokoje',
+    uid: 'rooms',
   }, {
     name: 'Konferencje',
     path: '/konferencje',
