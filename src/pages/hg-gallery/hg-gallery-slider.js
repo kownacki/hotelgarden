@@ -46,12 +46,12 @@ customElements.define('hg-gallery-slider', class extends LitElement {
     this.shadowRoot.getElementById('slider').selected = this.selected;
     this.shadowRoot.getElementById('slider').requestUpdate();
     document.body.style.overflow = 'hidden';
-    this.dispatchEvent(new CustomEvent('hide-header', {composed: true}))
+    this.dispatchEvent(new CustomEvent('hide-header', {composed: true, bubbles: true}))
   }
   close() {
     this.style.display = 'none';
     document.body.style.overflow = 'auto';
-    this.dispatchEvent(new CustomEvent('show-header', {composed: true}));
+    this.dispatchEvent(new CustomEvent('show-header', {composed: true, bubbles: true}));
   };
   render() {
     return html`

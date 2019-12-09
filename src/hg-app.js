@@ -58,29 +58,30 @@ customElements.define('hg-app', class extends LitElement {
         window.scrollTo(0, 0);
       }}></app-location>
       <hg-header id="header" .selected=${this._page}></hg-header>
-      ${this._page === '/hotel' || this._page === '/'
-        ? html`<hg-landing
-          @hide-header=${() => this.shadowRoot.getElementById('header').style.display = 'none'}
-          @show-header=${() => this.shadowRoot.getElementById('header').style.display = 'block'}>
-        </hg-landing>`
-        : this._page === '/villa-garden' 
-        ? html`<hg-villa-garden></hg-villa-garden>`
-        : this._page === '/pokoje'
-        ? html`<hg-rooms></hg-rooms>`
-        : this._page === '/konferencje' 
-        ? html`<hg-conferences></hg-conferences>`
-        : this._page === '/kuchnia'
-        ? html`<hg-cuisine></hg-cuisine>`
-        : this._page === '/galeria'
-        ? html`<hg-gallery 
-          @hide-header=${() => this.shadowRoot.getElementById('header').style.display = 'none'}
-          @show-header=${() => this.shadowRoot.getElementById('header').style.display = 'block'}>
-        </hg-gallery>`
-        : this._page === '/wydarzenia'
-        ? html`<hg-events></hg-events>`
-        : _.startsWith('/wydarzenia/', this._page)
-        ? html`<hg-event .uid=${_.replace('/wydarzenia/', '', this._page)}></hg-event>`
-        : html`<div>brak strony</div>`}
+      <div 
+        @hide-header=${() => this.shadowRoot.getElementById('header').style.display = 'none'}
+        @show-header=${() => this.shadowRoot.getElementById('header').style.display = 'block'}>
+        ${this._page === '/hotel' || this._page === '/'
+          ? html`<hg-landing></hg-landing>`
+          : this._page === '/villa-garden' 
+          ? html`<hg-villa-garden></hg-villa-garden>`
+          : this._page === '/pokoje'
+          ? html`<hg-rooms></hg-rooms>`
+          : this._page === '/konferencje' 
+          ? html`<hg-conferences></hg-conferences>`
+          : this._page === '/kuchnia'
+          ? html`<hg-cuisine></hg-cuisine>`
+          : this._page === '/galeria'
+          ? html`<hg-gallery 
+            @hide-header=${() => this.shadowRoot.getElementById('header').style.display = 'none'}
+            @show-header=${() => this.shadowRoot.getElementById('header').style.display = 'block'}>
+          </hg-gallery>`
+          : this._page === '/wydarzenia'
+          ? html`<hg-events></hg-events>`
+          : _.startsWith('/wydarzenia/', this._page)
+          ? html`<hg-event .uid=${_.replace('/wydarzenia/', '', this._page)}></hg-event>`
+          : html`<div>brak strony</div>`}
+      </div>
     `;
   }
 });
