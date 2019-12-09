@@ -15,8 +15,10 @@ customElements.define('hg-content-slider-item', class extends LitElement {
         align-items: center;
       }
       iron-image {
-        width: 100%;
-        height: 100%;
+        width: calc(100% - 1px);
+        height: calc(100% - 1px);
+        padding: 0.5px;
+        box-sizing: border-box;
       }
       paper-icon-button {
         display: none;
