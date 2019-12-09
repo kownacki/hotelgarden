@@ -100,6 +100,7 @@ customElements.define('hg-mosaic', class extends LitElement {
       </div>
       <div class="left">
         <hg-editable-image
+          presize
           .src=${_.get('primary.image.url', this._mosaic)}
           @save=${(event) => this.updateImage('primary.image', event.detail)}>
         </hg-editable-image>
@@ -122,6 +123,7 @@ customElements.define('hg-mosaic', class extends LitElement {
       </div>
       <div class="right">
         <hg-editable-image
+          presize
           .src=${_.get('secondary.image.url', this._mosaic)}
           @save=${(event) => this.updateImage('secondary.image', event.detail)}>
         </hg-editable-image>

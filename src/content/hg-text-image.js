@@ -57,6 +57,7 @@ customElements.define('hg-text-image', class extends LitElement {
   render() {
     return html`
       <hg-editable-image
+        presize
         .src=${_.get('image.url', this._textImage)}
         .sizing=${'cover'}
         @save=${(event) => this.updateImage(event.detail)}>

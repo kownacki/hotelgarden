@@ -11,6 +11,7 @@ customElements.define('hg-editable-image', class extends LitElement {
     return {
       src: {type: String, reflect: true},
       sizing: String,
+      presize: {type: Boolean, reflect: true},
     };
   }
   static get styles() {
@@ -23,6 +24,9 @@ customElements.define('hg-editable-image', class extends LitElement {
       }
       :host(:not([src])) {
         background: rgba(var(--placeholder-color-rgb), 0.5);
+      }
+      :host([presize]:not([src])) {
+        height: 250px;
       }
       iron-image {
         width: 100%;
@@ -50,9 +54,10 @@ customElements.define('hg-editable-image', class extends LitElement {
   }
   render() {
     return html`
-      ${this.sizing
-        ? html`<iron-image .src=${this.src} .sizing=${this.sizing}></iron-image>` 
-        : html`<img .src=${this.src}>`}
+      ${!this.src ? ''
+        : this.sizing
+          ? html`<iron-image .src=${this.src} .sizing=${this.sizing}></iron-image>` 
+          : html`<img .src=${this.src}>`}
       <input
         id="input"
         type="file"
