@@ -36,11 +36,22 @@ customElements.define('hg-icons-add', class extends LitElement {
       :host {
         padding: 10px;
       }
+      .icons {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 0 10px;
+        margin: 30px 0;
+      }
+      .icon {
+        width: 80px;
+        text-align: center;
+        padding: 5px;
+      }
       paper-icon-button {
         width: 60px;
         height: 60px;
         padding: 0;
-        margin: 0 34px;
       }
       paper-button {
         min-width: auto;
@@ -66,6 +77,7 @@ customElements.define('hg-icons-add', class extends LitElement {
       if (selected === this._selected) {
         this._availableIcons = icons;
         this._loading = false;
+        this.shadowRoot.getElementById('dialog').notifyResize();
       }
     }
   }
@@ -102,14 +114,16 @@ customElements.define('hg-icons-add', class extends LitElement {
             </paper-button>
           `, this._categories)}
         </div>
-        <div>
+        <div class="icons">
           <!--todo This can lag a bit due to how many images are rendered. Optimize. -->
           ${this._loading ? 'loading...' : !this._selected ? '' : _.map((icon) => html`
-            <paper-icon-button
-              title="${icon.name}" 
-              .src=${icon.url}
-              @click=${this.addIcon}>
-            </paper-icon-button>
+            <div class="icon">
+              <paper-icon-button
+                .src=${icon.url}
+                @click=${this.addIcon}>
+              </paper-icon-button>
+              <div>${icon.name}</div>
+            </div>
           `, this._availableIcons)}
         </div>
       </paper-dialog>
