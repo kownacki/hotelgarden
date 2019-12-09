@@ -1,6 +1,7 @@
 import {LitElement, html, css} from 'lit-element';
 import {db} from '../utils.js';
 import '../edit/hg-editable-text.js';
+import '../hg-content-label.js';
 
 customElements.define('hg-article', class extends LitElement {
   static get properties() {
@@ -19,10 +20,15 @@ customElements.define('hg-article', class extends LitElement {
   static get styles() {
     return css`
       :host {
+        position: relative;
         display: block;
         margin: 80px auto;
         max-width: 700px;
         padding: 0 20px;
+      }
+      :host(:hover) hg-content-label {
+        left: 20px;
+        display: block;
       }
       .text {
         font-size: 20px;
@@ -44,6 +50,7 @@ customElements.define('hg-article', class extends LitElement {
         @save=${(event) => db.doc('articles/' + this.uid).set({text: event.detail}, {merge: true})}>
         <div class="text"></div>
       </hg-editable-text>
+      <hg-content-label .name=${'Pole tekstowe'}></hg-content-label>
     `;
   }
 });

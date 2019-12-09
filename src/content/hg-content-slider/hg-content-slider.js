@@ -2,6 +2,7 @@ import {LitElement, html, css} from 'lit-element';
 import {db, updateImage, deleteImageFromStorage} from '../../utils.js';
 import './hg-content-slider-item.js';
 import '../../hg-image-upload.js';
+import '../../hg-content-label.js';
 
 customElements.define('hg-content-slider', class extends LitElement {
   static get properties() {
@@ -29,6 +30,9 @@ customElements.define('hg-content-slider', class extends LitElement {
         margin: 60px auto;
         height: 350px;
         background: rgba(var(--placeholder-color-rgb), 0.5);
+      }
+      :host(:hover) hg-content-label {
+        display: block;
       }
       hg-slider {
         height: 100%;
@@ -94,6 +98,7 @@ customElements.define('hg-content-slider', class extends LitElement {
           this.shadowRoot.getElementById('gallery-slider').requestUpdate();
         }}>
       </hg-gallery-slider>
+      <hg-content-label .name=${'Slider'}></hg-content-label>
     `;
   }
 });
