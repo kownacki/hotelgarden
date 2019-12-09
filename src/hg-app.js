@@ -21,6 +21,7 @@ import '@polymer/paper-styles/color';
 import './hg-header/hg-header.js';
 import './pages/hg-landing.js';
 import './pages/hg-villa-garden.js';
+import './pages/hg-surroundings.js';
 import './pages/hg-rooms.js';
 import './pages/hg-conferences.js';
 import './pages/hg-cuisine.js';
@@ -65,6 +66,8 @@ customElements.define('hg-app', class extends LitElement {
           ? html`<hg-landing></hg-landing>`
           : this._page === '/villa-garden' 
           ? html`<hg-villa-garden></hg-villa-garden>`
+          : this._page === '/olesnica-i-okolice'
+          ? html`<hg-surroundings></hg-surroundings>`
           : this._page === '/pokoje'
           ? html`<hg-rooms></hg-rooms>`
           : this._page === '/konferencje' 
