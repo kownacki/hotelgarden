@@ -1,6 +1,7 @@
 import {LitElement, html, css} from 'lit-element';
 import '../../hg-slider.js';
 import '../../edit/hg-editable-image.js';
+import '../../hg-image-upload.js';
 
 //todo bug clicking go back when image is displayed breaks website
 customElements.define('hg-gallery-slider', class extends LitElement {
@@ -25,11 +26,11 @@ customElements.define('hg-gallery-slider', class extends LitElement {
       hg-slider {
         height: 100%;
       }
-      paper-icon-button {
-        background: white;
+      .controls {
         position: fixed;
         top: 0;
         right: 0;
+        background: white;
       }
     `;
   }
@@ -60,14 +61,25 @@ customElements.define('hg-gallery-slider', class extends LitElement {
           </hg-editable-image>
         `}>
       </hg-slider>
-      <paper-icon-button 
-        icon="close"
-        @click=${() => {
-          this.style.display = 'none';
-          document.body.style.overflow = 'auto';
-          this.dispatchEvent(new CustomEvent('show-header', {composed: true}));
-        }}>
-      </paper-icon-button>
+      <div class="controls">
+        <hg-image-upload
+          @upload=${(event) => {
+            this._selected = this.images.length;
+            this.dispatchEvent(new CustomEvent('save', {detail: {
+              image: {index: this.images.length},
+              file: event.detail,
+            }}));
+          }}>
+        </hg-image-upload> 
+        <paper-icon-button
+          icon="close"
+          @click=${() => {
+            this.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            this.dispatchEvent(new CustomEvent('show-header', {composed: true}));
+          }}>
+        </paper-icon-button>
+      </div>
     `;
   }
 });
