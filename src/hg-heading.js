@@ -3,7 +3,7 @@ import {LitElement, html, css} from 'lit-element';
 customElements.define('hg-heading', class extends LitElement {
   static get properties() {
     return {
-      center: {type: Boolean},
+      center: {type: Boolean, reflect: true},
     };
   }
   static get styles() {
@@ -12,6 +12,10 @@ customElements.define('hg-heading', class extends LitElement {
         display: block;
         margin-bottom: 30px;
         text-transform: uppercase;
+      }
+      :host([center]) {
+        text-align: center;
+        margin: 60px 0;
       }
       h2 {
         margin: 0;
@@ -22,7 +26,7 @@ customElements.define('hg-heading', class extends LitElement {
   }
   render() {
     return html`
-      <h2 id="editable" style="text-align: ${this.center ? 'center' : 'initial'}"><slot></slot></h2>
+      <h2 id="editable"><slot></slot></h2>
     `;
   }
 });
