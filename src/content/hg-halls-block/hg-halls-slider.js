@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit-element';
 import {db, updateData} from "../../utils.js";
-import '../../hg-slider.js';
-import '../../hg-action-buttons.js';
+import '../../elements/hg-slider.js';
+import '../../elements/hg-action-buttons.js';
 
 customElements.define('hg-halls-slider', class extends LitElement {
   static get properties() {

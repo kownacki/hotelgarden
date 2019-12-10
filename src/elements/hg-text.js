@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit-element';
-import {db} from './utils.js';
-import './edit/hg-editable-text.js';
-import './hg-content-label.js';
+import {db} from '../utils.js';
+import '../edit/hg-editable-text.js';
+import './elements/hg-content-label.js';
 
 customElements.define('hg-text', class extends LitElement {
   static get properties() {

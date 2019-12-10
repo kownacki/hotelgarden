@@ -2,7 +2,7 @@ import {LitElement, html, css} from 'lit-element';
 import {db} from "../../utils.js";
 import './hg-menu-main.js';
 import './hg-menu-nav.js';
-import '../../hg-heading.js';
+import '../../elements/hg-heading.js';
 
 customElements.define('hg-menu', class extends LitElement {
   static get properties() {

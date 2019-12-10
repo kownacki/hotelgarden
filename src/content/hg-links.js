@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
 import {db, pathToUid, linksMap} from '../utils.js';
-import '../hg-heading.js';
+import '../elements/hg-heading.js';
 
 customElements.define('hg-links', class extends LitElement {
   static get properties() {

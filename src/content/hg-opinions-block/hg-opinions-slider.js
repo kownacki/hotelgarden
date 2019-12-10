@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
-import '../../hg-slider.js';
+import '../../elements/hg-slider.js';
 
 customElements.define('hg-opinions-slider', class extends LitElement {
   static get properties() {

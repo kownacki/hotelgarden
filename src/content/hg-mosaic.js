@@ -1,9 +1,9 @@
 import {LitElement, html, css} from 'lit-element';
 import {db, updateData, updateImage} from "../utils.js";
-import '../hg-heading.js';
+import '../elements/hg-heading.js';
 import '../edit/hg-editable-image.js';
 import '../edit/hg-editable-text.js';
-import '../hg-action-buttons.js';
+import '../elements/hg-action-buttons.js';
 
 customElements.define('hg-mosaic', class extends LitElement {
   static get properties() {

@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
 import './hg-halls-slider.js';
-import '../../content/hg-image.js';
+import '../../elements/hg-image.js';
 import '../../content/hg-text-image.js';
 
 customElements.define('hg-halls-block', class extends LitElement {

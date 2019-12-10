@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
-import '../../hg-heading.js';
+import '../../elements/hg-heading.js';
 import '../../edit/hg-editable-image.js';
 import '../../edit/hg-editable-text.js';
 import {db, updateData, updateImage} from "../../utils.js";

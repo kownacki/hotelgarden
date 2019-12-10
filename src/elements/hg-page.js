@@ -1,19 +1,19 @@
 import {LitElement, html, css} from 'lit-element';
 import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';
-import {pathToUid, headerHeight} from './utils.js';
-import './hg-banner.js';
-import './pages/hg-landing.js';
-import './pages/hg-villa-garden.js';
-import './pages/hg-surroundings.js';
-import './pages/hg-rooms.js';
-import './pages/conferences/hg-conferences.js';
-import './pages/conferences/hg-halls.js';
-import './pages/cuisine/hg-cuisine.js';
-import './pages/cuisine/hg-restaurant.js';
-import './pages/cuisine/hg-grill-garden.js';
-import './pages/hg-gallery/hg-gallery.js';
-import './pages/hg-events/hg-events.js';
-import './pages/hg-events/hg-event.js';
+import {pathToUid, headerHeight} from '../utils.js';
+import '../elements/hg-banner.js';
+import '../pages/hg-landing.js';
+import '../pages/hg-villa-garden.js';
+import '../pages/hg-surroundings.js';
+import '../pages/hg-rooms.js';
+import '../pages/conferences/hg-conferences.js';
+import '../pages/conferences/hg-halls.js';
+import '../pages/cuisine/hg-cuisine.js';
+import '../pages/cuisine/hg-restaurant.js';
+import '../pages/cuisine/hg-grill-garden.js';
+import '../pages/hg-gallery/hg-gallery.js';
+import '../pages/hg-events/hg-events.js';
+import '../pages/hg-events/hg-event.js';
 
 let seconds = 0;
 setInterval(() => ++seconds, 1000);
@@ -51,7 +51,6 @@ customElements.define('hg-page', class extends LitElement {
               `)}
             `
           : html`<div>brak strony</div>`}
-      })
     `;
   }
 });

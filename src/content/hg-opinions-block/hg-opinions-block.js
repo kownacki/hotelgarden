@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
 import {db} from "../../utils.js";
-import '../../hg-heading.js';
+import '../../elements/hg-heading.js';
 import './hg-scores.js';
 import './hg-opinions-slider.js';
 
