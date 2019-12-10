@@ -23,7 +23,8 @@ import './pages/hg-landing.js';
 import './pages/hg-villa-garden.js';
 import './pages/hg-surroundings.js';
 import './pages/hg-rooms.js';
-import './pages/hg-conferences.js';
+import './pages/conferences/hg-conferences.js';
+import './pages/conferences/hg-halls.js';
 import './pages/hg-cuisine.js';
 import './pages/hg-gallery/hg-gallery.js';
 import './pages/hg-events/hg-events.js';
@@ -72,13 +73,12 @@ customElements.define('hg-app', class extends LitElement {
           ? html`<hg-rooms></hg-rooms>`
           : this._page === '/konferencje' 
           ? html`<hg-conferences></hg-conferences>`
+          : this._page === '/sale'
+          ? html`<hg-halls></hg-halls>`
           : this._page === '/kuchnia'
           ? html`<hg-cuisine></hg-cuisine>`
           : this._page === '/galeria'
-          ? html`<hg-gallery 
-            @hide-header=${() => this.shadowRoot.getElementById('header').style.display = 'none'}
-            @show-header=${() => this.shadowRoot.getElementById('header').style.display = 'block'}>
-          </hg-gallery>`
+          ? html`<hg-gallery></hg-gallery>`
           : this._page === '/wydarzenia'
           ? html`<hg-events></hg-events>`
           : _.startsWith('/wydarzenia/', this._page)

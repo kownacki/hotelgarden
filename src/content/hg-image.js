@@ -6,6 +6,7 @@ customElements.define('hg-image', class extends LitElement {
   static get properties() {
     return {
       uid: Number,
+      sizing: String,
       _image: Object,
     };
   }
@@ -20,8 +21,9 @@ customElements.define('hg-image', class extends LitElement {
     return css`
       :host {
         display: block;
-        width: 800px;
-        margin: auto;
+      }
+      hg-editable-image {
+        height: 100%;
       }
     `;
   }
@@ -32,6 +34,7 @@ customElements.define('hg-image', class extends LitElement {
     return html`
       <hg-editable-image
         presize
+        .sizing=${this.sizing}
         .src=${_.get('url', this._image)}
         @save=${(event) => this.updateImage(event.detail)}>
       </hg-editable-image>

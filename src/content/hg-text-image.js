@@ -1,6 +1,8 @@
 import {LitElement, html, css} from 'lit-element';
 import {db, updateData, updateImage} from "../utils.js";
 import '../hg-heading.js';
+import '../edit/hg-editable-image.js';
+import '../edit/hg-editable-text.js';
 import '../hg-action-buttons.js';
 
 customElements.define('hg-text-image', class extends LitElement {
@@ -8,6 +10,7 @@ customElements.define('hg-text-image', class extends LitElement {
     return {
       uid: Number,
       buttons: Number,
+      h3: {type: Boolean},
       _textImage: Object,
     };
   }
@@ -60,7 +63,7 @@ customElements.define('hg-text-image', class extends LitElement {
         <hg-editable-text
           .text=${_.get('heading', this._textImage)}
           @save=${(event) => this.updateData('heading', event.detail)}>
-          <hg-heading></hg-heading>
+          <hg-heading ?h3=${this.h3}></hg-heading>
         </hg-editable-text>
         <hg-editable-text
           multiline

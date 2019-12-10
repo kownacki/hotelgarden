@@ -7,6 +7,7 @@ customElements.define('hg-article', class extends LitElement {
   static get properties() {
     return {
       uid: Number,
+      narrow: {type: Boolean},
       _text: String,
     };
   }
@@ -25,6 +26,9 @@ customElements.define('hg-article', class extends LitElement {
         margin: 80px auto;
         max-width: 700px;
         padding: 0 20px;
+      }
+      :host([narrow]) {
+        margin: 40px auto;
       }
       :host(:hover) hg-content-label {
         left: 20px;

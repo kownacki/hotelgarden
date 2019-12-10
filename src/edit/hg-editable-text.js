@@ -20,7 +20,10 @@ customElements.define('hg-editable-text', class extends LitElement {
     }, 500);
   }
   setEditable() {
-    const slotted = this.querySelector('*');
+    let slotted = this.querySelector('*');
+    while (slotted.tagName === 'SLOT') {
+      slotted = slotted.assignedNodes()[0];
+    }
     this._editable = (slotted.shadowRoot && slotted.shadowRoot.getElementById('editable')) || slotted;
     this._editable.setAttribute('contenteditable', true);
     this._editable.addEventListener('input', () => {

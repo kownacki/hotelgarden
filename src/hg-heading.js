@@ -15,15 +15,18 @@ customElements.define('hg-heading', class extends LitElement {
         margin-bottom: 30px;
         text-transform: uppercase;
       }
-      :host([center]) {
-        text-align: center;
-        margin: 60px 0;
-      }
       :host([h3]) {
         margin-bottom: 27px;
       }
       :host([h4]) {
         margin-bottom: 24px;
+      }
+      :host([center]) {
+        text-align: center;
+        margin: 60px 0;
+      }
+      :host([center][h3]) {
+        margin: 40px 0;
       }
       h2, h3, h4 {
         margin: 0;

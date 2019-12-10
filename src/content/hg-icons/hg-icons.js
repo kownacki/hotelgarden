@@ -27,7 +27,7 @@ customElements.define('hg-icons', class extends LitElement {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        margin: 80px auto;
+        margin: 60px auto;
         padding: 0 20px;
         min-height: 131px;
         max-width: 1200px;
