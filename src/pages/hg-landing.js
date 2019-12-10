@@ -1,5 +1,4 @@
 import {LitElement, html, css} from 'lit-element';
-import '../hg-banner.js';
 import '../content/hg-article.js';
 import '../content/hg-quote.js';
 import '../content/hg-icons/hg-icons.js';
@@ -23,7 +22,6 @@ customElements.define('hg-landing', class extends LitElement {
   }
   render() {
     return html`
-      <hg-banner .uid=${'landing'}></hg-banner>
       <hg-article .uid=${'landing'}></hg-article>
       <hg-quote .uid=${'landing'}></hg-quote>
       <hg-icons .uid=${'landing'}></hg-icons>

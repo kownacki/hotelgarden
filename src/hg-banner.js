@@ -14,12 +14,11 @@ customElements.define('hg-banner', class extends LitElement {
   }
   constructor() {
     super();
-    (async () => {
-      await this.updateComplete;
-      if (!this.heading) {
-        this._banner = (await db.doc('banners/' + this.uid).get()).data() || {};
-      }
-    })();
+  }
+  async updated(changedProperties) {
+    if (changedProperties.has('uid') && !this.heading) {
+      this._banner = (await db.doc('banners/' + this.uid).get()).data() || {};
+    }
   }
   static get styles() {
     return css`
@@ -72,7 +71,7 @@ customElements.define('hg-banner', class extends LitElement {
         ${this.heading 
           ? html`<h1>${this.heading}</h1>`
           : html`<hg-editable-text
-            .text=${_.get('heading', this._banner)}
+            .text=${_.get('heading', this._banner) || ''}
             @save=${(event) => db.doc('banners/' + this.uid).set({heading: event.detail}, {merge: true})}>
             <h1></h1>
           </hg-editable-text>
@@ -80,7 +79,7 @@ customElements.define('hg-banner', class extends LitElement {
         ${this.heading 
           ? (this.subheading ? html`<p>${this.subheading}</p>` : '')
           : html`<hg-editable-text
-            .text=${_.get('subheading', this._banner)}
+            .text=${_.get('subheading', this._banner) || ''}
             @save=${(event) => db.doc('banners/' + this.uid).set({subheading: event.detail}, {merge: true})}>
             <p></p>
           </hg-editable-text>

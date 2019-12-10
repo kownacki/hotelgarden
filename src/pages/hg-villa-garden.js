@@ -1,5 +1,4 @@
 import {LitElement, html, css} from 'lit-element';
-import '../hg-banner.js';
 import '../content/hg-article.js';
 import '../content/hg-icons/hg-icons.js';
 import '../content/hg-mosaic.js';
@@ -18,7 +17,6 @@ customElements.define('hg-villa-garden', class extends LitElement {
   }
   render() {
     return html`
-      <hg-banner .uid=${'villa-garden'}></hg-banner>
       <hg-article .uid=${'villa-garden'}></hg-article>
       <hg-icons .uid=${'villa-garden'}></hg-icons>
       <hg-mosaic .uid=${'villa-garden'} .buttons=${{

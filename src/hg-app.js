@@ -19,72 +19,39 @@ import '@material/mwc-textfield';
 import '@polymer/paper-styles/color';
 
 import './hg-header/hg-header.js';
-import './pages/hg-landing.js';
-import './pages/hg-villa-garden.js';
-import './pages/hg-surroundings.js';
-import './pages/hg-rooms.js';
-import './pages/conferences/hg-conferences.js';
-import './pages/conferences/hg-halls.js';
-import './pages/hg-cuisine.js';
-import './pages/hg-gallery/hg-gallery.js';
-import './pages/hg-events/hg-events.js';
-import './pages/hg-events/hg-event.js';
+import './hg-page.js';
 
 customElements.define('hg-app', class extends LitElement {
   static get properties() {
     return {
       _route: Object,
       _tail: Object,
-      _page: String,
+      _path: String,
     };
   }
   constructor() {
     super();
-    this._page = window.location.pathname;
+    this._path = window.location.pathname;
   }
   static get styles() {
     return css`
       :host {
         display: block;
       }
-      .content {
-        margin: auto;
-        max-width: 1300px;
-      }
     `;
   }
   render(){
     return html`
       <app-location @route-changed=${(event) => {
-        this._page = event.detail.value.path;
+        this._path = event.detail.value.path;
         window.scrollTo(0, 0);
       }}></app-location>
-      <hg-header id="header" .selected=${this._page}></hg-header>
-      <div 
+      <hg-header id="header" .selected=${this._path}></hg-header>
+      <hg-page 
+        .path=${this._path}
         @hide-header=${() => this.shadowRoot.getElementById('header').style.display = 'none'}
         @show-header=${() => this.shadowRoot.getElementById('header').style.display = 'block'}>
-        ${this._page === '/hotel' || this._page === '/'
-          ? html`<hg-landing></hg-landing>`
-          : this._page === '/villa-garden' 
-          ? html`<hg-villa-garden></hg-villa-garden>`
-          : this._page === '/olesnica-i-okolice'
-          ? html`<hg-surroundings></hg-surroundings>`
-          : this._page === '/pokoje'
-          ? html`<hg-rooms></hg-rooms>`
-          : this._page === '/konferencje' 
-          ? html`<hg-conferences></hg-conferences>`
-          : this._page === '/sale'
-          ? html`<hg-halls></hg-halls>`
-          : this._page === '/kuchnia'
-          ? html`<hg-cuisine></hg-cuisine>`
-          : this._page === '/galeria'
-          ? html`<hg-gallery></hg-gallery>`
-          : this._page === '/wydarzenia'
-          ? html`<hg-events></hg-events>`
-          : _.startsWith('/wydarzenia/', this._page)
-          ? html`<hg-event .uid=${_.replace('/wydarzenia/', '', this._page)}></hg-event>`
-          : html`<div>brak strony</div>`}
-      </div>
+      </hg-page>
     `;
   }
 });

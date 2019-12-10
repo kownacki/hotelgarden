@@ -69,55 +69,72 @@ export const array = {
   prevItem: (index, arr) => arr[array.prevIndex(index, arr)],
 };
 
+export const pathToUid = {
+  '/': 'landing',
+  '/villa-garden': 'villa-garden',
+  '/olesnica-i-okolice': 'surroundings',
+  '/opinie': 'reviews',
+  '/faq': 'faq',
+  '/pokoje': 'rooms',
+  '/konferencje': 'conferences',
+  '/sale': 'halls',
+  '/kuchnia': 'cuisine',
+  '/restauracja': 'restaurant',
+  '/grill-garden': 'grill-garden',
+  '/catering': 'catering',
+  '/wesela': 'weddings',
+  '/chrzciny': 'chrzciny',
+  '/komunie': 'komunie',
+  '/galeria': 'gallery',
+  '/wydarzenia': 'events',
+};
+
 //todo flat vs hierarchical url structure
 export const links = [
   {
     name: 'Hotel',
     path: '/',
     sublinks: [
-      {name: 'O hotelu', path: '/', uid: 'landing'},
-      {name: 'Villa Garden', path: '/villa-garden', uid: 'villa-garden'},
-      {name: 'Oleśnica i okolice', path: '/olesnica-i-okolice', uid: 'surroundings'},
-      {name: 'Opinie ', path: '/opinie', uid: 'reviews'},
-      {name: 'FAQ ', path: '/faq', uid: 'faq'},
+      {name: 'O hotelu', path: '/'},
+      {name: 'Villa Garden', path: '/villa-garden'},
+      {name: 'Oleśnica i okolice', path: '/olesnica-i-okolice'},
+      {name: 'Opinie ', path: '/opinie'},
+      {name: 'FAQ ', path: '/faq'},
     ],
   }, {
     name: 'Pokoje',
     path: '/pokoje',
-    uid: 'rooms',
   }, {
     name: 'Konferencje',
     path: '/konferencje',
     sublinks: [
-      {name: 'Konferencja w Gardenie', path: '/konferencje', uid: 'conferences'},
-      {name: 'Nasze sale', path: '/sale', uid: 'halls'},
+      {name: 'Konferencja w Gardenie', path: '/konferencje'},
+      {name: 'Nasze sale', path: '/sale'},
     ],
   }, {
     name: 'Kuchnia',
     path: '/kuchnia',
     sublinks: [
-      {name: 'O naszej kuchni', path: '/kuchnia', uid: 'cuisine'},
-      {name: 'Restauracja Magnolia', path: '/restauracja', uid: 'restaurant'},
-      {name: 'Grill Garden', path: '/grill-garden', uid: 'grill-garden'},
-      {name: 'Catering', path: '/catering', uid: 'catering'},
+      {name: 'O naszej kuchni', path: '/kuchnia'},
+      {name: 'Restauracja Magnolia', path: '/restauracja'},
+      {name: 'Grill Garden', path: '/grill-garden'},
+      {name: 'Catering', path: '/catering'},
     ],
   }, {
     name: 'Uroczystości',
     path: '/uroczystości',
     sublinks: [
-      {name: 'Wesela', path: '/wesela', uid: 'weddings'},
-      {name: 'Chrzciny', path: '/chrzciny', uid: 'chrzciny'},
-      {name: 'Komunie', path: '/komunie', uid: 'komunie'},
+      {name: 'Wesela', path: '/wesela'},
+      {name: 'Chrzciny', path: '/chrzciny'},
+      {name: 'Komunie', path: '/komunie'},
     ],
   },
   {
     name: 'Galeria',
     path: '/galeria',
-    uid: 'gallery'
   }, {
     name: 'Wydarzenia',
     path: '/wydarzenia',
-    uid: 'events'
   },
 ];
 

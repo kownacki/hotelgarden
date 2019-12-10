@@ -1,5 +1,4 @@
 import {LitElement, html, css} from 'lit-element';
-import '../hg-banner.js';
 import '../content/hg-article.js';
 import '../content/hg-icons/hg-icons.js';
 import '../content/hg-content-slider/hg-content-slider';
@@ -17,7 +16,6 @@ customElements.define('hg-cuisine', class extends LitElement {
   }
   render() {
     return html`
-      <hg-banner .uid=${'cuisine'}></hg-banner>
       <hg-article .uid=${'cuisine'}></hg-article>
       <hg-icons .uid=${'cuisine'}></hg-icons>
       <hg-content-slider></hg-content-slider>

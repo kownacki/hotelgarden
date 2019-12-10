@@ -2,7 +2,6 @@ import {LitElement, html, css} from 'lit-element';
 import {repeat} from 'lit-html/directives/repeat';
 import {db, splitEvents} from "../../utils.js";
 import sharedStyles from '../../sharedStyles.js';
-import '../../hg-banner.js';
 import '../../hg-heading.js';
 import './hg-events-card.js';
 import './hg-events-add.js';
@@ -38,10 +37,6 @@ customElements.define('hg-events', class extends LitElement {
   }
   render() {
     return html`
-      <hg-banner 
-        .src=${'https://picsum.photos/id/590/1920/980'}
-        .uid=${'events'}>
-      </hg-banner>
       <div class="events">
         <hg-events-add></hg-events-add>
         <hg-heading>${'Nadchodzące wydarzenia'}</hg-heading>
