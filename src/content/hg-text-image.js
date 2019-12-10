@@ -11,6 +11,7 @@ customElements.define('hg-text-image', class extends LitElement {
       uid: Number,
       buttons: Number,
       h3: {type: Boolean},
+      swap: {type: Boolean},
       _textImage: Object,
     };
   }
@@ -28,6 +29,9 @@ customElements.define('hg-text-image', class extends LitElement {
         margin: 60px auto;
         padding: 0 25px;
         display: flex;
+      }
+      :host([swap]) {
+        flex-direction: row-reverse;
       }
       hg-editable-image {
         width: 50%;

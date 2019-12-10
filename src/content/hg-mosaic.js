@@ -83,7 +83,7 @@ customElements.define('hg-mosaic', class extends LitElement {
             @save=${(event) => this.updateData('primary.text', event.detail)}>
             <p></p>
           </hg-editable-text>
-          ${_.isEmpty(this.buttons) ? '' : html`<hg-action-buttons .buttons=${this.buttons.primary}></hg-action-buttons>`}
+          ${!_.get('primary', this.buttons) ? '' : html`<hg-action-buttons .buttons=${this.buttons.primary}></hg-action-buttons>`}
         </div>
       </div>
       <div class="left">
@@ -104,7 +104,7 @@ customElements.define('hg-mosaic', class extends LitElement {
             @save=${(event) => this.updateData('primary.text', event.detail)}>
             <p></p>
           </hg-editable-text>
-          ${_.isEmpty(this.buttons) ? '' : html`<hg-action-buttons .buttons=${this.buttons.secondary}></hg-action-buttons>`}
+          ${!_.get('secondary', this.buttons) ? '' : html`<hg-action-buttons .buttons=${this.buttons.secondary}></hg-action-buttons>`}
         </div>
       </div>
       <div class="right">

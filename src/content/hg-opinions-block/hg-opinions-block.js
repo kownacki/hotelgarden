@@ -8,21 +8,32 @@ customElements.define('hg-opinions-block', class extends LitElement {
   static get properties() {
     return {
       _opinions: Array,
+      scores: {type: Boolean},
     };
   }
   static get styles() {
     return css`
       :host {
         display: block;
-        max-width: 1000px;
+        max-width: 1200px;
+        padding: 0 20px;
         margin: 80px auto;
       }
       .container {
         display: flex;
         justify-content: center;
+        height: 300px;
       }
-      hg-scores {
+      hg-scores, hg-image {
+        display: none;
         margin-right: 40px;
+      }
+      :host([scores]) hg-scores {
+        display: block;
+      }
+      :host(:not([scores])) hg-image {
+        width: 50%;
+        display: block;
       }
       hg-opinions-slider {
         flex: 1;
@@ -40,6 +51,7 @@ customElements.define('hg-opinions-block', class extends LitElement {
       <hg-heading center>${'Nasi goście o nas'}</hg-heading>
       <div class="container">
         <hg-scores></hg-scores>
+        <hg-image sizing=${'cover'} .uid="opinions"></hg-image>
         <hg-opinions-slider .opinions=${this._opinions}></hg-opinions-slider>
       </div>
     `;

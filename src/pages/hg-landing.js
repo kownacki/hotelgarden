@@ -30,7 +30,7 @@ customElements.define('hg-landing', class extends LitElement {
         secondary: [{url: '#'}],
       }}></hg-mosaic>
       <hg-text-image .uid=${'landing'} .buttons=${[{url: '#'}]}></hg-text-image>
-      <hg-opinions-block></hg-opinions-block>
+      <hg-opinions-block scores></hg-opinions-block>
       <hg-infographic .uid=${'landing'}></hg-infographic>
       <hg-content-slider .uid=${'landing'}></hg-content-slider>
     `;
