@@ -17,6 +17,8 @@ firebase.initializeApp({
   measurementId: "G-T7DQCNYLP2"
 });
 
+export const headerHeight = 59;
+
 export const db = firebase.firestore();
 export const storage = firebase.storage();
 

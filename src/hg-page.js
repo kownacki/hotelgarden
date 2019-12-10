@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
 import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';
-import {pathToUid} from './utils.js';
+import {pathToUid, headerHeight} from './utils.js';
 import './hg-banner.js';
 import './pages/hg-landing.js';
 import './pages/hg-villa-garden.js';
@@ -15,6 +15,9 @@ import './pages/hg-gallery/hg-gallery.js';
 import './pages/hg-events/hg-events.js';
 import './pages/hg-events/hg-event.js';
 
+let seconds = 0;
+setInterval(() => ++seconds, 1000);
+
 customElements.define('hg-page', class extends LitElement {
   static get properties() {
     return {
@@ -28,14 +31,27 @@ customElements.define('hg-page', class extends LitElement {
     }
   }
   render() {
-    return _.startsWith('/wydarzenia/', this.path)
-      ? html`<hg-event .uid=${_.replace('/wydarzenia/', '', this.path)}></hg-event>`
-      : this._uid
-        ? html`
-            <hg-banner .uid=${this._uid}></hg-banner>
-            ${unsafeHTML(`
-              <hg-${this._uid}></hg-${this._uid}>
-            `)}
-          `
-        : html`<div>brak strony</div>`}
+    return html`
+      <app-location use-hash-as-path @route-changed=${async (event) => {
+        await new Promise((resolve) => setTimeout(resolve, seconds === 0 ? 1000 : 500));
+        if (event.detail.value.path) {
+          const element = this.shadowRoot.getElementById('page').shadowRoot.getElementById(event.detail.value.path);
+          window.scrollTo({
+            top: element.offsetTop - headerHeight - 10,
+          });
+        }
+      }}></app-location>
+      ${_.startsWith('/wydarzenia/', this.path)
+        ? html`<hg-event .uid=${_.replace('/wydarzenia/', '', this.path)}></hg-event>`
+        : this._uid
+          ? html`
+              <hg-banner .uid=${this._uid}></hg-banner>
+              ${unsafeHTML(`
+                <hg-${this._uid} id="page"></hg-${this._uid}>
+              `)}
+            `
+          : html`<div>brak strony</div>`}
+      })
+    `;
+  }
 });

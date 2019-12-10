@@ -104,7 +104,7 @@ customElements.define('hg-halls-slider', class extends LitElement {
               <p></p>
             </hg-editable-text>
             <hg-action-buttons .buttons=${[
-              {url: '/sale', text: 'Więcej o sali'}
+              {url: '/sale#' + (Number(hall.index) + 1), text: 'Więcej o sali'}
             ]}></hg-action-buttons>
           </article>
         `}>

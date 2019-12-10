@@ -15,7 +15,7 @@ customElements.define('hg-halls', class extends LitElement {
     return html`
       <hg-article .uid=${'halls'}></hg-article>
       ${_.map((index) => html`
-        <hg-text-image .uid=${'halls-' + index}></hg-text-image>
+        <hg-text-image id="${index}" .uid=${'halls-' + index}></hg-text-image>
         <hg-content-slider .uid=${'halls-'+ index}></hg-content-slider>
         <hg-halls-tables .uid=${'halls-' + index}></hg-halls-tables>
       `, [1, 2, 3])}

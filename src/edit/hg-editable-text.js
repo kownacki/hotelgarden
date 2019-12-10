@@ -1,4 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
+import {headerHeight} from '../utils.js'
 
 customElements.define('hg-editable-text', class extends LitElement {
   static get properties() {
@@ -43,7 +44,7 @@ customElements.define('hg-editable-text', class extends LitElement {
       //todo add also when changing location
       //todo multiple onbeforeunload overlapping
       window.onbeforeunload = !this.showControls ? null : () => {
-        window.scrollTo(0, this._editable.offsetTop - 70);
+        window.scrollTo(0, this._editable.offsetTop - headerHeight - 10);
         this._editable.focus();
         return '';
       };

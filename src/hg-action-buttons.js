@@ -26,7 +26,9 @@ customElements.define('hg-action-buttons', class extends LitElement {
   render() {
     return html`
       ${_.map((button) => html`
-        <a href="${button.url}">${button.text || 'Zobacz więcej'}</a>
+        <a href="${button.url}">
+          ${button.text || 'Zobacz więcej'}
+        </a>
       `, this.buttons)}
     `;
   }
