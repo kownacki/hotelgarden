@@ -89,34 +89,38 @@ export const links = [
     name: 'Konferencje',
     path: '/konferencje',
     sublinks: [
-      {name: 'Nasze sale', path: '/nasze-sale'},
-      {name: 'Wigilie Firmowe', path: '/wigilie-firmowe'},
+      {name: 'Konferencja w Gardenie', path: '/konferencje', uid: 'conferences'},
+      {name: 'Nasze sale', path: '/sale', uid: 'halls'},
     ],
   }, {
     name: 'Kuchnia',
     path: '/kuchnia',
     sublinks: [
-      {name: 'O naszej kuchni', path: '/kuchnia'},
-      {name: 'Restauracja Magnolia', path: '/restauracja-magnolia'},
-      {name: 'Grill Garden', path: '/grill-garden'},
-      {name: 'Catering', path: '/catering'},
+      {name: 'O naszej kuchni', path: '/kuchnia', uid: 'cuisine'},
+      {name: 'Restauracja Magnolia', path: '/restauracja', uid: 'restaurant'},
+      {name: 'Grill Garden', path: '/grill-garden', uid: 'grill-garden'},
+      {name: 'Catering', path: '/catering', uid: 'catering'},
     ],
   }, {
     name: 'Uroczystości',
     path: '/uroczystości',
     sublinks: [
-      {name: 'Wesela', path: '/wesela'},
-      {name: 'Chrzciny', path: '/chrzciny'},
-      {name: 'Komunie', path: '/komunie'},
+      {name: 'Wesela', path: '/wesela', uid: 'weddings'},
+      {name: 'Chrzciny', path: '/chrzciny', uid: 'chrzciny'},
+      {name: 'Komunie', path: '/komunie', uid: 'komunie'},
     ],
   },
   {
     name: 'Galeria',
     path: '/galeria',
+    uid: 'gallery'
   }, {
     name: 'Wydarzenia',
     path: '/wydarzenia',
+    uid: 'events'
   },
 ];
+
+
 
 export const linksMap = _.keyBy('path', links);
