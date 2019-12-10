@@ -71,7 +71,7 @@ customElements.define('hg-text-image', class extends LitElement {
           @save=${(event) => this.updateData('text', event.detail)}>
           <p></p>
         </hg-editable-text>
-        <hg-action-buttons .buttons=${this.buttons}></hg-action-buttons>
+        ${_.isEmpty(this.buttons) ? '' : html`<hg-action-buttons .buttons=${this.buttons}></hg-action-buttons>`}
       </div>
     `;
   }
