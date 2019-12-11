@@ -7,8 +7,9 @@ import './hg-opinions-slider.js';
 customElements.define('hg-opinions-block', class extends LitElement {
   static get properties() {
     return {
-      _opinions: Array,
+      uid: String,
       scores: {type: Boolean},
+      _opinions: Array,
     };
   }
   static get styles() {
@@ -51,7 +52,7 @@ customElements.define('hg-opinions-block', class extends LitElement {
       <hg-heading center>${'Nasi goście o nas'}</hg-heading>
       <div class="container">
         <hg-scores></hg-scores>
-        <hg-image sizing=${'cover'} .uid="opinions"></hg-image>
+        <hg-image sizing=${'cover'} .uid=${this.uid + '-opinions-block'}></hg-image>
         <hg-opinions-slider .opinions=${this._opinions}></hg-opinions-slider>
       </div>
     `;

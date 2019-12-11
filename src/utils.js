@@ -124,7 +124,7 @@ export const links = [
     ],
   }, {
     name: 'Uroczystości',
-    path: '/uroczystości',
+    path: '/wesela',
     sublinks: [
       {name: 'Wesela', path: '/wesela'},
       {name: 'Chrzciny', path: '/chrzciny'},

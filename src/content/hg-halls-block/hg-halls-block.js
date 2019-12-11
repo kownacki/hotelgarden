@@ -34,10 +34,10 @@ customElements.define('hg-halls-block', class extends LitElement {
   }
   render() {
     return html`
-      <hg-text-image .uid=${this.uid}></hg-text-image>
+      <hg-text-image .uid=${this.uid + '-halls-block'}></hg-text-image>
       <div class="container">
         <hg-halls-slider .uid=${this.uid}></hg-halls-slider>
-        <hg-image .sizing=${'cover'} .uid=${this.uid}></hg-image>
+        <hg-image .sizing=${'cover'} .uid=${this.uid + '-halls-block'}></hg-image>
       </div>
     `;
   }
