@@ -1,5 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
 import './hg-header-subnav.js';
+import './hg-header-logo.js';
 import {links} from '../../utils.js';
 
 customElements.define('hg-header', class extends LitElement {
@@ -11,7 +12,7 @@ customElements.define('hg-header', class extends LitElement {
   }
   constructor() {
     super();
-    window.onscroll = _.throttle(100, () => this.scrolledDown = window.pageYOffset > this.offsetHeight);
+    window.onscroll = _.throttle(100, () => this.scrolledDown = window.pageYOffset > this.offsetHeight / 2);
   }
   static get styles() {
     return css`
@@ -21,14 +22,17 @@ customElements.define('hg-header', class extends LitElement {
         width: 100%;
         z-index: 2;
       }
+      :host([scrolled-down]) {
+        background: white;
+        box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
+      }
+      header {
+        display: flex;
+      }
       nav {
         display: block;
         background: transparent;
         transition: background-color 0.5s ease;
-      }
-      :host([scrolled-down]) nav {
-        background: white;
-        box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
       }
       ul {
         margin: 0;
@@ -73,6 +77,7 @@ customElements.define('hg-header', class extends LitElement {
   render() {
     return html`
       <header>
+        <hg-header-logo .scrolledDown=${this.scrolledDown}></hg-header-logo>
         <nav>
           <ul>
             ${_.map((link) => html`
