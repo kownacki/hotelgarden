@@ -1,7 +1,9 @@
 import {LitElement, html, css} from 'lit-element';
 import {db, updateData} from "../../utils.js";
+import '../../edit/hg-editable-text.js'
 import '../../elements/hg-slider.js';
 import '../../elements/hg-action-buttons.js';
+import '../../elements/hg-icon-info.js';
 
 customElements.define('hg-halls-slider', class extends LitElement {
   static get properties() {
@@ -43,29 +45,8 @@ customElements.define('hg-halls-slider', class extends LitElement {
             article > hg-editable-text {
               flex: 1;
             }
-            p, .text {
+            p {
               font-size: 20px;
-            }
-            .info {
-              display: flex;
-            }
-            .info > * {
-              display: flex;
-              align-items: center;
-            }
-            iron-icon {
-              min-width: 36px;
-              height: 36px;
-              filter: var(--primary-color-filter)
-            }
-            .text {
-              min-width: 20px;
-            }
-            .info hg-editable-text {
-              margin: 0 20px 0 10px;
-            }
-            .info > :last-child hg-editable-text {
-              margin-right: 0;
             }
             hg-action-buttons {
               margin-top: 40px;
@@ -77,26 +58,16 @@ customElements.define('hg-halls-slider', class extends LitElement {
               @save=${(event) => this.updateData(`${hall.index}.name`, event.detail)}>
               <hg-heading h3></hg-heading>
             </hg-editable-text>
-            <div class="info">
-              <div>
-                <iron-icon src="https://firebasestorage.googleapis.com/v0/b/pl-hotelgarden.appspot.com/o/icons%2Fediting%2Fmove.png?alt=media&token=68fa9540-cd2c-4577-9a32-55c83d5ea682"></iron-icon>
-                <hg-editable-text
-                  float
-                  .text=${hall.size}
-                  @save=${(event) => this.updateData(`${hall.index}.size`, event.detail)}>
-                  <div class="text"></div>
-                </hg-editable-text> 
-              </div>
-              <div>
-                <iron-icon src="https://firebasestorage.googleapis.com/v0/b/pl-hotelgarden.appspot.com/o/icons%2Fpeople%2Fcrowd.png?alt=media&token=b6252c3c-5c24-4afe-b24e-ee3159645627"></iron-icon>
-                <hg-editable-text
-                  float
-                  .text=${hall.people}
-                  @save=${(event) => this.updateData(`${hall.index}.people`, event.detail)}>
-                  <div class="text"></div>
-                </hg-editable-text> 
-              </div> 
-            </div>
+            <hg-icon-info
+              .items=${[{
+                text: hall.size,
+                src: 'https://firebasestorage.googleapis.com/v0/b/pl-hotelgarden.appspot.com/o/icons%2Fediting%2Fmove.png?alt=media&token=68fa9540-cd2c-4577-9a32-55c83d5ea682',
+              }, {
+                text: hall.people,
+                src: 'https://firebasestorage.googleapis.com/v0/b/pl-hotelgarden.appspot.com/o/icons%2Fpeople%2Fcrowd.png?alt=media&token=b6252c3c-5c24-4afe-b24e-ee3159645627',
+              }]}
+              @save=${(event) => this.updateData(`${hall.index}.${['size', 'people'][event.detail.index]}`, event.detail.text)}>
+            </hg-icon-info>
             <hg-editable-text
               multiline
               .text=${hall.text}
