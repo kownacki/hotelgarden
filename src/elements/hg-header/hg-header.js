@@ -5,13 +5,13 @@ import {links} from '../../utils.js';
 customElements.define('hg-header', class extends LitElement {
   static get properties() {
     return {
-      _scrolledDown: Boolean,
+      scrolledDown: {type: Boolean, reflect: true, attribute: 'scrolled-down'},
       selected: String,
     };
   }
   constructor() {
     super();
-    window.onscroll = _.throttle(100, () => this._scrolledDown = window.pageYOffset > this.offsetHeight);
+    window.onscroll = _.throttle(100, () => this.scrolledDown = window.pageYOffset > this.offsetHeight);
   }
   static get styles() {
     return css`
@@ -22,16 +22,13 @@ customElements.define('hg-header', class extends LitElement {
         z-index: 2;
       }
       nav {
-        transition: background-color 0.5s ease, color 0.2s ease, text-shadow 0.5s ease;;
         display: block;
         background: transparent;
-        color: white;
+        transition: background-color 0.5s ease;
       }
-      nav.scrolled-down {
-        text-shadow: none;
+      :host([scrolled-down]) nav {
         background: white;
-        color: var(--primary-color);
-        box-shadow: 2px 4px 10px rgba(0,0,0,.2);
+        box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
       }
       ul {
         margin: 0;
@@ -61,20 +58,22 @@ customElements.define('hg-header', class extends LitElement {
         padding: 10px;
         margin: 10px 0;
         font-weight: 400;
-        color: inherit;
+        color: white;
         text-decoration: none;
-        transition: background-color 0.3s ease;
+        transition: background-color 0.3s ease, color 0.2s ease;
+      }
+      :host([scrolled-down]) a:not(:hover):not([selected]) {
+        color: var(--primary-color);
       }
       a:hover, a[selected] {
         background: rgba(var(--primary-color-rgb), 90%);
-        color: white;
       }
     `;
   }
   render() {
     return html`
       <header>
-        <nav class=${this._scrolledDown ? 'scrolled-down' : ''}>
+        <nav>
           <ul>
             ${_.map((link) => html`
               <li>
