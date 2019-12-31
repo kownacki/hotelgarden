@@ -4,6 +4,7 @@ import '../elements/hg-heading.js';
 import '../edit/hg-editable-image.js';
 import '../edit/hg-editable-text.js';
 import '../elements/hg-action-buttons.js';
+import '../elements/hg-icon-info.js';
 
 customElements.define('hg-text-image', class extends LitElement {
   static get properties() {
@@ -12,6 +13,8 @@ customElements.define('hg-text-image', class extends LitElement {
       buttons: Number,
       h3: {type: Boolean},
       swap: {type: Boolean},
+      iconFields: Array,
+      iconSrcs: Array,
       _textImage: Object,
     };
   }
@@ -69,6 +72,10 @@ customElements.define('hg-text-image', class extends LitElement {
           @save=${(event) => this.updateData('heading', event.detail)}>
           <hg-heading ?h3=${this.h3}></hg-heading>
         </hg-editable-text>
+        ${_.isEmpty(this.iconFields) ? '' : html`<hg-icon-info
+          .items=${_.zipWith((text, src) => ({text, src}), _.map(_.get(_, this._textImage), this.iconFields), this.iconSrcs)}
+          @save=${(event) => this.updateData(`${this.iconFields[event.detail.index]}`, event.detail.text)}>
+        </hg-icon-info>`}
         <hg-editable-text
           multiline
           .text=${_.get('text', this._textImage)}

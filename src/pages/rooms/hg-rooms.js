@@ -1,0 +1,38 @@
+import {LitElement, html, css} from 'lit-element';
+import '../../content/hg-article.js';
+import '../../content/hg-icons/hg-icons.js';
+import '../../content/hg-content-slider/hg-content-slider';
+import '../../elements/hg-heading.js';
+import '../../elements/hg-text.js';
+// import './hg-room.js';
+
+customElements.define('hg-rooms', class extends LitElement {
+  static get properties() {
+    return {};
+  }
+  static get styles() {
+    return css`
+    `;
+  }
+  render() {
+    return html`
+      <hg-article .uid=${'rooms'}></hg-article>
+      <hg-icons .uid=${'rooms'}></hg-icons>
+      <hg-heading center>${'Wyposażenie każdego pokoju'}</hg-heading>
+      <hg-icons .uid=${'rooms-facilities'}></hg-icons>
+      ${_.map((index) => html`
+        <hg-text-image 
+          .uid=${'rooms-' + index}
+          .iconFields=${['size', 'people']}
+          .iconSrcs=${[
+            'https://firebasestorage.googleapis.com/v0/b/pl-hotelgarden.appspot.com/o/icons%2Fediting%2Fmove.png?alt=media&token=68fa9540-cd2c-4577-9a32-55c83d5ea682',
+            'https://firebasestorage.googleapis.com/v0/b/pl-hotelgarden.appspot.com/o/icons%2Fpeople%2Fstanding-man.png?alt=media&token=f284442d-c273-480e-acd1-67a9bcb0463a'
+          ]}>
+        </hg-text-image>
+        <hg-content-slider .uid=${'rooms-'+ index}></hg-content-slider>
+      `, [1, 2, 3, 4])}
+      <hg-heading center>${'Warunki rezerwacji'}</hg-heading>
+      <hg-icons .uid=${'rooms-conditions'}></hg-icons>
+    `;
+  }
+});
