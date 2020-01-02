@@ -1,8 +1,8 @@
 import {LitElement, html, css} from 'lit-element';
-import '../../elements/hg-heading.js';
-import '../../edit/hg-editable-image.js';
-import '../../edit/hg-editable-text.js';
-import {db, updateData, updateImage} from "../../utils.js";
+import '../../../elements/hg-heading.js';
+import '../../../edit/hg-editable-image.js';
+import '../../../edit/hg-editable-text.js';
+import {db, updateData, updateImage} from "../../../utils.js";
 
 customElements.define('hg-halls-tables', class extends LitElement {
   static get properties() {

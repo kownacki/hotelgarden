@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
-import '../../content/hg-menu/hg-menu.js'
-import '../../content/hg-opinions-block/hg-opinions-block.js';
+import '../../content/hg-menu.js'
+import '../../content/hg-opinions-block.js';
 
 customElements.define('hg-restaurant', class extends LitElement {
   static get properties() {

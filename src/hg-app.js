@@ -18,7 +18,7 @@ import '@material/mwc-button';
 import '@material/mwc-textfield';
 import '@polymer/paper-styles/color';
 
-import './elements/hg-header/hg-header.js';
+import './elements/hg-header.js';
 import './elements/hg-page.js';
 
 customElements.define('hg-app', class extends LitElement {

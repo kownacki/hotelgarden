@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit-element';
-import './hg-halls-slider.js';
-import '../../elements/hg-image.js';
-import '../../content/hg-text-image.js';
+import './hg-halls-block/hg-halls-slider.js';
+import '../elements/hg-image.js';
+import './hg-text-image.js';
 
 customElements.define('hg-halls-block', class extends LitElement {
   static get properties() {

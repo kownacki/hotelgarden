@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
 import '../../content/hg-article.js';
-import '../../content/hg-icons/hg-icons.js';
+import '../../content/hg-icons.js';
 import '../../content/hg-mosaic.js';
 import '../../content/hg-links.js';
 

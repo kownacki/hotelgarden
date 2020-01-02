@@ -1,8 +1,8 @@
 import {LitElement, html, css} from 'lit-element';
-import {db, array} from "../../utils.js";
-import './hg-icons-add.js';
-import './hg-icons-item.js';
-import '../../elements/hg-content-label.js';
+import {db, array} from "../utils.js";
+import './hg-icons/hg-icons-add.js';
+import './hg-icons/hg-icons-item.js';
+import '../elements/hg-content-label.js';
 
 customElements.define('hg-icons', class extends LitElement {
   static get properties() {

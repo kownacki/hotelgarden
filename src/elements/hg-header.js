@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit-element';
-import './hg-header-subnav.js';
-import './hg-header-logo.js';
-import {links} from '../../utils.js';
+import './hg-header/hg-header-subnav.js';
+import './hg-header/hg-header-logo.js';
+import {links} from '../utils.js';
 
 customElements.define('hg-header', class extends LitElement {
   static get properties() {

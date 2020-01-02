@@ -1,8 +1,8 @@
 import {LitElement, html, css} from 'lit-element';
-import {db, updateImage, deleteImageFromStorage} from '../../utils.js';
-import './hg-content-slider-item.js';
-import '../../elements/hg-image-upload.js';
-import '../../elements/hg-content-label.js';
+import {db, updateImage, deleteImageFromStorage} from '../utils.js';
+import './hg-content-slider/hg-content-slider-item.js';
+import '../elements/hg-image-upload.js';
+import '../elements/hg-content-label.js';
 
 customElements.define('hg-content-slider', class extends LitElement {
   static get properties() {

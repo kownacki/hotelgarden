@@ -15,9 +15,9 @@ import '../pages/cuisine/hg-grill-garden.js';
 import '../pages/celebrations/hg-weddings.js';
 import '../pages/celebrations/hg-chrzciny.js';
 import '../pages/celebrations/hg-komunie.js';
-import '../pages/hg-gallery/hg-gallery.js';
-import '../pages/hg-events/hg-events.js';
-import '../pages/hg-events/hg-event.js';
+import '../pages/gallery/hg-gallery.js';
+import '../pages/events/hg-events.js';
+import '../pages/events/hg-event.js';
 
 let seconds = 0;
 setInterval(() => ++seconds, 1000);

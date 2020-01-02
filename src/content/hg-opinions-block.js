@@ -1,8 +1,8 @@
 import {LitElement, html, css} from 'lit-element';
-import {db} from "../../utils.js";
-import '../../elements/hg-heading.js';
-import './hg-scores.js';
-import './hg-opinions-slider.js';
+import {db} from "../utils.js";
+import '../elements/hg-heading.js';
+import './hg-opinions-block/hg-scores.js';
+import './hg-opinions-block/hg-opinions-slider.js';
 
 customElements.define('hg-opinions-block', class extends LitElement {
   static get properties() {

@@ -3,8 +3,8 @@ import {repeat} from 'lit-html/directives/repeat';
 import {db, splitEvents} from "../../utils.js";
 import sharedStyles from '../../sharedStyles.js';
 import '../../elements/hg-heading.js';
-import './hg-events-card.js';
-import './hg-events-add.js';
+import './hg-events/hg-events-card.js';
+import './hg-events/hg-events-add.js';
 
 customElements.define('hg-events', class extends LitElement {
   static get properties() {
