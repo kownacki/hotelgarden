@@ -14,8 +14,10 @@ customElements.define('hg-editable-text', class extends LitElement {
   }
   constructor() {
     super();
-    setTimeout(() => {
-      if (!this._editable) {
+    const timeout = setTimeout(() => {
+      if (this._editable) {
+        clearTimeout(timeout)
+      } else {
         this.setEditable();
       }
     }, 500);
