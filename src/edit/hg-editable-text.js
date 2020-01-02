@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit-element';
 import {headerHeight} from '../utils.js'
 
-customElements.define('hg-editable-text', class extends LitElement {
+export default class HgEditableText extends LitElement {
   static get properties() {
     return {
       text: String,
@@ -84,6 +84,7 @@ customElements.define('hg-editable-text', class extends LitElement {
       }
       ::slotted(*) {
         height: 100%;
+        min-width: 20px;
       }
       .edit {
         margin-top: 5px;
@@ -130,4 +131,5 @@ customElements.define('hg-editable-text', class extends LitElement {
         </paper-button>
     `;
   }
-});
+}
+customElements.define('hg-editable-text', HgEditableText);
