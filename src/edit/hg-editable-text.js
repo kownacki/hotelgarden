@@ -25,7 +25,7 @@ customElements.define('hg-editable-text', class extends LitElement {
   setEditable() {
     let slotted = this.querySelector('*');
     while (slotted.tagName === 'SLOT') {
-      slotted = slotted.assignedNodes()[0];
+      slotted = slotted.assignedElements()[0];
     }
     this._editable = (slotted.shadowRoot && slotted.shadowRoot.getElementById('editable')) || slotted;
     this._editable.setAttribute('contenteditable', true);
