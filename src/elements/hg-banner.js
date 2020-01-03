@@ -26,20 +26,13 @@ customElements.define('hg-banner', class extends LitElement {
         height: 100vh;
         display: flex;
       }
-      .shadow {
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
-        position: absolute;
-        box-shadow: inset 0 150px 150px rgba(0, 0, 0, 0.5);
-      }
       hg-editable-image {
         top: 0;
         left: 0;
         bottom: 0;
         right: 0;
         position: absolute;
+        box-shadow: inset 0 150px 150px rgba(0, 0, 0, 0.5);
       }
       .heading {
         background: rgba(var(--secondary-color-rgb), 0.5);
@@ -68,6 +61,7 @@ customElements.define('hg-banner', class extends LitElement {
   render() {
     return html`
       <hg-editable-image
+        lower-image
         .src=${_.get('image.url', this._banner)}
         .sizing=${'cover'}
         @save=${async (event) => {
@@ -92,7 +86,6 @@ customElements.define('hg-banner', class extends LitElement {
           </hg-editable-text>
         `}
       </div>
-      <div class="shadow"></div>
     `;
   }
 });

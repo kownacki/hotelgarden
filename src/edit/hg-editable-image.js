@@ -35,6 +35,9 @@ customElements.define('hg-editable-image', class extends LitElement {
       img {
         width: 100%;
       }
+      :host([lower-image]) iron-image, :host([lower-image]) img {
+        z-index: -1;
+      }
       input {
         display: none;
       }
