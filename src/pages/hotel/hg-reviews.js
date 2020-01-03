@@ -2,7 +2,7 @@ import {LitElement, html, css} from 'lit-element';
 import '../../elements/hg-list.js';
 import './hg-reviews/hg-reviews-item.js';
 
-const reviewBlocks = ['landing', 'test'];
+const reviewBlocks = ['landing', 'restaurant'];
 
 customElements.define('hg-reviews', class extends LitElement {
   static get properties() {
