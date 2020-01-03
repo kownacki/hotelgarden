@@ -1,10 +1,10 @@
 import {LitElement, html, css} from 'lit-element';
 import '../../elements/hg-slider.js';
 
-customElements.define('hg-opinions-slider', class extends LitElement {
+customElements.define('hg-reviews-slider', class extends LitElement {
   static get properties() {
     return {
-      opinions: Array,
+      reviews: Array,
     };
   }
   static get styles() {
@@ -17,8 +17,8 @@ customElements.define('hg-opinions-slider', class extends LitElement {
   render() {
     return html`
       <hg-slider
-        .items=${this.opinions}
-        .template=${(opinion) => html`
+        .items=${this.reviews}
+        .template=${(review) => html`
           <style>
             article {
               padding: 0 60px;
@@ -46,10 +46,10 @@ customElements.define('hg-opinions-slider', class extends LitElement {
             }
           </style>
           <article>
-            <h3>${opinion.title}</h3>
-            <p>${opinion.text}</p>
+            <h3>${review.heading}</h3>
+            <p>${review.text}</p>
             <div class="bottom">
-              <span class="author">${opinion.author}</span>, ${opinion.portal}        
+              <span class="author">${review.author}</span>, ${review.platform}        
             </div>
           </article>
         `}>

@@ -4,7 +4,7 @@ import '../../content/hg-quote.js';
 import '../../content/hg-icons.js';
 import '../../content/hg-mosaic.js';
 import '../../content/hg-text-image.js';
-import '../../content/hg-opinions-block.js';
+import '../../content/hg-reviews-block.js';
 import '../../content/hg-infographic.js';
 import '../../content/hg-content-slider.js';
 import '../../content/hg-links.js';
@@ -30,7 +30,7 @@ customElements.define('hg-landing', class extends LitElement {
         secondary: [{url: '#'}],
       }}></hg-mosaic>
       <hg-text-image .uid=${'landing'} .buttons=${[{url: '#'}]}></hg-text-image>
-      <hg-opinions-block .uid=${'landing'} scores></hg-opinions-block>
+      <hg-reviews-block .uid=${'landing'} scores></hg-reviews-block>
       <hg-infographic .uid=${'landing'}></hg-infographic>
       <hg-content-slider .uid=${'landing'}></hg-content-slider>
     `;

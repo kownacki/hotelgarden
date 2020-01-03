@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
 import '../../content/hg-menu.js'
-import '../../content/hg-opinions-block.js';
+import '../../content/hg-reviews-block.js';
 
 customElements.define('hg-restaurant', class extends LitElement {
   static get properties() {
@@ -17,7 +17,7 @@ customElements.define('hg-restaurant', class extends LitElement {
       <hg-icons .uid=${'restaurant'}></hg-icons>
       <hg-mosaic .uid=${'restaurant'} .buttons=${{primary: [{url: '#menu', text: 'Zobacz menu'}]}}></hg-mosaic>
       <hg-content-slider .uid=${'restaurant'}></hg-content-slider>
-      <hg-opinions-block .uid=${'restaurant'}></hg-opinions-block>
+      <hg-reviews-block .uid=${'restaurant'}></hg-reviews-block>
       <hg-menu id="menu"></hg-menu> 
     `;
   }
