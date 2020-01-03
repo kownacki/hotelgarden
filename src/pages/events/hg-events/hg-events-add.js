@@ -32,6 +32,9 @@ customElements.define('hg-events-add', class extends LitElement {
   }
   static get styles() {
     return css`
+      paper-button {
+        margin: 20px 0;
+      }
       .address {
         font-family: monospace;
       }
@@ -67,11 +70,10 @@ customElements.define('hg-events-add', class extends LitElement {
       }
     };
     return html`
-      <paper-icon-button 
-        icon="icons:add"
-        @click=${() => this.shadowRoot.getElementById('dialog').open()}>
-      </paper-icon-button>
-      
+      <paper-button raised @click=${() => this.shadowRoot.getElementById('dialog').open()}>
+        <iron-icon .icon=${'add'} ></iron-icon>
+        Nowe wydarzenie
+      </paper-button>
       <paper-dialog id="dialog">
         <div>Dodaj wydarzenie</div>
         <p class="tip">
