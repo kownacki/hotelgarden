@@ -36,6 +36,7 @@ customElements.define('hg-list-item', class extends LitElement {
         margin: 1px;
       }
       paper-icon-button {
+        display: none;
         position: absolute;
         top: calc(50% - 12px);
         width: 24px;
