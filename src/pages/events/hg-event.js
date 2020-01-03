@@ -50,10 +50,7 @@ customElements.define('hg-event', class extends LitElement {
   }
   render() {
     return this._event ? html`
-      <hg-banner
-        .src=${this._event.image}
-        .heading=${this._event.title}>
-      </hg-banner>
+      <hg-banner .doc=${`events/${this.uid}`} .noSubheading=${true} .useTitleAsHeading=${true}></hg-banner>
       <div class="container">
         <div class="content"> 
           <div class="date">

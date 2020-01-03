@@ -6,9 +6,9 @@ customElements.define('hg-banner', class extends LitElement {
   static get properties() {
     return {
       uid: String,
-      heading: String,
-      subheading: String,
-      image: String,
+      doc: String,
+      useTitleAsHeading: String,
+      noSubheading: Boolean,
       _banner: Object,
     };
   }
@@ -16,8 +16,11 @@ customElements.define('hg-banner', class extends LitElement {
     super();
   }
   async updated(changedProperties) {
-    if (changedProperties.has('uid') && !this.heading) {
-      this._banner = (await db.doc('banners/' + this.uid).get()).data() || {};
+    if (changedProperties.has('uid')) {
+      this.doc = 'banners/' + this.uid;
+    }
+    if (changedProperties.has('doc')) {
+      this._banner = (await db.doc(this.doc).get()).data() || {};
     }
   }
   static get styles() {
@@ -65,26 +68,20 @@ customElements.define('hg-banner', class extends LitElement {
         .src=${_.get('image.url', this._banner)}
         .sizing=${'cover'}
         @save=${async (event) => {
-          this._banner.image = await updateImage('banners/' + this.uid, 'image', event.detail, (_.get('image.name', this._banner)));
+          this._banner.image = await updateImage(this.doc, 'image', event.detail, (_.get('image.name', this._banner)));
         }}>
       </hg-editable-image>
       <div class="heading">
-        ${this.heading 
-          ? html`<h1>${this.heading}</h1>`
-          : html`<hg-editable-text
-            .text=${_.get('heading', this._banner) || ''}
-            @save=${(event) => db.doc('banners/' + this.uid).set({heading: event.detail}, {merge: true})}>
-            <h1></h1>
-          </hg-editable-text>
-        `}
-        ${this.heading 
-          ? (this.subheading ? html`<p>${this.subheading}</p>` : '')
-          : html`<hg-editable-text
-            .text=${_.get('subheading', this._banner) || ''}
-            @save=${(event) => db.doc('banners/' + this.uid).set({subheading: event.detail}, {merge: true})}>
-            <p></p>
-          </hg-editable-text>
-        `}
+        <hg-editable-text
+          .text=${_.get(this.useTitleAsHeading ? 'title' : 'heading', this._banner) || ''}
+          @save=${(event) => db.doc(this.doc).set({[this.useTitleAsHeading ? 'title' : 'heading']: event.detail}, {merge: true})}>
+          <h1></h1>
+        </hg-editable-text>
+        ${this.noSubheading ? '' : html`<hg-editable-text
+          .text=${_.get('subheading', this._banner) || ''}
+          @save=${(event) => db.doc(this.doc).set({subheading: event.detail}, {merge: true})}>
+          <p></p>
+        </hg-editable-text>`}
       </div>
     `;
   }
