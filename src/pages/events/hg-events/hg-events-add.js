@@ -52,23 +52,22 @@ customElements.define('hg-events-add', class extends LitElement {
       }
     `;
   }
+  async addEvent() {
+    const title = this._title;
+    const date = this._date;
+    const address = this._address;
+    const colRef = db.collection('events');
+    if (!address || (await colRef.doc(address).get()).exists) {
+      alert(`Operacja nie powiodła się. Adres "${address}" jest zajęty lub nieprawidłowy.`);
+      this._checkIfAddressTaken();
+    } else {
+      // todo transaction to avoid race condition
+      colRef.doc(address).set({title, date});
+      window.history.pushState(null, null, '/wydarzenia/' + address);
+      this.dispatchEvent(new CustomEvent('location-changed', {composed: true, bubbles: true}));
+    }
+  };
   render() {
-    //todo Is it performant to place helper functions in render()?
-    const addEvent = async () => {
-      const title = this._title;
-      const date = this._date;
-      const address = this._address;
-      const colRef = db.collection('events');
-      if (!address || (await colRef.doc(address).get()).exists) {
-        alert(`Operacja nie powiodła się. Adres "${address}" jest zajęty lub nieprawidłowy.`);
-        this._checkIfAddressTaken();
-      } else {
-        // todo transaction to avoid race condition
-        colRef.doc(address).set({title, date});
-        window.history.pushState(null, null, '/wydarzenia/' + address);
-        this.dispatchEvent(new CustomEvent('location-changed', {composed: true, bubbles: true}));
-      }
-    };
     return html`
       <paper-button raised @click=${() => this.shadowRoot.getElementById('dialog').open()}>
         <iron-icon .icon=${'add'} ></iron-icon>
@@ -114,7 +113,7 @@ customElements.define('hg-events-add', class extends LitElement {
             ? html`<span style="color: red">zajęty</span>`
             : html`<span style="color: green">dostępny</span>`}<br>
         </p>
-        <mwc-button raised label="Dodaj" @click=${addEvent} 
+        <mwc-button raised label="Dodaj" @click=${this.addEvent} 
           ?disabled=${!this._address || !this._dateCorrect || this._addressTaken || this._typing || this._loading}>
         </mwc-button>
       </paper-dialog>
