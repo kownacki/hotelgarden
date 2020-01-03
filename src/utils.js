@@ -76,7 +76,6 @@ export const pathToUid = {
   '/villa-garden': 'villa-garden',
   '/olesnica-i-okolice': 'surroundings',
   '/opinie': 'reviews',
-  '/faq': 'faq',
   '/pokoje': 'rooms',
   '/konferencje': 'conferences',
   '/sale': 'halls',
@@ -101,7 +100,6 @@ export const links = [
       {name: 'Villa Garden', path: '/villa-garden'},
       {name: 'Oleśnica i okolice', path: '/olesnica-i-okolice'},
       {name: 'Opinie ', path: '/opinie'},
-      {name: 'FAQ ', path: '/faq'},
     ],
   }, {
     name: 'Pokoje',
