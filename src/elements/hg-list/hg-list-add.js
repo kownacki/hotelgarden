@@ -1,0 +1,34 @@
+import {LitElement, html, css} from 'lit-element';
+
+customElements.define('hg-list-add', class extends LitElement {
+  static get properties() {
+    return {
+      disable: Boolean,
+      opened: {type: Boolean, reflect: true},
+    };
+  }
+  static get styles() {
+    return css`
+      :host {
+        height: 400px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      paper-icon-button {
+        width: 60px;
+        height: 60px;
+        padding: 0;
+      }
+    `;
+  }
+  render() {
+    return html`
+      <paper-icon-button
+        ?disabled=${this.disable}
+        icon="icons:add"
+        @click=${() => this.dispatchEvent(new CustomEvent('add'))}>
+      </paper-icon-button>
+    `;
+  }
+});

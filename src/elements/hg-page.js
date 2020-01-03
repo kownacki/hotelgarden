@@ -5,6 +5,7 @@ import '../elements/hg-banner.js';
 import '../pages/hotel/hg-landing.js';
 import '../pages/hotel/hg-villa-garden.js';
 import '../pages/hotel/hg-surroundings.js';
+import '../pages/hotel/hg-reviews.js';
 import '../pages/hotel/hg-faq.js';
 import '../pages/rooms/hg-rooms.js';
 import '../pages/conferences/hg-conferences.js';
