@@ -62,8 +62,10 @@ export default class HgEditableText extends LitElement {
         this.removeAttribute('not-empty');
       }
     }
-    if (changedProperties.has('disabled')) {
-      this._editable.setAttribute('contenteditable', !this.disabled);
+    if (changedProperties.has('disabled') || changedProperties.has('_editable')) {
+      if (this._editable) {
+        this._editable.setAttribute('contenteditable', !this.disabled);
+      }
     }
   }
   static get styles() {
