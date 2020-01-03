@@ -13,8 +13,8 @@ customElements.define('hg-reviews-item', class extends LitElement {
       :host {
         display: block;
         box-sizing: border-box;
+        margin: 10px;
         padding: 1px 20px;
-        width: 100%;
         height: 100%;
         box-shadow: 0 0 2px var(--placeholder-color);
         border-radius: 2px;

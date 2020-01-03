@@ -11,6 +11,7 @@ customElements.define('hg-reviews', class extends LitElement {
       :host {
         display: block;
         max-width: 1200px;
+        padding: 20px;
         margin: auto;
       }
     `;
