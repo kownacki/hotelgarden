@@ -21,23 +21,34 @@ customElements.define('hg-header-logo', class extends LitElement {
       }
       .logomark {
         padding: 12px 10px;
-        width: 40px;
+        position: relative;
+        top: 10px;
+        width: 80px;
         margin: auto;
-      }
-      :host(:not([scrolled-down])) .logomark {
+        transition: top 0.3s ease, width 0.3s ease;
+        transition-delay: 0.3s;
         filter: drop-shadow(0 0 1px white);
       }
+      :host([scrolled-down]) .logomark {
+        top: 0;
+        width: 40px;
+        filter: none;
+        transition-delay: 0s;
+      }
       .logotype {
-        transition: top 0.5s ease;
+        transition: top 0.6s ease;
+        transition-delay: 0.3s;
         filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.25));
         padding: 0 10px 10px;
         position: absolute;
-        top: 60px;
+        top: 105px;
         width: 150px;
         z-index: -1;
       }
       :host([scrolled-down]) .logotype {
+        transition-delay: 0s;
         top: -100px;
+        filter: none;
       }
     `;
   }
