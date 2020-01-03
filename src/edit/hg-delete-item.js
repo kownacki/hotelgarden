@@ -37,7 +37,7 @@ customElements.define('hg-delete-item', class extends LitElement {
         @opened-changed=${(event) => {this.opened = event.target.opened; this.dispatchEvent(new CustomEvent('opened-changed'))}}>
         <div class="warning">
           <iron-icon icon="warning"></iron-icon>
-          Czy na pewno usunąć "${this.name}"? 
+          Czy na pewno usunąć ${this.name}? 
           Usunięte dane nie mogą być przywrócone.
         </div>
         <div class="buttons">

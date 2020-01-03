@@ -1,15 +1,18 @@
 import {LitElement, html, css} from 'lit-element';
 import '../../edit/hg-delete-item.js';
+import './hg-list-item-configure.js';
 
 customElements.define('hg-list-item', class extends LitElement {
   static get properties() {
     return {
+      item: Object,
       first: Boolean,
       last: Boolean,
       disableEdit: Boolean,
       opened: {type: Boolean, reflect: true},
+      configure: Object,
       _deleteOpened: Boolean,
-      _editOpened: Boolean,
+      _configureOpened: Boolean,
     };
   }
   static get styles() {
@@ -17,18 +20,22 @@ customElements.define('hg-list-item', class extends LitElement {
       :host {
         position: relative;
       }
-      hg-delete-item  {
-        position: absolute;
-        right: 15px;
-        top: 15px;
-        display: none;
-        flex-direction: column;
+      :host(:hover) .controls, :host([opened]) .controls {
+        display: flex;
       }
-      :host(:hover) hg-delete-item, :host([opened]) hg-delete-item, :host(:hover) paper-icon-button {
+      :host(:hover) paper-icon-button {
         display: block;
       }
-      paper-icon-button {
+      .controls {
+        position: absolute;
+        top: 15px;
+        right: 15px;
         display: none;
+      }
+      .controls > * {
+        margin: 1px;
+      }
+      paper-icon-button {
         position: absolute;
         top: calc(50% - 12px);
         width: 24px;
@@ -44,18 +51,36 @@ customElements.define('hg-list-item', class extends LitElement {
     `;
   }
   updated(changedProperties) {
-    if (changedProperties.has('_deleteOpened') || changedProperties.has('_editOpened')) {
-      this.opened = this._deleteOpened || this._editOpened;
+    if (changedProperties.has('_deleteOpened') || changedProperties.has('_configureOpened')) {
+      this.opened = this._deleteOpened || this._configureOpened;
     }
+    // todo make wrapper element for slot allowing passing properties instead of this workaround
+    // if (changedProperties.has('disableEdit')) {
+    //   let slotted = this.querySelector('*');
+    //   if (slotted) {
+    //     while (slotted.tagName === 'SLOT') {
+    //       slotted = slotted.assignedElements()[0];
+    //     }
+    //     slotted.disableEdit = this.disableEdit;
+    //   }
+    // }
   }
   render() {
     return html`
       <slot></slot>
-      <hg-delete-item
-        .disable=${this.disableEdit} 
-        .name=${"ikona"} 
-        @opened-changed=${(event) => this._deleteOpened = event.target.opened}>
-      </hg-delete-item>
+      <div class="controls">
+        ${!this.configure ? '' : html`<hg-list-item-configure 
+          .configure=${this.configure}
+          .item=${this.item}
+          .disable=${this.disableEdit}
+          @opened-changed=${(event) => this._configureOpened = event.target.opened}>
+        </hg-list-item-configure>`}
+        <hg-delete-item
+          .disable=${this.disableEdit} 
+          .name=${`opinię "${this.item.heading}"`} 
+          @opened-changed=${(event) => this._deleteOpened = event.target.opened}>
+        </hg-delete-item>
+      </div>
       ${this.first ? '' : html`<paper-icon-button
         class="swap-left"
         icon="swap-horiz"

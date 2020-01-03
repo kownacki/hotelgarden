@@ -10,6 +10,7 @@ import '@polymer/iron-icons/maps-icons.js';
 import '@polymer/iron-icon';
 import '@polymer/iron-image';
 import '@polymer/paper-button';
+import '@polymer/paper-checkbox/paper-checkbox.js';
 import '@polymer/paper-icon-button';
 import '@polymer/paper-input/paper-input';
 import '@polymer/paper-dialog';

@@ -42,7 +42,7 @@ export default class HgEditableText extends LitElement {
   }
   updated(changedProperties) {
     if (changedProperties.has('showControls')) {
-      this.dispatchEvent(new CustomEvent('show-controls-changed', {detail: this.showControls, composed: true}));
+      this.dispatchEvent(new CustomEvent('show-controls-changed', {detail: this.showControls, composed: true, bubbles: true}));
       //todo add also when changing location
       //todo multiple onbeforeunload overlapping
       window.onbeforeunload = !this.showControls ? null : () => {

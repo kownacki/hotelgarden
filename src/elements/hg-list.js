@@ -10,6 +10,7 @@ customElements.define('hg-list', class extends LitElement {
       reverse: Boolean,
       doc: String,
       template: Function,
+      configure: Object,
       _items: Array,
       _processing: Boolean,
     };
@@ -68,13 +69,18 @@ customElements.define('hg-list', class extends LitElement {
         _.isEmpty(this._items) ? ''
           : repeat(this.reverse ? _.reverse(this._items) : this._items, _.get('uid'), (item, index) => 
             html`<hg-list-item
+              .item=${item}
               .first=${index === 0}
               .last=${index === this._items.length - 1}
               .disableEdit=${this._processing}
+              .configure=${this.configure}
               @request-delete=${() => this.deleteItem(this.correctIndex(index))}
               @swap=${async (event) => this.swapItems(this.correctIndex(index), this.reverse ? event.detail*-1 : event.detail)}
-              @update=${(event) => this.updateData(`${this.correctIndex(index)}.${event.detail.path}`, event.detail.data)}>
-              ${this.template(item)}
+              @update=${(event) => this.updateData(`${this.correctIndex(index)}.${event.detail.path}`, event.detail.data)}
+              @show-controls-changed=${(event) => {
+                this._processing = event.detail;
+              }}>
+              ${this.template(item, this._processing)}
             </hg-list-item>`
           )
         ,
