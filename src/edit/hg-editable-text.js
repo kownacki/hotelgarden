@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
-import {headerHeight} from '../utils.js'
+import {headerHeight, moveOutFromShadowDom} from '../utils.js'
 
 export default class HgEditableText extends LitElement {
   static get properties() {
@@ -7,32 +7,43 @@ export default class HgEditableText extends LitElement {
       text: String,
       disabled: Boolean,
       showControls: Boolean,
+      rich: Boolean,
       multiline: {type: Boolean, reflect: true},
       float: {type: Boolean, reflect: true},
       _editable: Element,
+      _editor: Element,
     };
   }
   constructor() {
     super();
-    const timeout = setTimeout(() => {
-      if (this._editable) {
-        clearTimeout(timeout)
-      } else {
+    setTimeout(() => {
+      if (!this._editable) {
         this.setEditable();
       }
     }, 500);
   }
-  setEditable() {
+  async setEditable() {
     let slotted = this.querySelector('*');
     while (slotted.tagName === 'SLOT') {
       slotted = slotted.assignedElements()[0];
     }
     this._editable = (slotted.shadowRoot && slotted.shadowRoot.getElementById('editable')) || slotted;
     this._editable.setAttribute('contenteditable', true);
-    this._editable.addEventListener('input', () => {
-      this.showControls = true;
-      this.setAttribute('not-empty', '');
-    });
+
+    if (this.rich) {
+      await moveOutFromShadowDom(this._editable);
+      this._editor = await InlineEditor.create(this._editable);
+      this._editor.model.document.on('change:data', () => {
+        this.showControls = true;
+        this.setAttribute('not-empty', '');
+      });
+    } else {
+      this._editable.addEventListener('input', () => {
+        this.showControls = true;
+        this.setAttribute('not-empty', '');
+      });
+    }
+
     this._editable.addEventListener("focus", () => {
       this._editable.style['text-transform'] = "initial";
     });
@@ -56,11 +67,7 @@ export default class HgEditableText extends LitElement {
         this.setEditable();
       }
       this._editable.innerHTML = this.text;
-      if (this.text) {
-        this.setAttribute('not-empty', '');
-      } else {
-        this.removeAttribute('not-empty');
-      }
+      this.text ? this.setAttribute('not-empty', '') : this.removeAttribute('not-empty');
     }
     if (changedProperties.has('disabled') || changedProperties.has('_editable')) {
       if (this._editable) {
@@ -114,8 +121,8 @@ export default class HgEditableText extends LitElement {
         <paper-button
           raised
           @click=${() => {
+            this.rich ? this._editor.setData(this.text) : (this._editable.innerHTML = this.text || '');
             this.showControls = false;
-            this._editable.innerHTML = this.text ? this.text : '';
             if (!this.text) {
               this.removeAttribute('not-empty');
             }
@@ -126,8 +133,8 @@ export default class HgEditableText extends LitElement {
           raised
           @click=${() => {
             this.showControls = false;
-            this.text = this._editable.textContent ? this._editable.textContent : '';
-            this.dispatchEvent(new CustomEvent('save', {detail: this.text}));
+            this.text = this._editable.textContent || '';
+            this.dispatchEvent(new CustomEvent('save', {detail: this.rich ? this._editor.getData() : this.text}));
           }}>
           Zapisz
         </paper-button>

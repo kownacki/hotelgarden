@@ -17,6 +17,7 @@
     "rollup-plugin-terser": "^5.1.2"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-build-inline": "^16.0.0",
     "@material/mwc-button": "^0.10.0",
     "@material/mwc-textfield": "^0.10.0",
     "@polymer/app-route": "^3.0.2",

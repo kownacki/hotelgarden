@@ -85,7 +85,14 @@ customElements.define('hg-event', class extends LitElement {
             </hg-event-edit-date>
           </div>
           <div class="divider"></div>
-          ${this._content}
+          <hg-editable-text 
+            .rich=${true}
+            multiline
+            id="text"
+            .text=${this._event.content}
+            @save=${(event) => this.updateData('content', event.detail)}>
+            <div></div>
+          </hg-editable-text>
         </div>
         <hg-events-sidebar .selected=${this._event.address}></hg-events-sidebar>
       </div>
