@@ -19,6 +19,7 @@ export default {
         {src: 'index.html', dest: 'dist'},
         {src: 'src/styles.css', dest: 'dist/src'},
         {src: 'resources', dest: 'dist'},
+        {src: 'node_modules/@ckeditor', dest: 'dist/node_modules'},
       ],
     }),
     terser(),
