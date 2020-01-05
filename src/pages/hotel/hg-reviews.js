@@ -16,14 +16,22 @@ customElements.define('hg-reviews', class extends LitElement {
         padding: 20px;
         margin: auto;
       }
+      hg-list {
+        display: flex;
+        flex-wrap: wrap;
+        --columns: 3;
+      }
     `;
   }
   render() {
     return html`
       <hg-list
-        .reverse=${true}
+        .array=${true}
+        .addAtStart=${true}
+        .transform=${_.reverse}
         .doc=${'reviews/reviews'}
-        .template=${(review, processing) => html`<hg-reviews-item .review=${review} .disableEdit=${processing}></hg-reviews-item>`}
+        .getItemName=${(item) => `opinię${item.heading ? ` "${item.heading}"`: ''}`}
+        .itemTemplate=${(review, processing) => html`<hg-reviews-item .review=${review} .disableEdit=${processing}></hg-reviews-item>`}
         .configure=${{
           icon: 'settings',
           field: 'display',

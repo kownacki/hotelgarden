@@ -4,17 +4,23 @@ import {db, updateData} from "../../utils.js";
 import '../../elements/hg-banner.js';
 import './hg-events/hg-events-sidebar.js';
 import './hg-event/hg-event-edit-date.js';
+import {splitEvents} from "../../utils";
 
 customElements.define('hg-event', class extends LitElement {
   static get properties() {
     return {
       uid: String,
+      _events: Array,
       _event: Object,
+      _contentLoading: Boolean,
       _content: String,
     };
   }
   constructor() {
     super();
+    (async () => {
+      this._events = (await db.doc('events/events').get()).data() || {};
+    })();
   }
   static get styles() {
     return css`
@@ -52,18 +58,21 @@ customElements.define('hg-event', class extends LitElement {
     `;
   }
   async updated(changedProperties) {
-    if (changedProperties.has('uid')) {
-      db.doc('events/' + this.uid).get()
-        .then((snapshot) => this._event = {...snapshot.data(), address: snapshot.id});
-      this._content = (await db.doc('eventsContents/' + this.uid).get()).get('content');
+    if (changedProperties.has('uid') || changedProperties.has('_events')) {
+      if (this.uid && this._events) {
+        this._event = this._events[this.uid];
+        this._contentLoading = true;
+        this._content = (await db.doc('eventsContents/' + this.uid).get()).get('content');
+        this._contentLoading = false;
+      }
     }
   }
   async updateData(path, data) {
-    return updateData('events/' + this.uid, path, data);
+    return updateData('events/events', `${this.uid}.${path}`, data);
   }
   render() {
     return this._event ? html`
-      <hg-banner .doc=${`events/${this.uid}`} .noSubheading=${true} .useTitleAsHeading=${true}></hg-banner>
+      <hg-banner .path=${{doc: 'events/events', field: this.uid}} .noSubheading=${true} .useTitleAsHeading=${true}></hg-banner>
       <div class="container">
         <div class="content">
           <div class="header">
@@ -85,16 +94,19 @@ customElements.define('hg-event', class extends LitElement {
             </hg-event-edit-date>
           </div>
           <div class="divider"></div>
-          <hg-editable-text 
+          ${this._contentLoading ? '' : html`<hg-editable-text 
             .rich=${true}
             multiline
             id="text"
-            .text=${this._event.content}
-            @save=${(event) => this.updateData('content', event.detail)}>
+            .text=${this._content}
+            @save=${(event) => {
+              this._content = event.detail;
+              db.doc('eventsContents/' + this.uid).set({content: event.detail});
+            }}>
             <div></div>
-          </hg-editable-text>
+          </hg-editable-text>`}
         </div>
-        <hg-events-sidebar .selected=${this._event.address}></hg-events-sidebar>
+        <hg-events-sidebar .selected=${this.uid} .events=${this._events}></hg-events-sidebar>
       </div>
     ` : '';
   }

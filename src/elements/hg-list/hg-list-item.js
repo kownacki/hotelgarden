@@ -6,8 +6,10 @@ customElements.define('hg-list-item', class extends LitElement {
   static get properties() {
     return {
       item: Object,
+      getItemName: Object,
       first: Boolean,
       last: Boolean,
+      noSwap: Boolean,
       disableEdit: Boolean,
       opened: {type: Boolean, reflect: true},
       configure: Object,
@@ -18,6 +20,7 @@ customElements.define('hg-list-item', class extends LitElement {
   static get styles() {
     return css`
       :host {
+        display: block;
         position: relative;
       }
       :host(:hover) .controls, :host([opened]) .controls {
@@ -78,22 +81,24 @@ customElements.define('hg-list-item', class extends LitElement {
         </hg-list-item-configure>`}
         <hg-delete-item
           .disable=${this.disableEdit} 
-          .name=${`opinię "${this.item.heading}"`} 
+          .name=${this.getItemName(this.item)} 
           @opened-changed=${(event) => this._deleteOpened = event.target.opened}>
         </hg-delete-item>
       </div>
-      ${this.first ? '' : html`<paper-icon-button
-        class="swap-left"
-        icon="swap-horiz"
-        ?disabled=${this.disableEdit}
-        @click=${() => this.dispatchEvent(new CustomEvent('swap', {detail: -1}))}>
-      </paper-icon-button>`}
-      ${this.last ? '' : html`<paper-icon-button
-        class="swap-right"
-        icon="swap-horiz"
-        ?disabled=${this.disableEdit}
-        @click=${() => this.dispatchEvent(new CustomEvent('swap', {detail: +1}))}>
-      </paper-icon-button>`}
+      ${this.noSwap ? '' :
+        [(this.first ? '' : html`<paper-icon-button
+          class="swap-left"
+          icon="swap-horiz"
+          ?disabled=${this.disableEdit}
+          @click=${() => this.dispatchEvent(new CustomEvent('swap', {detail: -1}))}>
+        </paper-icon-button>`),
+        (this.last ? '' : html`<paper-icon-button
+          class="swap-right"
+          icon="swap-horiz"
+          ?disabled=${this.disableEdit}
+          @click=${() => this.dispatchEvent(new CustomEvent('swap', {detail: +1}))}>
+        </paper-icon-button>`)]
+      }
     `;
   }
 });

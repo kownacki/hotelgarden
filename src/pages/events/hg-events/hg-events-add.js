@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
 import moment from 'moment';
-import {db, hyphenate} from '../../../utils.js';
+import {db, hyphenate, updateData} from '../../../utils.js';
 
 customElements.define('hg-events-add', class extends LitElement {
   static get properties() {
@@ -21,7 +21,7 @@ customElements.define('hg-events-add', class extends LitElement {
       if (this._address) {
         this._loading = true;
         const title = this._title;
-        const dbResult = (await db.collection('events').doc(this._address).get()).exists;
+        const dbResult = _.has(this._address, (await db.doc('events/events').get()).data());
         this._loading = false;
         // Avoid race condition. Title could change while db query was going. Only use result if it's still relevant.
         if (title === this._title) {
@@ -56,13 +56,12 @@ customElements.define('hg-events-add', class extends LitElement {
     const title = this._title;
     const date = this._date;
     const address = this._address;
-    const colRef = db.collection('events');
-    if (!address || (await colRef.doc(address).get()).exists) {
+    if (!address || _.has(address, (await db.doc('events/events').get()).data())) {
       alert(`Operacja nie powiodła się. Adres "${address}" jest zajęty lub nieprawidłowy.`);
       this._checkIfAddressTaken();
     } else {
       // todo transaction to avoid race condition
-      colRef.doc(address).set({title, date});
+      updateData('events/events', address, {title, date});
       window.history.pushState(null, null, '/wydarzenia/' + address);
       this.dispatchEvent(new CustomEvent('location-changed', {composed: true, bubbles: true}));
     }
@@ -79,7 +78,7 @@ customElements.define('hg-events-add', class extends LitElement {
           <span style="color: var(--primary-color)">Podpowiedź:</span> 
           Gdy dodajesz cykliczne wydarzenie, umieść w nazwie rok lub edycję wydarzenia. Np "Sylwester 2020", 
           "Open Mic vol. V". Dzięki temu unikniesz konfliktu nazw, a twoje wydarzenie będzie łatwiej znaleźć.<br><br>
-           <span style="color: red">Uwaga:</span> Zmiana nazwy wydarzenia po utworzeniu będzie skutkować zmianą adresu URL.
+           <span style="color: red">Uwaga:</span> Zmiana nazwy wydarzenia po utworzeniu NIE będzie skutkować zmianą adresu URL.
         </p>
         <input 
           type="date"
@@ -93,7 +92,7 @@ customElements.define('hg-events-add', class extends LitElement {
         <span style="color: red">${this._date && !this._dateCorrect ? 'Data nie może być miniona' : ''}</span>
         <paper-input 
           id="name" 
-          .label=${'Nazwa'}
+          .label=${'Nazwa wydarzenia'}
           ?invalid=${this._title && !this._address}
           error-message="Tytuł wydarzenia musi zawierać litery lub cyfry"
           @value-changed=${(event) => {

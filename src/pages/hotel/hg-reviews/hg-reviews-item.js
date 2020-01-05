@@ -19,6 +19,7 @@ customElements.define('hg-reviews-item', class extends LitElement {
         height: calc(100% - 20px);
         box-shadow: 0 0 2px var(--placeholder-color);
         border-radius: 2px;
+        height: 400px;
       }
       hg-heading {
         font-style: italic;

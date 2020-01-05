@@ -29,6 +29,8 @@ export const hyphenate = _.flow(
   _.join('-'),
 );
 
+export const assignKeys = (field) => _.map.convert({cap: false})((item, key) => ({...item, [field]: key}));
+
 export const splitEvents = (events) => [
   _.flow([
     _.filter((event) => moment().isSameOrBefore(event.date, 'day')),

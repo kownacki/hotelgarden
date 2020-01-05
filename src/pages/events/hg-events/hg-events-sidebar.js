@@ -1,22 +1,14 @@
 import {LitElement, html, css} from 'lit-element';
 import {repeat} from 'lit-html/directives/repeat';
-import {splitEvents, db} from '../../../utils.js';
+import {splitEvents, assignKeys} from '../../../utils.js';
 
 customElements.define('hg-events-sidebar', class extends LitElement {
   static get properties() {
     return {
       selected: String,
+      events: Object,
       _upcoming: Array,
-      _past: Array,
     };
-  }
-  constructor() {
-    super();
-    (async () => {
-      const docs = (await db.collection("events").get()).docs;
-      const allEvents = _.map((snapshot) => ({...snapshot.data(), address: snapshot.id}), docs);
-      [this._upcoming, this._past] = splitEvents(allEvents);
-    })();
   }
   static get styles() {
     return css`
@@ -80,13 +72,18 @@ customElements.define('hg-events-sidebar', class extends LitElement {
       }
     `;
   }
+  updated(changedProperties) {
+    if (changedProperties.has('events')) {
+      this._upcoming = splitEvents(assignKeys('uid')(this.events))[0];
+    }
+  }
   render() {
     return html`
       <h2>Nadchodzące wydarzenia</h2>
       <nav>
         <ul>
           ${_.isEmpty(this._upcoming) ? '' : repeat(this._upcoming, _.get('uid'), (event) => html`
-            <li ?selected=${this.selected === event.address}><a href="/wydarzenia/${event.address}"><span>${event.title}</span></a></li>
+            <li ?selected=${this.selected === event.uid}><a href="/wydarzenia/${event.uid}"><span>${event.title}</span></a></li>
           `)}       
         </ul>
         <a class="all" href="/wydarzenia">Wszystkie wydarzenia</a>

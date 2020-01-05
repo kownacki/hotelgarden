@@ -20,7 +20,7 @@ customElements.define('hg-events-card', class extends LitElement {
       }
       .content {
         flex: 1;
-        padding: 20px;
+        padding: 40px;
       }
       a {
         color: var(--secondary-color);

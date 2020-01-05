@@ -1,12 +1,12 @@
 import {LitElement, html, css} from 'lit-element';
-import {db, updateImage} from "../utils";
+import {db, updateImage, updateData} from "../utils";
 import '../edit/hg-editable-text.js';
 
 customElements.define('hg-banner', class extends LitElement {
   static get properties() {
     return {
       uid: String,
-      doc: String,
+      path: Object,
       useTitleAsHeading: String,
       noSubheading: Boolean,
       _banner: Object,
@@ -17,10 +17,11 @@ customElements.define('hg-banner', class extends LitElement {
   }
   async updated(changedProperties) {
     if (changedProperties.has('uid')) {
-      this.doc = 'banners/' + this.uid;
+      this.path = {doc: 'banners/' + this.uid};
     }
-    if (changedProperties.has('doc')) {
-      this._banner = (await db.doc(this.doc).get()).data() || {};
+    if (changedProperties.has('path')) {
+      const doc = (await db.doc(this.path.doc).get()).data();
+      this._banner = (this.path.field ? _.get(this.path.field, doc) : doc) || {};
     }
   }
   static get styles() {
@@ -61,6 +62,12 @@ customElements.define('hg-banner', class extends LitElement {
       }
     `;
   }
+  updateImage(path, data, oldImageName) {
+    return updateImage(this.path.doc, `${this.path.hasOwnProperty('field') ? `${this.path.field}.` : ''}${path}`, data, oldImageName)
+  }
+  updateData(path, data) {
+    updateData(this.path.doc, `${this.path.hasOwnProperty('field') ? `${this.path.field}.` : ''}${path}`, data)
+  }
   render() {
     return html`
       <hg-editable-image
@@ -68,18 +75,18 @@ customElements.define('hg-banner', class extends LitElement {
         .src=${_.get('image.url', this._banner)}
         .sizing=${'cover'}
         @save=${async (event) => {
-          this._banner.image = await updateImage(this.doc, 'image', event.detail, (_.get('image.name', this._banner)));
+          this._banner.image = await this.updateImage('image', event.detail, (_.get('image.name', this._banner)));
         }}>
       </hg-editable-image>
       <div class="heading">
         <hg-editable-text
           .text=${_.get(this.useTitleAsHeading ? 'title' : 'heading', this._banner) || ''}
-          @save=${(event) => db.doc(this.doc).set({[this.useTitleAsHeading ? 'title' : 'heading']: event.detail}, {merge: true})}>
+          @save=${(event) => this.updateData(this.useTitleAsHeading ? 'title' : 'heading', event.detail)}>
           <h1></h1>
         </hg-editable-text>
         ${this.noSubheading ? '' : html`<hg-editable-text
           .text=${_.get('subheading', this._banner) || ''}
-          @save=${(event) => db.doc(this.doc).set({subheading: event.detail}, {merge: true})}>
+          @save=${(event) => this.updateData('subheading', event.detail)}>
           <p></p>
         </hg-editable-text>`}
       </div>
