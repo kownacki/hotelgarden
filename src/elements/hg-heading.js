@@ -1,4 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
+import sharedStyles from '../sharedStyles.js'
 
 customElements.define('hg-heading', class extends LitElement {
   static get properties() {
@@ -9,7 +10,7 @@ customElements.define('hg-heading', class extends LitElement {
     };
   }
   static get styles() {
-    return css`
+    return [sharedStyles, css`
       :host {
         display: block;
         margin-bottom: 30px;
@@ -30,18 +31,8 @@ customElements.define('hg-heading', class extends LitElement {
       }
       h2, h3, h4 {
         margin: 0;
-        font-weight: 300;
       }
-      h2 {
-        font-size: 40px;
-      }
-      h3 {
-        font-size: 35px;
-      }
-      h4 {
-        font-size: 30px;
-      }
-    `;
+    `];
   }
   render() {
     return html`

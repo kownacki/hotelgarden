@@ -1,6 +1,7 @@
 import {LitElement, html, css} from 'lit-element';
 import {db, updateImage, updateData} from "../utils";
 import '../edit/hg-editable-text.js';
+import sharedStyles from '../sharedStyles';
 
 customElements.define('hg-banner', class extends LitElement {
   static get properties() {
@@ -25,7 +26,7 @@ customElements.define('hg-banner', class extends LitElement {
     }
   }
   static get styles() {
-    return css`
+    return [sharedStyles, css`
       :host {
         height: 100vh;
         display: flex;
@@ -49,8 +50,6 @@ customElements.define('hg-banner', class extends LitElement {
         z-index: 1;
       }
       h1 {
-        font-weight: 300;
-        font-size: 50px;
         margin: 10px;
         color: white;
       }
@@ -60,7 +59,7 @@ customElements.define('hg-banner', class extends LitElement {
         margin: 10px;
         color: white;
       }
-    `;
+    `];
   }
   updateImage(path, data, oldImageName) {
     return updateImage(this.path.doc, `${this.path.hasOwnProperty('field') ? `${this.path.field}.` : ''}${path}`, data, oldImageName)

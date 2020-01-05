@@ -1,6 +1,7 @@
 import {LitElement, html, css} from 'lit-element';
 import {repeat} from 'lit-html/directives/repeat';
 import {splitEvents, assignKeys} from '../../../utils.js';
+import sharedStyles from '../../../sharedStyles.js';
 
 customElements.define('hg-events-sidebar', class extends LitElement {
   static get properties() {
@@ -11,7 +12,7 @@ customElements.define('hg-events-sidebar', class extends LitElement {
     };
   }
   static get styles() {
-    return css`
+    return [sharedStyles, css`
       :host {
         width: 250px;
         background: rgba(var(--primary-color-rgb), 10%);
@@ -19,7 +20,6 @@ customElements.define('hg-events-sidebar', class extends LitElement {
         text-align: center;
       }
       h2 {
-        color: var(--primary-color);
         font-weight: 400;
         font-size: 25px;
         margin: 0;
@@ -70,7 +70,7 @@ customElements.define('hg-events-sidebar', class extends LitElement {
       a.all:hover {
         background: rgba(var(--primary-color-rgb), 70%);
       }
-    `;
+    `];
   }
   updated(changedProperties) {
     if (changedProperties.has('events')) {

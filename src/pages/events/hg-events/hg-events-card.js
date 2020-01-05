@@ -1,5 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
 import {hyphenate} from '../../../utils.js'
+import sharedStyles from '../../../sharedStyles.js'
 
 customElements.define('hg-events-card', class extends LitElement {
   static get properties() {
@@ -8,7 +9,7 @@ customElements.define('hg-events-card', class extends LitElement {
     };
   }
   static get styles() {
-    return css`
+    return [sharedStyles, css`
       :host {
         display: block;
         margin: 20px 0;
@@ -38,7 +39,6 @@ customElements.define('hg-events-card', class extends LitElement {
       }
       h3 {
         flex: 1;
-        color: var(--primary-color);
         font-weight: 400;
         font-size: 24px;
         margin: 0 20px 0 0;
@@ -56,7 +56,7 @@ customElements.define('hg-events-card', class extends LitElement {
         width: 22px;
         vertical-align: text-bottom;
       }
-    `;
+    `];
   }
   render() {
     return html`

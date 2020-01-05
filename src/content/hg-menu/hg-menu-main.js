@@ -2,6 +2,7 @@ import {LitElement, html, css} from 'lit-element';
 import {array} from '../../utils.js';
 import './hg-menu-item.js';
 import './hg-menu-add-item.js';
+import sharedStyles from '../../sharedStyles.js'
 
 customElements.define('hg-menu-main', class extends LitElement {
   static get properties() {
@@ -11,7 +12,7 @@ customElements.define('hg-menu-main', class extends LitElement {
     };
   }
   static get styles() {
-    return css`
+    return [sharedStyles, css`
       :host {
         padding-right: 20px;
       }
@@ -29,13 +30,11 @@ customElements.define('hg-menu-main', class extends LitElement {
       h3 {
         text-transform: uppercase;
         text-align: center;
-        font-weight: 300;
-        font-size: 35px;
         color: white;
         text-shadow: 0 0 6px var(--secondary-color);
         margin: 0;
       }
-    `;
+    `];
   }
   render() {
     return html`

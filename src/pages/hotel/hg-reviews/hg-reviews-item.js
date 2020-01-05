@@ -23,7 +23,6 @@ customElements.define('hg-reviews-item', class extends LitElement {
       }
       hg-heading {
         font-style: italic;
-        color: var(--primary-color);
       }
       p {
         font-style: italic;

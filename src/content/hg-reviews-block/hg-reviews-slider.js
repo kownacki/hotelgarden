@@ -20,6 +20,7 @@ customElements.define('hg-reviews-slider', class extends LitElement {
         .items=${this.reviews}
         .template=${(review) => html`
           <style>
+          /*todo separate element with sharedStyles */
             article {
               padding: 0 60px;
               display: flex;
@@ -30,7 +31,6 @@ customElements.define('hg-reviews-slider', class extends LitElement {
               font-size: 35px;
               font-weight: 300;
               font-style: italic;
-              color: var(--primary-color);
             }
             p {
               font-style: italic;
