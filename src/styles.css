@@ -7,6 +7,7 @@ body {
   --accent-color: #4f6884;
   --placeholder-color: var(--paper-grey-500);
   --placeholder-color-rgb: 158, 158, 158;
+  --headerHeight: 59px;
   font-family: 'Lato', sans-serif;
   color: var(--secondary-color);
 }

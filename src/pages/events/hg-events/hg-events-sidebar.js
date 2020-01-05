@@ -14,10 +14,17 @@ customElements.define('hg-events-sidebar', class extends LitElement {
   static get styles() {
     return [sharedStyles, css`
       :host {
-        width: 250px;
-        background: rgba(var(--primary-color-rgb), 10%);
-        padding: 20px;
+        top: 0;
         text-align: center;
+        box-sizing: border-box;
+        min-width: 280px;
+        max-width: 280px;
+      }
+      .container {
+        background: rgba(var(--primary-color-rgb), 10%);
+        padding: 40px 20px;
+        position: sticky;
+        top: calc(20px + var(--headerHeight));
       }
       h2 {
         font-weight: 400;
@@ -79,15 +86,17 @@ customElements.define('hg-events-sidebar', class extends LitElement {
   }
   render() {
     return html`
-      <h2>Nadchodzące wydarzenia</h2>
-      <nav>
-        <ul>
-          ${_.isEmpty(this._upcoming) ? '' : repeat(this._upcoming, _.get('uid'), (event) => html`
-            <li ?selected=${this.selected === event.uid}><a href="/wydarzenia/${event.uid}"><span>${event.title}</span></a></li>
-          `)}       
-        </ul>
-        <a class="all" href="/wydarzenia">Wszystkie wydarzenia</a>
-      </nav>
+      <div class="container">
+        <h2>Nadchodzące wydarzenia</h2>
+        <nav>
+          <ul>
+            ${_.isEmpty(this._upcoming) ? '' : repeat(this._upcoming, _.get('uid'), (event) => html`
+              <li ?selected=${this.selected === event.uid}><a href="/wydarzenia/${event.uid}"><span>${event.title}</span></a></li>
+            `)}       
+          </ul>
+          <a class="all" href="/wydarzenia">Wszystkie wydarzenia</a>
+        </nav>
+      </div>
     `;
   }
 });

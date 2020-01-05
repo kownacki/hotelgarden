@@ -31,6 +31,7 @@ export default class HgEditableText extends LitElement {
     this._editable.setAttribute('contenteditable', true);
 
     if (this.rich) {
+      this._editable.classList.add('content');
       await moveOutFromShadowDom(this._editable);
       this._editor = await InlineEditor.create(this._editable);
       this._editor.model.document.on('change:data', () => {

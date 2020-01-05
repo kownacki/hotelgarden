@@ -4,7 +4,7 @@ import resolve from 'rollup-plugin-node-resolve';
 import {terser} from 'rollup-plugin-terser';
 import commonjs from 'rollup-plugin-commonjs';
 
-export default {
+export default [{
   input: 'src/hg-app.js',
   output: {
     file: 'dist/src/hg-app.js',
@@ -24,4 +24,15 @@ export default {
     }),
     terser(),
   ],
-};
+}, {
+  input: 'src/sharedStyles.js',
+  output: {
+    file: 'dist/src/sharedStyles.js',
+    format: 'esm',
+  },
+  plugins: [
+    resolve(),
+    commonjs(), // For moment.js, which is not 100% es6 modules :(
+    terser(),
+  ],
+}];

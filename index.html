@@ -16,11 +16,43 @@
   <script src="/node_modules/@ckeditor/ckeditor5-build-inline/build/ckeditor.js"></script>
   <script type="module" src="/src/hg-app.js"></script>
 
-  <style>
+  <style id="inline-style">
     body {
       margin: 0;
     }
+    .content {
+      font-size: 20px;
+      padding: 0 !important;
+    }
+    .content ul {
+      list-style: none;
+      padding-left: 20px;
+    }
+    .content li {
+      margin: 8px 0;
+    }
+    .content ul > li::before {
+      color: var(--primary-color);
+      font-size: 16px;
+      content: '\25A0';
+      width: 20px;
+      display: inline-block;
+      position: relative;
+      bottom: 3px;
+    }
+    .content a {
+      text-decoration: none;
+      color: var(--accent-color);
+    }
+    .content a:hover {
+      text-decoration: underline;
+    }
   </style>
+  <script type="module">
+    import sharedStyles from '/src/sharedStyles.js';
+    const style = document.getElementById('inline-style');
+    style.innerText += '/n' + sharedStyles.cssText;
+  </script>
 </head>
 <body>
 <hg-app></hg-app>

@@ -26,12 +26,14 @@ customElements.define('hg-event', class extends LitElement {
     return css`
       .container {
         display: flex;
-        max-width: 1300px;
+        max-width: 1040px;
         margin: auto;
         padding: 20px;
       }
       .content {
-        flex: 1;
+        box-sizing: border-box;
+        width: 720px;
+        padding: 0 60px;
       }
       .header {
         display: flex;
@@ -51,9 +53,6 @@ customElements.define('hg-event', class extends LitElement {
         height: 1px;
         background: rgba(var(--secondary-color-rgb), 30%);
         margin-bottom: 10px;
-      }
-      hg-events-sidebar {
-        margin-left: 20px;
       }
     `;
   }
