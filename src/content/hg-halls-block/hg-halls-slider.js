@@ -46,6 +46,7 @@ customElements.define('hg-halls-slider', class extends LitElement {
               flex: 1;
             }
             p {
+              line-height: 1.4em;
               font-size: 20px;
             }
             hg-action-buttons {

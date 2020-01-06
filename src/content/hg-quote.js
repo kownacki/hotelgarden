@@ -1,6 +1,7 @@
 import {LitElement, html, css} from 'lit-element';
 import {db} from '../utils.js';
 import '../edit/hg-editable-text.js';
+import sharedStyles from "../sharedStyles";
 
 customElements.define('hg-quote', class extends LitElement {
   static get properties() {
@@ -17,7 +18,7 @@ customElements.define('hg-quote', class extends LitElement {
     })();
   }
   static get styles() {
-    return css`
+    return [sharedStyles, css`
       :host {
         display: block;
         margin: 80px auto;
@@ -36,26 +37,23 @@ customElements.define('hg-quote', class extends LitElement {
         background-size: 90px 90px;
         filter: opacity(6%);
       }
-      .text {
-        font-size: 20px;
-        line-height: 1.5em;
+      p {
         font-style: italic;
       }
       .author {
         font-size: 20px;
-        line-height: 1.5em;
         text-align: right;
         font-family: 'Yellowtail', cursive;
         margin-right: 20px;
       }
-    `;
+    `];
   }
   render() {
     return html`
       <hg-editable-text
         .text=${_.get('text', this._quote)}
         @save=${(event) => db.doc('quotes/' + this.uid).set({text: event.detail}, {merge: true})}>
-        <div class="text"></div>
+        <p></p>
       </hg-editable-text>
       <hg-editable-text
         .text=${_.get('author', this._quote)}

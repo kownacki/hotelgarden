@@ -1,6 +1,7 @@
 import {LitElement, html, css} from 'lit-element';
 import '../../../elements/hg-list/hg-list-editable-text.js';
 import '../../../elements/hg-heading.js';
+import sharedStyles from "../../../sharedStyles";
 
 customElements.define('hg-reviews-item', class extends LitElement {
   static get properties() {
@@ -10,7 +11,7 @@ customElements.define('hg-reviews-item', class extends LitElement {
     };
   }
   static get styles() {
-    return css`
+    return [sharedStyles, css`
       :host {
         display: block;
         box-sizing: border-box;
@@ -26,7 +27,6 @@ customElements.define('hg-reviews-item', class extends LitElement {
       }
       p {
         font-style: italic;
-        font-size: 20px;
         text-align: center;
       }
       .bottom {
@@ -41,7 +41,7 @@ customElements.define('hg-reviews-item', class extends LitElement {
         font-weight: 700;
         color: var(--primary-color);
       }
-    `;
+    `];
   }
   render() {
     return html`

@@ -4,6 +4,7 @@ import '../elements/hg-heading.js';
 import '../edit/hg-editable-image.js';
 import '../edit/hg-editable-text.js';
 import '../elements/hg-action-buttons.js';
+import sharedStyles from "../sharedStyles";
 
 customElements.define('hg-mosaic', class extends LitElement {
   static get properties() {
@@ -21,7 +22,7 @@ customElements.define('hg-mosaic', class extends LitElement {
     })();
   }
   static get styles() {
-    return css`
+    return [sharedStyles, css`
       :host {
         max-width: 1250px;
         margin: 60px auto;
@@ -44,9 +45,6 @@ customElements.define('hg-mosaic', class extends LitElement {
       hg-heading:focus {
         text-transform: initial;
       }
-      p {
-        font-size: 20px;
-      }
       hg-action-buttons {
         margin-top: 40px;
       }
@@ -56,7 +54,7 @@ customElements.define('hg-mosaic', class extends LitElement {
           width: 100%;
         }
       }
-    `;
+    `];
   }
   async updateData(path, data) {
     updateData('mosaics/' + this.uid, path, data);

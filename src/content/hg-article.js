@@ -2,6 +2,7 @@ import {LitElement, html, css} from 'lit-element';
 import {db} from '../utils.js';
 import '../edit/hg-editable-text.js';
 import '../elements/hg-content-label.js';
+import sharedStyles from "../sharedStyles";
 
 customElements.define('hg-article', class extends LitElement {
   static get properties() {
@@ -19,7 +20,7 @@ customElements.define('hg-article', class extends LitElement {
     })();
   }
   static get styles() {
-    return css`
+    return [sharedStyles, css`
       :host {
         position: relative;
         display: block;
@@ -34,17 +35,13 @@ customElements.define('hg-article', class extends LitElement {
         left: 20px;
         display: block;
       }
-      .text {
-        font-size: 20px;
-        line-height: 1.5em;
-      }
       /* remove it when edited */
-      .text:not(:focus):first-letter {
+      p:not(:focus):first-letter {
         font-size: 3em;
         float: left;
         margin: 0.25em 0.15em 0.15em 0;
       }
-    `;
+    `];
   }
   render() {
     return html`
@@ -52,7 +49,7 @@ customElements.define('hg-article', class extends LitElement {
         multiline
         .text=${this._text}
         @save=${(event) => db.doc('articles/' + this.uid).set({text: event.detail}, {merge: true})}>
-        <div class="text"></div>
+        <p></p>
       </hg-editable-text>
       <hg-content-label .name=${'Pole tekstowe'}></hg-content-label>
     `;

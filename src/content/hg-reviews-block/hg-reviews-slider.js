@@ -33,6 +33,7 @@ customElements.define('hg-reviews-slider', class extends LitElement {
               font-style: italic;
             }
             p {
+              line-height: 1.4em;
               font-style: italic;
               font-size: 20px;
               margin-top: 0;

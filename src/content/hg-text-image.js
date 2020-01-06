@@ -5,6 +5,7 @@ import '../edit/hg-editable-image.js';
 import '../edit/hg-editable-text.js';
 import '../elements/hg-action-buttons.js';
 import '../elements/hg-icon-info.js';
+import sharedStyles from "../sharedStyles";
 
 customElements.define('hg-text-image', class extends LitElement {
   static get properties() {
@@ -26,7 +27,7 @@ customElements.define('hg-text-image', class extends LitElement {
     })();
   }
   static get styles() {
-    return css`
+    return [sharedStyles, css`
       :host {
         max-width: 1250px;
         margin: 60px auto;
@@ -44,13 +45,10 @@ customElements.define('hg-text-image', class extends LitElement {
         width: 50%;
         padding: 30px;
       }
-      hg-heading, p {
-        font-size: 20px;
-      }
       hg-action-buttons {
         margin-top: 40px;
       }
-    `;
+    `];
   }
   async updateData(path, data) {
     updateData('textImage/' + this.uid, path, data);

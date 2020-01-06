@@ -1,6 +1,10 @@
 import {css} from 'lit-element';
 
 export default css`
+  p {
+    line-height: 1.4em;
+    font-size: 20px;
+  }
   h1 {
     font-size: 50px;
   }
