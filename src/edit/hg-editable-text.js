@@ -32,7 +32,10 @@ export default class HgEditableText extends LitElement {
 
     if (this.rich) {
       this._editable.classList.add('content');
-      await moveOutFromShadowDom(this._editable);
+      await Promise.all([
+        import('/node_modules/@ckeditor/ckeditor5-build-inline/build/ckeditor.js'),
+        moveOutFromShadowDom(this._editable),
+      ]);
       this._editor = await InlineEditor.create(this._editable);
       this._editor.model.document.on('change:data', () => {
         this.showControls = true;

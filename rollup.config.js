@@ -8,7 +8,7 @@ export default [{
   input: 'src/hg-app.js',
   output: {
     file: 'dist/src/hg-app.js',
-    format: 'cjs',
+    format: 'iife',
   },
   plugins: [
     del({targets: 'dist'}),
