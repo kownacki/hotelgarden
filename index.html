@@ -6,11 +6,19 @@
 
   <link rel="shortcut icon" href="/resources/images/favicon-work-in-progress.ico">
 
-  <link rel="stylesheet" href="/src/styles.css">
   <!-- Edge and older browsers compatibility. See https://lit-element.polymer-project.org/guide/use#polyfills -->
   <!--  <script src="/node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js" defer></script>-->
-  <script src="/src/lodash-fp.min.js"></script>
 
+  <link rel="preload" href="/resources/fonts/Lato/Lato-Regular.ttf" as="font" crossorigin="anonymous">
+  <link rel="preload" href="/resources/fonts/Lato/Lato-Italic.ttf" as="font" crossorigin="anonymous">
+  <link rel="preload" href="/resources/fonts/Lato/Lato-Light.ttf" as="font" crossorigin="anonymous">
+  <link rel="preload" href="/resources/fonts/Lato/Lato-LightItalic.ttf" as="font" crossorigin="anonymous">
+  <link rel="preload" href="/resources/fonts/Lato/Lato-Bold.ttf" as="font" crossorigin="anonymous">
+  <link rel="preload" href="/resources/fonts/Lato/Lato-BoldItalic.ttf" as="font" crossorigin="anonymous">
+  <link rel="preload" href="/resources/fonts/Yellowtail/Yellowtail-Regular.ttf" as="font" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/src/styles.css">
+  <script src="/src/lodash-fp.min.js"></script>
   <script type="module" src="/src/hg-app.js"></script>
 
   <style id="inline-style">
