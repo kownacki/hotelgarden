@@ -44,7 +44,7 @@ customElements.define('hg-events', class extends LitElement {
             _.filter((event) => moment().isSameOrBefore(event.date, 'day')),
             _.sortBy('date'),
           ])}
-          .doc=${'events/events'}
+          .path=${{doc: 'events/events'}}
           .emptyTemplate=${html`<p style="font-size: 20px">Brak nadchodzących wydarzeń</p>`}
           .getItemName=${(item) => `wydarzenie "${item.title}"`}       
           .itemTemplate=${(event) => html`<hg-events-card .event=${event}></hg-events-card>`}>
@@ -64,7 +64,7 @@ customElements.define('hg-events', class extends LitElement {
               _.sortBy('date'),
               _.reverse,
             ])}
-            .doc=${'events/events'}
+            .path=${{doc: 'events/events'}}
             .emptyTemplate=${html`<p style="font-size: 20px">Brak minionych wydarzeń</p>`}
             .getItemName=${(item) => `wydarzenie "${item.title}"`}       
             .itemTemplate=${(event) => html`<hg-events-card .event=${event}></hg-events-card>`}>

@@ -7,26 +7,22 @@ import './hg-list/hg-list-add.js';
 customElements.define('hg-list', class extends LitElement {
   static get properties() {
     return {
+      // flags
       array: Boolean,
+      noGetItems: Boolean,
       addAtStart: Boolean,
       noAdd: Boolean,
-      doc: String,
+      // params
+      path: Object,
       transform: Function,
       itemTemplate: Function,
       getItemName: Object,
       configure: Object,
       emptyTemplate: Object,
-      _items: Array,
+      items: Array,
       _list: Array,
       _processing: Boolean,
     };
-  }
-  constructor() {
-    super();
-    (async () => {
-      await this.updateComplete;
-      this._items = (await db.doc(this.doc).get()).data() || {};
-    })();
   }
   static get styles() {
     return css`
@@ -36,32 +32,40 @@ customElements.define('hg-list', class extends LitElement {
     `;
   }
   updated(changedProperties) {
-    if (changedProperties.has('_items') || changedProperties.has('transform')) {
-      this._list = _.flow([assignKeys('key'), ...(this.transform ? [this.transform] : [])])(this._items);
+    if (changedProperties.has('path')) {
+      if (this.path && !this.noGetItems) {
+        (async () => {
+          const doc = (await db.doc(this.path.doc).get()).data() || {};
+          this.items = this.path.field ? _.get(this.path.field, doc) : doc;
+        })();
+      }
+    }
+    if (changedProperties.has('items') || changedProperties.has('transform')) {
+      this._list = _.flow([assignKeys('key'), ...(this.transform ? [this.transform] : [])])(this.items);
     }
   }
-  async updateData(path, data) {
-    return updateData(this.doc, path, data);
+  updateData(path, data) {
+    return updateData(this.path.doc, _.join('.', _.compact([this.path.field, path])), data);
   }
   async deleteItem(key) {
     this._processing = true;
     let newItems;
     if (this.array) {
-      newItems = _.toArray(this._items);
+      newItems = _.toArray(this.items);
       newItems.splice(key, 1);
       newItems = {...newItems};
     } else {
-      newItems = _.omit(key, this._items);
+      newItems = _.omit(key, this.items);
     }
-    await db.doc(this.doc).set(newItems);
-    this._items = newItems;
+    await this.updateData('', newItems);
+    this.items = newItems;
     this._processing = false;
   }
   async swapItems(index1, index2) {
     this._processing = true;
-    const newItems = array.swapItems(index1, index2, _.clone(this._items));
-    await db.doc(this.doc).set({...newItems});
-    this._items = newItems;
+    const newItems = array.swapItems(index1, index2, _.clone(this.items));
+    await this.updateData('', {...newItems});
+    this.items = newItems;
     this._processing = false;
   }
   render() {
@@ -74,7 +78,7 @@ customElements.define('hg-list', class extends LitElement {
             .item=${item}
             .getItemName=${this.getItemName}
             .first=${listIndex === 0}
-            .last=${listIndex === _.size(this._items) - 1}
+            .last=${listIndex === _.size(this.items) - 1}
             .noSwap=${!this.array}
             .disableEdit=${this._processing}
             .configure=${this.configure}
@@ -92,8 +96,8 @@ customElements.define('hg-list', class extends LitElement {
           @add=${async () => {
             this._processing = true;
             const newItem = {uid: Date.now()};
-            await this.updateData(_.size(this._items), newItem);
-            this._items = {...this._items, [_.size(this._items)]: newItem};
+            await this.updateData(String(_.size(this.items)), newItem);
+            this.items = {...this.items, [_.size(this.items)]: newItem};
             this._processing = false;
         }}>
         </hg-list-add>`

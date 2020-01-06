@@ -29,7 +29,7 @@ customElements.define('hg-reviews', class extends LitElement {
         .array=${true}
         .addAtStart=${true}
         .transform=${_.reverse}
-        .doc=${'reviews/reviews'}
+        .path=${{doc: 'reviews/reviews'}}
         .getItemName=${(item) => `opinię${item.heading ? ` "${item.heading}"`: ''}`}
         .itemTemplate=${(review, processing) => html`<hg-reviews-item .review=${review} .disableEdit=${processing}></hg-reviews-item>`}
         .configure=${{

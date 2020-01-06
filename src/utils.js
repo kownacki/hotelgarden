@@ -48,7 +48,9 @@ export const deleteImageFromStorage = (name) => {
   }
 };
 export const updateData = (doc, path, data) => {
-  return db.doc(doc).set(path === null ? data : _.set(path, data, {}), {merge: true});
+  return path
+    ? db.doc(doc).set(_.set(path, data, {}), {merge: true})
+    : db.doc(doc).set(data);
 };
 export const updateImage = async (doc, path, file, oldImageName) => {
   const name = `${Date.now()}${_.padCharsStart('0', 9,  _.random(1, 10**9 - 1))}`;
