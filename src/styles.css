@@ -16,40 +16,47 @@ body {
   font-family: 'Lato';
   font-style: normal;
   font-weight: 400;
+  font-display: swap;
   src: url(/resources/fonts/Lato/Lato-Regular.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Lato';
   font-style: italic;
   font-weight: 400;
+  font-display: swap;
   src: url(/resources/fonts/Lato/Lato-Italic.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Lato';
   font-style: normal;
   font-weight: 300;
+  font-display: swap;
   src: url(/resources/fonts/Lato/Lato-Light.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Lato';
   font-style: italic;
   font-weight: 300;
+  font-display: swap;
   src: url(/resources/fonts/Lato/Lato-LightItalic.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Lato';
   font-style: normal;
   font-weight: 700;
+  font-display: swap;
   src: url(/resources/fonts/Lato/Lato-Bold.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Lato';
   font-style: italic;
   font-weight: 700;
+  font-display: swap;
   src: url(/resources/fonts/Lato/Lato-BoldItalic.ttf) format('truetype');
 }
 
 @font-face {
   font-family: 'Yellowtail';
+  font-display: swap;
   src: url(/resources/fonts/Yellowtail/Yellowtail-Regular.ttf) format('truetype');
 }
