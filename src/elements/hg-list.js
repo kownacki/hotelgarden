@@ -22,6 +22,7 @@ customElements.define('hg-list', class extends LitElement {
       items: Array,
       _list: Array,
       _processing: Boolean,
+      _editing: Boolean,
     };
   }
   static get styles() {
@@ -41,11 +42,20 @@ customElements.define('hg-list', class extends LitElement {
       }
     }
     if (changedProperties.has('items') || changedProperties.has('transform')) {
-      this._list = _.flow([assignKeys('key'), ...(this.transform ? [this.transform] : [])])(this.items);
+      this._list = _.flow([
+        _.keys,
+        ...(this.transform ? [this.transform(this.items)] : [])
+      ])(this.items);
     }
   }
   updateData(path, data) {
     return updateData(this.path.doc, _.join('.', _.compact([this.path.field, path])), data);
+  }
+  async updateItem(key, field, data) {
+    this._processing = true;
+    await this.updateData(`${key}.${field}`, data);
+    this.items[key][field] = data;
+    this._processing = false;
   }
   async deleteItem(key) {
     this._processing = true;
@@ -72,27 +82,24 @@ customElements.define('hg-list', class extends LitElement {
     return html`
       ${(this.addAtStart ? _.reverse : _.identity)([
         _.isEmpty(this._list) ? (this.emptyTemplate || '') : '',
-        repeat(this._list || [], _.get(this.array ? 'uid' : 'key'), (item, listIndex) =>
-          html`<hg-list-item
-            style=""
-            .item=${item}
+        repeat(this._list || [], this.array ? (key) => _.get('uid', this.items[key]) : _.identity, (key, listIndex) =>
+          !this.items[key] ?  '' : html`<hg-list-item
+            .item=${this.items[key]}
             .getItemName=${this.getItemName}
             .first=${listIndex === 0}
-            .last=${listIndex === _.size(this.items) - 1}
+            .last=${listIndex === _.size(this._list) - 1}
             .noSwap=${!this.array}
-            .disableEdit=${this._processing}
+            .disableEdit=${this._processing || this._editing}
             .configure=${this.configure}
-            @request-delete=${() => this.deleteItem(item.key)}
-            @swap=${async (event) => this.swapItems(item.key, this._list[listIndex + event.detail].key)}
-            @update=${(event) => this.updateData(`${item.key}.${event.detail.path}`, event.detail.data)}
-            @show-controls-changed=${(event) => {
-              this._processing = event.detail;
-            }}>
-            ${this.itemTemplate(item, this._processing)}
+            @request-delete=${() => this.deleteItem(key)}
+            @swap=${async (event) => this.swapItems(key, this._list[listIndex + event.detail])}
+            @update=${(event) => this.updateItem(key, event.detail.path, event.detail.data)}
+            @show-controls-changed=${(event) => this._editing = event.detail}>
+            ${this.itemTemplate(this.items[key], this._processing || this._editing)}
           </hg-list-item>`
         ),
         this.noAdd ? '' : html`<hg-list-add 
-          .disable=${this._processing}
+          .disable=${this._processing || this._editing}
           @add=${async () => {
             this._processing = true;
             const newItem = {uid: Date.now()};

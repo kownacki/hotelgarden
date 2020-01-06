@@ -75,6 +75,7 @@ export default class HgEditableText extends LitElement {
     }
     if (changedProperties.has('disabled') || changedProperties.has('_editable')) {
       if (this._editable) {
+        //todo empty textfield has height 0 when contenteditable set to false
         this._editable.setAttribute('contenteditable', !this.disabled);
       }
     }

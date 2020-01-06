@@ -40,9 +40,9 @@ customElements.define('hg-events', class extends LitElement {
         <hg-list
           .noAdd=${true}
           .noSwap=${true}
-          .transform=${_.flow([
-            _.filter((event) => moment().isSameOrBefore(event.date, 'day')),
-            _.sortBy('date'),
+          .transform=${(items) => _.flow([
+            _.filter((key) => moment().isSameOrBefore(items[key].date, 'day')),
+            _.sortBy((key) => items[key].date),
           ])}
           .path=${{doc: 'events/events'}}
           .emptyTemplate=${html`<p style="font-size: 20px">Brak nadchodzących wydarzeń</p>`}
@@ -59,9 +59,9 @@ customElements.define('hg-events', class extends LitElement {
           <hg-heading>${'Minione wydarzenia'}</hg-heading>
           <hg-list
             .noAdd=${true}
-            .transform=${_.flow([
-              _.filter((event) => moment().isAfter(event.date, 'day')),
-              _.sortBy('date'),
+            .transform=${(items) => _.flow([
+              _.filter((key) => moment().isAfter(items[key].date, 'day')),
+              _.sortBy((key) => items[key].date),
               _.reverse,
             ])}
             .path=${{doc: 'events/events'}}

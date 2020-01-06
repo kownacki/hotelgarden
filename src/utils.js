@@ -49,7 +49,7 @@ export const deleteImageFromStorage = (name) => {
 };
 export const updateData = (doc, path, data) => {
   return path
-    ? db.doc(doc).set(_.set(path, data, {}), {merge: true})
+    ? db.doc(doc).set(_.setWith(Object, path, data, {}), {mergeFields: [path]})
     : db.doc(doc).set(data);
 };
 export const updateImage = async (doc, path, file, oldImageName) => {
