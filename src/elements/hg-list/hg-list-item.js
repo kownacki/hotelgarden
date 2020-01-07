@@ -10,6 +10,7 @@ customElements.define('hg-list-item', class extends LitElement {
       first: Boolean,
       last: Boolean,
       noSwap: Boolean,
+      vertical: {type: Boolean, reflect: true},
       disableEdit: Boolean,
       opened: {type: Boolean, reflect: true},
       configure: Object,
@@ -39,6 +40,8 @@ customElements.define('hg-list-item', class extends LitElement {
         margin: 1px;
       }
       paper-icon-button {
+        z-index: 1;
+        background: white;
         display: none;
         position: absolute;
         top: calc(50% - 12px);
@@ -51,6 +54,17 @@ customElements.define('hg-list-item', class extends LitElement {
       }
       .swap-right {
         right: -12px;
+      }
+      :host([vertical]) paper-icon-button {
+        top: auto;
+        left: calc(50% - 12px);
+      }
+      :host([vertical]) .swap-left {
+        top: -12px;
+      }
+      :host([vertical]) .swap-right {
+        right: auto;
+        bottom: -12px;
       }
     `;
   }
@@ -88,13 +102,13 @@ customElements.define('hg-list-item', class extends LitElement {
       ${this.noSwap ? '' :
         [(this.first ? '' : html`<paper-icon-button
           class="swap-left"
-          icon="swap-horiz"
+          .icon=${this.vertical ? 'swap-vert' : 'swap-horiz'}
           ?disabled=${this.disableEdit}
           @click=${() => this.dispatchEvent(new CustomEvent('swap', {detail: -1}))}>
         </paper-icon-button>`),
         (this.last ? '' : html`<paper-icon-button
           class="swap-right"
-          icon="swap-horiz"
+          .icon=${this.vertical ? 'swap-vert' : 'swap-horiz'}
           ?disabled=${this.disableEdit}
           @click=${() => this.dispatchEvent(new CustomEvent('swap', {detail: +1}))}>
         </paper-icon-button>`)]

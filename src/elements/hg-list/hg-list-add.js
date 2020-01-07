@@ -10,12 +10,12 @@ customElements.define('hg-list-add', class extends LitElement {
   static get styles() {
     return css`
       :host {
-        height: 400px;
         display: flex;
         justify-content: center;
         align-items: center;
       }
       paper-icon-button {
+        background: white;
         width: 60px;
         height: 60px;
         padding: 0;

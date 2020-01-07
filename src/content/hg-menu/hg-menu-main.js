@@ -1,24 +1,22 @@
 import {LitElement, html, css} from 'lit-element';
-import {array} from '../../utils.js';
 import './hg-menu-item.js';
-import './hg-menu-add-item.js';
+import {db} from "../../utils.js";
 import sharedStyles from '../../sharedStyles.js'
 
 customElements.define('hg-menu-main', class extends LitElement {
   static get properties() {
     return {
+      doc: String,
       category: Object,
-      categories: Array,
+      categoryIndex: Number,
+      categories: Object,
     };
   }
   static get styles() {
     return [sharedStyles, css`
       :host {
         padding-right: 20px;
-      }
-      ul {
-        padding: 0;
-        list-style: none
+        padding-bottom: 300px;
       }
       header {
         height: 170px;
@@ -26,6 +24,7 @@ customElements.define('hg-menu-main', class extends LitElement {
         display: flex;
         flex-direction: column;
         justify-content: center;
+        margin-bottom: 30px;
       }
       h3 {
         text-transform: uppercase;
@@ -34,35 +33,41 @@ customElements.define('hg-menu-main', class extends LitElement {
         text-shadow: 0 0 6px var(--secondary-color);
         margin: 0;
       }
+
     `];
+  }
+  updateCategory() {
+    this.category = _.set('items', this.shadowRoot.getElementById('list').items, this.category);
+    this.categories[this.categoryIndex] = this.category;
   }
   render() {
     return html`
-      ${_.isEmpty(this.categories) ? html`diema kategorii` : html`
-        <header><h3>${this.category.name}</h3></header>
-        <ul>
-          ${_.map.convert({cap: false})((item, index) =>
-            html`<li>
-              <hg-menu-item 
-                .itemsLength=${this.category.items.length}
-                .item=${item}
-                .index=${index}
-                @request-move=${(event) => {
-                  array.swapItems(index, index + event.detail, this.category.items) ; 
-                  this.requestUpdate();
-                }}
-                @request-delete=${() => { 
-                  this.category.items.splice(index, 1);
-                  this.requestUpdate();
-                }}>
-              </hg-menu-item>
-            </li>`
-          , this.category.items)}
-        </ul>
-        <hg-menu-add-item
-          .items=${this.category.items} 
-          @item-added=${() => this.requestUpdate()}>
-        </hg-menu-add-item>
+      ${_.isEmpty(this.categories) ? 'Brak kategorii' : html`
+        <header>
+          <hg-editable-text
+            float
+            id="name"
+            .text=${this.category.name} 
+            @save=${(event) => {
+              db.doc('menu/' + this.doc).update({[`${this.categoryIndex}.name`]: event.detail});
+              this.category.name = event.detail;
+              this.dispatchEvent(new CustomEvent('category-renamed'));
+            }}>
+            <h3></h3>
+          </hg-editable-text>
+        </header>
+        <hg-list
+          id="list"
+          .array=${true}
+          .vertical=${true}
+          .noGetItems=${true}
+          .items=${_.get('items', this.category)}
+          .path=${{doc: 'menu/' + this.doc, field: `${this.categoryIndex}.items`}}
+          .getItemName=${(item) => `pozycję${item.name ? ` "${item.name}"`: ''}`}
+          .itemTemplate=${(item, index, disableEdit) => html`<hg-menu-item .item=${item} .disableEdit=${disableEdit}></hg-menu-nav-item>`}
+          @item-added=${() => this.updateCategory()}
+          @item-deleted=${() => this.updateCategory()}>
+        </hg-list>
       `}
     `;
   }

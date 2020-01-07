@@ -1,67 +1,72 @@
 import {LitElement, html, css} from 'lit-element';
-import './hg-menu-edit-item.js';
-import '../../edit/hg-delete-item.js';
+import '../../elements/hg-list/hg-list-editable-text.js';
 
 customElements.define('hg-menu-item', class extends LitElement {
   static get properties() {
     return {
-      itemsLength: Number,
       item: Object,
-      index: Number
+      disableEdit: Boolean,
     };
   }
   static get styles() {
     return css`
-      :host, .item {
+      :host {
         display: flex;
-        margin-bottom: 20px;
+        padding: 15px 50px ;
       }
-      .text, .item {
+      .text  {
         flex-grow: 1;
       }
+      .right {
+        margin-left: 40px;
+      }
       .price {
-        padding: 0 24px;
+        text-align: right;
         font-size: 20px;
         min-width: 50px;
-      }
-      paper-icon-button {
-        width: 24px;
-        height: 24px;
-        padding: 0;
+        color: var(--primary-color);
       }
       h3 {
+        font-weight: 400;
+        font-size: 20px;
         margin: 0 0 10px;
       }
-      .edit {
-        min-width: 120px;
+      p {
+        font-weight: 300;
+        font-size: 18px;
+        margin: 0 0 10px;
       }
     `;
   }
   render(){
     return html`
-      <div class="item">
-        <div class="text">
-          <h3>${this.item.name}</h3>
-          ${this.item.description}
-        </div>
-        <div class="price">${this.item.price} zł</div>
+      <div class="text">
+        <hg-list-editable-text
+          float
+          id="name"
+          .disabled=${this.disableEdit && !this.shadowRoot.getElementById('name').showControls}
+          .item=${this.item} 
+          .field=${'name'}>
+          <h3></h3>
+        </hg-list-editable-text>
+        <hg-list-editable-text
+          float
+          id="description"
+          .disabled=${this.disableEdit && !this.shadowRoot.getElementById('description').showControls}
+          .item=${this.item} 
+          .field=${'description'}>
+          <p></p>
+        </hg-list-editable-text>
       </div>
-      <div class="edit">
-        <paper-icon-button
-          icon="icons:arrow-upward" 
-          .disabled=${this.index === 0}
-          @click=${() => this.dispatchEvent(new CustomEvent('request-move', {detail: -1}))}>
-        </paper-icon-button>   
-        <paper-icon-button
-          icon="icons:arrow-downward"
-          .disabled=${this.index === this.itemsLength - 1}
-          @click=${() => this.dispatchEvent(new CustomEvent('request-move', {detail: +1}))}>
-        </paper-icon-button>
-        <hg-menu-edit-item
-          .item=${this.item}
-          @item-edited=${() => this.requestUpdate()}>
-        </hg-menu-edit-item>
-        <hg-delete-item .name=${this.item.name}></hg-delete-item>
+      <div class="right">
+        <hg-list-editable-text
+          float
+          id="price"
+          .disabled=${this.disableEdit && !this.shadowRoot.getElementById('price').showControls}
+          .item=${this.item} 
+          .field=${'price'}>
+          <div class="price"></div>
+        </hg-list-editable-text>
       </div>
     `;
   }

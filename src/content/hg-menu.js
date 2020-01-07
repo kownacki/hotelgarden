@@ -7,17 +7,18 @@ import '../elements/hg-heading.js';
 customElements.define('hg-menu', class extends LitElement {
   static get properties() {
     return {
-      categories: Array,
+      categories: Object,
       selectedCategory: Number,
+      _editing: {type: Boolean, reflect: true, attribute: 'editing'},
     };
   }
   constructor() {
     super();
-    this.categories = [];
+    this.categories = {};
     this.selectedCategory = 0;
     db.collection("menu").doc("courses").get()
       .then((doc) => {
-        this.categories = _.toArray(doc.data());
+        this.categories = doc.data();
       });
   }
   static get styles() {
@@ -34,6 +35,13 @@ customElements.define('hg-menu', class extends LitElement {
         flex-grow: 1;
         max-width: 700px;
       }
+      hg-menu-nav {
+        transition: opacity 0.3s ease;
+      }
+      :host([editing]) hg-menu-nav {
+        opacity: 50%;
+        pointer-events: none;
+      }
       @media all and (max-width: 840px) {
         hg-menu-nav {
           display: none;
@@ -45,18 +53,27 @@ customElements.define('hg-menu', class extends LitElement {
     return html`
       <hg-heading center>${'Menu restauracji'}</hg-heading>
       <section>
-        <hg-menu-main id="main" .category=${this.categories[this.selectedCategory]} .categories=${this.categories}></hg-menu-main>
+        <hg-menu-main 
+          id="main"
+          .doc=${'courses'}
+          .category=${_.get(this.selectedCategory, this.categories)}
+          .categoryIndex=${this.selectedCategory}
+          .categories=${this.categories}
+          @category-renamed=${() => this.shadowRoot.getElementById('nav').requestUpdateCategoryName()}
+          @editing-changed=${(event) => this._editing = event.detail}>
+        </hg-menu-main>
         <hg-menu-nav
+          id="nav"
           .selectedCategory=${this.selectedCategory}
           .categories=${this.categories}
+          @categories-changed=${(event) => this.categories = event.detail}
           @selected-category-changed=${(event) => {
             this.selectedCategory = event.detail;
             // update in case if selectedCategory index unchanged but category object did
-            //todo think if more elegant solution
-            this.shadowRoot.getElementById('main').requestUpdate();
-            this.requestUpdate();
-          }}
-          @category-renamed=${() => this.shadowRoot.getElementById('main').requestUpdate()}>
+            // //todo think if more elegant solution
+            // this.shadowRoot.getElementById('main').requestUpdate();
+            // this.requestUpdate();
+          }}>
         </hg-menu-nav>
       </section>
     `;

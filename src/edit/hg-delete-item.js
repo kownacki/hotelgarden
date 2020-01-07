@@ -16,6 +16,7 @@ customElements.define('hg-delete-item', class extends LitElement {
         background: var(--paper-red-100);
       }
       paper-icon-button {
+        background: white;
         width: 24px;
         height: 24px;
         padding: 0;

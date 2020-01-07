@@ -12,6 +12,7 @@ customElements.define('hg-list-item-configure', class extends LitElement {
   static get styles() {
     return css`
       paper-icon-button {
+        background: white;
         width: 24px;
         height: 24px;
         padding: 0;

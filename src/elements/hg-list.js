@@ -12,27 +12,34 @@ customElements.define('hg-list', class extends LitElement {
       noGetItems: Boolean,
       addAtStart: Boolean,
       noAdd: Boolean,
+      vertical: Boolean,
       // params
-      path: Object,
+      path: Object, // {doc: String, field: String}
       transform: Function,
       itemTemplate: Function,
-      getItemName: Object,
+      getItemName: Function,
       configure: Object,
       emptyTemplate: Object,
-      items: Array,
+      items: Object,
       _list: Array,
       _processing: Boolean,
-      _editing: Boolean,
+      editing: Boolean,
     };
   }
   static get styles() {
     return css`
+      :host {
+        display: block;
+      }
       :host > * {
         width: calc(100% / var(--columns));
       }
     `;
   }
   updated(changedProperties) {
+    if (changedProperties.has('editing')) {
+      this.dispatchEvent(new CustomEvent('editing-changed', {detail: this.editing, composed: true}));
+    }
     if (changedProperties.has('path')) {
       if (this.path && !this.noGetItems) {
         (async () => {
@@ -67,8 +74,9 @@ customElements.define('hg-list', class extends LitElement {
     } else {
       newItems = _.omit(key, this.items);
     }
-    await this.updateData('', newItems);
+    await this.updateData('', {...newItems});
     this.items = newItems;
+    this.dispatchEvent(new CustomEvent('item-deleted', {detail: key}));
     this._processing = false;
   }
   async swapItems(index1, index2) {
@@ -76,35 +84,39 @@ customElements.define('hg-list', class extends LitElement {
     const newItems = array.swapItems(index1, index2, _.clone(this.items));
     await this.updateData('', {...newItems});
     this.items = newItems;
+    this.dispatchEvent(new CustomEvent('items-swapped', {detail: [index1, index2]}));
     this._processing = false;
   }
   render() {
     return html`
       ${(this.addAtStart ? _.reverse : _.identity)([
         _.isEmpty(this._list) ? (this.emptyTemplate || '') : '',
-        repeat(this._list || [], this.array ? (key) => _.get('uid', this.items[key]) : _.identity, (key, listIndex) =>
-          !this.items[key] ?  '' : html`<hg-list-item
+        repeat(this._list || [], this.array ? (key) => _.get(`${key}.uid`, this.items) : _.identity, (key, listIndex) =>
+          !_.get(key, this.items) ?  '' : html`<hg-list-item
             .item=${this.items[key]}
             .getItemName=${this.getItemName}
             .first=${listIndex === 0}
             .last=${listIndex === _.size(this._list) - 1}
             .noSwap=${!this.array}
-            .disableEdit=${this._processing || this._editing}
+            .vertical=${this.vertical}
+            .disableEdit=${this._processing || this.editing}
             .configure=${this.configure}
             @request-delete=${() => this.deleteItem(key)}
             @swap=${async (event) => this.swapItems(key, this._list[listIndex + event.detail])}
             @update=${(event) => this.updateItem(key, event.detail.path, event.detail.data)}
-            @show-controls-changed=${(event) => this._editing = event.detail}>
-            ${this.itemTemplate(this.items[key], this._processing || this._editing)}
+            @show-controls-changed=${(event) => this.editing = event.detail}>
+            ${this.itemTemplate(this.items[key], key, this._processing || this.editing)}
           </hg-list-item>`
         ),
         this.noAdd ? '' : html`<hg-list-add 
-          .disable=${this._processing || this._editing}
+          .disable=${this._processing || this.editing}
           @add=${async () => {
             this._processing = true;
             const newItem = {uid: Date.now()};
             await this.updateData(String(_.size(this.items)), newItem);
-            this.items = {...this.items, [_.size(this.items)]: newItem};
+            //todo use firebase.firestore.FieldValue.arrayUnion  
+            this.items = _.set(_.size(this.items), newItem, this.items);
+            this.dispatchEvent(new CustomEvent('item-added'));
             this._processing = false;
         }}>
         </hg-list-add>`

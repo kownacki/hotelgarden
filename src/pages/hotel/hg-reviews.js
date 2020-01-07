@@ -31,7 +31,7 @@ customElements.define('hg-reviews', class extends LitElement {
         .transform=${() => _.reverse}
         .path=${{doc: 'reviews/reviews'}}
         .getItemName=${(item) => `opinię${item.heading ? ` "${item.heading}"`: ''}`}
-        .itemTemplate=${(review, disableEdit) => html`<hg-reviews-item .review=${review} .disableEdit=${disableEdit}></hg-reviews-item>`}
+        .itemTemplate=${(review, index, disableEdit) => html`<hg-reviews-item .review=${review} .disableEdit=${disableEdit}></hg-reviews-item>`}
         .configure=${{
           icon: 'settings',
           field: 'display',

@@ -8,6 +8,11 @@ import './hg-events/hg-events-card.js';
 import './hg-events/hg-events-add.js';
 import '../../elements/hg-list.js';
 
+//todo bug podkreślenie długiej nazwy
+// polskie znaki
+// z menu usunąć złotówki
+// favicon rozciągnięta??
+
 customElements.define('hg-events', class extends LitElement {
   static get properties() {
     return {

@@ -70,7 +70,7 @@ export default class HgEditableText extends LitElement {
       if (!this._editable) {
         this.setEditable();
       }
-      this._editable.innerHTML = this.text;
+      this._editable.innerHTML = this.text || '';
       this.text ? this.setAttribute('not-empty', '') : this.removeAttribute('not-empty');
     }
     if (changedProperties.has('disabled') || changedProperties.has('_editable')) {
@@ -99,6 +99,7 @@ export default class HgEditableText extends LitElement {
       ::slotted(*) {
         height: 100%;
         min-width: 20px;
+        min-height: 1.25em;
       }
       .edit {
         margin-top: 5px;
@@ -112,7 +113,7 @@ export default class HgEditableText extends LitElement {
         position: absolute;
         top: 100%;
         right: 0;
-        z-index: 1;
+        z-index: 2;
       }
       paper-button {
         background: white;
