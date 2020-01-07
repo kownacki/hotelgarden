@@ -1,7 +1,9 @@
 import {LitElement, html, css} from 'lit-element';
-import './hg-menu-item.js';
-import {db} from "../../utils.js";
+import {updateData, updateImage} from "../../utils.js";
 import sharedStyles from '../../sharedStyles.js'
+import './hg-menu-item.js';
+import '../../edit/hg-editable-image.js';
+import '../../edit/hg-editable-image.js';
 
 customElements.define('hg-menu-main', class extends LitElement {
   static get properties() {
@@ -19,12 +21,21 @@ customElements.define('hg-menu-main', class extends LitElement {
         padding-bottom: 300px;
       }
       header {
-        height: 170px;
-        background: url("https://u.profitroom.pl/2017.airporthotel.pl/thumb/700x170/uploads/Restauracja_Mirage_Potrawy/Beznazwy-1_2.jpg");
         display: flex;
         flex-direction: column;
         justify-content: center;
+        align-items: center;
         margin-bottom: 30px;
+        position: relative;
+      }
+      hg-editable-image {
+        height: 170px;
+        width: 100%;
+      }
+      .name {
+        width: calc(100% - 40px);
+        max-height: calc(100% - 40px);
+        position: absolute;
       }
       h3 {
         text-transform: uppercase;
@@ -33,26 +44,38 @@ customElements.define('hg-menu-main', class extends LitElement {
         text-shadow: 0 0 6px var(--secondary-color);
         margin: 0;
       }
-
     `];
   }
   updateCategory() {
     this.category = _.set('items', this.shadowRoot.getElementById('list').items, this.category);
     this.categories[this.categoryIndex] = this.category;
   }
+  async updateName(data) {
+    await updateData('menu/' + this.doc, `${this.categoryIndex}.name`, data);
+    this.category.name = data;
+    this.dispatchEvent(new CustomEvent('category-changed'));
+  }
+  async updateImage(file) {
+    this.category.image = await updateImage('menu/' + this.doc, `${this.categoryIndex}.image`, file, (_.get('image.name', this.category)));
+    //todo it fixes bug when switching to category without image after adding image but causes flickering
+    this.requestUpdate();
+    this.dispatchEvent(new CustomEvent('category-changed'));
+  }
   render() {
     return html`
       ${_.isEmpty(this.categories) ? 'Brak kategorii' : html`
         <header>
+          <hg-editable-image
+            .src=${_.get('image.url', this.category)}
+            .sizing=${'cover'}
+            @save=${(event) => this.updateImage(event.detail)}>
+          </hg-editable-image>
           <hg-editable-text
             float
+            class="name"
             id="name"
             .text=${this.category.name} 
-            @save=${(event) => {
-              db.doc('menu/' + this.doc).update({[`${this.categoryIndex}.name`]: event.detail});
-              this.category.name = event.detail;
-              this.dispatchEvent(new CustomEvent('category-renamed'));
-            }}>
+            @save=${(event) => this.updateName(event.detail)}>
             <h3></h3>
           </hg-editable-text>
         </header>

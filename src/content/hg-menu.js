@@ -59,7 +59,7 @@ customElements.define('hg-menu', class extends LitElement {
           .category=${_.get(this.selectedCategory, this.categories)}
           .categoryIndex=${this.selectedCategory}
           .categories=${this.categories}
-          @category-renamed=${() => this.shadowRoot.getElementById('nav').requestUpdateCategoryName()}
+          @category-changed=${() => this.shadowRoot.getElementById('nav').requestUpdateNavItem()}
           @editing-changed=${(event) => this._editing = event.detail}>
         </hg-menu-main>
         <hg-menu-nav

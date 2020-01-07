@@ -38,7 +38,7 @@ customElements.define('hg-menu-nav', class extends LitElement {
     this.categories = this.shadowRoot.getElementById('list').items;
     this.dispatchEvent(new CustomEvent('categories-changed', {detail: this.categories}));
   }
-  requestUpdateCategoryName() {
+  requestUpdateNavItem() {
     this.shadowRoot.getElementById('list').shadowRoot.querySelector('hg-menu-nav-item[selected]').requestUpdate();
   }
   render() {

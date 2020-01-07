@@ -15,7 +15,13 @@ customElements.define('hg-menu-nav-item', class extends LitElement {
       }
       .category {
         display: flex;
+        align-items: center;
         transition: background-color 0.3s ease, color 0.2s ease;
+      }
+      iron-image {
+        width: 120px;
+        height: 80px;
+        background: var(--placeholder-color);
       }
       .name {
         font-size: 18px;
@@ -33,7 +39,7 @@ customElements.define('hg-menu-nav-item', class extends LitElement {
   render() {
     return html`
       <div class="category">
-        <iron-image src="https://u.profitroom.pl/2017.airporthotel.pl/thumb/105x80/uploads/Restauracja_Mirage_Potrawy/MIRZupaborowikowa.jpg"></iron-image>
+        <iron-image .sizing=${'cover'} .src=${_.get('url', this.category.image)}></iron-image>
         <div class="name">${this.category.name}</div>
       </div>
     `;

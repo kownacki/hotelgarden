@@ -9,7 +9,11 @@ const readFile = (file) => new Promise((resolve) => {
 customElements.define('hg-editable-image', class extends LitElement {
   static get properties() {
     return {
-      src: {type: String, reflect: true},
+      src: {
+        type: Boolean,
+        reflect: true,
+        attribute: 'not-empty',
+      },
       sizing: String,
       presize: {type: Boolean, reflect: true},
     };
@@ -22,10 +26,10 @@ customElements.define('hg-editable-image', class extends LitElement {
         justify-content: center;
         align-items: center;
       }
-      :host(:not([src])) {
+      :host(:not([not-empty])) {
         background: rgba(var(--placeholder-color-rgb), 0.5);
       }
-      :host([presize]:not([src])) {
+      :host([presize]:not([not-empty])) {
         height: 250px;
       }
       iron-image {
