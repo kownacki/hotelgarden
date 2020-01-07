@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
-import {updateData, updateImage} from "../../utils.js";
+import {updateData, updateImage, staticProp} from "../../utils.js";
 import sharedStyles from '../../sharedStyles.js'
 import './hg-menu-item.js';
 import '../../edit/hg-editable-image.js';
@@ -89,7 +89,7 @@ customElements.define('hg-menu-main', class extends LitElement {
           .vertical=${true}
           .noGetItems=${true}
           .items=${_.get('items', this.category)}
-          .path=${{doc: 'menus/' + this.uid, field: `${this.categoryIndex}.items`}}
+          .path=${staticProp({doc: 'menus/' + this.uid, field: `${this.categoryIndex}.items`})}
           .getItemName=${(item) => `pozycję${item.name ? ` "${item.name}"`: ''}`}
           .itemTemplate=${(item, index, disableEdit) => html`<hg-menu-item .item=${item} .disableEdit=${disableEdit}></hg-menu-nav-item>`}
           @item-added=${() => this.updateCategory()}

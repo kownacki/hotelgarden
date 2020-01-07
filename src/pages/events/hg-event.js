@@ -4,7 +4,7 @@ import {db, updateData} from "../../utils.js";
 import '../../elements/hg-banner.js';
 import './hg-events/hg-events-sidebar.js';
 import './hg-event/hg-event-edit-date.js';
-import {splitEvents} from "../../utils";
+import {splitEvents, staticProp} from "../../utils";
 
 customElements.define('hg-event', class extends LitElement {
   static get properties() {
@@ -71,7 +71,7 @@ customElements.define('hg-event', class extends LitElement {
   }
   render() {
     return this._event ? html`
-      <hg-banner .path=${{doc: 'events/events', field: this.uid}} .noSubheading=${true} .useTitleAsHeading=${true}></hg-banner>
+      <hg-banner .path=${staticProp({doc: 'events/events', field: this.uid})} .noSubheading=${true} .useTitleAsHeading=${true}></hg-banner>
       <div class="container">
         <div class="content">
           <div class="header">

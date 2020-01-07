@@ -1,4 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
+import {staticProp} from '../../utils.js';
 import '../../content/hg-article.js';
 import '../../content/hg-icons.js';
 import '../../content/hg-content-slider';
@@ -18,9 +19,9 @@ customElements.define('hg-cuisine', class extends LitElement {
       <hg-article .uid=${'cuisine'}></hg-article>
       <hg-icons .uid=${'cuisine'}></hg-icons>
       <hg-content-slider></hg-content-slider>
-      <hg-mosaic .uid=${'cuisine'} .buttons=${{primary: [{url: '/restauracja#menu', text: 'Zobacz menu'}]}}></hg-mosaic>
-      <hg-text-image .uid=${'cuisine-extra1'} .buttons=${[{url: '#'}]}></hg-text-image>
-      <hg-text-image swap .uid=${'landing-extra2'} .buttons=${[{url: '#'}]}></hg-text-image>
+      <hg-mosaic .uid=${'cuisine'} .buttons=${staticProp({primary: [{url: '/restauracja#menu', text: 'Zobacz menu'}]})}></hg-mosaic>
+      <hg-text-image .uid=${'cuisine-extra1'} .buttons=${staticProp([{url: '#'}])}></hg-text-image>
+      <hg-text-image swap .uid=${'landing-extra2'} .buttons=${staticProp([{url: '#'}])}></hg-text-image>
       <hg-links .path=${'/kuchnia'} .superpath=${'/kuchnia'}></hg-links>
     `;
   }

@@ -7,6 +7,7 @@ import '../../elements/hg-heading.js';
 import './hg-events/hg-events-card.js';
 import './hg-events/hg-events-add.js';
 import '../../elements/hg-list.js';
+import {staticProp} from "../../utils";
 
 //todo bug podkreślenie długiej nazwy
 // polskie znaki
@@ -49,7 +50,7 @@ customElements.define('hg-events', class extends LitElement {
             _.filter((key) => moment().isSameOrBefore(items[key].date, 'day')),
             _.sortBy((key) => items[key].date),
           ])}
-          .path=${{doc: 'events/events'}}
+          .path=${staticProp({doc: 'events/events'})}
           .emptyTemplate=${html`<p style="font-size: 20px">Brak nadchodzących wydarzeń</p>`}
           .getItemName=${(item) => `wydarzenie "${item.title}"`}       
           .itemTemplate=${(event) => html`<hg-events-card .event=${event}></hg-events-card>`}>
@@ -69,7 +70,7 @@ customElements.define('hg-events', class extends LitElement {
               _.sortBy((key) => items[key].date),
               _.reverse,
             ])}
-            .path=${{doc: 'events/events'}}
+            .path=${staticProp({doc: 'events/events'})}
             .emptyTemplate=${html`<p style="font-size: 20px">Brak minionych wydarzeń</p>`}
             .getItemName=${(item) => `wydarzenie "${item.title}"`}       
             .itemTemplate=${(event) => html`<hg-events-card .event=${event}></hg-events-card>`}>

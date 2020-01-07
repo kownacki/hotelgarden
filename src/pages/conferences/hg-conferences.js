@@ -1,4 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
+import {staticProp} from '../../utils.js';
 import '../../content/hg-article.js';
 import '../../content/hg-icons.js';
 import '../../content/hg-mosaic.js';
@@ -18,10 +19,10 @@ customElements.define('hg-conferences', class extends LitElement {
       <hg-article .uid=${'conferences'}></hg-article>
       <hg-icons .uid=${'conferences'}></hg-icons>
       <hg-content-slider .uid=${'conferences'}></hg-content-slider>
-      <hg-mosaic .uid=${'conferences'} .buttons=${{
+      <hg-mosaic .uid=${'conferences'} .buttons=${staticProp({
         primary: [{url: '#', text: 'Zobacz ofertę'}, {url: '#', text: 'Lorem ipsum'}],
         secondary: [{url: '#'}],
-      }}></hg-mosaic>
+      })}></hg-mosaic>
       <hg-halls-block .uid=${'conferences'}></hg-halls-block>
       <hg-heading center>${'Nowoczesne wyposażenie'}</hg-heading>
       <hg-icons .uid=${'conferences-halls'}></hg-icons>

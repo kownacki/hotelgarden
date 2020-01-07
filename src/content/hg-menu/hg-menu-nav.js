@@ -1,4 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
+import {staticProp} from '../../utils.js';
 import '../../elements/hg-list.js';
 import './hg-menu-nav-item.js';
 
@@ -8,6 +9,7 @@ customElements.define('hg-menu-nav', class extends LitElement {
       uid: String,
       selectedCategory: Number,
       categories: Object,
+      _dupa: String,
     };
   }
   static get styles() {
@@ -50,7 +52,7 @@ customElements.define('hg-menu-nav', class extends LitElement {
         .vertical=${true}
         .noGetItems=${true},
         .items=${this.categories}
-        .path=${{doc: 'menus/' + this.uid}}
+        .path=${staticProp({doc: 'menus/' + this.uid})}
         .getItemName=${(category) => `kategorię${category.name ? ` "${category.name}"`: ''} i wszystkie zawierające się w niej pozycje`}
         .itemTemplate=${(category, index) => html`
           <hg-menu-nav-item

@@ -75,6 +75,11 @@ export const array = {
   prevItem: (index, arr) => arr[array.prevIndex(index, arr)],
 };
 
+const memoizedParse =_.memoize(JSON.parse);
+export const staticProp = (object) => {
+  return memoizedParse(JSON.stringify(object));
+};
+
 export const sleep = (milliseconds = 0) => new Promise((resolve) => setTimeout(resolve, milliseconds));
 
 export const moveOutFromShadowDom = async (contentsElement) => {
