@@ -18,7 +18,7 @@ customElements.define('hg-restaurant', class extends LitElement {
       <hg-mosaic .uid=${'restaurant'} .buttons=${{primary: [{url: '#menu', text: 'Zobacz menu'}]}}></hg-mosaic>
       <hg-content-slider .uid=${'restaurant'}></hg-content-slider>
       <hg-reviews-block .uid=${'restaurant'}></hg-reviews-block>
-      <hg-menu id="menu"></hg-menu> 
+      <hg-menu .uid=${'restaurant'}></hg-menu> 
     `;
   }
 });

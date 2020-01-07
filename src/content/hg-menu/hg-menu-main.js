@@ -8,7 +8,7 @@ import '../../edit/hg-editable-image.js';
 customElements.define('hg-menu-main', class extends LitElement {
   static get properties() {
     return {
-      doc: String,
+      uid: String,
       category: Object,
       categoryIndex: Number,
       categories: Object,
@@ -27,6 +27,9 @@ customElements.define('hg-menu-main', class extends LitElement {
         align-items: center;
         margin-bottom: 30px;
         position: relative;
+      }
+      .empty {
+        margin-bottom: 30px;
       }
       hg-editable-image {
         height: 170px;
@@ -51,12 +54,12 @@ customElements.define('hg-menu-main', class extends LitElement {
     this.categories[this.categoryIndex] = this.category;
   }
   async updateName(data) {
-    await updateData('menu/' + this.doc, `${this.categoryIndex}.name`, data);
+    await updateData('menus/' + this.uid, `${this.categoryIndex}.name`, data);
     this.category.name = data;
     this.dispatchEvent(new CustomEvent('category-changed'));
   }
   async updateImage(file) {
-    this.category.image = await updateImage('menu/' + this.doc, `${this.categoryIndex}.image`, file, (_.get('image.name', this.category)));
+    this.category.image = await updateImage('menus/' + this.uid, `${this.categoryIndex}.image`, file, (_.get('image.name', this.category)));
     //todo it fixes bug when switching to category without image after adding image but causes flickering
     this.requestUpdate();
     this.dispatchEvent(new CustomEvent('category-changed'));
@@ -79,13 +82,14 @@ customElements.define('hg-menu-main', class extends LitElement {
             <h3></h3>
           </hg-editable-text>
         </header>
+        ${_.isEmpty(this.category.items) ? html`<div class="empty">Brak pozycji w kategorii</div>`: ''}
         <hg-list
           id="list"
           .array=${true}
           .vertical=${true}
           .noGetItems=${true}
           .items=${_.get('items', this.category)}
-          .path=${{doc: 'menu/' + this.doc, field: `${this.categoryIndex}.items`}}
+          .path=${{doc: 'menus/' + this.uid, field: `${this.categoryIndex}.items`}}
           .getItemName=${(item) => `pozycję${item.name ? ` "${item.name}"`: ''}`}
           .itemTemplate=${(item, index, disableEdit) => html`<hg-menu-item .item=${item} .disableEdit=${disableEdit}></hg-menu-nav-item>`}
           @item-added=${() => this.updateCategory()}

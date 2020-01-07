@@ -8,6 +8,7 @@ customElements.define('hg-menu', class extends LitElement {
   static get properties() {
     return {
       categories: Object,
+      uid: String,
       selectedCategory: Number,
       _editing: {type: Boolean, reflect: true, attribute: 'editing'},
     };
@@ -16,10 +17,11 @@ customElements.define('hg-menu', class extends LitElement {
     super();
     this.categories = {};
     this.selectedCategory = 0;
-    db.collection("menu").doc("courses").get()
-      .then((doc) => {
-        this.categories = doc.data();
-      });
+    this.categories = {};
+    (async () => {
+      await this.updateComplete;
+      this.categories = (await db.doc('menus/' + this.uid).get()).data();
+    })();
   }
   static get styles() {
     return css`
@@ -51,11 +53,11 @@ customElements.define('hg-menu', class extends LitElement {
   }
   render(){
     return html`
-      <hg-heading center>${'Menu restauracji'}</hg-heading>
+      <hg-heading center>${'Menu'}</hg-heading>
       <section>
         <hg-menu-main 
           id="main"
-          .doc=${'courses'}
+          .uid=${this.uid}
           .category=${_.get(this.selectedCategory, this.categories)}
           .categoryIndex=${this.selectedCategory}
           .categories=${this.categories}
@@ -64,6 +66,7 @@ customElements.define('hg-menu', class extends LitElement {
         </hg-menu-main>
         <hg-menu-nav
           id="nav"
+          .uid=${this.uid}
           .selectedCategory=${this.selectedCategory}
           .categories=${this.categories}
           @categories-changed=${(event) => this.categories = event.detail}

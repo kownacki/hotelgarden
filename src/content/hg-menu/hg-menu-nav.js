@@ -5,6 +5,7 @@ import './hg-menu-nav-item.js';
 customElements.define('hg-menu-nav', class extends LitElement {
   static get properties() {
     return {
+      uid: String,
       selectedCategory: Number,
       categories: Object,
     };
@@ -49,7 +50,7 @@ customElements.define('hg-menu-nav', class extends LitElement {
         .vertical=${true}
         .noGetItems=${true},
         .items=${this.categories}
-        .path=${{doc: 'menu/courses'}}
+        .path=${{doc: 'menus/' + this.uid}}
         .getItemName=${(category) => `kategorię${category.name ? ` "${category.name}"`: ''} i wszystkie zawierające się w niej pozycje`}
         .itemTemplate=${(category, index) => html`
           <hg-menu-nav-item
