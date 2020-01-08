@@ -3,7 +3,7 @@ import {createImage, deleteImage, updateImage, staticProp} from "../../utils.js"
 import './hg-gallery/hg-gallery-item.js';
 import './hg-gallery/hg-gallery-slider.js';
 import '../../edit/hg-image-upload.js';
-import '../../elements/hg-list.js'
+import '../../elements/hg-list/hg-mosaic-list.js'
 
 customElements.define('hg-gallery', class extends LitElement {
   static get properties() {
@@ -19,11 +19,6 @@ customElements.define('hg-gallery', class extends LitElement {
         max-width: 1300px;
         padding: 0 20px;
       }
-      hg-list {
-        display: flex;
-        flex-wrap: wrap;
-        --columns: 2;
-      }
     `;
   }
   async updateImage(image, index, file) {
@@ -34,11 +29,8 @@ customElements.define('hg-gallery', class extends LitElement {
   render() {
     return html`
       <hg-image-upload id="upload"></hg-image-upload>
-      <hg-list
+      <hg-mosaic-list
         id="list"
-        .array=${true}
-        .addAtStart=${true}
-        .transform=${() => _.reverse}
         .path=${staticProp({doc: 'gallery/gallery'})}
         .itemTemplate=${(item, index) => html`
           <hg-gallery-item
@@ -55,7 +47,7 @@ customElements.define('hg-gallery', class extends LitElement {
         })}
         .onDelete=${(item) => {deleteImage(item.image.name)}}
         @items-changed=${(event) => this._items = event.detail}>
-      </hg-list>
+      </hg-mosaic-list>
       <hg-gallery-slider
         id="slider" 
         .images=${_.reverse(_.map.convert({cap: false})((item, index) => ({...item.image, index}), this._items))}

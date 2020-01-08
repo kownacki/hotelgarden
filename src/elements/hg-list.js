@@ -4,7 +4,7 @@ import {array, db, updateData, generateUid} from "../utils.js";
 import './hg-list/hg-list-item.js';
 import './hg-list/hg-list-add.js';
 
-customElements.define('hg-list', class extends LitElement {
+export default class HgList extends LitElement {
   static get properties() {
     return {
       // flags
@@ -101,9 +101,10 @@ customElements.define('hg-list', class extends LitElement {
   render() {
     return html`
       ${(this.addAtStart ? _.reverse : _.identity)([
-        _.isEmpty(this._list) ? (this.emptyTemplate || '') : '',
+        _.isEmpty(this._list && this.emptyTemplate ) ? this.emptyTemplate : '',
         repeat(this._list || [], this.array ? (key) => _.get(`${key}.uid`, this.items) : _.identity, (key, listIndex) =>
           !_.get(key, this.items) ?  '' : html`<hg-list-item
+            style="${this.calculateItemTop ? `top: ${this.calculateItemTop(listIndex + 1) * 100}%` : ''}"
             .item=${this.items[key]}
             .getItemName=${this.getItemName}
             .first=${listIndex === 0}
@@ -137,4 +138,5 @@ customElements.define('hg-list', class extends LitElement {
       ])}
     `;
   }
-});
+}
+customElements.define('hg-list', HgList);

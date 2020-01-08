@@ -10,11 +10,15 @@ customElements.define('hg-gallery-item', class extends LitElement {
     return css`
       :host {
         display: block;
+        width: 100%;
+        height: 100%;
         position: relative;
+        margin: 1px;
       }
       iron-image {
+        width: calc(100% - 1px);
+        height: calc(100% - 1px);
         display: block;
-        padding-bottom: 60%
       }
       paper-icon-button {
         display: none;
