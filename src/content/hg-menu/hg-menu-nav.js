@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
-import {staticProp} from '../../utils.js';
+import {deleteImage, staticProp} from '../../utils.js';
 import '../../elements/hg-list.js';
 import './hg-menu-nav-item.js';
 
@@ -61,6 +61,7 @@ customElements.define('hg-menu-nav', class extends LitElement {
             @click=${() => this.selectCategory(Number(index))}>
           </hg-menu-nav-item>
         `}
+        .onDelete=${(item) => {deleteImage(item.image.name)}}
         @item-added=${() => {this.updateCategories(); this.selectCategory(_.size(this.categories) - 1)}}
         @item-deleted=${(event) => {this.updateCategories(); this.reselectAfterDelete(Number(event.detail))}}
         @items-swapped=${(event) => {this.updateCategories(); this.reselectAfterSwapped(Number(event.detail[0]), Number(event.detail[1]))}}>
