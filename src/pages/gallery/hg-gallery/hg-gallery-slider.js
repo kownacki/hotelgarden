@@ -2,7 +2,6 @@ import {LitElement, html, css} from 'lit-element';
 import '../../../elements/hg-slider.js';
 import '../../../edit/hg-delete-item.js';
 import '../../../edit/hg-editable-image.js';
-import '../../../elements/hg-image-upload.js';
 
 //todo bug clicking go back when image is displayed breaks website
 customElements.define('hg-gallery-slider', class extends LitElement {
@@ -69,22 +68,11 @@ customElements.define('hg-gallery-slider', class extends LitElement {
         `}>
       </hg-slider>
       <div class="controls">
-        <hg-delete-item .name=${_.get(this.selected + '/name', this.images)}>
-        </hg-delete-item>
         <paper-icon-button
           icon="close"
           @click=${this.close}>
         </paper-icon-button>
       </div>
-      <hg-image-upload
-        @upload=${(event) => {
-          this.selected = this.images.length;
-          this.dispatchEvent(new CustomEvent('save', {detail: {
-            image: {index: this.images.length},
-            file: event.detail,
-          }}));
-        }}>
-      </hg-image-upload>
     `;
   }
 });

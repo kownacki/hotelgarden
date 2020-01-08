@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
 
-customElements.define('hg-gallery-upload', class extends LitElement {
+customElements.define('hg-image-upload', class extends LitElement {
   static get properties() {
     return {
     };

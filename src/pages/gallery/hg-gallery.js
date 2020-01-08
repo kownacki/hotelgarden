@@ -2,7 +2,7 @@ import {LitElement, html, css} from 'lit-element';
 import {createImage, deleteImage, updateImage, staticProp} from "../../utils.js";
 import './hg-gallery/hg-gallery-item.js';
 import './hg-gallery/hg-gallery-slider.js';
-import './hg-gallery/hg-gallery-upload.js';
+import '../../edit/hg-image-upload.js';
 import '../../elements/hg-list.js'
 
 customElements.define('hg-gallery', class extends LitElement {
@@ -33,7 +33,7 @@ customElements.define('hg-gallery', class extends LitElement {
   }
   render() {
     return html`
-      <hg-gallery-upload id="upload"></hg-gallery-upload>
+      <hg-image-upload id="upload"></hg-image-upload>
       <hg-list
         id="list"
         .array=${true}

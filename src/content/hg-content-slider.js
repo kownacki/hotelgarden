@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit-element';
 import {db, updateImage, deleteImage} from '../utils.js';
 import './hg-content-slider/hg-content-slider-item.js';
-import '../elements/hg-image-upload.js';
+import '../elements/hg-image-upload-fab.js';
 import '../elements/hg-content-label.js';
 
 customElements.define('hg-content-slider', class extends LitElement {
@@ -43,7 +43,21 @@ customElements.define('hg-content-slider', class extends LitElement {
     if (image.index === this._images.length) {
       this._images = [...this._images, image];
     }
-    Object.assign(image, await updateImage('contentSliders/' + this.uid, image.index, file, image.name));
+    Object.assign(image, await updateImage('contentSliders/' + this.uid, String(image.index), file, image.name));
+  }
+  async deleteItem(index) {
+    const image = this._images[index];
+    deleteImage(image.name);
+    const newImages = _.map.convert({cap: false})(
+      (image, index) => _.set('index', index, image),
+      _.remove((image) => image.index === index, this._images),
+    );
+    db.doc('contentSliders/' + this.uid).set({..._.map(_.omit('index'), newImages)});
+    if (this.shadowRoot.getElementById('content-slider').selected === newImages.length) {
+      --this.shadowRoot.getElementById('content-slider').selected;
+    }
+    this._images = newImages;
+    this.requestUpdate();
   }
   render() {
     return html`
@@ -53,12 +67,13 @@ customElements.define('hg-content-slider', class extends LitElement {
         .items=${this._images}
         .template=${(image) => html`
           <hg-content-slider-item
-            .url=${_.get('url', image)}
-            @click=${() => !this.shadowRoot.getElementById('content-slider').transitionGoing && this.shadowRoot.getElementById('gallery-slider').open(image.index)}>
+            .image=${image}
+            @request-delete=${() => this.deleteItem(image.index)}
+            @click-image=${() => !this.shadowRoot.getElementById('content-slider').transitionGoing && this.shadowRoot.getElementById('gallery-slider').open(image.index)}>
           </hg-content-slider-item>
         `}>
       </hg-slider>`}
-      <hg-image-upload
+      <hg-image-upload-fab
         @upload=${async (event) => {
           const index = this._images.length;
           await this.updateImage({index}, event.detail);
@@ -66,34 +81,12 @@ customElements.define('hg-content-slider', class extends LitElement {
           contentSlider.selected = contentSlider.double ? index - 1 : index;
           contentSlider.requestUpdate();
         }}>
-      </hg-image-upload>
+      </hg-image-upload-fab>
       <hg-gallery-slider 
         id="gallery-slider" 
         .images=${this._images}
         @save=${async (event) => {
           await this.updateImage(event.detail.image, event.detail.file);
-          this.requestUpdate();
-          this.shadowRoot.getElementById('gallery-slider').requestUpdate();
-        }}
-        @request-delete=${async () => {
-          const index = this.shadowRoot.getElementById('gallery-slider').selected;
-          const image = this._images[index];
-          deleteImage(image.name);
-          const newImages = _.map.convert({cap: false})(
-            (image, index) => _.set('index', index, image),
-            _.remove((image) => image.index === index, this._images),
-          );
-          db.doc('contentSliders/' + this.uid).set({..._.map(_.omit('index'), newImages)});
-          if (newImages.length === 0) {
-            this.shadowRoot.getElementById('gallery-slider').close();
-          }
-          if (index === newImages.length) {
-            --this.shadowRoot.getElementById('gallery-slider').selected;
-          }
-          if (this.shadowRoot.getElementById('content-slider').selected === newImages.length) {
-            --this.shadowRoot.getElementById('content-slider').selected;
-          }
-          this._images = newImages;
           this.requestUpdate();
           this.shadowRoot.getElementById('gallery-slider').requestUpdate();
         }}>
