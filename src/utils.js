@@ -42,22 +42,26 @@ export const splitEvents = (events) => [
   ])(events)
 ];
 
-export const deleteImageFromStorage = (name) => {
-  if (name) {
-    storage.ref('images/' + name).delete();
-  }
-};
+export const generateUid = () => `${Date.now()}${_.padCharsStart('0', 9,  _.random(1, 10**9 - 1))}`;
+
 export const updateData = (doc, path, data) => {
   return path
     ? db.doc(doc).set(_.setWith(Object, path, data, {}), {mergeFields: [path]})
     : db.doc(doc).set(data);
 };
-export const updateImage = async (doc, path, file, oldImageName) => {
-  const name = `${Date.now()}${_.padCharsStart('0', 9,  _.random(1, 10**9 - 1))}`;
-  deleteImageFromStorage(oldImageName);
+
+export const createImage = async (file) => {
+  const name = generateUid();
   const storageRef = storage.ref('images/' + name);
   await storageRef.put(file);
-  const image = {name, url: await storageRef.getDownloadURL()};
+  return {name, url: await storageRef.getDownloadURL()};
+};
+export const deleteImage = async (imageName) => {
+  return storage.ref('images/' + imageName).delete()
+};
+export const updateImage = async (doc, path, file, oldImageName) => {
+  if (oldImageName) deleteImage(oldImageName);
+  const image = await createImage(file);
   updateData(doc, path, image);
   return image;
 };

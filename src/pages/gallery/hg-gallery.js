@@ -1,88 +1,69 @@
 import {LitElement, html, css} from 'lit-element';
-import {repeat} from 'lit-html/directives/repeat';
-import {storage} from "../../utils.js";
-import '../../edit/hg-delete-item.js';
-import './hg-gallery/hg-gallery-upload.js';
+import {createImage, deleteImage, updateImage, staticProp} from "../../utils.js";
+import './hg-gallery/hg-gallery-item.js';
 import './hg-gallery/hg-gallery-slider.js';
+import './hg-gallery/hg-gallery-upload.js';
+import '../../elements/hg-list.js'
 
 customElements.define('hg-gallery', class extends LitElement {
   static get properties() {
     return {
-      images: Array,
+      _items: Object,
     };
-  }
-  constructor() {
-    super();
-    (async () => {
-      this.images = await Promise.all(_.map(async (item) => ({
-        name: item.name,
-        url: await item.getDownloadURL(),
-      }), _.reverse((await storage.ref('gallery').listAll()).items)));
-    })();
   }
   static get styles() {
     return css`
       :host {
         display: block;
-        margin: auto;
+        margin: 40px auto;
         max-width: 1300px;
+        padding: 0 20px;
       }
-      .images {
+      hg-list {
         display: flex;
         flex-wrap: wrap;
-      }
-      .image {
-        width: calc(50% - 2px);
-        margin: 1px;
-        position: relative;
-      }
-      iron-image {
-        display: block;
-        padding-bottom: 60%;
-      }
-      hg-delete-item {
-        background: white;
-        position: absolute;
-        right: 0;
-        top: 0;
-      }
-      .image:hover {
-        cursor: pointer;
-      }
-      .image:not(:hover) hg-delete-item:not([opened]) {
-        display: none;
+        --columns: 2;
       }
     `;
   }
+  async updateImage(image, index, file) {
+    const list = this.shadowRoot.getElementById('list');
+    list.items[index].image = await updateImage('gallery/gallery', `${index}.image`, file, image.name);
+    list.items = {...list.items};
+  }
   render() {
     return html`
-      <hg-gallery-upload 
-        .images=${this.images}
-        @upload-started=${() => this.requestUpdate()}
-        @upload-finished=${() => {this.requestUpdate(); this.shadowRoot.getElementById('slider').requestUpdate()}}>
-      </hg-gallery-upload>
-      <div class="images">
-        ${repeat(this.images, _.get('name'), (image, index) => html`
-          <div class="image">
-            <iron-image
-              src="${image.url}" 
-              sizing="cover"
-              @click=${() => {
-                this.shadowRoot.getElementById('slider').open(index);
-              }}>
-            </iron-image>
-            <hg-delete-item
-              .name=${image.name}
-              @request-delete=${() => {
-                storage.ref('gallery/' + image.name).delete();
-                this.images.splice(index, 1);
-                this.requestUpdate();
-              }}>
-            </hg-delete-item>
-          </div>
-        `)}
-      </div>
-      <hg-gallery-slider id="slider" .images=${this.images}></hg-gallery-slider>
+      <hg-gallery-upload id="upload"></hg-gallery-upload>
+      <hg-list
+        id="list"
+        .array=${true}
+        .addAtStart=${true}
+        .transform=${() => _.reverse}
+        .path=${staticProp({doc: 'gallery/gallery'})}
+        .itemTemplate=${(item, index) => html`
+          <hg-gallery-item
+            .src=${item.image.url}
+            @click=${() => {
+              this.shadowRoot.getElementById('slider').open(_.size(this._items) - Number(index) - 1);
+            }}>
+            </hg-gallery-item>
+        `}
+        .getItemName=${(item) => `obraz "${item.uid}"`}
+        .onAdd=${async (newItem) => ({
+          ...newItem,
+          image: await createImage(await this.shadowRoot.getElementById('upload').upload()),
+        })}
+        .onDelete=${(item) => {deleteImage(item.image.name)}}
+        @items-changed=${(event) => this._items = event.detail}>
+      </hg-list>
+      <hg-gallery-slider
+        id="slider" 
+        .images=${_.reverse(_.map.convert({cap: false})((item, index) => ({...item.image, index}), this._items))}
+        @save=${async (event) => {
+          await this.updateImage(event.detail.image, event.detail.image.index, event.detail.file);
+          this.shadowRoot.getElementById('list').requestUpdate();
+        }}>
+      </hg-gallery-slider>
     `;
   }
 });

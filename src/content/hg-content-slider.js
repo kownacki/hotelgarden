@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
-import {db, updateImage, deleteImageFromStorage} from '../utils.js';
+import {db, updateImage, deleteImage} from '../utils.js';
 import './hg-content-slider/hg-content-slider-item.js';
 import '../elements/hg-image-upload.js';
 import '../elements/hg-content-label.js';
@@ -78,7 +78,7 @@ customElements.define('hg-content-slider', class extends LitElement {
         @request-delete=${async () => {
           const index = this.shadowRoot.getElementById('gallery-slider').selected;
           const image = this._images[index];
-          deleteImageFromStorage(image.name);
+          deleteImage(image.name);
           const newImages = _.map.convert({cap: false})(
             (image, index) => _.set('index', index, image),
             _.remove((image) => image.index === index, this._images),

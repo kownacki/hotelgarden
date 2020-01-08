@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
 import {repeat} from 'lit-html/directives/repeat';
-import {array, db, updateData, assignKeys, sleep} from "../utils.js";
+import {array, db, updateData, generateUid} from "../utils.js";
 import './hg-list/hg-list-item.js';
 import './hg-list/hg-list-add.js';
 
@@ -13,17 +13,22 @@ customElements.define('hg-list', class extends LitElement {
       addAtStart: Boolean,
       noAdd: Boolean,
       vertical: Boolean,
-      // params
-      path: Object, // {doc: String, field: String}
-      transform: Function,
+      // required params
+      path: Object, // {doc: String, [field: String]}
       itemTemplate: Function,
       getItemName: Function,
+      // optional params
+      transform: Function,
+      onAdd: Function,
+      onDelete: Function,
       configure: Object,
       emptyTemplate: Object,
       items: Object,
+      // observables
+      editing: Boolean,
+      // private
       _list: Array,
       _processing: Boolean,
-      editing: Boolean,
     };
   }
   static get styles() {
@@ -39,6 +44,9 @@ customElements.define('hg-list', class extends LitElement {
   updated(changedProperties) {
     if (changedProperties.has('editing')) {
       this.dispatchEvent(new CustomEvent('editing-changed', {detail: this.editing, composed: true}));
+    }
+    if (changedProperties.has('items')) {
+      this.dispatchEvent(new CustomEvent('items-changed', {detail: this.items}));
     }
     if (changedProperties.has('path')) {
       if (this.path && !this.noGetItems) {
@@ -66,6 +74,9 @@ customElements.define('hg-list', class extends LitElement {
   }
   async deleteItem(key) {
     this._processing = true;
+    if (this.onDelete) {
+      await this.onDelete(this.items[key]);
+    }
     let newItems;
     if (this.array) {
       newItems = _.toArray(this.items);
@@ -112,7 +123,10 @@ customElements.define('hg-list', class extends LitElement {
           .disable=${this._processing || this.editing}
           @add=${async () => {
             this._processing = true;
-            const newItem = {uid: Date.now()};
+            let newItem = {uid: generateUid()};
+            if (this.onAdd) {
+              newItem = await this.onAdd(newItem)
+            }
             await this.updateData(String(_.size(this.items)), newItem);
             //todo use firebase.firestore.FieldValue.arrayUnion  
             this.items = _.set(_.size(this.items), newItem, this.items);
