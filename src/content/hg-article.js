@@ -4,11 +4,10 @@ import '../edit/hg-editable-text.js';
 import '../elements/hg-content-label.js';
 import sharedStyles from "../sharedStyles";
 
-customElements.define('hg-article', class extends LitElement {
+export default class HgArticle extends LitElement {
   static get properties() {
     return {
       uid: Number,
-      narrow: {type: Boolean},
       _text: String,
     };
   }
@@ -24,22 +23,13 @@ customElements.define('hg-article', class extends LitElement {
       :host {
         position: relative;
         display: block;
-        margin: 80px auto;
+        margin: 40px auto;
         max-width: 700px;
         padding: 0 20px;
-      }
-      :host([narrow]) {
-        margin: 40px auto;
       }
       :host(:hover) hg-content-label {
         left: 20px;
         display: block;
-      }
-      /* remove it when edited */
-      p:not(:focus):first-letter {
-        font-size: 3em;
-        float: left;
-        margin: 0.25em 0.15em 0.15em 0;
       }
     `];
   }
@@ -54,4 +44,5 @@ customElements.define('hg-article', class extends LitElement {
       <hg-content-label .name=${'Pole tekstowe'}></hg-content-label>
     `;
   }
-});
+}
+customElements.define('hg-article', HgArticle);

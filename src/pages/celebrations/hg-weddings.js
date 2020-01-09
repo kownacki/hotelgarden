@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
-import '../../content/hg-article.js';
+import '../../content/hg-article/hg-intro-article.js';
 import '../../content/hg-icons.js';
 import '../../content/hg-mosaic.js';
 import '../../content/hg-content-slider.js';
@@ -15,7 +15,7 @@ customElements.define('hg-weddings', class extends LitElement {
   }
   render() {
     return html`
-      <hg-article .uid=${'weddings'}></hg-article>
+      <hg-intro-article .uid=${'weddings'}></hg-intro-article>
       <hg-quote .uid=${'weddings'}></hg-quote>
       <hg-icons .uid=${'weddings'}></hg-icons>
       <hg-content-slider .uid=${'weddings'}></hg-content-slider>

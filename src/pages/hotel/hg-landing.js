@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
 import {staticProp} from '../../utils.js';
-import '../../content/hg-article.js';
+import '../../content/hg-article/hg-intro-article.js';
 import '../../content/hg-quote.js';
 import '../../content/hg-icons.js';
 import '../../content/hg-mosaic.js';
@@ -23,7 +23,7 @@ customElements.define('hg-landing', class extends LitElement {
   }
   render() {
     return html`
-      <hg-article .uid=${'landing'}></hg-article>
+      <hg-intro-article .uid=${'landing'}></hg-intro-article>
       <hg-quote .uid=${'landing'}></hg-quote>
       <hg-icons .uid=${'landing'}></hg-icons>
       <hg-mosaic .uid=${'landing'} .buttons=${staticProp({

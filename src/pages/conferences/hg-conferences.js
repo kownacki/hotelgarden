@@ -1,6 +1,7 @@
 import {LitElement, html, css} from 'lit-element';
 import {staticProp} from '../../utils.js';
 import '../../content/hg-article.js';
+import '../../content/hg-article/hg-intro-article.js';
 import '../../content/hg-icons.js';
 import '../../content/hg-mosaic.js';
 import '../../content/hg-content-slider.js';
@@ -16,7 +17,7 @@ customElements.define('hg-conferences', class extends LitElement {
   }
   render() {
     return html`
-      <hg-article .uid=${'conferences'}></hg-article>
+      <hg-intro-article .uid=${'conferences'}></hg-intro-article>
       <hg-icons .uid=${'conferences'}></hg-icons>
       <hg-content-slider .uid=${'conferences'}></hg-content-slider>
       <hg-mosaic .uid=${'conferences'} .buttons=${staticProp({
@@ -27,7 +28,7 @@ customElements.define('hg-conferences', class extends LitElement {
       <hg-heading center>${'Nowoczesne wyposażenie'}</hg-heading>
       <hg-icons .uid=${'conferences-halls'}></hg-icons>
       <hg-heading center>${'Food & Beverages'}</hg-heading>
-      <hg-article narrow .uid=${'conferences-cuisine'}></hg-article>
+      <hg-article .uid=${'conferences-cuisine'}></hg-article>
       <hg-content-slider .uid=${'conferences-cuisine'}></hg-content-slider>
     `;
   }

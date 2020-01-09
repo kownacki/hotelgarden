@@ -14,7 +14,7 @@ customElements.define('hg-restaurant', class extends LitElement {
   }
   render() {
     return html`
-      <hg-article .uid=${'restaurant'}></hg-article>
+      <hg-intro-article .uid=${'restaurant'}></hg-intro-article>
       <hg-icons .uid=${'restaurant'}></hg-icons>
       <hg-mosaic .uid=${'restaurant'} .buttons=${staticProp({primary: [{url: '#menu', text: 'Zobacz menu'}]})}></hg-mosaic>
       <hg-content-slider .uid=${'restaurant'}></hg-content-slider>

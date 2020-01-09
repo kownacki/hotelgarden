@@ -13,7 +13,7 @@ customElements.define('hg-halls', class extends LitElement {
   }
   render() {
     return html`
-      <hg-article .uid=${'halls'}></hg-article>
+      <hg-intro-article .uid=${'halls'}></hg-intro-article>
       ${_.map((index) => html`
         <hg-text-image id="${index}" .uid=${'halls-' + index}></hg-text-image>
         <hg-content-slider .uid=${'halls-'+ index}></hg-content-slider>

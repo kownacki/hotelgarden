@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
 import {staticProp} from '../../utils.js';
-import '../../content/hg-article.js';
+import '../../content/hg-article/hg-intro-article.js';
 import '../../content/hg-icons.js';
 import '../../content/hg-content-slider';
 import '../../elements/hg-heading.js';
@@ -17,7 +17,7 @@ customElements.define('hg-rooms', class extends LitElement {
   }
   render() {
     return html`
-      <hg-article .uid=${'rooms'}></hg-article>
+      <hg-intro-article .uid=${'rooms'}></hg-intro-article>
       <hg-icons .uid=${'rooms'}></hg-icons>
       <hg-heading h3 center>${'Wyposażenie każdego pokoju'}</hg-heading>
       <hg-icons .uid=${'rooms-facilities'}></hg-icons>
