@@ -37,7 +37,7 @@ export default class HgArticle extends LitElement {
   render() {
     return html`
       <hg-editable-text
-        .rich=${true}
+        .rich=${this.rich}
         multiline
         .text=${this._text}
         @save=${(event) => {
