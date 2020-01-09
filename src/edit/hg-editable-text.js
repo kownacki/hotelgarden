@@ -101,6 +101,11 @@ export default class HgEditableText extends LitElement {
         min-width: 20px;
         min-height: 1.25em;
       }
+      ::slotted(.ck-focused) {
+        z-index: 2;
+        position: relative;
+        background: white;
+      }
       .edit {
         margin-top: 5px;
         justify-content: flex-end;
