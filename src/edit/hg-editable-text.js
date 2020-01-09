@@ -127,7 +127,7 @@ export default class HgEditableText extends LitElement {
         <paper-button
           raised
           @click=${() => {
-            this.rich ? this._editor.setData(this.text) : (this._editable.innerHTML = this.text || '');
+            this.rich ? this._editor.setData(this.text || '') : (this._editable.innerHTML = this.text || '');
             this.showControls = false;
             if (!this.text) {
               this.removeAttribute('not-empty');
