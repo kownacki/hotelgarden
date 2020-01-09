@@ -29,6 +29,7 @@ customElements.define('hg-icons-item', class extends LitElement {
         filter: var(--primary-color-filter)
       }
       p {
+        font-size: 18px;
         text-align: center;
       }
       :host(:hover) hg-delete-item, :host([opened]) hg-delete-item, :host(:hover) paper-icon-button {
