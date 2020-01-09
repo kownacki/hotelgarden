@@ -38,7 +38,7 @@ customElements.define('hg-banner', class extends LitElement {
         bottom: 0;
         right: 0;
         position: absolute;
-        box-shadow: inset 0 150px 150px rgba(0, 0, 0, 0.5);
+        background: linear-gradient(to bottom,rgba(0,0,0,.4),transparent 45%);
       }
       .heading {
         background: rgba(var(--secondary-color-rgb), 0.5);
