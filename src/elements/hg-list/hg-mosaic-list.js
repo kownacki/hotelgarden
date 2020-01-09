@@ -3,7 +3,7 @@ import {css} from 'lit-element';
 
 customElements.define('hg-mosaic-list', class extends HgList {
   static get styles() {
-    return css`
+    return [super.styles, css`
       :host {
         position: relative;
         padding-bottom: calc(100% * (3 / 16));
@@ -32,7 +32,7 @@ customElements.define('hg-mosaic-list', class extends HgList {
         width: calc(100% * (6 / 16));
         height: 200%;
       }
-    `;
+    `];
   }
   calculateItemTop(index) {
     return Math.floor(index/5) * 2 + (_.includes(index%10, [2, 3, 8, 9]) ? 1 : 0);
