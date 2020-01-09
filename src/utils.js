@@ -145,6 +145,7 @@ export const pathToUid = {
   '/komunie': 'komunie',
   '/galeria': 'gallery',
   '/wydarzenia': 'events',
+  '/kontakt': 'contact',
 };
 
 //todo flat vs hierarchical url structure
@@ -192,6 +193,9 @@ export const links = [
   }, {
     name: 'Wydarzenia',
     path: '/wydarzenia',
+  }, {
+    name: 'Kontakt',
+    path: '/kontakt',
   },
 ];
 

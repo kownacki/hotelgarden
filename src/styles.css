@@ -7,6 +7,8 @@ body {
   --accent-color: #4f6884;
   --placeholder-color: var(--paper-grey-500);
   --placeholder-color-rgb: 158, 158, 158;
+  --logotype-color: #84979E;
+  --logotype-color-filter: invert(73%) sepia(6%) saturate(853%) hue-rotate(150deg) brightness(91%) contrast(79%);
   --headerHeight: 59px;
   font-family: 'Lato', sans-serif;
   color: var(--secondary-color);

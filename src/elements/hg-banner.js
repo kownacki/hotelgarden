@@ -9,6 +9,7 @@ customElements.define('hg-banner', class extends LitElement {
       uid: String,
       path: Object,
       useTitleAsHeading: String,
+      noImage: {type: Boolean, reflect: true, attribute: 'no-image'},
       noSubheading: Boolean,
       _banner: Object,
     };
@@ -59,6 +60,15 @@ customElements.define('hg-banner', class extends LitElement {
         margin: 10px;
         color: white;
       }
+      :host([no-image]) {
+        height: auto;
+      }
+      :host([no-image]) .heading {
+        background: transparent;
+      }
+      :host([no-image]) h1, :host([no-image]) p {
+        color: inherit;
+      }
     `];
   }
   updateImage(path, data, oldImageName) {
@@ -69,14 +79,14 @@ customElements.define('hg-banner', class extends LitElement {
   }
   render() {
     return html`
-      <hg-editable-image
+      ${this.noImage ? '' : html`<hg-editable-image
         lower-image
         .src=${_.get('image.url', this._banner)}
         .sizing=${'cover'}
         @save=${async (event) => {
           this._banner.image = await this.updateImage('image', event.detail, (_.get('image.name', this._banner)));
         }}>
-      </hg-editable-image>
+      </hg-editable-image>`}
       <div class="heading">
         <hg-editable-text
           .text=${_.get(this.useTitleAsHeading ? 'title' : 'heading', this._banner) || ''}

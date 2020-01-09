@@ -1,4 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
+import {pathToUid} from './utils.js';
 import moment from 'moment';
 import 'moment/src/locale/pl';
 moment.locale('pl');
@@ -47,7 +48,7 @@ customElements.define('hg-app', class extends LitElement {
         this._path = event.detail.value.path;
         window.scrollTo(0, 0);
       }}></app-location>
-      <hg-header id="header" .selected=${this._path}></hg-header>
+      <hg-header id="header" .noBanner=${pathToUid[this._path] === 'contact'} .selected=${this._path}></hg-header>
       <hg-page 
         .path=${this._path}
         @hide-header=${() => this.shadowRoot.getElementById('header').style.display = 'none'}

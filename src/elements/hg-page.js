@@ -18,6 +18,7 @@ import '../pages/celebrations/hg-komunie.js';
 import '../pages/gallery/hg-gallery.js';
 import '../pages/events/hg-events.js';
 import '../pages/events/hg-event.js';
+import '../pages/contact/hg-contact.js';
 
 let seconds = 0;
 setInterval(() => ++seconds, 1000);
@@ -26,13 +27,25 @@ customElements.define('hg-page', class extends LitElement {
   static get properties() {
     return {
       path: String,
+      _noBanner: {type: Boolean, reflect: true, attribute: 'no-banner'},
       _uid: String,
     };
   }
   async updated(changedProperties) {
     if (changedProperties.has('path')) {
       this._uid = pathToUid[this.path];
+      this._noBanner = (this._uid === 'contact');
     }
+  }
+  static get styles() {
+    return css`
+      :host {
+        display: block;
+      }
+      :host([no-banner]) {
+        margin-top: 150px;
+      }
+    `
   }
   render() {
     return html`
@@ -49,7 +62,7 @@ customElements.define('hg-page', class extends LitElement {
         ? html`<hg-event .uid=${_.replace('/wydarzenia/', '', this.path)}></hg-event>`
         : this._uid
           ? html`
-              <hg-banner .uid=${this._uid}></hg-banner>
+              <hg-banner .noImage=${this._noBanner} .uid=${this._uid}></hg-banner>
               ${unsafeHTML(`
                 <hg-${this._uid} id="page"></hg-${this._uid}>
               `)}

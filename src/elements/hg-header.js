@@ -6,18 +6,20 @@ import {links} from '../utils.js';
 customElements.define('hg-header', class extends LitElement {
   static get properties() {
     return {
+      noBanner: {type: Boolean, reflect: true, attribute: 'no-banner'},
       scrolledDown: {type: Boolean, reflect: true, attribute: 'scrolled-down'},
       selected: String,
     };
   }
   constructor() {
     super();
-    window.onscroll = _.throttle(100, () => this.scrolledDown = window.pageYOffset > this.offsetHeight / 2);
+    window.onscroll = _.throttle(100, () => this.scrolledDown = window.pageYOffset > 0);
   }
   static get styles() {
     return css`
       :host {
         display: block;
+        top: 0;
         position: fixed;
         width: 100%;
         z-index: 2;
@@ -52,7 +54,7 @@ customElements.define('hg-header', class extends LitElement {
         opacity: 0;
         margin: 10px 0 0;
       }
-      li:hover  hg-header-subnav {
+      li:hover hg-header-subnav {
         visibility: visible;
         opacity: 1.0;
         margin: 0;
@@ -66,7 +68,7 @@ customElements.define('hg-header', class extends LitElement {
         text-decoration: none;
         transition: background-color 0.3s ease, color 0.2s ease;
       }
-      :host([scrolled-down]) a:not(:hover):not([selected]) {
+      :host([scrolled-down]) a:not(:hover):not([selected]), :host([no-banner]) a:not(:hover):not([selected]) {
         color: var(--primary-color);
       }
       a:hover, a[selected] {
@@ -77,7 +79,7 @@ customElements.define('hg-header', class extends LitElement {
   render() {
     return html`
       <header>
-        <hg-header-logo .scrolledDown=${this.scrolledDown}></hg-header-logo>
+        <hg-header-logo .scrolledDown=${this.scrolledDown} .noBanner=${this.noBanner}></hg-header-logo>
         <nav>
           <ul>
             ${_.map((link) => html`
