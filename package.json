@@ -3,7 +3,9 @@
   "scripts": {
     "build": "rollup --config",
     "dev": "es-dev-server --app-index index.html --node-resolve",
-    "deploy": "firebase deploy --only hosting"
+    "deploy": "firebase deploy",
+    "deploy-hosting": "firebase deploy --only hosting",
+    "deploy-functions": "firebase deploy --only functions"
   },
   "private": true,
   "devDependencies": {
@@ -21,6 +23,7 @@
     "@material/mwc-button": "^0.10.0",
     "@material/mwc-textfield": "^0.10.0",
     "@polymer/app-route": "^3.0.2",
+    "@polymer/iron-ajax": "^3.0.1",
     "@polymer/iron-icon": "^3.0.1",
     "@polymer/iron-icons": "^3.0.1",
     "@polymer/iron-image": "^3.0.2",
@@ -30,6 +33,8 @@
     "@polymer/paper-fab": "^3.0.1",
     "@polymer/paper-icon-button": "^3.0.2",
     "@polymer/paper-input": "^3.0.2",
+    "@polymer/paper-radio-group": "^3.0.1",
+    "@polymer/paper-spinner": "^3.0.2",
     "@polymer/paper-styles": "^3.0.1",
     "@webcomponents/webcomponentsjs": "^2.3.0",
     "firebase": "^7.2.2",
