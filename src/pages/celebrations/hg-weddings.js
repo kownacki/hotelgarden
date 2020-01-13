@@ -1,9 +1,13 @@
 import {LitElement, html, css} from 'lit-element';
 import '../../content/hg-article/hg-intro-article.js';
+import '../../content/hg-quote.js';
 import '../../content/hg-icons.js';
-import '../../content/hg-mosaic.js';
 import '../../content/hg-content-slider.js';
+import '../../content/hg-mosaic.js';
+import '../../content/hg-reviews-block.js';
+import '../../content/hg-text-image.js';
 import '../../content/hg-halls-block.js';
+import '../../content/hg-links.js';
 
 customElements.define('hg-weddings', class extends LitElement {
   static get properties() {
@@ -20,7 +24,7 @@ customElements.define('hg-weddings', class extends LitElement {
       <hg-icons .uid=${'weddings'}></hg-icons>
       <hg-content-slider .uid=${'weddings'}></hg-content-slider>
       <hg-mosaic .uid=${'weddings'}}></hg-mosaic>
-      <hg-opinions-block uid=${'weddings'}></hg-opinions-block>
+      <hg-reviews-block uid=${'weddings'}></hg-reviews-block>
       <hg-text-image swap .uid=${'weddings'}}></hg-text-image>
       <hg-halls-block .uid=${'weddings'}></hg-halls-block>
       <hg-links .path=${'/wesela'} .superpath=${'/wesela'}></hg-links>

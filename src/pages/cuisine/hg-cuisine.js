@@ -5,6 +5,7 @@ import '../../content/hg-icons.js';
 import '../../content/hg-content-slider';
 import '../../content/hg-mosaic.js';
 import '../../content/hg-links.js';
+import '../../content/hg-links.js';
 
 customElements.define('hg-cuisine', class extends LitElement {
   static get properties() {

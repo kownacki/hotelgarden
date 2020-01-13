@@ -143,6 +143,7 @@ export const pathToUid = {
   '/wesela': 'weddings',
   '/chrzciny': 'chrzciny',
   '/komunie': 'komunie',
+  '/bale-szkolne': 'bale-szkolne',
   '/galeria': 'gallery',
   '/wydarzenia': 'events',
   '/kontakt': 'contact',
@@ -185,6 +186,7 @@ export const links = [
       {name: 'Wesela', path: '/wesela'},
       {name: 'Chrzciny', path: '/chrzciny'},
       {name: 'Komunie', path: '/komunie'},
+      {name: 'Bale Szkolne', path: '/bale-szkolne'},
     ],
   },
   {

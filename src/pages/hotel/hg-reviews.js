@@ -3,7 +3,7 @@ import {staticProp} from '../../utils.js';
 import '../../elements/hg-list.js';
 import './hg-reviews/hg-reviews-item.js';
 
-const reviewBlocks = ['landing', 'restaurant'];
+const reviewBlocks = ['landing', 'restaurant', 'grill-garden', 'catering', 'weddings', 'chrzciny', 'komunie', 'bale-szkolne'];
 
 const configure = {
   icon: 'settings',
