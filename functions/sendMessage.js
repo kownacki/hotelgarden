@@ -14,7 +14,7 @@ const sendMail = async (body) => {
   const mailOptions = {
     to: config.mailOptions.to[body.subject],
     replyTo: body.email,
-    subject: config.mailOptions.subject,
+    subject: `${config.mailOptions.subject} | ${body.email}`,
     html: `
       <p>Dotyczy: ${body.subject}</p>
       <p>${_.replace(/\n/g, '<br>')(body.text)}</p>
