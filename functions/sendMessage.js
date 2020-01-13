@@ -17,11 +17,11 @@ const sendMail = async (body) => {
     subject: `${config.mailOptions.subject} | ${body.email}`,
     html: `
       <p>Dotyczy: ${body.subject}</p>
-      <p>${_.replace(/\n/g, '<br>')(body.text)}</p>
-      <p>Name: ${body.name}</p>
-      <p>Company: ${body.company || 'Nie podano'}</p>
-      <p>Phone: ${body.phone}</p>
+      <p>Imię i nazwisko: ${body.name}</p>
+      <p>Firma: ${body.company || 'Nie podano'}</p>
+      <p>Telefon: ${body.phone}</p>
       <p>Email: ${body.email}</p>
+      <p>Wiadomość: ${_.replace(/\n/g, '<br>')(body.text)}</p>
     `,
   };
   const mailTransport = nodemailer.createTransport({
