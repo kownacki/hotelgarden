@@ -25,6 +25,10 @@ customElements.define('hg-menu', class extends LitElement {
   }
   static get styles() {
     return css`
+      :host {
+        display: block;
+        margin: 80px 0;
+      }
       section {
         display: flex;
         justify-content: center;

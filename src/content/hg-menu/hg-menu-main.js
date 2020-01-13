@@ -18,7 +18,6 @@ customElements.define('hg-menu-main', class extends LitElement {
     return [sharedStyles, css`
       :host {
         padding-right: 20px;
-        padding-bottom: 300px;
       }
       header {
         display: flex;
