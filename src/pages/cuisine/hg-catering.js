@@ -22,6 +22,7 @@ customElements.define('hg-catering', class extends LitElement {
       <hg-mosaic .uid=${'catering'}></hg-mosaic>
       <hg-content-slider .uid=${'catering'}></hg-content-slider>
       <hg-reviews-block .uid=${'catering'}></hg-reviews-block>
+      <hg-contact-block></hg-contact-block>
       <hg-links .path=${'/catering'} .superpath=${'/kuchnia'}></hg-links>
     `;
   }

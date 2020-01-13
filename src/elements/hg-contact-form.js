@@ -7,6 +7,7 @@ const FIELDS = ['name', 'company', 'phone', 'email', 'text'];
 customElements.define('hg-contact-form', class extends LitElement {
   static get properties() {
     return {
+      subject: {type: String, reflect: true},
       sent: {type: Boolean, reflect: true},
       formHidden: {type: Boolean, reflect: true, attribute: 'form-hidden'},
       loading: {type: Boolean, reflect: true},
@@ -61,6 +62,9 @@ customElements.define('hg-contact-form', class extends LitElement {
         --paper-font-subhead_-_font-size: 18px;
         --paper-font-subhead_-_line-height: 1.4em;
       }
+      :host([subject]) paper-radio-group {
+        display: none;
+      }
       paper-spinner-lite {
          display: block;
          margin-right: 10px;
@@ -103,7 +107,7 @@ customElements.define('hg-contact-form', class extends LitElement {
       _.map((element) => element.shadowRoot.querySelector('paper-input-container').shadowRoot.querySelector('.underline').hidden = true,
         this.shadowRoot.querySelectorAll('paper-input'));
       this.shadowRoot.getElementById('text')
-        .shadowRoot.querySelector('iron-autogrow-textarea').style = 'height: 220px';
+        .shadowRoot.querySelector('iron-autogrow-textarea').style = `height: ${this.subject ? 276 : 220}px`;
       this.shadowRoot.getElementById('text')
         .shadowRoot.querySelector('paper-input-container').style = 'padding-bottom: 20px';
     })();
@@ -148,7 +152,10 @@ customElements.define('hg-contact-form', class extends LitElement {
           ])}
         </div>
         <div>
-          <paper-radio-group id="subject" @selected-changed=${(event) => this._selectedSubject = event.detail}>
+          <paper-radio-group 
+            id="subject" 
+            .selected=${this.subject ? this.subject : null}
+            @selected-changed=${(event) => this._selectedSubject = event.detail}>
             <span class="about">Dotyczy*:</span> 
             <paper-radio-button name="hotel">Noclegi</paper-radio-button>
             <paper-radio-button name="gastro">Gastronomia</paper-radio-button>

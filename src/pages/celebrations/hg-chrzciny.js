@@ -27,6 +27,7 @@ customElements.define('hg-chrzciny', class extends LitElement {
       <hg-reviews-block uid=${'chrzciny'}></hg-reviews-block>
       <hg-text-image swap .uid=${'chrzciny'}}></hg-text-image>
       <hg-halls-block .uid=${'chrzciny'}></hg-halls-block>
+      <hg-contact-block></hg-contact-block>
       <hg-links .path=${'/chrzciny'} .superpath=${'/wesela'} .includeSuperpath=${true}></hg-links>
     `;
   }

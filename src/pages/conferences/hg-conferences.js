@@ -30,6 +30,7 @@ customElements.define('hg-conferences', class extends LitElement {
       <hg-heading center>${'Food & Beverages'}</hg-heading>
       <hg-article .uid=${'conferences-cuisine'}></hg-article>
       <hg-content-slider .uid=${'conferences-cuisine'}></hg-content-slider>
+      <hg-contact-block></hg-contact-block>
     `;
   }
 });
