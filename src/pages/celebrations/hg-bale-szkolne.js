@@ -27,7 +27,7 @@ customElements.define('hg-bale-szkolne', class extends LitElement {
       <hg-reviews-block uid=${'bale-szkolne'}></hg-reviews-block>
       <hg-text-image swap .uid=${'bale-szkolne'}}></hg-text-image>
       <hg-halls-block .uid=${'bale-szkolne'}></hg-halls-block>
-      <hg-links .path=${'/bale-szkolne'} .superpath=${'/wesela'}></hg-links>
+      <hg-links .path=${'/bale-szkolne'} .superpath=${'/wesela'} .includeSuperpath=${true}></hg-links>
     `;
   }
 });

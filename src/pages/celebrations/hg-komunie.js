@@ -27,7 +27,7 @@ customElements.define('hg-komunie', class extends LitElement {
       <hg-reviews-block uid=${'komunie'}></hg-reviews-block>
       <hg-text-image swap .uid=${'komunie'}}></hg-text-image>
       <hg-halls-block .uid=${'komunie'}></hg-halls-block>
-      <hg-links .path=${'/komunie'} .superpath=${'/wesela'}></hg-links>
+      <hg-links .path=${'/komunie'} .superpath=${'/wesela'} .includeSuperpath=${true}></hg-links>
     `;
   }
 });
