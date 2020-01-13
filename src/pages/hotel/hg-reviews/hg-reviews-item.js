@@ -17,12 +17,14 @@ customElements.define('hg-reviews-item', class extends LitElement {
         box-sizing: border-box;
         margin: 10px;
         padding: 1px 20px;
-        height: calc(100% - 20px);
         box-shadow: 0 0 2px var(--placeholder-color);
         border-radius: 2px;
         height: 400px;
       }
-      hg-heading {
+      h3 {
+        font-weight: 400;
+        text-align: center;
+        font-size: 28px;
         font-style: italic;
       }
       p {
@@ -51,7 +53,7 @@ customElements.define('hg-reviews-item', class extends LitElement {
         .disabled=${this.disableEdit && !this.shadowRoot.getElementById('heading').showControls}
         .item=${this.review} 
         .field=${'heading'}>
-        <hg-heading center h3></hg-heading>
+        <h3></h3>
       </hg-list-editable-text>
       <hg-list-editable-text 
         float 
