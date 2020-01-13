@@ -26,6 +26,7 @@ customElements.define('hg-weddings', class extends LitElement {
       <hg-mosaic .uid=${'weddings'}}></hg-mosaic>
       <hg-reviews-block uid=${'weddings'}></hg-reviews-block>
       <hg-text-image swap .uid=${'weddings'}}></hg-text-image>
+      <hg-content-slider .uid=${'weddings-2'}></hg-content-slider>
       <hg-halls-block .uid=${'weddings'}></hg-halls-block>
       <hg-links .path=${'/wesela'} .superpath=${'/wesela'}></hg-links>
     `;
