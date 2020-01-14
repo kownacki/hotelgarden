@@ -186,7 +186,7 @@ export const links = [
       {name: 'Wesela', path: '/wesela'},
       {name: 'Chrzciny', path: '/chrzciny'},
       {name: 'Komunie', path: '/komunie'},
-      {name: 'Bale Szkolne', path: '/bale-szkolne'},
+      {name: 'Bale szkolne', path: '/bale-szkolne'},
     ],
   },
   {
