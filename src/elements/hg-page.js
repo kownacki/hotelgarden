@@ -21,6 +21,7 @@ import '../pages/gallery/hg-gallery.js';
 import '../pages/events/hg-events.js';
 import '../pages/events/hg-event.js';
 import '../pages/contact/hg-contact.js';
+import '../elements/hg-footer.js';
 
 let seconds = 0;
 setInterval(() => ++seconds, 1000);
@@ -70,6 +71,7 @@ customElements.define('hg-page', class extends LitElement {
               `)}
             `
           : html`<div>brak strony</div>`}
+      <hg-footer></hg-footer>
     `;
   }
 });

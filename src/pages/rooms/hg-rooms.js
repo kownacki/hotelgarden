@@ -4,7 +4,6 @@ import '../../content/hg-article/hg-intro-article.js';
 import '../../content/hg-icons.js';
 import '../../content/hg-content-slider';
 import '../../elements/hg-heading.js';
-import '../../elements/hg-text.js';
 // import './hg-room.js';
 
 customElements.define('hg-rooms', class extends LitElement {
