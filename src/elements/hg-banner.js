@@ -12,18 +12,21 @@ customElements.define('hg-banner', class extends LitElement {
       noImage: {type: Boolean, reflect: true, attribute: 'no-image'},
       noSubheading: Boolean,
       _banner: Object,
+      _dataReady: Boolean,
     };
-  }
-  constructor() {
-    super();
   }
   async updated(changedProperties) {
     if (changedProperties.has('uid')) {
       this.path = {doc: 'banners/' + this.uid};
     }
     if (changedProperties.has('path')) {
+      this._dataReady = false;
+      const path = this.path;
       const doc = (await db.doc(this.path.doc).get()).data();
       this._banner = (this.path.field ? _.get(this.path.field, doc) : doc) || {};
+      if (_.isEqual(this.path, path)) {
+        this._dataReady = true;
+      }
     }
   }
   static get styles() {
@@ -89,11 +92,13 @@ customElements.define('hg-banner', class extends LitElement {
       </hg-editable-image>`}
       <div class="heading">
         <hg-editable-text
+          .ready=${this._dataReady}
           .text=${_.get(this.useTitleAsHeading ? 'title' : 'heading', this._banner) || ''}
           @save=${(event) => this.updateData(this.useTitleAsHeading ? 'title' : 'heading', event.detail)}>
           <h1></h1>
         </hg-editable-text>
         ${this.noSubheading ? '' : html`<hg-editable-text
+          .ready=${this._dataReady}
           .text=${_.get('subheading', this._banner) || ''}
           @save=${(event) => this.updateData('subheading', event.detail)}>
           <p></p>

@@ -10,6 +10,7 @@ customElements.define('hg-halls-slider', class extends LitElement {
     return {
       uid: String,
       _hallsBlock: Array,
+      _dataReady: Boolean,
     };
   }
   static get styles() {
@@ -28,6 +29,7 @@ customElements.define('hg-halls-slider', class extends LitElement {
         (hall, index) => ({index, ...hall}),
         (await db.doc('hallsBlocks/' + this.uid).get()).data(),
       ) || {};
+      this._dataReady = true;
     })();
   }
   async updateData(path, data) {
@@ -55,11 +57,13 @@ customElements.define('hg-halls-slider', class extends LitElement {
           </style>
           <article>
             <hg-editable-text
+              .ready=${this._dataReady}
               .text=${hall.name}
               @save=${(event) => this.updateData(`${hall.index}.name`, event.detail)}>
               <hg-heading h3></hg-heading>
             </hg-editable-text>
             <hg-icon-info
+              .dataReady=${this._dataReady}
               .items=${staticProp([{
                 text: hall.size,
                 src: 'https://firebasestorage.googleapis.com/v0/b/pl-hotelgarden.appspot.com/o/icons%2Fediting%2Fmove.png?alt=media&token=68fa9540-cd2c-4577-9a32-55c83d5ea682',
@@ -70,6 +74,8 @@ customElements.define('hg-halls-slider', class extends LitElement {
               @save=${(event) => this.updateData(`${hall.index}.${['size', 'people'][event.detail.index]}`, event.detail.text)}>
             </hg-icon-info>
             <hg-editable-text
+              float
+              .ready=${this._dataReady}
               multiline
               .text=${hall.text}
               @save=${(event) => this.updateData(`${hall.index}.text`, event.detail)}>

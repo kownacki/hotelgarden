@@ -5,6 +5,7 @@ export default class HgEditableText extends LitElement {
   static get properties() {
     return {
       text: String,
+      ready: {type: Boolean, reflect: true},
       disabled: Boolean,
       showControls: Boolean,
       rich: Boolean,
@@ -14,14 +15,6 @@ export default class HgEditableText extends LitElement {
       _editor: Element,
       _editorSet: Boolean,
     };
-  }
-  constructor() {
-    super();
-    setTimeout(() => {
-      if (!this._editable) {
-        this.setEditable();
-      }
-    }, 500);
   }
   setEditable() {
     let slotted = this.querySelector('*');
@@ -61,29 +54,32 @@ export default class HgEditableText extends LitElement {
         return '';
       };
     }
-    if (changedProperties.has('text')) {
-      if (!this._editable) {
-        this.setEditable();
-      }
-      this._editable.innerHTML = this.text || '';
-      this.text ? this.setAttribute('not-empty', '') : this.removeAttribute('not-empty');
+    if (changedProperties.has('ready') || changedProperties.has('text')) {
+      if (this.ready) {
+        if (!this._editable) {
+          this.setEditable();
+        }
 
-      if (!this._editorSet) {
-        this._editorSet = true;
-        if (this.rich) {
-          this.setCkeditor();
-        } else {
-          this._editable.addEventListener('input', () => {
-            this.showControls = true;
-            this.setAttribute('not-empty', '');
-          });
+        this._editable.innerHTML = this.text || (this.rich ? '<p></p>' : '');
+        this.text ? this.setAttribute('not-empty', '') : this.removeAttribute('not-empty');
+
+        if (!this._editorSet) {
+          this._editorSet = true;
+          if (this.rich) {
+            this.setCkeditor();
+          } else {
+            this._editable.addEventListener('input', () => {
+              this.showControls = true;
+              this.setAttribute('not-empty', '');
+            });
+          }
         }
       }
     }
-    if (changedProperties.has('disabled') || changedProperties.has('_editable')) {
+    if (changedProperties.has('disabled') || changedProperties.has('ready') || changedProperties.has('_editable')) {
       if (this._editable) {
         //todo empty textfield has height 0 when contenteditable set to false
-        this._editable.setAttribute('contenteditable', !this.disabled);
+        this._editable.setAttribute('contenteditable', !(this.disabled || !this.ready));
       }
     }
   }
@@ -93,6 +89,9 @@ export default class HgEditableText extends LitElement {
         display: block;
         background: rgba(var(--placeholder-color-rgb), 0.5);
         position: relative;
+      }
+      :host(:not([ready])), :host([disabled]) {
+        opacity: 50%;
       }
       :host([not-empty]) {
         background: transparent;

@@ -10,6 +10,7 @@ customElements.define('hg-halls-tables', class extends LitElement {
       uid: String,
       _hallsTables: Array,
       _setOuts: Array,
+      _dataReady: Boolean,
     };
   }
   static get styles() {
@@ -43,6 +44,7 @@ customElements.define('hg-halls-tables', class extends LitElement {
       await this.updateComplete;
       this._setOuts = (await db.doc('hallsTables/setOuts').get()).data() || {};
       this._hallsTables = (await db.doc('hallsTables/' + this.uid).get()).data() || {};
+      this._dataReady = true;
     })();
   }
   async updateImage(index, file) {
@@ -64,11 +66,13 @@ customElements.define('hg-halls-tables', class extends LitElement {
               @save=${(event) => this.updateImage(index, event.detail)}>
             </hg-editable-image>
             <hg-editable-text
+              .ready=${this._dataReady}
               .text=${_.get(`${index}.name`, this._setOuts)}
               @save=${(event) => updateData('hallsTables/setOuts', `${index}.name`, event.detail)}>
               <p class='bigger'></p>
             </hg-editable-text>
             <hg-editable-text
+              .ready=${this._dataReady}
               .text=${_.get(`${index}.text1`, this._hallsTables)}
               @save=${(event) => updateData('hallsTables/' + this.uid, `${index}.text1`, event.detail)}>
               <p></p>

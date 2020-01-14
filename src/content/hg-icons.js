@@ -11,6 +11,7 @@ customElements.define('hg-icons', class extends LitElement {
       empty: {type: Boolean, reflect: true},
       _processing: Boolean,
       _icons: Array,
+      _dataReady: Boolean,
     };
   }
   constructor() {
@@ -18,6 +19,7 @@ customElements.define('hg-icons', class extends LitElement {
     (async () => {
       await this.updateComplete;
       this._icons = _.toArray((await db.collection("iconBlocks").doc(this.uid).get()).data());
+      this._dataReady = true;
     })();
   }
   static get styles() {
@@ -54,7 +56,8 @@ customElements.define('hg-icons', class extends LitElement {
   render() {
     return html`
       ${_.map.convert({cap: false})((icon, index) => html`
-        <hg-icons-item 
+        <hg-icons-item
+          .dataReady=${this._dataReady}
           .icon=${icon}
           .first=${index === 0}
           .last=${index === this._icons.length - 1}

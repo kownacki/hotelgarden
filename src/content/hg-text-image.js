@@ -17,6 +17,7 @@ customElements.define('hg-text-image', class extends LitElement {
       iconFields: Array,
       iconSrcs: Array,
       _textImage: Object,
+      _dataReady: Boolean,
     };
   }
   constructor() {
@@ -24,6 +25,7 @@ customElements.define('hg-text-image', class extends LitElement {
     (async () => {
       await this.updateComplete;
       this._textImage = (await db.doc('textImage/' + this.uid).get()).data() || {};
+      this._dataReady = true;
     })();
   }
   static get styles() {
@@ -66,15 +68,18 @@ customElements.define('hg-text-image', class extends LitElement {
       </hg-editable-image>
       <div class="content">
         <hg-editable-text
+          .ready=${this._dataReady}
           .text=${_.get('heading', this._textImage)}
           @save=${(event) => this.updateData('heading', event.detail)}>
           <hg-heading ?h3=${this.h3}></hg-heading>
         </hg-editable-text>
         ${_.isEmpty(this.iconFields) ? '' : html`<hg-icon-info
+          .dataReady=${this._dataReady}
           .items=${_.zipWith((text, src) => ({text, src}), _.map(_.get(_, this._textImage), this.iconFields), this.iconSrcs)}
           @save=${(event) => this.updateData(`${this.iconFields[event.detail.index]}`, event.detail.text)}>
         </hg-icon-info>`}
         <hg-editable-text
+          .ready=${this._dataReady}
           multiline
           .text=${_.get('text', this._textImage)}
           @save=${(event) => this.updateData('text', event.detail)}>

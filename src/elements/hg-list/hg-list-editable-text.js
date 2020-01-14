@@ -12,6 +12,7 @@ customElements.define('hg-list-editable-text', class extends HgEditableText {
     (async () => {
       await this.updateComplete;
       this.text = _.get(this.field, this.item);
+      this.ready = true;
     })();
     this.addEventListener('save', (event) => this.dispatchEvent(new CustomEvent('update', {detail: {path: this.field, data: event.detail}, bubbles: true, composed: true})));
   }

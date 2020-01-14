@@ -94,6 +94,7 @@ customElements.define('hg-event', class extends LitElement {
           </div>
           <div class="divider"></div>
           ${this._contentLoading ? '' : html`<hg-editable-text 
+            .ready=${true}
             .rich=${true}
             multiline
             id="text"

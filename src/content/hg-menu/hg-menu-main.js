@@ -12,6 +12,7 @@ customElements.define('hg-menu-main', class extends LitElement {
       category: Object,
       categoryIndex: Number,
       categories: Object,
+      dataReady: Boolean,
     };
   }
   static get styles() {
@@ -74,6 +75,7 @@ customElements.define('hg-menu-main', class extends LitElement {
             @save=${(event) => this.updateImage(event.detail)}>
           </hg-editable-image>
           <hg-editable-text
+            .ready=${true}
             float
             class="name"
             id="name"

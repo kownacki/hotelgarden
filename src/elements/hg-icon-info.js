@@ -5,6 +5,7 @@ customElements.define('hg-icon-info', class extends LitElement {
   static get properties() {
     return {
       items: Array,
+      dataReady: Boolean,
     };
   }
   static get styles() {
@@ -39,6 +40,7 @@ customElements.define('hg-icon-info', class extends LitElement {
         <div>
           <iron-icon .src=${item.src}></iron-icon>
           <hg-editable-text
+            .ready=${this.dataReady}
             float
             .text=${item.text}
             @save=${(event) => this.dispatchEvent(new CustomEvent('save', {detail: {index, text: event.detail}}))}>

@@ -12,6 +12,7 @@ customElements.define('hg-text', class extends HgEditableText {
     (async () => {
       await this.updateComplete;
       this.text = _.get('text', (await db.doc('texts/' + this.uid).get()).data());
+      this.ready = true;
     })();
     this.addEventListener('save', (event) => db.doc('texts/' + this.uid).set({text: event.detail}));
   }

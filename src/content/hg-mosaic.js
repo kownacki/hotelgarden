@@ -12,6 +12,7 @@ customElements.define('hg-mosaic', class extends LitElement {
       uid: Number,
       buttons: Object,
       _mosaic: Object,
+      _dataReady: Boolean,
     };
   }
   constructor() {
@@ -19,6 +20,7 @@ customElements.define('hg-mosaic', class extends LitElement {
     (async () => {
       await this.updateComplete;
       this._mosaic = (await db.doc('mosaics/' + this.uid).get()).data() || {};
+      this._dataReady = true;
     })();
   }
   static get styles() {
@@ -71,11 +73,13 @@ customElements.define('hg-mosaic', class extends LitElement {
       <div class="right">
         <div class="content">
           <hg-editable-text
+            .ready=${this._dataReady}
             .text=${_.get('primary.heading', this._mosaic)}
             @save=${(event) => this.updateData('primary.heading', event.detail)}>
             <hg-heading></hg-heading>
           </hg-editable-text>
           <hg-editable-text
+            .ready=${this._dataReady}
             multiline
             .text=${_.get('primary.text', this._mosaic)}
             @save=${(event) => this.updateData('primary.text', event.detail)}>
@@ -92,11 +96,13 @@ customElements.define('hg-mosaic', class extends LitElement {
         </hg-editable-image>
         <div class="content">
            <hg-editable-text
+            .ready=${this._dataReady}
             .text=${_.get('secondary.heading', this._mosaic)}
             @save=${(event) => this.updateData('secondary.heading', event.detail)}>
             <hg-heading></hg-heading>
           </hg-editable-text>
           <hg-editable-text
+            .ready=${this._dataReady}
             multiline
             .text=${_.get('secondary.text', this._mosaic)}
             @save=${(event) => this.updateData('primary.text', event.detail)}>

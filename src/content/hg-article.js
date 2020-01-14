@@ -10,6 +10,7 @@ export default class HgArticle extends LitElement {
       uid: Number,
       rich: Boolean,
       _text: String,
+      _dataReady: Boolean,
     };
   }
   constructor() {
@@ -17,6 +18,7 @@ export default class HgArticle extends LitElement {
     (async () => {
       await this.updateComplete;
       this._text = _.get('text', (await db.doc('articles/' + this.uid).get()).data());
+      this._dataReady = true;
     })();
   }
   static get styles() {
@@ -37,6 +39,7 @@ export default class HgArticle extends LitElement {
   render() {
     return html`
       <hg-editable-text
+        .ready=${this._dataReady}
         .rich=${this.rich}
         multiline
         .text=${this._text}

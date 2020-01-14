@@ -21,6 +21,7 @@ customElements.define('hg-menu', class extends LitElement {
     (async () => {
       await this.updateComplete;
       this.categories = (await db.doc('menus/' + this.uid).get()).data();
+      this._dataReady = true;
     })();
   }
   static get styles() {
@@ -61,6 +62,7 @@ customElements.define('hg-menu', class extends LitElement {
       <section>
         <hg-menu-main 
           id="main"
+          .dataReady=${this._dataReady}
           .uid=${this.uid}
           .category=${_.get(this.selectedCategory, this.categories)}
           .categoryIndex=${this.selectedCategory}

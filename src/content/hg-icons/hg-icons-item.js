@@ -10,6 +10,7 @@ customElements.define('hg-icons-item', class extends LitElement {
       last: Boolean,
       disableEdit: Boolean,
       opened: {type: Boolean, reflect: true},
+      dataReady: Boolean,
       _deleteOpened: Boolean,
       _editOpened: Boolean,
     };
@@ -67,7 +68,8 @@ customElements.define('hg-icons-item', class extends LitElement {
     return html`
       <iron-icon .src="${this.icon.url}"></iron-icon>
       <hg-editable-text
-         id="editable"
+        id="editable"
+        .ready=${this.dataReady}
         .disabled=${this.disableEdit && !this.shadowRoot.getElementById('editable').showControls}
         .text=${this.icon.text}
         @save=${(event) => this.dispatchEvent(new CustomEvent('request-edit', {detail: event.detail}))}>

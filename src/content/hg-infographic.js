@@ -9,6 +9,7 @@ customElements.define('hg-infographic', class extends LitElement {
     return {
       uid: String,
       _infographic: Array,
+      _dataReady: Boolean,
     };
   }
   constructor() {
@@ -16,6 +17,7 @@ customElements.define('hg-infographic', class extends LitElement {
     (async () => {
       await this.updateComplete;
       this._infographic = (await db.doc('infographics/' + this.uid).get()).data();
+      this._dataReady = true;
     })();
   }
   static get styles() {
@@ -104,12 +106,14 @@ customElements.define('hg-infographic', class extends LitElement {
           <div class="item">
             <div class="data">
               <hg-editable-text
+                .ready=${this._dataReady}
                 float
                 .text=${item.number}
                 @save=${(event) => db.doc('infographics/' + this.uid).update({[index + '.number']: event.detail})}>
                 <div class="number"></div>
               </hg-editable-text>
               <hg-editable-text
+                .ready=${this._dataReady}
                 float
                 .text=${item.string}
                 @save=${(event) => db.doc('infographics/' + this.uid).update({[index + '.string']: event.detail})}>

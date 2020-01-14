@@ -8,6 +8,7 @@ customElements.define('hg-quote', class extends LitElement {
     return {
       uid: Number,
       _quote: Object,
+      _dataReady: Boolean,
     };
   }
   constructor() {
@@ -15,6 +16,7 @@ customElements.define('hg-quote', class extends LitElement {
     (async () => {
       await this.updateComplete;
       this._quote = (await db.doc('quotes/' + this.uid).get()).data();
+      this._dataReady = true;
     })();
   }
   static get styles() {
@@ -51,11 +53,13 @@ customElements.define('hg-quote', class extends LitElement {
   render() {
     return html`
       <hg-editable-text
+        .ready=${this._dataReady}
         .text=${_.get('text', this._quote)}
         @save=${(event) => db.doc('quotes/' + this.uid).set({text: event.detail}, {merge: true})}>
         <p></p>
       </hg-editable-text>
       <hg-editable-text
+        .ready=${this._dataReady}
         .text=${_.get('author', this._quote)}
         @save=${(event) => db.doc('quotes/' + this.uid).set({author: event.detail}, {merge: true})}>
         <div class="author"></div>
