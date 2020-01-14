@@ -61,7 +61,7 @@ customElements.define('hg-menu-nav', class extends LitElement {
             @click=${() => this.selectCategory(Number(index))}>
           </hg-menu-nav-item>
         `}
-        .onDelete=${(item) => {deleteImage(item.image.name)}}
+        .onDelete=${(item) => item.image ? deleteImage(item.image.name) : null}
         @item-added=${() => {this.updateCategories(); this.selectCategory(_.size(this.categories) - 1)}}
         @item-deleted=${(event) => {this.updateCategories(); this.reselectAfterDelete(Number(event.detail))}}
         @items-swapped=${(event) => {this.updateCategories(); this.reselectAfterSwapped(Number(event.detail[0]), Number(event.detail[1]))}}>
