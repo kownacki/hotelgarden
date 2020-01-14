@@ -9,6 +9,7 @@ import '../../content/hg-reviews-block.js';
 import '../../content/hg-infographic.js';
 import '../../content/hg-content-slider.js';
 import '../../content/hg-links.js';
+import '../../content/hg-map.js';
 
 customElements.define('hg-landing', class extends LitElement {
   static get properties() {
@@ -34,6 +35,7 @@ customElements.define('hg-landing', class extends LitElement {
       <hg-reviews-block .uid=${'landing'} scores></hg-reviews-block>
       <hg-infographic .uid=${'landing'}></hg-infographic>
       <hg-content-slider .uid=${'landing'}></hg-content-slider>
+      <hg-map></hg-map>
     `;
   }
 });

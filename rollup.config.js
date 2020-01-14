@@ -20,7 +20,6 @@ export default [{
         {src: 'src/styles.css', dest: 'dist/src'},
         {src: 'resources', dest: 'dist'},
         {src: 'node_modules/@ckeditor', dest: 'dist/node_modules'},
-        {src: 'src/lodash-fp.min.js', dest: 'dist/src'},
       ],
     }),
     terser(),
