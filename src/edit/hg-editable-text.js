@@ -12,6 +12,7 @@ export default class HgEditableText extends LitElement {
       float: {type: Boolean, reflect: true},
       _editable: Element,
       _editor: Element,
+      _editorSet: Boolean,
     };
   }
   constructor() {
@@ -22,31 +23,13 @@ export default class HgEditableText extends LitElement {
       }
     }, 500);
   }
-  async setEditable() {
+  setEditable() {
     let slotted = this.querySelector('*');
     while (slotted.tagName === 'SLOT') {
       slotted = slotted.assignedElements()[0];
     }
     this._editable = (slotted.shadowRoot && slotted.shadowRoot.getElementById('editable')) || slotted;
     this._editable.setAttribute('contenteditable', true);
-
-    if (this.rich) {
-      this._editable.classList.add('content');
-      await Promise.all([
-        import('/node_modules/@ckeditor/ckeditor5-build-inline/build/ckeditor.js'),
-        moveOutFromShadowDom(this._editable),
-      ]);
-      this._editor = await InlineEditor.create(this._editable);
-      this._editor.model.document.on('change:data', () => {
-        this.showControls = true;
-        this.setAttribute('not-empty', '');
-      });
-    } else {
-      this._editable.addEventListener('input', () => {
-        this.showControls = true;
-        this.setAttribute('not-empty', '');
-      });
-    }
 
     this._editable.addEventListener("focus", () => {
       this._editable.style['text-transform'] = "initial";
@@ -55,7 +38,19 @@ export default class HgEditableText extends LitElement {
       this._editable.style['text-transform'] = null;
     });
   }
-  updated(changedProperties) {
+  async setCkeditor() {
+    this._editable.classList.add('content');
+    await Promise.all([
+      import('/node_modules/@ckeditor/ckeditor5-build-inline/build/ckeditor.js'),
+      moveOutFromShadowDom(this._editable),
+    ]);
+    this._editor = await InlineEditor.create(this._editable);
+    this._editor.model.document.on('change:data', () => {
+      this.showControls = true;
+      this.setAttribute('not-empty', '');
+    });
+  }
+  async updated(changedProperties) {
     if (changedProperties.has('showControls')) {
       this.dispatchEvent(new CustomEvent('show-controls-changed', {detail: this.showControls, composed: true, bubbles: true}));
       //todo add also when changing location
@@ -72,6 +67,18 @@ export default class HgEditableText extends LitElement {
       }
       this._editable.innerHTML = this.text || '';
       this.text ? this.setAttribute('not-empty', '') : this.removeAttribute('not-empty');
+
+      if (!this._editorSet) {
+        this._editorSet = true;
+        if (this.rich) {
+          this.setCkeditor();
+        } else {
+          this._editable.addEventListener('input', () => {
+            this.showControls = true;
+            this.setAttribute('not-empty', '');
+          });
+        }
+      }
     }
     if (changedProperties.has('disabled') || changedProperties.has('_editable')) {
       if (this._editable) {
