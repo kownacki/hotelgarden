@@ -64,6 +64,7 @@ customElements.define('hg-menu-main', class extends LitElement {
     this.dispatchEvent(new CustomEvent('category-changed'));
   }
   render() {
+    // todo when setting name and switching to another item name stays
     return html`
       ${_.isEmpty(this.categories) ? 'Brak kategorii' : html`
         <header>
