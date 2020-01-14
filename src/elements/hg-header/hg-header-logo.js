@@ -48,6 +48,7 @@ customElements.define('hg-header-logo', class extends LitElement {
         filter: invert(100%) var(--logotype-color-filter);
       }
       :host([scrolled-down]) .logotype {
+        pointer-events: none;
         top: 65px;
         opacity: 0;
       }
