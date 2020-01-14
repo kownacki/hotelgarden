@@ -3,7 +3,7 @@ import {LitElement, html, css} from 'lit-element';
 customElements.define('hg-header-logo', class extends LitElement {
   static get properties() {
     return {
-      noBanner: {type: Boolean, reflect: true, attribute: 'no-banner'},
+      noBannerImage: {type: Boolean, reflect: true, attribute: 'no-banner-image'},
       scrolledDown: {type: Boolean, reflect: true, attribute: 'scrolled-down'},
     };
   }
@@ -44,7 +44,7 @@ customElements.define('hg-header-logo', class extends LitElement {
         z-index: -1;
         opacity: 100%;
       }
-      :host([no-banner]) .logotype {
+      :host([no-banner-image]) .logotype {
         filter: invert(100%) var(--logotype-color-filter);
       }
       :host([scrolled-down]) .logotype {

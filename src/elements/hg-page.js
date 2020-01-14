@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
 import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';
-import {pathToUid, headerHeight} from '../utils.js';
+import {headerHeight} from '../utils.js';
 import '../elements/hg-banner.js';
 import '../pages/hotel/hg-landing.js';
 import '../pages/hotel/hg-villa-garden.js';
@@ -30,22 +30,16 @@ customElements.define('hg-page', class extends LitElement {
   static get properties() {
     return {
       path: String,
-      _noBanner: {type: Boolean, reflect: true, attribute: 'no-banner'},
-      _uid: String,
+      uid: String,
+      noBannerImage: {type: Boolean, reflect: true, attribute: 'no-banner-image'},
     };
-  }
-  async updated(changedProperties) {
-    if (changedProperties.has('path')) {
-      this._uid = pathToUid[this.path];
-      this._noBanner = (this._uid === 'contact');
-    }
   }
   static get styles() {
     return css`
       :host {
         display: block;
       }
-      :host([no-banner]) {
+      :host([no-banner-image]) {
         margin-top: 150px;
       }
     `
@@ -63,11 +57,11 @@ customElements.define('hg-page', class extends LitElement {
       }}></app-location>
       ${_.startsWith('/wydarzenia/', this.path)
         ? html`<hg-event .uid=${_.replace('/wydarzenia/', '', this.path)}></hg-event>`
-        : this._uid
+        : this.uid
           ? html`
-              <hg-banner .noImage=${this._noBanner} .uid=${this._uid}></hg-banner>
+              <hg-banner .noImage=${this.noBannerImage} .uid=${this.uid}></hg-banner>
               ${unsafeHTML(`
-                <hg-${this._uid} id="page"></hg-${this._uid}>
+                <hg-${this.uid} id="page"></hg-${this.uid}>
               `)}
             `
           : html`<div>brak strony</div>`}

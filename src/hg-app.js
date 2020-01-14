@@ -34,11 +34,19 @@ customElements.define('hg-app', class extends LitElement {
       _route: Object,
       _tail: Object,
       _path: String,
+      _uid: String,
+      _noBannerImage: Boolean
     };
   }
   constructor() {
     super();
     this._path = window.location.pathname;
+  }
+  async updated(changedProperties) {
+    if (changedProperties.has('_path')) {
+      this._uid = pathToUid[this._path];
+      this._noBannerImage = _.includes(this._uid, ['contact', 'gallery']);
+    }
   }
   static get styles() {
     return css`
@@ -53,9 +61,11 @@ customElements.define('hg-app', class extends LitElement {
         this._path = event.detail.value.path;
         window.scrollTo(0, 0);
       }}></app-location>
-      <hg-header id="header" .noBanner=${pathToUid[this._path] === 'contact'} .selected=${this._path}></hg-header>
+      <hg-header id="header" .noBannerImage=${this._noBannerImage} .selected=${this._path}></hg-header>
       <hg-page 
         .path=${this._path}
+        .uid=${this._uid}
+        .noBannerImage=${this._noBannerImage}
         @hide-header=${() => this.shadowRoot.getElementById('header').style.display = 'none'}
         @show-header=${() => this.shadowRoot.getElementById('header').style.display = 'block'}>
       </hg-page>

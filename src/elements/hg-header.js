@@ -6,7 +6,7 @@ import {links} from '../utils.js';
 customElements.define('hg-header', class extends LitElement {
   static get properties() {
     return {
-      noBanner: {type: Boolean, reflect: true, attribute: 'no-banner'},
+      noBannerImage: {type: Boolean, reflect: true, attribute: 'no-banner-image'},
       scrolledDown: {type: Boolean, reflect: true, attribute: 'scrolled-down'},
       selected: String,
     };
@@ -68,7 +68,7 @@ customElements.define('hg-header', class extends LitElement {
         text-decoration: none;
         transition: background-color 0.3s ease, color 0.2s ease;
       }
-      :host([scrolled-down]) a:not(:hover):not([selected]), :host([no-banner]) a:not(:hover):not([selected]) {
+      :host([scrolled-down]) a:not(:hover):not([selected]), :host([no-banner-image]) a:not(:hover):not([selected]) {
         color: var(--primary-color);
       }
       a:hover, a[selected] {
@@ -79,7 +79,7 @@ customElements.define('hg-header', class extends LitElement {
   render() {
     return html`
       <header>
-        <hg-header-logo .scrolledDown=${this.scrolledDown} .noBanner=${this.noBanner}></hg-header-logo>
+        <hg-header-logo .scrolledDown=${this.scrolledDown} .noBannerImage=${this.noBannerImage}></hg-header-logo>
         <nav>
           <ul>
             ${_.map((link) => html`
