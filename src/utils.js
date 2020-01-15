@@ -129,6 +129,7 @@ export const moveOutFromShadowDom = async (contentsElement) => {
 };
 
 export const pathToUid = {
+  '/index.html': 'landing',
   '/': 'landing',
   '/villa-garden': 'villa-garden',
   '/olesnica-i-okolice': 'surroundings',

@@ -40,7 +40,8 @@ customElements.define('hg-app', class extends LitElement {
   }
   constructor() {
     super();
-    this._path = window.location.pathname;
+    const pathString = window.location.pathname;
+    this._path = (pathString.slice(-1) === '/' && pathString.length !== 1) ? pathString.slice(0, -1) : pathString;
   }
   async updated(changedProperties) {
     if (changedProperties.has('_path')) {
