@@ -5,7 +5,13 @@
   },
   "hosting": {
     "public": "dist",
-    "trailingSlash": false,
+    "redirects": [
+      {
+        "source": "/:url*/",
+        "destination": "/:url",
+        "type": 301
+      }
+    ],
     "rewrites": [
       {
         "source": "/@(villa-garden|olesnica-i-okolice|opinie|pokoje|konferencje|sale|kuchnia|restauracja|grill-garden|catering|wesela|chrzciny|komunie|bale-szkolne|galeria|wydarzenia|kontakt)",
