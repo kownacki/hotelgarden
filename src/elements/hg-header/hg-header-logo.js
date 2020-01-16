@@ -24,7 +24,7 @@ customElements.define('hg-header-logo', class extends LitElement {
         padding: 12px 10px;
         position: relative;
         top: 10px;
-        width: 80px;
+        width: calc((80 / 170) * 100%);
         margin: auto;
         transition: top 0.3s ease, width 0.3s ease;
         filter: drop-shadow(0 0 1px white);
@@ -39,8 +39,8 @@ customElements.define('hg-header-logo', class extends LitElement {
         filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.25));
         padding: 0 10px 10px;
         position: absolute;
-        top: 105px;
-        width: 150px;
+        top: calc(10px + 100%);
+        width: calc((150 / 170) * 100%);
         z-index: -1;
         opacity: 100%;
       }
@@ -51,6 +51,11 @@ customElements.define('hg-header-logo', class extends LitElement {
         pointer-events: none;
         top: 65px;
         opacity: 0;
+      }
+      @media all and (max-width: 1023px) {
+        a {
+          width: 120px;
+        }
       }
     `;
   }

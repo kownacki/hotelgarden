@@ -32,21 +32,25 @@ customElements.define('hg-header', class extends LitElement {
         display: flex;
       }
       nav {
-        display: block;
+        flex: 1;
         background: transparent;
         transition: background-color 0.5s ease;
       }
       ul {
-        margin: 0;
+        margin: 10px 0 0 10px;
+        padding: 0;
         display: flex;
+        flex-wrap: wrap;
       }
       li {
         position: relative;
         list-style-type: none;
         margin-right: 10px;
+        padding-bottom: 10px;
       }
       hg-header-subnav {
         position: absolute;
+        z-index: 1;
         top: 100%;
         left: 0;
         transition: visibility 0.3s, opacity 0.3s ease, margin 0.3s ease;
@@ -62,7 +66,6 @@ customElements.define('hg-header', class extends LitElement {
       a {
         display: block;
         padding: 10px;
-        margin: 10px 0;
         font-weight: 400;
         color: white;
         text-decoration: none;
@@ -73,6 +76,17 @@ customElements.define('hg-header', class extends LitElement {
       }
       a:hover, a[selected] {
         background: rgba(var(--primary-color-rgb), 90%);
+      }
+      @media all and (max-width: 1023px) {
+        li {
+          margin-right: 5px;
+        }
+        a {
+          padding: 10px 7px;
+        }
+      }
+      @media all and (max-width: 959px) {
+        
       }
     `;
   }
