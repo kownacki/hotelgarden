@@ -32,7 +32,7 @@ customElements.define('hg-banner', class extends LitElement {
   static get styles() {
     return [sharedStyles, css`
       :host {
-        height: 100vh;
+        height: 100%;
         display: flex;
       }
       hg-editable-image {

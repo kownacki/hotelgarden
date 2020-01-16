@@ -36,11 +36,15 @@ customElements.define('hg-page', class extends LitElement {
   }
   static get styles() {
     return css`
-      :host {
-        display: block;
-      }
       :host([no-banner-image]) {
-        margin-top: 150px;
+        display: flex;
+        flex-direction: column;
+        min-height: 100%;
+        padding-top: 150px;
+        box-sizing: border-box;
+      }
+      :host([no-banner-image]) .page {
+        flex: 1;
       }
     `
   }

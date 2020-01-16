@@ -52,7 +52,6 @@ customElements.define('hg-app', class extends LitElement {
   static get styles() {
     return css`
       :host {
-        display: block;
       }
     `;
   }
