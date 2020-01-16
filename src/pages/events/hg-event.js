@@ -14,18 +14,14 @@ customElements.define('hg-event', class extends LitElement {
       _event: Object,
       _contentLoading: Boolean,
       _content: String,
+      _dataReady: Boolean,
     };
-  }
-  constructor() {
-    super();
-    (async () => {
-      this._events = (await db.doc('events/events').get()).data() || {};
-    })();
   }
   static get styles() {
     return css`
       .container {
         display: flex;
+        justify-content: center;
         max-width: 1040px;
         margin: auto;
         padding: 20px;
@@ -57,12 +53,20 @@ customElements.define('hg-event', class extends LitElement {
     `;
   }
   async updated(changedProperties) {
-    if (changedProperties.has('uid') || changedProperties.has('_events')) {
-      if (this.uid && this._events) {
+    if (changedProperties.has('uid')) {
+      this._dataReady = false;
+      const uid = this.uid;
+      this._events = (await db.doc('events/events').get()).data() || {};
+      if (this.uid === uid) {
+        this._dataReady = true;
         this._event = this._events[this.uid];
+      }
+      if (this._event) {
         this._contentLoading = true;
         this._content = (await db.doc('eventsContents/' + this.uid).get()).get('content');
         this._contentLoading = false;
+      } else {
+        this.dispatchEvent(new CustomEvent('event-not-found', {composed: true}))
       }
     }
   }
@@ -70,44 +74,52 @@ customElements.define('hg-event', class extends LitElement {
     return updateData('events/events', `${this.uid}.${path}`, data);
   }
   render() {
-    return this._event ? html`
-      <hg-banner .path=${staticProp({doc: 'events/events', field: this.uid})} .noSubheading=${true} .useTitleAsHeading=${true}></hg-banner>
+    return html`
+      <hg-banner 
+        .uid=${this._dataReady && !this._event ? 'event-not-found' : undefined}
+        .path=${this._dataReady && this._event ? staticProp({doc: 'events/events', field: this.uid}) : undefined}
+        .noImage=${this._dataReady && !this._event}
+        .noSubheading=${true} 
+        .useTitleAsHeading=${this._dataReady && this._event}>
+      </hg-banner>
       <div class="container">
-        <div class="content">
-          <div class="header">
-            <div class="date">
-              ${moment().isBefore(this._event.date, 'day')
-                ? 'Odbędzie się'
-                : moment().isSame(this._event.date, 'day')
-                  ? 'Dzisiaj'
-                  : 'Odbyło się'}
-              ${moment(this._event.date).format('D MMMM YYYY')}
+        ${!(this._dataReady && this._event) ? '' : html`
+          <div class="content">
+            <div class="header">
+              <div class="date">
+                ${moment().isBefore(this._event.date, 'day')
+                  ? 'Odbędzie się'
+                  : moment().isSame(this._event.date, 'day')
+                    ? 'Dzisiaj'
+                    : 'Odbyło się'}
+                ${moment(this._event.date).format('D MMMM YYYY')}
+              </div>
+              <hg-event-edit-date 
+                .date=${this._event.date}
+                @save=${(event) => {
+                  this._event.date = event.detail;
+                  this.requestUpdate();
+                  this.updateData('date', event.detail);
+                }}>
+              </hg-event-edit-date>
             </div>
-            <hg-event-edit-date 
-              .date=${this._event.date}
+            <div class="divider"></div>
+            ${this._contentLoading ? '' : html`<hg-editable-text 
+              .ready=${true}
+              .rich=${true}
+              multiline
+              id="text"
+              .text=${this._content}
               @save=${(event) => {
-                this._event.date = event.detail;
-                this.requestUpdate();
-                this.updateData('date', event.detail);
+                this._content = event.detail;
+                db.doc('eventsContents/' + this.uid).set({content: event.detail});
               }}>
-            </hg-event-edit-date>
+              <div></div>
+            </hg-editable-text>`}
           </div>
-          <div class="divider"></div>
-          ${this._contentLoading ? '' : html`<hg-editable-text 
-            .ready=${true}
-            .rich=${true}
-            multiline
-            id="text"
-            .text=${this._content}
-            @save=${(event) => {
-              this._content = event.detail;
-              db.doc('eventsContents/' + this.uid).set({content: event.detail});
-            }}>
-            <div></div>
-          </hg-editable-text>`}
-        </div>
-        <hg-events-sidebar .selected=${this.uid} .events=${this._events}></hg-events-sidebar>
+        `}
+        ${!this._dataReady ? '' : html`<hg-events-sidebar .selected=${this.uid} .events=${this._events}></hg-events-sidebar>`}
       </div>
-    ` : '';
+    `;
   }
 });

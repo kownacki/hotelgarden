@@ -140,6 +140,7 @@ customElements.define('hg-contact-form', class extends LitElement {
                   this._fieldsValues
                 );
                 if (event.detail.value !== '' && input.id === 'email') {
+                  // todo what if there are trailing and starting additional characters?
                   this.shadowRoot.getElementById(input.id).invalid = !/\S+@\S+\.\S+/.test(event.detail.value)
                 }
               }}>

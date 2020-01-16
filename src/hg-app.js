@@ -34,6 +34,7 @@ customElements.define('hg-app', class extends LitElement {
       _route: Object,
       _tail: Object,
       _path: String,
+      _event: String,
       _uid: String,
       _noBannerImage: Boolean
     };
@@ -45,8 +46,15 @@ customElements.define('hg-app', class extends LitElement {
   }
   async updated(changedProperties) {
     if (changedProperties.has('_path')) {
-      this._uid = pathToUid[this._path] || '404';
-      this._noBannerImage = _.includes(this._uid, ['contact', 'gallery', '404']);
+      if (/^\/wydarzenia\/[^\/]+$/.test(this._path)) {
+        this._event = true;
+        this._uid =_.replace('/wydarzenia/', '', this._path);
+        this._noBannerImage = false;
+      } else {
+        this._event = false;
+        this._uid = pathToUid[this._path] || '404';
+        this._noBannerImage = _.includes(this._uid, ['contact', 'gallery', '404']);
+      }
     }
   }
   static get styles() {
@@ -63,9 +71,10 @@ customElements.define('hg-app', class extends LitElement {
       }}></app-location>
       <hg-header id="header" .noBannerImage=${this._noBannerImage} .selected=${this._path}></hg-header>
       <hg-page 
-        .path=${this._path}
+        .event=${this._event}
         .uid=${this._uid}
         .noBannerImage=${this._noBannerImage}
+        @event-not-found=${() => this._noBannerImage = true}
         @hide-header=${() => this.shadowRoot.getElementById('header').style.display = 'none'}
         @show-header=${() => this.shadowRoot.getElementById('header').style.display = 'block'}>
       </hg-page>

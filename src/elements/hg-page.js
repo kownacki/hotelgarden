@@ -30,7 +30,7 @@ setInterval(() => ++seconds, 1000);
 customElements.define('hg-page', class extends LitElement {
   static get properties() {
     return {
-      path: String,
+      event: Boolean,
       uid: String,
       noBannerImage: {type: Boolean, reflect: true, attribute: 'no-banner-image'},
     };
@@ -60,8 +60,8 @@ customElements.define('hg-page', class extends LitElement {
           });
         }
       }}></app-location>
-      ${_.startsWith('/wydarzenia/', this.path)
-        ? html`<hg-event .uid=${_.replace('/wydarzenia/', '', this.path)}></hg-event>`
+      ${this.event 
+        ? html`<hg-event .uid=${this.uid} class="page"></hg-event>`
         : html`
           <hg-banner .noImage=${this.noBannerImage} .uid=${this.uid}></hg-banner>
           ${unsafeHTML(`

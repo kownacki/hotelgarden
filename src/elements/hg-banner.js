@@ -16,10 +16,10 @@ customElements.define('hg-banner', class extends LitElement {
     };
   }
   async updated(changedProperties) {
-    if (changedProperties.has('uid')) {
+    if (changedProperties.has('uid') && this.uid) {
       this.path = {doc: 'banners/' + this.uid};
     }
-    if (changedProperties.has('path')) {
+    if (changedProperties.has('path') && this.path) {
       this._dataReady = false;
       const path = this.path;
       const doc = (await db.doc(this.path.doc).get()).data();
