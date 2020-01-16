@@ -77,6 +77,17 @@ customElements.define('hg-header', class extends LitElement {
       a:hover, a[selected] {
         background: rgba(var(--primary-color-rgb), 90%);
       }
+      paper-icon-button {
+        display: none;
+        width: 44px;
+        height: 44px;
+        margin: 8px;
+        color: white;
+        position: absolute;
+      }
+      :host([scrolled-down]) paper-icon-button, :host([no-banner-image]) paper-icon-button {
+        color: var(--primary-color);
+      }
       @media all and (max-width: 1023px) {
         li {
           margin-right: 5px;
@@ -86,13 +97,22 @@ customElements.define('hg-header', class extends LitElement {
         }
       }
       @media all and (max-width: 959px) {
-        
+        nav {
+          display: none;
+        }
+        paper-icon-button {
+          display: block;
+        }
+        hg-header-logo {
+          margin: auto;
+        }
       }
     `;
   }
   render() {
     return html`
       <header>
+        <paper-icon-button icon="menu" @click=${() => this.dispatchEvent(new CustomEvent('open-drawer'))}></paper-icon-button>
         <hg-header-logo .scrolledDown=${this.scrolledDown} .noBannerImage=${this.noBannerImage}></hg-header-logo>
         <nav>
           <ul>

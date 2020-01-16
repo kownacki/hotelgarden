@@ -22,6 +22,7 @@
     "@ckeditor/ckeditor5-build-inline": "git+https://github.com/kownacki2/ckeditor5-build-inline.git#stable",
     "@material/mwc-button": "^0.10.0",
     "@material/mwc-textfield": "^0.10.0",
+    "@polymer/app-layout": "^3.1.0",
     "@polymer/app-route": "^3.0.2",
     "@polymer/iron-ajax": "^3.0.1",
     "@polymer/iron-icon": "^3.0.1",

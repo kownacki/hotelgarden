@@ -10,7 +10,7 @@ body {
   --placeholder-color-rgb: 158, 158, 158;
   --logotype-color: #84979E;
   --logotype-color-filter: invert(73%) sepia(6%) saturate(853%) hue-rotate(150deg) brightness(91%) contrast(79%);
-  --headerHeight: 59px;
+  --headerHeight: 59.5px;
   font-family: 'Lato', sans-serif;
   color: var(--secondary-color);
 }

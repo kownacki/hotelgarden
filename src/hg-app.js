@@ -4,6 +4,7 @@ import moment from 'moment';
 import 'moment/src/locale/pl';
 moment.locale('pl');
 
+import '@polymer/app-layout/app-drawer/app-drawer.js';
 import '@polymer/app-route/app-location';
 import '@polymer/iron-ajax/iron-ajax.js';
 import '@polymer/iron-icons';
@@ -27,6 +28,7 @@ import '@polymer/paper-styles/color';
 
 import './elements/hg-header.js';
 import './elements/hg-page.js';
+import './elements/hg-drawer.js';
 
 customElements.define('hg-app', class extends LitElement {
   static get properties() {
@@ -43,6 +45,7 @@ customElements.define('hg-app', class extends LitElement {
     super();
     const pathString = window.location.pathname;
     this._path = (pathString.slice(-1) === '/' && pathString.length !== 1) ? pathString.slice(0, -1) : pathString;
+    window.addEventListener('resize', _.throttle(100, () => (window.innerWidth > 959) && this.shadowRoot.getElementById('drawer').close()));
   }
   async updated(changedProperties) {
     if (changedProperties.has('_path')) {
@@ -59,7 +62,11 @@ customElements.define('hg-app', class extends LitElement {
   }
   static get styles() {
     return css`
-      :host {
+      app-drawer {
+        z-index: 2;
+      }
+      hg-drawer {
+        background: white;
       }
     `;
   }
@@ -69,7 +76,12 @@ customElements.define('hg-app', class extends LitElement {
         this._path = event.detail.value.path;
         window.scrollTo(0, 0);
       }}></app-location>
-      <hg-header id="header" .noBannerImage=${this._noBannerImage} .selected=${this._path}></hg-header>
+      <hg-header 
+        id="header"
+        .noBannerImage=${this._noBannerImage}
+        .selected=${this._path}
+        @open-drawer=${() => this.shadowRoot.getElementById('drawer').open()}>
+      </hg-header>
       <hg-page 
         .event=${this._event}
         .uid=${this._uid}
@@ -78,6 +90,13 @@ customElements.define('hg-app', class extends LitElement {
         @hide-header=${() => this.shadowRoot.getElementById('header').style.display = 'none'}
         @show-header=${() => this.shadowRoot.getElementById('header').style.display = 'block'}>
       </hg-page>
+      <!--todo somehow prevent scrolling parent when on android -->
+      <app-drawer id="drawer">
+        <hg-drawer 
+          .selected=${this._path}
+          @close-drawer=${() => this.shadowRoot.getElementById('drawer').close()}>
+        </hg-drawer>
+      </app-drawer>
     `;
   }
 });
