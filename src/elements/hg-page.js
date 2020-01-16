@@ -21,6 +21,7 @@ import '../pages/gallery/hg-gallery.js';
 import '../pages/events/hg-events.js';
 import '../pages/events/hg-event.js';
 import '../pages/contact/hg-contact.js';
+import '../pages/hg-404.js';
 import '../elements/hg-footer.js';
 
 let seconds = 0;
@@ -61,14 +62,12 @@ customElements.define('hg-page', class extends LitElement {
       }}></app-location>
       ${_.startsWith('/wydarzenia/', this.path)
         ? html`<hg-event .uid=${_.replace('/wydarzenia/', '', this.path)}></hg-event>`
-        : this.uid
-          ? html`
-              <hg-banner .noImage=${this.noBannerImage} .uid=${this.uid}></hg-banner>
-              ${unsafeHTML(`
-                <hg-${this.uid} id="page"></hg-${this.uid}>
-              `)}
-            `
-          : html`<div>brak strony</div>`}
+        : html`
+          <hg-banner .noImage=${this.noBannerImage} .uid=${this.uid}></hg-banner>
+          ${unsafeHTML(`
+            <hg-${this.uid} id="page" class="page"></hg-${this.uid}>
+          `)}
+        `}
       <hg-footer></hg-footer>
     `;
   }

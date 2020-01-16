@@ -45,8 +45,8 @@ customElements.define('hg-app', class extends LitElement {
   }
   async updated(changedProperties) {
     if (changedProperties.has('_path')) {
-      this._uid = pathToUid[this._path];
-      this._noBannerImage = _.includes(this._uid, ['contact', 'gallery']);
+      this._uid = pathToUid[this._path] || '404';
+      this._noBannerImage = _.includes(this._uid, ['contact', 'gallery', '404']);
     }
   }
   static get styles() {
