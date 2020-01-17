@@ -9,6 +9,7 @@ customElements.define('hg-drawer-item', class extends LitElement {
     };
   }
   static get styles() {
+    // todo arrow to bottom to show that this menu is dropdown
     return css`
       :host {
         display: block;
@@ -29,7 +30,7 @@ customElements.define('hg-drawer-item', class extends LitElement {
       .item:hover, .sublink:hover {
         cursor: pointer;
       }
-      .item:hover > *, .item[selected] > *, .sublink:hover, .sublink[selected] {
+      .item[selected] > *, .sublink[selected] {
         background: var(--primary-color);
         color: white;
       }
