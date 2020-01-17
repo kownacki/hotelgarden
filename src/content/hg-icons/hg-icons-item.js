@@ -57,6 +57,11 @@ customElements.define('hg-icons-item', class extends LitElement {
       .swap-right {
         right: -12px;
       }
+      @media all and (max-width: 599px) {
+        p {
+          font-size: 16px;
+        }
+      }
     `;
   }
   updated(changedProperties) {

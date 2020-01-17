@@ -20,6 +20,8 @@ customElements.define('hg-events', class extends LitElement {
   static get styles() {
     return [sharedStyles, css`
       :host {
+        max-width: 1000px;
+        margin: 20px auto;
         display: block;
       }
       .events {

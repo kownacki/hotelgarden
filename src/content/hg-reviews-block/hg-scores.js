@@ -16,7 +16,7 @@ customElements.define('hg-scores', class extends LitElement {
         text-align: center;
       }
       .container > * {
-        margin: 10px;
+        margin: 0 10px;
       }
       .property {
         font-size: 20px;
@@ -27,8 +27,8 @@ customElements.define('hg-scores', class extends LitElement {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        width: 120px;
-        height: 120px;
+        width: 100px;
+        height: 100px;
         background: var(--accent-color);
         color: white;
         padding: 10px;

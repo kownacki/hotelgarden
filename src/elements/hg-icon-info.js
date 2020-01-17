@@ -12,8 +12,10 @@ customElements.define('hg-icon-info', class extends LitElement {
     return css`
       :host {
         display: flex;
+        flex-wrap: wrap;
       }
       :host > * {
+        margin-bottom: 5px;
         display: flex;
         align-items: center;
       }

@@ -23,7 +23,6 @@ customElements.define('hg-grill-garden', class extends LitElement {
       <hg-mosaic .uid=${'grill-garden'} .buttons=${staticProp({primary: [{url: '#menu', text: 'Zobacz menu'}]})}></hg-mosaic>
       <hg-content-slider .uid=${'grill-garden'}></hg-content-slider>
       <hg-reviews-block .uid=${'grill-garden'}></hg-reviews-block>
-      <hg-menu id="menu" .uid=${'grill-garden'}></hg-menu> 
       <hg-links .path=${'/grill-garden'} .superpath=${'/kuchnia'}></hg-links>
     `;
   }

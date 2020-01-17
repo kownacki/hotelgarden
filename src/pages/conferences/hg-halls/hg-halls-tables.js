@@ -17,24 +17,39 @@ customElements.define('hg-halls-tables', class extends LitElement {
     return css`
       :host {
         display: block;
-        margin-bottom: 100px;
+        margin-bottom: 50px;
       }
       .items {
         display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
         max-width: 1000px;
         margin: auto;
         text-align: center;
       }
       .items > * {
-        padding: 10px;
+        padding: 10px 10px 30px;
         box-sizing: border-box;
         width: 25%;
+        min-width: 240px;
       }
       p {
         margin: 10px 0;
       }
       p.bigger {
         font-size: 25px;
+      }
+      @media all and (max-width: 959px) {
+        :host {
+          display: block;
+          margin-bottom: 20px;
+        }
+      }
+      @media all and (max-width: 479px) {
+        .items > * {
+          width: 50%;
+          min-width: auto;
+        }
       }
     `;
   }

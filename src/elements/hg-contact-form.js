@@ -24,12 +24,14 @@ customElements.define('hg-contact-form', class extends LitElement {
         width: 900px;
         padding: 0 20px;
         margin: 20px auto;
+        --height: 346px;
       }
       .inputs {
         display: flex;
         transition: height 0.5s ease-in;
         overflow: hidden;
-        height: 346px;
+        /* needed for animation */
+        height: var(--height);
       }
       :host([sent]) .inputs {
         height: 0;
@@ -93,6 +95,25 @@ customElements.define('hg-contact-form', class extends LitElement {
       }
       :host(:not([error])) .error {
         display: none;
+      }
+      @media all and (max-width: 959px) {
+        :host {
+          width: auto;
+          max-width: 450px;
+        }
+        .inputs {
+          flex-direction: column;
+          height: 784px;
+        }
+        .inputs > * {
+          width: auto;
+        }
+        paper-radio-group > * {
+          display: block;
+        }
+        .about {
+          bottom: 0;
+        }
       }
     `];
   }

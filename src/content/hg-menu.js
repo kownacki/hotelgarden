@@ -43,14 +43,21 @@ customElements.define('hg-menu', class extends LitElement {
         max-width: 700px;
       }
       hg-menu-nav {
+        width: 340px;
         transition: opacity 0.3s ease;
       }
       :host([editing]) hg-menu-nav {
         opacity: 50%;
         pointer-events: none;
       }
-      @media all and (max-width: 840px) {
+      @media all and (max-width: 959px) {
         hg-menu-nav {
+          min-width: 240px;
+        }
+      }
+      /* todo better way to view menu */
+      @media all and (max-width: 599px) {
+        :host {
           display: none;
         }
       }

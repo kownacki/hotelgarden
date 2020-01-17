@@ -20,10 +20,10 @@ customElements.define('hg-footer', class extends LitElement {
         margin: auto;
       }
       .container > * {
-        width: 33.33%;
+        flex: 1;
       }
       .image {
-        margin: 10px 0;
+        margin: 10px;
         text-align: center;
       }
       .icons {
@@ -43,6 +43,12 @@ customElements.define('hg-footer', class extends LitElement {
       .icons > :hover {
         transition: filter 0.3s ease;
         filter: none !important;
+      }
+      @media all and (max-width: 959px) {
+        .container {
+          flex-direction: column;
+          align-items: center;
+        }
       }
     `;
   }

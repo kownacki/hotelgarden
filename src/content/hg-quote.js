@@ -32,7 +32,8 @@ customElements.define('hg-quote', class extends LitElement {
         z-index: -1;
         content: "";
         position: absolute;
-        top: -35px; left: 35px;
+        top: -35px; 
+        left: 35px;
         width: 90px;
         height: 90px;
         background: url("/resources/images/quote.png") no-repeat 0 0;
@@ -47,6 +48,14 @@ customElements.define('hg-quote', class extends LitElement {
         text-align: right;
         font-family: 'Yellowtail', cursive;
         margin-right: 20px;
+      }
+      @media all and (max-width: 599px) {
+        :host {
+          padding: 0 40px;
+        }
+        :host:before {
+          left: 10px;
+        }
       }
     `];
   }

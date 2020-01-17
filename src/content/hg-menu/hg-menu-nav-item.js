@@ -12,14 +12,11 @@ customElements.define('hg-menu-nav-item', class extends LitElement {
       :host {
         display: flex;
         padding: 1px 0;
-      }
-      .category {
-        display: flex;
         align-items: center;
         transition: background-color 0.3s ease, color 0.2s ease;
       }
       iron-image {
-        width: 120px;
+        width: 40%;
         height: 80px;
         background: var(--placeholder-color);
       }
@@ -27,9 +24,9 @@ customElements.define('hg-menu-nav-item', class extends LitElement {
         font-size: 18px;
         font-weight: 400;
         padding: 10px;
-        width: 200px;
+        flex: 1;
       }
-      :host([selected]) .category, .category:hover{
+      :host([selected]), :host(:hover) {
         background: var(--primary-color);
         color: white;
         cursor: pointer;
@@ -38,10 +35,8 @@ customElements.define('hg-menu-nav-item', class extends LitElement {
   }
   render() {
     return html`
-      <div class="category">
-        <iron-image .sizing=${'cover'} .src=${_.get('url', this.category.image)}></iron-image>
-        <div class="name">${this.category.name}</div>
-      </div>
+      <iron-image .sizing=${'cover'} .src=${_.get('url', this.category.image)}></iron-image>
+      <div class="name">${this.category.name}</div>
     `;
   }
 });

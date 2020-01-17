@@ -16,6 +16,11 @@ customElements.define('hg-intro-article', class extends HgArticle {
         float: left;
         margin: 0.25em 0.15em 0.15em 0;
       }
+      @media all and (max-width: 599px) {
+        :host {
+          margin: 40px auto;
+        }
+      }
     `];
   }
   constructor() {

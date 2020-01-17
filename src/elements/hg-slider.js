@@ -29,9 +29,11 @@ customElements.define('hg-slider', class extends LitElement {
         position: absolute;
         display: flex;
       }
-      :host([double]) #slider {
-        right: -50%;
-        width: 200%;
+      @media all and (min-width: 600px) {
+        :host([double]) #slider {
+          right: -50%;
+          width: 200%;
+        }
       }
       #slider > * {
         flex: 1;
@@ -66,13 +68,13 @@ customElements.define('hg-slider', class extends LitElement {
   }
   move(direction) {
     const slider = this.shadowRoot.getElementById('slider');
-    slider.style.right = direction === 'right' ? '0': (this.double ? '-100%' : '-200%');
+    slider.style.right = direction === 'right' ? '0': ((this.double && window.innerWidth >= 600) ? '-100%' : '-200%');
     slider.style.transition = 'all 0.3s ease';
     this.transitionGoing = true;
     _.delay(300, () => {
       this.transitionGoing = false;
       slider.style.transition = 'none';
-      slider.style.right = (this.double ? '-50%' : '-100%');
+      slider.style.right = ((this.double && window.innerWidth >= 600) && window.innerWidth ? '-50%' : '-100%');
       this.selected = (direction === 'right' ? array.nextIndex : array.prevIndex)(this.selected, this.items);
       this.dispatchEvent(new CustomEvent('selected-changed', {detail: this.selected}));
     });
@@ -85,7 +87,7 @@ customElements.define('hg-slider', class extends LitElement {
               array.prevItem(this.selected, this.items), 
               this.items[this.selected], 
               array.nextItem(this.selected, this.items),
-              ...(this.double ? [array.nextItem(array.nextIndex(this.selected, this.items), this.items)] : [])
+              ...((this.double && window.innerWidth >= 600) ? [array.nextItem(array.nextIndex(this.selected, this.items), this.items)] : [])
             ], _.get('name'), this.template)}
       </div>
       <div class="counter">${this.selected + 1} / ${_.size(this.items)}</div>

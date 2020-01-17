@@ -25,10 +25,39 @@ customElements.define('hg-halls-block', class extends LitElement {
         width: 450px;
       }
       hg-image {
-        margin-left: 40px;
+        margin: 0 40px;
         flex: 1;
-        margin-right: 40px;
         height: 400px;
+      }
+      @media all and (max-width: 959px) {
+        :host {
+          margin: 40px auto;
+        }
+        .container {
+          display: block;
+        }
+        hg-halls-slider {
+          width: 600px;
+          max-width: 100%;
+          height: 400px;
+          margin: 40px auto 0;
+        }
+        hg-image {
+          margin: 0 20px;
+        }
+      }
+      @media all and (max-width: 599px) {
+        :host(:not([scores])) hg-image {
+          height: 280px;
+        }
+        hg-halls-slider {
+          height: 500px;
+        }
+      }
+      @media all and (max-width: 479px) {
+        :host(:not([scores])) hg-image {
+          height: 200px;
+        }
       }
     `;
   }

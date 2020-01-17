@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit-element';
 import {staticProp} from '../../utils.js';
 import '../../elements/hg-list.js';
-import './hg-reviews/hg-reviews-item.js';
+import '../../elements/hg-review.js';
 
 const reviewBlocks = ['landing', 'restaurant', 'grill-garden', 'catering', 'weddings', 'chrzciny', 'komunie', 'bale-szkolne'];
 
@@ -43,6 +43,22 @@ customElements.define('hg-reviews', class extends LitElement {
         flex-wrap: wrap;
         --columns: 3;
       }
+      @media all and (max-width: 1279px) {
+        :host {
+          max-width: 800px;
+        }
+        hg-list {
+          --columns: 2;
+        }
+      }
+      @media all and (max-width: 839px) {
+        :host {
+          width: auto;
+        }
+        hg-list {
+          --columns: 1;
+        }
+      }
     `;
   }
   render() {
@@ -53,7 +69,25 @@ customElements.define('hg-reviews', class extends LitElement {
         .transform=${() => _.reverse}
         .path=${staticProp({doc: 'reviews/reviews'})}
         .getItemName=${(item) => `opinię${item.heading ? ` "${item.heading}"`: ''}`}
-        .itemTemplate=${(review, index, disableEdit) => html`<hg-reviews-item .review=${review} .disableEdit=${disableEdit}></hg-reviews-item>`}
+        .itemTemplate=${(review, index, disableEdit) => html`
+          <style>
+            hg-review {
+              text-align: center;
+              box-sizing: border-box;
+              margin: 10px;
+              padding: 30px 20px;
+              box-shadow: 0 0 2px var(--placeholder-color);
+              border-radius: 2px;
+              height: 400px;
+            }
+            @media all and (max-width: 839px) {
+              hg-review {
+                height: auto;
+              }
+            }
+          </style>
+          <hg-review .review=${review} .editable=${true} .disableEdit=${disableEdit}></hg-review>
+        `}
         .configure=${configure}>
       </hg-list>
     `;

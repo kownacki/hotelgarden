@@ -30,7 +30,7 @@ customElements.define('hg-icons', class extends LitElement {
         flex-wrap: wrap;
         justify-content: center;
         margin: 60px auto;
-        padding: 0 20px;
+        padding: 0 10px;
         min-height: 131px;
         max-width: 1200px;
       }
@@ -45,6 +45,11 @@ customElements.define('hg-icons', class extends LitElement {
       }
       :host([empty]) {
         background: rgba(var(--placeholder-color-rgb), 0.5);
+      }
+      @media all and (max-width: 599px) {
+        :host {
+          margin: 40px auto;
+        }
       }
     `;
   }

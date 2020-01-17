@@ -32,6 +32,14 @@ customElements.define('hg-heading', class extends LitElement {
       h2, h3, h4 {
         margin: 0;
       }
+      @media all and (max-width: 959px) {
+        :host([center]) {
+          margin: 40px 0;
+        }
+        :host([center][h3]) {
+          margin: 30px 0;
+        }
+      }
     `];
   }
   render() {

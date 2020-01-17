@@ -35,6 +35,7 @@ customElements.define('hg-events-card', class extends LitElement {
       }
       .header {
         display: flex;
+        flex-direction: row-reverse;
         align-items: baseline;
       }
       h3 {
@@ -46,6 +47,7 @@ customElements.define('hg-events-card', class extends LitElement {
       .date {
         color: var(--primary-color);
         font-size: 18px;
+        margin-bottom: 5px;
       }
       .more {
         color: var(--primary-color);
@@ -56,6 +58,36 @@ customElements.define('hg-events-card', class extends LitElement {
         width: 22px;
         vertical-align: text-bottom;
       }
+      @media all and (max-width: 839px) {
+        .header {
+          display: block;
+        }
+      }
+      @media all and (max-width: 719px) {
+        iron-image {
+          width: 200px;
+          min-width: 200px;
+          height: 250px;
+        }
+      }
+      @media all and (max-width: 599px) {
+        .content {
+          padding: 40px 20px;
+        }
+      }
+      @media all and (max-width: 479px) {
+        .content {
+          padding: 20px;
+        }
+        iron-image {
+          width: 100%;
+          min-width: auto;
+          height: 200px;
+        }
+        a {
+          display: block;
+        }
+      }
     `];
   }
   render() {
@@ -64,8 +96,8 @@ customElements.define('hg-events-card', class extends LitElement {
         <iron-image .src=${_.get('image.url', this.event)} .sizing=${'cover'}></iron-image>
         <div class="content">
           <div class="header">
-            <h3>${this.event.title}</h3>
             <div class="date">${this.event.date.split('-').reverse().join(' / ')}</div>
+            <h3>${this.event.title}</h3>
           </div>
           <p>${this.event.description}</p>
           <div class="more">Zobacz więcej <iron-icon icon="add"></iron-icon></div>

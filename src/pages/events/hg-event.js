@@ -50,6 +50,21 @@ customElements.define('hg-event', class extends LitElement {
         background: rgba(var(--secondary-color-rgb), 30%);
         margin-bottom: 10px;
       }
+      @media all and (max-width: 959px) {
+        .container {
+          display: block;
+        }
+        .content {
+          max-width: 720px;
+          width: auto;
+          padding: 0;
+          margin: auto;
+        }
+        hg-events-sidebar {
+          display: block;
+          margin: 40px auto 0;
+        }
+      }
     `;
   }
   async updated(changedProperties) {

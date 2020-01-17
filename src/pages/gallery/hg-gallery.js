@@ -16,9 +16,9 @@ customElements.define('hg-gallery', class extends LitElement {
       :host {
         display: block;
         margin: 40px auto;
-        width: calc(100% - 40px);
+        width: 100%;
         max-width: 1300px;
-        padding: 0 20px 1px;
+        padding: 0 0 1px;
       }
     `;
   }

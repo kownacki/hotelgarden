@@ -36,6 +36,11 @@ customElements.define('hg-menu-item', class extends LitElement {
         font-size: 18px;
         margin: 0 0 10px;
       }
+      @media all and (max-width: 959px) {
+        :host {
+          padding: 10px 20px;
+        }
+      }
     `;
   }
   render(){

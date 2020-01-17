@@ -5,32 +5,57 @@ customElements.define('hg-mosaic-list', class extends HgList {
   static get styles() {
     return [super.styles, css`
       :host {
-        position: relative;
-        padding-bottom: calc(100% * (3 / 16));
         display: flex;
         flex-wrap: wrap;
       }
-      :host > * {
-        position: absolute;
-        width: calc(100% * (5 / 16));
-        max-width: 100%;
-        height: 100%;
+      @media all and (min-width: 840px) {
+        :host {
+          position: relative;
+          padding-bottom: calc(100% * (3 / 16));
+        }
+        :host > * {
+          position: absolute;
+          width: calc(100% * (5 / 16));
+          max-width: 100%;
+          height: 100%;
+        }
+        :host > :nth-child(10n + 1), :host > :nth-child(10n + 3), :host > :nth-child(10n + 6) {
+          left: 0;
+        }
+        :host > :nth-child(10n + 5), :host > :nth-child(10n + 8), :host > :nth-child(10n + 10) {
+          right: 0;
+        }
+        :host > :nth-child(10n + 2), :host > :nth-child(10n + 4) {
+          left: calc(100% * (5 / 16));
+        }
+        :host > :nth-child(10n + 7), :host > :nth-child(10n + 9) {
+          right: calc(100% * (5 / 16));
+        }
+        :host > :nth-child(10n + 5), :host > :nth-child(10n + 6) {
+          width: calc(100% * (6 / 16));
+          height: 200%;
+        }
       }
-      :host > :nth-child(10n + 1), :host > :nth-child(10n + 3), :host > :nth-child(10n + 6) {
-        left: 0;
+      @media all and (max-width: 839px) {
+        :host > * {
+          width: 50%;
+          height: 300px;
+        }
       }
-      :host > :nth-child(10n + 5), :host > :nth-child(10n + 8), :host > :nth-child(10n + 10) {
-        right: 0;
+      @media all and (max-width: 719px) {
+        :host > * {
+          height: 250px;
+        }
       }
-      :host > :nth-child(10n + 2), :host > :nth-child(10n + 4) {
-        left: calc(100% * (5 / 16));
+      @media all and (max-width: 599px) {
+        :host > * {
+          height: 200px;
+        }
       }
-      :host > :nth-child(10n + 7), :host > :nth-child(10n + 9) {
-        right: calc(100% * (5 / 16));
-      }
-      :host > :nth-child(10n + 5), :host > :nth-child(10n + 6) {
-        width: calc(100% * (6 / 16));
-        height: 200%;
+      @media all and (max-width: 479px) {
+        :host > * {
+          height: 150px;
+        }
       }
     `];
   }
@@ -43,10 +68,13 @@ customElements.define('hg-mosaic-list', class extends HgList {
   calculateHeight(tilesCount) {
     return Math.floor(tilesCount/10) * 4 + this.calculateHeightRemainder(tilesCount%10);
   }
+  setMargin() {
+    this.style = `margin-bottom: ${(this.calculateHeight(this._list.length + 1) - 1) * 3/16 * 100}%`;
+  }
   updated(changedProperties) {
     super.updated(changedProperties);
-    if (changedProperties.has('_list')) {
-      this.style = `margin-bottom: ${(this.calculateHeight(this._list.length + 1) - 1) * 3/16 * 100}%`;
+    if (changedProperties.has('_list') && window.innerWidth > 839) {
+      this.setMargin();
     }
   }
   constructor() {
@@ -54,6 +82,9 @@ customElements.define('hg-mosaic-list', class extends HgList {
     this.array = true;
     this.addAtStart = true;
     this.transform = () => _.reverse;
+    window.onresize = _.throttle(500, () => (this._list && window.innerWidth > 839)
+      ? this.setMargin()
+      : this.style = null);
   }
 });
 

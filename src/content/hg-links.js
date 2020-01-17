@@ -25,15 +25,18 @@ customElements.define('hg-links', class extends LitElement {
       :host {
         display: block;
         max-width: 1202px;
-        margin: 80px auto;
+        margin: 80px auto 0;
+        padding: 0 20px;
       }
       .links {
         display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
       }
       a {
         background: rgba(var(--secondary-color-rgb), 0.075);
         flex: 1;
-        margin: 1px;
+        margin: 1px 1px 40px;
         text-decoration: none;
         color: inherit;
       }
@@ -49,6 +52,23 @@ customElements.define('hg-links', class extends LitElement {
         padding: 20px;
         font-size: 20px;
         text-transform: uppercase;
+      }
+      @media all and (max-width: 959px) {
+        a {
+          min-width: calc(50% - 2px);
+          max-width: calc(50% - 2px);
+        }
+      }
+      @media all and (max-width: 599px) {
+        iron-image{
+          height: 200px;
+        }
+      }
+      @media all and (max-width: 479px) {
+        a {
+          min-width: calc(100% - 2px);
+          max-width: calc(100% - 2px);
+        }
       }
     `;
   }

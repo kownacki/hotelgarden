@@ -50,6 +50,33 @@ customElements.define('hg-text-image', class extends LitElement {
       hg-action-buttons {
         margin-top: 40px;
       }
+      @media all and (max-width: 959px) {
+        :host, :host([swap]) {
+          max-width: 750px;
+          flex-direction: column-reverse;
+        }
+        hg-editable-image {
+          width: 100%;
+          margin: auto;
+        }
+        .content {
+          width: auto;
+          padding: 0 0 40px;
+        }
+      }
+      @media all and (max-width: 599px) {
+        :host {
+          margin: 40px auto;
+        }
+        hg-editable-image {
+          height: 280px;
+        }
+      }
+      @media all and (max-width: 479px) {
+        hg-editable-image {
+          height: 200px;
+        }
+      }
     `];
   }
   async updateData(path, data) {

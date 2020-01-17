@@ -37,6 +37,16 @@ customElements.define('hg-content-slider', class extends LitElement {
       hg-slider {
         height: 100%;
       }
+      @media all and (max-width: 959px) {
+        :host {
+          margin: 70px auto;
+        }
+      }
+      @media all and (max-width: 599px) {
+        :host {
+          margin: 40px auto;
+        }
+      }
     `;
   }
   async updateImage(image, file) {
@@ -78,7 +88,7 @@ customElements.define('hg-content-slider', class extends LitElement {
           const index = this._images.length;
           await this.updateImage({index}, event.detail);
           const contentSlider = this.shadowRoot.getElementById('content-slider');
-          contentSlider.selected = contentSlider.double ? index - 1 : index;
+          contentSlider.selected = (contentSlider.double && window.innerWidth >= 600) ? index - 1 : index;
           contentSlider.requestUpdate();
         }}>
       </hg-image-upload-fab>

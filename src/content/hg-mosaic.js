@@ -50,10 +50,21 @@ customElements.define('hg-mosaic', class extends LitElement {
       hg-action-buttons {
         margin-top: 40px;
       }
-      @media all and (max-width: 900px) {
+      @media all and (max-width: 959px) {
+        :host {
+          max-width: 750px;
+        }
         .left, .right {
           float: none;
           width: 100%;
+        }
+        .content {
+          margin: 20px 0 40px;
+        }
+      }
+      @media all and (max-width: 599px) {
+        :host {
+          margin: 40px auto;
         }
       }
     `];
