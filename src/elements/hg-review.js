@@ -15,7 +15,6 @@ customElements.define('hg-review', class extends LitElement {
         display: block;
       }
       h3 {
-        font-weight: 400;
         font-size: 28px;
         font-style: italic;
         margin-top: 0;
@@ -30,21 +29,14 @@ customElements.define('hg-review', class extends LitElement {
       .bottom hg-list-editable-text  {
         display: inline;
       }
-      .author, .platform, .space {
-        font-size: 20px;
-      }
       .author {
         font-weight: 700;
         color: var(--primary-color);
       }
-      @media all and (max-width: 479px) {
+      @media all and (max-width: 599px) {
         h3 {
-          font-weight: 400;
-          font-size: 25px;
+          font-size: 24px;
           margin-bottom: 15px;
-        }
-        p {
-          font-size: 16px;
         }
       }
     `];
@@ -70,15 +62,16 @@ customElements.define('hg-review', class extends LitElement {
             .field=${'text'}>
             <p></p>
           </hg-list-editable-text>
-          <div class="bottom">
+          <p class="bottom">
             <hg-list-editable-text 
               float 
               id="author"
               .disabled=${this.disableEdit && !this.shadowRoot.getElementById('author').showControls}
               .item=${this.review} 
               .field=${'author'}>
-              <span class="author"></span>
-            </hg-list-editable-text>, <hg-list-editable-text 
+              <span class="author"></span>,
+            </hg-list-editable-text>
+            <hg-list-editable-text 
               float 
               id="platform"
               .disabled=${this.disableEdit && !this.shadowRoot.getElementById('platform').showControls}
@@ -86,11 +79,11 @@ customElements.define('hg-review', class extends LitElement {
               .field=${'platform'}>
               <span class="platform"></span>
             </hg-list-editable-text>
-          </div>`
+          </p>`
         : html`
           <h3>${this.review.heading}</h3>
           <p>${this.review.text}</p>
-          <span class="bottom">
+          <p class="bottom">
             <span class="author">${this.review.author}</span>, <span class="platform">${this.review.platform}</span>   
           </div>
       `}

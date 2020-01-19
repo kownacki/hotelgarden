@@ -1,9 +1,11 @@
 import {css} from 'lit-element';
 
 export default css`
+  body, :host {
+    font-size: 20px;
+  }
   p {
     line-height: 1.4em;
-    font-size: 20px;
   }
   h1 {
     font-size: 50px;
@@ -26,6 +28,9 @@ export default css`
     font-weight: 300;
   }
   @media all and (max-width: 959px) {
+    body, :host {
+      font-size: 18px;
+    }
     h1 {
       font-size: 40px;
     }
@@ -40,8 +45,8 @@ export default css`
     }
   }
   @media all and (max-width: 599px) {
-    p {
-      font-size: 18px;
+    body, :host {
+      font-size: 16px;
     }
     h1 {
       font-size: 30px;
