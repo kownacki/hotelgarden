@@ -11,7 +11,7 @@ customElements.define('hg-map', class extends LitElement {
       const script = document.createElement('script');
       document.body.append(script);
       script.onload = resolve;
-      script.src = '/resources/scripts/google-maps.js';
+      script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDvamIugzBC3k3WA52KpHeINrfDHfkvnSs';
     })
   }
   constructor() {
