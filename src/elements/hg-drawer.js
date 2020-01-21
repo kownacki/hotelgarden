@@ -15,7 +15,7 @@ customElements.define('hg-drawer', class extends LitElement {
         background: white;
         position: fixed;
         width: 100%;
-        box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
       }
       paper-icon-button {
         width: 44px;

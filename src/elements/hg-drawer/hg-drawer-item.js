@@ -14,6 +14,7 @@ customElements.define('hg-drawer-item', class extends LitElement {
       :host {
         display: block;
         font-weight: 700;
+        font-size: 16px;
       }
       a {
         color: inherit;
