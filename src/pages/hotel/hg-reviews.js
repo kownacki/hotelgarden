@@ -27,7 +27,6 @@ const configure = {
 customElements.define('hg-reviews', class extends LitElement {
   static get properties() {
     return {
-      _dupa: Boolean,
     };
   }
   static get styles() {

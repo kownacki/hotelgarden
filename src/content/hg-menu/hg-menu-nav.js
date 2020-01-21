@@ -9,7 +9,6 @@ customElements.define('hg-menu-nav', class extends LitElement {
       uid: String,
       selectedCategory: Number,
       categories: Object,
-      _dupa: String,
     };
   }
   static get styles() {
