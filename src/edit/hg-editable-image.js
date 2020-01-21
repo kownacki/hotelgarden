@@ -1,4 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
+import firebase from "firebase";
 
 const readFile = (file) => new Promise((resolve) => {
   const reader = new FileReader();
@@ -16,7 +17,12 @@ customElements.define('hg-editable-image', class extends LitElement {
       },
       sizing: String,
       presize: {type: Boolean, reflect: true},
+      _loggedIn: Boolean,
     };
+  }
+  constructor() {
+    super();
+    firebase.auth().onAuthStateChanged((user) => this._loggedIn = Boolean(user));
   }
   static get styles() {
     return css`
@@ -65,21 +71,23 @@ customElements.define('hg-editable-image', class extends LitElement {
         : this.sizing
           ? html`<iron-image .src=${this.src} .sizing=${this.sizing}></iron-image>` 
           : html`<img .src=${this.src}>`}
-      <input
-        id="input"
-        type="file"
-        accept="image/png, image/jpeg"
-        @change=${async (event) => {
-          const file = event.target.files[0];
-          event.target.value = '';
-          this.dispatchEvent(new CustomEvent('save', {detail: file}));
-          this.src = await readFile(file);
-        }}>
-      <paper-icon-button
-        noink
-        icon="image:image"
-        @click=${() => this.shadowRoot.getElementById('input').click()}>
-      </paper-icon-button>
+      ${!this._loggedIn ? '' : html`
+        <input
+          id="input"
+          type="file"
+          accept="image/png, image/jpeg"
+          @change=${async (event) => {
+            const file = event.target.files[0];
+            event.target.value = '';
+            this.dispatchEvent(new CustomEvent('save', {detail: file}));
+            this.src = await readFile(file);
+          }}>
+        <paper-icon-button
+          noink
+          icon="image:image"
+          @click=${() => this.shadowRoot.getElementById('input').click()}>
+        </paper-icon-button>
+      `}
     `;
   }
 });
