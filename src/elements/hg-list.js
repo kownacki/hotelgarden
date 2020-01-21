@@ -3,6 +3,7 @@ import {repeat} from 'lit-html/directives/repeat';
 import {array, db, updateData, generateUid} from "../utils.js";
 import './hg-list/hg-list-item.js';
 import './hg-list/hg-list-add.js';
+import firebase from "firebase";
 
 export default class HgList extends LitElement {
   static get properties() {
@@ -29,17 +30,16 @@ export default class HgList extends LitElement {
       // private
       _list: Array,
       _processing: Boolean,
+      _loggedIn: Boolean,
     };
   }
-  static get styles() {
-    return css`
-      :host {
-        display: block;
-      }
-      :host > * {
-        width: calc(100% / var(--columns));
-      }
-    `;
+  constructor() {
+    super();
+    this._unsubscribeLoggedInListener = firebase.auth().onAuthStateChanged((user) => this._loggedIn = Boolean(user));
+  }
+  disconnectedCallback() {
+    this._unsubscribeLoggedInListener();
+    return super.disconnectedCallback();
   }
   updated(changedProperties) {
     if (changedProperties.has('editing')) {
@@ -98,21 +98,32 @@ export default class HgList extends LitElement {
     this.dispatchEvent(new CustomEvent('items-swapped', {detail: [index1, index2]}));
     this._processing = false;
   }
+  static get styles() {
+    return css`
+      :host {
+        display: block;
+      }
+      :host > * {
+        width: calc(100% / var(--columns));
+      }
+    `;
+  }
   render() {
     return html`
       ${(this.addAtStart ? _.reverse : _.identity)([
         _.isEmpty(this._list && this.emptyTemplate ) ? this.emptyTemplate : '',
         repeat(this._list || [], this.array ? (key) => _.get(`${key}.uid`, this.items) : _.identity, (key, listIndex) =>
           !_.get(key, this.items) ?  '' : html`<hg-list-item
-            style="${this.calculateItemTop ? `top: ${this.calculateItemTop(listIndex + 1) * 100}%` : ''}"
+            style="${this.calculateItemTop ? `top: ${this.calculateItemTop(listIndex + ((this._loggedIn && !this.noAdd) ? 1 : 0)) * 100}%` : ''}"
             .item=${this.items[key]}
             .getItemName=${this.getItemName}
             .first=${listIndex === 0}
             .last=${listIndex === _.size(this._list) - 1}
-            .noSwap=${!this.array}
+            .noSwap=${!this._loggedIn || !this.array}
+            .noDelete=${!this._loggedIn}
             .vertical=${this.vertical}
             .disableEdit=${this._processing || this.editing}
-            .configure=${this.configure}
+            .configure=${this._loggedIn && this.configure}
             @request-delete=${() => this.deleteItem(key)}
             @swap=${async (event) => this.swapItems(key, this._list[listIndex + event.detail])}
             @update=${(event) => this.updateItem(key, event.detail.path, event.detail.data)}
@@ -120,7 +131,7 @@ export default class HgList extends LitElement {
             ${this.itemTemplate(this.items[key], key, this._processing || this.editing)}
           </hg-list-item>`
         ),
-        this.noAdd ? '' : html`<hg-list-add 
+        (!this._loggedIn || this.noAdd) ? '' : html`<hg-list-add 
           .disable=${this._processing || this.editing}
           @add=${async () => {
             this._processing = true;

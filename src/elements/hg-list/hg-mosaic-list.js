@@ -69,11 +69,12 @@ customElements.define('hg-mosaic-list', class extends HgList {
     return Math.floor(tilesCount/10) * 4 + this.calculateHeightRemainder(tilesCount%10);
   }
   setMargin() {
-    this.style = `margin-bottom: ${(this.calculateHeight(this._list.length + 1) - 1) * 3/16 * 100}%`;
+    const tilesCount = this._list.length + ((this._loggedIn && !this.noAdd) ? 1 : 0);
+    this.style = `margin-bottom: ${(this.calculateHeight(tilesCount) - 1) * 3/16 * 100}%`;
   }
   updated(changedProperties) {
     super.updated(changedProperties);
-    if (changedProperties.has('_list') && window.innerWidth > 839) {
+    if ((changedProperties.has('_loggedIn') || changedProperties.has('noAdd') || changedProperties.has('_list')) && window.innerWidth > 839) {
       this.setMargin();
     }
   }

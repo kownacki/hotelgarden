@@ -1,6 +1,7 @@
 import {LitElement, html, css} from 'lit-element';
 import '../../edit/hg-delete-item.js';
 import './hg-list-item-configure.js';
+import firebase from "firebase";
 
 customElements.define('hg-list-item', class extends LitElement {
   static get properties() {
@@ -10,6 +11,7 @@ customElements.define('hg-list-item', class extends LitElement {
       first: Boolean,
       last: Boolean,
       noSwap: Boolean,
+      noDelete: Boolean,
       vertical: {type: Boolean, reflect: true},
       disableEdit: Boolean,
       opened: {type: Boolean, reflect: true},
@@ -93,11 +95,11 @@ customElements.define('hg-list-item', class extends LitElement {
           .disable=${this.disableEdit}
           @opened-changed=${(event) => this._configureOpened = event.target.opened}>
         </hg-list-item-configure>`}
-        <hg-delete-item
+        ${this.noDelete ? '' : html`<hg-delete-item
           .disable=${this.disableEdit} 
           .name=${this.getItemName(this.item)} 
           @opened-changed=${(event) => this._deleteOpened = event.target.opened}>
-        </hg-delete-item>
+        </hg-delete-item>`}
       </div>
       ${this.noSwap ? '' :
         [(this.first ? '' : html`<paper-icon-button
