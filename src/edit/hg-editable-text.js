@@ -32,7 +32,7 @@ export default class HgEditableText extends LitElement {
     });
   }
   async setCkeditor() {
-    this._editable.classList.add('content');
+    this._editable.classList.add('ckeditor-content');
     await Promise.all([
       import('/node_modules/@ckeditor/ckeditor5-build-inline/build/ckeditor.js'),
       moveOutFromShadowDom(this._editable),
