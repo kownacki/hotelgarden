@@ -19,12 +19,13 @@ customElements.define('hg-contact-form', class extends LitElement {
   static get styles() {
     return [sharedStyles, css`
       :host {
+        --height: 346px;
+        --width: 900px;
         font-size: 18px;
         display: block;
-        width: 900px;
+        width: var(--width);
         padding: 0 20px;
         margin: 20px auto;
-        --height: 346px;
       }
       .inputs {
         display: flex;
@@ -99,11 +100,11 @@ customElements.define('hg-contact-form', class extends LitElement {
       @media all and (max-width: 959px) {
         :host {
           width: auto;
-          max-width: 450px;
+          max-width: calc(var(--width) / 2);
         }
         .inputs {
           flex-direction: column;
-          height: 784px;
+          height: calc(var(--height) * 2);
         }
         .inputs > * {
           width: auto;
