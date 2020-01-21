@@ -13,11 +13,11 @@ customElements.define('hg-gallery-item', class extends LitElement {
         width: 100%;
         height: 100%;
         position: relative;
-        margin: 1px;
       }
       iron-image {
-        width: calc(100% - 1px);
-        height: calc(100% - 1px);
+        width: calc(100% - 2px);
+        height: calc(100% - 2px);
+        margin: 1px;
         display: block;
       }
       paper-icon-button {
