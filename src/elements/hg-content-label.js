@@ -1,9 +1,11 @@
 import {LitElement, html, css} from 'lit-element';
+import firebase from "firebase";
 
 customElements.define('hg-content-label', class extends LitElement {
   static get properties() {
     return {
       name: String,
+      _loggedIn: Boolean,
     };
   }
   static get styles() {
@@ -16,9 +18,17 @@ customElements.define('hg-content-label', class extends LitElement {
       }
     `;
   }
+  constructor() {
+    super();
+    this._unsubscribeLoggedInListener = firebase.auth().onAuthStateChanged((user) => this._loggedIn = Boolean(user));
+  }
+  disconnectedCallback() {
+    this._unsubscribeLoggedInListener();
+    return super.disconnectedCallback();
+  }
   render() {
     return html`
-      ${this.name}
+      ${this._loggedIn ? this.name : ''}
     `;
   }
 });
