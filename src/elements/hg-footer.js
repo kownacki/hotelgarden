@@ -1,5 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
 import './hg-text.js'
+import './hg-login.js'
 
 customElements.define('hg-footer', class extends LitElement {
   static get properties() {
@@ -11,6 +12,7 @@ customElements.define('hg-footer', class extends LitElement {
         color: #949494;
         display: block;
         background: var(--secondary-color);
+        position: relative;
       }
       .container {
         display: flex;
@@ -44,6 +46,11 @@ customElements.define('hg-footer', class extends LitElement {
         transition: filter 0.3s ease;
         filter: none !important;
       }
+      hg-login {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+      }
       @media all and (max-width: 959px) {
         .container {
           flex-direction: column;
@@ -65,6 +72,7 @@ customElements.define('hg-footer', class extends LitElement {
           <a target="_blank" href="https://pl.tripadvisor.com/Hotel_Review-g1052898-d7323305-Reviews-Garden_Hotel-Olesnica_Lower_Silesia_Province_Southern_Poland.html"><img src="/resources/images/tripadvisor-footer.png"></a>
         </div>
       </div>
+      <hg-login></hg-login>
     `;
   }
 });
