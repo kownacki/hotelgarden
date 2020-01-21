@@ -20,7 +20,11 @@ export default class HgEditableText extends LitElement {
   }
   constructor() {
     super();
-    firebase.auth().onAuthStateChanged((user) => this._loggedIn = Boolean(user));
+    this._unsubscribeLoggedInListener = firebase.auth().onAuthStateChanged((user) => this._loggedIn = Boolean(user));
+  }
+  disconnectedCallback() {
+    this._unsubscribeLoggedInListener();
+    return super.disconnectedCallback();
   }
   setEditable() {
     let slotted = this.querySelector('*');

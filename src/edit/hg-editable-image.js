@@ -22,7 +22,11 @@ customElements.define('hg-editable-image', class extends LitElement {
   }
   constructor() {
     super();
-    firebase.auth().onAuthStateChanged((user) => this._loggedIn = Boolean(user));
+    this._unsubscribeLoggedInListener = firebase.auth().onAuthStateChanged((user) => this._loggedIn = Boolean(user));
+  }
+  disconnectedCallback() {
+    this._unsubscribeLoggedInListener();
+    return super.disconnectedCallback();
   }
   static get styles() {
     return css`
