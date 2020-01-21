@@ -1,5 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
 import {headerHeight, moveOutFromShadowDom} from '../utils.js'
+import firebase from "firebase";
 
 export default class HgEditableText extends LitElement {
   static get properties() {
@@ -14,7 +15,12 @@ export default class HgEditableText extends LitElement {
       _editable: Element,
       _editor: Element,
       _editorSet: Boolean,
+      _loggedIn: Boolean,
     };
+  }
+  constructor() {
+    super();
+    firebase.auth().onAuthStateChanged((user) => this._loggedIn = Boolean(user));
   }
   setEditable() {
     let slotted = this.querySelector('*');
@@ -22,14 +28,22 @@ export default class HgEditableText extends LitElement {
       slotted = slotted.assignedElements()[0];
     }
     this._editable = (slotted.shadowRoot && slotted.shadowRoot.getElementById('editable')) || slotted;
-    this._editable.setAttribute('contenteditable', true);
-
+  }
+  setEditor() {
     this._editable.addEventListener("focus", () => {
       this._editable.style['text-transform'] = "initial";
     });
     this._editable.addEventListener("blur", () => {
       this._editable.style['text-transform'] = null;
     });
+    if (this.rich) {
+      this.setCkeditor();
+    } else {
+      this._editable.addEventListener('input', () => {
+        this.showControls = true;
+        this.setAttribute('not-empty', '');
+      });
+    }
   }
   async setCkeditor() {
     this._editable.classList.add('ckeditor-content');
@@ -54,32 +68,29 @@ export default class HgEditableText extends LitElement {
         return '';
       };
     }
-    if (changedProperties.has('ready') || changedProperties.has('text')) {
-      if (this.ready) {
-        if (!this._editable) {
-          this.setEditable();
-        }
-
-        this._editable.innerHTML = this.text || (this.rich ? '<p></p>' : '');
-        this.text ? this.setAttribute('not-empty', '') : this.removeAttribute('not-empty');
-
+    if ((changedProperties.has('ready') && this.ready) || changedProperties.has('text')) {
+      if (!this._editable) {
+        this.setEditable();
+      }
+      this._editable.innerHTML = this.text || (this.rich ? '<p></p>' : '');
+      this.text ? this.setAttribute('not-empty', '') : this.removeAttribute('not-empty');
+    }
+    if (changedProperties.has('_editable') || (changedProperties.has('_loggedIn'))) {
+      if (this._editable && this._loggedIn) {
         if (!this._editorSet) {
           this._editorSet = true;
-          if (this.rich) {
-            this.setCkeditor();
-          } else {
-            this._editable.addEventListener('input', () => {
-              this.showControls = true;
-              this.setAttribute('not-empty', '');
-            });
-          }
+          this.setEditor();
         }
       }
     }
-    if (changedProperties.has('disabled') || changedProperties.has('ready') || changedProperties.has('_editable')) {
+    if (changedProperties.has('disabled')
+      || changedProperties.has('ready')
+      || changedProperties.has('_editable')
+      || changedProperties.has('_loggedIn')
+    ) {
       if (this._editable) {
         //todo empty textfield has height 0 when contenteditable set to false
-        this._editable.setAttribute('contenteditable', !(this.disabled || !this.ready));
+        this._editable.setAttribute('contenteditable', !(this.disabled || !this.ready || !this._loggedIn));
       }
     }
   }
@@ -127,34 +138,43 @@ export default class HgEditableText extends LitElement {
         z-index: 2;
       }
       paper-button {
+        font-size: 18px;
         background: white;
+      }
+      @media all and (max-width: 599px) {
+        paper-button {
+          font-size: 16px;
+        }
       }
     `;
   }
   render() {
     return html`
       <slot id="text"></slot>
-      <div class="edit" ?hidden=${!this.showControls}>
-        <paper-button
-          raised
-          @click=${() => {
-            this.rich ? this._editor.setData(this.text || '') : (this._editable.innerHTML = this.text || '');
-            this.showControls = false;
-            if (!this.text) {
-              this.removeAttribute('not-empty');
-            }
-          }}>
-          Cofnij
-        </paper-button>
-        <paper-button
-          raised
-          @click=${() => {
-            this.showControls = false;
-            this.text = this._editable.textContent || '';
-            this.dispatchEvent(new CustomEvent('save', {detail: this.rich ? this._editor.getData() : this.text}));
-          }}>
-          Zapisz
-        </paper-button>
+      ${!this._loggedIn ? '' : html`
+        <div class="edit" ?hidden=${!this.showControls}>
+          <paper-button
+            raised
+            @click=${() => {
+              this.rich ? this._editor.setData(this.text || '') : (this._editable.innerHTML = this.text || '');
+              this.showControls = false;
+              if (!this.text) {
+                this.removeAttribute('not-empty');
+              }
+            }}>
+            Cofnij
+          </paper-button>
+          <paper-button
+            raised
+            @click=${() => {
+              this.showControls = false;
+              this.text = this._editable.textContent || '';
+              this.dispatchEvent(new CustomEvent('save', {detail: this.rich ? this._editor.getData() : this.text}));
+            }}>
+            Zapisz
+          </paper-button>
+        </div>
+      `}
     `;
   }
 }
