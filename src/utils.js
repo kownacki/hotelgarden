@@ -1,4 +1,5 @@
 import moment from "moment";
+import diacritics from '../resources/diacritics.js';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
@@ -26,6 +27,7 @@ export const storage = firebase.storage();
 export const hyphenate = _.flow(
   _.replace(/'/g, ''),
   _.toLower,
+  diacritics.remove,
   _.words,
   _.join('-'),
 );

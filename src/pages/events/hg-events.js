@@ -9,8 +9,8 @@ import './hg-events/hg-events-add.js';
 import '../../elements/hg-list.js';
 import {staticProp} from "../../utils";
 
-// polskie znaki
 // favicon rozciągnięta??
+// todo add scrolling to dialogs
 
 customElements.define('hg-events', class extends LitElement {
   static get properties() {
