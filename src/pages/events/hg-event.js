@@ -5,6 +5,7 @@ import '../../elements/hg-banner.js';
 import './hg-events/hg-events-sidebar.js';
 import './hg-event/hg-event-edit-date.js';
 import {splitEvents, staticProp} from "../../utils";
+import sharedStyles from "../../sharedStyles";
 
 customElements.define('hg-event', class extends LitElement {
   static get properties() {
@@ -18,7 +19,7 @@ customElements.define('hg-event', class extends LitElement {
     };
   }
   static get styles() {
-    return css`
+    return [sharedStyles, css`
       .container {
         display: flex;
         justify-content: center;
@@ -65,7 +66,7 @@ customElements.define('hg-event', class extends LitElement {
           margin: 40px auto 0;
         }
       }
-    `;
+    `];
   }
   async updated(changedProperties) {
     if (changedProperties.has('uid')) {

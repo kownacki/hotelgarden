@@ -21,54 +21,7 @@
   <script src="/resources/scripts/lodash-fp.min.js"></script>
   <script type="module" src="/src/hg-app.js"></script>
 
-  <style id="inline-style">
-    html, body {
-      height: 100%;
-    }
-    body {
-      margin: 0;
-    }
-    .ckeditor-content {
-      line-height: 1.4em;
-      font-size: 18px;
-      padding: 0 !important;
-    }
-    @media all and (max-width: 599px) {
-      .ckeditor-content {
-        font-size: 16px;
-      }
-    }
-    .ckeditor-content ul {
-      list-style: none;
-      padding-left: 20px;
-    }
-    .ckeditor-content li {
-      margin: 8px 0;
-    }
-    .ckeditor-content ul > li::before {
-      color: var(--primary-color);
-      content: '\25A0';
-      width: 20px;
-      display: inline-block;
-      position: relative;
-      bottom: 2px;
-    }
-    .ckeditor-content a {
-      text-decoration: none;
-      font-weight: 700;
-      color: var(--accent-color);
-    }
-    .ckeditor-content a:hover {
-      text-decoration: underline;
-    }
-    .ckeditor-content .table table {
-      border: none !important;
-    }
-    .ckeditor-content .table table td, .ckeditor-content .table table th {
-      padding: 20px 40px !important;
-      border: none !important;
-    }
-  </style>
+  <style id="inline-style"></style>
   <script type="module">
     import sharedStyles from '/src/sharedStyles.js';
     const style = document.getElementById('inline-style');

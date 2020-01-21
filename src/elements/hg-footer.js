@@ -1,13 +1,14 @@
 import {LitElement, html, css} from 'lit-element';
 import './hg-text.js'
 import './hg-login.js'
+import sharedStyles from "../sharedStyles";
 
 customElements.define('hg-footer', class extends LitElement {
   static get properties() {
     return {};
   }
   static get styles() {
-    return css`
+    return [sharedStyles, css`
       :host {
         color: #949494;
         display: block;
@@ -57,7 +58,7 @@ customElements.define('hg-footer', class extends LitElement {
           align-items: center;
         }
       }
-    `;
+    `];
   }
   render() {
     return html`

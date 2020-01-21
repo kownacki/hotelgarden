@@ -50,7 +50,6 @@ export default class HgEditableText extends LitElement {
     }
   }
   async setCkeditor() {
-    this._editable.classList.add('ckeditor-content');
     await Promise.all([
       import('/node_modules/@ckeditor/ckeditor5-build-inline/build/ckeditor.js'),
       moveOutFromShadowDom(this._editable),
@@ -75,6 +74,9 @@ export default class HgEditableText extends LitElement {
     if ((changedProperties.has('ready') && this.ready) || changedProperties.has('text')) {
       if (!this._editable) {
         this.setEditable();
+        if (this.rich) {
+          this._editable.classList.add('editable-text-ckeditor');
+        }
       }
       this._editable.innerHTML = this.text || (this.rich ? '<p></p>' : '');
       this.text ? this.setAttribute('not-empty', '') : this.removeAttribute('not-empty');
