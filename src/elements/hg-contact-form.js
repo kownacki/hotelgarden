@@ -20,6 +20,7 @@ customElements.define('hg-contact-form', class extends LitElement {
     return [sharedStyles, css`
       :host {
         --height: 346px;
+        --heightMobile: calc(var(--height) + 438px);
         --width: 900px;
         font-size: 18px;
         display: block;
@@ -104,7 +105,7 @@ customElements.define('hg-contact-form', class extends LitElement {
         }
         .inputs {
           flex-direction: column;
-          height: calc(var(--height) * 2);
+          height: var(--heightMobile);
         }
         .inputs > * {
           width: auto;
