@@ -3,7 +3,6 @@ import '../../../elements/hg-slider.js';
 import '../../../edit/hg-delete-item.js';
 import '../../../edit/hg-editable-image.js';
 
-//todo bug clicking go back when image is displayed breaks website
 customElements.define('hg-gallery-slider', class extends LitElement {
   static get properties() {
     return {
@@ -35,10 +34,14 @@ customElements.define('hg-gallery-slider', class extends LitElement {
     `;
   }
   constructor() {
+    // todo remove all window event listeners registered imperatively
     super();
     this.selected = 0;
   }
   open(index) {
+    window.history.pushState(null, document.title, '#slider');
+    this._eventToRemove = () => this.close();
+    window.addEventListener('popstate', this._eventToRemove);
     this.selected = index;
     this.style.display = 'block';
     // Imperatively change 'selected' in case #slider changed it himself.
@@ -48,6 +51,7 @@ customElements.define('hg-gallery-slider', class extends LitElement {
     this.dispatchEvent(new CustomEvent('hide-header', {composed: true, bubbles: true}))
   }
   close() {
+    window.removeEventListener('popstate', this._eventToRemove);
     this.style.display = 'none';
     document.body.style.overflow = 'auto';
     this.dispatchEvent(new CustomEvent('show-header', {composed: true, bubbles: true}));
@@ -70,7 +74,10 @@ customElements.define('hg-gallery-slider', class extends LitElement {
       <div class="controls">
         <paper-icon-button
           icon="close"
-          @click=${this.close}>
+          @click=${() => {
+            window.history.back();
+            this.close();
+          }}>
         </paper-icon-button>
       </div>
     `;

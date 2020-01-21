@@ -53,8 +53,9 @@ customElements.define('hg-page', class extends LitElement {
     return html`
       <app-location use-hash-as-path @route-changed=${async (event) => {
         await new Promise((resolve) => setTimeout(resolve, seconds === 0 ? 1000 : 500));
-        if (event.detail.value.path) {
-          const element = this.shadowRoot.getElementById('page').shadowRoot.getElementById(event.detail.value.path);
+        const hash = event.detail.value.path;
+        if (hash && hash !== 'slider') {
+          const element = this.shadowRoot.getElementById('page').shadowRoot.getElementById(hash);
           window.scrollTo({
             top: element.offsetTop - headerHeight - 10,
           });
