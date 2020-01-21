@@ -21,10 +21,10 @@ customElements.define('hg-header-logo', class extends LitElement {
         display: block;
       }
       .logomark {
-        padding: 12px 10px;
         position: relative;
         top: 10px;
         width: calc((80 / 170) * 100%);
+        padding: 12px 10px;
         margin: auto;
         transition: top 0.3s ease, width 0.3s ease;
         filter: drop-shadow(0 0 1px white);
@@ -37,9 +37,9 @@ customElements.define('hg-header-logo', class extends LitElement {
       .logotype {
         transition: top 0.3s ease, opacity 0.2s ease;
         filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.25));
-        padding: 0 10px 10px;
+        padding: 0 calc((10 / 170) * 100%) 10px;
         position: absolute;
-        top: calc(10px + 100%);
+        top: calc((105 / 95) * 100%);
         width: calc((150 / 170) * 100%);
         z-index: -1;
         opacity: 100%;
