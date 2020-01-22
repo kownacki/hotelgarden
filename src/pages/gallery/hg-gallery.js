@@ -42,10 +42,12 @@ customElements.define('hg-gallery', class extends LitElement {
             </hg-gallery-item>
         `}
         .getItemName=${(item) => `obraz "${item.uid}"`}
-        .onAdd=${async (newItem) => ({
-          ...newItem,
-          image: await createImage(await this.shadowRoot.getElementById('upload').upload()),
-        })}
+        .onAdd=${async (newItem) => {
+          const uploadResult = await this.shadowRoot.getElementById('upload').upload();
+          return uploadResult
+            ? {...newItem, image: await createImage(uploadResult)}
+            : false;
+        }}
         .onDelete=${(item) => {deleteImage(item.image.name)}}
         @items-changed=${(event) => this._items = event.detail}>
       </hg-mosaic-list>
