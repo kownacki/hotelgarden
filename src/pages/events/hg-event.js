@@ -6,6 +6,7 @@ import './hg-events/hg-events-sidebar.js';
 import './hg-event/hg-event-edit-date.js';
 import {splitEvents, staticProp} from "../../utils";
 import sharedStyles from "../../sharedStyles";
+import firebase from "firebase";
 
 customElements.define('hg-event', class extends LitElement {
   static get properties() {
@@ -16,6 +17,7 @@ customElements.define('hg-event', class extends LitElement {
       _contentLoading: Boolean,
       _content: String,
       _dataReady: Boolean,
+      _loggedIn: Boolean,
     };
   }
   static get styles() {
@@ -68,6 +70,14 @@ customElements.define('hg-event', class extends LitElement {
       }
     `];
   }
+  constructor() {
+    super();
+    this._unsubscribeLoggedInListener = firebase.auth().onAuthStateChanged((user) => this._loggedIn = Boolean(user));
+  }
+  disconnectedCallback() {
+    this._unsubscribeLoggedInListener();
+    return super.disconnectedCallback();
+  }
   async updated(changedProperties) {
     if (changedProperties.has('uid')) {
       this._dataReady = false;
@@ -110,14 +120,14 @@ customElements.define('hg-event', class extends LitElement {
                     : 'Odbyło się'}
                 ${moment(this._event.date).format('D MMMM YYYY')}
               </div>
-              <hg-event-edit-date 
+              ${!this._loggedIn ? '' : html`<hg-event-edit-date 
                 .date=${this._event.date}
                 @save=${(event) => {
                   this._event.date = event.detail;
                   this.requestUpdate();
                   this.updateData('date', event.detail);
                 }}>
-              </hg-event-edit-date>
+              </hg-event-edit-date>`}
             </div>
             <div class="divider"></div>
             ${this._contentLoading ? '' : html`<hg-editable-text 

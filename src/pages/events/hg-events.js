@@ -8,6 +8,7 @@ import './hg-events/hg-events-card.js';
 import './hg-events/hg-events-add.js';
 import '../../elements/hg-list.js';
 import {staticProp} from "../../utils";
+import firebase from "firebase";
 
 // favicon rozciągnięta??
 // todo add scrolling to dialogs
@@ -15,7 +16,16 @@ import {staticProp} from "../../utils";
 customElements.define('hg-events', class extends LitElement {
   static get properties() {
     return {
+      _loggedIn: Boolean,
     };
+  }
+  constructor() {
+    super();
+    this._unsubscribeLoggedInListener = firebase.auth().onAuthStateChanged((user) => this._loggedIn = Boolean(user));
+  }
+  disconnectedCallback() {
+    this._unsubscribeLoggedInListener();
+    return super.disconnectedCallback();
   }
   static get styles() {
     return [sharedStyles, css`
@@ -23,6 +33,9 @@ customElements.define('hg-events', class extends LitElement {
         max-width: 1000px;
         margin: 20px auto;
         display: block;
+      }
+      hg-heading {
+        margin: 40px 0;
       }
       .events {
         max-width: 1300px;
@@ -41,7 +54,7 @@ customElements.define('hg-events', class extends LitElement {
   render() {
     return html`
       <div class="events">
-        <hg-events-add></hg-events-add>
+        ${!this._loggedIn ? '' : html`<hg-events-add></hg-events-add>`}
         <hg-heading>${'Nadchodzące wydarzenia'}</hg-heading>
         <hg-list
           .noAdd=${true}
