@@ -2,6 +2,7 @@ import {LitElement, html, css} from 'lit-element';
 import './hg-text.js'
 import './hg-login.js'
 import sharedStyles from "../sharedStyles";
+import {staticProp} from "../utils";
 
 customElements.define('hg-footer', class extends LitElement {
   static get properties() {
@@ -66,7 +67,7 @@ customElements.define('hg-footer', class extends LitElement {
         <div class="image">
           <img src="/resources/images/logo-footer.png">
         </div>
-        <hg-text .rich=${true} .uid=${'footer'}><div></div></hg-text>
+        <hg-text .rich=${true} .path=${staticProp({doc: 'texts/footer', field: 'text'})}><div></div></hg-text>
         <div class="icons">
           <a target="_blank" href="http://www.booking.com/hotel/pl/garden.pl.html" class="lighter"><img src="/resources/images/booking-footer.png"></a>
           <a target="_blank" href="https://https://www.facebook.com/HotelGardenOlesnica" class="lighter"><img src="/resources/images/facebook-footer.png"></a>
