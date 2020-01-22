@@ -136,13 +136,13 @@ export default class HgList extends LitElement {
           @add=${async () => {
             this._processing = true;
             let newItem = {uid: generateUid()};
-            if (this.onAdd) {
-              newItem = await this.onAdd(newItem)
+            newItem = this.onAdd ? await this.onAdd(newItem) : newItem;
+            if (newItem) {
+              await this.updateData(String(_.size(this.items)), newItem);
+              //todo use firebase.firestore.FieldValue.arrayUnion  
+              this.items = _.set(_.size(this.items), newItem, this.items);
+              this.dispatchEvent(new CustomEvent('item-added'));
             }
-            await this.updateData(String(_.size(this.items)), newItem);
-            //todo use firebase.firestore.FieldValue.arrayUnion  
-            this.items = _.set(_.size(this.items), newItem, this.items);
-            this.dispatchEvent(new CustomEvent('item-added'));
             this._processing = false;
         }}>
         </hg-list-add>`

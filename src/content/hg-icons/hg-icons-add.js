@@ -7,7 +7,6 @@ customElements.define('hg-icons-add', class extends LitElement {
   static get properties() {
     return {
       disable: Boolean,
-      opened: {type: Boolean, reflect: true},
       _availableIcons: Array,
       _categories: Array,
       _selected: String,
@@ -81,26 +80,28 @@ customElements.define('hg-icons-add', class extends LitElement {
       }
     }
   }
-  addIcon(event) {
-    this.shadowRoot.getElementById('dialog').close();
-    const icon = {text: this.shadowRoot.getElementById('text').value, url: event.target.src};
-    this.dispatchEvent(new CustomEvent('request-add', {detail: icon}));
-  };
+  async getIcon() {
+    this._selected = null;
+    this.shadowRoot.getElementById('dialog').open();
+    return new Promise((resolve) => {
+      this.addEventListener('icon-selected', (event) => {
+        if (event.detail) {
+          this.shadowRoot.getElementById('dialog').close();
+          resolve({text: this.shadowRoot.getElementById('text').value, url: event.detail});
+        } else {
+          resolve(false);
+        }
+      }, {once: true});
+    });
+  }
   render() {
     return html`
-      <paper-icon-button
-        ?disabled=${this.disable}
-        icon="icons:add"
-        @click=${() => {
-          this.shadowRoot.getElementById('dialog').open(); 
-          this._selected = null;
-        }}>
-      </paper-icon-button>
       <paper-dialog 
         id="dialog"
         @opened-changed=${(event) => {
-          this.opened = event.target.opened;
-          this.dispatchEvent(new CustomEvent('opened-changed', {detail: this.opened}));
+          if (!event.detail.value) {
+            this.dispatchEvent(new CustomEvent('icon-selected', {detail: false}))
+          }
         }}>
         <div>Dodaj ikonę</div>
         <paper-input
@@ -120,7 +121,7 @@ customElements.define('hg-icons-add', class extends LitElement {
             <div class="icon">
               <paper-icon-button
                 .src=${icon.url}
-                @click=${this.addIcon}>
+                @click=${(event) => this.dispatchEvent(new CustomEvent('icon-selected', {detail: event.target.src}))}>
               </paper-icon-button>
               <div>${icon.name}</div>
             </div>
