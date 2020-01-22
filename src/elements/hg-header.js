@@ -13,7 +13,7 @@ customElements.define('hg-header', class extends LitElement {
   }
   constructor() {
     super();
-    window.onscroll = _.throttle(100, () => this.scrolledDown = window.pageYOffset > 0);
+    window.addEventListener('scroll', _.throttle(100, () => this.scrolledDown = window.pageYOffset > 0));
   }
   static get styles() {
     return css`

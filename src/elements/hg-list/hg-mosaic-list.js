@@ -83,9 +83,11 @@ customElements.define('hg-mosaic-list', class extends HgList {
     this.array = true;
     this.addAtStart = true;
     this.transform = () => _.reverse;
-    window.onresize = _.throttle(500, () => (this._list && window.innerWidth > 839)
-      ? this.setMargin()
-      : this.style = null);
+    window.addEventListener('resize', _.throttle(500, () =>
+      (this._list && window.innerWidth > 839)
+        ? this.setMargin()
+        : this.style = null
+    ));
   }
 });
 
