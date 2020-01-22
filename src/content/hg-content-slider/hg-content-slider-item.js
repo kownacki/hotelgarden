@@ -5,6 +5,7 @@ customElements.define('hg-content-slider-item', class extends LitElement {
   static get properties() {
     return {
       image: Object,
+      noDelete: Boolean,
       _deleteOpened: {type: Boolean, reflect: true, attribute: 'delete-opened'},
     };
   }
@@ -54,10 +55,10 @@ customElements.define('hg-content-slider-item', class extends LitElement {
         <iron-image .src=${_.get('url', this.image)} .sizing=${'cover'}></iron-image>
         <paper-icon-button noink .icon=${'maps:zoom-out-map'}></paper-icon-button>
       </div>
-      <hg-delete-item 
+      ${this.noDelete ? '' : html`<hg-delete-item 
         .name=${_.get('name', this.image)}
         @opened-changed=${(event) => this._deleteOpened = event.target.opened}>
-      </hg-delete-item>
+      </hg-delete-item>`}
     `;
   }
 });

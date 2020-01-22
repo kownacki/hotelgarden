@@ -3,16 +3,19 @@ import {db, updateImage, deleteImage} from '../utils.js';
 import './hg-content-slider/hg-content-slider-item.js';
 import '../elements/hg-image-upload-fab.js';
 import '../elements/hg-content-label.js';
+import firebase from "firebase";
 
 customElements.define('hg-content-slider', class extends LitElement {
   static get properties() {
     return {
       uid: String,
       _images: Array,
+      _loggedIn: Boolean,
     };
   }
   constructor() {
     super();
+    this._unsubscribeLoggedInListener = firebase.auth().onAuthStateChanged((user) => this._loggedIn = Boolean(user));
     (async () => {
       await this.updateComplete;
       this._images = _.map.convert({cap: false})(
@@ -20,6 +23,10 @@ customElements.define('hg-content-slider', class extends LitElement {
         _.toArray((await db.doc('contentSliders/' + this.uid).get()).data()),
       );
     })();
+  }
+  disconnectedCallback() {
+    this._unsubscribeLoggedInListener();
+    return super.disconnectedCallback();
   }
   static get styles() {
     return css`
@@ -78,12 +85,13 @@ customElements.define('hg-content-slider', class extends LitElement {
         .template=${(image) => html`
           <hg-content-slider-item
             .image=${image}
+            .noDelete=${!this._loggedIn}
             @request-delete=${() => this.deleteItem(image.index)}
             @click-image=${() => !this.shadowRoot.getElementById('content-slider').transitionGoing && this.shadowRoot.getElementById('gallery-slider').open(image.index)}>
           </hg-content-slider-item>
         `}>
       </hg-slider>`}
-      <hg-image-upload-fab
+      ${!this._loggedIn ? '' : html`<hg-image-upload-fab
         @upload=${async (event) => {
           const index = this._images.length;
           await this.updateImage({index}, event.detail);
@@ -91,7 +99,7 @@ customElements.define('hg-content-slider', class extends LitElement {
           contentSlider.selected = (contentSlider.double && window.innerWidth >= 600) ? index - 1 : index;
           contentSlider.requestUpdate();
         }}>
-      </hg-image-upload-fab>
+      </hg-image-upload-fab>`}
       <hg-gallery-slider 
         id="gallery-slider" 
         .images=${this._images}
