@@ -5,6 +5,7 @@ import '../elements/hg-image-upload-fab.js';
 import '../elements/hg-content-label.js';
 import firebase from "firebase";
 
+//todo esc should close window
 customElements.define('hg-content-slider', class extends LitElement {
   static get properties() {
     return {
