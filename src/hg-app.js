@@ -63,7 +63,7 @@ customElements.define('hg-app', class extends LitElement {
   static get styles() {
     return css`
       app-drawer {
-        z-index: 2;
+        z-index: var(--layer-header-1);
       }
       hg-drawer {
         background: white;

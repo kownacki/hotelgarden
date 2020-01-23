@@ -22,7 +22,7 @@ customElements.define('hg-header', class extends LitElement {
         top: 0;
         position: fixed;
         width: 100%;
-        z-index: 2;
+        z-index: var(--layer-header);
       }
       :host([scrolled-down]) {
         background: white;
@@ -50,7 +50,6 @@ customElements.define('hg-header', class extends LitElement {
       }
       hg-header-subnav {
         position: absolute;
-        z-index: 1;
         top: 100%;
         left: 0;
         transition: visibility 0.3s, opacity 0.3s ease, margin 0.3s ease;

@@ -41,7 +41,6 @@ customElements.define('hg-header-logo', class extends LitElement {
         position: absolute;
         top: calc((105 / 95) * 100%);
         width: calc((150 / 170) * 100%);
-        z-index: -1;
         opacity: 100%;
       }
       :host([no-banner-image]) .logotype {

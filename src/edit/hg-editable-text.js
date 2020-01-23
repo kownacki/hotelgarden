@@ -125,7 +125,7 @@ export default class HgEditableText extends LitElement {
         min-height: 1.25em;
       }
       ::slotted(.ck-focused) {
-        z-index: 2;
+        z-index: var(--layer-header-1);
         position: relative;
         background: white;
       }
@@ -141,7 +141,7 @@ export default class HgEditableText extends LitElement {
         position: absolute;
         top: 100%;
         right: 0;
-        z-index: 2;
+        z-index: var(--layer-header-1);
       }
       paper-button {
         font-size: 18px;
