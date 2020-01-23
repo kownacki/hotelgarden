@@ -1,43 +1,37 @@
 import {LitElement, html, css} from 'lit-element';
-import {db, updateData, updateImage} from "../utils.js";
-import '../edit/hg-editable-image.js';
+import {db, getData, updateImage} from "../utils.js";
+import HgEditableImage from '../edit/hg-editable-image.js';
 
-customElements.define('hg-image', class extends LitElement {
+customElements.define('hg-image', class extends HgEditableImage {
   static get properties() {
     return {
-      uid: Number,
-      sizing: String,
-      _image: Object,
+      // required params
+      path: Object, // {doc: String, [field: String]}
+      // optional params
+      noGetImage: Boolean,
+      // private
+      image: Object,
     };
   }
   constructor() {
     super();
-    (async () => {
-      await this.updateComplete;
-      this._image = (await db.doc('images/' + this.uid).get()).data() || {};
-    })();
+    this.addEventListener('save', (event) => this.updateImage(event.detail));
   }
-  static get styles() {
-    return css`
-      :host {
-        display: block;
+  // duplicated from hg-list
+  updated(changedProperties) {
+    if (changedProperties.has('path')) {
+      if (this.path && !this.noGetImage) {
+        (async () => {
+          this.image = await getData(this.path.doc, this.path.field);
+        })();
       }
-      hg-editable-image {
-        height: 100%;
-      }
-    `;
+    }
+    if (changedProperties.has('image')) {
+      this.src = _.get('url', this.image);
+    }
+    super.updated(changedProperties);
   }
   async updateImage(file) {
-    this._image = await updateImage('images/' + this.uid, null, file, (_.get('name', this._image)));
-  }
-  render() {
-    return html`
-      <hg-editable-image
-        presize
-        .sizing=${this.sizing}
-        .src=${_.get('url', this._image)}
-        @save=${(event) => this.updateImage(event.detail)}>
-      </hg-editable-image>
-    `;
+    this.image = await updateImage(this.path.doc, this.path.field, file, (_.get('name', this.image)));
   }
 });

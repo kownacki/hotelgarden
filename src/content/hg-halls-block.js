@@ -1,4 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
+import {staticProp} from '../utils.js';
 import './hg-halls-block/hg-halls-slider.js';
 import '../elements/hg-image.js';
 import './hg-text-image.js';
@@ -66,7 +67,7 @@ customElements.define('hg-halls-block', class extends LitElement {
       <hg-text-image .uid=${this.uid + '-halls-block'}></hg-text-image>
       <div class="container">
         <hg-halls-slider .uid=${this.uid}></hg-halls-slider>
-        <hg-image .sizing=${'cover'} .uid=${this.uid + '-halls-block'}></hg-image>
+        <hg-image .sizing=${'cover'} .path=${staticProp({doc: `images/${this.uid}-halls-block`})}></hg-image>
       </div>
     `;
   }

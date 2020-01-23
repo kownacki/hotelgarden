@@ -47,6 +47,11 @@ export const splitEvents = (events) => [
 
 export const generateUid = () => `${Date.now()}${_.padCharsStart('0', 9,  _.random(1, 10**9 - 1))}`;
 
+export const getData = async (doc, path) => {
+  const docData = (await db.doc(doc).get()).data() || {};
+  return path ? _.get(path, docData) : docData;
+};
+
 export const updateData = (doc, path, data) => {
   return path
     ? db.doc(doc).set(_.setWith(Object, path, data, {}), {mergeFields: [path]})

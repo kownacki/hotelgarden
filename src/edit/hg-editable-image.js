@@ -7,7 +7,7 @@ const readFile = (file) => new Promise((resolve) => {
   reader.readAsDataURL(file);
 });
 
-customElements.define('hg-editable-image', class extends LitElement {
+export default class HgEditableImage extends LitElement {
   static get properties() {
     return {
       src: {
@@ -31,12 +31,13 @@ customElements.define('hg-editable-image', class extends LitElement {
   static get styles() {
     return css`
       :host {
-        position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        display: block;
       }
-      :host(:not([not-empty])) {
+      .container {
+        position: relative;
+        height: 100%;
+      }
+      :host(:not([not-empty])) .container {
         background: rgba(var(--placeholder-color-rgb), 0.5);
       }
       :host([presize]:not([not-empty])) {
@@ -49,7 +50,7 @@ customElements.define('hg-editable-image', class extends LitElement {
       img {
         width: 100%;
       }
-      :host([lower-image]) iron-image, :host([lower-image]) img {
+      :host([lower-image]) .image {
         z-index: -1;
       }
       input {
@@ -58,40 +59,45 @@ customElements.define('hg-editable-image', class extends LitElement {
       paper-icon-button {
         display: none;
         position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
         height: 100%;
         padding: 0 calc(50% - 24px);
         color: white;
         --paper-icon-button-ink-color: transparent;
       }
-      :host(:hover) paper-icon-button {
+      .container:hover paper-icon-button {
         display: block;
       }
     `;
   }
   render() {
     return html`
-      ${!this.src ? ''
-        : this.sizing
-          ? html`<iron-image .src=${this.src} .sizing=${this.sizing}></iron-image>` 
-          : html`<img .src=${this.src}>`}
-      ${!this._loggedIn ? '' : html`
-        <input
-          id="input"
-          type="file"
-          accept="image/png, image/jpeg"
-          @change=${async (event) => {
-            const file = event.target.files[0];
-            event.target.value = '';
-            this.dispatchEvent(new CustomEvent('save', {detail: file}));
-            this.src = await readFile(file);
-          }}>
-        <paper-icon-button
-          noink
-          icon="image:image"
-          @click=${() => this.shadowRoot.getElementById('input').click()}>
-        </paper-icon-button>
-      `}
+      <div class="container">
+        ${!this.src ? ''
+          : this.sizing
+            ? html`<iron-image class="image" .src=${this.src} .sizing=${this.sizing}></iron-image>` 
+            : html`<img class="image" .src=${this.src}>`}
+        ${!this._loggedIn ? '' : html`
+          <input
+            id="input"
+            type="file"
+            accept="image/png, image/jpeg"
+            @change=${async (event) => {
+              const file = event.target.files[0];
+              event.target.value = '';
+              this.dispatchEvent(new CustomEvent('save', {detail: file}));
+              this.src = await readFile(file);
+            }}>
+          <paper-icon-button
+            noink
+            icon="image:image"
+            @click=${() => this.shadowRoot.getElementById('input').click()}>
+          </paper-icon-button>
+        `}
+      </div>
     `;
   }
-});
+}
+customElements.define('hg-editable-image', HgEditableImage);

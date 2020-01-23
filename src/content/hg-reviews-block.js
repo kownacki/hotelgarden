@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
-import {db} from "../utils.js";
+import {db, staticProp} from "../utils.js";
 import '../elements/hg-heading.js';
 import './hg-reviews-block/hg-scores.js';
 import './hg-reviews-block/hg-reviews-slider.js';
@@ -97,7 +97,7 @@ customElements.define('hg-reviews-block', class extends LitElement {
       <div class="container">
         <hg-reviews-slider .reviews=${this._reviews}></hg-reviews-slider>
         <hg-scores></hg-scores>
-        <hg-image sizing=${'cover'} .uid=${this.uid + '-reviews-block'}></hg-image>
+        <hg-image sizing=${'cover'} .path=${staticProp({doc: `images/${this.uid}-reviews-block`})}></hg-image>
       </div>
     `;
   }
