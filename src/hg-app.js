@@ -86,9 +86,7 @@ customElements.define('hg-app', class extends LitElement {
         .event=${this._event}
         .uid=${this._uid}
         .noBannerImage=${this._noBannerImage}
-        @event-not-found=${() => this._noBannerImage = true}
-        @hide-header=${() => this.shadowRoot.getElementById('header').style.display = 'none'}
-        @show-header=${() => this.shadowRoot.getElementById('header').style.display = 'block'}>
+        @event-not-found=${() => this._noBannerImage = true}>
       </hg-page>
       <!--todo somehow prevent scrolling parent when on android -->
       <app-drawer id="drawer">
