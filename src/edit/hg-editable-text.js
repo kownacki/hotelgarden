@@ -104,14 +104,10 @@ export default class HgEditableText extends LitElement {
     return css`
       :host {
         display: block;
-        background: rgba(var(--placeholder-color-rgb), 0.5);
         position: relative;
       }
       :host(:not([ready])), :host([disabled]) {
         opacity: 50%;
-      }
-      :host([not-empty]) {
-        background: transparent;
       }
       :host([multiline]) {
         height: 150px;
@@ -123,11 +119,17 @@ export default class HgEditableText extends LitElement {
         height: 100%;
         min-width: 20px;
         min-height: 1.25em;
+        /*todo background only to #editable */
+        background: rgba(var(--placeholder-color-rgb), 0.5);
+      }
+      :host([not-empty]) ::slotted(:not(.ck-focused)) {
+        background: transparent;
       }
       ::slotted(.ck-focused) {
         z-index: var(--layer-header-1);
         position: relative;
-        background: white;
+        /* todo sometimes not working when clicket too fast on load */
+        background: white
       }
       .edit {
         margin-top: 5px;
