@@ -13,7 +13,7 @@ customElements.define('hg-text-image', class extends LitElement {
       uid: Number,
       buttons: Number,
       h3: {type: Boolean},
-      swap: {type: Boolean},
+      swap: {type: Boolean, reflect: true},
       iconFields: Array,
       iconSrcs: Array,
       _textImage: Object,
