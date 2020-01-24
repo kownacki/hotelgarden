@@ -116,7 +116,7 @@ customElements.define('hg-mosaic', class extends LitElement {
             .ready=${this._dataReady}
             multiline
             .text=${_.get('secondary.text', this._mosaic)}
-            @save=${(event) => this.updateData('primary.text', event.detail)}>
+            @save=${(event) => this.updateData('secondary.text', event.detail)}>
             <p></p>
           </hg-editable-text>
           ${!_.get('secondary', this.buttons) ? '' : html`<hg-action-buttons .buttons=${this.buttons.secondary}></hg-action-buttons>`}
