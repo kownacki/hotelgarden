@@ -30,6 +30,9 @@ customElements.define('hg-footer', class extends LitElement {
         margin: 10px;
         text-align: center;
       }
+      hg-text {
+        margin: 10px 0;
+      }
       .icons {
         margin: 10px;
         text-align: center;

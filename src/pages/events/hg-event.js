@@ -27,7 +27,7 @@ customElements.define('hg-event', class extends LitElement {
         justify-content: center;
         max-width: 1040px;
         margin: auto;
-        padding: 20px;
+        padding: 20px 20px 40px;
       }
       .content {
         box-sizing: border-box;
@@ -51,7 +51,7 @@ customElements.define('hg-event', class extends LitElement {
       .divider {
         height: 1px;
         background: rgba(var(--secondary-color-rgb), 30%);
-        margin-bottom: 10px;
+        margin-bottom: 20px;
       }
       @media all and (max-width: 959px) {
         .container {
