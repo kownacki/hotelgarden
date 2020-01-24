@@ -27,14 +27,14 @@ customElements.define('hg-landing', class extends LitElement {
       <hg-intro-article .uid=${'landing'}></hg-intro-article>
       <hg-quote .uid=${'landing'}></hg-quote>
       <hg-icons .uid=${'landing'}></hg-icons>
+      <hg-text-image .swap=${true} .uid=${'landing'} .buttons=${staticProp([{url: '/pokoje', text: 'Zobacz pokoje'}])}></hg-text-image>
       <hg-mosaic .uid=${'landing'} .buttons=${staticProp({
-        primary: [{url: '#', text: 'Zobacz ofertę'}, {url: '#', text: 'Lorem ipsum'}],
-        secondary: [{url: '#', text: 'Zobacz ofertę'}],
+        primary: [{url: '/wesela', text: 'Zobacz ofertę'}],
+        secondary: [{url: '/sale', text: 'Zobacz sale'}],
       })}></hg-mosaic>
-      <hg-text-image .uid=${'landing'} .buttons=${staticProp([{url: '#', text: 'Zobacz ofertę'}])}></hg-text-image>
+      <hg-content-slider .uid=${'landing'}></hg-content-slider>
       <hg-reviews-block .uid=${'landing'} scores></hg-reviews-block>
       <hg-infographic .uid=${'landing'}></hg-infographic>
-      <hg-content-slider .uid=${'landing'}></hg-content-slider>
       <hg-map></hg-map>
     `;
   }
