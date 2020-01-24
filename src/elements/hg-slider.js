@@ -41,6 +41,7 @@ customElements.define('hg-slider', class extends LitElement {
         box-sizing: border-box;
       }
       .counter {
+        font-size: 16px;
         background: white;
         top: 0;
         left: 0;

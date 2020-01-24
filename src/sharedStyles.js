@@ -33,6 +33,16 @@ export default css`
     line-height: normal;
     font-weight: 300;
   }
+  .content-heading {
+    text-align: center;
+    padding: 0 20px;
+    margin-right: auto;
+    margin-left: auto;
+    text-transform: uppercase;
+    width: 800px;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
   .editable-text-ckeditor {
     padding: 0 !important;
     margin: 1px;

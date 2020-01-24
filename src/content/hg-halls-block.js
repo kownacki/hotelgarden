@@ -1,8 +1,9 @@
 import {LitElement, html, css} from 'lit-element';
 import {staticProp} from '../utils.js';
 import './hg-halls-block/hg-halls-slider.js';
-import '../elements/hg-image.js';
 import './hg-text-image.js';
+import '../elements/hg-image.js';
+import sharedStyles from "../sharedStyles";
 
 customElements.define('hg-halls-block', class extends LitElement {
   static get properties() {
@@ -11,7 +12,7 @@ customElements.define('hg-halls-block', class extends LitElement {
     };
   }
   static get styles() {
-    return css`
+    return [sharedStyles, css`
       :host {
         display: block;
         margin: 80px 0;
@@ -51,6 +52,7 @@ customElements.define('hg-halls-block', class extends LitElement {
       @media all and (max-width: 599px) {
         :host(:not([scores])) hg-image {
           height: 280px;
+          max-width: 750px;
         }
         hg-halls-slider {
           height: 500px;
@@ -61,11 +63,11 @@ customElements.define('hg-halls-block', class extends LitElement {
           height: 200px;
         }
       }
-    `;
+    `];
   }
   render() {
     return html`
-      <hg-text-image .uid=${this.uid + '-halls-block'}></hg-text-image>
+      <h2 class="content-heading">Zobacz sale</h2>
       <div class="container">
         <hg-image .sizing=${'cover'} .path=${staticProp({doc: `images/${this.uid}-halls-block`})}></hg-image>
         <hg-halls-slider .uid=${this.uid}></hg-halls-slider>

@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
-import {staticProp} from "../../utils.js";
+import {staticProp, updateData} from "../../utils.js";
 import sharedStyles from "../../sharedStyles.js";
 import '../../elements/hg-action-buttons.js';
 import '../../elements/hg-icon-info.js';
@@ -20,6 +20,9 @@ customElements.define('hg-halls-slider-item', class extends LitElement {
       :host > hg-editable-text {
         flex: 1;
       }
+      h3 {
+        margin-top: 0;
+      }
       hg-action-buttons {
         margin-top: 40px;
       }
@@ -30,13 +33,16 @@ customElements.define('hg-halls-slider-item', class extends LitElement {
       }
     `];
   }
+  async updateData(path, data) {
+    updateData('hallsBlocks/' + this.uid, path, data);
+  }
   render() {
     return html`
       <hg-editable-text
         .ready=${this.dataReady}
         .text=${this.hall.name}
         @save=${(event) => this.updateData(`${this.hall.index}.name`, event.detail)}>
-        <hg-heading h3></hg-heading>
+        <h3></h3>
       </hg-editable-text>
       <hg-icon-info
         .dataReady=${this.dataReady}

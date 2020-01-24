@@ -1,8 +1,8 @@
 import {LitElement, html, css} from 'lit-element';
 import {db, staticProp} from "../utils.js";
-import '../elements/hg-heading.js';
 import './hg-reviews-block/hg-scores.js';
 import './hg-reviews-block/hg-reviews-slider.js';
+import sharedStyles from "../sharedStyles";
 
 customElements.define('hg-reviews-block', class extends LitElement {
   static get properties() {
@@ -13,13 +13,14 @@ customElements.define('hg-reviews-block', class extends LitElement {
     };
   }
   static get styles() {
-    return css`
+    return [sharedStyles, css`
       :host {
         display: block;
         margin: 60px auto -40px;
       }
       .container {
         display: flex;
+        margin: 60px auto;
         flex-direction: row;
         justify-content: center;
       }
@@ -83,7 +84,7 @@ customElements.define('hg-reviews-block', class extends LitElement {
           height: 340px;
         }
       }
-    `;
+    `];
   }
   constructor() {
     super();
@@ -93,7 +94,7 @@ customElements.define('hg-reviews-block', class extends LitElement {
   }
   render() {
     return html`
-      <hg-heading center>${'Nasi goście o nas'}</hg-heading>
+      <h2 class="content-heading">Nasi goście o nas</h2>
       <div class="container">
         <hg-scores></hg-scores>
         <hg-image sizing=${'cover'} .path=${staticProp({doc: `images/${this.uid}-reviews-block`})}></hg-image>
