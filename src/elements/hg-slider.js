@@ -42,24 +42,25 @@ customElements.define('hg-slider', class extends LitElement {
       }
       .counter {
         font-size: 16px;
-        background: white;
-        top: 0;
-        left: 0;
+        top: 2px;
+        left: 2px;
         position: absolute;
-        padding: 12px;
+        padding: 8px;
       }
       paper-icon-button {
-        background: white;
         position: absolute;
         top: calc(50% - 20px);
         height: 45px;
         width: 45px;
       }
+      paper-icon-button, .counter {
+        background: rgba(255, 255, 255, 0.5);
+      }
       paper-icon-button#left {
-        left: 0;
+        left: 2px;
       }
       paper-icon-button#right {
-        right: 0;
+        right: 2px;
       }
     `;
   }

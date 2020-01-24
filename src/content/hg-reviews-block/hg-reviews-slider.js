@@ -20,7 +20,7 @@ customElements.define('hg-reviews-slider', class extends LitElement {
       <hg-slider
         .items=${this.reviews}
         .template=${(review) => html`
-          <hg-review style="padding: 5px 60px;" .review=${review}></hg-review>
+          <hg-review style="padding: 0 50px;" .review=${review}></hg-review>
         `}>
       </hg-slider>
     `;

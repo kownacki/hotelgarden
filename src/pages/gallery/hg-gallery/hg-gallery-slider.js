@@ -29,7 +29,7 @@ customElements.define('hg-gallery-slider', class extends LitElement {
         position: fixed;
         top: 0;
         right: 0;
-        background: white;
+        background: rgba(255, 255, 255, 0.5);
       }
     `;
   }

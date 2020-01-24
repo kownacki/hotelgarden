@@ -34,7 +34,7 @@ customElements.define('hg-reviews', class extends LitElement {
       :host {
         display: block;
         max-width: 1200px;
-        padding: 20px;
+        padding: 20px 0;
         margin: auto;
       }
       hg-list {
@@ -52,7 +52,8 @@ customElements.define('hg-reviews', class extends LitElement {
       }
       @media all and (max-width: 839px) {
         :host {
-          width: auto;
+          width: 580px;
+          max-width: 100%;
         }
         hg-list {
           --columns: 1;
@@ -72,16 +73,14 @@ customElements.define('hg-reviews', class extends LitElement {
           <style>
             hg-review {
               text-align: center;
-              box-sizing: border-box;
               margin: 10px;
-              padding: 30px 20px;
-              box-shadow: 0 0 2px var(--placeholder-color);
-              border-radius: 2px;
+              padding: 10px 20px;
               height: 400px;
             }
             @media all and (max-width: 839px) {
               hg-review {
                 height: auto;
+                margin: 10px 0;
               }
             }
           </style>

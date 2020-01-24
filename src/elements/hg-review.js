@@ -13,17 +13,20 @@ customElements.define('hg-review', class extends LitElement {
     return [sharedStyles, css`
       :host {
         display: block;
+        box-sizing: border-box;
+        border: solid 1px var(--divider-color);
+        background: rgba(var(--placeholder-color-rgb), 0.03);
+        border-radius: 2px;
       }
       h3 {
         font-size: 28px;
         font-style: italic;
-        margin-top: 0;
       }
       p {
         font-style: italic;
       }
       .bottom {
-        margin-top: 30px;
+        margin-top: 1.25em;
       }
       /* todo do I really have to set it? */
       .bottom hg-list-editable-text  {
@@ -37,6 +40,12 @@ customElements.define('hg-review', class extends LitElement {
         h3 {
           font-size: 24px;
           margin-bottom: 15px;
+        }
+        :host {
+          border: none;
+          border-top: solid 1px var(--divider-color);
+          border-bottom:  solid 1px var(--divider-color);
+          border-radius: 0;
         }
       }
     `];

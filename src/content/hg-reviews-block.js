@@ -16,11 +16,11 @@ customElements.define('hg-reviews-block', class extends LitElement {
     return [sharedStyles, css`
       :host {
         display: block;
-        margin: 60px auto -40px;
+        margin: 60px auto;
       }
       .container {
         display: flex;
-        margin: 60px auto;
+        margin: 60px auto 0;
         flex-direction: row;
         justify-content: center;
       }
@@ -39,9 +39,9 @@ customElements.define('hg-reviews-block', class extends LitElement {
       }
       hg-reviews-slider {
         display: block;
-        width: 600px;
+        width: 580px;
         max-width: 100%;
-        height: 300px;
+        height: 380px;
         margin: 0 20px;
       }
       @media all and (max-width: 1159px) {
@@ -61,13 +61,12 @@ customElements.define('hg-reviews-block', class extends LitElement {
         }
       }
       @media all and (max-width: 959px) {
-        :host {
-          margin: 60px auto;
-        }
         .container {
+          margin: 20px auto 0;
           display: block;
         }
         hg-reviews-slider {
+          height: 320px;
           margin: 40px auto 0;
         }
       }
@@ -75,13 +74,21 @@ customElements.define('hg-reviews-block', class extends LitElement {
         :host(:not([scores])) hg-image {
           height: 280px;
         }
+        hg-reviews-slider {
+          height: 320px;
+        }
       }
       @media all and (max-width: 479px) {
         :host(:not([scores])) hg-image {
           height: 200px;
         }
         hg-reviews-slider {
-          height: 340px;
+          height: 350px;
+        }
+      }
+      @media all and (max-width: 399px) {
+        hg-reviews-slider {
+          height: 420px;
         }
       }
     `];
