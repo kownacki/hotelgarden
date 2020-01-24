@@ -39,9 +39,8 @@ customElements.define('hg-halls-slider', class extends LitElement {
   render() {
     return html`
       <hg-slider
-        .uid=${this.uid}
         .items=${this._hallsBlock}
-        .template=${(hall) => html`<hg-halls-slider-item .hall=${hall} .dataReady=${this._dataReady}></hg-halls-slider-item>`}>
+        .template=${(hall) => html`<hg-halls-slider-item .uid=${this.uid} .hall=${hall} .dataReady=${this._dataReady}></hg-halls-slider-item>`}>
       </hg-slider>
     `;
   }

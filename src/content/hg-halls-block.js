@@ -30,6 +30,8 @@ customElements.define('hg-halls-block', class extends LitElement {
       hg-image {
         margin: 0 40px;
         flex: 1;
+        width: 670px;
+        max-width: 100%;
         height: 400px;
       }
       @media all and (max-width: 959px) {
@@ -46,21 +48,25 @@ customElements.define('hg-halls-block', class extends LitElement {
           margin: 40px auto 0;
         }
         hg-image {
-          margin: 0 20px;
+          margin: auto;
+          width: 750px;
+          max-width: calc(100% - 40px);
         }
       }
       @media all and (max-width: 599px) {
         :host(:not([scores])) hg-image {
           height: 280px;
-          max-width: 750px;
         }
         hg-halls-slider {
-          height: 500px;
+          height: 350px;
         }
       }
       @media all and (max-width: 479px) {
         :host(:not([scores])) hg-image {
           height: 200px;
+        }
+        hg-halls-slider {
+          height: 450px;
         }
       }
     `];

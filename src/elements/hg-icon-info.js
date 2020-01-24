@@ -25,7 +25,6 @@ customElements.define('hg-icon-info', class extends LitElement {
         filter: var(--primary-color-filter)
       }
       .text {
-        font-size: 20px;
         min-width: 20px;
       }
       hg-editable-text {
@@ -33,6 +32,13 @@ customElements.define('hg-icon-info', class extends LitElement {
       }
       :host > :last-child hg-editable-text {
         margin-right: 0;
+      }
+
+      @media all and (max-width: 599px) {
+        iron-icon {
+          min-width: 24px;
+          height: 24px;
+        }
       }
     `;
   }

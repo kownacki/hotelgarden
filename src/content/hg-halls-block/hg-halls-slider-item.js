@@ -7,6 +7,7 @@ import '../../elements/hg-icon-info.js';
 customElements.define('hg-halls-slider-item', class extends LitElement {
   static get properties() {
     return {
+      uid: String,
       hall: Object,
       dataReady: Boolean,
     };
@@ -23,13 +24,14 @@ customElements.define('hg-halls-slider-item', class extends LitElement {
       h3 {
         margin-top: 0;
       }
-      hg-action-buttons {
-        margin-top: 40px;
+      div {
+        margin-top: 20px;
       }
-      @media all and (max-width: 479px) {
-        p {
-          font-size: 16px;
-        }
+      hg-icon-info {
+        margin-bottom: 20px;
+      }
+      hg-action-buttons {
+        margin-top: 30px;
       }
     `];
   }
@@ -56,12 +58,15 @@ customElements.define('hg-halls-slider-item', class extends LitElement {
         @save=${(event) => this.updateData(`${this.hall.index}.${['size', 'people'][event.detail.index]}`, event.detail.text)}>
       </hg-icon-info>
       <hg-editable-text
+        class="text"
         float
         .ready=${this.dataReady}
+        .rich=${true}
+        .richConfig=${'intro'}
         multiline
         .text=${this.hall.text}
         @save=${(event) => this.updateData(`${this.hall.index}.text`, event.detail)}>
-        <p></p>
+        <div class="smaller-text"></div>
       </hg-editable-text>
       <hg-action-buttons 
         .buttons=${staticProp([
