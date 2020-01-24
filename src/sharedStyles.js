@@ -87,6 +87,12 @@ export default css`
     padding: 20px 40px !important;
     border: none !important;
   }
+  .editable-text-ckeditor figure {
+    margin: 10px auto;
+  }
+  .editable-text-ckeditor img {
+    max-width: 100%;
+  }
   @media all and (max-width: 959px) {
     body, :host {
       font-size: 18px;
