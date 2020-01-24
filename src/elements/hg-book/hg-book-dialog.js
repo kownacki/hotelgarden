@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
-import {staticProp, getData, detectMobile} from '../../utils.js';
+import {staticProp, getData, openProfitroom} from '../../utils.js';
 import sharedStyles from "../../sharedStyles";
 import '../hg-dialog.js';
 import '../hg-action-button.js';
@@ -98,16 +98,9 @@ customElements.define('hg-book-dialog', class extends LitElement {
                 .ready=${this._dataReady}>
                 <div></div>
               </hg-text>
-              <hg-action-button .click=${() => {
-                if (detectMobile()) {
-                  window.open(`https://booking.profitroom.com/pl/${location.name === 'villa' ? 'villagarden' : 'hotelgarden'}/pricelist/rooms/?check-in=${moment().format('YYYY-MM-DD')}&check-out=${moment().add(1, 'day').format('YYYY-MM-DD')}&r1_adults=2&code=&currency=PLN`, '_self');
-                } else {
-                  document.getElementById('wis2-chain').selectedIndex = location.profitroomId;
-                  document.getElementById('wis2-open-booking').click();
-                }
-              }}>Wybierz</hg-action-button>
+              <hg-action-button .click=${() => openProfitroom(location.name)}>Wybierz</hg-action-button>
             </div>
-          `, [{name: 'villa', profitroomId: 1}, {name: 'hotel', profitroomId: 2}])}     
+          `, [{name: 'villa'}, {name: 'hotel'}])}     
         </div>
       </hg-dialog>
     `;

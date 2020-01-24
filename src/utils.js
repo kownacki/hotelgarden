@@ -152,6 +152,15 @@ export const detectMobile = () => {
   }
 };
 
+export const openProfitroom = (name) => {
+  if (detectMobile()) {
+    window.open(`https://booking.profitroom.com/pl/${name === 'villa' ? 'villagarden' : 'hotelgarden'}/pricelist/rooms/?check-in=${moment().format('YYYY-MM-DD')}&check-out=${moment().add(1, 'day').format('YYYY-MM-DD')}&r1_adults=2&code=&currency=PLN`, '_self');
+  } else {
+    document.getElementById('wis2-chain').selectedIndex = (name === 'villa' ? 1 : 2);
+    document.getElementById('wis2-open-booking').click();
+  }
+};
+
 export const pathToUid = {
   '/index.html': 'landing',
   '/': 'landing',
