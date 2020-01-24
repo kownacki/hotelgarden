@@ -20,7 +20,7 @@ customElements.define('hg-reviews-block', class extends LitElement {
       }
       .container {
         display: flex;
-        flex-direction: row-reverse;
+        flex-direction: row;
         justify-content: center;
       }
       hg-scores, hg-image {
@@ -95,9 +95,9 @@ customElements.define('hg-reviews-block', class extends LitElement {
     return html`
       <hg-heading center>${'Nasi goście o nas'}</hg-heading>
       <div class="container">
-        <hg-reviews-slider .reviews=${this._reviews}></hg-reviews-slider>
         <hg-scores></hg-scores>
         <hg-image sizing=${'cover'} .path=${staticProp({doc: `images/${this.uid}-reviews-block`})}></hg-image>
+        <hg-reviews-slider .reviews=${this._reviews}></hg-reviews-slider>
       </div>
     `;
   }

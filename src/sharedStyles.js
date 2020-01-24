@@ -14,21 +14,17 @@ export default css`
     font-size: 40px;
     margin: 30px 0;
   }
-  h3 {
+  h3, paper-dialog h2 {
     font-size: 35px;
     margin: 27px 0;
   }
-  h4, paper-dialog h2 {
+  h4, paper-dialog h3 {
     font-size: 30px;
     margin: 24px 0;
   }
-  paper-dialog h3 {
+  paper-dialog h4  {
     font-size: 27px;
     margin: 21px 0;
-  }
-  paper-dialog h4 {
-    font-size: 24px;
-    margin: 19px 0;
   }
   h1, h2, h3, h4 {
     word-break: break-word;
@@ -102,15 +98,19 @@ export default css`
     }
     h2 {
       font-size: 35px;
+      margin: 27px 0;
     }
     h3, paper-dialog h2 {
       font-size: 30px;
+      margin: 24px 0;
     }
     h4, paper-dialog h3 {
       font-size: 27px;
+      margin: 21px 0;
     }
     paper-dialog h4 {
       font-size: 24px;
+      margin: 19px 0;
     }
   }
   @media all and (max-width: 599px) {

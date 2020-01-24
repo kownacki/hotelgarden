@@ -20,6 +20,7 @@ customElements.define('hg-halls-block', class extends LitElement {
         max-width: 1200px;
         margin: 60px auto;
         display: flex;
+        flex-direction: row-reverse;
         justify-content: center;
       }
       hg-halls-slider {
@@ -66,8 +67,8 @@ customElements.define('hg-halls-block', class extends LitElement {
     return html`
       <hg-text-image .uid=${this.uid + '-halls-block'}></hg-text-image>
       <div class="container">
-        <hg-halls-slider .uid=${this.uid}></hg-halls-slider>
         <hg-image .sizing=${'cover'} .path=${staticProp({doc: `images/${this.uid}-halls-block`})}></hg-image>
+        <hg-halls-slider .uid=${this.uid}></hg-halls-slider>
       </div>
     `;
   }

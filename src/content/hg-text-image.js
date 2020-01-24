@@ -1,6 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
 import {db, updateData, updateImage} from "../utils.js";
-import '../elements/hg-heading.js';
 import '../edit/hg-editable-image.js';
 import '../edit/hg-editable-text.js';
 import '../elements/hg-action-buttons.js';
@@ -32,7 +31,7 @@ customElements.define('hg-text-image', class extends LitElement {
     return [sharedStyles, css`
       :host {
         max-width: 1250px;
-        margin: 60px auto;
+        margin: 80px auto;
         padding: 0 25px;
         display: flex;
       }
@@ -48,12 +47,12 @@ customElements.define('hg-text-image', class extends LitElement {
         padding: 30px;
       }
       hg-action-buttons {
-        margin-top: 40px;
+        margin-top: 30px;
       }
       @media all and (max-width: 959px) {
         :host, :host([swap]) {
           max-width: 750px;
-          flex-direction: column-reverse;
+          flex-direction: column;
         }
         hg-editable-image {
           width: 100%;
@@ -61,12 +60,12 @@ customElements.define('hg-text-image', class extends LitElement {
         }
         .content {
           width: auto;
-          padding: 0 0 40px;
+          padding: 0;
         }
       }
       @media all and (max-width: 599px) {
         :host {
-          margin: 40px auto;
+          margin: 60px auto 80px;
         }
         hg-editable-image {
           height: 280px;
@@ -98,7 +97,7 @@ customElements.define('hg-text-image', class extends LitElement {
           .ready=${this._dataReady}
           .text=${_.get('heading', this._textImage)}
           @save=${(event) => this.updateData('heading', event.detail)}>
-          <hg-heading ?h3=${this.h3}></hg-heading>
+          ${!this.h3 ? html`<h2></h2>` : html`<h3></h3>`}
         </hg-editable-text>
         ${_.isEmpty(this.iconFields) ? '' : html`<hg-icon-info
           .dataReady=${this._dataReady}

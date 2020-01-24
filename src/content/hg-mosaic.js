@@ -1,6 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
 import {db, updateData, updateImage} from "../utils.js";
-import '../elements/hg-heading.js';
 import '../edit/hg-editable-image.js';
 import '../edit/hg-editable-text.js';
 import '../elements/hg-action-buttons.js';
@@ -44,11 +43,8 @@ customElements.define('hg-mosaic', class extends LitElement {
       .content {
         margin: 40px;
       }
-      hg-heading:focus {
-        text-transform: initial;
-      }
       hg-action-buttons {
-        margin-top: 40px;
+        margin-top: 30px;
       }
       @media all and (max-width: 959px) {
         :host {
@@ -81,13 +77,20 @@ customElements.define('hg-mosaic', class extends LitElement {
   }
   render() {
     return html`
+      <div class="left">
+        <hg-editable-image
+          presize
+          .src=${_.get('primary.image.url', this._mosaic)}
+          @save=${(event) => this.updateImage('primary.image', event.detail)}>
+        </hg-editable-image>
+      </div>
       <div class="right">
         <div class="content">
           <hg-editable-text
             .ready=${this._dataReady}
             .text=${_.get('primary.heading', this._mosaic)}
             @save=${(event) => this.updateData('primary.heading', event.detail)}>
-            <hg-heading></hg-heading>
+            <h2></h2>
           </hg-editable-text>
           <hg-editable-text
             .ready=${this._dataReady}
@@ -98,19 +101,19 @@ customElements.define('hg-mosaic', class extends LitElement {
           </hg-editable-text>
           ${!_.get('primary', this.buttons) ? '' : html`<hg-action-buttons .buttons=${this.buttons.primary}></hg-action-buttons>`}
         </div>
-      </div>
-      <div class="left">
         <hg-editable-image
           presize
-          .src=${_.get('primary.image.url', this._mosaic)}
-          @save=${(event) => this.updateImage('primary.image', event.detail)}>
+          .src=${_.get('secondary.image.url', this._mosaic)}
+          @save=${(event) => this.updateImage('secondary.image', event.detail)}>
         </hg-editable-image>
+      </div>
+      <div class="left">
         <div class="content">
            <hg-editable-text
             .ready=${this._dataReady}
             .text=${_.get('secondary.heading', this._mosaic)}
             @save=${(event) => this.updateData('secondary.heading', event.detail)}>
-            <hg-heading></hg-heading>
+            <h2></h2>
           </hg-editable-text>
           <hg-editable-text
             .ready=${this._dataReady}
@@ -121,13 +124,6 @@ customElements.define('hg-mosaic', class extends LitElement {
           </hg-editable-text>
           ${!_.get('secondary', this.buttons) ? '' : html`<hg-action-buttons .buttons=${this.buttons.secondary}></hg-action-buttons>`}
         </div>
-      </div>
-      <div class="right">
-        <hg-editable-image
-          presize
-          .src=${_.get('secondary.image.url', this._mosaic)}
-          @save=${(event) => this.updateImage('secondary.image', event.detail)}>
-        </hg-editable-image>
       </div>
     `;
   }
