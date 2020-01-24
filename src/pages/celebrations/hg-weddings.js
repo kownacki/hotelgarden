@@ -24,9 +24,9 @@ customElements.define('hg-weddings', class extends LitElement {
       <hg-quote .uid=${'weddings'}></hg-quote>
       <hg-icons .uid=${'weddings'}></hg-icons>
       <hg-content-slider .uid=${'weddings'}></hg-content-slider>
-      <hg-mosaic .uid=${'weddings'}}></hg-mosaic>
+      <hg-mosaic .uid=${'weddings'}></hg-mosaic>
       <hg-reviews-block uid=${'weddings'}></hg-reviews-block>
-      <hg-text-image swap .uid=${'weddings'}}></hg-text-image>
+      <hg-text-image swap .uid=${'weddings'}></hg-text-image>
       <hg-content-slider .uid=${'weddings-2'}></hg-content-slider>
       <hg-halls-block .uid=${'weddings'}></hg-halls-block>
       <hg-contact-block></hg-contact-block>
