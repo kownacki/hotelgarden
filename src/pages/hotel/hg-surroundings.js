@@ -20,7 +20,7 @@ customElements.define('hg-surroundings', class extends LitElement {
     return html`
       <hg-intro-article .uid=${'surroundings'}></hg-intro-article>
       <hg-content-slider .uid=${'surroundings'}></hg-content-slider>
-      <hg-text-image .uid=${'surroundings'} .buttons=${staticProp([{url: '/grill-garden'}])}></hg-text-image>
+      <hg-text-image .uid=${'surroundings'} .buttons=${staticProp([{url: '/grill-garden', text: 'Zobacz ofertę'}])}></hg-text-image>
       <hg-links .path=${'/olesnica-i-okolice'} .superpath=${'/'}></hg-links>
     `;
   }

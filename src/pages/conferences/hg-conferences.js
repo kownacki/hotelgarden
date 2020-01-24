@@ -22,7 +22,7 @@ customElements.define('hg-conferences', class extends LitElement {
       <hg-content-slider .uid=${'conferences'}></hg-content-slider>
       <hg-mosaic .uid=${'conferences'} .buttons=${staticProp({
         primary: [{url: '#', text: 'Zobacz ofertę'}, {url: '#', text: 'Lorem ipsum'}],
-        secondary: [{url: '#'}],
+        secondary: [{url: '#', text: 'Zobacz ofertę'}],
       })}></hg-mosaic>
       <hg-halls-block .uid=${'conferences'}></hg-halls-block>
       <hg-heading center>${'Nowoczesne wyposażenie'}</hg-heading>

@@ -9,6 +9,7 @@ body {
   --secondary-color: var(--paper-grey-800);
   --secondary-color-rgb: 117, 117, 117;
   --accent-color: #4f6884;
+  --accent-color-dark: #324254;
   --accent-color-rgb: 79, 104, 132;
   --placeholder-color: var(--paper-grey-500);
   --placeholder-color-rgb: 158, 158, 158;

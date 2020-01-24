@@ -22,7 +22,7 @@ customElements.define('hg-villa-garden', class extends LitElement {
       <hg-icons .uid=${'villa-garden'}></hg-icons>
       <hg-mosaic .uid=${'villa-garden'} .buttons=${staticProp({
         primary: [{url: '#', text: 'Zobacz ofertę'}, {url: '#', text: 'Lorem ipsum'}],
-        secondary: [{url: '#'}],
+        secondary: [{url: '#', text: 'Zobacz ofertę'}],
       })}></hg-mosaic>
       <hg-links .path=${'/villa-garden'} .superpath=${'/'}></hg-links>
     `;

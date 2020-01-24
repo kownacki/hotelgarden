@@ -29,9 +29,9 @@ customElements.define('hg-landing', class extends LitElement {
       <hg-icons .uid=${'landing'}></hg-icons>
       <hg-mosaic .uid=${'landing'} .buttons=${staticProp({
         primary: [{url: '#', text: 'Zobacz ofertę'}, {url: '#', text: 'Lorem ipsum'}],
-        secondary: [{url: '#'}],
+        secondary: [{url: '#', text: 'Zobacz ofertę'}],
       })}></hg-mosaic>
-      <hg-text-image .uid=${'landing'} .buttons=${staticProp([{url: '#'}])}></hg-text-image>
+      <hg-text-image .uid=${'landing'} .buttons=${staticProp([{url: '#', text: 'Zobacz ofertę'}])}></hg-text-image>
       <hg-reviews-block .uid=${'landing'} scores></hg-reviews-block>
       <hg-infographic .uid=${'landing'}></hg-infographic>
       <hg-content-slider .uid=${'landing'}></hg-content-slider>

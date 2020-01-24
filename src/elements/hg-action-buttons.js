@@ -1,4 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
+import './hg-action-button.js';
 
 customElements.define('hg-action-buttons', class extends LitElement {
   static get properties() {
@@ -9,26 +10,19 @@ customElements.define('hg-action-buttons', class extends LitElement {
   static get styles() {
     return css`
       :host {
-        display: flex;
+        display: block;
+        margin-right: -10px;
       }
-      a {
-        text-decoration: none;
-        color: white;
-        background: var(--accent-color);
-        padding: 15px 30px;
-        margin-right: 30px;
-      }
-      a:last-child {
-        margin-right: 0;
+      hg-action-button {
+        margin-right: 10px;
+        margin-bottom: 8px;
       }
     `;
   }
   render() {
     return html`
       ${_.map((button) => html`
-        <a href="${button.url}">
-          ${button.text || 'Zobacz więcej'}
-        </a>
+        <hg-action-button .url=${button.url} .click=${button.click}>${button.text}</hg-action-button>
       `, this.buttons)}
     `;
   }

@@ -21,8 +21,8 @@ customElements.define('hg-cuisine', class extends LitElement {
       <hg-icons .uid=${'cuisine'}></hg-icons>
       <hg-content-slider></hg-content-slider>
       <hg-mosaic .uid=${'cuisine'} .buttons=${staticProp({primary: [{url: '/restauracja#menu', text: 'Zobacz menu'}]})}></hg-mosaic>
-      <hg-text-image .uid=${'cuisine-extra1'} .buttons=${staticProp([{url: '#'}])}></hg-text-image>
-      <hg-text-image swap .uid=${'landing-extra2'} .buttons=${staticProp([{url: '#'}])}></hg-text-image>
+      <hg-text-image .uid=${'cuisine-extra1'} .buttons=${staticProp([{url: '#', text: 'Zobacz ofertę'}])}></hg-text-image>
+      <hg-text-image swap .uid=${'landing-extra2'} .buttons=${staticProp([{url: '#', text: 'Zobacz ofertę'}])}></hg-text-image>
       <hg-links .path=${'/kuchnia'} .superpath=${'/kuchnia'}></hg-links>
     `;
   }
