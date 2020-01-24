@@ -11,6 +11,7 @@ customElements.define('hg-intro-article', class extends HgArticle {
         margin: 80px auto;
       }
       /* remove it when edited */
+      /* todo effect disapears when editing is on */
       p:not(:focus):first-letter {
         font-size: 3em;
         float: left;
@@ -25,5 +26,8 @@ customElements.define('hg-intro-article', class extends HgArticle {
   }
   constructor() {
     super();
+    this.richConfig = 'intro';
+    this.rich = true;
+    this.div = true;
   }
 });

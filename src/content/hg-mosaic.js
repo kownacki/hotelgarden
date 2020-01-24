@@ -95,6 +95,8 @@ customElements.define('hg-mosaic', class extends LitElement {
           <hg-editable-text
             .ready=${this._dataReady}
             multiline
+            .rich=${true}
+            .richConfig=${'mosaic'}
             .text=${_.get('primary.text', this._mosaic)}
             @save=${(event) => this.updateData('primary.text', event.detail)}>
             <p></p>
@@ -118,6 +120,8 @@ customElements.define('hg-mosaic', class extends LitElement {
           <hg-editable-text
             .ready=${this._dataReady}
             multiline
+            .rich=${true}
+            .richConfig=${'mosaic'}
             .text=${_.get('secondary.text', this._mosaic)}
             @save=${(event) => this.updateData('secondary.text', event.detail)}>
             <p></p>

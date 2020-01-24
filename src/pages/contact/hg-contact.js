@@ -23,7 +23,7 @@ customElements.define('hg-contact', class extends LitElement {
   }
   render() {
     return html`
-      <hg-article .rich=${true} .uid=${'contact'}></hg-article>
+      <hg-article .rich=${true} .uid=${'contact'}><div class="smaller-text"></div></hg-article>
       <hg-contact-form></hg-contact-form>
       <hg-map></hg-map>
     `;

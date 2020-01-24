@@ -9,7 +9,9 @@ export default class HgEditableText extends LitElement {
       ready: {type: Boolean, reflect: true},
       disabled: Boolean,
       showControls: Boolean,
+      //todo rich and lessRich into one property
       rich: Boolean,
+      richConfig: String, // 'mosaic' / 'intro' / default full
       multiline: {type: Boolean, reflect: true},
       float: {type: Boolean, reflect: true},
       _editable: Element,
@@ -54,7 +56,22 @@ export default class HgEditableText extends LitElement {
       import('/node_modules/@ckeditor/ckeditor5-build-inline/build/ckeditor.js'),
       moveOutFromShadowDom(this._editable),
     ]);
-    this._editor = await InlineEditor.create(this._editable);
+    this._editor = await InlineEditor.create(
+      this._editable,
+      this.richConfig === 'mosaic'
+        ? {
+            removePlugins: _(InlineEditor.builtinPlugins).map(_.get('pluginName'))
+              .without('Essentials', 'Autoformat', 'Bold', 'Italic', 'Link', 'List', 'Paragraph').value(),
+            toolbar: ['bold', 'italic', 'link', 'bulletedList', 'numberedList', 'undo', 'redo'],
+          }
+        : this.richConfig === 'intro'
+        ? {
+          removePlugins: _(InlineEditor.builtinPlugins).map(_.get('pluginName'))
+            .without('Essentials', 'Autoformat', 'Bold', 'Italic', 'Link', 'Paragraph').value(),
+          toolbar: ['bold', 'italic', 'link', 'undo', 'redo'],
+        }
+        : {},
+    );
     this._editor.model.document.on('change:data', () => {
       this.showControls = true;
       this.setAttribute('not-empty', '');

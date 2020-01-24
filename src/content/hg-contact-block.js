@@ -12,7 +12,7 @@ customElements.define('hg-contact-block', class extends LitElement {
   render() {
     return html`
       <hg-heading center>${'Skontaktuj się'}</hg-heading>
-      <hg-article .rich=${true} .uid=${'contact-block'}></hg-article>
+      <hg-article .rich=${true} .uid=${'contact-block'}><div></div></hg-article>
       <hg-contact-form .subject=${'gastro'}></hg-contact-form>
     `;
   }

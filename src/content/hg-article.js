@@ -9,6 +9,8 @@ export default class HgArticle extends LitElement {
     return {
       uid: Number,
       rich: Boolean,
+      richConfig: Boolean,
+      div: Boolean,
       _text: String,
       _dataReady: Boolean,
     };
@@ -41,13 +43,14 @@ export default class HgArticle extends LitElement {
       <hg-editable-text
         .ready=${this._dataReady}
         .rich=${this.rich}
+        .richConfig=${this.richConfig}
         multiline
         .text=${this._text}
         @save=${(event) => {
           this._text = event.detail;
           db.doc('articles/' + this.uid).set({text: event.detail}, {merge: true})}
         }>
-        <p></p>
+        ${this.div ? html`<div></div>` : html`<slot></slot>`}
       </hg-editable-text>
       <hg-content-label .name=${'Pole tekstowe'}></hg-content-label>
     `;

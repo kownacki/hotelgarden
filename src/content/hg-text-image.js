@@ -106,6 +106,8 @@ customElements.define('hg-text-image', class extends LitElement {
         </hg-icon-info>`}
         <hg-editable-text
           .ready=${this._dataReady}
+          .rich=${true}
+          .richConfig=${'mosaic'}
           multiline
           .text=${_.get('text', this._textImage)}
           @save=${(event) => this.updateData('text', event.detail)}>

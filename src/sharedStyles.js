@@ -43,6 +43,9 @@ export default css`
     max-width: 100%;
     box-sizing: border-box;
   }
+  .smaller-text {
+    font-size: 18px;
+  }
   .editable-text-ckeditor {
     padding: 0 !important;
     margin: 1px;
@@ -55,13 +58,7 @@ export default css`
   }
   .editable-text-ckeditor p, .editable-text-ckeditor ul {
     line-height: 1.4em;
-    font-size: 18px;
     padding: 0 !important;
-  }
-  @media all and (max-width: 599px) {
-    .editable-text-ckeditor {
-      font-size: 16px;
-    }
   }
   .editable-text-ckeditor ul {
     list-style: none;
@@ -98,6 +95,11 @@ export default css`
   }
   .editable-text-ckeditor img {
     max-width: 100%;
+  }
+  @media all and (max-width: 599px) {
+    .smaller-text {
+      font-size: 16px;
+    }
   }
   @media all and (max-width: 959px) {
     body, :host {

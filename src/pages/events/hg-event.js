@@ -140,7 +140,7 @@ customElements.define('hg-event', class extends LitElement {
                 this._content = event.detail;
                 db.doc('eventsContents/' + this.uid).set({content: event.detail});
               }}>
-              <div></div>
+              <div class="smaller-text"></div>
             </hg-editable-text>`}
           </div>
         `}

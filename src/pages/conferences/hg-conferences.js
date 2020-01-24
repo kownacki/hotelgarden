@@ -28,7 +28,7 @@ customElements.define('hg-conferences', class extends LitElement {
       <hg-heading center>${'Nowoczesne wyposażenie'}</hg-heading>
       <hg-icons .uid=${'conferences-halls'}></hg-icons>
       <hg-heading center>${'Food & Beverages'}</hg-heading>
-      <hg-article .uid=${'conferences-cuisine'}></hg-article>
+      <hg-article .uid=${'conferences-cuisine'}><div></div></hg-article>
       <hg-content-slider .uid=${'conferences-cuisine'}></hg-content-slider>
       <hg-contact-block></hg-contact-block>
     `;
