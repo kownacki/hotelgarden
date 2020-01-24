@@ -16,20 +16,36 @@ export default css`
   }
   h3 {
     font-size: 35px;
-    margin: 25px 0;
+    margin: 27px 0;
   }
-  h4 {
+  h4, paper-dialog h2 {
     font-size: 30px;
-    margin: 20px 0;
+    margin: 24px 0;
+  }
+  paper-dialog h3 {
+    font-size: 27px;
+    margin: 21px 0;
+  }
+  paper-dialog h4 {
+    font-size: 24px;
+    margin: 19px 0;
   }
   h1, h2, h3, h4 {
     word-break: break-word;
     color: var(--primary-color);
+    /* for headings in paper-dialog */
+    line-height: normal;
     font-weight: 300;
   }
   .editable-text-ckeditor {
     padding: 0 !important;
     margin: 1px;
+  }
+  .editable-text-ckeditor > :first-child {
+    margin-top: 0 !important;
+  }
+  .editable-text-ckeditor > :last-child {
+    margin-bottom: 0 !important;
   }
   .editable-text-ckeditor p, .editable-text-ckeditor ul {
     line-height: 1.4em;
@@ -81,15 +97,18 @@ export default css`
     h2 {
       font-size: 35px;
     }
-    h3 {
+    h3, paper-dialog h2 {
       font-size: 30px;
     }
-    h4 {
-      font-size: 25px;
+    h4, paper-dialog h3 {
+      font-size: 27px;
+    }
+    paper-dialog h4 {
+      font-size: 24px;
     }
   }
   @media all and (max-width: 599px) {
-    body, :host {
+    body, :host, paper-dialog  {
       font-size: 16px;
     }
     h1 {
@@ -98,11 +117,17 @@ export default css`
     h2 {
       font-size: 27px;
     }
-    h3 {
+    h3, paper-dialog h2 {
       font-size: 24px;
     }
-    h4 {
+    h4, paper-dialog h3 {
       font-size: 21px;
+    }
+    paper-dialog h4 {
+      font-size: 19px;
+    }
+    .editable-text-ckeditor p, .editable-text-ckeditor ul {
+      font-size: 16px;
     }
   }
   [hidden] {

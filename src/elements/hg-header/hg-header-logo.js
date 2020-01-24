@@ -51,7 +51,7 @@ customElements.define('hg-header-logo', class extends LitElement {
         top: 65px;
         opacity: 0;
       }
-      @media all and (max-width: 1023px) {
+      @media all and (max-width: 1279px) {
         a {
           width: 120px;
         }

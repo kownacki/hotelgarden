@@ -54,14 +54,14 @@ customElements.define('hg-page', class extends LitElement {
       <app-location use-hash-as-path @route-changed=${async (event) => {
         await new Promise((resolve) => setTimeout(resolve, seconds === 0 ? 1000 : 500));
         const hash = event.detail.value.path;
-        if (hash && hash !== 'slider') {
+        if (hash && hash !== 'slider' && hash !== 'dialog') {
           const element = this.shadowRoot.getElementById('page').shadowRoot.getElementById(hash);
           window.scrollTo({
             top: element.offsetTop - headerHeight - 10,
           });
         }
       }}></app-location>
-      ${this.event 
+      ${this.event
         ? html`<hg-event .uid=${this.uid} class="page"></hg-event>`
         : html`
           <hg-banner .noImage=${this.noBannerImage} .uid=${this.uid}></hg-banner>

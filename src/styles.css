@@ -13,6 +13,7 @@ body {
   --accent-color-rgb: 79, 104, 132;
   --placeholder-color: var(--paper-grey-500);
   --placeholder-color-rgb: 158, 158, 158;
+  --divider-color: rgba(0, 0, 0, 0.12);
   --logotype-color: #84979E;
   --logotype-color-filter: invert(73%) sepia(6%) saturate(853%) hue-rotate(150deg) brightness(91%) contrast(79%);
   --headerHeight: 59.5px;

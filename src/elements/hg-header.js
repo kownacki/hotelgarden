@@ -1,6 +1,7 @@
 import {LitElement, html, css} from 'lit-element';
 import './hg-header/hg-header-subnav.js';
 import './hg-header/hg-header-logo.js';
+import './hg-book/hg-book-button.js';
 import {links} from '../utils.js';
 
 customElements.define('hg-header', class extends LitElement {
@@ -87,15 +88,23 @@ customElements.define('hg-header', class extends LitElement {
       :host([scrolled-down]) paper-icon-button, :host([no-banner-image]) paper-icon-button {
         color: var(--primary-color);
       }
-      @media all and (max-width: 1023px) {
+      hg-book-button {
+        position: absolute;
+        top: 9px;
+        right: 15px;
+      }
+      @media all and (max-width: 1279px) {
         li {
           margin-right: 5px;
         }
         a {
           padding: 10px 7px;
         }
+        hg-book-button {
+          right: 5px;
+        }
       }
-      @media all and (max-width: 959px) {
+      @media all and (max-width: 1023px) {
         nav {
           display: none;
         }
@@ -131,6 +140,7 @@ customElements.define('hg-header', class extends LitElement {
             `, links)}   
           </ul>
         </nav>
+        <hg-book-button></hg-book-button>
       </header>
     `;
   }
