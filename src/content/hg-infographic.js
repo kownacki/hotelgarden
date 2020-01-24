@@ -65,24 +65,6 @@ customElements.define('hg-infographic', class extends LitElement {
         font-weight: 300;
         font-size: 50px;
       }
-      @media all and (max-width: 399px) {
-        .item {
-          width: 100%;
-        }
-      }
-      @media all and (min-width: 400px) and (max-width: 719px) {
-        .item {
-          width: 50%;
-        }
-        .item:nth-child(even) {
-          flex-direction: column;
-        }
-        .item:nth-child(even)::after {
-          top: calc(50%);
-          border-top: 20px solid var(--paper-grey-200);
-          border-bottom: none;
-        }
-      }
       @media all and (min-width: 720px) {
         .item {
           width: 33.33%;
@@ -91,6 +73,22 @@ customElements.define('hg-infographic', class extends LitElement {
           flex-direction: column;
         }
         .item:nth-child(2)::after, .item:nth-child(5)::after {;
+          top: calc(50%);
+          border-top: 20px solid var(--paper-grey-200);
+          border-bottom: none;
+        }
+      }
+      @media all and (max-width: 719px) {
+        .number {
+          font-size: 40px;
+        }
+        .item {
+          width: 50%;
+        }
+        .item:nth-child(even) {
+          flex-direction: column;
+        }
+        .item:nth-child(even)::after {
           top: calc(50%);
           border-top: 20px solid var(--paper-grey-200);
           border-bottom: none;
