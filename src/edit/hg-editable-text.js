@@ -1,5 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
 import {headerHeight, moveOutFromShadowDom} from '../utils.js'
+import sharedStyles from "../sharedStyles.js";
 import firebase from "firebase";
 
 export default class HgEditableText extends LitElement {
@@ -91,9 +92,7 @@ export default class HgEditableText extends LitElement {
     if ((changedProperties.has('ready') && this.ready) || changedProperties.has('text')) {
       if (!this._editable) {
         this.setEditable();
-        if (this.rich) {
-          this._editable.classList.add('editable-text-ckeditor');
-        }
+        this._editable.classList.add('editable-text');
       }
       this._editable.innerHTML = this.text || (this.rich ? '<p></p>' : '');
       this.text ? this.setAttribute('not-empty', '') : this.removeAttribute('not-empty');
@@ -118,7 +117,7 @@ export default class HgEditableText extends LitElement {
     }
   }
   static get styles() {
-    return css`
+    return [sharedStyles, css`
       :host {
         display: block;
         position: relative;
@@ -171,7 +170,7 @@ export default class HgEditableText extends LitElement {
           font-size: 16px;
         }
       }
-    `;
+    `];
   }
   render() {
     return html`

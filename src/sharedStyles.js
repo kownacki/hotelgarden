@@ -46,28 +46,28 @@ export default css`
   .smaller-text {
     font-size: 18px;
   }
-  .editable-text-ckeditor {
+  .editable-text {
     padding: 0 !important;
     margin: 1px;
   }
-  .editable-text-ckeditor > :first-child {
+  .editable-text > :first-child {
     margin-top: 0 !important;
   }
-  .editable-text-ckeditor > :last-child {
+  .editable-text > :last-child {
     margin-bottom: 0 !important;
   }
-  .editable-text-ckeditor p, .editable-text-ckeditor ul {
+  .editable-text p, .editable-text ul {
     line-height: 1.4em;
     padding: 0 !important;
   }
-  .editable-text-ckeditor ul {
+  .editable-text ul {
     list-style: none;
     padding-left: 20px;
   }
-  .editable-text-ckeditor li {
+  .editable-text li {
     margin: 8px 0;
   }
-  .editable-text-ckeditor ul > li::before {
+  .editable-text ul > li::before {
     color: var(--primary-color);
     content: '\\25A0';
     width: 20px;
@@ -75,25 +75,25 @@ export default css`
     position: relative;
     bottom: 2px;
   }
-  .editable-text-ckeditor a {
+  .editable-text a {
     text-decoration: none;
     font-weight: 700;
     color: var(--accent-color);
   }
-  .editable-text-ckeditor a:hover {
+  .editable-text a:hover {
     text-decoration: underline;
   }
-  .editable-text-ckeditor .table table {
+  .editable-text .table table {
     border: none !important;
   }
-  .editable-text-ckeditor .table table td, .editable-text-ckeditor .table table th {
+  .editable-text .table table td, .editable-text .table table th {
     padding: 20px 40px !important;
     border: none !important;
   }
-  .editable-text-ckeditor figure {
+  .editable-text figure {
     margin: 10px auto;
   }
-  .editable-text-ckeditor img {
+  .editable-text img {
     max-width: 100%;
   }
   @media all and (max-width: 599px) {
@@ -144,7 +144,7 @@ export default css`
     paper-dialog h4 {
       font-size: 19px;
     }
-    .editable-text-ckeditor p, .editable-text-ckeditor ul {
+    .editable-text p, .editable-text ul {
       font-size: 16px;
     }
   }
