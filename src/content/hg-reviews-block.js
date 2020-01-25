@@ -35,7 +35,6 @@ customElements.define('hg-reviews-block', class extends LitElement {
         display: block;
         width: 480px;
         max-width: 100%;
-        height: 300px;
       }
       hg-reviews-slider {
         display: block;
@@ -55,9 +54,7 @@ customElements.define('hg-reviews-block', class extends LitElement {
           margin: 40px auto 20px ;
         }
         :host(:not([scores])) hg-image {
-          padding: 0 20px;
-          max-width: calc(100% - 40px);
-          margin: auto;
+          display: none;
         }
       }
       @media all and (max-width: 959px) {
@@ -71,17 +68,11 @@ customElements.define('hg-reviews-block', class extends LitElement {
         }
       }
       @media all and (max-width: 599px) {
-        :host(:not([scores])) hg-image {
-          height: 280px;
-        }
         hg-reviews-slider {
           height: 320px;
         }
       }
       @media all and (max-width: 479px) {
-        :host(:not([scores])) hg-image {
-          height: 200px;
-        }
         hg-reviews-slider {
           height: 350px;
         }
