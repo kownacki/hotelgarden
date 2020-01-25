@@ -5,7 +5,7 @@ import '../../elements/hg-banner.js';
 import './hg-events/hg-events-sidebar.js';
 import './hg-event/hg-event-edit-date.js';
 import {splitEvents, staticProp} from "../../utils";
-import sharedStyles from "../../sharedStyles";
+import sharedStyles from "../../styles/shared-styles";
 import ckContent from '../../styles/ck-content.js'
 import firebase from "firebase";
 

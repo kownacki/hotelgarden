@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit-element';
 import {db, updateImage, updateData} from "../utils";
 import '../edit/hg-editable-text.js';
-import sharedStyles from '../sharedStyles';
+import sharedStyles from '../styles/shared-styles';
 
 customElements.define('hg-banner', class extends LitElement {
   static get properties() {

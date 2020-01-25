@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
 import {sleep} from '../utils.js'
-import sharedStyles from "../sharedStyles";
+import sharedStyles from "../styles/shared-styles";
 
 const FIELDS = ['name', 'company', 'phone', 'email', 'text'];
 

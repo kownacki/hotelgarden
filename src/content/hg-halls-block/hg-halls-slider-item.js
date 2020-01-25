@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
 import {staticProp, updateData} from "../../utils.js";
-import sharedStyles from "../../sharedStyles.js";
+import sharedStyles from "../../styles/shared-styles.js";
 import ckContent from '../../styles/ck-content.js'
 import '../../elements/hg-action-buttons.js';
 import '../../elements/hg-icon-info.js';

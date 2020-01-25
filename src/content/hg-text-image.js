@@ -4,7 +4,7 @@ import '../edit/hg-editable-image.js';
 import '../edit/hg-editable-text.js';
 import '../elements/hg-action-buttons.js';
 import '../elements/hg-icon-info.js';
-import sharedStyles from "../sharedStyles";
+import sharedStyles from "../styles/shared-styles";
 import ckContent from '../styles/ck-content.js'
 
 customElements.define('hg-text-image', class extends LitElement {

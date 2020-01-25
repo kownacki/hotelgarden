@@ -3,7 +3,7 @@ import {staticProp} from '../utils.js';
 import './hg-halls-block/hg-halls-slider.js';
 import './hg-text-image.js';
 import '../elements/hg-image.js';
-import sharedStyles from "../sharedStyles";
+import sharedStyles from "../styles/shared-styles";
 
 customElements.define('hg-halls-block', class extends LitElement {
   static get properties() {

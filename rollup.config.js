@@ -26,9 +26,20 @@ export default [{
     terser(),
   ],
 }, {
-  input: 'src/sharedStyles.js',
+  input: 'src/styles/shared-styles.js',
   output: {
-    file: 'dist/src/sharedStyles.js',
+    file: 'dist/src/styles/shared-styles.js',
+    format: 'esm',
+  },
+  plugins: [
+    resolve(),
+    commonjs(), // For moment.js, which is not 100% es6 modules :(
+    terser(),
+  ],
+}, {
+  input: 'src/styles/ck-content.js',
+  output: {
+    file: 'dist/src/styles/ck-content.js',
     format: 'esm',
   },
   plugins: [

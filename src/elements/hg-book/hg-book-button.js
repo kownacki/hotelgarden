@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
-import sharedStyles from "../../sharedStyles.js";
+import sharedStyles from "../../styles/shared-styles.js";
 import '../hg-heading.js'
 import '../hg-action-button.js';
 import './hg-book-dialog';

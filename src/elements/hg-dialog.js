@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
-import sharedStyles from "../sharedStyles";
+import sharedStyles from "../styles/shared-styles";
 
 customElements.define('hg-dialog', class extends LitElement {
   static get properties() {

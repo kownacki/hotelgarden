@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
-import sharedStyles from '../sharedStyles.js'
+import sharedStyles from '../styles/shared-styles.js'
 
 customElements.define('hg-heading', class extends LitElement {
   static get properties() {

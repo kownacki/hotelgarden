@@ -2,7 +2,7 @@ import {LitElement, html, css} from 'lit-element';
 import {db, staticProp} from "../utils.js";
 import './hg-reviews-block/hg-scores.js';
 import './hg-reviews-block/hg-reviews-slider.js';
-import sharedStyles from "../sharedStyles";
+import sharedStyles from "../styles/shared-styles";
 
 customElements.define('hg-reviews-block', class extends LitElement {
   static get properties() {

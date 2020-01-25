@@ -2,7 +2,7 @@ import {LitElement, html, css} from 'lit-element';
 import {repeat} from 'lit-html/directives/repeat';
 import {db, splitEvents} from "../../utils.js";
 import moment from "moment";
-import sharedStyles from '../../sharedStyles.js';
+import sharedStyles from '../../styles/shared-styles.js';
 import '../../elements/hg-heading.js';
 import './hg-events/hg-events-card.js';
 import './hg-events/hg-events-add.js';

@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
 import {staticProp, getData, openProfitroom} from '../../utils.js';
-import sharedStyles from "../../sharedStyles";
+import sharedStyles from "../../styles/shared-styles";
 import ckContent from '../../styles/ck-content.js'
 import '../hg-dialog.js';
 import '../hg-action-button.js';
