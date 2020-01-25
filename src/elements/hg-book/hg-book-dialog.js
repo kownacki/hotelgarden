@@ -1,6 +1,7 @@
 import {LitElement, html, css} from 'lit-element';
 import {staticProp, getData, openProfitroom} from '../../utils.js';
 import sharedStyles from "../../sharedStyles";
+import ckContent from '../../styles/ck-content.js'
 import '../hg-dialog.js';
 import '../hg-action-button.js';
 import '../hg-heading.js'
@@ -26,7 +27,7 @@ customElements.define('hg-book-dialog', class extends LitElement {
     })();
   }
   static get styles() {
-    return [sharedStyles, css`
+    return [sharedStyles, ckContent, css`
       :host {
       }
       hg-dialog {
@@ -96,7 +97,7 @@ customElements.define('hg-book-dialog', class extends LitElement {
                 .noGetText=${true}
                 .text=${_.get(`${location.name}.text`, this._data)}
                 .ready=${this._dataReady}>
-                <div></div>
+                <div class="ck-content smaller-text"></div>
               </hg-text>
               <hg-action-button .click=${() => openProfitroom(location.name)}>Wybierz</hg-action-button>
             </div>

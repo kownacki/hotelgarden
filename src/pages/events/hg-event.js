@@ -6,6 +6,7 @@ import './hg-events/hg-events-sidebar.js';
 import './hg-event/hg-event-edit-date.js';
 import {splitEvents, staticProp} from "../../utils";
 import sharedStyles from "../../sharedStyles";
+import ckContent from '../../styles/ck-content.js'
 import firebase from "firebase";
 
 customElements.define('hg-event', class extends LitElement {
@@ -21,7 +22,7 @@ customElements.define('hg-event', class extends LitElement {
     };
   }
   static get styles() {
-    return [sharedStyles, css`
+    return [sharedStyles, ckContent, css`
       .container {
         display: flex;
         justify-content: center;
@@ -140,7 +141,7 @@ customElements.define('hg-event', class extends LitElement {
                 this._content = event.detail;
                 db.doc('eventsContents/' + this.uid).set({content: event.detail});
               }}>
-              <div class="smaller-text"></div>
+              <div class="ck-content smaller-text"></div>
             </hg-editable-text>`}
           </div>
         `}

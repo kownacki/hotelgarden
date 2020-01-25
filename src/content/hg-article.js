@@ -1,8 +1,10 @@
 import {LitElement, html, css} from 'lit-element';
-import {db} from '../utils.js';
-import '../edit/hg-editable-text.js';
+import {classMap} from 'lit-html/directives/class-map';
+import {staticProp} from '../utils.js';
+import '../elements/hg-text.js';
 import '../elements/hg-content-label.js';
 import sharedStyles from "../sharedStyles";
+import ckContent from '../styles/ck-content.js';
 
 export default class HgArticle extends LitElement {
   static get properties() {
@@ -10,21 +12,11 @@ export default class HgArticle extends LitElement {
       uid: Number,
       rich: Boolean,
       richConfig: Boolean,
-      div: Boolean,
-      _text: String,
-      _dataReady: Boolean,
+      classes: Object,
     };
   }
-  constructor() {
-    super();
-    (async () => {
-      await this.updateComplete;
-      this._text = _.get('text', (await db.doc('articles/' + this.uid).get()).data());
-      this._dataReady = true;
-    })();
-  }
   static get styles() {
-    return [sharedStyles, css`
+    return [sharedStyles, ckContent, css`
       :host {
         position: relative;
         display: block;
@@ -40,18 +32,13 @@ export default class HgArticle extends LitElement {
   }
   render() {
     return html`
-      <hg-editable-text
-        .ready=${this._dataReady}
+      <hg-text
+        .path=${staticProp({doc: 'articles/' + this.uid, field: 'text'})}
         .rich=${this.rich}
         .richConfig=${this.richConfig}
-        multiline
-        .text=${this._text}
-        @save=${(event) => {
-          this._text = event.detail;
-          db.doc('articles/' + this.uid).set({text: event.detail}, {merge: true})}
-        }>
-        ${this.div ? html`<div></div>` : html`<slot></slot>`}
-      </hg-editable-text>
+        .multiline=${true}>
+        <div class="ck-content ${classMap(this.classes)}"></div>
+      </hg-text>
       <hg-content-label .name=${'Pole tekstowe'}></hg-content-label>
     `;
   }

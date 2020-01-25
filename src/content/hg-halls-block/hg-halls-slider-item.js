@@ -1,6 +1,7 @@
 import {LitElement, html, css} from 'lit-element';
 import {staticProp, updateData} from "../../utils.js";
 import sharedStyles from "../../sharedStyles.js";
+import ckContent from '../../styles/ck-content.js'
 import '../../elements/hg-action-buttons.js';
 import '../../elements/hg-icon-info.js';
 
@@ -13,7 +14,7 @@ customElements.define('hg-halls-slider-item', class extends LitElement {
     };
   }
   static get styles() {
-    return [sharedStyles, css`
+    return [sharedStyles, ckContent, css`
       :host {
         display: block;
         padding: 0 60px;
@@ -66,7 +67,7 @@ customElements.define('hg-halls-slider-item', class extends LitElement {
         multiline
         .text=${this.hall.text}
         @save=${(event) => this.updateData(`${this.hall.index}.text`, event.detail)}>
-        <div class="smaller-text"></div>
+        <div class="smaller-text ck-content"></div>
       </hg-editable-text>
       <hg-action-buttons 
         .buttons=${staticProp([

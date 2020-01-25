@@ -4,6 +4,7 @@ import '../edit/hg-editable-image.js';
 import '../edit/hg-editable-text.js';
 import '../elements/hg-action-buttons.js';
 import sharedStyles from "../sharedStyles";
+import ckContent from '../styles/ck-content.js'
 
 customElements.define('hg-mosaic', class extends LitElement {
   static get properties() {
@@ -23,7 +24,7 @@ customElements.define('hg-mosaic', class extends LitElement {
     })();
   }
   static get styles() {
-    return [sharedStyles, css`
+    return [sharedStyles, ckContent, css`
       :host {
         max-width: 1250px;
         margin: 60px auto;
@@ -99,7 +100,7 @@ customElements.define('hg-mosaic', class extends LitElement {
             .richConfig=${'mosaic'}
             .text=${_.get('primary.text', this._mosaic)}
             @save=${(event) => this.updateData('primary.text', event.detail)}>
-            <p></p>
+            <div class="ck-content"></div>
           </hg-editable-text>
           ${!_.get('primary', this.buttons) ? '' : html`<hg-action-buttons .buttons=${this.buttons.primary}></hg-action-buttons>`}
         </div>
@@ -124,7 +125,7 @@ customElements.define('hg-mosaic', class extends LitElement {
             .richConfig=${'mosaic'}
             .text=${_.get('secondary.text', this._mosaic)}
             @save=${(event) => this.updateData('secondary.text', event.detail)}>
-            <p></p>
+            <div class="ck-content"></div>
           </hg-editable-text>
           ${!_.get('secondary', this.buttons) ? '' : html`<hg-action-buttons .buttons=${this.buttons.secondary}></hg-action-buttons>`}
         </div>

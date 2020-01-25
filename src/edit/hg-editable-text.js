@@ -92,7 +92,6 @@ export default class HgEditableText extends LitElement {
     if ((changedProperties.has('ready') && this.ready) || changedProperties.has('text')) {
       if (!this._editable) {
         this.setEditable();
-        this._editable.classList.add('editable-text');
       }
       this._editable.innerHTML = this.text || (this.rich ? '<p></p>' : '');
       this.text ? this.setAttribute('not-empty', '') : this.removeAttribute('not-empty');

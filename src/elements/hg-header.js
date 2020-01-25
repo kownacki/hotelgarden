@@ -19,6 +19,7 @@ customElements.define('hg-header', class extends LitElement {
   static get styles() {
     return css`
       :host {
+        font-size: 16px;
         display: block;
         top: 0;
         position: fixed;

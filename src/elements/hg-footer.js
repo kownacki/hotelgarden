@@ -2,6 +2,7 @@ import {LitElement, html, css} from 'lit-element';
 import './hg-text.js'
 import './hg-login.js'
 import sharedStyles from "../sharedStyles";
+import ckContent from '../styles/ck-content.js';
 import {staticProp} from "../utils";
 
 customElements.define('hg-footer', class extends LitElement {
@@ -9,7 +10,7 @@ customElements.define('hg-footer', class extends LitElement {
     return {};
   }
   static get styles() {
-    return [sharedStyles, css`
+    return [sharedStyles, ckContent, css`
       :host {
         color: #949494;
         display: block;
@@ -70,7 +71,7 @@ customElements.define('hg-footer', class extends LitElement {
         <div class="image">
           <img src="/resources/images/logo-footer.png">
         </div>
-        <hg-text .rich=${true} .path=${staticProp({doc: 'texts/footer', field: 'text'})}><div class="smaller-text"></div></hg-text>
+        <hg-text .rich=${true} .path=${staticProp({doc: 'texts/footer', field: 'text'})}><div class="ck-content smaller-text"></div></hg-text>
         <div class="icons">
           <a target="_blank" href="http://www.booking.com/hotel/pl/garden.pl.html" class="lighter"><img src="/resources/images/booking-footer.png"></a>
           <a target="_blank" href="https://https://www.facebook.com/HotelGardenOlesnica" class="lighter"><img src="/resources/images/facebook-footer.png"></a>

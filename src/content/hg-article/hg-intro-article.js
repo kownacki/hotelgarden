@@ -28,6 +28,5 @@ customElements.define('hg-intro-article', class extends HgArticle {
     super();
     this.richConfig = 'intro';
     this.rich = true;
-    this.div = true;
   }
 });
