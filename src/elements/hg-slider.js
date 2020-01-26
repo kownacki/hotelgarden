@@ -92,19 +92,21 @@ customElements.define('hg-slider', class extends LitElement {
               ...((this.double && window.innerWidth >= 600) ? [array.nextItem(array.nextIndex(this.selected, this.items), this.items)] : [])
             ], _.get('name'), this.template)}
       </div>
-      <div class="counter">${this.selected + 1} / ${_.size(this.items)}</div>
-      <paper-icon-button
-        ?disabled=${this.transitionGoing || _.size(this.items) === 1}
-        id="left"
-        icon="chevron-left"
-        @click=${() => this.move('left')}>
-      </paper-icon-button>
-      <paper-icon-button
-        ?disabled=${this.transitionGoing || _.size(this.items) === 1}
-        id="right"
-        icon="chevron-right"
-        @click=${() => this.move('right')}>
-      </paper-icon-button>
+      ${_.size(this.items) < 2 ? '' : html`
+        <div class="counter">${this.selected + 1} / ${_.size(this.items)}</div>
+        <paper-icon-button
+          ?disabled=${this.transitionGoing}
+          id="left"
+          icon="chevron-left"
+          @click=${() => this.move('left')}>
+        </paper-icon-button>
+        <paper-icon-button
+          ?disabled=${this.transitionGoing}
+          id="right"
+          icon="chevron-right"
+          @click=${() => this.move('right')}>
+        </paper-icon-button>
+      `}
     `;
   }
 });
