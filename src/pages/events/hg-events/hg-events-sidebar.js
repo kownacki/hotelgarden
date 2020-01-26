@@ -69,7 +69,7 @@ customElements.define('hg-events-sidebar', class extends LitElement {
   }
   render() {
     return html`
-      <div class="container">
+      <div class="container smaller-text">
         <h2>Nadchodzące wydarzenia</h2>
         <nav>
           <ul>
