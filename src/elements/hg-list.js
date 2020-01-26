@@ -106,6 +106,12 @@ export default class HgList extends LitElement {
       :host > * {
         width: calc(100% / var(--columns));
       }
+      hg-list-add {
+        display: none;
+      }
+      :host(:hover) hg-list-add {
+        display: flex;
+      }
     `;
   }
   render() {
