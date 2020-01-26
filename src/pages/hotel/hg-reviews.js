@@ -34,7 +34,7 @@ customElements.define('hg-reviews', class extends LitElement {
       :host {
         display: block;
         max-width: 1200px;
-        padding: 20px 0;
+        padding: 40px 0;
         margin: auto;
       }
       hg-list {
@@ -73,7 +73,7 @@ customElements.define('hg-reviews', class extends LitElement {
           <style>
             hg-review {
               text-align: center;
-              margin: 10px;
+              margin: 0 10px 20px;
               padding: 10px 20px;
               height: 400px;
             }

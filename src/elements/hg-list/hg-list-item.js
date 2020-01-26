@@ -34,8 +34,8 @@ customElements.define('hg-list-item', class extends LitElement {
       }
       .controls {
         position: absolute;
-        top: 15px;
-        right: 15px;
+        top: 3px;
+        right: 10px;
         display: none;
       }
       .controls > * {
