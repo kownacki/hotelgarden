@@ -32,9 +32,6 @@ customElements.define('hg-icons-add', class extends LitElement {
   }
   static get styles() {
     return css`
-      :host {
-        padding: 10px;
-      }
       .icons {
         display: flex;
         flex-wrap: wrap;

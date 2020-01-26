@@ -49,11 +49,7 @@ customElements.define('hg-event', class extends LitElement {
       .header:hover hg-event-edit-date, hg-event-edit-date[opened] {
         display: block;
       }
-      .divider {
-        height: 1px;
-        background: rgba(var(--secondary-color-rgb), 30%);
-        margin-bottom: 20px;
-      }
+
       @media all and (max-width: 959px) {
         .container {
           display: block;

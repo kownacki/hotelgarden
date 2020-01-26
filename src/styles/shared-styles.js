@@ -43,6 +43,10 @@ export default css`
     max-width: 100%;
     box-sizing: border-box;
   }
+  .divider {
+    border-bottom: solid 1px rgba(var(--secondary-color-rgb), 30%);
+    margin-bottom: 20px;
+  }
   .smaller-text {
     font-size: 18px;
   }

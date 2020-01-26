@@ -47,6 +47,9 @@ customElements.define('hg-text-image', class extends LitElement {
         width: 50%;
         margin: 0 40px 40px;
       }
+      hg-icon-info {
+        margin-bottom: 20px;
+      }
       hg-action-buttons {
         margin-top: 30px;
       }
@@ -66,7 +69,7 @@ customElements.define('hg-text-image', class extends LitElement {
       }
       @media all and (max-width: 599px) {
         :host {
-          margin: 60px auto 80px;
+          margin: 60px auto;
         }
         hg-image-slider {
           height: 280px;
