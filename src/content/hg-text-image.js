@@ -45,7 +45,7 @@ customElements.define('hg-text-image', class extends LitElement {
       }
       .content {
         width: 50%;
-        margin: 30px;
+        margin: 0 40px 40px;
       }
       hg-action-buttons {
         margin-top: 30px;

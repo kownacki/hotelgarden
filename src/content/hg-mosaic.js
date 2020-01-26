@@ -42,7 +42,7 @@ customElements.define('hg-mosaic', class extends LitElement {
         float: right;
       }
       .content {
-        margin: 40px;
+        margin: 0 40px 40px;
       }
       hg-action-buttons {
         margin-top: 30px;
