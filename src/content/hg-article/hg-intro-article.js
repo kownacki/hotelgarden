@@ -12,7 +12,7 @@ customElements.define('hg-intro-article', class extends HgArticle {
       }
       /* remove it when edited */
       /* todo effect disapears when editing is on */
-      p:not(:focus):first-letter {
+      div:not(:focus):first-letter {
         font-size: 3em;
         float: left;
         margin: 0.25em 0.15em 0.15em 0;
