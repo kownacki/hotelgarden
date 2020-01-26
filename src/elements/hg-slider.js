@@ -9,7 +9,7 @@ customElements.define('hg-slider', class extends LitElement {
       selected: Number,
       items: Array,
       template: Function,
-      double: {type: Boolean},
+      double: {type: Boolean, reflect: true},
       transitionGoing: Boolean,
     };
   }
