@@ -44,10 +44,12 @@ export default class HgEditableImage extends LitElement {
         height: 250px;
       }
       iron-image {
+        display: block;
         width: 100%;
         height: 100%;
       }
       img {
+        display: block;
         width: 100%;
       }
       :host([lower-image]) .image {
