@@ -26,7 +26,7 @@ customElements.define('hg-mosaic', class extends LitElement {
   static get styles() {
     return [sharedStyles, ckContent, css`
       :host {
-        max-width: 1250px;
+        max-width: 1240px;
         margin: 60px auto;
         padding: 0 25px;
         display: block;

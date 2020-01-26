@@ -73,6 +73,9 @@ export default css`
       font-size: 24px;
       margin: 19px 0;
     }
+    .smaller-text {
+      font-size: 17px;
+    }
   }
   @media all and (max-width: 599px) {
     body, :host, paper-dialog  {

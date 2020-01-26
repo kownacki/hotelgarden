@@ -4,6 +4,7 @@ import '../edit/hg-editable-text.js';
 import '../elements/hg-image-slider.js';
 import '../elements/hg-action-buttons.js';
 import '../elements/hg-icon-info.js';
+import '../elements/hg-icons.js';
 import sharedStyles from "../styles/shared-styles";
 import ckContent from '../styles/ck-content.js'
 
@@ -31,9 +32,9 @@ customElements.define('hg-text-image', class extends LitElement {
   static get styles() {
     return [sharedStyles, ckContent, css`
       :host {
-        max-width: 1250px;
+        max-width: 1240px;
         margin: 80px auto;
-        padding: 0 25px;
+        padding: 0 20px;
         display: flex;
       }
       :host([swap]) {
@@ -49,6 +50,9 @@ customElements.define('hg-text-image', class extends LitElement {
       }
       hg-icon-info {
         margin-bottom: 20px;
+      }
+      hg-icons {
+        margin: 20px -15px;
       }
       hg-action-buttons {
         margin-top: 30px;
@@ -111,7 +115,7 @@ customElements.define('hg-text-image', class extends LitElement {
           multiline
           .text=${_.get('text', this._textImage)}
           @save=${(event) => this.updateData('text', event.detail)}>
-          <div class="ck-content"></div>
+          <div class="text ck-content"></div>
         </hg-editable-text>
         ${_.isEmpty(this.buttons) ? '' : html`<hg-action-buttons .buttons=${this.buttons}></hg-action-buttons>`}
       </div>

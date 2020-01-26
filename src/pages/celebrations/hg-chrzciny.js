@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit-element';
 import '../../content/hg-article/hg-intro-article.js';
 import '../../content/hg-quote.js';
-import '../../content/hg-icons.js';
+import '../../content/hg-content-icons.js';
 import '../../content/hg-content-slider.js';
 import '../../content/hg-mosaic.js';
 import '../../content/hg-reviews-block.js';
@@ -21,7 +21,7 @@ customElements.define('hg-chrzciny', class extends LitElement {
     return html`
       <hg-intro-article .uid=${'chrzciny'}></hg-intro-article>
       <hg-quote .uid=${'chrzciny'}></hg-quote>
-      <hg-icons .uid=${'chrzciny'}></hg-icons>
+      <hg-content-icons .uid=${'chrzciny'}></hg-content-icons>
       <hg-content-slider .uid=${'chrzciny'}></hg-content-slider>
       <hg-mosaic .uid=${'chrzciny'}></hg-mosaic>
       <hg-reviews-block uid=${'chrzciny'}></hg-reviews-block>

@@ -3,7 +3,6 @@ import {staticProp} from '../../utils.js';
 import '../../content/hg-article/hg-intro-article.js';
 import '../../content/hg-content-slider';
 import '../../content/hg-text-image.js';
-import '../../content/hg-icons.js';
 import '../../content/hg-mosaic.js';
 import '../../content/hg-menu.js'
 import '../../content/hg-links.js';

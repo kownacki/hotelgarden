@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit-element';
 import '../../content/hg-article/hg-intro-article.js';
 import '../../content/hg-quote.js';
-import '../../content/hg-icons.js';
+import '../../content/hg-content-icons.js';
 import '../../content/hg-content-slider.js';
 import '../../content/hg-mosaic.js';
 import '../../content/hg-reviews-block.js';

@@ -2,7 +2,7 @@ import {LitElement, html, css} from 'lit-element';
 import {staticProp} from '../../utils.js';
 import '../../content/hg-article/hg-intro-article.js';
 import '../../content/hg-quote.js';
-import '../../content/hg-icons.js';
+import '../../content/hg-content-icons.js';
 import '../../content/hg-mosaic.js';
 import '../../content/hg-text-image.js';
 import '../../content/hg-reviews-block.js';
@@ -26,7 +26,7 @@ customElements.define('hg-landing', class extends LitElement {
     return html`
       <hg-intro-article .uid=${'landing'}></hg-intro-article>
       <hg-quote .uid=${'landing'}></hg-quote>
-      <hg-icons .uid=${'landing'}></hg-icons>
+      <hg-content-icons .uid=${'landing'}></hg-content-icons>
       <hg-text-image .swap=${true} .uid=${'landing'} .buttons=${staticProp([{url: '/pokoje', text: 'Zobacz pokoje'}])}></hg-text-image>
       <hg-mosaic .uid=${'landing'} .buttons=${staticProp({
         primary: [{url: '/wesela', text: 'Zobacz ofertę'}],

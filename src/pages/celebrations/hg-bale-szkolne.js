@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit-element';
 import '../../content/hg-article/hg-intro-article.js';
 import '../../content/hg-quote.js';
-import '../../content/hg-icons.js';
+import '../../content/hg-content-icons.js';
 import '../../content/hg-content-slider.js';
 import '../../content/hg-mosaic.js';
 import '../../content/hg-reviews-block.js';
@@ -21,7 +21,7 @@ customElements.define('hg-bale-szkolne', class extends LitElement {
     return html`
       <hg-intro-article .uid=${'bale-szkolne'}></hg-intro-article>
       <hg-quote .uid=${'bale-szkolne'}></hg-quote>
-      <hg-icons .uid=${'bale-szkolne'}></hg-icons>
+      <hg-content-icons .uid=${'bale-szkolne'}></hg-content-icons>
       <hg-content-slider .uid=${'bale-szkolne'}></hg-content-slider>
       <hg-mosaic .uid=${'bale-szkolne'}></hg-mosaic>
       <hg-reviews-block uid=${'bale-szkolne'}></hg-reviews-block>
