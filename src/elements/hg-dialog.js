@@ -51,25 +51,32 @@ customElements.define('hg-dialog', class extends LitElement {
   }
   render() {
     return html`
+      <app-location @route-changed=${() => this.shadowRoot.getElementById('dialog').close()}></app-location>
       <paper-dialog
         id="dialog" 
         @opened-changed=${(event) => {
           document.body.style.overflow = event.target.opened ? 'hidden' : null;
           if (event.target.opened) {
+            this._locationOnOpen = window.location.pathname;
             window.history.pushState(null, document.title, '#dialog');
             this._eventToRemove = () => this.dialog.close();
             window.addEventListener('popstate', this._eventToRemove);
           } else {
-            window.removeEventListener('popstate', this._eventToRemove);
+            if (!this._locationOnOpen && window.location.hash === '#dialog') {
+              window.history.back();
+            }
+            if (this._locationOnOpen) {
+              window.removeEventListener('popstate', this._eventToRemove);
+              if (this._locationOnOpen === window.location.pathname && window.location.hash === '#dialog') {
+                window.history.back();
+              }
+            }
           }
         }}>
         <header>
           <paper-icon-button 
             .icon=${'close'} 
-            @click=${() => {
-              window.history.back();
-              this.dialog.close();
-            }}>
+            @click=${() => this.dialog.close()}>
           </paper-icon-button>
           <slot name="header"></slot>
         </header>
