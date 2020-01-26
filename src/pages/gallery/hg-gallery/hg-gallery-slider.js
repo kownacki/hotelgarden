@@ -65,7 +65,7 @@ customElements.define('hg-gallery-slider', class extends LitElement {
           <hg-editable-image
             .src=${_.get('url', image)}
             .sizing=${'contain'}
-            @save=${(event) => this.dispatchEvent(new CustomEvent('save', {detail: {image, file: event.detail}}))}>
+            @save=${(event) => this.dispatchEvent(new CustomEvent('save', {detail: {index: image.index, file: event.detail}}))}>
           </hg-editable-image>
         `}>
       </hg-slider>

@@ -2,7 +2,6 @@ import {LitElement, html, css} from 'lit-element';
 import {staticProp} from '../../utils.js';
 import '../../content/hg-article/hg-intro-article.js';
 import '../../content/hg-icons.js';
-import '../../content/hg-content-slider';
 import '../../elements/hg-heading.js';
 // import './hg-room.js';
 
@@ -34,7 +33,6 @@ customElements.define('hg-rooms', class extends LitElement {
           <hg-heading h3 center>${'Dodatkowe udogodnienia pokoju'}</hg-heading>
           <hg-icons .uid=${'rooms-'+ index}></hg-icons>
         `}
-        <hg-content-slider .uid=${'rooms-'+ index}></hg-content-slider>
       `, [1, 2, 3, 4])}
       <hg-heading center>${'Warunki rezerwacji'}</hg-heading>
       <hg-icons .uid=${'rooms-conditions'}></hg-icons>

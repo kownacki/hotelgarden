@@ -22,9 +22,10 @@ customElements.define('hg-gallery', class extends LitElement {
       }
     `;
   }
-  async updateImage(image, index, file) {
+  async updateImage(index, file) {
+    const oldImageName = _.get(`${index}.image.name`, this._items);
     const list = this.shadowRoot.getElementById('list');
-    list.items[index].image = await updateImage('gallery/gallery', `${index}.image`, file, image.name);
+    list.items[index].image = await updateImage('gallery/gallery', `${index}.image`, file, oldImageName);
     list.items = {...list.items};
   }
   render() {
@@ -55,7 +56,7 @@ customElements.define('hg-gallery', class extends LitElement {
         id="slider" 
         .images=${_.reverse(_.map.convert({cap: false})((item, index) => ({...item.image, index}), this._items))}
         @save=${async (event) => {
-          await this.updateImage(event.detail.image, event.detail.image.index, event.detail.file);
+          await this.updateImage(event.detail.index, event.detail.file);
           this.shadowRoot.getElementById('list').requestUpdate();
         }}>
       </hg-gallery-slider>

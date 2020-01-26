@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit-element';
-import {db, updateData, updateImage} from "../utils.js";
-import '../edit/hg-editable-image.js';
+import {db, updateData, updateImage, staticProp} from "../utils.js";
 import '../edit/hg-editable-text.js';
+import '../elements/hg-image-slider.js';
 import '../elements/hg-action-buttons.js';
 import '../elements/hg-icon-info.js';
 import sharedStyles from "../styles/shared-styles";
@@ -39,7 +39,7 @@ customElements.define('hg-text-image', class extends LitElement {
       :host([swap]) {
         flex-direction: row-reverse;
       }
-      hg-editable-image {
+      hg-image-slider {
         width: 50%;
         height: 400px;
       }
@@ -55,7 +55,7 @@ customElements.define('hg-text-image', class extends LitElement {
           max-width: 750px;
           flex-direction: column;
         }
-        hg-editable-image {
+        hg-image-slider {
           width: 100%;
           margin: auto;
         }
@@ -68,12 +68,12 @@ customElements.define('hg-text-image', class extends LitElement {
         :host {
           margin: 60px auto 80px;
         }
-        hg-editable-image {
+        hg-image-slider {
           height: 280px;
         }
       }
       @media all and (max-width: 479px) {
-        hg-editable-image {
+        hg-image-slider {
           height: 200px;
         }
       }
@@ -82,17 +82,13 @@ customElements.define('hg-text-image', class extends LitElement {
   async updateData(path, data) {
     updateData('textImage/' + this.uid, path, data);
   }
-  async updateImage(file) {
-    this._textImage.image = await updateImage('textImage/' + this.uid, 'image', file, (_.get('image.name', this._textImage)));
-  }
   render() {
     return html`
-      <hg-editable-image
-        presize
-        .src=${_.get('image.url', this._textImage)}
-        .sizing=${'cover'}
-        @save=${(event) => this.updateImage(event.detail)}>
-      </hg-editable-image>
+      <hg-image-slider
+        .path=${staticProp({doc: 'textImage/' + this.uid, field: 'images'})}
+        .images=${_.get('images', this._textImage)}
+        .noGetImages=${true}>
+      </hg-image-slider>
       <div class="content">
         <hg-editable-text
           .ready=${this._dataReady}

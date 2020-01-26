@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit-element';
 import '../../edit/hg-delete-item.js'
 
-customElements.define('hg-content-slider-item', class extends LitElement {
+customElements.define('hg-image-slider-item', class extends LitElement {
   static get properties() {
     return {
       image: Object,
