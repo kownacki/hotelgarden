@@ -101,7 +101,7 @@ customElements.define('hg-book-dialog', class extends LitElement {
               </hg-text>
               <hg-action-button .click=${() => openProfitroom(location.name)}>Wybierz</hg-action-button>
             </div>
-          `, [{name: 'villa'}, {name: 'hotel'}])}     
+          `, [{name: 'villagarden'}, {name: 'hotelgarden'}])}     
         </div>
       </hg-dialog>
     `;
