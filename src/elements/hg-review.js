@@ -12,21 +12,24 @@ customElements.define('hg-review', class extends LitElement {
   static get styles() {
     return [sharedStyles, css`
       :host {
-        display: block;
         box-sizing: border-box;
         border: solid 1px var(--divider-color);
         background: rgba(var(--placeholder-color-rgb), 0.03);
         border-radius: 2px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
       }
       h3 {
-        font-size: 28px;
+        margin: 0;
+        font-size: 30px;
         font-style: italic;
       }
       p {
         font-style: italic;
       }
       .bottom {
-        margin-top: 1.25em;
+        margin: 0;
       }
       /* todo do I really have to set it? */
       .bottom hg-list-editable-text  {
@@ -36,10 +39,14 @@ customElements.define('hg-review', class extends LitElement {
         font-weight: 700;
         color: var(--primary-color);
       }
+      @media all and (max-width: 959px) {
+        h3 {
+          font-size: 27px;
+        }
+      }
       @media all and (max-width: 599px) {
         h3 {
           font-size: 24px;
-          margin-bottom: 15px;
         }
         :host {
           border: none;
@@ -69,7 +76,7 @@ customElements.define('hg-review', class extends LitElement {
             .disabled=${this.disableEdit && !this.shadowRoot.getElementById('text').showControls}
             .item=${this.review} 
             .field=${'text'}>
-            <p></p>
+            <p class="smaller-text"></p>
           </hg-list-editable-text>
           <p class="bottom">
             <hg-list-editable-text 
@@ -78,7 +85,7 @@ customElements.define('hg-review', class extends LitElement {
               .disabled=${this.disableEdit && !this.shadowRoot.getElementById('author').showControls}
               .item=${this.review} 
               .field=${'author'}>
-              <span class="author"></span>,
+              <span class="author smaller-text"></span>,
             </hg-list-editable-text>
             <hg-list-editable-text 
               float 
@@ -86,7 +93,7 @@ customElements.define('hg-review', class extends LitElement {
               .disabled=${this.disableEdit && !this.shadowRoot.getElementById('platform').showControls}
               .item=${this.review} 
               .field=${'platform'}>
-              <span class="platform"></span>
+              <span class="platform smaller-text"></span>
             </hg-list-editable-text>
           </p>`
         : html`

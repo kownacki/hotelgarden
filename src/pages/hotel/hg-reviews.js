@@ -74,13 +74,14 @@ customElements.define('hg-reviews', class extends LitElement {
             hg-review {
               text-align: center;
               margin: 0 10px 20px;
-              padding: 10px 20px;
+              padding: 0 20px;
               height: 400px;
             }
             @media all and (max-width: 839px) {
               hg-review {
                 height: auto;
                 margin: 10px 0;
+                padding: 20px;
               }
             }
           </style>

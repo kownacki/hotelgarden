@@ -40,7 +40,7 @@ customElements.define('hg-reviews-block', class extends LitElement {
         display: block;
         width: 580px;
         max-width: 100%;
-        height: 380px;
+        height: 360px;
         margin: 0 20px;
       }
       @media all and (max-width: 1159px) {
