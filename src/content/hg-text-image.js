@@ -104,6 +104,7 @@ customElements.define('hg-text-image', class extends LitElement {
           ${!this.h3 ? html`<h2></h2>` : html`<h3></h3>`}
         </hg-editable-text>
         ${_.isEmpty(this.iconFields) ? '' : html`<hg-icon-info
+          .editable=${true}
           .dataReady=${this._dataReady}
           .items=${_.zipWith((text, src) => ({text, src}), _.map(_.get(_, this._textImage), this.iconFields), this.iconSrcs)}
           @save=${(event) => this.updateData(`${this.iconFields[event.detail.index]}`, event.detail.text)}>

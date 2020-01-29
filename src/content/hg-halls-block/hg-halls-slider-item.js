@@ -5,12 +5,12 @@ import ckContent from '../../styles/ck-content.js'
 import '../../elements/hg-action-buttons.js';
 import '../../elements/hg-icon-info.js';
 
+const shorten = (text, maxLength) => text.length > maxLength - 3 ? text.slice(0, maxLength - 3) + '...' : text;
+
 customElements.define('hg-halls-slider-item', class extends LitElement {
   static get properties() {
     return {
-      uid: String,
       hall: Object,
-      dataReady: Boolean,
     };
   }
   static get styles() {
@@ -22,7 +22,8 @@ customElements.define('hg-halls-slider-item', class extends LitElement {
         margin-top: 0;
       }
       div {
-        margin-top: 20px;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
       hg-icon-info {
         margin-bottom: 20px;
@@ -36,42 +37,24 @@ customElements.define('hg-halls-slider-item', class extends LitElement {
     super();
     this.classList.add('fixed-height-element');
   }
-  async updateData(path, data) {
-    updateData('hallsBlocks/' + this.uid, path, data);
-  }
   render() {
     return html`
-      <hg-editable-text
-        .ready=${this.dataReady}
-        .text=${this.hall.name}
-        @save=${(event) => this.updateData(`${this.hall.index}.name`, event.detail)}>
-        <h3></h3>
-      </hg-editable-text>
+      <h3>${this.hall.heading}</h3>
       <hg-icon-info
-        .dataReady=${this.dataReady}
         .items=${staticProp([{
           text: this.hall.size,
           src: 'https://firebasestorage.googleapis.com/v0/b/pl-hotelgarden.appspot.com/o/icons%2Fediting%2Fmove.png?alt=media&token=68fa9540-cd2c-4577-9a32-55c83d5ea682',
         }, {
           text: this.hall.people,
           src: 'https://firebasestorage.googleapis.com/v0/b/pl-hotelgarden.appspot.com/o/icons%2Fpeople%2Fcrowd.png?alt=media&token=b6252c3c-5c24-4afe-b24e-ee3159645627',
-        }])}
-        @save=${(event) => this.updateData(`${this.hall.index}.${['size', 'people'][event.detail.index]}`, event.detail.text)}>
+        }])}>
       </hg-icon-info>
-      <hg-editable-text
-        class="text"
-        float
-        .ready=${this.dataReady}
-        .rich=${true}
-        .richConfig=${'intro'}
-        multiline
-        .text=${this.hall.text}
-        @save=${(event) => this.updateData(`${this.hall.index}.text`, event.detail)}>
-        <div class="smaller-text ck-content"></div>
-      </hg-editable-text>
+      <div class="smaller-text ck-content" 
+        .innerHTML=${shorten(_.flow([_.replace('<p>', ''), _.replace('</p>', '')])(this.hall.text), 235)}>
+      </div>
       <hg-action-buttons 
         .buttons=${staticProp([
-          {url: '/sale#' + (Number(this.hall.index) + 1), text: 'Więcej o sali'}
+          {url: `/sale-${this.hall.hallType === 'conference' ? 'konferencyjne' : 'bankietowe'}#${Number(this.hall.index) + 1}`, text: 'Więcej o sali'}
         ])}>
       </hg-action-buttons>
     `;

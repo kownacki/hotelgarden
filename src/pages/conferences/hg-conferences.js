@@ -24,7 +24,7 @@ customElements.define('hg-conferences', class extends LitElement {
         primary: [{url: '#', text: 'Zobacz ofertę'}, {url: '#', text: 'Lorem ipsum'}],
         secondary: [{url: '#', text: 'Zobacz ofertę'}],
       })}></hg-mosaic>
-      <hg-halls-block .uid=${'conferences'}></hg-halls-block>
+      <hg-halls-block .type=${'conference'}></hg-halls-block>
       <hg-heading center>${'Nowoczesne wyposażenie'}</hg-heading>
       <hg-content-icons .uid=${'conferences-halls'}></hg-content-icons>
       <hg-heading center>${'Food & Beverages'}</hg-heading>

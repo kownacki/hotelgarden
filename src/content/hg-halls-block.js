@@ -8,7 +8,7 @@ import sharedStyles from "../styles/shared-styles";
 customElements.define('hg-halls-block', class extends LitElement {
   static get properties() {
     return {
-      uid: String,
+      type: String, // 'conference' / 'banquet'
     };
   }
   static get styles() {
@@ -76,7 +76,7 @@ customElements.define('hg-halls-block', class extends LitElement {
       <h2 class="content-heading">Zobacz sale</h2>
       <div class="container">
         <hg-image .sizing=${'cover'} .path=${staticProp({doc: `images/${this.uid}-halls-block`})}></hg-image>
-        <hg-halls-slider .uid=${this.uid}></hg-halls-slider>
+        <hg-halls-slider .type=${this.type}></hg-halls-slider>
       </div>
     `;
   }

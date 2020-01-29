@@ -4,6 +4,7 @@ import '../edit/hg-editable-text.js';
 customElements.define('hg-icon-info', class extends LitElement {
   static get properties() {
     return {
+      editable: Boolean,
       items: Array,
       dataReady: Boolean,
     };
@@ -31,7 +32,6 @@ customElements.define('hg-icon-info', class extends LitElement {
       :host > :last-child .text {
         margin-right: 0;
       }
-
       @media all and (max-width: 599px) {
         iron-icon {
           min-width: 32px;
@@ -45,13 +45,16 @@ customElements.define('hg-icon-info', class extends LitElement {
       ${_.map.convert({cap: false})((item, index) => html`
         <div>
           <iron-icon .src=${item.src}></iron-icon>
-          <hg-editable-text
-            .ready=${this.dataReady}
-            float
-            .text=${item.text}
-            @save=${(event) => this.dispatchEvent(new CustomEvent('save', {detail: {index, text: event.detail}}))}>
-            <div class="text"></div>
-          </hg-editable-text> 
+          ${this.editable 
+            ? html`<hg-editable-text
+              .ready=${this.dataReady}
+              float
+              .text=${item.text}
+              @save=${(event) => this.dispatchEvent(new CustomEvent('save', {detail: {index, text: event.detail}}))}>
+              <div class="text"></div>
+            </hg-editable-text>`
+            : html`<div class="text">${item.text}</div>`
+          }
         </div>
       `, this.items)}
     `;

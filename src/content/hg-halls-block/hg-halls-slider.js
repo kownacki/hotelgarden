@@ -7,9 +7,8 @@ import './hg-halls-slider-item.js';
 customElements.define('hg-halls-slider', class extends LitElement {
   static get properties() {
     return {
-      uid: String,
-      _hallsBlock: Array,
-      _dataReady: Boolean,
+      type: String, // 'conference' / 'banquet'
+      _halls: Array,
     };
   }
   static get styles() {
@@ -26,11 +25,10 @@ customElements.define('hg-halls-slider', class extends LitElement {
     super();
     (async () => {
       await this.updateComplete;
-      this._hallsBlock = _.map.convert({cap: false})(
-        (hall, index) => ({index, ...hall}),
-        (await db.doc('hallsBlocks/' + this.uid).get()).data(),
-      ) || {};
-      this._dataReady = true;
+      this._halls = _.map.convert({cap: false})(
+        (doc, index) => ({index, ...doc.data()}),
+        (await firebase.firestore().collection('textImage').where("hallType", "==", "conference").get()).docs
+      );
     })();
   }
   async updateData(path, data) {
@@ -39,8 +37,8 @@ customElements.define('hg-halls-slider', class extends LitElement {
   render() {
     return html`
       <hg-slider
-        .items=${this._hallsBlock}
-        .template=${(hall) => html`<hg-halls-slider-item .uid=${this.uid} .hall=${hall} .dataReady=${this._dataReady}></hg-halls-slider-item>`}>
+        .items=${this._halls}
+        .template=${(hall) => html`<hg-halls-slider-item .hall=${hall}></hg-halls-slider-item>`}>
       </hg-slider>
     `;
   }
