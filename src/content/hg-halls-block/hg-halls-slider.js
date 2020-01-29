@@ -27,7 +27,7 @@ customElements.define('hg-halls-slider', class extends LitElement {
       await this.updateComplete;
       this._halls = _.map.convert({cap: false})(
         (doc, index) => ({index, ...doc.data()}),
-        (await firebase.firestore().collection('textImage').where("hallType", "==", "conference").get()).docs
+        (await firebase.firestore().collection('textImage').where("hallType", "==", this.type).get()).docs
       );
     })();
   }

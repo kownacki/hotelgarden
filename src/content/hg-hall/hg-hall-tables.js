@@ -11,6 +11,7 @@ customElements.define('hg-hall-tables', class extends LitElement {
       uid: String,
       _hallTables: Array,
       _setOuts: Array,
+      _setOutsDoc: String,
       _dataReady: Boolean,
     };
   }
@@ -55,15 +56,20 @@ customElements.define('hg-hall-tables', class extends LitElement {
     super();
     (async () => {
       await this.updateComplete;
-      this._setOuts = (await db.doc('hallTables/setOuts').get()).data() || {};
-      this._hallTables = (await db.doc('hallTables/' + this.uid).get()).data() || {};
+      //todo refactor ehh....
+      (async () => {
+        this._hallTables = (await db.doc('hallTables/' + this.uid).get()).data() || {};
+      })();
+      const hall = (await db.doc('textImage/' + this.uid).get()).data();
+      this._setOutsDoc = 'hallTables/setOuts' + _.capitalize(hall.tent ? 'tent' : hall.narrow ? 'narrow' : hall.hallType);
+      this._setOuts = (await db.doc(this._setOutsDoc).get()).data() || {};
       this._dataReady = true;
     })();
   }
   async updateImage(index, file) {
     this._setOuts = _.set(
       `${index}.image`,
-      await updateImage('hallTables/setOuts', `${index}.image`, file, (_.get(`${index}.image.name`, this._setOuts))),
+      await updateImage(this._setOutsDoc, `${index}.image`, file, (_.get(`${index}.image.name`, this._setOuts))),
       this._setOuts,
     );
   }
@@ -71,17 +77,17 @@ customElements.define('hg-hall-tables', class extends LitElement {
     return html`
       <hg-heading center h3>${'Ustawienie stołów'}</hg-heading>
       <div class="items">
-        ${_.map((index) => html`
+        ${_.map.convert({cap: false})((setOut, index) => html`
           <div>
             <hg-editable-image
               presize
-              .src=${_.get(`${index}.image.url`, this._setOuts)}
+              .src=${_.get(`image.url`, setOut)}
               @save=${(event) => this.updateImage(index, event.detail)}>
             </hg-editable-image>
             <hg-editable-text
               .ready=${this._dataReady}
-              .text=${_.get(`${index}.name`, this._setOuts)}
-              @save=${(event) => updateData('hallTables/setOuts', `${index}.name`, event.detail)}>
+              .text=${_.get(`name`, setOut)}
+              @save=${(event) => updateData(this._setOutsDoc, `${index}.name`, event.detail)}>
               <p class="bigger-text"></p>
             </hg-editable-text>
             <hg-editable-text
@@ -91,7 +97,7 @@ customElements.define('hg-hall-tables', class extends LitElement {
               <p></p>
             </hg-editable-text>
           </div>
-        `, [0, 1, 2, 3])}
+        `, this._setOuts)}
       </div>
     `;
   }

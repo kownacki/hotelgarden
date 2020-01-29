@@ -24,9 +24,9 @@ customElements.define('hg-bale-szkolne', class extends LitElement {
       <hg-content-icons .uid=${'bale-szkolne'}></hg-content-icons>
       <hg-content-slider .uid=${'bale-szkolne'}></hg-content-slider>
       <hg-mosaic .uid=${'bale-szkolne'}></hg-mosaic>
-      <hg-reviews-block uid=${'bale-szkolne'}></hg-reviews-block>
       <hg-text-image swap .uid=${'bale-szkolne'}></hg-text-image>
-      <hg-halls-block .uid=${'bale-szkolne'}></hg-halls-block>
+      <hg-halls-block .type=${'banquet'}></hg-halls-block>
+      <hg-reviews-block uid=${'bale-szkolne'}></hg-reviews-block>
       <hg-contact-block></hg-contact-block>
       <hg-links .path=${'/bale-szkolne'} .superpath=${'/wesela'} .includeSuperpath=${true}></hg-links>
     `;

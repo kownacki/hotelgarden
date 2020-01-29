@@ -28,9 +28,5 @@ customElements.define('hg-hall', class extends LitElement {
         <hg-hall-tables .uid=${this.uid}></hg-hall-tables>
       </div>
     `;
-  // <!--<hg-halls-tables .uid=${'halls-' + index}></hg-halls-tables>
-  //   <hg-text-image id="${index}" .uid=${'halls-' + index}></hg-text-image>
-  //   <hg-content-slider .uid=${'halls-'+ index}></hg-content-slider>
-  //   <hg-halls-tables .uid=${'halls-' + index}></hg-halls-tables>-->
   }
 });

@@ -24,9 +24,9 @@ customElements.define('hg-chrzciny', class extends LitElement {
       <hg-content-icons .uid=${'chrzciny'}></hg-content-icons>
       <hg-content-slider .uid=${'chrzciny'}></hg-content-slider>
       <hg-mosaic .uid=${'chrzciny'}></hg-mosaic>
-      <hg-reviews-block uid=${'chrzciny'}></hg-reviews-block>
       <hg-text-image swap .uid=${'chrzciny'}></hg-text-image>
-      <hg-halls-block .uid=${'chrzciny'}></hg-halls-block>
+      <hg-halls-block .type=${'banquet'}></hg-halls-block>
+      <hg-reviews-block uid=${'chrzciny'}></hg-reviews-block>
       <hg-contact-block></hg-contact-block>
       <hg-links .path=${'/chrzciny'} .superpath=${'/wesela'} .includeSuperpath=${true}></hg-links>
     `;

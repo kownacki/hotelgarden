@@ -24,9 +24,9 @@ customElements.define('hg-komunie', class extends LitElement {
       <hg-icons .uid=${'komunie'}></hg-icons>
       <hg-content-slider .uid=${'komunie'}></hg-content-slider>
       <hg-mosaic .uid=${'komunie'}></hg-mosaic>
-      <hg-reviews-block uid=${'komunie'}></hg-reviews-block>
       <hg-text-image swap .uid=${'komunie'}></hg-text-image>
-      <hg-halls-block .uid=${'komunie'}></hg-halls-block>
+      <hg-halls-block .type=${'banquet'}></hg-halls-block>
+      <hg-reviews-block uid=${'komunie'}></hg-reviews-block>
       <hg-contact-block></hg-contact-block>
       <hg-links .path=${'/komunie'} .superpath=${'/wesela'} .includeSuperpath=${true}></hg-links>
     `;

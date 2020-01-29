@@ -29,7 +29,7 @@ customElements.define('hg-weddings', class extends LitElement {
         primary: [{url: '#contact', text: 'Skontaktuj się z nami'}],
       })}></hg-mosaic>
       <hg-text-image swap .uid=${'weddings'}></hg-text-image>
-      <hg-halls-block .uid=${'weddings'}></hg-halls-block>
+      <hg-halls-block .type=${'banquet'}></hg-halls-block>
       <hg-reviews-block uid=${'weddings'}></hg-reviews-block>
       <hg-content-slider .uid=${'weddings-2'}></hg-content-slider>
       <hg-contact-block id="contact"></hg-contact-block>
