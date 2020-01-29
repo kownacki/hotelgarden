@@ -59,19 +59,24 @@ export default class HgEditableText extends LitElement {
     ]);
     this._editor = await InlineEditor.create(
       this._editable,
-      this.richConfig === 'mosaic'
-        ? {
+      {
+        mediaEmbed: {
+          previewsInData: true
+        },
+        ...(this.richConfig === 'mosaic'
+          ? {
+              removePlugins: _(InlineEditor.builtinPlugins).map(_.get('pluginName'))
+                .without('Essentials', 'Autoformat', 'Bold', 'Italic', 'Link', 'List', 'Paragraph').value(),
+              toolbar: ['bold', 'italic', 'link', 'bulletedList', 'numberedList', 'undo', 'redo'],
+            }
+          : this.richConfig === 'intro'
+          ? {
             removePlugins: _(InlineEditor.builtinPlugins).map(_.get('pluginName'))
-              .without('Essentials', 'Autoformat', 'Bold', 'Italic', 'Link', 'List', 'Paragraph').value(),
-            toolbar: ['bold', 'italic', 'link', 'bulletedList', 'numberedList', 'undo', 'redo'],
+              .without('Essentials', 'Autoformat', 'Bold', 'Italic', 'Link', 'Paragraph').value(),
+            toolbar: ['bold', 'italic', 'link', 'undo', 'redo'],
           }
-        : this.richConfig === 'intro'
-        ? {
-          removePlugins: _(InlineEditor.builtinPlugins).map(_.get('pluginName'))
-            .without('Essentials', 'Autoformat', 'Bold', 'Italic', 'Link', 'Paragraph').value(),
-          toolbar: ['bold', 'italic', 'link', 'undo', 'redo'],
-        }
-        : {},
+        : {}),
+      }
     );
     this._editor.model.document.on('change:data', () => {
       this.showControls = true;
