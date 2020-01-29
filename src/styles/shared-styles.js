@@ -7,6 +7,9 @@ export default css`
   .smaller-text {
     font-size: 18px;
   }
+  .bigger-text {
+    font-size: 24px;
+  }
   p {
     line-height: 1.4em;
   }
@@ -65,6 +68,9 @@ export default css`
     .smaller-text {
       font-size: 17px;
     }
+    .bigger-text {
+      font-size: 23px;
+    }
     h1 {
       font-size: 40px;
     }
@@ -91,6 +97,9 @@ export default css`
     }
     .smaller-text {
       font-size: 15px;
+    }
+    .bigger-text {
+      font-size: 20px;
     }
     h1 {
       font-size: 30px;

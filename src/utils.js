@@ -173,7 +173,7 @@ export const pathToUid = {
   '/opinie': 'reviews',
   '/pokoje': 'rooms',
   '/konferencje': 'conferences',
-  '/sale': 'halls',
+  '/sale-konferencyjne': 'conference-halls',
   '/kuchnia': 'cuisine',
   '/restauracja': 'restaurant',
   '/grill-garden': 'grill-garden',
@@ -182,6 +182,7 @@ export const pathToUid = {
   '/chrzciny': 'chrzciny',
   '/komunie': 'komunie',
   '/bale-szkolne': 'bale-szkolne',
+  '/sale-bankietowe': 'banquet-halls',
   '/galeria': 'gallery',
   '/wydarzenia': 'events',
   '/kontakt': 'contact',
@@ -206,7 +207,7 @@ export const links = [
     path: '/konferencje',
     sublinks: [
       {name: 'Konferencja w Gardenie', path: '/konferencje'},
-      {name: 'Nasze sale', path: '/sale'},
+      {name: 'Sale konferencyjne', path: '/sale-konferencyjne'},
     ],
   }, {
     name: 'Kuchnia',
@@ -225,6 +226,7 @@ export const links = [
       {name: 'Chrzciny', path: '/chrzciny'},
       {name: 'Komunie', path: '/komunie'},
       {name: 'Bale szkolne', path: '/bale-szkolne'},
+      {name: 'Sale bankietowe', path: '/sale-bankietowe'},
     ],
   },
   {

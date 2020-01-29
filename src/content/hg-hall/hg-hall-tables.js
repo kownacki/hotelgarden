@@ -1,20 +1,21 @@
 import {LitElement, html, css} from 'lit-element';
-import '../../../elements/hg-heading.js';
-import '../../../edit/hg-editable-image.js';
-import '../../../edit/hg-editable-text.js';
-import {db, updateData, updateImage} from "../../../utils.js";
+import {db, updateData, updateImage} from "../../utils.js";
+import sharedStyles from '../../styles/shared-styles.js'
+import '../../elements/hg-heading.js';
+import '../../edit/hg-editable-image.js';
+import '../../edit/hg-editable-text.js';
 
-customElements.define('hg-halls-tables', class extends LitElement {
+customElements.define('hg-hall-tables', class extends LitElement {
   static get properties() {
     return {
       uid: String,
-      _hallsTables: Array,
+      _hallTables: Array,
       _setOuts: Array,
       _dataReady: Boolean,
     };
   }
   static get styles() {
-    return css`
+    return [sharedStyles, css`
       :host {
         display: block;
         margin-bottom: 50px;
@@ -36,9 +37,6 @@ customElements.define('hg-halls-tables', class extends LitElement {
       p {
         margin: 10px 0;
       }
-      p.bigger {
-        font-size: 25px;
-      }
       @media all and (max-width: 959px) {
         :host {
           display: block;
@@ -51,21 +49,21 @@ customElements.define('hg-halls-tables', class extends LitElement {
           min-width: auto;
         }
       }
-    `;
+    `];
   }
   constructor() {
     super();
     (async () => {
       await this.updateComplete;
-      this._setOuts = (await db.doc('hallsTables/setOuts').get()).data() || {};
-      this._hallsTables = (await db.doc('hallsTables/' + this.uid).get()).data() || {};
+      this._setOuts = (await db.doc('hallTables/setOuts').get()).data() || {};
+      this._hallTables = (await db.doc('hallTables/' + this.uid).get()).data() || {};
       this._dataReady = true;
     })();
   }
   async updateImage(index, file) {
     this._setOuts = _.set(
       `${index}.image`,
-      await updateImage('hallsTables/setOuts', `${index}.image`, file, (_.get(`${index}.image.name`, this._setOuts))),
+      await updateImage('hallTables/setOuts', `${index}.image`, file, (_.get(`${index}.image.name`, this._setOuts))),
       this._setOuts,
     );
   }
@@ -83,13 +81,13 @@ customElements.define('hg-halls-tables', class extends LitElement {
             <hg-editable-text
               .ready=${this._dataReady}
               .text=${_.get(`${index}.name`, this._setOuts)}
-              @save=${(event) => updateData('hallsTables/setOuts', `${index}.name`, event.detail)}>
-              <p class='bigger'></p>
+              @save=${(event) => updateData('hallTables/setOuts', `${index}.name`, event.detail)}>
+              <p class="bigger-text"></p>
             </hg-editable-text>
             <hg-editable-text
               .ready=${this._dataReady}
-              .text=${_.get(`${index}.text1`, this._hallsTables)}
-              @save=${(event) => updateData('hallsTables/' + this.uid, `${index}.text1`, event.detail)}>
+              .text=${_.get(`${index}.text1`, this._hallTables)}
+              @save=${(event) => updateData('hallTables/' + this.uid, `${index}.text1`, event.detail)}>
               <p></p>
             </hg-editable-text>
           </div>
