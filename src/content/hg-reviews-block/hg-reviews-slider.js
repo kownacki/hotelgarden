@@ -1,4 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
+import sharedStyles from '../../styles/shared-styles.js'
 import '../../elements/hg-slider.js';
 import '../../elements/hg-review.js';
 
@@ -9,11 +10,11 @@ customElements.define('hg-reviews-slider', class extends LitElement {
     };
   }
   static get styles() {
-    return css`
+    return [sharedStyles, css`
       hg-slider {
         height: 100%;
       }
-    `;
+    `];
   }
   render() {
     return html`

@@ -25,12 +25,12 @@ customElements.define('hg-halls-block', class extends LitElement {
         justify-content: center;
       }
       hg-halls-slider {
-        width: 450px;
+        width: 500px;
       }
       hg-image {
         margin: 0 40px;
         flex: 1;
-        width: 670px;
+        width: 620px;
         max-width: 100%;
         height: 400px;
       }

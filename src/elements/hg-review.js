@@ -9,16 +9,14 @@ customElements.define('hg-review', class extends LitElement {
       disableEdit: Boolean,
     };
   }
+  constructor() {
+    super();
+    this.classList.add('fixed-height-element');
+  }
   static get styles() {
     return [sharedStyles, css`
       :host {
         box-sizing: border-box;
-        border: solid 1px var(--divider-color);
-        background: rgba(var(--placeholder-color-rgb), 0.03);
-        border-radius: 2px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
       }
       h3 {
         margin: 0;

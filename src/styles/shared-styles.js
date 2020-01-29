@@ -50,6 +50,14 @@ export default css`
     border-bottom: solid 1px rgba(var(--secondary-color-rgb), 30%);
     margin-bottom: 20px;
   }
+  .fixed-height-element {
+    border: solid 1px var(--divider-color);
+    background: rgba(var(--placeholder-color-rgb), 0.03);
+    border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
   @media all and (max-width: 959px) {
     body, :host {
       font-size: 18px;

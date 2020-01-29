@@ -1,6 +1,7 @@
 import {LitElement, html, css} from 'lit-element';
 import {repeat} from 'lit-html/directives/repeat';
 import {array, db, updateData, generateUid} from "../utils.js";
+import sharedStyles from '../styles/shared-styles.js'
 import './hg-list/hg-list-item.js';
 import './hg-list/hg-list-add.js';
 import firebase from "firebase";
@@ -99,7 +100,7 @@ export default class HgList extends LitElement {
     this._processing = false;
   }
   static get styles() {
-    return css`
+    return [sharedStyles, css`
       :host {
         display: block;
       }
@@ -112,7 +113,7 @@ export default class HgList extends LitElement {
       :host(:hover) hg-list-add {
         display: flex;
       }
-    `;
+    `];
   }
   render() {
     return html`

@@ -16,11 +16,7 @@ customElements.define('hg-halls-slider-item', class extends LitElement {
   static get styles() {
     return [sharedStyles, ckContent, css`
       :host {
-        display: block;
-        padding: 0 60px;
-      }
-      :host > hg-editable-text {
-        flex: 1;
+        padding: 0 50px;
       }
       h3 {
         margin-top: 0;
@@ -35,6 +31,10 @@ customElements.define('hg-halls-slider-item', class extends LitElement {
         margin-top: 30px;
       }
     `];
+  }
+  constructor() {
+    super();
+    this.classList.add('fixed-height-element');
   }
   async updateData(path, data) {
     updateData('hallsBlocks/' + this.uid, path, data);

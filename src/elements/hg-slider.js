@@ -1,6 +1,7 @@
 import {LitElement, html, css} from 'lit-element';
 import {repeat} from 'lit-html/directives/repeat';
 import {array} from '../utils.js';
+import sharedStyles from "../styles/shared-styles";
 
 //todo bug clicking go back when image is displayed breaks website
 customElements.define('hg-slider', class extends LitElement {
@@ -14,7 +15,7 @@ customElements.define('hg-slider', class extends LitElement {
     };
   }
   static get styles() {
-    return css`      
+    return [sharedStyles, css`
       :host {
         display: block;
         background: white;
@@ -62,7 +63,7 @@ customElements.define('hg-slider', class extends LitElement {
       paper-icon-button#right {
         right: 2px;
       }
-    `;
+    `];
   }
   constructor() {
     super();
