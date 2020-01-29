@@ -4,6 +4,9 @@ export default css`
   body, :host {
     font-size: 20px;
   }
+  .smaller-text {
+    font-size: 18px;
+  }
   p {
     line-height: 1.4em;
   }
@@ -47,12 +50,12 @@ export default css`
     border-bottom: solid 1px rgba(var(--secondary-color-rgb), 30%);
     margin-bottom: 20px;
   }
-  .smaller-text {
-    font-size: 18px;
-  }
   @media all and (max-width: 959px) {
     body, :host {
       font-size: 18px;
+    }
+    .smaller-text {
+      font-size: 17px;
     }
     h1 {
       font-size: 40px;
@@ -73,13 +76,13 @@ export default css`
       font-size: 24px;
       margin: 19px 0;
     }
-    .smaller-text {
-      font-size: 17px;
-    }
   }
   @media all and (max-width: 599px) {
     body, :host, paper-dialog  {
       font-size: 16px;
+    }
+    .smaller-text {
+      font-size: 15px;
     }
     h1 {
       font-size: 30px;
@@ -95,9 +98,6 @@ export default css`
     }
     paper-dialog h4 {
       font-size: 19px;
-    }
-    .smaller-text {
-      font-size: 16px;
     }
   }
   [hidden] {

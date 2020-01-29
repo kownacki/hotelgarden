@@ -131,11 +131,12 @@ export default class HgEditableText extends LitElement {
         height: auto;
       }
       ::slotted(*) {
-        height: 100%;
         min-width: 20px;
-        min-height: 1.25em;
         /*todo background only to #editable */
         background: rgba(var(--placeholder-color-rgb), 0.5);
+      }
+      :host([multiline]) ::slotted(*) {
+        height: 100%;
       }
       :host([not-empty]) ::slotted(:not(.ck-focused)) {
         background: transparent;
@@ -161,13 +162,7 @@ export default class HgEditableText extends LitElement {
         z-index: var(--layer-header-1);
       }
       paper-button {
-        font-size: 18px;
         background: white;
-      }
-      @media all and (max-width: 599px) {
-        paper-button {
-          font-size: 16px;
-        }
       }
     `];
   }
@@ -175,7 +170,7 @@ export default class HgEditableText extends LitElement {
     return html`
       <slot id="text"></slot>
       ${!this._loggedIn ? '' : html`
-        <div class="edit" ?hidden=${!this.showControls}>
+        <div class="edit smaller-text" ?hidden=${!this.showControls}>
           <paper-button
             raised
             @click=${() => {

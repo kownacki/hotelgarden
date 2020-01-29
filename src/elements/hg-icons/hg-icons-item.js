@@ -38,7 +38,7 @@ customElements.define('hg-icons-item', class extends LitElement {
         height: 40px;
         margin-right: 10px
       }
-      hg-list-editable-text {
+      .text {
         margin: 8px 0;
       }
       :host(:not([small])) .text {
@@ -55,6 +55,15 @@ customElements.define('hg-icons-item', class extends LitElement {
         }
         :host([small]) {
           min-height: auto;
+        }
+        :host(:not([small])) iron-icon {
+          width: 50px;
+          height: 50px;
+        }
+        :host([small]) iron-icon {
+          min-width: 32px;
+          height: 32px;
+          margin-right: 8px
         }
       }
     `];

@@ -20,24 +20,22 @@ customElements.define('hg-icon-info', class extends LitElement {
         align-items: center;
       }
       iron-icon {
-        min-width: 36px;
-        height: 36px;
+        min-width: 40px;
+        height: 40px;
         filter: var(--primary-color-filter)
       }
       .text {
         min-width: 20px;
-      }
-      hg-editable-text {
         margin: 0 20px 0 10px;
       }
-      :host > :last-child hg-editable-text {
+      :host > :last-child .text {
         margin-right: 0;
       }
 
       @media all and (max-width: 599px) {
         iron-icon {
-          min-width: 24px;
-          height: 24px;
+          min-width: 32px;
+          height: 32px;
         }
       }
     `;
