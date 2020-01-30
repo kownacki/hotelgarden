@@ -11,7 +11,7 @@ customElements.define('hg-menu-nav-item', class extends LitElement {
     return css`
       :host {
         display: flex;
-        padding: 1px 0;
+        margin: 1px 0;
         align-items: center;
         transition: background-color 0.3s ease, color 0.2s ease;
       }
