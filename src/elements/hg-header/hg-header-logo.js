@@ -11,7 +11,6 @@ customElements.define('hg-header-logo', class extends LitElement {
     return css`
       :host {
         position: relative;
-        margin: 0 20px;
       }
       a {
         display: block;

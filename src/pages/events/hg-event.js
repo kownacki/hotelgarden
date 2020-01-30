@@ -15,6 +15,7 @@ customElements.define('hg-event', class extends LitElement {
       uid: String,
       _events: Array,
       _event: Object,
+      _promotedEvent: String,
       _contentLoading: Boolean,
       _content: String,
       _dataReady: Boolean,
@@ -43,13 +44,19 @@ customElements.define('hg-event', class extends LitElement {
         color: var(--secondary-color);
         margin-bottom: 10px;
       }
-      hg-event-edit-date {
+      .controls {
+        display: flex;
+        align-items: flex-start;
+      }
+      paper-toggle-button {
+        margin: 1px 0 1px 10px;
+      }
+      hg-event-edit-date, paper-toggle-button {
         display: none;
       }
-      .header:hover hg-event-edit-date, hg-event-edit-date[opened] {
-        display: block;
+      .header:hover .controls > *, hg-event-edit-date[opened] {
+        display: flex;
       }
-
       @media all and (max-width: 959px) {
         .container {
           display: block;
@@ -69,6 +76,9 @@ customElements.define('hg-event', class extends LitElement {
   }
   constructor() {
     super();
+    (async () => {
+      this._promotedEvent = _.get('uid', (await db.doc('events/promoted').get()).data());
+    })();
     this._unsubscribeLoggedInListener = firebase.auth().onAuthStateChanged((user) => this._loggedIn = Boolean(user));
   }
   disconnectedCallback() {
@@ -117,14 +127,24 @@ customElements.define('hg-event', class extends LitElement {
                     : 'Odbyło się'}
                 ${moment(this._event.date).format('D MMMM YYYY')}
               </div>
-              ${!this._loggedIn ? '' : html`<hg-event-edit-date 
-                .date=${this._event.date}
-                @save=${(event) => {
-                  this._event.date = event.detail;
-                  this.requestUpdate();
-                  this.updateData('date', event.detail);
-                }}>
-              </hg-event-edit-date>`}
+              ${!this._loggedIn ? '' : html`
+                <div class="controls smaller-text">
+                  <hg-event-edit-date 
+                    .date=${this._event.date}
+                    @save=${(event) => {
+                      this._event.date = event.detail;
+                      this.requestUpdate();
+                      this.updateData('date', event.detail);
+                    }}>
+                  </hg-event-edit-date>
+                  <paper-toggle-button
+                    id="promote"
+                    .checked=${this._promotedEvent === this.uid}
+                    @click=${() => db.doc('events/promoted').set({uid: this.shadowRoot.getElementById('promote').checked ? this.uid : null})}>
+                    Promuj
+                  </paper-toggle-button>
+                </div>
+              `}
             </div>
             <div class="divider"></div>
             ${this._contentLoading ? '' : html`<hg-editable-text 

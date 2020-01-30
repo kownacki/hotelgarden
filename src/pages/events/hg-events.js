@@ -66,7 +66,7 @@ customElements.define('hg-events', class extends LitElement {
           .path=${staticProp({doc: 'events/events'})}
           .emptyTemplate=${html`<p style="font-size: 20px">Brak nadchodzących wydarzeń</p>`}
           .getItemName=${(item) => `wydarzenie "${item.title}"`}       
-          .itemTemplate=${(event) => html`<hg-events-card .event=${event}></hg-events-card>`}>
+          .itemTemplate=${(event, uid) => html`<hg-events-card .event=${{uid, ...event}}></hg-events-card>`}>
         </hg-list>
         <mwc-button id="button" raised label="Pokaż minione wydarzenia"
           @click=${() => {
@@ -86,7 +86,7 @@ customElements.define('hg-events', class extends LitElement {
             .path=${staticProp({doc: 'events/events'})}
             .emptyTemplate=${html`<p style="font-size: 20px">Brak minionych wydarzeń</p>`}
             .getItemName=${(item) => `wydarzenie "${item.title}"`}       
-            .itemTemplate=${(event) => html`<hg-events-card .event=${event}></hg-events-card>`}>
+            .itemTemplate=${(event, uid) => html`<hg-events-card .event=${{uid, ...event}}></hg-events-card>`}>
           </hg-list>
         </div>
       </div>

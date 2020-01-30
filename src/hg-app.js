@@ -22,6 +22,7 @@ import '@polymer/paper-dialog';
 import '@polymer/paper-fab';
 import '@polymer/paper-radio-button/paper-radio-button.js';
 import '@polymer/paper-radio-group/paper-radio-group.js';
+import '@polymer/paper-toggle-button/paper-toggle-button.js';
 import '@material/mwc-button';
 import '@material/mwc-textfield';
 import '@polymer/paper-styles/color';
@@ -29,6 +30,7 @@ import '@polymer/paper-styles/color';
 import './elements/hg-header.js';
 import './elements/hg-page.js';
 import './elements/hg-drawer.js';
+import {db} from "./utils";
 
 customElements.define('hg-app', class extends LitElement {
   static get properties() {
@@ -38,14 +40,33 @@ customElements.define('hg-app', class extends LitElement {
       _path: String,
       _event: String,
       _uid: String,
-      _noBannerImage: Boolean
+      _noBannerImage: Boolean,
+      _promotedEvent: Object,
+      _promotedEventLoaded: Boolean,
+      _enableDrawer: Boolean,
+      _drawerOnceOpened: Boolean,
     };
   }
   constructor() {
     super();
+    (async () => {
+      const promotedEventUid = _.get('uid', (await db.doc('events/promoted').get()).data());
+      if (promotedEventUid) {
+        this._promotedEvent = {
+          uid: promotedEventUid,
+          title: _.get(promotedEventUid + '.title', (await db.doc('events/events').get()).data()),
+        };
+      }
+      this._promotedEventLoaded = true;
+    })();
     const pathString = window.location.pathname;
     this._path = (pathString.slice(-1) === '/' && pathString.length !== 1) ? pathString.slice(0, -1) : pathString;
-    window.addEventListener('resize', _.throttle(100, () => (window.innerWidth > 959) && this.shadowRoot.getElementById('drawer').close()));
+    this._enableDrawer = (window.innerWidth < 1100);
+    window.addEventListener('resize', _.throttle(100, () => {
+      (window.innerWidth < 1100)
+        ? this._enableDrawer = true
+        : (this.shadowRoot.getElementById('drawer') && this.shadowRoot.getElementById('drawer').close());
+    }));
   }
   async updated(changedProperties) {
     if (changedProperties.has('_path')) {
@@ -76,10 +97,12 @@ customElements.define('hg-app', class extends LitElement {
         this._path = event.detail.value.path;
         window.scrollTo(0, 0);
       }}></app-location>
-      <hg-header 
+      <hg-header
         id="header"
         .noBannerImage=${this._noBannerImage}
         .selected=${this._path}
+        .promotedEvent=${this._promotedEvent}
+        .promotedEventLoaded=${this._promotedEventLoaded}
         @open-drawer=${() => this.shadowRoot.getElementById('drawer').open()}>
       </hg-header>
       <hg-page 
@@ -89,12 +112,15 @@ customElements.define('hg-app', class extends LitElement {
         @event-not-found=${() => this._noBannerImage = true}>
       </hg-page>
       <!--todo somehow prevent scrolling parent when on android -->
-      <app-drawer id="drawer">
-        <hg-drawer 
-          .selected=${this._path}
-          @close-drawer=${() => this.shadowRoot.getElementById('drawer').close()}>
-        </hg-drawer>
-      </app-drawer>
+      ${!this._promotedEventLoaded || !this._enableDrawer ? ''
+        : html`<app-drawer id="drawer" .swipeOpen=${true} @opened-changed=${(event) => event.detail.value ? this._drawerOnceOpened = true : ''}>
+          ${!this._drawerOnceOpened ? ''
+            : html`<hg-drawer
+            .selected=${this._path}
+            .promotedEvent=${this._promotedEvent}
+            @close-drawer=${() => this.shadowRoot.getElementById('drawer').close()}>
+          </hg-drawer>`}
+        </app-drawer>`}
     `;
   }
 });

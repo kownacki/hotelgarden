@@ -1,11 +1,12 @@
 import {LitElement, html, css} from 'lit-element';
-import {links} from '../utils.js';
+import {links, staticProp} from '../utils.js';
 import './hg-drawer/hg-drawer-item.js';
 
 customElements.define('hg-drawer', class extends LitElement {
   static get properties() {
     return {
       selected: String,
+      promotedEvent: Object,
       _nowOpened: HTMLElement,
     };
   }
@@ -48,6 +49,15 @@ customElements.define('hg-drawer', class extends LitElement {
       </div>
       <nav>
         <ul>
+          ${!this.promotedEvent ? ''
+            : html`<li class="event">
+              <hg-drawer-item .link=${staticProp({
+                path: '/wydarzenia/' + this.promotedEvent.uid,
+                name: this.promotedEvent.title,
+              })}>
+              </hg-drawer-item>
+            </li>`
+          }
           ${_.map((link) => html`
             <li>
               <hg-drawer-item 
@@ -56,7 +66,7 @@ customElements.define('hg-drawer', class extends LitElement {
                 .opened=${_.some(['path', this.selected], link.sublinks)}>
               </hg-drawer-item>        
             </li>
-          `, links)}   
+          `, links)}
         </ul>
       </nav>
     `;

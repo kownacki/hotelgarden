@@ -92,7 +92,7 @@ customElements.define('hg-events-card', class extends LitElement {
   }
   render() {
     return html`
-      <a href="/wydarzenia/${hyphenate(this.event.title)}">
+      <a href="/wydarzenia/${this.event.uid}">
         <iron-image .src=${_.get('image.url', this.event)} .sizing=${'cover'}></iron-image>
         <div class="content">
           <div class="header">

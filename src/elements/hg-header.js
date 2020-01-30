@@ -10,6 +10,8 @@ customElements.define('hg-header', class extends LitElement {
       noBannerImage: {type: Boolean, reflect: true, attribute: 'no-banner-image'},
       scrolledDown: {type: Boolean, reflect: true, attribute: 'scrolled-down'},
       selected: String,
+      promotedEvent: Object,
+      promotedEventLoaded: Boolean,
     };
   }
   constructor() {
@@ -34,21 +36,26 @@ customElements.define('hg-header', class extends LitElement {
         display: flex;
       }
       nav {
+        align-self: flex-start;
+        display: flex;
         flex: 1;
         background: transparent;
         transition: background-color 0.5s ease;
       }
       ul {
-        margin: 10px 0 0 10px;
+        margin: 0 0 0 10px;
         padding: 0;
         display: flex;
-        flex-wrap: wrap;
+        align-items: center;
       }
       li {
         position: relative;
         list-style-type: none;
         margin-right: 10px;
-        padding-bottom: 10px;
+        padding: 10px 0;
+      }
+      li.event {
+        padding: 0;
       }
       hg-header-subnav {
         position: absolute;
@@ -65,6 +72,7 @@ customElements.define('hg-header', class extends LitElement {
         margin: 0;
       }
       a {
+        text-align: center;
         display: block;
         padding: 10px;
         font-weight: 400;
@@ -86,13 +94,16 @@ customElements.define('hg-header', class extends LitElement {
         color: white;
         position: absolute;
       }
+      hg-header-logo {
+        align-self: center;
+        margin: 0 20px;
+      }
       :host([scrolled-down]) paper-icon-button, :host([no-banner-image]) paper-icon-button {
         color: var(--primary-color);
       }
       hg-book-button {
-        position: absolute;
-        top: 9px;
-        right: 15px;
+        align-self: center;
+        margin: 9px 15px 9px auto;
       }
       @media all and (max-width: 1279px) {
         li {
@@ -102,11 +113,14 @@ customElements.define('hg-header', class extends LitElement {
           padding: 10px 7px;
         }
         hg-book-button {
-          right: 5px;
+          margin: 9px 7px 9px auto;
+        }
+        hg-header-logo {
+          margin: 0 10px;
         }
       }
-      @media all and (max-width: 1023px) {
-        nav {
+      @media all and (max-width: 1099px) {
+        ul {
           display: none;
         }
         paper-icon-button {
@@ -115,17 +129,33 @@ customElements.define('hg-header', class extends LitElement {
         hg-header-logo {
           margin: auto;
         }
+        hg-book-button {
+          margin: 9px 15px;
+        }
+        nav {
+          position: absolute;
+          top: 0;
+          right: 0;
+        }
+      }
+      @media all and (max-width: 479px) {
+        hg-book-button {
+          margin: 9px 5px;
+        }
       }
     `;
   }
   render() {
     return html`
       <header>
-        <paper-icon-button icon="menu" @click=${() => this.dispatchEvent(new CustomEvent('open-drawer'))}></paper-icon-button>
+        ${!this.promotedEventLoaded ? ''
+          : html`<paper-icon-button icon="menu" @click=${() => this.dispatchEvent(new CustomEvent('open-drawer'))}></paper-icon-button>`}
         <hg-header-logo .scrolledDown=${this.scrolledDown} .noBannerImage=${this.noBannerImage}></hg-header-logo>
         <nav>
           <ul>
-            ${_.map((link) => html`
+            ${!this.promotedEvent ? '' 
+              : html`<li class="event"><a href="/wydarzenia/${this.promotedEvent.uid}">${this.promotedEvent.title}</a></li>`}
+            ${!this.promotedEventLoaded ? '' :_.map((link) => html`
               <li>
                 <a 
                   href="${link.path}"
@@ -138,10 +168,10 @@ customElements.define('hg-header', class extends LitElement {
                   <hg-header-subnav .links=${link.sublinks} .selected=${this.selected}></hg-header-subnav>
                 `}
               </li>
-            `, links)}   
+            `, links)}
           </ul>
+          <hg-book-button></hg-book-button>
         </nav>
-        <hg-book-button></hg-book-button>
       </header>
     `;
   }
