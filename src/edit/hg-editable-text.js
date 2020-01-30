@@ -63,6 +63,24 @@ export default class HgEditableText extends LitElement {
         mediaEmbed: {
           previewsInData: true
         },
+        link: {
+          decorators: [
+            {
+              mode: 'manual',
+              label: 'Downloadable',
+              attributes: {
+                download: 'download'
+              }
+            },
+            {
+               mode: 'manual',
+               label: 'Open in a new tab',
+               attributes: {
+                 target: '_blank',
+               }
+             }
+          ]
+        },
         ...(this.richConfig === 'mosaic'
           ? {
               removePlugins: _(InlineEditor.builtinPlugins).map(_.get('pluginName'))
