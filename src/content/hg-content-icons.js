@@ -21,6 +21,7 @@ customElements.define('hg-content-icons', class extends LitElement {
       }
       :host([small]) {
         padding: 0 20px;
+        margin: 40px auto;
       }
       :host(:hover) hg-content-label {
         display: block;

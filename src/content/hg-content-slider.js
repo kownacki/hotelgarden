@@ -30,7 +30,13 @@ customElements.define('hg-content-slider', class extends LitElement {
       }
       @media all and (max-width: 599px) {
         :host {
+          height: 300px;
           margin: 40px auto;
+        }
+      }
+      @media all and (max-width: 479px) {
+        :host {
+          height: 250px;
         }
       }
     `;

@@ -32,7 +32,7 @@ customElements.define('hg-room', class extends LitElement {
         margin-bottom: 40px;
       }
       hg-content-icons {
-        margin-top: 40px;
+        margin-bottom: 60px;
       }
     `];
   }
@@ -46,7 +46,6 @@ customElements.define('hg-room', class extends LitElement {
             'https://firebasestorage.googleapis.com/v0/b/pl-hotelgarden.appspot.com/o/icons%2Fediting%2Fmove.png?alt=media&token=68fa9540-cd2c-4577-9a32-55c83d5ea682',
             'https://firebasestorage.googleapis.com/v0/b/pl-hotelgarden.appspot.com/o/icons%2Fpeople%2Fstanding-man.png?alt=media&token=f284442d-c273-480e-acd1-67a9bcb0463a'
           ])}
-          .icons=${true}
           .buttons=${[
             ..._.map(
               (room) => ({click: () => openProfitroom(room.location, room.id, room.adults), text: room.text || 'Rezerwuj pokój'}),
