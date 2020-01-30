@@ -23,7 +23,7 @@ customElements.define('hg-menu-item', class extends LitElement {
       .price {
         text-align: right;
         font-size: 20px;
-        min-width: 50px;
+        min-width: 40px;
         color: var(--primary-color);
       }
       h3 {
@@ -33,12 +33,19 @@ customElements.define('hg-menu-item', class extends LitElement {
       }
       p {
         font-weight: 300;
-        font-size: 18px;
         margin: 0 0 10px;
       }
       @media all and (max-width: 959px) {
         :host {
           padding: 10px 20px;
+        }
+      }
+      @media all and (max-width: 719px) {
+        .right {
+          margin-left: 20px;
+        }
+        .price, h3 {
+          font-size: 18px;
         }
       }
     `;
@@ -60,7 +67,7 @@ customElements.define('hg-menu-item', class extends LitElement {
           .disabled=${this.disableEdit && !this.shadowRoot.getElementById('description').showControls}
           .item=${this.item} 
           .field=${'description'}>
-          <p></p>
+          <p class="smaller-text"></p>
         </hg-list-editable-text>
       </div>
       <div class="right">

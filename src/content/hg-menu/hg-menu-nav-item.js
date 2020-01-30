@@ -1,4 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
+import sharedStyles from '../../styles/shared-styles.js';
 
 customElements.define('hg-menu-nav-item', class extends LitElement {
   static get properties() {
@@ -8,7 +9,7 @@ customElements.define('hg-menu-nav-item', class extends LitElement {
     };
   }
   static get styles() {
-    return css`
+    return [sharedStyles, css`
       :host {
         display: flex;
         margin: 1px 0;
@@ -31,7 +32,12 @@ customElements.define('hg-menu-nav-item', class extends LitElement {
         color: white;
         cursor: pointer;
       }
-    `;
+      @media all and (max-width: 959px) {
+        .name {
+          font-size: 16px;
+        }
+      }
+    `];
   }
   render() {
     return html`

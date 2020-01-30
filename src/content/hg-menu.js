@@ -10,6 +10,7 @@ customElements.define('hg-menu', class extends LitElement {
       categories: Object,
       uid: String,
       selectedCategory: Number,
+      _compact: Boolean,
       _editing: {type: Boolean, reflect: true, attribute: 'editing'},
     };
   }
@@ -23,6 +24,8 @@ customElements.define('hg-menu', class extends LitElement {
       this.categories = (await db.doc('menus/' + this.uid).get()).data();
       this._dataReady = true;
     })();
+    this._compact = (window.innerWidth < 600);
+    window.addEventListener('resize', _.throttle(100, () => this._compact = (window.innerWidth < 600)));
   }
   static get styles() {
     return css`
@@ -53,11 +56,15 @@ customElements.define('hg-menu', class extends LitElement {
       @media all and (max-width: 959px) {
         hg-menu-nav {
           min-width: 240px;
+          width: 240px;
         }
       }
       /* todo better way to view menu */
       @media all and (max-width: 599px) {
-        :host {
+        section {
+          display: block;
+        }
+        hg-menu-nav {
           display: none;
         }
       }
@@ -65,18 +72,19 @@ customElements.define('hg-menu', class extends LitElement {
   }
   render(){
     return html`
-      <hg-heading center>${'Menu'}</hg-heading>
       <section>
-        <hg-menu-main 
-          id="main"
-          .dataReady=${this._dataReady}
-          .uid=${this.uid}
-          .category=${_.get(this.selectedCategory, this.categories)}
-          .categoryIndex=${this.selectedCategory}
-          .categories=${this.categories}
-          @category-changed=${() => this.shadowRoot.getElementById('nav').requestUpdateNavItem()}
-          @editing-changed=${(event) => this._editing = event.detail}>
-        </hg-menu-main>
+        ${_.map((category) => html`
+          <hg-menu-main
+            id="main"
+            .dataReady=${this._dataReady}
+            .uid=${this.uid}
+            .category=${_.get(category, this.categories)}
+            .categoryIndex=${category}
+            .categories=${this.categories}
+            @category-changed=${() => this.shadowRoot.getElementById('nav').requestUpdateNavItem()}
+            @editing-changed=${(event) => this._editing = event.detail}>
+          </hg-menu-main>
+        `, this._compact ? _.range(0, _.size(this.categories)) : [this.selectedCategory])}
         <hg-menu-nav
           id="nav"
           .uid=${this.uid}

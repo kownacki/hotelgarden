@@ -47,6 +47,11 @@ customElements.define('hg-menu-main', class extends LitElement {
         text-shadow: 0 0 6px var(--secondary-color);
         margin: 0;
       }
+      @media all and (max-width: 599px) {
+        hg-editable-image {
+          height: 120px;
+        }
+      }
     `];
   }
   updateCategory() {
