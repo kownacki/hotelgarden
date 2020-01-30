@@ -1,5 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
 import {staticProp} from '../../utils.js';
+import '../../content/hg-article.js'
 import '../../content/hg-article/hg-intro-article.js'
 import '../../content/hg-content-icons.js';
 import '../../content/hg-mosaic.js'
@@ -20,9 +21,11 @@ customElements.define('hg-grill-garden', class extends LitElement {
     return html`
       <hg-intro-article .uid=${'grill-garden'}></hg-intro-article>
       <hg-content-icons .uid=${'grill-garden'}></hg-content-icons>
+      <hg-article .rich=${true} .uid=${'grill-garden-extra1'}></hg-article>
       <hg-mosaic .uid=${'grill-garden'} .buttons=${staticProp({primary: [{url: '#menu', text: 'Zobacz menu'}]})}></hg-mosaic>
       <hg-content-slider .uid=${'grill-garden'}></hg-content-slider>
       <hg-reviews-block .uid=${'grill-garden'}></hg-reviews-block>
+      <hg-article .rich=${true} .uid=${'grill-garden-extra2'}></hg-article>
       <hg-links .path=${'/grill-garden'} .superpath=${'/kuchnia'}></hg-links>
     `;
   }
