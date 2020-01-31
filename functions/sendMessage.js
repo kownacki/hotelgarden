@@ -10,7 +10,7 @@ const corsAsync = require('./cors-async')({origin: true});
 const MAX_MESSAGE_SIZE = 10000;
 
 const sendMail = async (body) => {
-  const config = (await admin.firestore().doc('config/config').get()).data().sendMessage;
+  const config = (await admin.firestore().doc('_config/admin').get()).data().sendMessage;
   const mailOptions = {
     to: config.mailOptions.to[body.subject],
     replyTo: body.email,
