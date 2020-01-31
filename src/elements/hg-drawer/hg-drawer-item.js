@@ -1,4 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
+import {pages} from '../../utils.js';
 
 customElements.define('hg-drawer-item', class extends LitElement {
   static get properties() {
@@ -76,7 +77,7 @@ customElements.define('hg-drawer-item', class extends LitElement {
                 ${sublink.name}
               </a>
             </li>
-          `, this.link.sublinks)}
+          `, _.map(_.get(_, pages), this.link.sublinks))}
         </ul>
       `}
     `;

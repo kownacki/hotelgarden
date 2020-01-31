@@ -1,4 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
+import {pages} from '../../utils.js';
 
 customElements.define('hg-header-subnav', class extends LitElement {
   static get properties() {
@@ -50,7 +51,7 @@ customElements.define('hg-header-subnav', class extends LitElement {
       <ul>
         ${_.map((link) => html`
           <li><a href="${link.path}" ?selected=${link.path === this.selected}>${link.name}</a></li>
-        `, this.links)}
+        `, _.map(_.get(_, pages), this.links))}
       </ul>
     `;
   }

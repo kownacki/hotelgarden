@@ -188,57 +188,52 @@ export const pathToUid = {
   '/kontakt': 'contact',
 };
 
-//todo flat vs hierarchical url structure
+export const pages = {
+  'landing': {name: 'O hotelu', path: '/'},
+  'villa-garden': {name: 'Villa Garden', path: '/villa-garden'},
+  'surroundings': {name: 'Oleśnica i okolice', path: '/olesnica-i-okolice'},
+  'reviews': {name: 'Opinie ', path: '/opinie'},
+  'rooms': {name: 'Pokoje', path: '/pokoje'},
+  'conferences': {name: 'Konferencja w Gardenie', path: '/konferencje'},
+  'conference-halls': {name: 'Sale konferencyjne', path: '/sale-konferencyjne'},
+  'cuisine': {name: 'O naszej kuchni', path: '/kuchnia'},
+  'restaurant': {name: 'Restauracja Magnolia', path: '/restauracja'},
+  'grill-garden': {name: 'Grill Garden', path: '/grill-garden'},
+  'catering': {name: 'Catering', path: '/catering'},
+  'weddings': {name: 'Wesela', path: '/wesela'},
+  'chrzciny': {name: 'Chrzciny', path: '/chrzciny'},
+  'komunie': {name: 'Komunie', path: '/komunie'},
+  'bale-szkolne': {name: 'Bale szkolne', path: '/bale-szkolne'},
+  'banquet-halls': {name: 'Sale bankietowe', path: '/sale-bankietowe'},
+  'gallery': {name: 'Galeria', path: '/galeria'},
+  'events': {name: 'Wydarzenia', path: '/wydarzenia'},
+  'contact': {name: 'Kontakt', path: '/kontakt'},
+  '404': {name: 'Błąd 404 - strony nie znaleziono'},
+};
+
 export const links = [
   {
     name: 'Hotel',
     path: '/',
-    sublinks: [
-      {name: 'O hotelu', path: '/'},
-      {name: 'Villa Garden', path: '/villa-garden'},
-      {name: 'Oleśnica i okolice', path: '/olesnica-i-okolice'},
-      {name: 'Opinie ', path: '/opinie'},
-    ],
-  }, {
-    name: 'Pokoje',
-    path: '/pokoje',
-  }, {
+    sublinks: ['landing', 'villa-garden', 'surroundings', 'reviews'],
+  },
+  pages['rooms'],
+  {
     name: 'Konferencje',
     path: '/konferencje',
-    sublinks: [
-      {name: 'Konferencja w Gardenie', path: '/konferencje'},
-      {name: 'Sale konferencyjne', path: '/sale-konferencyjne'},
-    ],
+    sublinks: ['conferences', 'conference-halls'],
   }, {
     name: 'Kuchnia',
     path: '/kuchnia',
-    sublinks: [
-      {name: 'O naszej kuchni', path: '/kuchnia'},
-      {name: 'Restauracja Magnolia', path: '/restauracja'},
-      {name: 'Grill Garden', path: '/grill-garden'},
-      {name: 'Catering', path: '/catering'},
-    ],
+    sublinks: ['cuisine', 'restaurant', 'grill-garden', 'catering'],
   }, {
     name: 'Uroczystości',
     path: '/wesela',
-    sublinks: [
-      {name: 'Wesela', path: '/wesela'},
-      {name: 'Chrzciny', path: '/chrzciny'},
-      {name: 'Komunie', path: '/komunie'},
-      {name: 'Bale szkolne', path: '/bale-szkolne'},
-      {name: 'Sale bankietowe', path: '/sale-bankietowe'},
-    ],
+    sublinks: ['weddings', 'chrzciny', 'komunie', 'bale-szkolne', 'banquet-halls'],
   },
-  {
-    name: 'Galeria',
-    path: '/galeria',
-  }, {
-    name: 'Wydarzenia',
-    path: '/wydarzenia',
-  }, {
-    name: 'Kontakt',
-    path: '/kontakt',
-  },
+  pages['gallery'],
+  pages['events'],
+  pages['contact'],
 ];
 
 export const linksMap = _.keyBy('path', links);

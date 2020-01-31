@@ -93,6 +93,7 @@ customElements.define('hg-event', class extends LitElement {
       if (this.uid === uid) {
         this._dataReady = true;
         this._event = this._events[this.uid];
+        this.dispatchEvent(new CustomEvent('title-loaded', {detail: this._event ? this._event.title : 'Nie znaleziono wydarzenia'}))
       }
       if (this._event) {
         this._contentLoading = true;

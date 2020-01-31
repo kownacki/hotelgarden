@@ -24,9 +24,12 @@ import '../pages/events/hg-event.js';
 import '../pages/contact/hg-contact.js';
 import '../pages/hg-404.js';
 import '../elements/hg-footer.js';
+import {db, pages} from "../utils";
 
 let seconds = 0;
 setInterval(() => ++seconds, 1000);
+
+const setDocumentTitle = (title) => document.title = title + ' - Hotel Garden Oleśnica';
 
 customElements.define('hg-page', class extends LitElement {
   static get properties() {
@@ -34,7 +37,22 @@ customElements.define('hg-page', class extends LitElement {
       event: Boolean,
       uid: String,
       noBannerImage: {type: Boolean, reflect: true, attribute: 'no-banner-image'},
+      eventTitle: String,
+      _config: Object,
     };
+  }
+  constructor() {
+    super();
+    (async () => {
+      this._config = (await db.doc('_config/client').get()).data() || {};
+    })();
+  }
+  updated(changedProperties) {
+    if (changedProperties.has('uid') || changedProperties.has('_config')) {
+      if (this.uid && this._config && !this.event) {
+        setDocumentTitle(_.get(`seo.${this.uid}.title`, this._config) || pages[this.uid].name)
+      }
+    }
   }
   static get styles() {
     return css`
@@ -63,7 +81,7 @@ customElements.define('hg-page', class extends LitElement {
         }
       }}></app-location>
       ${this.event
-        ? html`<hg-event .uid=${this.uid} class="page"></hg-event>`
+        ? html`<hg-event .uid=${this.uid} class="page" @title-loaded=${(event) => setDocumentTitle(event.detail)}></hg-event>`
         : html`
           <hg-banner .noImage=${this.noBannerImage} .uid=${this.uid}></hg-banner>
           ${unsafeHTML(`
