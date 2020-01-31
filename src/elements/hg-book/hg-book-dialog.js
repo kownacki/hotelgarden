@@ -7,7 +7,6 @@ import '../hg-action-button.js';
 import '../hg-heading.js'
 import '../hg-image.js'
 import '../hg-text.js'
-import moment from "moment";
 
 customElements.define('hg-book-dialog', class extends LitElement {
   static get properties() {

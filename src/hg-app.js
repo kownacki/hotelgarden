@@ -1,8 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
 import {pathToUid} from './utils.js';
-import moment from 'moment';
-import 'moment/src/locale/pl';
-moment.locale('pl');
 
 import '@polymer/app-layout/app-drawer/app-drawer.js';
 import '@polymer/app-route/app-location';

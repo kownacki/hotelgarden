@@ -125,7 +125,7 @@ customElements.define('hg-event', class extends LitElement {
                   : moment().isSame(this._event.date, 'day')
                     ? 'Dzisiaj'
                     : 'Odbyło się'}
-                ${moment(this._event.date).format('D MMMM YYYY')}
+                ${this._event.date.split('-').reverse().join(' / ')}
               </div>
               ${!this._loggedIn ? '' : html`
                 <div class="controls smaller-text">
