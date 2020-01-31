@@ -1,6 +1,7 @@
 import {LitElement, html, css} from 'lit-element';
 import {db, updateData, updateImage, staticProp} from "../utils.js";
 import '../edit/hg-editable-text.js';
+import '../elements/hg-image.js';
 import '../elements/hg-image-slider.js';
 import '../elements/hg-action-buttons.js';
 import '../elements/hg-icon-info.js';
@@ -18,6 +19,7 @@ customElements.define('hg-text-image', class extends LitElement {
       iconFields: Array,
       iconSrcs: Array,
       iconsAtEnd: {type: Boolean, reflect: true, attribute: 'icons-at-end'},
+      slider: Boolean,
       _textImage: Object,
       _dataReady: Boolean,
     };
@@ -41,7 +43,7 @@ customElements.define('hg-text-image', class extends LitElement {
       :host([swap]) {
         flex-direction: row-reverse;
       }
-      hg-image-slider {
+      hg-image, hg-image-slider {
         width: 50%;
         height: 400px;
       }
@@ -66,7 +68,7 @@ customElements.define('hg-text-image', class extends LitElement {
           max-width: 750px;
           flex-direction: column;
         }
-        hg-image-slider {
+        hg-image, hg-image-slider {
           width: 100%;
           margin: auto;
         }
@@ -79,12 +81,12 @@ customElements.define('hg-text-image', class extends LitElement {
         :host {
           margin: 60px auto;
         }
-        hg-image-slider {
+        hg-image, hg-image-slider {
           height: 280px;
         }
       }
       @media all and (max-width: 479px) {
-        hg-image-slider {
+        hg-image, hg-image-slider {
           height: 200px;
         }
       }
@@ -95,11 +97,19 @@ customElements.define('hg-text-image', class extends LitElement {
   }
   render() {
     return html`
-      <hg-image-slider
-        .path=${staticProp({doc: 'textImage/' + this.uid, field: 'images'})}
-        .images=${_.get('images', this._textImage)}
-        .noGetImages=${true}>
-      </hg-image-slider>
+      ${this.slider
+        ? html`<hg-image-slider
+          .path=${staticProp({doc: 'textImage/' + this.uid, field: 'images'})}
+          .images=${_.get('images', this._textImage)}
+          .noGetImages=${true}>
+        </hg-image-slider>`
+        : html`<hg-image
+          presize
+          .path=${staticProp({doc: 'textImage/' + this.uid, field: 'images.0'})}
+          .noGetImage=${true}
+          .image=${_.get('images.0', this._textImage)}
+          .sizing=${'cover'}>
+        </hg-image>`}
       <div class="content">
         ${this.noHeading ? '' : html`<hg-editable-text
           .ready=${this._dataReady}

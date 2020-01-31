@@ -17,7 +17,8 @@ customElements.define('hg-hall', class extends LitElement {
   render() {
     return html`
       <div class="divider">
-        <hg-text-image 
+        <hg-text-image
+          .slider=${true}
           .uid=${this.uid}
           .iconFields=${staticProp(['size', 'people'])}
           .iconSrcs=${staticProp([

@@ -40,6 +40,7 @@ customElements.define('hg-room', class extends LitElement {
     return html`
       <div class="divider">
         <hg-text-image
+          .slider=${true}
           .uid=${'rooms-' + this.index}
           .iconFields=${staticProp(['size', 'people'])}
           .iconSrcs=${staticProp([
