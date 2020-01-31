@@ -1,4 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
+import '../../pages/gallery/hg-gallery/hg-gallery-item.js'
 import '../../edit/hg-delete-item.js'
 
 customElements.define('hg-image-slider-item', class extends LitElement {
@@ -14,30 +15,6 @@ customElements.define('hg-image-slider-item', class extends LitElement {
       :host {
         position: relative;
       }
-      .container {
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      iron-image {
-        width: calc(100% - 1px);
-        height: calc(100% - 1px);
-        padding: 0.5px;
-        box-sizing: border-box;
-      }
-      paper-icon-button {
-        display: none;
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        padding: 0 calc(50% - 24px);
-        color: white;
-        --paper-icon-button-ink-color: transparent;
-      }
-      .container:hover paper-icon-button {
-        display: block;
-      }
       hg-delete-item {
         display: none;
         position: absolute;
@@ -51,10 +28,10 @@ customElements.define('hg-image-slider-item', class extends LitElement {
   }
   render() {
     return html`
-      <div class="container" @click=${() => this.dispatchEvent(new CustomEvent('click-image'))}>
-        <iron-image .src=${_.get('url', this.image)} .sizing=${'cover'}></iron-image>
-        <paper-icon-button noink .icon=${'maps:zoom-out-map'}></paper-icon-button>
-      </div>
+      <hg-gallery-item 
+        .src=${_.get('url', this.image)}
+        @click=${() => this.dispatchEvent(new CustomEvent('click-image'))}>
+      </hg-gallery-item>
       ${this.noDelete ? '' : html`<hg-delete-item 
         .name=${_.get('name', this.image)}
         @opened-changed=${(event) => this._deleteOpened = event.target.opened}>
