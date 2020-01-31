@@ -2,7 +2,7 @@ import {LitElement, html, css} from 'lit-element';
 import {db, updateData, updateImage, deleteImage, getData} from '../utils.js';
 import './hg-image-slider/hg-image-slider-item.js';
 import './hg-image-upload-fab.js';
-import firebase from "firebase";
+import firebase from 'firebase/app';
 
 //todo esc should close window
 customElements.define('hg-image-slider', class extends LitElement {

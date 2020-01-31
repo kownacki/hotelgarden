@@ -1,5 +1,10 @@
+import 'firebase/app';
+import 'firebase/auth';
+import 'firebase/firestore';
+import 'firebase/storage';
+
 import {LitElement, html, css} from 'lit-element';
-import {pathToUid} from './utils.js';
+import {pathToUid, db} from './utils.js';
 
 import '@polymer/app-layout/app-drawer/app-drawer.js';
 import '@polymer/app-route/app-location';
@@ -27,7 +32,6 @@ import '@polymer/paper-styles/color';
 import './elements/hg-header.js';
 import './elements/hg-page.js';
 import './elements/hg-drawer.js';
-import {db} from "./utils";
 
 customElements.define('hg-app', class extends LitElement {
   static get properties() {

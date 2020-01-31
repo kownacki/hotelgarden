@@ -1,7 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
 import '../../edit/hg-delete-item.js';
 import './hg-list-item-configure.js';
-import firebase from "firebase";
 
 customElements.define('hg-list-item', class extends LitElement {
   static get properties() {

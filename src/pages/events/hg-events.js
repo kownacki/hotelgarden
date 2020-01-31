@@ -8,7 +8,7 @@ import './hg-events/hg-events-card.js';
 import './hg-events/hg-events-add.js';
 import '../../elements/hg-list.js';
 import {staticProp} from "../../utils";
-import firebase from "firebase";
+import firebase from 'firebase/app';
 
 // favicon rozciągnięta??
 // todo add scrolling to dialogs

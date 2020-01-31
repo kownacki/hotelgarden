@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
-import firebase from "firebase";
+import firebase from 'firebase/app';
 
 const readFile = (file) => new Promise((resolve) => {
   const reader = new FileReader();

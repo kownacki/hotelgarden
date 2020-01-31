@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit-element';
 import {headerHeight, moveOutFromShadowDom} from '../utils.js'
 import sharedStyles from "../styles/shared-styles.js";
-import firebase from "firebase";
+import firebase from 'firebase/app';
 
 export default class HgEditableText extends LitElement {
   static get properties() {

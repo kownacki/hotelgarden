@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
-import firebase from "firebase";
+import firebase from 'firebase/app';
 import sharedStyles from '../styles/shared-styles.js';
 
 customElements.define('hg-content-label', class extends LitElement {

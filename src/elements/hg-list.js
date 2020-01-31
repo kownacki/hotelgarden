@@ -4,7 +4,7 @@ import {array, db, updateData, generateUid} from "../utils.js";
 import sharedStyles from '../styles/shared-styles.js'
 import './hg-list/hg-list-item.js';
 import './hg-list/hg-list-add.js';
-import firebase from "firebase";
+import firebase from 'firebase/app';
 
 export default class HgList extends LitElement {
   static get properties() {

@@ -7,7 +7,7 @@ import './hg-event/hg-event-edit-date.js';
 import {splitEvents, staticProp} from "../../utils";
 import sharedStyles from "../../styles/shared-styles";
 import ckContent from '../../styles/ck-content.js'
-import firebase from "firebase";
+import firebase from 'firebase/app';
 
 customElements.define('hg-event', class extends LitElement {
   static get properties() {
