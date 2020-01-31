@@ -6,17 +6,15 @@ import '../../content/hg-text-image.js';
 import '../../content/hg-mosaic.js';
 import '../../content/hg-menu.js'
 import '../../content/hg-links.js';
+import HgContent from "../../elements/hg-content";
 
-customElements.define('hg-surroundings', class extends LitElement {
-  static get properties() {
-    return {};
-  }
+customElements.define('hg-surroundings', class extends HgContent {
   static get styles() {
-    return css`
+    return [super.styles, css`
       hg-text-image {
         margin-bottom: 40px;
       }
-    `;
+    `];
   }
   render() {
     return html`

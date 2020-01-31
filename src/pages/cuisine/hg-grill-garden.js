@@ -8,15 +8,9 @@ import '../../content/hg-content-slider.js';
 import '../../content/hg-reviews-block.js';
 import '../../content/hg-menu.js'
 import '../../content/hg-links.js';
+import HgContent from "../../elements/hg-content";
 
-customElements.define('hg-grill-garden', class extends LitElement {
-  static get properties() {
-    return {};
-  }
-  static get styles() {
-    return css`
-    `;
-  }
+customElements.define('hg-grill-garden', class extends HgContent {
   render() {
     return html`
       <hg-intro-article .uid=${'grill-garden'}></hg-intro-article>

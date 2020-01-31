@@ -8,15 +8,9 @@ import '../../content/hg-reviews-block.js';
 import '../../content/hg-text-image.js';
 import '../../content/hg-halls-block.js';
 import '../../content/hg-links.js';
+import HgContent from "../../elements/hg-content";
 
-customElements.define('hg-komunie', class extends LitElement {
-  static get properties() {
-    return {};
-  }
-  static get styles() {
-    return css`
-    `;
-  }
+customElements.define('hg-komunie', class extends HgContent {
   render() {
     return html`
       <hg-intro-article .uid=${'komunie'}></hg-intro-article>

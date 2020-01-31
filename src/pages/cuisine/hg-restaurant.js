@@ -8,18 +8,15 @@ import '../../content/hg-content-slider.js';
 import '../../content/hg-reviews-block.js';
 import '../../content/hg-menu.js'
 import '../../content/hg-links.js';
+import HgContent from "../../elements/hg-content";
 
-customElements.define('hg-restaurant', class extends LitElement {
-  static get properties() {
-    return {
-    };
-  }
+customElements.define('hg-restaurant', class extends HgContent {
   static get styles() {
-    return css`
+    return [super.styles, css`
       hg-menu {
         margin-top: 40px;
       }
-    `;
+    `];
   }
   render() {
     return html`

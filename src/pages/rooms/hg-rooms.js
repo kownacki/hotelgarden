@@ -4,13 +4,11 @@ import '../../content/hg-article/hg-intro-article.js';
 import '../../content/hg-content-icons.js';
 import '../../elements/hg-heading.js';
 import './hg-room.js';
+import HgContent from "../../elements/hg-content";
 
-customElements.define('hg-rooms', class extends LitElement {
-  static get properties() {
-    return {};
-  }
+customElements.define('hg-rooms', class extends HgContent {
   static get styles() {
-    return [sharedStyles, css`
+    return [super.styles, sharedStyles, css`
     `];
   }
   render() {

@@ -6,15 +6,9 @@ import '../../content/hg-content-icons.js';
 import '../../content/hg-mosaic.js';
 import '../../content/hg-content-slider.js';
 import '../../content/hg-halls-block.js';
+import HgContent from "../../elements/hg-content";
 
-customElements.define('hg-conferences', class extends LitElement {
-  static get properties() {
-    return {};
-  }
-  static get styles() {
-    return css`
-    `;
-  }
+customElements.define('hg-conferences', class extends HgContent {
   render() {
     return html`
       <hg-intro-article .uid=${'conferences'}></hg-intro-article>

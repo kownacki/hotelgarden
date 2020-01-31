@@ -10,15 +10,9 @@ import '../../content/hg-text-image.js';
 import '../../content/hg-halls-block.js';
 import '../../content/hg-contact-block.js';
 import '../../content/hg-links.js';
+import HgContent from "../../elements/hg-content";
 
-customElements.define('hg-weddings', class extends LitElement {
-  static get properties() {
-    return {};
-  }
-  static get styles() {
-    return css`
-    `;
-  }
+customElements.define('hg-weddings', class extends HgContent {
   render() {
     return html`
       <hg-intro-article .uid=${'weddings'}></hg-intro-article>

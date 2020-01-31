@@ -2,15 +2,9 @@ import {LitElement, html, css} from 'lit-element';
 import '../../content/hg-article/hg-intro-article.js';
 import '../../content/hg-hall.js';
 import '../../content/hg-links.js';
+import HgContent from "../../elements/hg-content";
 
-customElements.define('hg-conference-halls', class extends LitElement {
-  static get properties() {
-    return {};
-  }
-  static get styles() {
-    return css`
-    `;
-  }
+customElements.define('hg-conference-halls', class extends HgContent {
   render() {
     return html`
       <hg-intro-article .uid=${'halls'}></hg-intro-article>

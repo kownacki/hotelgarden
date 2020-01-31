@@ -6,15 +6,9 @@ import '../../content/hg-content-slider';
 import '../../content/hg-mosaic.js';
 import '../../content/hg-links.js';
 import '../../content/hg-links.js';
+import HgContent from "../../elements/hg-content";
 
-customElements.define('hg-cuisine', class extends LitElement {
-  static get properties() {
-    return {};
-  }
-  static get styles() {
-    return css`
-    `;
-  }
+customElements.define('hg-cuisine', class extends HgContent {
   render() {
     return html`
       <hg-intro-article .uid=${'cuisine'}></hg-intro-article>
