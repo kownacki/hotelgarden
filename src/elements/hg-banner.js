@@ -23,8 +23,8 @@ customElements.define('hg-banner', class extends LitElement {
       this._dataReady = false;
       const path = this.path;
       const doc = (await db.doc(this.path.doc).get()).data();
-      this._banner = (this.path.field ? _.get(this.path.field, doc) : doc) || {};
       if (_.isEqual(this.path, path)) {
+        this._banner = (this.path.field ? _.get(this.path.field, doc) : doc) || {};
         this._dataReady = true;
       }
     }
