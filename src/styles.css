@@ -16,7 +16,7 @@ body {
   --divider-color: rgba(0, 0, 0, 0.12);
   --logotype-color: #84979E;
   --logotype-color-filter: invert(73%) sepia(6%) saturate(853%) hue-rotate(150deg) brightness(91%) contrast(79%);
-  --headerHeight: 59.5px;
+  --headerHeight: 60px;
   --layer-header: 100;
   --layer-header-1: 101;
   --layer-profitroom: 999; /* Profitroom snippet layer*/
