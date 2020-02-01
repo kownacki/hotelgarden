@@ -12,6 +12,7 @@ customElements.define('hg-gallery-item', class extends LitElement {
         display: block;
         width: 100%;
         height: 100%;
+        /* todo not really transparent due to grey background? */
         border: solid 1px transparent;
         box-sizing: border-box;
         position: relative;
