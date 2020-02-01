@@ -28,7 +28,7 @@ customElements.define('hg-mosaic', class extends LitElement {
       :host {
         max-width: 1240px;
         margin: 60px auto;
-        padding: 0 25px;
+        padding: 0 20px;
         display: block;
         overflow: auto;
       }
