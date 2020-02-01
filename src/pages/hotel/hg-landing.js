@@ -21,7 +21,7 @@ customElements.define('hg-landing', class extends HgContent {
       <hg-text-image .swap=${true} .uid=${'landing'} .buttons=${staticProp([{url: '/pokoje', text: 'Zobacz pokoje'}])}></hg-text-image>
       <hg-mosaic .uid=${'landing'} .buttons=${staticProp({
         primary: [{url: '/wesela', text: 'Zobacz ofertę'}],
-        secondary: [{url: '/sale', text: 'Zobacz sale'}],
+        secondary: [{url: '/sale-bankietowe', text: 'Zobacz sale'}],
       })}></hg-mosaic>
       <hg-content-slider .uid=${'landing'}></hg-content-slider>
       <hg-reviews-block .uid=${'landing'} scores></hg-reviews-block>
