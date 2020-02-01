@@ -2,7 +2,7 @@ import {LitElement, html, css} from 'lit-element';
 import './hg-header/hg-header-subnav.js';
 import './hg-header/hg-header-logo.js';
 import './hg-book/hg-book-button.js';
-import {links} from '../utils.js';
+import {pathToUid, links} from '../utils.js';
 
 customElements.define('hg-header', class extends LitElement {
   static get properties() {
@@ -161,7 +161,7 @@ customElements.define('hg-header', class extends LitElement {
                   href="${link.path}"
                   ?selected=${link.path === this.selected
                     || (link.path === '/wydarzenia' && _.startsWith('/wydarzenia', this.selected))
-                    || _.some(['path', this.selected], link.sublinks)}>
+                    || _.includes(pathToUid[this.selected], link.sublinks)}>
                   ${link.name}
                 </a>
                 ${!link.sublinks ? '' : html`
