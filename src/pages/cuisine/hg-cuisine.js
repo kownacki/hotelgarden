@@ -1,12 +1,12 @@
 import {LitElement, html, css} from 'lit-element';
+import HgContent from "../../elements/hg-content";
 import {staticProp} from '../../utils.js';
 import '../../content/hg-article/hg-intro-article.js';
 import '../../content/hg-content-icons.js';
 import '../../content/hg-content-slider';
 import '../../content/hg-mosaic.js';
+import '../../content/hg-text-image.js';
 import '../../content/hg-links.js';
-import '../../content/hg-links.js';
-import HgContent from "../../elements/hg-content";
 
 customElements.define('hg-cuisine', class extends HgContent {
   render() {

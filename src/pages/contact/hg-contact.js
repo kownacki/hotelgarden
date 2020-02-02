@@ -1,9 +1,9 @@
 import {LitElement, html, css} from 'lit-element';
-import {db, staticProp} from "../../utils";
+import {staticProp} from "../../utils";
+import ckContent from "../../styles/ck-content.js";
 import '../../content/hg-article.js';
 import '../../elements/hg-contact-form.js';
 import '../../content/hg-map.js';
-import ckContent from "../../styles/ck-content.js";
 
 customElements.define('hg-contact', class extends LitElement {
   static get properties() {

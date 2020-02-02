@@ -1,14 +1,13 @@
 import {LitElement, html, css} from 'lit-element';
 import {staticProp} from '../../utils.js';
-import '../../content/hg-article.js'
+import HgContent from "../../elements/hg-content";
 import '../../content/hg-article/hg-intro-article.js'
 import '../../content/hg-content-icons.js';
+import '../../content/hg-article.js'
 import '../../content/hg-mosaic.js'
 import '../../content/hg-content-slider.js';
 import '../../content/hg-reviews-block.js';
-import '../../content/hg-menu.js'
 import '../../content/hg-links.js';
-import HgContent from "../../elements/hg-content";
 
 customElements.define('hg-grill-garden', class extends HgContent {
   render() {

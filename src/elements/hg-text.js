@@ -1,4 +1,4 @@
-import {db, updateData} from '../utils.js';
+import {updateData} from '../utils.js';
 import HgEditableText from '../edit/hg-editable-text.js';
 
 customElements.define('hg-text', class extends HgEditableText {

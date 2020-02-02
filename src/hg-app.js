@@ -1,32 +1,40 @@
-import 'firebase/app';
+import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
 import 'firebase/storage';
 
+firebase.initializeApp({
+  apiKey: "AIzaSyDvamIugzBC3k3WA52KpHeINrfDHfkvnSs",
+  authDomain: "pl-hotelgarden.firebaseapp.com",
+  databaseURL: "https://pl-hotelgarden.firebaseio.com",
+  projectId: "pl-hotelgarden",
+  storageBucket: "pl-hotelgarden.appspot.com",
+  messagingSenderId: "439170507609",
+  appId: "1:439170507609:web:d50495f3bf9c9613702248",
+  measurementId: "G-T7DQCNYLP2"
+});
+
+window.firebase = firebase;
+window.auth = firebase.auth();
+window.db = firebase.firestore();
+window.storage = firebase.storage();
+
 import {LitElement, html, css} from 'lit-element';
-import {pathToUid, db} from './utils.js';
+import {pathToUid} from './utils.js';
 
 import '@polymer/app-layout/app-drawer/app-drawer.js';
 import '@polymer/app-route/app-location';
-import '@polymer/iron-ajax/iron-ajax.js';
 import '@polymer/iron-icons';
 import '@polymer/iron-icons/image-icons.js';
 import '@polymer/iron-icons/maps-icons.js';
 import '@polymer/iron-icon';
 import '@polymer/iron-image';
 import '@polymer/paper-button';
-import '@polymer/paper-checkbox/paper-checkbox.js';
 import '@polymer/paper-icon-button';
 import '@polymer/paper-input/paper-input';
 import '@polymer/paper-input/paper-textarea.js';
-import '@polymer/paper-spinner/paper-spinner-lite.js';
 import '@polymer/paper-dialog';
-import '@polymer/paper-fab';
-import '@polymer/paper-radio-button/paper-radio-button.js';
-import '@polymer/paper-radio-group/paper-radio-group.js';
-import '@polymer/paper-toggle-button/paper-toggle-button.js';
 import '@material/mwc-button';
-import '@material/mwc-textfield';
 import '@polymer/paper-styles/color';
 
 import './elements/hg-header.js';

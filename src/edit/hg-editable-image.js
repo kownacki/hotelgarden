@@ -1,5 +1,4 @@
 import {LitElement, html, css} from 'lit-element';
-import firebase from 'firebase/app';
 
 const readFile = (file) => new Promise((resolve) => {
   const reader = new FileReader();
@@ -22,7 +21,7 @@ export default class HgEditableImage extends LitElement {
   }
   constructor() {
     super();
-    this._unsubscribeLoggedInListener = firebase.auth().onAuthStateChanged((user) => this._loggedIn = Boolean(user));
+    this._unsubscribeLoggedInListener = auth.onAuthStateChanged((user) => this._loggedIn = Boolean(user));
   }
   disconnectedCallback() {
     this._unsubscribeLoggedInListener();

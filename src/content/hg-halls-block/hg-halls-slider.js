@@ -1,6 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
-import {db, updateData} from "../../utils.js";
-import '../../edit/hg-editable-text.js'
+import {updateData} from "../../utils.js";
 import '../../elements/hg-slider.js';
 import './hg-halls-slider-item.js';
 

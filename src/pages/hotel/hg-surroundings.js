@@ -1,12 +1,9 @@
 import {LitElement, html, css} from 'lit-element';
 import {staticProp} from '../../utils.js';
-import '../../content/hg-article/hg-intro-article.js';
-import '../../content/hg-content-slider';
-import '../../content/hg-text-image.js';
-import '../../content/hg-mosaic.js';
-import '../../content/hg-menu.js'
-import '../../content/hg-links.js';
 import HgContent from "../../elements/hg-content";
+import '../../content/hg-article/hg-intro-article.js';
+import '../../content/hg-text-image.js';
+import '../../content/hg-links.js';
 
 customElements.define('hg-surroundings', class extends HgContent {
   static get styles() {

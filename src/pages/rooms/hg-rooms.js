@@ -1,10 +1,10 @@
 import {LitElement, html, css} from 'lit-element';
 import sharedStyles from '../../styles/shared-styles.js'
+import HgContent from "../../elements/hg-content";
 import '../../content/hg-article/hg-intro-article.js';
 import '../../content/hg-content-icons.js';
-import '../../elements/hg-heading.js';
 import './hg-room.js';
-import HgContent from "../../elements/hg-content";
+import '../../elements/hg-heading.js';
 
 customElements.define('hg-rooms', class extends HgContent {
   static get styles() {

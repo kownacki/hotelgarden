@@ -1,4 +1,8 @@
 import {LitElement, html, css} from 'lit-element';
+import '@polymer/iron-ajax/iron-ajax.js';
+import '@polymer/paper-radio-button/paper-radio-button.js';
+import '@polymer/paper-radio-group/paper-radio-group.js';
+import '@polymer/paper-spinner/paper-spinner-lite.js';
 import {sleep} from '../utils.js'
 import sharedStyles from "../styles/shared-styles";
 

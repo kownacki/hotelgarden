@@ -1,5 +1,4 @@
 import {LitElement, html, css} from 'lit-element';
-import {storage, db} from "../../utils.js";
 
 //todo dodać link do strony icons8
 

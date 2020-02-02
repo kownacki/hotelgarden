@@ -1,7 +1,12 @@
 import {LitElement, html, css} from 'lit-element';
 import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';
-import {headerHeight} from '../utils.js';
+import {headerHeight, pages} from '../utils.js';
+
 import '../elements/hg-banner.js';
+import '../elements/hg-footer.js';
+
+// todo put hg-event in elements
+import '../pages/events/hg-event.js';
 import '../pages/hotel/hg-landing.js';
 import '../pages/hotel/hg-villa-garden.js';
 import '../pages/hotel/hg-surroundings.js';
@@ -20,11 +25,8 @@ import '../pages/celebrations/hg-bale-szkolne.js';
 import '../pages/celebrations/hg-banquet-halls.js';
 import '../pages/gallery/hg-gallery.js';
 import '../pages/events/hg-events.js';
-import '../pages/events/hg-event.js';
 import '../pages/contact/hg-contact.js';
-import '../pages/hg-404.js';
-import '../elements/hg-footer.js';
-import {db, pages} from "../utils";
+import '../pages/404/hg-404.js';
 
 let seconds = 0;
 setInterval(() => ++seconds, 1000);
@@ -84,7 +86,7 @@ customElements.define('hg-page', class extends LitElement {
         ? html`<hg-event .uid=${this.uid} class="page" @title-loaded=${(event) => setDocumentTitle(event.detail)}></hg-event>`
         : html`
           <hg-banner .noImage=${this.noBannerImage} .uid=${this.uid}></hg-banner>
-          ${unsafeHTML(`
+          ${!this.uid ? '' : unsafeHTML(`
             <hg-${this.uid} id="page" class="page"></hg-${this.uid}>
           `)}
         `}

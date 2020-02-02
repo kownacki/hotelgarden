@@ -1,13 +1,13 @@
 import {LitElement, html, css} from 'lit-element';
+import '@polymer/paper-toggle-button/paper-toggle-button.js';
 import moment from 'moment';
-import {db, updateData} from "../../utils.js";
-import '../../elements/hg-banner.js';
-import './hg-events/hg-events-sidebar.js';
-import './hg-event/hg-event-edit-date.js';
-import {splitEvents, staticProp} from "../../utils";
+import {updateData, staticProp} from "../../utils.js";
 import sharedStyles from "../../styles/shared-styles";
 import ckContent from '../../styles/ck-content.js'
-import firebase from 'firebase/app';
+import '../../edit/hg-editable-text.js';
+import '../../elements/hg-banner.js';
+import './hg-event/hg-event-edit-date.js';
+import './hg-events/hg-events-sidebar.js';
 
 customElements.define('hg-event', class extends LitElement {
   static get properties() {
@@ -79,7 +79,7 @@ customElements.define('hg-event', class extends LitElement {
     (async () => {
       this._promotedEvent = _.get('uid', (await db.doc('events/promoted').get()).data());
     })();
-    this._unsubscribeLoggedInListener = firebase.auth().onAuthStateChanged((user) => this._loggedIn = Boolean(user));
+    this._unsubscribeLoggedInListener = auth.onAuthStateChanged((user) => this._loggedIn = Boolean(user));
   }
   disconnectedCallback() {
     this._unsubscribeLoggedInListener();

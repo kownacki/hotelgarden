@@ -1,12 +1,14 @@
 import {LitElement, html, css} from 'lit-element';
 import {staticProp} from '../../utils.js';
-import '../../content/hg-article.js';
+import HgContent from "../../elements/hg-content.js";
 import '../../content/hg-article/hg-intro-article.js';
 import '../../content/hg-content-icons.js';
-import '../../content/hg-mosaic.js';
 import '../../content/hg-content-slider.js';
+import '../../content/hg-mosaic.js';
 import '../../content/hg-halls-block.js';
-import HgContent from "../../elements/hg-content";
+import '../../elements/hg-heading.js';
+import '../../content/hg-article.js';
+import '../../content/hg-contact-block.js';
 
 customElements.define('hg-conferences', class extends HgContent {
   render() {

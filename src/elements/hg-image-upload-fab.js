@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
+import '@polymer/paper-fab';
 import '../edit/hg-image-upload.js';
-import {createImage} from "../utils";
 
 customElements.define('hg-image-upload-fab', class extends LitElement {
   static get properties() {

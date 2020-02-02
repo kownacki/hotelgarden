@@ -1,5 +1,4 @@
 import {LitElement, html, css} from 'lit-element';
-import firebase from 'firebase/app';
 
 customElements.define('hg-login', class extends LitElement {
   static get properties() {
@@ -21,15 +20,15 @@ customElements.define('hg-login', class extends LitElement {
   }
   constructor() {
     super();
-    firebase.auth().onAuthStateChanged((user) => this._loggedIn = Boolean(user));
+    auth.onAuthStateChanged((user) => this._loggedIn = Boolean(user));
   }
   render() {
     return html`
       <a @click=${() => {
-        if (firebase.auth().currentUser) {
-          firebase.auth().signOut();
+        if (auth.currentUser) {
+          auth.signOut();
         } else {
-          firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider());
+          auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
         }
       }}>${this._loggedIn ? 'Wyloguj się' : 'Zaloguj się'}</a>
     `;

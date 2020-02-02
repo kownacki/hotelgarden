@@ -1,25 +1,7 @@
 import moment from "moment";
 import diacritics from '../resources/scripts/diacritics.js';
-import firebase from 'firebase/app';
-
-// for testing in console
-window.firebase = firebase;
-
-firebase.initializeApp({
-  apiKey: "AIzaSyDvamIugzBC3k3WA52KpHeINrfDHfkvnSs",
-  authDomain: "pl-hotelgarden.firebaseapp.com",
-  databaseURL: "https://pl-hotelgarden.firebaseio.com",
-  projectId: "pl-hotelgarden",
-  storageBucket: "pl-hotelgarden.appspot.com",
-  messagingSenderId: "439170507609",
-  appId: "1:439170507609:web:d50495f3bf9c9613702248",
-  measurementId: "G-T7DQCNYLP2"
-});
 
 export const headerHeight = 59;
-
-export const db = firebase.firestore();
-export const storage = firebase.storage();
 
 export const hyphenate = _.flow(
   _.replace(/'/g, ''),
@@ -178,26 +160,26 @@ export const pathToUid = {
 };
 
 export const pages = {
-  'landing': {name: 'O hotelu', path: '/'},
-  'villa-garden': {name: 'Villa Garden', path: '/villa-garden'},
-  'surroundings': {name: 'Oleśnica i okolice', path: '/olesnica-i-okolice'},
-  'reviews': {name: 'Opinie ', path: '/opinie'},
-  'rooms': {name: 'Pokoje', path: '/pokoje'},
-  'conferences': {name: 'Konferencja w Gardenie', path: '/konferencje'},
-  'conference-halls': {name: 'Sale konferencyjne', path: '/sale-konferencyjne'},
-  'cuisine': {name: 'O naszej kuchni', path: '/kuchnia'},
-  'restaurant': {name: 'Restauracja Magnolia', path: '/restauracja'},
-  'grill-garden': {name: 'Grill Garden', path: '/grill-garden'},
-  'catering': {name: 'Catering', path: '/catering'},
-  'weddings': {name: 'Wesela', path: '/wesela'},
-  'chrzciny': {name: 'Chrzciny', path: '/chrzciny'},
-  'komunie': {name: 'Komunie', path: '/komunie'},
-  'bale-szkolne': {name: 'Bale szkolne', path: '/bale-szkolne'},
-  'banquet-halls': {name: 'Sale bankietowe', path: '/sale-bankietowe'},
-  'gallery': {name: 'Galeria', path: '/galeria'},
-  'events': {name: 'Wydarzenia', path: '/wydarzenia'},
-  'contact': {name: 'Kontakt', path: '/kontakt'},
-  '404': {name: 'Błąd 404 - strony nie znaleziono'},
+  'landing': {name: 'O hotelu', path: '/', dir: 'hotel'},
+  'villa-garden': {name: 'Villa Garden', path: '/villa-garden', dir: 'hotel'},
+  'surroundings': {name: 'Oleśnica i okolice', path: '/olesnica-i-okolice', dir: 'hotel'},
+  'reviews': {name: 'Opinie ', path: '/opinie', dir: 'hotel'},
+  'rooms': {name: 'Pokoje', path: '/pokoje', dir: 'rooms'},
+  'conferences': {name: 'Konferencja w Gardenie', path: '/konferencje', dir: 'conferences'},
+  'conference-halls': {name: 'Sale konferencyjne', path: '/sale-konferencyjne', dir: 'conferences'},
+  'cuisine': {name: 'O naszej kuchni', path: '/kuchnia', dir: 'cuisine'},
+  'restaurant': {name: 'Restauracja Magnolia', path: '/restauracja', dir: 'cuisine'},
+  'grill-garden': {name: 'Grill Garden', path: '/grill-garden', dir: 'cuisine'},
+  'catering': {name: 'Catering', path: '/catering', dir: 'cuisine'},
+  'weddings': {name: 'Wesela', path: '/wesela', dir: 'celebrations'},
+  'chrzciny': {name: 'Chrzciny', path: '/chrzciny', dir: 'celebrations'},
+  'komunie': {name: 'Komunie', path: '/komunie', dir: 'celebrations'},
+  'bale-szkolne': {name: 'Bale szkolne', path: '/bale-szkolne', dir: 'celebrations'},
+  'banquet-halls': {name: 'Sale bankietowe', path: '/sale-bankietowe', dir: 'celebrations'},
+  'gallery': {name: 'Galeria', path: '/galeria', dir: 'gallery'},
+  'events': {name: 'Wydarzenia', path: '/wydarzenia', dir: 'events'},
+  'contact': {name: 'Kontakt', path: '/kontakt', dir: 'contact'},
+  '404': {name: 'Błąd 404 - strony nie znaleziono', dir: '404'},
 };
 
 export const links = [

@@ -1,10 +1,10 @@
 import {LitElement, html, css} from 'lit-element';
-import {db, updateData, updateImage} from "../utils.js";
+import {updateData, updateImage} from "../utils.js";
+import sharedStyles from "../styles/shared-styles";
+import ckContent from '../styles/ck-content.js'
 import '../edit/hg-editable-image.js';
 import '../edit/hg-editable-text.js';
 import '../elements/hg-action-buttons.js';
-import sharedStyles from "../styles/shared-styles";
-import ckContent from '../styles/ck-content.js'
 
 customElements.define('hg-mosaic', class extends LitElement {
   static get properties() {

@@ -1,9 +1,9 @@
 import {LitElement, html, css} from 'lit-element';
-import './hg-text.js'
-import './hg-login.js'
+import {staticProp} from "../utils";
 import sharedStyles from "../styles/shared-styles";
 import ckContent from '../styles/ck-content.js';
-import {staticProp} from "../utils";
+import './hg-text.js'
+import './hg-login.js'
 
 customElements.define('hg-footer', class extends LitElement {
   static get properties() {

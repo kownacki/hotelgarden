@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
-import {db, pathToUid, linksMap, pages} from '../utils.js';
+import {pathToUid, linksMap, pages} from '../utils.js';
 import '../elements/hg-heading.js';
 
 customElements.define('hg-links', class extends LitElement {

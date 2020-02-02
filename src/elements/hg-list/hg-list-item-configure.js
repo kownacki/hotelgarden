@@ -20,9 +20,6 @@ customElements.define('hg-list-item-configure', class extends LitElement {
       .buttons {
         margin: 10px 0;
       }
-      paper-checkbox {
-        display: block;
-      }
     `;
   }
   render() {

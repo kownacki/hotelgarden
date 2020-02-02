@@ -1,7 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
-import {db} from '../utils.js';
-import '../edit/hg-editable-text.js';
 import sharedStyles from "../styles/shared-styles";
+import '../edit/hg-editable-text.js';
 
 customElements.define('hg-quote', class extends LitElement {
   static get properties() {

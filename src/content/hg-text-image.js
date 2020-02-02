@@ -1,12 +1,12 @@
 import {LitElement, html, css} from 'lit-element';
-import {db, updateData, updateImage, staticProp} from "../utils.js";
+import {updateData, staticProp} from "../utils.js";
+import sharedStyles from "../styles/shared-styles";
+import ckContent from '../styles/ck-content.js'
 import '../edit/hg-editable-text.js';
 import '../elements/hg-image.js';
 import '../elements/hg-image-slider.js';
-import '../elements/hg-action-buttons.js';
 import '../elements/hg-icon-info.js';
-import sharedStyles from "../styles/shared-styles";
-import ckContent from '../styles/ck-content.js'
+import '../elements/hg-action-buttons.js';
 
 customElements.define('hg-text-image', class extends LitElement {
   static get properties() {

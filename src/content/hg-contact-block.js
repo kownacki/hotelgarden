@@ -1,4 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
+import '../elements/hg-heading.js';
+import '../content/hg-article.js';
 import '../elements/hg-contact-form.js';
 
 customElements.define('hg-contact-block', class extends LitElement {

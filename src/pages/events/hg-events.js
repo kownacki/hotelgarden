@@ -1,14 +1,11 @@
 import {LitElement, html, css} from 'lit-element';
-import {repeat} from 'lit-html/directives/repeat';
-import {db, splitEvents} from "../../utils.js";
 import moment from "moment";
+import {staticProp} from "../../utils";
 import sharedStyles from '../../styles/shared-styles.js';
 import '../../elements/hg-heading.js';
-import './hg-events/hg-events-card.js';
-import './hg-events/hg-events-add.js';
 import '../../elements/hg-list.js';
-import {staticProp} from "../../utils";
-import firebase from 'firebase/app';
+import './hg-events/hg-events-add.js';
+import './hg-events/hg-events-card.js';
 
 // favicon rozciągnięta??
 // todo add scrolling to dialogs
@@ -21,7 +18,7 @@ customElements.define('hg-events', class extends LitElement {
   }
   constructor() {
     super();
-    this._unsubscribeLoggedInListener = firebase.auth().onAuthStateChanged((user) => this._loggedIn = Boolean(user));
+    this._unsubscribeLoggedInListener = auth.onAuthStateChanged((user) => this._loggedIn = Boolean(user));
   }
   disconnectedCallback() {
     this._unsubscribeLoggedInListener();

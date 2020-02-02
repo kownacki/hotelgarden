@@ -1,4 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
+import '@polymer/paper-checkbox/paper-checkbox.js';
 import {staticProp} from '../../utils.js';
 import '../../elements/hg-list.js';
 import '../../elements/hg-review.js';

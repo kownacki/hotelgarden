@@ -1,6 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
 import '../../../elements/hg-slider.js';
-import '../../../edit/hg-delete-item.js';
 import '../../../edit/hg-editable-image.js';
 
 customElements.define('hg-gallery-slider', class extends LitElement {

@@ -1,8 +1,9 @@
 import {LitElement, html, css} from 'lit-element';
-import {db, updateData, updateImage, deleteImage, getData} from '../utils.js';
+import {updateData, updateImage, deleteImage, getData} from '../utils.js';
+import './hg-slider.js';
 import './hg-image-slider/hg-image-slider-item.js';
 import './hg-image-upload-fab.js';
-import firebase from 'firebase/app';
+import '../pages/gallery/hg-gallery/hg-gallery-slider.js'
 
 //todo esc should close window
 customElements.define('hg-image-slider', class extends LitElement {
@@ -20,7 +21,7 @@ customElements.define('hg-image-slider', class extends LitElement {
   }
   constructor() {
     super();
-    this._unsubscribeLoggedInListener = firebase.auth().onAuthStateChanged((user) => this._loggedIn = Boolean(user));
+    this._unsubscribeLoggedInListener = auth.onAuthStateChanged((user) => this._loggedIn = Boolean(user));
   }
   disconnectedCallback() {
     this._unsubscribeLoggedInListener();

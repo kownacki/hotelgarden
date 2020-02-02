@@ -1,10 +1,9 @@
 import {LitElement, html, css} from 'lit-element';
 import {repeat} from 'lit-html/directives/repeat';
-import {array, db, updateData, generateUid} from "../utils.js";
+import {array, updateData, generateUid} from "../utils.js";
 import sharedStyles from '../styles/shared-styles.js'
 import './hg-list/hg-list-item.js';
 import './hg-list/hg-list-add.js';
-import firebase from 'firebase/app';
 
 export default class HgList extends LitElement {
   static get properties() {
@@ -36,7 +35,7 @@ export default class HgList extends LitElement {
   }
   constructor() {
     super();
-    this._unsubscribeLoggedInListener = firebase.auth().onAuthStateChanged((user) => this._loggedIn = Boolean(user));
+    this._unsubscribeLoggedInListener = auth.onAuthStateChanged((user) => this._loggedIn = Boolean(user));
   }
   disconnectedCallback() {
     this._unsubscribeLoggedInListener();

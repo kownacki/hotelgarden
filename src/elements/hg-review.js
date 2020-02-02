@@ -1,5 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
 import sharedStyles from "../styles/shared-styles";
+import './hg-list/hg-list-editable-text.js';
 
 customElements.define('hg-review', class extends LitElement {
   static get properties() {

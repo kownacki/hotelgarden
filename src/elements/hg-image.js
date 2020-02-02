@@ -1,5 +1,4 @@
-import {LitElement, html, css} from 'lit-element';
-import {db, getData, updateImage} from "../utils.js";
+import {getData, updateImage} from "../utils.js";
 import HgEditableImage from '../edit/hg-editable-image.js';
 
 customElements.define('hg-image', class extends HgEditableImage {

@@ -4,7 +4,6 @@ import sharedStyles from "../../styles/shared-styles";
 import ckContent from '../../styles/ck-content.js'
 import '../hg-dialog.js';
 import '../hg-action-button.js';
-import '../hg-heading.js'
 import '../hg-image.js'
 import '../hg-text.js'
 

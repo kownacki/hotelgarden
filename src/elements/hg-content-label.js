@@ -1,5 +1,4 @@
 import {LitElement, html, css} from 'lit-element';
-import firebase from 'firebase/app';
 import sharedStyles from '../styles/shared-styles.js';
 
 customElements.define('hg-content-label', class extends LitElement {
@@ -21,7 +20,7 @@ customElements.define('hg-content-label', class extends LitElement {
   }
   constructor() {
     super();
-    this._unsubscribeLoggedInListener = firebase.auth().onAuthStateChanged((user) => this._loggedIn = Boolean(user));
+    this._unsubscribeLoggedInListener = auth.onAuthStateChanged((user) => this._loggedIn = Boolean(user));
     this.classList.add('smaller-text');
   }
   disconnectedCallback() {

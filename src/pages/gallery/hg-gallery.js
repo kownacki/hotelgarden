@@ -1,9 +1,9 @@
 import {LitElement, html, css} from 'lit-element';
 import {createImage, deleteImage, updateImage, staticProp} from "../../utils.js";
-import './hg-gallery/hg-gallery-item.js';
-import './hg-gallery/hg-gallery-slider.js';
 import '../../edit/hg-image-upload.js';
 import '../../elements/hg-list/hg-mosaic-list.js'
+import './hg-gallery/hg-gallery-item.js';
+import './hg-gallery/hg-gallery-slider.js';
 
 customElements.define('hg-gallery', class extends LitElement {
   static get properties() {
