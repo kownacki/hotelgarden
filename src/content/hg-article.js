@@ -37,7 +37,7 @@ export default class HgArticle extends LitElement {
         .rich=${this.rich}
         .richConfig=${this.richConfig}
         .multiline=${true}>
-        <div class="ck-content ${classMap(this.classes)}"></div>
+        <div id="text" class="ck-content ${classMap(this.classes)}"></div>
       </hg-text>
       <hg-content-label .name=${'Pole tekstowe'}></hg-content-label>
     `;

@@ -11,7 +11,6 @@ customElements.define('hg-intro-article', class extends HgArticle {
         margin: 80px auto;
       }
       /* remove it when edited */
-      /* todo effect disapears when editing is on */
       div:not(:focus):first-letter {
         font-size: 3em;
         float: left;
@@ -28,5 +27,9 @@ customElements.define('hg-intro-article', class extends HgArticle {
     super();
     this.richConfig = 'intro';
     this.rich = true;
+    (async () => {
+      await this.updateComplete;
+      this.shadowRoot.getElementById('text').classList.add('big-first-letter');
+    })();
   }
 });
