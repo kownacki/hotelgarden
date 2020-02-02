@@ -27,7 +27,7 @@ customElements.define('hg-restaurant', class extends HgContent {
       <hg-reviews-block .uid=${'restaurant'}></hg-reviews-block>
       <hg-article .rich=${true} .uid=${'restaurant-extra1'}></hg-article>
       <hg-menu id="menu" .uid=${'restaurant'}></hg-menu> 
-      <hg-links .path=${'/restaurant'} .superpath=${'/kuchnia'}></hg-links>
+      <hg-links .path=${'/restauracja'} .superpath=${'/kuchnia'}></hg-links>
     `;
   }
 });
