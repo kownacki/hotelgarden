@@ -15,7 +15,8 @@ customElements.define('hg-icon-info', class extends LitElement {
         display: flex;
         flex-wrap: wrap;
       }
-      :host > * {
+      /* Prevent bugs. Iphone adds style tag as host's last child. */
+      :host > :not(style) {
         margin-bottom: 5px;
         display: flex;
         align-items: center;
@@ -23,13 +24,14 @@ customElements.define('hg-icon-info', class extends LitElement {
       iron-icon {
         min-width: 40px;
         height: 40px;
-        filter: var(--primary-color-filter)
+        filter: var(--primary-color-filter);
       }
       .text {
         min-width: 20px;
         margin: 0 20px 0 10px;
       }
-      :host > :last-child .text {
+      /* Prevent bugs. Iphone adds style tag as host's last child. */
+      :host > div:last-of-type .text {
         margin-right: 0;
       }
       @media all and (max-width: 599px) {
@@ -48,7 +50,7 @@ customElements.define('hg-icon-info', class extends LitElement {
           ${this.editable 
             ? html`<hg-editable-text
               .ready=${this.dataReady}
-              float
+              .float=${true}
               .text=${item.text}
               @save=${(event) => this.dispatchEvent(new CustomEvent('save', {detail: {index, text: event.detail}}))}>
               <div class="text"></div>

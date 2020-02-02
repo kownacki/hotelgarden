@@ -103,7 +103,8 @@ export default class HgList extends LitElement {
       :host {
         display: block;
       }
-      :host > * {
+      /* Prevent bugs. Iphone adds style tag as host's last child. */
+      :host > :not(style) {
         width: calc(100% / var(--columns));
       }
       hg-list-add {

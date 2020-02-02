@@ -13,7 +13,8 @@ customElements.define('hg-mosaic-list', class extends HgList {
           position: relative;
           padding-bottom: calc(100% * (3 / 16));
         }
-        :host > * {
+        /* Prevent bugs. Iphone adds style tag as host's last child. */
+        :host > :not(style) {
           position: absolute;
           width: calc(100% * (5 / 16));
           max-width: 100%;
@@ -37,23 +38,27 @@ customElements.define('hg-mosaic-list', class extends HgList {
         }
       }
       @media all and (max-width: 839px) {
-        :host > * {
+        /* Prevent bugs. Iphone adds style tag as host's last child. */
+        :host > :not(style) {
           width: 50%;
           height: 300px;
         }
       }
       @media all and (max-width: 719px) {
-        :host > * {
+        /* Prevent bugs. Iphone adds style tag as host's last child. */
+        :host > :not(style) {
           height: 250px;
         }
       }
       @media all and (max-width: 599px) {
-        :host > * {
+        /* Prevent bugs. Iphone adds style tag as host's last child. */
+        :host > :not(style) {
           height: 200px;
         }
       }
       @media all and (max-width: 479px) {
-        :host > * {
+        /* Prevent bugs. Iphone adds style tag as host's last child. */
+        :host > :not(style) {
           height: 150px;
         }
       }

@@ -31,7 +31,8 @@ export default class HgContent extends LitElement {
   }
   static get styles() {
     return css`
-      :host > * {
+      /* Prevent bugs. Iphone adds style tag as host's last child. */
+      :host > :not(style) {
         transition-property: opacity, top;
         transition-duration: 0.5s;
         transition-timing-function: ease-in-out;
