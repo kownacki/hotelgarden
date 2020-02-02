@@ -3,6 +3,7 @@ import '@polymer/paper-checkbox/paper-checkbox.js';
 import {staticProp} from '../../utils.js';
 import '../../elements/hg-list.js';
 import '../../elements/hg-review.js';
+import '../../content/hg-links.js';
 
 const reviewBlocks = ['landing', 'restaurant', 'grill-garden', 'catering', 'weddings', 'chrzciny', 'komunie', 'bale-szkolne'];
 
@@ -90,6 +91,7 @@ customElements.define('hg-reviews', class extends LitElement {
         `}
         .configure=${configure}>
       </hg-list>
+      <hg-links .path=${'/opinie'} .superpath=${'/'}></hg-links>
     `;
   }
 });
