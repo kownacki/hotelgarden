@@ -7,6 +7,8 @@ import '../../content/hg-article.js'
 import '../../content/hg-mosaic.js'
 import '../../content/hg-content-slider.js';
 import '../../content/hg-reviews-block.js';
+import '../../content/hg-text-image.js';
+import '../../content/hg-contact-block.js';
 import '../../content/hg-links.js';
 
 customElements.define('hg-grill-garden', class extends HgContent {
@@ -18,7 +20,8 @@ customElements.define('hg-grill-garden', class extends HgContent {
       <hg-mosaic .uid=${'grill-garden'} .buttons=${staticProp({primary: [{url: '#menu', text: 'Zobacz menu'}]})}></hg-mosaic>
       <hg-content-slider .uid=${'grill-garden'}></hg-content-slider>
       <hg-reviews-block .uid=${'grill-garden'}></hg-reviews-block>
-      <hg-article .rich=${true} .uid=${'grill-garden-extra2'}></hg-article>
+      <hg-text-image .swap=${true} .uid=${'grill-garden'}></hg-text-image>
+      <hg-contact-block></hg-contact-block>
       <hg-links .path=${'/grill-garden'} .superpath=${'/kuchnia'}></hg-links>
     `;
   }
