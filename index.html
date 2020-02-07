@@ -24,8 +24,25 @@
   <script src="/resources/scripts/lodash-fp.min.js"></script>
   <script type="module" src="/src/hg-app.js"></script>
   <script type="text/javascript" src="https://open.upperbooking.com/js/Booking.js?locale=pl" defer></script>
+  <script type="text/javascript" src="https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js" defer></script>
+  <script>
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId            : '608176286628501',
+        autoLogAppEvents : true,
+        xfbml            : true,
+        version          : 'v5.0'
+      });
+    };
+    window.addEventListener('scroll', _.throttle(100, () => document.getElementById('fb-root')
+      && (document.getElementById('fb-root').style.opacity = (window.pageYOffset > 0 ? '1' : '0'))));
+  </script>
 
   <style id="inline-style">
+    #fb-root {
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
   </style>
   <script type="module">
     import sharedStyles from '/src/styles/shared-styles.js';
@@ -36,5 +53,13 @@
 </head>
 <body>
 <hg-app></hg-app>
+<div
+  class="fb-customerchat"
+  attribution=setup_tool
+  page_id="946632798797840"
+  logged_in_greeting="Witaj! Co możemy dla Ciebie zrobić?"
+  logged_out_greeting="Witaj! Co możemy dla Ciebie zrobić?"
+  theme_color="#0078FF">
+</div>
 </body>
 </html>
