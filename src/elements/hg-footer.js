@@ -55,7 +55,7 @@ customElements.define('hg-footer', class extends LitElement {
       hg-login {
         position: absolute;
         bottom: 0;
-        right: 0;
+        left: 0;
       }
       @media all and (max-width: 959px) {
         .container {
