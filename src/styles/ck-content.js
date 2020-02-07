@@ -307,11 +307,6 @@ export default css`
     padding: 0 !important;
     border: 1px solid transparent;
   }
-  .ck-content:focus:first-letter {
-    font-size: inherit;
-    float: initial;
-    margin: initial;
-  }
   .ck-content > :first-child {
     margin-top: 0 !important;
   }

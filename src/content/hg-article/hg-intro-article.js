@@ -10,12 +10,6 @@ customElements.define('hg-intro-article', class extends HgArticle {
       :host {
         margin: 80px auto;
       }
-      /* remove it when edited */
-      div:not(:focus):first-letter {
-        font-size: 3em;
-        float: left;
-        margin: 0.25em 0.15em 0.15em 0;
-      }
       @media all and (max-width: 599px) {
         :host {
           margin: 40px auto;

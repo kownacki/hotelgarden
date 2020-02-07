@@ -10,8 +10,8 @@ export default css`
   .bigger-text {
     font-size: 24px;
   }
-  /* todo scrollbar appears in edit mode */
-  .big-first-letter:first-letter {
+  /* remove on focus when editing */
+  .big-first-letter:not(:focus)::first-letter {
     font-size: 3em;
     float: left;
     margin: 0.25em 0.15em 0.15em 0;
