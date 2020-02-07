@@ -74,7 +74,7 @@ customElements.define('hg-footer', class extends LitElement {
         <hg-text .rich=${true} .path=${staticProp({doc: 'texts/footer', field: 'text'})}><div class="ck-content smaller-text"></div></hg-text>
         <div class="icons">
           <a target="_blank" href="http://www.booking.com/hotel/pl/garden.pl.html" class="lighter"><img src="/resources/images/booking-footer.png"></a>
-          <a target="_blank" href="https://https://www.facebook.com/HotelGardenOlesnica" class="lighter"><img src="/resources/images/facebook-footer.png"></a>
+          <a target="_blank" href="https://www.facebook.com/HotelGardenOlesnica" class="lighter"><img src="/resources/images/facebook-footer.png"></a>
           <a target="_blank" href="https://pl.tripadvisor.com/Hotel_Review-g1052898-d7323305-Reviews-Garden_Hotel-Olesnica_Lower_Silesia_Province_Southern_Poland.html"><img src="/resources/images/tripadvisor-footer.png"></a>
         </div>
       </div>
