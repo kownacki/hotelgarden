@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
-import {staticProp} from "../../utils";
+import {staticProp, setMetaDescription} from "../../utils";
 import ckContent from "../../styles/ck-content.js";
 import '../../content/hg-article.js';
 import '../../elements/hg-contact-form.js';
@@ -24,7 +24,12 @@ customElements.define('hg-contact', class extends LitElement {
   }
   render() {
     return html`
-      <hg-article .rich=${true} .uid=${'contact'} .classes=${staticProp({'smaller-text': true})}></hg-article>
+      <hg-article 
+        .rich=${true} 
+        .uid=${'contact'} 
+        .classes=${staticProp({'smaller-text': true})}
+        @text-ready=${(event) => setMetaDescription(event.detail)}>
+      </hg-article>
       <hg-contact-form></hg-contact-form>
       <hg-map></hg-map>
     `;

@@ -33,6 +33,7 @@ export default class HgArticle extends LitElement {
   render() {
     return html`
       <hg-text
+        id="hg-text"
         .path=${staticProp({doc: 'articles/' + this.uid, field: 'text'})}
         .rich=${this.rich}
         .richConfig=${this.richConfig}

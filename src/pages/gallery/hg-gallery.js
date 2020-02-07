@@ -1,5 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
 import {createImage, deleteImage, updateImage, staticProp} from "../../utils.js";
+import '../../content/hg-article/hg-intro-article.js';
 import '../../edit/hg-image-upload.js';
 import '../../elements/hg-list/hg-mosaic-list.js'
 import './hg-gallery/hg-gallery-item.js';
@@ -20,6 +21,9 @@ customElements.define('hg-gallery', class extends LitElement {
         max-width: 1300px;
         padding: 0 0 1px;
       }
+      hg-intro-article {
+        display: none;
+      }
     `;
   }
   async updateImage(index, file) {
@@ -30,6 +34,7 @@ customElements.define('hg-gallery', class extends LitElement {
   }
   render() {
     return html`
+      <hg-intro-article .uid=${'gallery'}></hg-intro-article>
       <hg-image-upload id="upload"></hg-image-upload>
       <hg-mosaic-list
         id="list"

@@ -136,6 +136,19 @@ export const openProfitroom = (location, roomId, adults = 2) => {
   window.Booking.OpenSite(location, {RoomID: roomId, adults, checkin: moment().format('YYYY-MM-DD'), checkout: moment().add(1, 'day').format('YYYY-MM-DD')});
 };
 
+export const setMetaDescription = (text) => {
+  document.head.querySelector('meta[name="description"]').setAttribute('content',
+    !text ? ''
+      : text.search('<p') === -1
+      ? text
+      : (() => {
+        const el = document.createElement('div');
+        el.innerHTML = _.replace(/<br>/g, ' ', text);
+        return el.getElementsByTagName('p')[0].innerText;
+      })()
+  );
+};
+
 export const pathToUid = {
   '/index.html': 'landing',
   '/': 'landing',

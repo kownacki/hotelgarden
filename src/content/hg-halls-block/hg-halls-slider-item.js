@@ -50,7 +50,7 @@ customElements.define('hg-halls-slider-item', class extends LitElement {
         }])}>
       </hg-icon-info>
       <div class="smaller-text ck-content" 
-        .innerHTML=${shorten(_.flow([_.replace('<p>', ''), _.replace('</p>', '')])(this.hall.text), 235)}>
+        .innerHTML=${shorten(_.flow([_.replace(/<p>/g, ''), _.replace(/<\/p>/g, '')])(this.hall.text), 235)}>
       </div>
       <hg-action-buttons 
         .buttons=${staticProp([

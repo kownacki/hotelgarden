@@ -1,5 +1,6 @@
 import {html, css} from 'lit-element';
 import HgArticle from '../hg-article.js';
+import {setMetaDescription} from "../../utils";
 
 customElements.define('hg-intro-article', class extends HgArticle {
   static get properties() {
@@ -24,6 +25,7 @@ customElements.define('hg-intro-article', class extends HgArticle {
     (async () => {
       await this.updateComplete;
       this.shadowRoot.getElementById('text').classList.add('big-first-letter');
+      this.shadowRoot.getElementById('hg-text').addEventListener('text-ready', (event) => setMetaDescription(event.detail));
     })();
   }
 });

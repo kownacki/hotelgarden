@@ -2,6 +2,7 @@ import {LitElement, html, css} from 'lit-element';
 import moment from "moment";
 import {staticProp} from "../../utils";
 import sharedStyles from '../../styles/shared-styles.js';
+import '../../content/hg-article/hg-intro-article.js';
 import '../../elements/hg-heading.js';
 import '../../elements/hg-list.js';
 import './hg-events/hg-events-add.js';
@@ -31,6 +32,9 @@ customElements.define('hg-events', class extends LitElement {
         margin: 20px auto;
         display: block;
       }
+      hg-intro-article {
+        display: none;
+      }
       hg-heading {
         margin: 40px 0;
       }
@@ -50,6 +54,7 @@ customElements.define('hg-events', class extends LitElement {
   }
   render() {
     return html`
+      <hg-intro-article .uid=${'events'}></hg-intro-article>
       <div class="events">
         ${!this._loggedIn ? '' : html`<hg-events-add></hg-events-add>`}
         <hg-heading>${'Nadchodzące wydarzenia'}</hg-heading>

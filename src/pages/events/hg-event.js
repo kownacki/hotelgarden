@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit-element';
 import '@polymer/paper-toggle-button/paper-toggle-button.js';
 import moment from 'moment';
-import {updateData, staticProp} from "../../utils.js";
+import {updateData, staticProp, setMetaDescription} from "../../utils.js";
 import sharedStyles from "../../styles/shared-styles";
 import ckContent from '../../styles/ck-content.js'
 import '../../edit/hg-editable-text.js';
@@ -98,6 +98,7 @@ customElements.define('hg-event', class extends LitElement {
       if (this._event) {
         this._contentLoading = true;
         this._content = (await db.doc('eventsContents/' + this.uid).get()).get('content');
+        setMetaDescription(this._content);
         this._contentLoading = false;
       } else {
         this.dispatchEvent(new CustomEvent('event-not-found', {composed: true}))

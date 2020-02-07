@@ -17,6 +17,7 @@ customElements.define('hg-text', class extends HgEditableText {
         (async () => {
           this.text = _.get(this.path.field, (await db.doc(this.path.doc).get()).data());
           this.ready = true;
+          this.dispatchEvent(new CustomEvent('text-ready', {detail: this.text, composed: true}));
         })();
       }
     }

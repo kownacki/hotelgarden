@@ -1,6 +1,7 @@
 import {LitElement, html, css} from 'lit-element';
 import '@polymer/paper-checkbox/paper-checkbox.js';
 import {staticProp} from '../../utils.js';
+import '../../content/hg-article/hg-intro-article.js';
 import '../../elements/hg-list.js';
 import '../../elements/hg-review.js';
 import '../../content/hg-links.js';
@@ -39,6 +40,9 @@ customElements.define('hg-reviews', class extends LitElement {
         padding: 40px 0;
         margin: auto;
       }
+      hg-intro-article {
+        display: none;
+      }
       hg-list {
         display: flex;
         flex-wrap: wrap;
@@ -65,6 +69,7 @@ customElements.define('hg-reviews', class extends LitElement {
   }
   render() {
     return html`
+      <hg-intro-article .uid=${'reviews'}></hg-intro-article>
       <hg-list
         .array=${true}
         .addAtStart=${true}
