@@ -153,7 +153,7 @@ export const pathToUid = {
   '/index.html': 'landing',
   '/': 'landing',
   '/villa-garden': 'villa-garden',
-  '/olesnica-i-okolice': 'surroundings',
+  '/atrakcje-okolicy': 'surroundings',
   '/opinie': 'reviews',
   '/pokoje': 'rooms',
   '/konferencje': 'conferences',
@@ -174,7 +174,7 @@ export const pathToUid = {
 export const pages = {
   'landing': {name: 'O hotelu', path: '/', dir: 'hotel'},
   'villa-garden': {name: 'Villa Garden', path: '/villa-garden', dir: 'hotel'},
-  'surroundings': {name: 'Oleśnica i okolice', path: '/olesnica-i-okolice', dir: 'hotel'},
+  'surroundings': {name: 'Atrakcje okolicy', path: '/atrakcje-okolicy', dir: 'hotel'},
   'reviews': {name: 'Opinie ', path: '/opinie', dir: 'hotel'},
   'rooms': {name: 'Pokoje', path: '/pokoje', dir: 'rooms'},
   'conferences': {name: 'Konferencja w Gardenie', path: '/konferencje', dir: 'conferences'},

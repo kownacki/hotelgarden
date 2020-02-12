@@ -32,7 +32,7 @@ customElements.define('hg-surroundings', class extends HgContent {
         </hg-text-image>
         ${index === 0 ? '' : html`<hg-content-icons .small=${true} .uid=${'surroundings-extra' + index}></hg-content-icons>`}
       `, [null, 'foot', 'foot', 'foot', 'car', 'car'])}
-      <hg-links .path=${'/olesnica-i-okolice'} .superpath=${'/'}></hg-links>
+      <hg-links .path=${'/atrakcje-okolicy'} .superpath=${'/'}></hg-links>
     `;
   }
 });
