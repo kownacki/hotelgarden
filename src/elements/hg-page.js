@@ -21,7 +21,6 @@ import '../pages/cuisine/hg-catering.js';
 import '../pages/celebrations/hg-weddings.js';
 import '../pages/celebrations/hg-chrzciny.js';
 import '../pages/celebrations/hg-komunie.js';
-import '../pages/celebrations/hg-bale-szkolne.js';
 import '../pages/celebrations/hg-banquet-halls.js';
 import '../pages/gallery/hg-gallery.js';
 import '../pages/events/hg-events.js';
