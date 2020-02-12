@@ -207,11 +207,11 @@ export const links = [
   }, {
     name: 'Kuchnia',
     path: '/kuchnia',
-    sublinks: ['cuisine', 'restaurant', 'grill-garden', 'catering'],
+    sublinks: ['cuisine', 'restaurant', 'grill-garden'],
   }, {
     name: 'Uroczystości',
     path: '/wesela',
-    sublinks: ['weddings', 'chrzciny', 'komunie', 'banquet-halls'],
+    sublinks: ['weddings', 'banquet-halls'],
   },
   pages['gallery'],
   pages['events'],

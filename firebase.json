@@ -44,7 +44,7 @@
       },
       {
         "source": "/przyjecia-rodzinne",
-        "destination": "/chrzciny",
+        "destination": "/wesela",
         "type": 301
       },
       {
