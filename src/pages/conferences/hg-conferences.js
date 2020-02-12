@@ -21,8 +21,6 @@ customElements.define('hg-conferences', class extends HgContent {
         secondary: [{url: '#', text: 'Zobacz ofertę'}],
       })}></hg-mosaic>
       <hg-halls-block .type=${'conference'}></hg-halls-block>
-      <hg-heading center>${'Nowoczesne wyposażenie'}</hg-heading>
-      <hg-content-icons .uid=${'conferences-halls'}></hg-content-icons>
       <hg-heading center>${'Food & Beverages'}</hg-heading>
       <hg-article .rich=${true} .richConfig=${'mosaic'} .uid=${'conferences-cuisine'}></hg-article>
       <hg-content-slider .uid=${'conferences-cuisine'}></hg-content-slider>
