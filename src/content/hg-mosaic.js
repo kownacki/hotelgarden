@@ -33,12 +33,12 @@ customElements.define('hg-mosaic', class extends LitElement {
         overflow: auto;
       }
       .left {
-        width: calc(40% - 1px);
+        width: calc(45% - 1px);
         margin-right: 1px;
         float: left;
       }
       .right {
-        width: 60%;
+        width: 55%;
         float: right;
       }
       .content {
