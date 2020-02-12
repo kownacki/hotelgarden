@@ -5,7 +5,6 @@ import '../../content/hg-quote.js';
 import '../../content/hg-content-icons.js';
 import '../../content/hg-content-slider.js';
 import '../../content/hg-mosaic.js';
-import '../../content/hg-text-image.js';
 import '../../content/hg-halls-block.js';
 import '../../content/hg-reviews-block.js';
 import '../../content/hg-contact-block.js';
@@ -19,7 +18,6 @@ customElements.define('hg-komunie', class extends HgContent {
       <hg-content-icons .uid=${'komunie'}></hg-content-icons>
       <hg-content-slider .uid=${'komunie'}></hg-content-slider>
       <hg-mosaic .uid=${'komunie'}></hg-mosaic>
-      <hg-text-image swap .uid=${'komunie'}></hg-text-image>
       <hg-halls-block .type=${'banquet'}></hg-halls-block>
       <hg-reviews-block uid=${'komunie'}></hg-reviews-block>
       <hg-contact-block></hg-contact-block>

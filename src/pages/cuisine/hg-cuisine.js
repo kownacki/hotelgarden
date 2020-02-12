@@ -16,7 +16,7 @@ customElements.define('hg-cuisine', class extends HgContent {
       <hg-content-slider .uid=${'cuisine'}></hg-content-slider>
       <hg-mosaic .uid=${'cuisine'} .buttons=${staticProp({primary: [{url: '/restauracja#menu', text: 'Zobacz menu'}]})}></hg-mosaic>
       <hg-text-image .uid=${'lunch'}></hg-text-image>
-      <hg-text-image .swap=${true} .uid=${'cuisine-extra1'} .buttons=${staticProp([{url: '#', text: 'Zobacz ofertę'}])}></hg-text-image>
+      <hg-text-image .swap=${true} .uid=${'cuisine-extra1'} .buttons=${staticProp([{url: '/grill-garden', text: 'Zobacz więcej'}])}></hg-text-image>
       <hg-links .path=${'/kuchnia'} .superpath=${'/kuchnia'}></hg-links>
     `;
   }

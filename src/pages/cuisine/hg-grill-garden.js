@@ -17,7 +17,7 @@ customElements.define('hg-grill-garden', class extends HgContent {
       <hg-intro-article .uid=${'grill-garden'}></hg-intro-article>
       <hg-content-icons .uid=${'grill-garden'}></hg-content-icons>
       <hg-article .rich=${true} .uid=${'grill-garden-extra1'}></hg-article>
-      <hg-mosaic .uid=${'grill-garden'} .buttons=${staticProp({primary: [{url: '#menu', text: 'Zobacz menu'}]})}></hg-mosaic>
+      <hg-mosaic .uid=${'grill-garden'}></hg-mosaic>
       <hg-content-slider .uid=${'grill-garden'}></hg-content-slider>
       <hg-reviews-block .uid=${'grill-garden'}></hg-reviews-block>
       <hg-text-image .swap=${true} .uid=${'grill-garden'}></hg-text-image>

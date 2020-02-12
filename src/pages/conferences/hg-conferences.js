@@ -17,14 +17,13 @@ customElements.define('hg-conferences', class extends HgContent {
       <hg-content-icons .uid=${'conferences'}></hg-content-icons>
       <hg-content-slider .uid=${'conferences'}></hg-content-slider>
       <hg-mosaic .uid=${'conferences'} .buttons=${staticProp({
-        primary: [{url: '#', text: 'Zobacz ofertę'}, {url: '#', text: 'Lorem ipsum'}],
-        secondary: [{url: '#', text: 'Zobacz ofertę'}],
+        primary: [{url: '#kontact', text: 'Skontaktuj się z nami'}],
       })}></hg-mosaic>
       <hg-halls-block .type=${'conference'}></hg-halls-block>
       <hg-heading center>${'Food & Beverages'}</hg-heading>
       <hg-article .rich=${true} .richConfig=${'mosaic'} .uid=${'conferences-cuisine'}></hg-article>
       <hg-content-slider .uid=${'conferences-cuisine'}></hg-content-slider>
-      <hg-contact-block></hg-contact-block>
+      <hg-contact-block id="kontakt"></hg-contact-block>
     `;
   }
 });

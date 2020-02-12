@@ -16,7 +16,7 @@ customElements.define('hg-surroundings', class extends HgContent {
   render() {
     return html`
       <hg-intro-article .uid=${'surroundings'}></hg-intro-article>
-      <hg-text-image .uid=${'surroundings'} .buttons=${staticProp([{url: '/grill-garden', text: 'Czytaj więcej'}])}></hg-text-image>
+      <hg-text-image .uid=${'surroundings'} .buttons=${staticProp([{url: '/grill-garden', text: 'Zobacz więcej'}])}></hg-text-image>
       ${_.map.convert({cap: false})((icon, index) => html`
         <hg-text-image 
           .uid=${'surroundings-extra' + (index + 1)}

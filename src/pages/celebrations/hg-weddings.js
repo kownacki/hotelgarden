@@ -20,13 +20,13 @@ customElements.define('hg-weddings', class extends HgContent {
       <hg-content-icons .uid=${'weddings'}></hg-content-icons>
       <hg-content-slider .uid=${'weddings'}></hg-content-slider>
       <hg-mosaic .uid=${'weddings'} .buttons=${staticProp({
-        primary: [{url: '#contact', text: 'Skontaktuj się z nami'}],
+        primary: [{url: '#kontakt', text: 'Skontaktuj się z nami'}],
       })}></hg-mosaic>
       <hg-text-image swap .uid=${'weddings'}></hg-text-image>
       <hg-halls-block .type=${'banquet'}></hg-halls-block>
       <hg-reviews-block uid=${'weddings'}></hg-reviews-block>
       <hg-content-slider .uid=${'weddings-2'}></hg-content-slider>
-      <hg-contact-block id="contact"></hg-contact-block>
+      <hg-contact-block id="kontakt"></hg-contact-block>
       <hg-links .path=${'/wesela'} .superpath=${'/wesela'}></hg-links>
     `;
   }

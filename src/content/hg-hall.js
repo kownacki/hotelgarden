@@ -11,7 +11,7 @@ customElements.define('hg-hall', class extends LitElement {
     };
   }
   static get styles() {
-    return [sharedStyles, css`
+    return [sharedStyles, css`      
     `];
   }
   render() {
