@@ -5,13 +5,6 @@
   },
   "hosting": {
     "public": "dist",
-    "redirects": [
-      {
-        "source": "/:url*/",
-        "destination": "/:url",
-        "type": 301
-      }
-    ],
     "rewrites": [
       {
         "source": "/@(villa-garden|atrakcje-okolicy|opinie|pokoje|konferencje|sale-konferencyjne|kuchnia|restauracja|grill-garden|catering|wesela|chrzciny|komunie|sale-bankietowe|galeria|wydarzenia|kontakt)",
@@ -31,6 +24,33 @@
             "value": "no-cache"
           }
         ]
+      }
+    ],
+    "redirects": [
+      {
+        "source": "/:url*/",
+        "destination": "/:url",
+        "type": 301
+      },
+      {
+        "source": "/restaurant",
+        "destination": "/restauracja",
+        "type": 301
+      },
+      {
+        "source": "/biznes",
+        "destination": "/konferencje",
+        "type": 301
+      },
+      {
+        "source": "/przyjecia-rodzinne",
+        "destination": "/chrzciny",
+        "type": 301
+      },
+      {
+        "source": "/relaks",
+        "destination": "/atrakcje-okolicy",
+        "type": 301
       }
     ]
   },
