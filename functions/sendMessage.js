@@ -2,9 +2,12 @@
 
 const _ = require('lodash/fp');
 const admin = require('firebase-admin');
+const moment = require('moment-timezone');
 const nodemailer = require('nodemailer');
 
 const corsAsync = require('./cors-async')({origin: true});
+
+const generateUid = (timestamp = Date.now()) => `${timestamp}${_.padCharsStart('0', 9,  _.random(1, 10**9 - 1))}`;
 
 // Rough limit, to prevent attacks
 const MAX_MESSAGE_SIZE = 10000;
@@ -31,21 +34,28 @@ const sendMail = async (body) => {
       pass: config.mailTransport.pass,
     },
   });
-  return mailTransport.sendMail(mailOptions);
+  await mailTransport.sendMail(mailOptions);
+  return mailOptions.to;
 };
 
-module.exports = (req, res) => {
-  return corsAsync(req, res)
-    .then(() => {
-      if (JSON.stringify(req.body).length > MAX_MESSAGE_SIZE) {
-        return res.status(400).send('Message is too big.');
-      }
-
-      return sendMail(req.body)
-        .then(() => res.status(200).end())
-        .catch((error) => {
-          res.status(500).send('Error while sending contact form message.');
-          throw error;
-        });
-    })
+module.exports = async (req, res) => {
+  const now = Date.now();
+  await corsAsync(req, res);
+  if (JSON.stringify(req.body).length > MAX_MESSAGE_SIZE) {
+    return res.status(400).send('Message is too big.');
+  }
+  let to;
+  try {
+    to = await sendMail(req.body);
+    res.status(200).end();
+  } catch (error) {
+    res.status(500).send('Error while sending contact form message.');
+    throw error;
+  }
+  await admin.firestore().doc('sentMessages/' + generateUid(now)).set({
+    ...req.body,
+    to,
+    timestamp: now,
+    time: moment(now).tz('Poland').format('YYYY-MM-DD LT'),
+  });
 };
