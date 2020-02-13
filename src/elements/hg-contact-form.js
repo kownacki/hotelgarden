@@ -189,7 +189,7 @@ customElements.define('hg-contact-form', class extends LitElement {
           <paper-radio-group 
             id="subject" 
             .selected=${this.subject ? this.subject : null}
-            @selected-changed=${(event) => this._selectedSubject = event.detail}>
+            @selected-changed=${(event) => this._selectedSubject = event.detail.value}>
             <span class="about">Dotyczy*:</span> 
             <paper-radio-button name="hotel">Noclegi</paper-radio-button>
             <paper-radio-button name="gastro">Gastronomia</paper-radio-button>
