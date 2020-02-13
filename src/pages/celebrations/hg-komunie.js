@@ -18,7 +18,7 @@ customElements.define('hg-komunie', class extends HgContent {
       <hg-content-icons .uid=${'komunie'}></hg-content-icons>
       <hg-content-slider .uid=${'komunie'}></hg-content-slider>
       <hg-mosaic .uid=${'komunie'}></hg-mosaic>
-      <hg-halls-block .type=${'banquet'}></hg-halls-block>
+      <hg-halls-block .uid=${'komunie'} .type=${'banquet'}></hg-halls-block>
       <hg-reviews-block uid=${'komunie'}></hg-reviews-block>
       <hg-contact-block></hg-contact-block>
       <hg-links .path=${'/komunie'} .superpath=${'/wesela'} .includeSuperpath=${true}></hg-links>

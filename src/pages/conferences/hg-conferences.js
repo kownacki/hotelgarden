@@ -17,7 +17,7 @@ customElements.define('hg-conferences', class extends HgContent {
       <hg-content-icons .uid=${'conferences'}></hg-content-icons>
       <hg-content-slider .uid=${'conferences'}></hg-content-slider>
       <hg-text-image .uid=${'conferences'} .buttons=${staticProp([{url: '#kontakt', text: 'Skontaktuj się z nami'}])}></hg-text-image>
-      <hg-halls-block .type=${'conference'}></hg-halls-block>
+      <hg-halls-block .uid=${'conferences'} .type=${'conference'}></hg-halls-block>
       <hg-heading center>${'Food & Beverages'}</hg-heading>
       <hg-article .rich=${true} .richConfig=${'mosaic'} .uid=${'conferences-cuisine'}></hg-article>
       <hg-content-slider .uid=${'conferences-cuisine'}></hg-content-slider>

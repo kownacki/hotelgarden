@@ -18,7 +18,7 @@ customElements.define('hg-chrzciny', class extends HgContent {
       <hg-content-icons .uid=${'chrzciny'}></hg-content-icons>
       <hg-content-slider .uid=${'chrzciny'}></hg-content-slider>
       <hg-mosaic .uid=${'chrzciny'}></hg-mosaic>
-      <hg-halls-block .type=${'banquet'}></hg-halls-block>
+      <hg-halls-block .uid=${'chrzciny'} .type=${'banquet'}></hg-halls-block>
       <hg-reviews-block uid=${'chrzciny'}></hg-reviews-block>
       <hg-contact-block></hg-contact-block>
       <hg-links .path=${'/chrzciny'} .superpath=${'/wesela'} .includeSuperpath=${true}></hg-links>

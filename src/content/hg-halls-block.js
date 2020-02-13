@@ -7,6 +7,7 @@ import './hg-halls-block/hg-halls-slider.js';
 customElements.define('hg-halls-block', class extends LitElement {
   static get properties() {
     return {
+      uid: String,
       type: String, // 'conference' / 'banquet'
     };
   }
