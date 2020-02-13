@@ -37,6 +37,7 @@ customElements.define('hg-links', class extends LitElement {
         justify-content: center;
       }
       a {
+        max-width: 600px;
         background: rgba(var(--secondary-color-rgb), 0.075);
         flex: 1;
         margin: 1px 1px 40px;
