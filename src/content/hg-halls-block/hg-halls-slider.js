@@ -1,5 +1,4 @@
 import {LitElement, html, css} from 'lit-element';
-import {updateData} from "../../utils.js";
 import '../../elements/hg-slider.js';
 import './hg-halls-slider-item.js';
 
@@ -29,9 +28,6 @@ customElements.define('hg-halls-slider', class extends LitElement {
         (await firebase.firestore().collection('textImage').where("hallType", "==", this.type).get()).docs
       );
     })();
-  }
-  async updateData(path, data) {
-    updateData('hallsBlocks/' + this.uid, path, data);
   }
   render() {
     return html`
