@@ -10,7 +10,16 @@ customElements.define('hg-icons', class extends LitElement {
       uid: String,
       empty: {type: Boolean, reflect: true},
       small: {type: Boolean, reflect: true},
+      _loggedIn: Boolean,
     };
+  }
+  constructor() {
+    super();
+    this._unsubscribeLoggedInListener = auth.onAuthStateChanged((user) => this._loggedIn = Boolean(user));
+  }
+  disconnectedCallback() {
+    this._unsubscribeLoggedInListener();
+    return super.disconnectedCallback();
   }
   static get styles() {
     return css`
@@ -66,7 +75,7 @@ customElements.define('hg-icons', class extends LitElement {
         }}
         @items-changed=${(event) => this.empty = _.isEmpty(event.detail)}>
       </hg-list>
-      <hg-icons-add id="add"></hg-icons-add>
+      ${!this._loggedIn ? '' : html`<hg-icons-add id="add"></hg-icons-add>`}
     `;
   }
 });
