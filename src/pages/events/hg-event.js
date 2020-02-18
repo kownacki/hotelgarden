@@ -146,6 +146,12 @@ customElements.define('hg-event', class extends LitElement {
                       this.updateData('date', event.detail);
                     }}>
                   </hg-event-edit-date>
+                  <paper-toggle-button
+                    id="public"
+                    .checked=${this._event.public}
+                    @click=${() => this.updateData('public', this.shadowRoot.getElementById('public').checked)}>
+                    Publiczne
+                  </paper-toggle-button>
                   <div title="${moment().isAfter(this._event.date, 'day') ? 'Nie można promować minionego wydarzenia' : ''}">
                     <paper-toggle-button
                       id="promote"
@@ -155,12 +161,6 @@ customElements.define('hg-event', class extends LitElement {
                       Promuj
                     </paper-toggle-button>
                   </div>
-                  <paper-toggle-button
-                    id="public"
-                    .checked=${this._event.public}
-                    @click=${() => this.updateData('public', this.shadowRoot.getElementById('public').checked)}>
-                    Publiczne
-                  </paper-toggle-button>
                 </div>
               `}
             </div>
