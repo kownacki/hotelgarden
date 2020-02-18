@@ -159,7 +159,7 @@ customElements.define('hg-event', class extends LitElement {
                     id="public"
                     .checked=${this._event.public}
                     @click=${() => this.updateData('public', this.shadowRoot.getElementById('public').checked)}>
-                    Publiczny
+                    Publiczne
                   </paper-toggle-button>
                 </div>
               `}
