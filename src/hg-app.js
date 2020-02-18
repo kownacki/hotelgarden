@@ -61,9 +61,11 @@ customElements.define('hg-app', class extends LitElement {
     (async () => {
       const promotedEventUid = _.get('uid', (await db.doc('events/promoted').get()).data());
       if (promotedEventUid) {
+        const events = (await db.doc('events/events').get()).data();
         this._promotedEvent = {
           uid: promotedEventUid,
-          title: _.get(promotedEventUid + '.title', (await db.doc('events/events').get()).data()),
+          title: _.get(promotedEventUid + '.title', events),
+          date: _.get(promotedEventUid + '.date', events),
         };
       }
       this._promotedEventLoaded = true;

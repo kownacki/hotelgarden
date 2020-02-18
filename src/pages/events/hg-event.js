@@ -50,14 +50,14 @@ customElements.define('hg-event', class extends LitElement {
         flex-wrap: wrap;
         margin-bottom: 5px;
       }
-      paper-toggle-button {
-        margin: 1px 0 1px 20px;
-      }
-      hg-event-edit-date, paper-toggle-button {
+      .controls > * {
         display: none;
       }
       .header:hover .controls > *, hg-event-edit-date[opened] {
         display: flex;
+      }
+      paper-toggle-button {
+        margin: 1px 0 1px 20px;
       }
       @media all and (max-width: 599px) {
         .header {
@@ -146,12 +146,15 @@ customElements.define('hg-event', class extends LitElement {
                       this.updateData('date', event.detail);
                     }}>
                   </hg-event-edit-date>
-                  <paper-toggle-button
-                    id="promote"
-                    .checked=${this._promotedEvent === this.uid}
-                    @click=${() => db.doc('events/promoted').set({uid: this.shadowRoot.getElementById('promote').checked ? this.uid : null})}>
-                    Promuj
-                  </paper-toggle-button>
+                  <div title="${moment().isAfter(this._event.date, 'day') ? 'Nie można promować minionego wydarzenia' : ''}">
+                    <paper-toggle-button
+                      id="promote"
+                      .checked=${moment().isSameOrBefore(this._event.date, 'day') && this._promotedEvent === this.uid}
+                      .disabled=${moment().isAfter(this._event.date, 'day')}
+                      @click=${() => db.doc('events/promoted').set({uid: this.shadowRoot.getElementById('promote').checked ? this.uid : null})}>
+                      Promuj
+                    </paper-toggle-button>
+                  </div>
                   <paper-toggle-button
                     id="public"
                     .checked=${this._event.public}

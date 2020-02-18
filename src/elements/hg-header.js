@@ -1,4 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
+import moment from 'moment';
 import {pathToUid, links} from '../utils.js';
 import './hg-header/hg-header-subnav.js';
 import './hg-header/hg-header-logo.js';
@@ -153,7 +154,7 @@ customElements.define('hg-header', class extends LitElement {
         <hg-header-logo .scrolledDown=${this.scrolledDown} .noBannerImage=${this.noBannerImage}></hg-header-logo>
         <nav>
           <ul>
-            ${!this.promotedEvent ? '' 
+            ${!this.promotedEvent || moment().isAfter(this.promotedEvent.date, 'day') ? '' 
               : html`<li class="event"><a href="/wydarzenia/${this.promotedEvent.uid}">${this.promotedEvent.title}</a></li>`}
             ${!this.promotedEventLoaded ? '' :_.map((link) => html`
               <li>

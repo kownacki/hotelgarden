@@ -1,4 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
+import moment from 'moment';
 import {links, staticProp} from '../utils.js';
 import './hg-drawer/hg-drawer-item.js';
 
@@ -49,7 +50,7 @@ customElements.define('hg-drawer', class extends LitElement {
       </div>
       <nav>
         <ul>
-          ${!this.promotedEvent ? ''
+          ${!this.promotedEvent || moment().isAfter(this.promotedEvent.date, 'day') ? ''
             : html`<li class="event">
               <hg-drawer-item .link=${staticProp({
                 path: '/wydarzenia/' + this.promotedEvent.uid,
