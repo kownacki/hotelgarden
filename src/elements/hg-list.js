@@ -118,7 +118,7 @@ export default class HgList extends LitElement {
   render() {
     return html`
       ${(this.addAtStart ? _.reverse : _.identity)([
-        _.isEmpty(this._list && this.emptyTemplate ) ? this.emptyTemplate : '',
+        _.isEmpty(this._list) && this.emptyTemplate ? this.emptyTemplate : '',
         repeat(this._list || [], this.array ? (key) => _.get(`${key}.uid`, this.items) : _.identity, (key, listIndex) =>
           !_.get(key, this.items) ?  '' : html`<hg-list-item
             style="${this.calculateItemTop ? `top: ${this.calculateItemTop(listIndex + ((this._loggedIn && !this.noAdd) ? 1 : 0)) * 100}%` : ''}"
