@@ -70,13 +70,15 @@ customElements.define('hg-events-sidebar', class extends LitElement {
   render() {
     return html`
       <div class="container smaller-text">
-        <h2>Nadchodzące wydarzenia</h2>
+        ${_.isEmpty(this._upcoming) ? '' : html`<h2>Nadchodzące wydarzenia</h2>`}
         <nav>
-          <ul>
-            ${_.isEmpty(this._upcoming) ? '' : repeat(this._upcoming, _.get('uid'), (event) => html`
-              <li ?selected=${this.selected === event.uid}><a href="/wydarzenia/${event.uid}">${event.title}</a></li>
-            `)}       
-          </ul>
+          ${_.isEmpty(this._upcoming) ? '' : html`
+            <ul>
+              ${repeat(this._upcoming, _.get('uid'), (event) => html`
+                <li ?selected=${this.selected === event.uid}><a href="/wydarzenia/${event.uid}">${event.title}</a></li>
+              `)}       
+            </ul>
+          `}
           <a class="all" href="/wydarzenia">Wszystkie wydarzenia</a>
         </nav>
       </div>
