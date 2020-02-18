@@ -19,6 +19,7 @@ import '../pages/cuisine/hg-restaurant.js';
 import '../pages/cuisine/hg-grill-garden.js';
 import '../pages/cuisine/hg-catering.js';
 import '../pages/celebrations/hg-weddings.js';
+import '../pages/celebrations/hg-family-parties.js';
 import '../pages/celebrations/hg-chrzciny.js';
 import '../pages/celebrations/hg-komunie.js';
 import '../pages/celebrations/hg-banquet-halls.js';
