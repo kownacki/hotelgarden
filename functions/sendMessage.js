@@ -3,6 +3,7 @@
 const _ = require('lodash/fp');
 const admin = require('firebase-admin');
 const moment = require('moment-timezone');
+moment.locale('pl');
 const nodemailer = require('nodemailer');
 
 const corsAsync = require('./cors-async')({origin: true});
@@ -56,6 +57,6 @@ module.exports = async (req, res) => {
     ...req.body,
     to,
     timestamp: now,
-    time: moment(now).tz('Poland').format('YYYY-MM-DD LT'),
+    time: moment(now).tz('Poland').format('LLLL'),
   });
 };
