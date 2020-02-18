@@ -36,6 +36,7 @@ customElements.define('hg-page', class extends LitElement {
   static get properties() {
     return {
       event: Boolean,
+      path: String,
       uid: String,
       noBannerImage: {type: Boolean, reflect: true, attribute: 'no-banner-image'},
       eventTitle: String,
@@ -51,7 +52,7 @@ customElements.define('hg-page', class extends LitElement {
   updated(changedProperties) {
     if (changedProperties.has('uid') || changedProperties.has('_config')) {
       if (this.uid && this._config && !this.event) {
-        setDocumentTitle(_.get(`seo.${this.uid}.title`, this._config) || pages[this.uid].name)
+        setDocumentTitle(_.get(`seo.${this.path}.title`, this._config) || pages[this.uid].name)
       }
     }
   }

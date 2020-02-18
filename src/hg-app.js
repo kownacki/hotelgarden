@@ -118,6 +118,7 @@ customElements.define('hg-app', class extends LitElement {
       </hg-header>
       <hg-page 
         .event=${this._event}
+        .path=${this._path}
         .uid=${this._uid}
         .noBannerImage=${this._noBannerImage}
         @event-not-found=${() => this._noBannerImage = true}>
