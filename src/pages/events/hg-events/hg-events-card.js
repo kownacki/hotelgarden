@@ -43,6 +43,10 @@ customElements.define('hg-events-card', class extends LitElement {
         font-size: 24px;
         margin: 0 20px 0 0;
       }
+      .non-public {
+        color: red;
+        text-transform: uppercase;
+      }
       .date {
         color: var(--primary-color);
         font-size: 18px;
@@ -62,7 +66,7 @@ customElements.define('hg-events-card', class extends LitElement {
           display: block;
         }
       }
-      @media all and (max-width: 719px) {
+      @media all and (max-width: 839px) {
         iron-image {
           width: 200px;
           min-width: 200px;
@@ -70,11 +74,6 @@ customElements.define('hg-events-card', class extends LitElement {
         }
       }
       @media all and (max-width: 599px) {
-        .content {
-          padding: 40px 20px;
-        }
-      }
-      @media all and (max-width: 479px) {
         .content {
           padding: 20px;
         }
@@ -96,7 +95,7 @@ customElements.define('hg-events-card', class extends LitElement {
         <div class="content">
           <div class="header">
             <div class="date">${this.event.date.split('-').reverse().join(' / ')}</div>
-            <h3>${this.event.title}</h3>
+            <h3>${this.event.public ? '' : html`<span class="non-public">Niepubliczne </span>`}${this.event.title}</h3>
           </div>
           <p>${this.event.description}</p>
           <div class="more">Zobacz więcej <iron-icon icon="add"></iron-icon></div>

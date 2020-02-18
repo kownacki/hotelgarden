@@ -47,15 +47,22 @@ customElements.define('hg-event', class extends LitElement {
       .controls {
         display: flex;
         align-items: flex-start;
+        flex-wrap: wrap;
+        margin-bottom: 5px;
       }
       paper-toggle-button {
-        margin: 1px 0 1px 10px;
+        margin: 1px 0 1px 20px;
       }
       hg-event-edit-date, paper-toggle-button {
         display: none;
       }
       .header:hover .controls > *, hg-event-edit-date[opened] {
         display: flex;
+      }
+      @media all and (max-width: 599px) {
+        .header {
+          display: block;
+        }
       }
       @media all and (max-width: 959px) {
         .container {
@@ -144,6 +151,12 @@ customElements.define('hg-event', class extends LitElement {
                     .checked=${this._promotedEvent === this.uid}
                     @click=${() => db.doc('events/promoted').set({uid: this.shadowRoot.getElementById('promote').checked ? this.uid : null})}>
                     Promuj
+                  </paper-toggle-button>
+                  <paper-toggle-button
+                    id="public"
+                    .checked=${this._event.public}
+                    @click=${() => this.updateData('public', this.shadowRoot.getElementById('public').checked)}>
+                    Publiczny
                   </paper-toggle-button>
                 </div>
               `}

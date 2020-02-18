@@ -62,6 +62,7 @@ customElements.define('hg-events', class extends LitElement {
           .noAdd=${true}
           .noSwap=${true}
           .transform=${(items) => _.flow([
+            ...(this._loggedIn ? [] : [_.filter((key) => items[key].public)]),
             _.filter((key) => moment().isSameOrBefore(items[key].date, 'day')),
             _.sortBy((key) => items[key].date),
           ])}
@@ -81,6 +82,7 @@ customElements.define('hg-events', class extends LitElement {
           <hg-list
             .noAdd=${true}
             .transform=${(items) => _.flow([
+              ...(this._loggedIn ? [] : [_.filter((key) => items[key].public)]),
               _.filter((key) => moment().isAfter(items[key].date, 'day')),
               _.sortBy((key) => items[key].date),
               _.reverse,

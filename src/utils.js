@@ -15,10 +15,12 @@ export const assignKeys = (field) => _.map.convert({cap: false})((item, key) => 
 
 export const splitEvents = (events) => [
   _.flow([
+    _.filter(_.get('public')),
     _.filter((event) => moment().isSameOrBefore(event.date, 'day')),
     _.sortBy('date'),
   ])(events),
   _.flow([
+    _.filter(_.get('public')),
     _.filter((event) => moment().isAfter(event.date, 'day')),
     _.sortBy('date'),
   ])(events)
