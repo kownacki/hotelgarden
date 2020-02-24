@@ -21,12 +21,9 @@ window.storage = firebase.storage();
 
 import {LitElement, html, css} from 'lit-element';
 import {pathToUid} from './utils.js';
-
+import './hg-iconset.js';
 import '@polymer/app-layout/app-drawer/app-drawer.js';
 import '@polymer/app-route/app-location';
-import '@polymer/iron-icons';
-import '@polymer/iron-icons/image-icons.js';
-import '@polymer/iron-icons/maps-icons.js';
 import '@polymer/iron-icon';
 import '@polymer/iron-image';
 import '@polymer/paper-button';

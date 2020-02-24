@@ -26,7 +26,7 @@ customElements.define('hg-list-add', class extends LitElement {
     return html`
       <paper-icon-button
         ?disabled=${this.disable}
-        icon="icons:add"
+        .icon=${'add'}
         @click=${() => this.dispatchEvent(new CustomEvent('add'))}>
       </paper-icon-button>
     `;

@@ -26,7 +26,7 @@ customElements.define('hg-event-edit-date', class extends LitElement {
   render() {
     return html`
       <paper-icon-button 
-        .icon=${'image:edit'}
+        .icon=${'edit'}
          @click=${() => this.shadowRoot.getElementById('dialog').open()}>
       </paper-icon-button>
       <paper-dialog 

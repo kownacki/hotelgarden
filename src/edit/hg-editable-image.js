@@ -93,7 +93,7 @@ export default class HgEditableImage extends LitElement {
             }}>
           <paper-icon-button
             noink
-            icon="image:image"
+            .icon=${'image'}
             @click=${() => this.shadowRoot.getElementById('input').click()}>
           </paper-icon-button>
         `}

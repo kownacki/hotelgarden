@@ -46,7 +46,7 @@ customElements.define('hg-drawer', class extends LitElement {
   render() {
     return html`
       <div class="header">
-        <paper-icon-button icon="close" @click=${() => this.dispatchEvent(new CustomEvent('close-drawer'))}></paper-icon-button>
+        <paper-icon-button .icon=${'close'} @click=${() => this.dispatchEvent(new CustomEvent('close-drawer'))}></paper-icon-button>
       </div>
       <nav>
         <ul>

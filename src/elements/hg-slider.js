@@ -97,12 +97,12 @@ customElements.define('hg-slider', class extends LitElement {
         <div class="counter">${this.selected + 1} / ${_.size(this.items)}</div>
         <paper-icon-button
           id="left"
-          icon="chevron-left"
+          .icon=${'chevron-left'}
           @click=${() => !this.transitionGoing && this.move('left')}>
         </paper-icon-button>
         <paper-icon-button
           id="right"
-          icon="chevron-right"
+          .icon=${'chevron-right'}
           @click=${() => !this.transitionGoing && this.move('right')}>
         </paper-icon-button>
       `}

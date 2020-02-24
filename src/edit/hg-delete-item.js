@@ -30,14 +30,14 @@ customElements.define('hg-delete-item', class extends LitElement {
     return html`
       <paper-icon-button 
         ?disabled=${this.disable}
-        icon="icons:delete"
+        .icon=${'delete'}
         @click=${() => this.shadowRoot.getElementById('dialog').open()}>
       </paper-icon-button>
       <paper-dialog 
         id="dialog" 
         @opened-changed=${(event) => {this.opened = event.target.opened; this.dispatchEvent(new CustomEvent('opened-changed'))}}>
         <div class="warning">
-          <iron-icon icon="warning"></iron-icon>
+          <iron-icon .icon=${'warning'}></iron-icon>
           Czy na pewno usunąć ${this.name}? 
           Usunięte dane nie mogą być przywrócone.
         </div>

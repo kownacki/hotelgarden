@@ -51,7 +51,7 @@ customElements.define('hg-gallery-item', class extends LitElement {
   render() {
     return html`
       <iron-image .src=${this.src} .sizing=${'cover'}></iron-image>
-      <paper-icon-button noink .icon=${'maps:zoom-out-map'}></paper-icon-button>
+      <paper-icon-button noink .icon=${'zoom-out-map'}></paper-icon-button>
     `;
   }
 });

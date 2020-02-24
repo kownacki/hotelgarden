@@ -24,7 +24,7 @@ customElements.define('hg-image-upload-fab', class extends LitElement {
     return html`
       <hg-image-upload id="upload"></hg-image-upload>
       <paper-fab
-        icon="add" 
+        .icon=${'add'}
         @click=${async() => {
           // todo when cancelling there is error
           this.dispatchEvent(new CustomEvent('upload', {detail: await this.shadowRoot.getElementById('upload').upload()}));

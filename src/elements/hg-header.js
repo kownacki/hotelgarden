@@ -150,7 +150,7 @@ customElements.define('hg-header', class extends LitElement {
     return html`
       <header>
         ${!this.promotedEventLoaded ? ''
-          : html`<paper-icon-button icon="menu" @click=${() => this.dispatchEvent(new CustomEvent('open-drawer'))}></paper-icon-button>`}
+          : html`<paper-icon-button .icon=${'menu'} @click=${() => this.dispatchEvent(new CustomEvent('open-drawer'))}></paper-icon-button>`}
         <hg-header-logo .scrolledDown=${this.scrolledDown} .noBannerImage=${this.noBannerImage}></hg-header-logo>
         <nav>
           <ul>

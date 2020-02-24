@@ -98,7 +98,7 @@ customElements.define('hg-events-card', class extends LitElement {
             <h3>${this.event.public ? '' : html`<span class="non-public">Niepubliczne </span>`}${this.event.title}</h3>
           </div>
           <p>${this.event.description}</p>
-          <div class="more">Zobacz więcej <iron-icon icon="add"></iron-icon></div>
+          <div class="more">Zobacz więcej <iron-icon .icon=${'add'}></iron-icon></div>
         </div>
       </a>
     `;

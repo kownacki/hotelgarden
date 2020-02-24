@@ -70,7 +70,7 @@ customElements.define('hg-gallery-slider', class extends LitElement {
       </hg-slider>
       <div class="controls">
         <paper-icon-button
-          icon="close"
+          .icon=${'close'}
           @click=${() => {
             window.history.back();
             this.close();
