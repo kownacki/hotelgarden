@@ -10,6 +10,7 @@ customElements.define('hg-reviews-block', class extends LitElement {
     return {
       uid: String,
       scores: {type: Boolean},
+      bookingScores: Object,
       _reviews: Array,
     };
   }
@@ -95,7 +96,7 @@ customElements.define('hg-reviews-block', class extends LitElement {
     return html`
       <h2 class="content-heading">Nasi goście o nas</h2>
       <div class="container">
-        <hg-scores></hg-scores>
+        <hg-scores .bookingScores=${this.bookingScores}></hg-scores>
         <hg-image sizing=${'cover'} .path=${staticProp({doc: `images/${this.uid}-reviews-block`})}></hg-image>
         <hg-reviews-slider .reviews=${this._reviews}></hg-reviews-slider>
       </div>

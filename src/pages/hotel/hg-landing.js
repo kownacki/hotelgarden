@@ -12,6 +12,11 @@ import '../../content/hg-infographic.js';
 import '../../content/hg-map.js';
 
 customElements.define('hg-landing', class extends HgContent {
+  static get properties() {
+    return {
+      config: Object,
+    };
+  }
   render() {
     return html`
       <hg-intro-article .uid=${'landing'}></hg-intro-article>
@@ -23,7 +28,7 @@ customElements.define('hg-landing', class extends HgContent {
         secondary: [{url: '/sale-bankietowe', text: 'Zobacz sale'}],
       })}></hg-mosaic>
       <hg-content-slider .uid=${'landing'}></hg-content-slider>
-      <hg-reviews-block .uid=${'landing'} scores></hg-reviews-block>
+      <hg-reviews-block .uid=${'landing'} scores .bookingScores=${_.get('bookingScores', this.config)}></hg-reviews-block>
       <hg-infographic .uid=${'landing'}></hg-infographic>
       <hg-map></hg-map>
     `;

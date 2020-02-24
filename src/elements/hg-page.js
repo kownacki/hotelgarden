@@ -53,7 +53,8 @@ customElements.define('hg-page', class extends LitElement {
   updated(changedProperties) {
     if (changedProperties.has('uid') || changedProperties.has('_config')) {
       if (this.uid && this._config && !this.event) {
-        setDocumentTitle(_.get(`seo.${this.path}.title`, this._config) || pages[this.uid].name)
+        setDocumentTitle(_.get(`seo.${this.path}.title`, this._config) || pages[this.uid].name);
+        this.shadowRoot.getElementById('page').config = this._config;
       }
     }
   }

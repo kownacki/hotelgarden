@@ -2,7 +2,9 @@ import {LitElement, html, css} from 'lit-element';
 
 customElements.define('hg-scores', class extends LitElement {
   static get properties() {
-    return {};
+    return {
+      bookingScores: Object,
+    };
   }
   static get styles() {
     return css`
@@ -70,14 +72,14 @@ customElements.define('hg-scores', class extends LitElement {
         <div>
           <div class="property">Hotel Garden</div>
           <div class="box">
-            <div class="score">8,3</div>
+            <div class="score">${_.get('hotel-garden', this.bookingScores)}</div>
             <div class="out-of">/ 10</div>         
           </div>
         </div>
         <div>
           <div class="property">Villa Garden</div>
           <div class="box">
-            <div class="score">9,0</div>
+            <div class="score">${_.get('villa-garden', this.bookingScores)}</div>
             <div class="out-of">/ 10</div>         
           </div>
         </div>
