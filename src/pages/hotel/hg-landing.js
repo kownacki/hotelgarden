@@ -17,7 +17,7 @@ customElements.define('hg-landing', class extends HgContent {
       <hg-intro-article .uid=${'landing'}></hg-intro-article>
       <hg-quote .uid=${'landing'}></hg-quote>
       <hg-content-icons .uid=${'landing'}></hg-content-icons>
-      <hg-text-image .swap=${true} .uid=${'landing'} .buttons=${staticProp([{url: '/pokoje', text: 'Zobacz pokoje'}])}></hg-text-image>
+      <hg-text-image .swap=${true} .uid=${'landing'} .buttons=${staticProp([{url: '/pokoje', text: 'Zobacz pokoje / Rezerwuj online'}])}></hg-text-image>
       <hg-mosaic .uid=${'landing'} .buttons=${staticProp({
         primary: [{url: '/wesela', text: 'Zobacz ofertę'}],
         secondary: [{url: '/sale-bankietowe', text: 'Zobacz sale'}],
