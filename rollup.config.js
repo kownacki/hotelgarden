@@ -17,7 +17,6 @@ export default [{
       targets: [
         {src: 'index.html', dest: 'dist'},
         {src: 'index.html', dest: 'dist', rename: '404.html'},
-        {src: 'src/styles.css', dest: 'dist/src'},
         {src: 'resources', dest: 'dist'},
         {src: 'node_modules/@ckeditor', dest: 'dist/node_modules'},
         {src: 'googlec2ac75b505b73639.html', dest: 'dist'},
