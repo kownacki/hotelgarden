@@ -30,7 +30,7 @@ customElements.define('hg-landing', class extends HgContent {
       <hg-content-slider .uid=${'landing'}></hg-content-slider>
       <hg-reviews-block .uid=${'landing'} scores .bookingScores=${_.get('bookingScores', this.config)}></hg-reviews-block>
       <hg-infographic .uid=${'landing'}></hg-infographic>
-      <hg-map></hg-map>
+      <hg-map class="no-animation"></hg-map>
     `;
   }
 });

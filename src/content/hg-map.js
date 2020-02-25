@@ -4,20 +4,20 @@ let googleMapsLoaded = false;
 
 customElements.define('hg-map', class extends LitElement {
   static get properties() {
-    return {};
+    return {
+      seen: Boolean,
+    };
   }
   loadGoogleMaps() {
     return new Promise((resolve) => {
       const script = document.createElement('script');
-      document.body.append(script);
       script.onload = resolve;
       script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDvamIugzBC3k3WA52KpHeINrfDHfkvnSs';
+      document.body.append(script);
     })
   }
-  constructor() {
-    super();
-    (async () => {
-      await this.updateComplete;
+  async updated(changedProperties) {
+    if (changedProperties.has('seen')) {
       if (!googleMapsLoaded) {
         googleMapsLoaded = true;
         await this.loadGoogleMaps();
@@ -53,8 +53,7 @@ customElements.define('hg-map', class extends LitElement {
       `});
       infoWindow.open(map, marker);
       marker.addListener('click', () => infoWindow.open(map, marker))
-    })();
-
+    }
   }
   static get styles() {
     return css`

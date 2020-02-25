@@ -7,7 +7,10 @@ const isElementVisible = (element) => {
 
 const checkChildrenVisibility = _.throttle(100, (element) => {
   _.map((child) => {
-    if (isElementVisible(child)) child.classList.add('seen');
+    if (isElementVisible(child)) {
+      child.classList.add('seen');
+      child.seen = true;
+    }
   }, element.shadowRoot.children);
 });
 
@@ -32,7 +35,7 @@ export default class HgContent extends LitElement {
   static get styles() {
     return css`
       /* Prevent bugs. Iphone adds style tag as host's last child. */
-      :host > :not(style) {
+      :host > :not(style):not(.no-animation) {
         transition-property: opacity, top;
         transition-duration: 0.5s;
         transition-timing-function: ease-in-out;
@@ -40,7 +43,7 @@ export default class HgContent extends LitElement {
         opacity: 0;
         position: relative;
       }
-      :host > .seen {
+      :host > .seen:not(.no-animation) {
         opacity: 1;
         top: 0;
       }
