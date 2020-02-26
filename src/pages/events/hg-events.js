@@ -1,11 +1,8 @@
 import {LitElement, html, css} from 'lit-element';
-import moment from "moment";
-import {staticProp} from "../../utils";
 import sharedStyles from '../../styles/shared-styles.js';
 import '../../content/hg-article/hg-intro-article.js';
-import '../../elements/hg-list.js';
 import './hg-events/hg-events-add.js';
-import './hg-events/hg-events-card.js';
+import './hg-events/hg-events-list.js';
 
 // favicon rozciągnięta??
 // todo add scrolling to dialogs
@@ -28,67 +25,38 @@ customElements.define('hg-events', class extends LitElement {
     return [sharedStyles, css`
       :host {
         max-width: 1000px;
-        margin: 20px auto;
         display: block;
+        margin: 40px auto;
+        padding: 0 20px;
       }
       hg-intro-article {
         display: none;
       }
-      .events {
-        max-width: 1300px;
-        padding: 0 20px;
-        margin: 20px auto;
-      }
-      hg-list {
-        display: block;
-        margin-bottom: 50px;
+      h2 {
+        margin: 40px 0;
       }
       mwc-button {
+        display: block;
         --mdc-theme-primary: var(--primary-color);
+        margin: 40px 0;
       }
     `];
   }
   render() {
     return html`
       <hg-intro-article .uid=${'events'}></hg-intro-article>
-      <div class="events">
-        ${!this._loggedIn ? '' : html`<hg-events-add></hg-events-add>`}
-        <h2>Nadchodzące wydarzenia</h2>
-        <hg-list
-          .noAdd=${true}
-          .noSwap=${true}
-          .transform=${(items) => _.flow([
-            ...(this._loggedIn ? [] : [_.filter((key) => items[key].public)]),
-            _.filter((key) => moment().isSameOrBefore(items[key].date, 'day')),
-            _.sortBy((key) => items[key].date),
-          ])}
-          .path=${staticProp({doc: 'events/events'})}
-          .emptyTemplate=${html`<p style="font-size: 20px">Brak nadchodzących wydarzeń</p>`}
-          .getItemName=${(item) => `wydarzenie "${item.title}"`}       
-          .itemTemplate=${(event, uid) => html`<hg-events-card .event=${{uid, ...event}}></hg-events-card>`}>
-        </hg-list>
-        <mwc-button id="button" raised label="Pokaż minione wydarzenia"
-          @click=${() => {
-            this.shadowRoot.getElementById('past').hidden = false;
-            this.shadowRoot.getElementById('button').hidden = true;
-          }}>
-        </mwc-button>
-        <div id="past" hidden>
-          <h2>Minione wydarzenia</h2>
-          <hg-list
-            .noAdd=${true}
-            .transform=${(items) => _.flow([
-              ...(this._loggedIn ? [] : [_.filter((key) => items[key].public)]),
-              _.filter((key) => moment().isAfter(items[key].date, 'day')),
-              _.sortBy((key) => items[key].date),
-              _.reverse,
-            ])}
-            .path=${staticProp({doc: 'events/events'})}
-            .emptyTemplate=${html`<p style="font-size: 20px">Brak minionych wydarzeń</p>`}
-            .getItemName=${(item) => `wydarzenie "${item.title}"`}       
-            .itemTemplate=${(event, uid) => html`<hg-events-card .event=${{uid, ...event}}></hg-events-card>`}>
-          </hg-list>
-        </div>
+      ${!this._loggedIn ? '' : html`<hg-events-add></hg-events-add>`}
+      <h2>Nadchodzące wydarzenia</h2>
+      <hg-events-list></hg-events-list>
+      <mwc-button id="button" raised label="Pokaż minione wydarzenia"
+        @click=${() => {
+          this.shadowRoot.getElementById('past').hidden = false;
+          this.shadowRoot.getElementById('button').hidden = true;
+        }}>
+      </mwc-button>
+      <div id="past" hidden>
+        <h2>Minione wydarzenia</h2>
+        <hg-events-list .past=${true}></hg-events-list>
       </div>
     `;
   }

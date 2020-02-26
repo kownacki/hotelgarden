@@ -33,7 +33,7 @@ customElements.define('hg-events-add', class extends LitElement {
   static get styles() {
     return css`
       paper-button {
-        margin: 20px 0;
+        margin: 0;
       }
       .address {
         font-family: monospace;
