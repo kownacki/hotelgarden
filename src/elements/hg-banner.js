@@ -96,13 +96,13 @@ customElements.define('hg-banner', class extends LitElement {
           .ready=${this._dataReady}
           .text=${_.get(this.useTitleAsHeading ? 'title' : 'heading', this._banner) || ''}
           @save=${(event) => this.updateData(this.useTitleAsHeading ? 'title' : 'heading', event.detail)}>
-          <h1></h1>
+          <h1 class="horizontally-spacious-text"></h1>
         </hg-editable-text>
         ${this.noSubheading ? '' : html`<hg-editable-text
           .ready=${this._dataReady}
           .text=${_.get('subheading', this._banner) || ''}
           @save=${(event) => this.updateData('subheading', event.detail)}>
-          <p></p>
+          <p class="horizontally-spacious-text"></p>
         </hg-editable-text>`}
       </div>
     `;

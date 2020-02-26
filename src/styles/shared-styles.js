@@ -10,9 +10,16 @@ export default css`
   .bigger-text {
     font-size: 24px;
   }
+  .horizontally-spacious-text {
+    letter-spacing: 0.04em;
+    word-spacing: 0.1em;
+  }
+  .vertically-spacious-text, .vertically-spacious-text p  {
+    line-height: 1.6em !important;
+  }
   /* remove on focus when editing */
   .big-first-letter:not(:focus)::first-letter {
-    font-size: 3em;
+    font-size: 3.2em;
     float: left;
     margin: 0.25em 0.15em 0.15em 0;
   }

@@ -45,10 +45,10 @@ customElements.define('hg-heading', class extends LitElement {
   render() {
     return html`
       ${this.h4
-        ? html`<h4 id="editable"><slot></slot></h4>`
+        ? html`<h4 id="editable" class="horizontally-spacious-text"><slot></slot></h4>`
         : this.h3
-        ? html`<h3 id="editable"><slot></slot></h3>`
-        : html`<h2 id="editable"><slot></slot></h2>`}
+        ? html`<h3 id="editable" class="horizontally-spacious-text"><slot></slot></h3>`
+        : html`<h2 id="editable" class="horizontally-spacious-text"><slot></slot></h2>`}
     `;
   }
 });
