@@ -24,6 +24,7 @@ export default class HgContent extends LitElement {
     addEventListener('scroll', this._eventToRemove);
     addEventListener('resize', this._eventToRemove);
     addEventListener('touchmove', this._eventToRemove);
+    this._eventToRemove();
   }
   disconnectedCallback() {
     window.removeEventListener('DOMContentLoaded', this._eventToRemove);
