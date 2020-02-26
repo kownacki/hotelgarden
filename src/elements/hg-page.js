@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
 import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';
-import {headerHeight, pages} from '../utils.js';
+import {setDocumentTitle, headerHeight, pages} from '../utils.js';
 
 import '../elements/hg-banner.js';
 import '../elements/hg-footer.js';
@@ -31,7 +31,6 @@ import '../pages/404/hg-404.js';
 let seconds = 0;
 setInterval(() => ++seconds, 1000);
 
-const setDocumentTitle = (title) => document.title = title + ' - Hotel Garden Oleśnica';
 
 customElements.define('hg-page', class extends LitElement {
   static get properties() {
@@ -41,6 +40,7 @@ customElements.define('hg-page', class extends LitElement {
       uid: String,
       noBannerImage: {type: Boolean, reflect: true, attribute: 'no-banner-image'},
       eventTitle: String,
+      _defaultTitle: String,
       _config: Object,
     };
   }
@@ -51,10 +51,15 @@ customElements.define('hg-page', class extends LitElement {
     })();
   }
   updated(changedProperties) {
-    if (changedProperties.has('uid') || changedProperties.has('_config')) {
-      if (this.uid && this._config && !this.event) {
-        setDocumentTitle(_.get(`seo.${this.path}.title`, this._config) || pages[this.uid].name);
-        this.shadowRoot.getElementById('page').config = this._config;
+    if (changedProperties.has('uid')) {
+      this._defaultTitle = pages[this.uid].name;
+    }
+    if (changedProperties.has('_config') && !this.event) {
+      this.shadowRoot.getElementById('page').config = this._config;
+    }
+    if (changedProperties.has('_defaultTitle') || changedProperties.has('_config')) {
+      if (this._config) {
+        setDocumentTitle(_.get(`${this.path}.title`, this._config.seo.urls) || this._defaultTitle, this._config.seo);
       }
     }
   }
@@ -85,7 +90,11 @@ customElements.define('hg-page', class extends LitElement {
         }
       }}></app-location>
       ${this.event
-        ? html`<hg-event .uid=${this.uid} class="page" @title-loaded=${(event) => setDocumentTitle(event.detail)}></hg-event>`
+        ? html`<hg-event 
+          .uid=${this.uid}
+          class="page"
+          @title-loaded=${(event) => this._defaultTitle = event.detail || 'Wydarzenie bez tytułu'}>
+        </hg-event>`
         : html`
           <hg-banner .noImage=${this.noBannerImage} .uid=${this.uid}></hg-banner>
           ${!this.uid ? '' : unsafeHTML(`

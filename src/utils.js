@@ -138,6 +138,8 @@ export const openProfitroom = (location, roomId, adults = 2) => {
   window.Booking.OpenSite(location, {RoomID: roomId, adults, checkin: moment().format('YYYY-MM-DD'), checkout: moment().add(1, 'day').format('YYYY-MM-DD')});
 };
 
+export const setDocumentTitle = (title, seo) => document.title = `${title} ${seo.titleSeparator} ${seo.titleSuffix}`;
+
 export const setMetaDescription = (text) => {
   document.head.querySelector('meta[name="description"]').setAttribute('content',
     !text ? ''
