@@ -1,7 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
 import {updateData, updateImage} from "../../utils.js";
 import sharedStyles from '../../styles/shared-styles.js'
-import '../../elements/hg-heading.js';
 import '../../edit/hg-editable-image.js';
 import '../../edit/hg-editable-text.js';
 
@@ -75,7 +74,7 @@ customElements.define('hg-hall-tables', class extends LitElement {
   }
   render() {
     return html`
-      <hg-heading center h3>${'Ustawienie stołów'}</hg-heading>
+      <h3 class="content-heading">Ustawienie stołów</h3>
       <div class="items">
         ${_.map.convert({cap: false})((setOut, index) => html`
           <div>

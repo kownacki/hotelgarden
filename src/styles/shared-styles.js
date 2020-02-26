@@ -10,12 +10,22 @@ export default css`
   .bigger-text {
     font-size: 24px;
   }
-  .horizontally-spacious-text {
-    letter-spacing: 0.04em;
-    word-spacing: 0.1em;
-  }
   .vertically-spacious-text, .vertically-spacious-text p  {
     line-height: 1.6em !important;
+  }
+  .horizontally-spacious-text, .content-heading {
+    letter-spacing: 0.06em;
+    word-spacing: 0.15em;
+  }
+  .content-heading {
+    text-align: center;
+    padding: 0 20px;
+    margin-right: auto;
+    margin-left: auto;
+    text-transform: uppercase;
+    width: 800px;
+    max-width: 100%;
+    box-sizing: border-box;
   }
   /* remove on focus when editing */
   .big-first-letter:not(:focus)::first-letter {
@@ -51,16 +61,6 @@ export default css`
     /* for headings in paper-dialog */
     line-height: normal;
     font-weight: 300;
-  }
-  .content-heading {
-    text-align: center;
-    padding: 0 20px;
-    margin-right: auto;
-    margin-left: auto;
-    text-transform: uppercase;
-    width: 800px;
-    max-width: 100%;
-    box-sizing: border-box;
   }
   .divider {
     border-bottom: solid 1px rgba(var(--secondary-color-rgb), 30%);

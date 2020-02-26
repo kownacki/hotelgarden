@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
+import sharedStyles from '../styles/shared-styles.js';
 import {pathToUid, linksMap, pages} from '../utils.js';
-import '../elements/hg-heading.js';
 
 customElements.define('hg-links', class extends LitElement {
   static get properties() {
@@ -24,7 +24,7 @@ customElements.define('hg-links', class extends LitElement {
     })();
   }
   static get styles() {
-    return css`
+    return [sharedStyles, css`
       :host {
         display: block;
         max-width: 1202px;
@@ -35,6 +35,7 @@ customElements.define('hg-links', class extends LitElement {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
+        margin-top: 60px;
       }
       a {
         max-width: 600px;
@@ -74,11 +75,11 @@ customElements.define('hg-links', class extends LitElement {
           max-width: calc(100% - 2px);
         }
       }
-    `;
+    `];
   }
   render() {
     return html`
-      <hg-heading center>${'Zobacz także'}</hg-heading>
+      <h2 class="content-heading">Zobacz także</h2>
       <div class="links">
         ${_.map((link) => html`
           <a href="${link.path}">

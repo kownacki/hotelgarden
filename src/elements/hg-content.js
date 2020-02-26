@@ -1,4 +1,5 @@
 import {LitElement, css} from 'lit-element';
+import sharedStyles from '../styles/shared-styles.js';
 
 const isElementVisible = (element) => {
   const rect = element.getBoundingClientRect();
@@ -33,7 +34,7 @@ export default class HgContent extends LitElement {
     return super.disconnectedCallback();
   }
   static get styles() {
-    return css`
+    return [sharedStyles, css`
       /* Prevent bugs. Iphone adds style tag as host's last child. */
       :host > :not(style):not(.no-animation) {
         transition-property: opacity, top;
@@ -47,7 +48,7 @@ export default class HgContent extends LitElement {
         opacity: 1;
         top: 0;
       }
-    `;
+    `];
   }
 }
 customElements.define('hg-content', HgContent);

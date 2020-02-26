@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
+import sharedStyles from '../styles/shared-styles.js'
 import {updateImage} from "../utils";
-import '../elements/hg-heading.js';
 import '../edit/hg-editable-image.js';
 import '../edit/hg-editable-text.js';
 
@@ -21,7 +21,7 @@ customElements.define('hg-infographic', class extends LitElement {
     })();
   }
   static get styles() {
-    return css`
+    return [sharedStyles, css`
       :host {
         display: block;
         max-width: 900px;
@@ -30,6 +30,7 @@ customElements.define('hg-infographic', class extends LitElement {
       .items {
         display: flex;
         flex-wrap: wrap;
+        margin: 60px 0;
       }
       .item {
         display: flex;
@@ -94,11 +95,11 @@ customElements.define('hg-infographic', class extends LitElement {
           border-bottom: none;
         }
       }
-    `;
+    `];
   }
   render() {
     return html`
-      <hg-heading center>${'Hotel Garden w liczbach'}</hg-heading>
+      <h2 class="content-heading">Hotel Garden w liczbach</h2>
       <div class="items">
         ${_.map.convert({cap: false})((item, index) => html`
           <div class="item">

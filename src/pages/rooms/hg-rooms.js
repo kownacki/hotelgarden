@@ -4,7 +4,6 @@ import HgContent from "../../elements/hg-content";
 import '../../content/hg-article/hg-intro-article.js';
 import '../../content/hg-content-icons.js';
 import './hg-room.js';
-import '../../elements/hg-heading.js';
 
 customElements.define('hg-rooms', class extends HgContent {
   static get styles() {
@@ -18,7 +17,7 @@ customElements.define('hg-rooms', class extends HgContent {
       ${_.map((index) => html`
         <hg-room .index=${index}></hg-room>
       `, [1, 2, 3, 4])}
-      <hg-heading center>${'Warunki rezerwacji'}</hg-heading>
+      <h2 class="content-heading">Warunki rezerwacji</h2>
       <hg-content-icons .uid=${'rooms-conditions'}></hg-content-icons>
     `;
   }

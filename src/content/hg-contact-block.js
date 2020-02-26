@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
-import '../elements/hg-heading.js';
+import sharedStyles from "../styles/shared-styles";
 import '../content/hg-article.js';
 import '../elements/hg-contact-form.js';
 
@@ -8,12 +8,12 @@ customElements.define('hg-contact-block', class extends LitElement {
     return {};
   }
   static get styles() {
-    return css`
-    `;
+    return [sharedStyles, css`
+    `];
   }
   render() {
     return html`
-      <hg-heading center>${'Skontaktuj się'}</hg-heading>
+      <h2 class="content-heading">Skontaktuj się</h2>
       <hg-article .rich=${true} .uid=${'contact-block'}></hg-article>
       <hg-contact-form .subject=${'gastro'}></hg-contact-form>
     `;
