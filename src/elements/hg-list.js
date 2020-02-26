@@ -61,6 +61,7 @@ export default class HgList extends LitElement {
         _.keys,
         ...(this.transform ? [this.transform(this.items)] : [])
       ])(this.items);
+      this.dispatchEvent(new CustomEvent('list-changed', {detail: this._list}));
     }
   }
   updateData(path, data) {

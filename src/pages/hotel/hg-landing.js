@@ -6,6 +6,7 @@ import '../../content/hg-quote.js';
 import '../../content/hg-content-icons.js';
 import '../../content/hg-text-image.js';
 import '../../content/hg-mosaic.js';
+import '../../content/hg-events-block.js';
 import '../../content/hg-content-slider.js';
 import '../../content/hg-reviews-block.js';
 import '../../content/hg-infographic.js';
@@ -22,6 +23,7 @@ customElements.define('hg-landing', class extends HgContent {
       <hg-intro-article .uid=${'landing'}></hg-intro-article>
       <hg-quote .uid=${'landing'}></hg-quote>
       <hg-content-icons .uid=${'landing'}></hg-content-icons>
+      <hg-events-block></hg-events-block>
       <hg-text-image .swap=${true} .uid=${'landing'} .buttons=${staticProp([{url: '/pokoje', text: 'Zobacz pokoje / Rezerwuj online'}])}></hg-text-image>
       <hg-mosaic .uid=${'landing'} .buttons=${staticProp({
         primary: [{url: '/wesela', text: 'Zobacz ofertę'}],
