@@ -82,7 +82,7 @@ export default css`
       font-size: 17px;
     }
     .bigger-text {
-      font-size: 23px;
+      font-size: 22px;
     }
     h1 {
       font-size: 40px;

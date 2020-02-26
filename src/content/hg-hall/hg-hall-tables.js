@@ -24,7 +24,7 @@ customElements.define('hg-hall-tables', class extends LitElement {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        max-width: 1000px;
+        max-width: 800px;
         margin: auto;
         text-align: center;
       }
@@ -32,22 +32,10 @@ customElements.define('hg-hall-tables', class extends LitElement {
         padding: 10px 10px 30px;
         box-sizing: border-box;
         width: 25%;
-        min-width: 240px;
+        min-width: 120px;
       }
       p {
-        margin: 10px 0;
-      }
-      @media all and (max-width: 959px) {
-        :host {
-          display: block;
-          margin-bottom: 20px;
-        }
-      }
-      @media all and (max-width: 479px) {
-        .items > * {
-          width: 50%;
-          min-width: auto;
-        }
+        margin: 8px 0;
       }
     `];
   }
@@ -87,13 +75,13 @@ customElements.define('hg-hall-tables', class extends LitElement {
               .ready=${this._dataReady}
               .text=${_.get(`name`, setOut)}
               @save=${(event) => updateData(this._setOutsDoc, `${index}.name`, event.detail)}>
-              <p class="bigger-text"></p>
+              <p></p>
             </hg-editable-text>
             <hg-editable-text
               .ready=${this._dataReady}
               .text=${_.get(`${index}.text1`, this._hallTables)}
               @save=${(event) => updateData('hallTables/' + this.uid, `${index}.text1`, event.detail)}>
-              <p></p>
+              <p class="smaller-text"></p>
             </hg-editable-text>
           </div>
         `, this._setOuts)}
