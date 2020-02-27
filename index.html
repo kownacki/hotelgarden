@@ -32,7 +32,6 @@
   <script src="/resources/scripts/lodash-fp.min.js"></script>
   <script type="module" src="/src/hg-app.js"></script>
   <script type="text/javascript" src="https://open.upperbooking.com/js/Booking.js?locale=pl" defer></script>
-  <script type="text/javascript" src="https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js" defer></script>
   <script>
     window.fbAsyncInit = function() {
       FB.init({
@@ -42,8 +41,18 @@
         version          : 'v5.0'
       });
     };
-    window.addEventListener('scroll', _.throttle(100, () => document.getElementById('fb-root')
-      && (document.getElementById('fb-root').style.opacity = (window.pageYOffset > 0 ? '1' : '0'))));
+    let facebookLoaded = false;
+    window.addEventListener('scroll', _.throttle(100, () => {
+      document.getElementById('fb-root')
+        && (document.getElementById('fb-root').style.opacity = (window.pageYOffset > 0 ? '1' : '0'));
+      if (!facebookLoaded) {
+        facebookLoaded = true;
+        const script = document.createElement('script');
+        script.setAttribute('defer', '');
+        script.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
+        document.body.append(script);
+      }
+    }));
   </script>
 
   <style id="inline-style">
