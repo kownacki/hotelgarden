@@ -10,6 +10,7 @@ customElements.define('hg-events-list', class extends LitElement {
     return {
       past: Boolean,
       max: Number,
+      noNonPublic: Boolean,
       _loggedIn: Boolean,
     };
   }
@@ -33,7 +34,7 @@ customElements.define('hg-events-list', class extends LitElement {
       <hg-list
         .noAdd=${true}
         .transform=${(items) => _.flow([
-          ...(this._loggedIn ? [] : [_.filter((key) => items[key].public)]),
+          ...(this._loggedIn && !this.noNonPublic ? [] : [_.filter((key) => items[key].public)]),
           _.filter((key) => moment()[!this.past ? 'isSameOrBefore' : 'isAfter'](items[key].date, 'day')),
           _.sortBy((key) => items[key].date),
           ...(!this.past ? [] : [_.reverse]),

@@ -31,7 +31,11 @@ customElements.define('hg-events-block', class extends LitElement {
   render() {
     return html`
       <h2 class="content-heading">Najbliższe wydarzenia</h2>
-      <hg-events-list .max=${2} @events-changed=${(event) => this._eventsNotEmpty = !_.isEmpty(event.detail)}></hg-events-list>
+      <hg-events-list 
+        .max=${2} 
+        .noNonPublic=${true}
+        @events-changed=${(event) => this._eventsNotEmpty = !_.isEmpty(event.detail)}>
+      </hg-events-list>
       <hg-action-button .url=${'/wydarzenia'}>Wszystkie wydarzenia</hg-action-button>
     `;
   }
