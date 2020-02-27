@@ -78,6 +78,8 @@ customElements.define('hg-app', class extends LitElement {
   }
   async updated(changedProperties) {
     if (changedProperties.has('_path')) {
+      ga('set', 'page', this._path);
+      ga('send', 'pageview');
       if (/^\/wydarzenia\/[^\/]+$/.test(this._path)) {
         this._event = true;
         this._uid =_.replace('/wydarzenia/', '', this._path);
