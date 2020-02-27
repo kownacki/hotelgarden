@@ -36,7 +36,7 @@ customElements.define('hg-events-list', class extends LitElement {
           ...(this._loggedIn ? [] : [_.filter((key) => items[key].public)]),
           _.filter((key) => moment()[!this.past ? 'isSameOrBefore' : 'isAfter'](items[key].date, 'day')),
           _.sortBy((key) => items[key].date),
-          ...(!this.past ? [] : [_.filter((key) => items[key].public)]),
+          ...(!this.past ? [] : [_.reverse]),
           ...(!this.max ? [] : [_.take(this.max)]),
         ])}
         .path=${staticProp({doc: 'events/events'})}
