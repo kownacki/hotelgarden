@@ -28,12 +28,7 @@
     ],
     "redirects": [
       {
-        "source": "/:url*/",
-        "destination": "/:url",
-        "type": 301
-      },
-      {
-        "source": "/restaurant",
+        "source": "/@(restaurant|sushi)",
         "destination": "/restauracja",
         "type": 301
       },
@@ -45,6 +40,16 @@
       {
         "source": "/relaks",
         "destination": "/atrakcje-okolicy",
+        "type": 301
+      },
+      {
+        "source": "/@(karnawal|sylwester|dzien-kobiet|walentynki|andrzejki|festival-sushi)",
+        "destination": "/wydarzenia",
+        "type": 301
+      },
+      {
+        "source": "/:url*/",
+        "destination": "/:url",
         "type": 301
       }
     ]
