@@ -1,4 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
+import {sleep} from '../utils.js';
 import sharedStyles from '../styles/shared-styles.js';
 import '../pages/events/hg-events/hg-events-list.js';
 import '../elements/hg-action-button.js';
@@ -34,7 +35,11 @@ customElements.define('hg-events-block', class extends LitElement {
       <hg-events-list 
         .max=${2} 
         .noNonPublic=${true}
-        @events-changed=${(event) => this._eventsNotEmpty = !_.isEmpty(event.detail)}>
+        @events-changed=${async (event) => {
+          this._eventsNotEmpty = !_.isEmpty(event.detail);
+          await sleep(); // wait for styles to apply
+          this.dispatchEvent(new CustomEvent('check-visibility', {composed: true}));
+        }}>
       </hg-events-list>
       <hg-action-button .url=${'/wydarzenia'}>Wszystkie wydarzenia</hg-action-button>
     `;

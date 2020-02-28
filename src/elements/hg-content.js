@@ -25,6 +25,10 @@ export default class HgContent extends LitElement {
     addEventListener('resize', this._eventToRemove);
     addEventListener('touchmove', this._eventToRemove);
     this._eventToRemove();
+    this.addEventListener('check-visibility', (event) => {
+      this._eventToRemove();
+      event.stopPropagation();
+    });
   }
   disconnectedCallback() {
     window.removeEventListener('DOMContentLoaded', this._eventToRemove);
