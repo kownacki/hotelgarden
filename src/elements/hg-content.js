@@ -19,16 +19,18 @@ export default class HgContent extends LitElement {
   constructor() {
     super();
     this._eventToRemove = () => checkChildrenVisibility(this);
+    this._eventToRemove();
     addEventListener('DOMContentLoaded', this._eventToRemove);
     addEventListener('load', this._eventToRemove);
     addEventListener('scroll', this._eventToRemove);
     addEventListener('resize', this._eventToRemove);
     addEventListener('touchmove', this._eventToRemove);
-    this._eventToRemove();
     this.addEventListener('check-visibility', (event) => {
       this._eventToRemove();
       event.stopPropagation();
     });
+    // todo heuristics to catch any not showing content when some movement happens
+    setTimeout(this._eventToRemove, 1000);
   }
   disconnectedCallback() {
     window.removeEventListener('DOMContentLoaded', this._eventToRemove);
