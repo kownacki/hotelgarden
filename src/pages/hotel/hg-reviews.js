@@ -6,7 +6,7 @@ import '../../elements/hg-list.js';
 import '../../elements/hg-review.js';
 import '../../content/hg-links.js';
 
-const reviewBlocks = ['landing', 'restaurant', 'grill-garden', 'catering', 'weddings', 'family-parties', 'chrzciny', 'komunie'];
+const reviewBlocks = ['landing', 'restaurant', 'grill-garden', 'weddings', 'family-parties'];
 
 const configure = {
   icon: 'settings',

@@ -7,7 +7,7 @@
     "public": "dist",
     "rewrites": [
       {
-        "source": "/@(villa-garden|atrakcje-okolicy|opinie|pokoje|konferencje|sale-konferencyjne|kuchnia|restauracja|grill-garden|catering|wesela|przyjecia-rodzinne|chrzciny|komunie|sale-bankietowe|galeria|wydarzenia|kontakt)",
+        "source": "/@(villa-garden|atrakcje-okolicy|opinie|pokoje|konferencje|sale-konferencyjne|kuchnia|restauracja|grill-garden|wesela|przyjecia-rodzinne|sale-bankietowe|galeria|wydarzenia|kontakt)",
         "destination": "/index.html"
       },
       {
