@@ -19,9 +19,6 @@
 
   <link rel="shortcut icon" href="/resources/images/favicon.ico">
 
-  <!-- Edge and older browsers compatibility. See https://lit-element.polymer-project.org/guide/use#polyfills -->
-  <!--  <script src="/node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js" defer></script>-->
-
   <link rel="preload" href="/resources/fonts/Lato/Lato-Regular.ttf" as="font" crossorigin="anonymous">
   <link rel="preload" href="/resources/fonts/Lato/Lato-Italic.ttf" as="font" crossorigin="anonymous">
   <link rel="preload" href="/resources/fonts/Lato/Lato-Light.ttf" as="font" crossorigin="anonymous">
@@ -30,33 +27,42 @@
   <link rel="preload" href="/resources/fonts/Lato/Lato-BoldItalic.ttf" as="font" crossorigin="anonymous">
   <link rel="preload" href="/resources/fonts/Yellowtail/Yellowtail-Regular.ttf" as="font" crossorigin="anonymous">
 
-  <script src="/resources/scripts/lodash-fp.min.js"></script>
-  <script type="module" src="/src/hg-app.js"></script>
-  <script type="text/javascript" src="https://open.upperbooking.com/js/Booking.js?locale=pl" defer></script>
-  <script>
-    window.fbAsyncInit = function() {
-      FB.init({
-        appId            : '608176286628501',
-        autoLogAppEvents : true,
-        xfbml            : true,
-        version          : 'v5.0'
-      });
-    };
-    let facebookLoaded = false;
-    window.addEventListener('scroll', _.throttle(100, () => {
-      document.getElementById('fb-root')
-        && (document.getElementById('fb-root').style.opacity = (window.pageYOffset > 0 ? '1' : '0'));
-      if (!facebookLoaded) {
-        facebookLoaded = true;
-        const script = document.createElement('script');
-        script.setAttribute('defer', '');
-        script.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
-        document.body.append(script);
-      }
-    }));
-  </script>
-
   <style id="inline-style">
+    .loading {
+      font-family: sans-serif;
+      font-size: 50px;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    @keyframes blink {
+      0% {
+        opacity: .2;
+      }
+      20% {
+        opacity: 1;
+      }
+      100% {
+        opacity: .2;
+      }
+    }
+    .loading span {
+      animation-name: blink;
+      animation-duration: 1.4s;
+      animation-iteration-count: infinite;
+      animation-fill-mode: both;
+    }
+    .loading span:nth-child(2) {
+      animation-delay: .2s;
+    }
+    .loading span:nth-child(3) {
+      animation-delay: .4s;
+    }
     html, body {
       height: 100%;
     }
@@ -135,15 +141,9 @@
       transition: opacity 0.3s ease;
     }
   </style>
-  <script type="module">
-    import sharedStyles from '/src/styles/shared-styles.js';
-    import ckContent from '/src/styles/ck-content.js';
-    const style = document.getElementById('inline-style');
-    style.innerHTML += '\n' + sharedStyles.cssText + '\n' + ckContent.cssText;
-  </script>
 </head>
 <body>
-<hg-app>Ładowanie...</hg-app>
+<hg-app><div class="loading"><span>.</span><span>.</span><span>.</span></div></hg-app>
 <div
   class="fb-customerchat"
   attribution=setup_tool
@@ -152,5 +152,37 @@
   logged_out_greeting="Witaj! Co możemy dla Ciebie zrobić?"
   theme_color="#0078FF">
 </div>
+
+<script src="/resources/scripts/lodash-fp.min.js"></script>
+<script type="module" src="/src/hg-app.js"></script>
+<script type="text/javascript" src="https://open.upperbooking.com/js/Booking.js?locale=pl" defer></script>
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId            : '608176286628501',
+      autoLogAppEvents : true,
+      xfbml            : true,
+      version          : 'v5.0'
+    });
+  };
+  let facebookLoaded = false;
+  window.addEventListener('scroll', _.throttle(100, () => {
+    document.getElementById('fb-root')
+    && (document.getElementById('fb-root').style.opacity = (window.pageYOffset > 0 ? '1' : '0'));
+    if (!facebookLoaded) {
+      facebookLoaded = true;
+      const script = document.createElement('script');
+      script.setAttribute('defer', '');
+      script.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
+      document.body.append(script);
+    }
+  }));
+</script>
+<script type="module">
+  import sharedStyles from '/src/styles/shared-styles.js';
+  import ckContent from '/src/styles/ck-content.js';
+  const style = document.getElementById('inline-style');
+  style.innerHTML += '\n' + sharedStyles.cssText + '\n' + ckContent.cssText;
+</script>
 </body>
 </html>
