@@ -55,6 +55,9 @@ customElements.define('hg-dialog', class extends LitElement {
       <paper-dialog
         id="dialog" 
         @opened-changed=${(event) => {
+          if (window.Tawk_API.toggleVisibility) {
+            Tawk_API.toggleVisibility();
+          }
           document.body.style.overflow = event.target.opened ? 'hidden' : null;
           if (event.target.opened) {
             this._locationOnOpen = window.location.pathname;

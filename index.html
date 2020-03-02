@@ -177,6 +177,31 @@
 <!--    }-->
 <!--  }));-->
 <!--</script>-->
+<script type="text/javascript">
+  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+  Tawk_API.onLoad = () => {
+    if (window.pageYOffset === 0 && Tawk_API.isChatMinimized()) {
+      Tawk_API.hideWidget();
+    }
+    window.addEventListener('scroll', _.throttle(100, () => {
+      if (window.pageYOffset === 0) {
+        if (Tawk_API.isChatMinimized()) {
+          Tawk_API.hideWidget();
+        }
+      } else {
+        Tawk_API.showWidget();
+      }
+    }));
+  };
+  window.addEventListener('scroll', () => {
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.defer=true;
+    s1.src='https://embed.tawk.to/5e5d63246d48ff250ad8e6f4/default';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+  }, {once: true});
+</script>
 <script type="module">
   import sharedStyles from '/src/styles/shared-styles.js';
   import ckContent from '/src/styles/ck-content.js';
