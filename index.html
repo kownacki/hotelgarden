@@ -136,10 +136,10 @@
       font-display: swap;
       src: url(/resources/fonts/Yellowtail/Yellowtail-Regular.ttf) format('truetype');
     }
-    #fb-root {
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
+    /*#fb-root {*/
+    /*  opacity: 0;
+    /*  transition: opacity 0.3s ease;
+    /*}*/
   </style>
 </head>
 <body>
@@ -167,13 +167,12 @@
   };
   let facebookLoaded = false;
   window.addEventListener('scroll', _.throttle(100, () => {
-    document.getElementById('fb-root')
-    && (document.getElementById('fb-root').style.opacity = (window.pageYOffset > 0 ? '1' : '0'));
+    //document.getElementById('fb-root') && (document.getElementById('fb-root').style.opacity = (window.pageYOffset > 0 ? '1' : '0'));
     if (!facebookLoaded) {
       facebookLoaded = true;
       const script = document.createElement('script');
       script.setAttribute('defer', '');
-      script.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
+      script.src = 'https://connect.facebook.net/pl_PL/sdk/xfbml.customerchat.js';
       document.body.append(script);
     }
   }));
