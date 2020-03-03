@@ -16,5 +16,11 @@ customElements.define('hg-list-editable-text', class extends HgEditableText {
     })();
     this.addEventListener('save', (event) => this.dispatchEvent(new CustomEvent('update', {detail: {path: this.field, data: event.detail}, bubbles: true, composed: true})));
   }
+  updated(changedProperties) {
+    super.updated(changedProperties);
+    if (changedProperties.has('item') || changedProperties.has('field')) {
+      this.text = _.get(this.field, this.item);
+    }
+  }
 });
 
