@@ -21,7 +21,8 @@ customElements.define('hg-halls-slider-item', class extends LitElement {
       h3 {
         margin-top: 0;
       }
-      div {
+      p {
+        margin: 0;
         overflow: hidden;
         text-overflow: ellipsis;
       }
@@ -49,9 +50,9 @@ customElements.define('hg-halls-slider-item', class extends LitElement {
           src: 'https://firebasestorage.googleapis.com/v0/b/pl-hotelgarden.appspot.com/o/icons%2Fpeople%2Fcrowd.png?alt=media&token=b6252c3c-5c24-4afe-b24e-ee3159645627',
         }])}>
       </hg-icon-info>
-      <div class="smaller-text ck-content" 
+      <p class="smaller-text ck-content"
         .innerHTML=${shorten(_.flow([_.replace(/<p>/g, ''), _.replace(/<\/p>/g, '')])(this.hall.text), 235)}>
-      </div>
+      </p>
       <hg-action-buttons 
         .buttons=${staticProp([
           {url: `/sale-${this.hall.hallType === 'conference' ? 'konferencyjne' : 'bankietowe'}#${Number(this.hall.index) + 1}`, text: 'Więcej o sali'}
