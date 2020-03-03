@@ -149,7 +149,7 @@ customElements.define('hg-contact-form', class extends LitElement {
     this.shadowRoot.getElementById('ajax').body = _.reduce(
       (body, id) => _.set(id, this.shadowRoot.getElementById(id).value, body),
       {},
-      _.without(['company'], FIELDS),
+      FIELDS,
     );
     this.shadowRoot.getElementById('ajax').body.subject = this.shadowRoot.getElementById('subject').selected;
     this.shadowRoot.getElementById('ajax').generateRequest();
