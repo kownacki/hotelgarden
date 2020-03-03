@@ -41,7 +41,7 @@ customElements.define('hg-contact-form', class extends LitElement {
         height: var(--height);
       }
       :host([sent]) .inputs {
-        height: 0;
+        height: 0 !important;
       }
       .inputs > * {
         width: 50%;
