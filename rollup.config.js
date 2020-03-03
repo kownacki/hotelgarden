@@ -20,6 +20,7 @@ export default [{
         {src: 'resources', dest: 'dist'},
         {src: 'node_modules/@ckeditor', dest: 'dist/node_modules'},
         {src: 'googlec2ac75b505b73639.html', dest: 'dist'},
+        {src: 'BingSiteAuth.xml', dest: 'dist'},
       ],
     }),
     resolve(),
