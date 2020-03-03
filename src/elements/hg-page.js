@@ -54,7 +54,7 @@ customElements.define('hg-page', class extends LitElement {
     if (changedProperties.has('uid')) {
       this._defaultTitle = pages[this.uid].name;
     }
-    if (changedProperties.has('_config') && !this.event) {
+    if ((changedProperties.has('_config') || changedProperties.has('uid')) && !this.event) {
       this.shadowRoot.getElementById('page').config = this._config;
     }
     if (changedProperties.has('_defaultTitle') || changedProperties.has('_config')) {
