@@ -15,6 +15,7 @@ import '../pages/rooms/hg-rooms.js';
 import '../pages/conferences/hg-conferences.js';
 import '../pages/conferences/hg-conference-halls.js';
 import '../pages/cuisine/hg-cuisine.js';
+import '../pages/cuisine/hg-lunch.js';
 import '../pages/cuisine/hg-restaurant.js';
 import '../pages/cuisine/hg-grill-garden.js';
 // import '../pages/cuisine/hg-catering.js';

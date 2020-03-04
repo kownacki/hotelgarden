@@ -89,7 +89,7 @@ customElements.define('hg-app', class extends LitElement {
       } else {
         this._event = false;
         this._uid = pathToUid[this._path] || '404';
-        this._noBannerImage = _.includes(this._uid, ['contact', 'gallery', '404']);
+        this._noBannerImage = _.includes(this._uid, ['contact', 'gallery', 'lunch', '404']);
       }
     }
   }

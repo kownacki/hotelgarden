@@ -31,9 +31,6 @@ customElements.define('hg-book-dialog', class extends LitElement {
       hg-dialog {
         --hg-dialog-width: 800px;
       }
-      h2 {
-        margin: 15px 30px 15px 0 !important;
-      }
       .container {
         display: flex;
         justify-content: space-between;
@@ -64,14 +61,14 @@ customElements.define('hg-book-dialog', class extends LitElement {
   }
   render() {
     return html`
-      <hg-dialog id="dialog" @dialog-changed=${() => this.dialog = this.shadowRoot.getElementById('dialog').dialog}>
+      <hg-dialog id="dialog" .noButtons=${true} @dialog-changed=${() => this.dialog = this.shadowRoot.getElementById('dialog').dialog}>
         <hg-text
           slot="header"
           .path=${staticProp({doc: 'texts/book', field: 'heading'})}
           .noGetText=${true}
           .text=${_.get('heading', this._data)}
           .ready=${this._dataReady}>
-          <h2></h2>
+          <div class="bigger-text"></div>
         </hg-text>
         <div class="container" slot="content">
           ${_.map((location) => html`

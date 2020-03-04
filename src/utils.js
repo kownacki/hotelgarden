@@ -153,6 +153,9 @@ export const setMetaDescription = (text) => {
   );
 };
 
+// todo use moment js
+export const getDayOfWeek = (index) => ['poniedziałek', 'wtorek', 'środa', 'czwartek', 'piątek'][index - 1];
+
 export const pathToUid = {
   '/index.html': 'landing',
   '/': 'landing',
@@ -163,6 +166,7 @@ export const pathToUid = {
   '/konferencje': 'conferences',
   '/sale-konferencyjne': 'conference-halls',
   '/kuchnia': 'cuisine',
+  '/lunch': 'lunch',
   '/restauracja': 'restaurant',
   '/grill-garden': 'grill-garden',
   // '/catering': 'catering',
@@ -185,6 +189,7 @@ export const pages = {
   'conferences': {name: 'Konferencja w Gardenie', path: '/konferencje', dir: 'conferences'},
   'conference-halls': {name: 'Sale konferencyjne', path: '/sale-konferencyjne', dir: 'conferences'},
   'cuisine': {name: 'O naszej kuchni', path: '/kuchnia', dir: 'cuisine'},
+  'lunch': {name: 'Lunch', path: '/lunch', dir: 'cuisine'},
   'restaurant': {name: 'Restauracja Magnolia', path: '/restauracja', dir: 'cuisine'},
   'grill-garden': {name: 'Grill Garden', path: '/grill-garden', dir: 'cuisine'},
   // 'catering': {name: 'Catering', path: '/catering', dir: 'cuisine'},

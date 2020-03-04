@@ -5,6 +5,9 @@ customElements.define('hg-dialog', class extends LitElement {
   static get properties() {
     return {
       dialog: Element,
+      noButtons: Boolean,
+      noHeader: Boolean,
+      noClose: {type: Boolean, reflect: true, attribute: 'no-close'},
     };
   }
   constructor() {
@@ -18,6 +21,8 @@ customElements.define('hg-dialog', class extends LitElement {
   static get styles() {
     return [sharedStyles, css`
       :host {
+        --hg-dialog-header-height: 64px;
+        --hg-dialog-buttons-height: 52px;
         display: block;
         position: relative;
       }
@@ -33,10 +38,19 @@ customElements.define('hg-dialog', class extends LitElement {
       }
       header {
         border-bottom: solid 1px var(--divider-color);
+        line-height: 1.5em;
+        padding: 15px 24px;
+      }
+      :host(:not([no-close])) header {
+        padding-right: calc(64px);
       }
       .content {
         overflow: auto;
         flex: 1;
+      }
+      .buttons {
+        border-top: solid 1px var(--divider-color);
+        min-height: calc(var(--hg-dialog-buttons-height) - 16px);
       }
       paper-icon-button {
         position: absolute;
@@ -74,16 +88,25 @@ customElements.define('hg-dialog', class extends LitElement {
             }
           }
         }}>
-        <header>
+        ${this.noClose ? '' : html`
           <paper-icon-button 
             .icon=${'close'} 
             @click=${() => this.dialog.close()}>
           </paper-icon-button>
-          <slot name="header"></slot>
-        </header>
+        `}
+        ${this.noHeader ? '' : html`
+          <header class="bigger-text">
+            <slot name="header"></slot>
+          </header>
+        `}
         <div class="content">
           <slot name="content"></slot>
         </div>
+        ${this.noButtons ? '' : html`
+          <div class="buttons">
+            <slot name="buttons"></slot>
+          </div>
+        `}
       </paper-dialog>
     `;
   }

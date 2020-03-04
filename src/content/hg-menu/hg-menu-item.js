@@ -56,7 +56,7 @@ customElements.define('hg-menu-item', class extends LitElement {
         <hg-list-editable-text
           float
           id="name"
-          .disabled=${this.disableEdit && !this.shadowRoot.getElementById('name').showControls}
+          .disabled=${this.disableEdit && !_.get('showControls', this.shadowRoot.getElementById('name'))}
           .item=${this.item} 
           .field=${'name'}>
           <h3></h3>
@@ -64,7 +64,7 @@ customElements.define('hg-menu-item', class extends LitElement {
         <hg-list-editable-text
           float
           id="description"
-          .disabled=${this.disableEdit && !this.shadowRoot.getElementById('description').showControls}
+          .disabled=${this.disableEdit && !_.get('showControls', this.shadowRoot.getElementById('description'))}
           .item=${this.item} 
           .field=${'description'}>
           <p class="smaller-text"></p>
@@ -74,7 +74,7 @@ customElements.define('hg-menu-item', class extends LitElement {
         <hg-list-editable-text
           float
           id="price"
-          .disabled=${this.disableEdit && !this.shadowRoot.getElementById('price').showControls}
+          .disabled=${this.disableEdit && !_.get('showControls', this.shadowRoot.getElementById('price'))}
           .item=${this.item} 
           .field=${'price'}>
           <div class="price"></div>
