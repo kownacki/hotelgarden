@@ -1,4 +1,5 @@
-import {getDayOfWeek, urlTo64Base, loadScript} from '../../../utils.js';
+import {html} from 'lit-element';
+import {getDayOfWeek, urlTo64Base, loadScript, sleep} from '../../../utils.js';
 
 const bodyStyles = getComputedStyle(document.body);
 const primaryColor = bodyStyles.getPropertyValue('--primary-color').trim();
@@ -41,7 +42,7 @@ const getDay = (lunches, prices, day) => [
             style: 'smaller',
           }
         ],
-        {text: {1: _.get(1, prices), 2: _.get(2, prices)}[course], width: 20, alignment: 'right'}
+        {text: {1: _.get(1, prices), 2: _.get(2, prices)}[course], width: 40, alignment: 'right'}
       ],
     },
     course === 2 ? '' : '\n',
@@ -94,9 +95,14 @@ const getFooter = (config, columnGap) => [
   },
 ];
 
+const getPageCount = (pdf) => {
+  const range = pdf.getStream().bufferedPageRange();
+  return range.start + range.count;
+};
+
 let pdfmakeLoaded = false;
 let resourcesPromise;
-export default async (lunches, config) => {
+const generate = async (lunches, config, decrementFontSize) => {
   if (!pdfmakeLoaded) {
     pdfmakeLoaded = true;
     resourcesPromise = Promise.all([
@@ -133,7 +139,7 @@ export default async (lunches, config) => {
       paddingLeft: () => 0,
       paddingRight: () => 0,
       paddingTop: () => 0,
-      paddingBottom: () => 5,
+      paddingBottom: () => 10,
     },
     footer: {
       hLineColor: () => secondaryColor,
@@ -158,7 +164,7 @@ export default async (lunches, config) => {
             [[
               getHeader(config),
               '\n',
-              getBody(lunches, _.get('prices', config), restaurantLogo, columnGap)
+              getBody(lunches, _.get('prices', config), restaurantLogo, columnGap),
             ]],
           ]
         }
@@ -167,7 +173,7 @@ export default async (lunches, config) => {
     ],
     defaultStyle: {
       font: 'Lato',
-      fontSize: 13,
+      fontSize: 15 * (1 - decrementFontSize),
       color: secondaryColor,
     },
     styles: {
@@ -177,7 +183,7 @@ export default async (lunches, config) => {
         bold: true
       },
       subheader: {
-        fontSize: 28,
+        fontSize: 30,
       },
       dayHeader: {
         fontSize: 20,
@@ -185,9 +191,38 @@ export default async (lunches, config) => {
         alignment: 'center',
       },
       smaller: {
-        fontSize: 10,
+        fontSize: 14 * (1 - decrementFontSize),
       },
     }
   };
-  return new Promise((resolve) => pdfMake.createPdf(docDefinition).download('lunch', resolve));
+  return pdfMake.createPdf(docDefinition);
+};
+
+export default async (lunches, config, that) => {
+  const smallestAllowedFont = 8;
+  const smallestInitialFont = 14;
+
+  let decrementFontSize = 0;
+  const decrementStep = 0.05;
+  let pdf;
+  let pageCount;
+  do {
+     pdf = await generate(lunches, config, decrementFontSize);
+     await sleep(); // break synchronicity
+  } while (
+    (pageCount = getPageCount(pdf)) > 1
+    && smallestInitialFont * (1 - (decrementFontSize + decrementStep)) >= smallestAllowedFont
+    && (decrementFontSize += decrementStep)
+    && (that._decreasingFont = decrementFontSize)
+    );
+
+  const finalPdf = await generate(lunches, config, decrementFontSize);
+  that._result = [];
+  if (decrementFontSize) {
+    that._result.push(html`Dostosowano wielkość czcionki. Zmniejszono o ${Math.round(decrementFontSize * 100)}%<br>`);
+  }
+  if (pageCount > 1) {
+    that._result.push(html`Nie udało się zmieścić zawartości na jednej stronie. Wielkość czcionki osiągnęła minimum<br>`);
+  }
+  return new Promise((resolve) => finalPdf.download('lunch', resolve));
 };

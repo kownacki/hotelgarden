@@ -12,6 +12,8 @@ customElements.define('hg-lunch-edit', class extends LitElement {
       doc: String,
       _loading: Boolean,
       _error: Boolean,
+      _decreasingFont: Number,
+      _result: String,
     };
   }
   static get styles() {
@@ -33,12 +35,13 @@ customElements.define('hg-lunch-edit', class extends LitElement {
       <mwc-button raised label="Edytuj"
         @click=${() => this.shadowRoot.getElementById('dialog').dialog.open()}>
       </mwc-button>
-      <mwc-button raised label="Pobierz pdf" .disabled=${this._loading} @click=${async () => {
+      <mwc-button raised label="Generuj pdf" .disabled=${this._loading} @click=${async () => {
         this._loading = true;
         this._error = false;
+        this._result = '';
         const minWaitingTime = sleep(1000);
         try {
-          await downloadLunches(this.lunches, this.config);
+          await downloadLunches(this.lunches, this.config, this);
         } catch(error) {
           await minWaitingTime;
           this._error = true;
@@ -46,9 +49,12 @@ customElements.define('hg-lunch-edit', class extends LitElement {
         } finally {
           await minWaitingTime;
           this._loading = false;
+          this._decreasingFont = null;
         }
       }}></mwc-button>
-      ${this._loading ? 'Generuję...' : ''}
+      ${!this._loading ? '' : 'Generuję... '}
+      ${!this._decreasingFont ? '' : `Zmniejszanie czcionki o ${Math.round(this._decreasingFont * 100)}%...`}
+      <div class="result">${!this._result ? '' : this._result}</div>
       <div class="error">${this._error ? 'Generowanie pliku nie powiodło się.' : ''}</div>
       <hg-lunch-edit-dialog id="dialog" .lunches=${this.lunches} .doc=${this.doc}></hg-lunch-edit-dialog>
     `;

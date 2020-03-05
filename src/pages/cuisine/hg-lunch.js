@@ -51,6 +51,7 @@ customElements.define('hg-lunch', class extends HgContent {
         <hg-todays-lunch .lunches=${this._lunches} .prices=${this._prices}></hg-todays-lunch>-->
         <h2 class="content-heading">Lunche w tym tygodniu</h2>
         <hg-article .uid=${'lunch-extra'} .rich=${true} .richConfig=${'mosaic'}></hg-article>
+        <hg-lunch-week .lunches=${this._lunches} .prices=${this._prices} .today=${3}></hg-lunch-week>
         ${!this._loggedIn ? '' : html`
           <hg-lunch-edit
             .lunches=${this._lunches} 
@@ -59,7 +60,6 @@ customElements.define('hg-lunch', class extends HgContent {
             @lunches-changed=${(event) => this._lunches = event.detail}>
           </hg-lunch-edit>
         `} 
-        <hg-lunch-week .lunches=${this._lunches} .prices=${this._prices} .today=${3}></hg-lunch-week>
       `}
       <hg-links .path=${'/lunch'} .superpath=${'/kuchnia'}></hg-links>
     `;
