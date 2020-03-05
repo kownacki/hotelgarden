@@ -6,9 +6,9 @@ const primaryColor = bodyStyles.getPropertyValue('--primary-color').trim();
 const secondaryColor = bodyStyles.getPropertyValue('--secondary-color').trim();
 const accentColor = bodyStyles.getPropertyValue('--accent-color').trim();
 
-const getHeader = (config) => ({
+const getHeader = (config, dateString) => ({
   text: [
-    'Lunch menu 02.03-06.03\n'.toUpperCase(),
+    _.toUpper(`Lunch menu ${dateString}\n`),
     {
       text: `od ${_.get('beginTime', config)} do ${_.get('endTime', config)}\n`,
       style: 'subheader',
@@ -32,11 +32,11 @@ const getDayHeader = (day) => ({
 const getDay = (lunches, prices, day) => [
   getDayHeader(day),
   _.map((course) => [
-    `${{1: 'I', 2: 'II'}[course]} danie:`.toUpperCase(),
+    _.toUpper(`${{1: 'I', 2: 'II'}[course]} danie:`),
     {
       columns: [
         [
-          _.get(`${day}.${course}.name`, lunches).toUpperCase(),
+          _.toUpper(_.get(`${day}.${course}.name`, lunches)),
           {
             text: _.get(`${day}.${course}.description`, lunches),
             style: 'smaller',
@@ -75,9 +75,9 @@ const getFooter = (config, columnGap) => [
           '\n',
           {
             columns: [
-              'I + II danie'.toUpperCase() + '\n\nKarnety i abonamenty'.toUpperCase(),
+              _.toUpper('I + II danie\n\nKarnety i abonamenty'),
               {text: `${_.get('prices.set', config)}\n\nod 10`, width: 40, alignment: 'right'},
-              ['Dostawa'.toUpperCase(), {text: 'na terenie Oleśnicy przy zamówieniach > 25 zł\ninaczej 5 zł', style: 'smaller'}],
+              [_.toUpper('Dostawa'), {text: 'na terenie Oleśnicy przy zamówieniach > 25 zł\ninaczej 5 zł', style: 'smaller'}],
               {text: '0', width: 40, alignment: 'right'},
             ],
             columnGap,
@@ -102,7 +102,7 @@ const getPageCount = (pdf) => {
 
 let pdfmakeLoaded = false;
 let resourcesPromise;
-const generate = async (lunches, config, decrementFontSize) => {
+const generate = async (lunches, config, dateString, decrementFontSize) => {
   if (!pdfmakeLoaded) {
     pdfmakeLoaded = true;
     resourcesPromise = Promise.all([
@@ -162,7 +162,7 @@ const generate = async (lunches, config, decrementFontSize) => {
           widths: ['*'],
           body: [
             [[
-              getHeader(config),
+              getHeader(config, dateString),
               '\n',
               getBody(lunches, _.get('prices', config), restaurantLogo, columnGap),
             ]],
@@ -198,7 +198,7 @@ const generate = async (lunches, config, decrementFontSize) => {
   return pdfMake.createPdf(docDefinition);
 };
 
-export default async (lunches, config, that) => {
+export default async (lunches, config, that, dateString) => {
   const smallestAllowedFont = 8;
   const smallestInitialFont = 14;
 
@@ -207,7 +207,7 @@ export default async (lunches, config, that) => {
   let pdf;
   let pageCount;
   do {
-     pdf = await generate(lunches, config, decrementFontSize);
+     pdf = await generate(lunches, config, dateString, decrementFontSize);
      await sleep(); // break synchronicity
   } while (
     (pageCount = getPageCount(pdf)) > 1
@@ -216,7 +216,7 @@ export default async (lunches, config, that) => {
     && (that._decreasingFont = decrementFontSize)
     );
 
-  const finalPdf = await generate(lunches, config, decrementFontSize);
+  const finalPdf = await generate(lunches, config, dateString, decrementFontSize);
   that._result = [];
   if (decrementFontSize) {
     that._result.push(html`Dostosowano wielkość czcionki. Zmniejszono o ${Math.round(decrementFontSize * 100)}%<br>`);
@@ -224,5 +224,5 @@ export default async (lunches, config, that) => {
   if (pageCount > 1) {
     that._result.push(html`Nie udało się zmieścić zawartości na jednej stronie. Wielkość czcionki osiągnęła minimum<br>`);
   }
-  return new Promise((resolve) => finalPdf.download('lunch', resolve));
+  return new Promise((resolve) => finalPdf.download(`Menu Lunchowe ${dateString.replace(/\./g, '-')}`, resolve));
 };

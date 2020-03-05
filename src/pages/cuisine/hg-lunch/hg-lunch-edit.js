@@ -1,4 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
+import moment from "moment";
 import {sleep} from '../../../utils.js';
 import downloadLunches from './downloadLunches.js';
 import sharedStyles from '../../../styles/shared-styles.js';
@@ -7,9 +8,10 @@ import './hg-lunch-edit-dialog.js';
 customElements.define('hg-lunch-edit', class extends LitElement {
   static get properties() {
     return {
+      isUpcoming: Boolean,
       lunches: Object,
+      lunchesData: Object,
       config: Object,
-      doc: String,
       _loading: Boolean,
       _error: Boolean,
       _decreasingFont: Number,
@@ -20,7 +22,7 @@ customElements.define('hg-lunch-edit', class extends LitElement {
     return [sharedStyles, css`
       :host {
         display: block;
-        max-width: 700px;
+        max-width: 1100px;
         padding: 60px 20px;
         margin: auto;
       }
@@ -31,7 +33,13 @@ customElements.define('hg-lunch-edit', class extends LitElement {
   }
   render() {
     return html`
-      <div>Aktualny lunch 2-6.03.2020</div>
+      <div>${this.isUpcoming ? 'Nadchodzące' : 'Aktualne'} Menu Lunchowe ${this.lunchesData.dateString}</div>
+      <hg-lunch-edit-dialog 
+        id="dialog"
+        .lunches=${this.lunches}
+        .doc=${`lunches/${this.lunchesData.doc}`}
+        .dateString=${this.lunchesData.dateString}>
+      </hg-lunch-edit-dialog>
       <mwc-button raised label="Edytuj"
         @click=${() => this.shadowRoot.getElementById('dialog').dialog.open()}>
       </mwc-button>
@@ -41,7 +49,7 @@ customElements.define('hg-lunch-edit', class extends LitElement {
         this._result = '';
         const minWaitingTime = sleep(1000);
         try {
-          await downloadLunches(this.lunches, this.config, this);
+          await downloadLunches(this.lunches, this.config, this, this.lunchesData.dateStringShort);
         } catch(error) {
           await minWaitingTime;
           this._error = true;
@@ -56,7 +64,6 @@ customElements.define('hg-lunch-edit', class extends LitElement {
       ${!this._decreasingFont ? '' : `Zmniejszanie czcionki o ${Math.round(this._decreasingFont * 100)}%...`}
       <div class="result">${!this._result ? '' : this._result}</div>
       <div class="error">${this._error ? 'Generowanie pliku nie powiodło się.' : ''}</div>
-      <hg-lunch-edit-dialog id="dialog" .lunches=${this.lunches} .doc=${this.doc}></hg-lunch-edit-dialog>
     `;
   }
 });

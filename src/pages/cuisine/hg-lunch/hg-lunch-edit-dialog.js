@@ -9,6 +9,8 @@ customElements.define('hg-lunch-edit-dialog', class extends LitElement {
     return {
       lunches: Object,
       doc: String,
+      dateString: String,
+      //
       dialog: Element,
     };
   }
@@ -26,7 +28,7 @@ customElements.define('hg-lunch-edit-dialog', class extends LitElement {
         .noClose=${true}
         @dialog-changed=${() => this.dialog = this.shadowRoot.getElementById('dialog').dialog}>
         <div slot="header">
-          Edytuj lunch <span style="display: inline-block">2-6.03.2020</span>
+          Edytuj lunch ${this.dateString}
         </div>
         <div slot="content">
           ${_.map((day) => html`
@@ -39,7 +41,7 @@ customElements.define('hg-lunch-edit-dialog', class extends LitElement {
                     <mwc-textfield
                       id=${`${day}.${course}.${field}`}
                       .label=${{name: 'Nazwa', description: 'Podpis'}[field]}
-                      .value=${_.get(`${day}.${course}.${field}`, this.lunches)}>
+                      .value=${_.get(`${day}.${course}.${field}`, this.lunches) || ''}>
                     </mwc-textfield>
                   `, ['name', 'description'])}
                   </div>
