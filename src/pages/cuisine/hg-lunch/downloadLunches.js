@@ -4,7 +4,6 @@ const bodyStyles = getComputedStyle(document.body);
 const primaryColor = bodyStyles.getPropertyValue('--primary-color').trim();
 const secondaryColor = bodyStyles.getPropertyValue('--secondary-color').trim();
 const accentColor = bodyStyles.getPropertyValue('--accent-color').trim();
-const columnGap = 25;
 
 const getHeader = (config) => ({
   text: [
@@ -49,7 +48,7 @@ const getDay = (lunches, prices, day) => [
   ], [1, 2]),
   '\n',
 ];
-const getBody = (lunches, prices, img) => [
+const getBody = (lunches, prices, img, columnGap) => [
   {
     columns:
       _.map.convert({cap: false})((column, index) =>
@@ -61,7 +60,7 @@ const getBody = (lunches, prices, img) => [
     columnGap,
   },
 ];
-const getFooter = (config) => [
+const getFooter = (config, columnGap) => [
   {
     layout: 'footer',
     table: {
@@ -109,6 +108,7 @@ export default async (lunches, config) => {
     await loadScript('/node_modules/pdfmake/build/vfs_fonts.js');
   }
   const [backgroundImage, restaurantLogo] = await resourcesPromise;
+  const columnGap = 25;
 
   pdfMake.fonts = {
     Lato: {
@@ -155,11 +155,15 @@ export default async (lunches, config) => {
         table: {
           widths: ['*'],
           body: [
-            [[getHeader(config), '\n', getBody(lunches, _.get('prices', config), restaurantLogo)]],
+            [[
+              getHeader(config),
+              '\n',
+              getBody(lunches, _.get('prices', config), restaurantLogo, columnGap)
+            ]],
           ]
         }
       },
-      getFooter(config),
+      getFooter(config, columnGap),
     ],
     defaultStyle: {
       font: 'Lato',
@@ -185,5 +189,5 @@ export default async (lunches, config) => {
       },
     }
   };
-  pdfMake.createPdf(docDefinition).download();
+  return new Promise((resolve) => pdfMake.createPdf(docDefinition).download('lunch', resolve));
 };

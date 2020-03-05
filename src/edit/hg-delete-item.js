@@ -11,7 +11,7 @@ customElements.define('hg-delete-item', class extends LitElement {
   static get styles() {
     return css`
       .warning {
-        color: var(--paper-red-800);
+        color: var(--error-color);
         padding: 10px;
         background: var(--paper-red-100);
       }
