@@ -1,4 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
+import {loadScript} from "../utils";
 
 let googleMapsLoaded = false;
 
@@ -8,19 +9,11 @@ customElements.define('hg-map', class extends LitElement {
       seen: Boolean,
     };
   }
-  loadGoogleMaps() {
-    return new Promise((resolve) => {
-      const script = document.createElement('script');
-      script.onload = resolve;
-      script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDvamIugzBC3k3WA52KpHeINrfDHfkvnSs';
-      document.body.append(script);
-    })
-  }
   async updated(changedProperties) {
     if (changedProperties.has('seen')) {
       if (!googleMapsLoaded) {
         googleMapsLoaded = true;
-        await this.loadGoogleMaps();
+        await loadScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyDvamIugzBC3k3WA52KpHeINrfDHfkvnSs');
       }
       const lat = 51.210707;
       const lng = 17.401097;

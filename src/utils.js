@@ -156,6 +156,19 @@ export const setMetaDescription = (text) => {
 // todo use moment js
 export const getDayOfWeek = (index) => ['poniedziałek', 'wtorek', 'środa', 'czwartek', 'piątek'][index - 1];
 
+export const urlTo64Base = async (url) => {
+  const reader = new FileReader();
+  reader.readAsDataURL(await (await fetch(url)).blob());
+  return new Promise((resolve) => (reader.onloadend = () => resolve(reader.result)));
+};
+
+export const loadScript = (src) => new Promise((resolve) => {
+  const script = document.createElement('script');
+  script.onload = resolve;
+  script.src = src;
+  document.body.append(script);
+});
+
 export const pathToUid = {
   '/index.html': 'landing',
   '/': 'landing',

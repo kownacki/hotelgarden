@@ -45,6 +45,6 @@
     "lit-element": "^2.2.1",
     "lit-html": "^1.1.2",
     "moment": "^2.24.0",
-    "pdfmake": "^0.1.65"
+    "pdfmake": "git+https://github.com/kownacki2/pdfmake.git#hotelgarden"
   }
 }
