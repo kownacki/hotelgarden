@@ -7,6 +7,7 @@ customElements.define('hg-lunch-edit', class extends LitElement {
   static get properties() {
     return {
       lunches: Object,
+      config: Object,
       doc: String,
     };
   }
@@ -26,7 +27,7 @@ customElements.define('hg-lunch-edit', class extends LitElement {
       <mwc-button raised label="Edytuj"
         @click=${() => this.shadowRoot.getElementById('dialog').dialog.open()}>
       </mwc-button>
-      <mwc-button raised label="Pobierz" @click=${() => downloadLunches(this.lunches)}></mwc-button>
+      <mwc-button raised label="Pobierz" @click=${() => downloadLunches(this.lunches, this.config)}></mwc-button>
       <hg-lunch-edit-dialog id="dialog" .lunches=${this.lunches} .doc=${this.doc}></hg-lunch-edit-dialog>
     `;
   }

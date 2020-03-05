@@ -6,11 +6,11 @@ const secondaryColor = bodyStyles.getPropertyValue('--secondary-color').trim();
 const accentColor = bodyStyles.getPropertyValue('--accent-color').trim();
 const columnGap = 25;
 
-const getHeader = () => ({
+const getHeader = (config) => ({
   text: [
     'Lunch menu 02.03-06.03\n'.toUpperCase(),
     {
-      text: 'od 13:00 do 16:30\n',
+      text: `od ${_.get('beginTime', config)} do ${_.get('endTime', config)}\n`,
       style: 'subheader',
     },
   ],
@@ -29,7 +29,7 @@ const getDayHeader = (day) => ({
     ]
   }
 });
-const getDay = (lunches, day) => [
+const getDay = (lunches, prices, day) => [
   getDayHeader(day),
   _.map((course) => [
     `${{1: 'I', 2: 'II'}[course]} danie:`.toUpperCase(),
@@ -42,26 +42,26 @@ const getDay = (lunches, day) => [
             style: 'smaller',
           }
         ],
-        {text: {1: 6, 2: 14}[course], width: 20, alignment: 'right'}
+        {text: {1: _.get(1, prices), 2: _.get(2, prices)}[course], width: 20, alignment: 'right'}
       ],
     },
     course === 2 ? '' : '\n',
   ], [1, 2]),
   '\n',
 ];
-const getBody = (lunches, img) => [
+const getBody = (lunches, prices, img) => [
   {
     columns:
       _.map.convert({cap: false})((column, index) =>
           [
-            _.map((day) => getDay(lunches, day), column),
-            index === 0 ? ['\n', {image: img, width: 180}] : '',
+            _.map((day) => getDay(lunches, prices, day), column),
+            index === 0 ? [ '\n', {image: img, width: 180}, '\n'] : '',
           ],
         [[1, 2], [3, 4, 5]]),
     columnGap,
   },
 ];
-const getFooter = () => [
+const getFooter = (config) => [
   {
     layout: 'footer',
     table: {
@@ -76,7 +76,7 @@ const getFooter = () => [
           {
             columns: [
               'I + II danie'.toUpperCase() + '\n\nKarnety i abonamenty'.toUpperCase(),
-              {text: '18,90\n\nod 10', width: 40, alignment: 'right'},
+              {text: `${_.get('prices.set', config)}\n\nod 10`, width: 40, alignment: 'right'},
               ['Dostawa'.toUpperCase(), {text: 'na terenie Oleśnicy przy zamówieniach > 25 zł\ninaczej 5 zł', style: 'smaller'}],
               {text: '0', width: 40, alignment: 'right'},
             ],
@@ -89,7 +89,7 @@ const getFooter = () => [
   '\n',
   {
     columns: [
-      'tel. 500 407 722',
+      `tel. ${_.get('phone', config)}`,
       {text: 'FB/restauracjamagnolia', alignment: 'right'},
     ],
   },
@@ -97,7 +97,7 @@ const getFooter = () => [
 
 let pdfmakeLoaded = false;
 let resourcesPromise;
-export default async (lunches) => {
+export default async (lunches, config) => {
   if (!pdfmakeLoaded) {
     pdfmakeLoaded = true;
     resourcesPromise = Promise.all([
@@ -123,8 +123,8 @@ export default async (lunches) => {
       vLineWidth: () => 0,
       paddingLeft: () => 15,
       paddingRight: () => 15,
-      paddingTop: () => 10,
-      paddingBottom: () => 15,
+      paddingTop: () => 0,
+      paddingBottom: () => 0,
     },
     horizontalLine: {
       hLineWidth: (i) => i === 1 ? 1 : 0,
@@ -133,7 +133,7 @@ export default async (lunches) => {
       paddingLeft: () => 0,
       paddingRight: () => 0,
       paddingTop: () => 0,
-      paddingBottom: () => 10,
+      paddingBottom: () => 5,
     },
     footer: {
       hLineColor: () => secondaryColor,
@@ -155,11 +155,11 @@ export default async (lunches) => {
         table: {
           widths: ['*'],
           body: [
-            [[getHeader(), '\n', getBody(lunches, restaurantLogo)]],
+            [[getHeader(config), '\n', getBody(lunches, _.get('prices', config), restaurantLogo)]],
           ]
         }
       },
-      getFooter(),
+      getFooter(config),
     ],
     defaultStyle: {
       font: 'Lato',

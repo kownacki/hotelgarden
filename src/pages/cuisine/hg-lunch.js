@@ -54,6 +54,7 @@ customElements.define('hg-lunch', class extends HgContent {
         ${!this._loggedIn ? '' : html`
           <hg-lunch-edit
             .lunches=${this._lunches} 
+            .config=${_.get('lunches', this.config)}
             .doc=${'lunches/2020-03-02'}
             @lunches-changed=${(event) => this._lunches = event.detail}>
           </hg-lunch-edit>
