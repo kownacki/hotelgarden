@@ -12,6 +12,7 @@ customElements.define('hg-lunch-edit', class extends LitElement {
       lunches: Object,
       lunchesData: Object,
       config: Object,
+      _enableDialog: Boolean,
       _loading: Boolean,
       _error: Boolean,
       _decreasingFont: Number,
@@ -34,14 +35,22 @@ customElements.define('hg-lunch-edit', class extends LitElement {
   render() {
     return html`
       <div>${this.isUpcoming ? 'Nadchodzące' : 'Aktualne'} Menu Lunchowe ${this.lunchesData.dateString}</div>
-      <hg-lunch-edit-dialog 
-        id="dialog"
-        .lunches=${this.lunches}
-        .doc=${`lunches/${this.lunchesData.doc}`}
-        .dateString=${this.lunchesData.dateString}>
-      </hg-lunch-edit-dialog>
-      <mwc-button raised label="Edytuj"
-        @click=${() => this.shadowRoot.getElementById('dialog').dialog.open()}>
+      ${!this._enableDialog ? '' : html`
+        <hg-lunch-edit-dialog
+          id="dialog"
+          .lunches=${this.lunches}
+          .doc=${`lunches/${this.lunchesData.doc}`}
+          .dateString=${this.lunchesData.dateString}>
+        </hg-lunch-edit-dialog>
+      `}
+      <mwc-button label="Edytuj"
+        @click=${async () => {
+          this._enableDialog = false;
+          await sleep();
+          this._enableDialog = true;
+          await sleep();
+          this.shadowRoot.getElementById('dialog').dialog.open()
+        }}>
       </mwc-button>
       <mwc-button raised label="Generuj pdf" .disabled=${this._loading} @click=${async () => {
         this._loading = true;
@@ -49,7 +58,7 @@ customElements.define('hg-lunch-edit', class extends LitElement {
         this._result = '';
         const minWaitingTime = sleep(1000);
         try {
-          await downloadLunches(this.lunches, this.config, this, this.lunchesData.dateStringShort);
+          await downloadLunches(this.lunches, this.config, this, this.lunchesData.dateString);
         } catch(error) {
           await minWaitingTime;
           this._error = true;

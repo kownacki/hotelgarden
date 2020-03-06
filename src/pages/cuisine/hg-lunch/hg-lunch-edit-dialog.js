@@ -1,8 +1,10 @@
 import {LitElement, html, css} from 'lit-element';
+import '@material/mwc-snackbar';
+import {updateData, sleep} from '../../../utils.js';
 import sharedStyles from '../../../styles/shared-styles.js';
-import '@material/mwc-textfield';
-import {updateData, getDayOfWeek} from '../../../utils.js';
+import '../../../elements/hg-action-button.js'
 import '../../../elements/hg-dialog.js';
+import './hg-lunch-edit-dialog-day.js';
 
 customElements.define('hg-lunch-edit-dialog', class extends LitElement {
   static get properties() {
@@ -10,14 +12,30 @@ customElements.define('hg-lunch-edit-dialog', class extends LitElement {
       lunches: Object,
       doc: String,
       dateString: String,
+      _error: String,
       //
       dialog: Element,
     };
   }
   static get styles() {
     return [sharedStyles, css`
-      h2 {
-        margin: 15px 30px 15px 0;
+      :host {
+        position: relative;
+      }
+      hg-dialog {
+        --hg-dialog-width: 800px;
+      }
+      .required-info {
+        font-size: 12px;
+        color: var(--grey-text);
+        margin: 10px 0 20px;
+      }
+      .message {
+        color: var(--error-color);
+        margin-bottom: 20px;
+      }
+      mwc-snackbar {
+        z-index: 104;
       }
     `];
   }
@@ -25,53 +43,70 @@ customElements.define('hg-lunch-edit-dialog', class extends LitElement {
     return html`
       <hg-dialog 
         id="dialog"
-        .noClose=${true}
+        .modal=${true}
         @dialog-changed=${() => this.dialog = this.shadowRoot.getElementById('dialog').dialog}>
         <div slot="header">
           Edytuj lunch ${this.dateString}
-        </div>
+        </div>l
         <div slot="content">
           ${_.map((day) => html`
-            <div class="edit-day">
-              ${getDayOfWeek(day)}
-              ${_.map((course) => html`
-                <div class="edit-course">
-                  ${{1: 'I', 2: 'II'}[course]} danie:
-                  ${_.map((field) => html`
-                    <mwc-textfield
-                      id=${`${day}.${course}.${field}`}
-                      .label=${{name: 'Nazwa', description: 'Podpis'}[field]}
-                      .value=${_.get(`${day}.${course}.${field}`, this.lunches) || ''}>
-                    </mwc-textfield>
-                  `, ['name', 'description'])}
-                  </div>
-              `, [1, 2])}
-            </div>
+            <hg-lunch-edit-dialog-day
+              class="${day === 5 ? '' : 'divider'}"
+              id="${day}"
+              .day=${day}
+              .lunches=${_.get(day, this.lunches)}>
+            </hg-lunch-edit-dialog-day>
           `, [1, 2, 3, 4, 5])}
+          <div class="required-info">* Pole jest wymagane</div>
+          ${!this._error ? '' : html`<div class="message">${this._error}</div>`}
         </div>
-        <div slot="buttons">
-          <mwc-button raised label="Anuluj" 
-            @click=${() => this.shadowRoot.getElementById('dialog').dialog.close()}>
-          </mwc-button>
-          <mwc-button raised label="Zapisz" 
-            @click=${() => {
+        <hg-action-button slot="button"
+          .lowEmphasis=${true}
+          @click=${() => this.shadowRoot.getElementById('dialog').dialog.close()}>
+          Anuluj
+        </hg-action-button>
+        <hg-action-button
+          slot="button"
+          id="save-button"
+          @click=${async () => {
+            try {
+              this.shadowRoot.getElementById('save-button').disabled = true;
               let newLunches = {};
+              let firstUnfilledRequiredInput;
               _.map((day) => {
-                _.map((course) => {
-                  _.map((field) => {
-                    const path = `${day}.${course}.${field}`;
-                    newLunches = _.setWith(Object, path, this.shadowRoot.getElementById(path).value, newLunches);
-                  }, ['name', 'description'])
-                }, [1, 2]);
+                const dayData = this.shadowRoot.getElementById(day).getData();
+                firstUnfilledRequiredInput = firstUnfilledRequiredInput || dayData.firstUnfilledRequiredInput;
+                newLunches = _.setWith(Object, String(day), dayData.values, newLunches);
               }, [1, 2, 3, 4, 5]);
-              updateData(this.doc, null, newLunches);
-              this.lunches = newLunches;
-              this.dispatchEvent(new CustomEvent('lunches-changed', {detail: newLunches, composed: true}));
-              this.shadowRoot.getElementById('dialog').dialog.close();
-            }}>
-          </mwc-button>
-        </div>
+              if (firstUnfilledRequiredInput) {
+                firstUnfilledRequiredInput.focus();
+                firstUnfilledRequiredInput.reportValidity();
+                firstUnfilledRequiredInput.scrollIntoView();
+                this.shadowRoot.getElementById('dialog').scrollable.scrollBy(0, -10);
+              } else {
+                await updateData(this.doc, null, newLunches);
+                this.lunches = newLunches;
+                this.dispatchEvent(new CustomEvent('lunches-changed', {detail: newLunches, composed: true}));
+                this.shadowRoot.getElementById('dialog').dialog.close();
+                this.shadowRoot.getElementById('snackbar-success').open();
+                this._error = null;
+              }
+            }
+            catch (error) {
+              this._error = 'Zapisywanie nie powiodło się.';
+              await sleep(0);
+              this.shadowRoot.getElementById('dialog').scrollable.scrollBy(0, this.shadowRoot.getElementById('dialog').scrollable.scrollHeight);
+              throw error;
+            }
+            finally {
+              console.log('qwe');
+              this.shadowRoot.getElementById('save-button').disabled = false;
+            }
+          }}>
+          Zapisz
+        </hg-action-button>
       </hg-dialog>
+      <mwc-snackbar .leading=${true} id="snackbar-success" labelText="Menu lunchowe ${this.dateString} zostało zapisane."></mwc-snackbar>
     `;
   }
 });

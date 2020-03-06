@@ -30,8 +30,7 @@ customElements.define('hg-lunch', class extends HgContent {
           : moment().isoWeekday() <= 5 ? moment(lastMonday).add(1, 'week') : moment(lastMonday).add(2, 'week');
         return {
           date,
-          dateString: `${date.format('DD.MM.YYYY')} — ${moment(date).add(4, 'day').format('DD.MM.YYYY')}`,
-          dateStringShort: `${date.format('DD.MM')} — ${moment(date).add(4, 'day').format('DD.MM')}`,
+          dateString: `${date.format('DD.MM')} — ${moment(date).add(4, 'day').format('DD.MM')}`,
           doc: date.format('YYYY-MM-DD'),
         };
       }, {current: 'current', upcoming: 'upcoming'});
@@ -64,8 +63,8 @@ customElements.define('hg-lunch', class extends HgContent {
       <hg-intro-article .uid=${'lunch'}></hg-intro-article>
       ${!(this.config && this._lunches) ? '' : html`
         <!--<hg-todays-lunch .lunches=${this._lunches} .prices=${this._prices}></hg-todays-lunch>-->
-        <h2 class="content-heading">Aktualne menu lunchowe ${this._lunchesData.current.dateStringShort}</h2>
-        <hg-lunch-week .lunches=${this._lunches.current} .prices=${this._prices} .today=${3}></hg-lunch-week>
+        <h2 class="content-heading">Aktualne menu lunchowe ${this._lunchesData.current.dateString}</h2>
+        <hg-lunch-week .lunches=${this._lunches.current} .prices=${this._prices} .today=${moment().isoWeekday()}></hg-lunch-week>
         ${!this._loggedIn ? '' : html`
           ${_.map((week) => html`
             <hg-lunch-edit

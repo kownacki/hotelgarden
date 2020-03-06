@@ -22,7 +22,7 @@ customElements.define('hg-action-buttons', class extends LitElement {
   render() {
     return html`
       ${_.map((button) => html`
-        <hg-action-button .url=${button.url} .click=${button.click}>${button.text}</hg-action-button>
+        <hg-action-button .url=${button.url} @click=${button.click || null}>${button.text}</hg-action-button>
       `, this.buttons)}
     `;
   }

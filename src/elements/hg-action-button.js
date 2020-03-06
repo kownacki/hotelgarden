@@ -4,43 +4,73 @@ customElements.define('hg-action-button', class extends LitElement {
   static get properties() {
     return {
       url: String,
-      click: Function,
+      lowEmphasis: {type: Boolean, reflect: true, attribute: 'low-emphasis'},
+      disabled: {type: Boolean, reflect: true},
     };
-  }
-  updated(changedProperties) {
-    if (changedProperties.has('url')) {
-      this.shadowRoot.querySelector('a').href = this.url;
-    }
   }
   static get styles() {
     return css`
       :host {
         display: inline-block;
-        text-decoration: none;
-        color: white;
-        background: var(--accent-color);
         font-size: 16px;
         transition: background 0.2s ease;
-        border: solid 1px rgba(255, 255, 255, 0.25);
+        border: solid 1px transparent;
         --action-button-padding: 10px 20px;
       }
-      a {
+      :host(:not([low-emphasis])) {
+        background: var(--accent-color);
+        border-color: rgba(255, 255, 255, 0.25);
+        color: white;
+      }
+      :host([low-emphasis]) {
+        color: var(--accent-color);
+      }
+      :host([disabled]) {
+        background: var(--divider-color);
+        pointer-events: none;
+        color: white;
+      }
+      :host(:not([disabled]):hover) {
+        background: var(--accent-color-dark);
+        cursor: pointer;
+        /* remember to remove it when disabled */
+      }
+      :host([low-emphasis]:hover) {
+        background: var(--divider-color);
+      }
+      a, button {
         display: block;
         color: inherit;
-        text-decoration: none;
         padding: var(--action-button-padding);
       }
-      :host(:hover) {
-        background: var(--accent-color-dark);
+      a {
+        text-decoration: none;
+      }
+      button {
+        font: inherit;
+        border: none;
+        background: transparent;
+      }
+      button:hover {
         cursor: pointer;
       }
     `;
   }
   render() {
     return html`
-      <a @click=${this.click ? (event) => {event.preventDefault(); return this.click(event)} : null}>
-        <slot></slot>
-      </a>
+      ${this.url
+        ? html`
+          <a href="${this.url}">
+            <slot></slot>
+          </a>
+        `
+        : html`
+          <button>
+            <slot></slot>
+          </button>
+        `
+      }
+      
     `;
   }
 });

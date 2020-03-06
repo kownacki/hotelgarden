@@ -4,10 +4,14 @@ import sharedStyles from "../styles/shared-styles";
 customElements.define('hg-dialog', class extends LitElement {
   static get properties() {
     return {
-      dialog: Element,
       noButtons: Boolean,
+      fixedButtons: {type: Boolean, reflect: true, attribute: 'fixed-buttons'},
       noHeader: Boolean,
       noClose: {type: Boolean, reflect: true, attribute: 'no-close'},
+      modal: Boolean,
+      //
+      dialog: Element,
+      scrollable: Element,
     };
   }
   constructor() {
@@ -15,14 +19,13 @@ customElements.define('hg-dialog', class extends LitElement {
     (async () => {
       await this.updateComplete;
       this.dialog = this.shadowRoot.getElementById('dialog');
+      this.scrollable = this.shadowRoot.getElementById(this.fixedButtons ? 'content' : 'content-and-buttons');
       this.dispatchEvent(new CustomEvent('dialog-changed', {detail: this.dialog}))
     })();
   }
   static get styles() {
     return [sharedStyles, css`
       :host {
-        --hg-dialog-header-height: 64px;
-        --hg-dialog-buttons-height: 52px;
         display: block;
         position: relative;
       }
@@ -42,24 +45,63 @@ customElements.define('hg-dialog', class extends LitElement {
         padding: 15px 24px;
       }
       :host(:not([no-close])) header {
-        padding-right: calc(64px);
+        padding: 15px 64px 15px 24px;
+      }
+      .content-and-buttons {
+        padding: 0;
+        overflow: auto;
+        flex: 1;
       }
       .content {
+        padding: 0 24px;
+      }
+      :host([fixed-buttons]) .content-and-buttons {
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+      :host([fixed-buttons]) .content {
         overflow: auto;
         flex: 1;
       }
       .buttons {
+        padding: 2px 4px 2px 12px;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+      }
+      :host([fixed-buttons]) .buttons {
         border-top: solid 1px var(--divider-color);
-        min-height: calc(var(--hg-dialog-buttons-height) - 16px);
+      }
+      :host(:not([fixed-buttons])) .buttons {
+        padding: 2px 24px 12px 24px;
+      }
+      ::slotted([slot="button"]) {
+        margin: 6px 4px;
       }
       paper-icon-button {
         position: absolute;
         width: 44px;
         height: 44px;
         padding: 8px;
-        top: 10px;
-        right: 10px;
+        top: 8px;
+        right: 8px;
         z-index: 1;
+      }
+      @media all and (max-width: 839px) {
+        paper-dialog {
+          margin: 0;
+          width: 100%;
+          height: 100%;
+        }
+        :host(:not([no-close])) header {
+          padding: 15px 24px 15px 64px;
+        }
+        paper-icon-button {
+          left: 8px;
+          right: auto;
+        }
       }
     `];
   }
@@ -68,6 +110,7 @@ customElements.define('hg-dialog', class extends LitElement {
       <app-location @route-changed=${() => this.shadowRoot.getElementById('dialog').close()}></app-location>
       <paper-dialog
         id="dialog" 
+        .modal=${this.modal}
         @opened-changed=${(event) => {
           this.dispatchEvent(new CustomEvent('hg-dialog-opened-changed', {detail: event.detail.value, composed: true, bubbles: true}));
           document.body.style.overflow = event.target.opened ? 'hidden' : null;
@@ -99,14 +142,16 @@ customElements.define('hg-dialog', class extends LitElement {
             <slot name="header"></slot>
           </header>
         `}
-        <div class="content">
-          <slot name="content"></slot>
-        </div>
-        ${this.noButtons ? '' : html`
-          <div class="buttons">
-            <slot name="buttons"></slot>
+        <div class="content-and-buttons" id="content-and-buttons">
+          <div class="content" id="content">
+            <slot name="content"></slot>
           </div>
-        `}
+          ${this.noButtons ? '' : html`
+            <div class="buttons">
+              <slot name="button"></slot>
+            </div>
+          `}
+        </div>
       </paper-dialog>
     `;
   }

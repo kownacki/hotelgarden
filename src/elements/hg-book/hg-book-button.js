@@ -23,7 +23,7 @@ customElements.define('hg-book-button', class extends LitElement {
   render() {
     return html`
       <hg-action-button 
-        .click=${() => {
+        @click=${() => {
           this.shadowRoot.getElementById('dialog').dialog.open();
         }}>
         Rezerwuj
