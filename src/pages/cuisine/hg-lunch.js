@@ -6,7 +6,6 @@ import HgContent from "../../elements/hg-content";
 import '../../content/hg-article/hg-intro-article.js';
 import '../../content/hg-article.js';
 import '../../content/hg-links.js';
-import './hg-lunch/hg-todays-lunch.js';
 import './hg-lunch/hg-lunch-week.js';
 import './hg-lunch/hg-lunch-edit.js';
 
@@ -62,7 +61,6 @@ customElements.define('hg-lunch', class extends HgContent {
     return html`
       <hg-intro-article .uid=${'lunch'}></hg-intro-article>
       ${!(this.config && this._lunches) ? '' : html`
-        <!--<hg-todays-lunch .lunches=${this._lunches} .prices=${this._prices}></hg-todays-lunch>-->
         <h2 class="content-heading">Aktualne menu lunchowe ${this._lunchesData.current.dateString}</h2>
         <hg-lunch-week .lunches=${this._lunches.current} .prices=${this._prices} .today=${moment().isoWeekday()}></hg-lunch-week>
         ${!this._loggedIn ? '' : html`

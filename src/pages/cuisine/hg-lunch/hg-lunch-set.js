@@ -11,6 +11,9 @@ customElements.define('hg-lunch-set', class extends LitElement {
   }
   static get styles() {
     return [sharedStyles, css`
+      hg-menu-item {
+        padding: 0;
+      }
     `];
   }
   render() {

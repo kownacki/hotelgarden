@@ -24,7 +24,6 @@ customElements.define('hg-lunch-edit', class extends LitElement {
       :host {
         display: block;
         max-width: 1100px;
-        padding: 60px 20px;
         margin: auto;
       }
       .error {

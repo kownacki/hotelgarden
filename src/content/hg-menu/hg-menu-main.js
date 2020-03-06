@@ -99,7 +99,9 @@ customElements.define('hg-menu-main', class extends LitElement {
           .items=${_.get('items', this.category)}
           .path=${staticProp({doc: 'menus/' + this.uid, field: `${this.categoryIndex}.items`})}
           .getItemName=${(item) => `pozycję${item.name ? ` "${item.name}"`: ''}`}
-          .itemTemplate=${(item, index, disableEdit) => html`<hg-menu-item .item=${item} .disableEdit=${disableEdit}></hg-menu-nav-item>`}
+          .itemTemplate=${(item, index, disableEdit) => 
+            html`<hg-menu-item .item=${item} .disableEdit=${disableEdit} .isRestaurantMenu=${true}></hg-menu-nav-item>
+          `}
           @item-added=${() => this.updateCategory()}
           @item-deleted=${() => this.updateCategory()}>
         </hg-list>

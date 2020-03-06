@@ -1,4 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
+import sharedStyles from '../../styles/shared-styles.js';
 import '../../elements/hg-list/hg-list-editable-text.js';
 
 customElements.define('hg-menu-item', class extends LitElement {
@@ -6,13 +7,17 @@ customElements.define('hg-menu-item', class extends LitElement {
     return {
       item: Object,
       disableEdit: Boolean,
+      isRestaurantMenu: {type: Boolean, reflect: true, attribute: 'is-restaurant-menu'},
     };
   }
   static get styles() {
-    return css`
+    return [sharedStyles, css`
       :host {
         display: flex;
-        padding: 15px 50px ;
+        padding: 0 0 30px;
+      }
+      :host([is-restaurant-menu]) {
+        padding: 15px 50px;
       }
       .text  {
         flex-grow: 1;
@@ -22,21 +27,21 @@ customElements.define('hg-menu-item', class extends LitElement {
       }
       .price {
         text-align: right;
-        font-size: 20px;
         min-width: 40px;
         color: var(--primary-color);
       }
-      h3 {
-        font-weight: 400;
-        font-size: 20px;
+      .name {
         margin: 0 0 10px;
       }
-      p {
+      .description {
         font-weight: 300;
         margin: 0 0 10px;
       }
       @media all and (max-width: 959px) {
         :host {
+          padding: 0 0 20px;
+        }
+        :host([is-restaurant-menu]) {
           padding: 10px 20px;
         }
       }
@@ -44,11 +49,16 @@ customElements.define('hg-menu-item', class extends LitElement {
         .right {
           margin-left: 20px;
         }
-        .price, h3 {
+      }
+      @media all and (max-width: 599px) {
+        .name, .price {
           font-size: 18px;
         }
+        .description {
+          font-size: 16px;
+        }
       }
-    `;
+    `];
   }
   render(){
     return html`
@@ -59,7 +69,7 @@ customElements.define('hg-menu-item', class extends LitElement {
           .disabled=${this.disableEdit && !_.get('showControls', this.shadowRoot.getElementById('name'))}
           .item=${this.item} 
           .field=${'name'}>
-          <h3></h3>
+          <div class="name"></div>
         </hg-list-editable-text>
         <hg-list-editable-text
           float
@@ -67,7 +77,7 @@ customElements.define('hg-menu-item', class extends LitElement {
           .disabled=${this.disableEdit && !_.get('showControls', this.shadowRoot.getElementById('description'))}
           .item=${this.item} 
           .field=${'description'}>
-          <p class="smaller-text"></p>
+          <div class="description smaller-text"></div>
         </hg-list-editable-text>
       </div>
       <div class="right">
