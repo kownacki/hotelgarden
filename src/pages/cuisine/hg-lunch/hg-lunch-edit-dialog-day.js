@@ -43,7 +43,7 @@ customElements.define('hg-lunch-edit-dialog-day', class extends LitElement {
     }
   }
   getData() {
-    let values = {disabled: this._disabled};
+    let values = {disabled: Boolean(this._disabled)};
     let firstUnfilledRequiredInput;
     _.map((course) => {
       _.map((field) => {

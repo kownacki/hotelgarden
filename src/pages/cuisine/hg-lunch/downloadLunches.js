@@ -29,16 +29,16 @@ const getDayHeader = (day) => ({
     ]
   }
 });
-const getDay = (lunches, prices, day) => [
+const getDay = (lunch, prices, day) => [
   getDayHeader(day),
-  _.map((course) => [
+  _.get('disabled', lunch) ? 'W ten dzień wyjątkowo nie serwujemy lunchu\n' : _.map((course) => [
     _.toUpper(`${{1: 'I', 2: 'II'}[course]} danie:`),
     {
       columns: [
         [
-          _.toUpper(_.get(`${day}.${course}.name`, lunches)),
+          _.toUpper(_.get(`${course}.name`, lunch)),
           {
-            text: _.get(`${day}.${course}.description`, lunches),
+            text: _.get(`${course}.description`, lunch),
             style: 'smaller',
           }
         ],
@@ -54,7 +54,7 @@ const getBody = (lunches, prices, img, columnGap) => [
     columns:
       _.map.convert({cap: false})((column, index) =>
           [
-            _.map((day) => getDay(lunches, prices, day), column),
+            _.map((day) => getDay(_.get(day, lunches), prices, day), column),
             index === 0 ? [ '\n', {image: img, width: 180}, '\n'] : '',
           ],
         [[1, 2], [3, 4, 5]]),
