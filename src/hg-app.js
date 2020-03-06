@@ -19,6 +19,8 @@ window.auth = firebase.auth();
 window.db = firebase.firestore();
 window.storage = firebase.storage();
 
+auth.onAuthStateChanged((user) => {window.loggedIn = Boolean(user) ; hideOrShowWidget()});
+
 import {LitElement, html, css} from 'lit-element';
 import {pathToUid} from './utils.js';
 import './hg-iconset.js';
