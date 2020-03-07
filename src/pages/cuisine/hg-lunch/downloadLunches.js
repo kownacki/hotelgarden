@@ -216,13 +216,12 @@ export default async (lunches, config, that, dateString) => {
     && (that._decreasingFont = decrementFontSize)
     );
 
-  const finalPdf = await generate(lunches, config, dateString, decrementFontSize);
-  that._result = [];
-  if (decrementFontSize) {
-    that._result.push(html`Dostosowano wielkość czcionki. Zmniejszono o ${Math.round(decrementFontSize * 100)}%<br>`);
-  }
-  if (pageCount > 1) {
-    that._result.push(html`Nie udało się zmieścić zawartości na jednej stronie. Wielkość czcionki osiągnęła minimum<br>`);
-  }
-  return new Promise((resolve) => finalPdf.download(`Menu Lunchowe ${dateString.replace(/\./g, '-')}`, resolve));
+  const fileName = `Menu Lunchowe ${dateString.replace(/\./g, '-')}`;
+  // cannot download twice from the same generation due to bug: images warping on the second download
+  const generateAndDownload = async (cb) => (await generate(lunches, config, dateString, decrementFontSize)).download(fileName, cb);
+  return new Promise((resolve) => generateAndDownload(() => resolve({
+    decrementFontSize,
+    pageCount,
+    downloadAgain: generateAndDownload,
+  })));
 };

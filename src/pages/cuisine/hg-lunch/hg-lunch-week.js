@@ -15,10 +15,15 @@ customElements.define('hg-lunch-week', class extends LitElement {
   static get styles() {
     return [sharedStyles, css`
       :host {
-        display: flex;
-        flex-wrap: wrap;
         max-width: 1200px;
         margin: auto;
+        display: block;
+        margin-bottom: 60px;
+      }
+      .items {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
       }
       .item {
         width: 50%;
@@ -27,6 +32,10 @@ customElements.define('hg-lunch-week', class extends LitElement {
       }
       h3 {
         text-align: center;
+      }
+      .today-or-tomorrow {
+        font-weight: 400;
+        color: var(--secondary-color);
       }
       .item-content {
         padding: 20px 0;
@@ -40,7 +49,7 @@ customElements.define('hg-lunch-week', class extends LitElement {
         }
       }
       @media all and (max-width: 719px) {
-        :host {
+        .items {
           display: block;
         }
         .item {
@@ -62,19 +71,28 @@ customElements.define('hg-lunch-week', class extends LitElement {
   }
   render() {
     return html`
-      ${_.map((day) => html`
-        <div class="item">
-          <h3>${{[this.today]: 'Dzisiaj ', [this.today + 1]: 'Jutro '}[day] || _.capitalize(getDayOfWeek(day))}</h3>
-          <div class="item-content">
-            ${_.get(`${day}.disabled`, this.lunches)
-              ? html`<div class="no-lunch">W ten dzień wyjątkowo nie serwujemy lunchu</div>`
-              : html`
-                <hg-lunch-item .lunch=${_.get(day, this.lunches)} .prices=${this.prices}></hg-lunch-item>  
-                <hg-lunch-set .price=${_.get('set', this.prices)}></hg-lunch-set>
-              `}
+      ${_.isEmpty(this.lunches)
+        ? html`<div class="bigger-text no-lunch">Menu lunchowe pojawi się w tym miejscu w poniedziałek.</div>`
+        : html`
+          <div class="items">
+            ${_.map((day) => html`
+              <div class="item">
+                <h3>
+                  <span class="today-or-tomorrow">${{[this.today]: 'Dzisiaj ', [(this.today % 7) + 1]: 'Jutro'}[day]}</span>
+                  ${_.capitalize(getDayOfWeek(day))}
+                </h3>
+                <div class="item-content">
+                  ${_.get(`${day}.disabled`, this.lunches)
+                    ? html`<div class="no-lunch">W ten dzień wyjątkowo nie serwujemy lunchu</div>`
+                    : html`
+                      <hg-lunch-item .lunch=${_.get(day, this.lunches)} .prices=${this.prices}></hg-lunch-item>  
+                      <hg-lunch-set .price=${_.get('set', this.prices)}></hg-lunch-set>
+                    `}
+                </div>
+              </div>
+            `, _.range(this.today <= 5 ? this.today : 1, 6))}
           </div>
-        </div>
-      `, _.range(this.today <= 5 ? this.today : 1, 6))}
+      `}
     `;
   }
 });

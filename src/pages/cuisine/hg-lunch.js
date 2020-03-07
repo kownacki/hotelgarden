@@ -5,6 +5,7 @@ import sharedStyles from "../../styles/shared-styles";
 import HgContent from "../../elements/hg-content";
 import '../../content/hg-article/hg-intro-article.js';
 import '../../content/hg-article.js';
+import '../../content/hg-content-slider.js';
 import '../../content/hg-links.js';
 import './hg-lunch/hg-lunch-week.js';
 import './hg-lunch/hg-lunch-edit.js';
@@ -30,12 +31,12 @@ customElements.define('hg-lunch', class extends HgContent {
         return {
           date,
           dateString: `${date.format('DD.MM')} — ${moment(date).add(4, 'day').format('DD.MM')}`,
-          doc: date.format('YYYY-MM-DD'),
+          doc: `lunches/${date.format('YYYY-MM-DD')}`,
         };
       }, {current: 'current', upcoming: 'upcoming'});
       this._lunches = {
-        current: await getData(`lunches/${this._lunchesData.current.doc}`) || {},
-        upcoming: await getData(`lunches/${this._lunchesData.upcoming.doc}`) || {},
+        current: await getData(this._lunchesData.current.doc) || {},
+        upcoming: await getData(this._lunchesData.upcoming.doc) || {},
       };
     })();
     this._unsubscribeLoggedInListener = auth.onAuthStateChanged((user) => this._loggedIn = Boolean(user));
@@ -55,6 +56,50 @@ customElements.define('hg-lunch', class extends HgContent {
       h2 {
         margin: 60px 0 30px;
       }
+      hg-lunch-week {
+        margin-bottom: 80px;
+      }
+      .edit-wrapper {
+        max-width: 1000px;
+        margin: 80px auto;
+        padding: 0 20px;
+      }
+      .edit {
+        border: solid 1px var(--divider-color);
+        display: flex;
+        justify-content: center;
+        padding: 30px;
+        background: rgba(var(--placeholder-color-rgb), 0.03);
+      }
+      .generate {
+        max-width: 700px;
+        margin: 80px auto;
+        padding: 0 20px;
+        text-align: center;
+      }
+      hg-lunch-edit {
+        padding: 40px 20px;
+        width: calc(50% - 80px);
+      }
+      @media all and (max-width: 839px) {
+        .edit {
+          padding: 30px 0;
+        }
+      }
+      @media all and (max-width: 719px) {
+        .edit {
+          display: block;
+        }
+        hg-lunch-edit {
+          width: auto;
+          margin: auto;
+        }
+      }
+      @media all and (max-width: 479px) {
+        .edit-wrapper {
+          padding: 0;
+        }
+      }
     `];
   }
   render() {
@@ -64,17 +109,22 @@ customElements.define('hg-lunch', class extends HgContent {
         <h2 class="content-heading">Aktualne menu lunchowe ${this._lunchesData.current.dateString}</h2>
         <hg-lunch-week .lunches=${this._lunches.current} .prices=${this._prices} .today=${moment().isoWeekday()}></hg-lunch-week>
         ${!this._loggedIn ? '' : html`
-          ${_.map((week) => html`
-            <hg-lunch-edit
-              .isUpcoming=${week === 'upcoming'}
-              .lunches=${this._lunches[week]} 
-              .lunchesData=${this._lunchesData[week]} 
-              .config=${_.get('lunches', this.config)}
-              @lunches-changed=${(event) => this._lunches = _.set(week, event.detail, this._lunches)}>
-            </hg-lunch-edit>
-          `, ['current', 'upcoming'])}
+          <div class="edit-wrapper">
+            <div class="edit">
+              ${_.map((week) => html`
+                <hg-lunch-edit
+                  .isUpcoming=${week === 'upcoming'}
+                  .lunches=${this._lunches[week]} 
+                  .lunchesData=${this._lunchesData[week]} 
+                  .config=${_.get('lunches', this.config)}
+                  @lunches-changed=${(event) => this._lunches = _.set(week, event.detail, this._lunches)}>
+                </hg-lunch-edit>
+              `, ['current', 'upcoming'])}
+            </div>
+          </div>
         `} 
       `}
+      <hg-content-slider .uid=${'lunch'}></hg-content-slider>
       <hg-links .path=${'/lunch'} .superpath=${'/kuchnia'}></hg-links>
     `;
   }

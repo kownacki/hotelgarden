@@ -1,9 +1,10 @@
 import {LitElement, html, css} from 'lit-element';
-import moment from "moment";
-import {sleep} from '../../../utils.js';
-import downloadLunches from './downloadLunches.js';
+import {updateData, sleep} from '../../../utils.js';
 import sharedStyles from '../../../styles/shared-styles.js';
+import '../../../elements/hg-action-button.js'
+import '../../../edit/hg-delete-item.js';
 import './hg-lunch-edit-dialog.js';
+import './hg-lunch-generate.js';
 
 customElements.define('hg-lunch-edit', class extends LitElement {
   static get properties() {
@@ -13,65 +14,90 @@ customElements.define('hg-lunch-edit', class extends LitElement {
       lunchesData: Object,
       config: Object,
       _enableDialog: Boolean,
-      _loading: Boolean,
-      _error: Boolean,
-      _decreasingFont: Number,
-      _result: String,
     };
   }
   static get styles() {
     return [sharedStyles, css`
       :host {
         display: block;
-        max-width: 1100px;
-        margin: auto;
       }
-      .error {
+      .top {
+        text-align: center;
+      }
+      .status {
+        margin-bottom: 20px;
+      }
+      .not-prepared {
         color: var(--error-color);
+      }
+      .prepared {
+        color: var(--correct-color);
+      }
+      hg-delete-item {
+        position: relative;
+        top: -2px;
+        margin-left: 5px;
+      }
+      .date {
+        font-size: 30px;
+        font-weight: 300;
+        margin: 10px 0;
+      }
+      .buttons {
+        text-align: center;
+      }
+      hg-action-button, hg-lunch-generate {
+        margin: 4px;
+        text-align: center;
       }
     `];
   }
   render() {
     return html`
-      <div>${this.isUpcoming ? 'Nadchodzące' : 'Aktualne'} Menu Lunchowe ${this.lunchesData.dateString}</div>
+      <div class="top">
+        <div class="bigger-text">${this.isUpcoming ? 'Kolejne' : 'Aktualne'} Menu Lunchowe</div>
+        <div class="date">${this.lunchesData.dateString}</div>
+        <div class="status bigger-text">
+          ${_.isEmpty(this.lunches)
+            ? html`<span class="not-prepared">Nieprzygotowane</span>`
+            : html`
+              <span class="prepared">Przygotowane</span>
+              <hg-delete-item
+                .name=${`Menu Lunchowe ${this.lunchesData.dateString}`}
+                @request-delete=${(event) => {
+                  event.stopPropagation();
+                  updateData(this.lunchesData.doc, null, {});
+                  this.dispatchEvent(new CustomEvent('lunches-changed', {detail: {}}));
+                }}>
+              </hg-delete-item>
+            `}
+        </div>
+      </div>
       ${!this._enableDialog ? '' : html`
         <hg-lunch-edit-dialog
           id="dialog"
           .lunches=${this.lunches}
-          .doc=${`lunches/${this.lunchesData.doc}`}
+          .doc=${this.lunchesData.doc}
           .dateString=${this.lunchesData.dateString}>
         </hg-lunch-edit-dialog>
       `}
-      <mwc-button label="Edytuj"
-        @click=${async () => {
-          this._enableDialog = false;
-          await sleep();
-          this._enableDialog = true;
-          await sleep();
-          this.shadowRoot.getElementById('dialog').dialog.open()
-        }}>
-      </mwc-button>
-      <mwc-button raised label="Generuj pdf" .disabled=${this._loading} @click=${async () => {
-        this._loading = true;
-        this._error = false;
-        this._result = '';
-        const minWaitingTime = sleep(1000);
-        try {
-          await downloadLunches(this.lunches, this.config, this, this.lunchesData.dateString);
-        } catch(error) {
-          await minWaitingTime;
-          this._error = true;
-          throw error;
-        } finally {
-          await minWaitingTime;
-          this._loading = false;
-          this._decreasingFont = null;
-        }
-      }}></mwc-button>
-      ${!this._loading ? '' : 'Generuję... '}
-      ${!this._decreasingFont ? '' : `Zmniejszanie czcionki o ${Math.round(this._decreasingFont * 100)}%...`}
-      <div class="result">${!this._result ? '' : this._result}</div>
-      <div class="error">${this._error ? 'Generowanie pliku nie powiodło się.' : ''}</div>
+      <div class="buttons">
+        <hg-action-button
+          @click=${async () => {
+            this._enableDialog = false;
+            await sleep();
+            this._enableDialog = true;
+            await sleep();
+            this.shadowRoot.getElementById('dialog').dialog.open()
+          }}>
+          Edytuj
+        </hg-action-button>
+        <hg-lunch-generate 
+          .lunches=${this.lunches}
+          .dateString=${this.lunchesData.dateString}
+          .config=${this.config}>
+        </hg-lunch-generate>
+      </div>
     `;
   }
 });
