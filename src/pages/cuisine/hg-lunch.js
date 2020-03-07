@@ -109,8 +109,8 @@ customElements.define('hg-lunch', class extends HgContent {
   render() {
     return html`
       <hg-intro-article .uid=${'lunch'}></hg-intro-article>
+      <h2 class="content-heading" id="aktualny-lunch">Aktualne menu lunchowe ${this._lunchesData.current.dateString}</h2>
       ${!(this.config && this._lunches) ? '' : html`
-        <h2 class="content-heading">Aktualne menu lunchowe ${this._lunchesData.current.dateString}</h2>
         <hg-lunch-week .lunches=${this._lunches.current} .prices=${this._prices} .today=${moment().isoWeekday()}></hg-lunch-week>
         ${this._loggedIn
           ? html`

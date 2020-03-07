@@ -231,7 +231,7 @@ export const links = [
   }, {
     name: 'Kuchnia',
     path: '/kuchnia',
-    sublinks: ['cuisine', 'restaurant', 'grill-garden'],
+    sublinks: ['cuisine', 'lunch', 'restaurant', 'grill-garden'],
   }, {
     name: 'Uroczystości',
     path: '/wesela',
