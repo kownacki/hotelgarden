@@ -9,6 +9,7 @@ import '../../content/hg-content-slider.js';
 import '../../content/hg-links.js';
 import './hg-lunch/hg-lunch-week.js';
 import './hg-lunch/hg-lunch-edit.js';
+import './hg-lunch/hg-lunch-generate.js';
 
 customElements.define('hg-lunch', class extends HgContent {
   static get properties() {
@@ -59,6 +60,9 @@ customElements.define('hg-lunch', class extends HgContent {
       hg-lunch-week {
         margin-bottom: 80px;
       }
+      .generate {
+        text-align: center;
+      }
       .edit-wrapper {
         max-width: 1000px;
         margin: 80px auto;
@@ -108,21 +112,34 @@ customElements.define('hg-lunch', class extends HgContent {
       ${!(this.config && this._lunches) ? '' : html`
         <h2 class="content-heading">Aktualne menu lunchowe ${this._lunchesData.current.dateString}</h2>
         <hg-lunch-week .lunches=${this._lunches.current} .prices=${this._prices} .today=${moment().isoWeekday()}></hg-lunch-week>
-        ${!this._loggedIn ? '' : html`
-          <div class="edit-wrapper">
-            <div class="edit">
-              ${_.map((week) => html`
-                <hg-lunch-edit
-                  .isUpcoming=${week === 'upcoming'}
-                  .lunches=${this._lunches[week]} 
-                  .lunchesData=${this._lunchesData[week]} 
-                  .config=${_.get('lunches', this.config)}
-                  @lunches-changed=${(event) => this._lunches = _.set(week, event.detail, this._lunches)}>
-                </hg-lunch-edit>
-              `, ['current', 'upcoming'])}
+        ${this._loggedIn
+          ? html`
+            <div class="edit-wrapper">
+              <div class="edit">
+                ${_.map((week) => html`
+                  <hg-lunch-edit
+                    .isUpcoming=${week === 'upcoming'}
+                    .lunches=${this._lunches[week]} 
+                    .lunchesData=${this._lunchesData[week]} 
+                    .config=${_.get('lunches', this.config)}
+                    @lunches-changed=${(event) => this._lunches = _.set(week, event.detail, this._lunches)}>
+                  </hg-lunch-edit>
+                `, ['current', 'upcoming'])}
+              </div>
             </div>
-          </div>
-        `} 
+          `
+          : !_.isEmpty(this._lunches.current) 
+            ? html`
+              <div class="generate">
+                <hg-lunch-generate
+                  .lunches=${this._lunches.current}
+                  .dateString=${this._lunchesData.current.dateString}
+                  .config=${_.get('lunches', this.config)}>
+                </hg-lunch-generate>
+              </div>
+            `
+            : ''
+        }
       `}
       <hg-content-slider .uid=${'lunch'}></hg-content-slider>
       <hg-links .path=${'/lunch'} .superpath=${'/kuchnia'}></hg-links>

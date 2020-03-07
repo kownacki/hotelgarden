@@ -42,6 +42,7 @@ customElements.define('hg-lunch-week', class extends LitElement {
       }
       .no-lunch {
         text-align: center;
+        padding: 0 20px;
       }
       @media all and (max-width: 1023px) {
         .item {
