@@ -56,7 +56,7 @@ customElements.define('hg-lunch-generate', class extends LitElement {
       }}>Generuj PDF</hg-action-button>
 
       <div class="result">
-        ${!this._loading ? '' : html`<div>Generuję...</div>`}
+        ${!this._loading ? '' : html`<div>Generuję. To może zająć kilka sekund...</div>`}
         ${!this._decreasingFont ? '' : html`<div>Zmniejszanie czcionki o ${Math.round(this._decreasingFont * 100)}%...</div>`}
         ${!this._result ? '' : html`<div>
           Generowanie PDF ukończone.
