@@ -141,7 +141,7 @@ customElements.define('hg-lunch', class extends HgContent {
             : ''
         }
       `}
-      <hg-content-slider .uid=${'lunch'}></hg-content-slider>
+      <hg-content-slider id="zdjecia" .uid=${'lunch'}></hg-content-slider>
       <hg-links .path=${'/lunch'} .superpath=${'/kuchnia'}></hg-links>
     `;
   }
