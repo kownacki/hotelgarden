@@ -1,5 +1,4 @@
 import {LitElement, html, css} from 'lit-element';
-import moment from 'moment';
 import {hyphenate, updateData} from '../../../utils.js';
 
 customElements.define('hg-events-add', class extends LitElement {

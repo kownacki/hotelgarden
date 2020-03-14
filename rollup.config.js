@@ -2,14 +2,13 @@ import copy from 'rollup-plugin-copy';
 import del from 'rollup-plugin-delete';
 import resolve from 'rollup-plugin-node-resolve';
 import {terser} from 'rollup-plugin-terser';
-import commonjs from 'rollup-plugin-commonjs';
 import minifyHTML from 'rollup-plugin-minify-html-literals';
 
 export default [{
   input: 'src/hg-app.js',
   output: {
     file: 'dist/src/hg-app.js',
-    format: 'iife',
+    format: 'module',
   },
   plugins: [
     del({targets: 'dist'}),
@@ -25,7 +24,6 @@ export default [{
       ],
     }),
     resolve(),
-    commonjs(), // For moment.js, which is not 100% es6 modules :(
     minifyHTML(),
     terser(),
   ],
@@ -33,11 +31,10 @@ export default [{
   input: 'src/styles/shared-styles.js',
   output: {
     file: 'dist/src/styles/shared-styles.js',
-    format: 'esm',
+    format: 'module',
   },
   plugins: [
     resolve(),
-    commonjs(), // For moment.js, which is not 100% es6 modules :(
     minifyHTML(),
     terser(),
   ],
@@ -45,11 +42,10 @@ export default [{
   input: 'src/styles/ck-content.js',
   output: {
     file: 'dist/src/styles/ck-content.js',
-    format: 'esm',
+    format: 'module',
   },
   plugins: [
     resolve(),
-    commonjs(), // For moment.js, which is not 100% es6 modules :(
     minifyHTML(),
     terser(),
   ],

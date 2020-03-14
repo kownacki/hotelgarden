@@ -1,5 +1,4 @@
 import {LitElement, html, css} from 'lit-element';
-import moment from 'moment';
 import {links, staticProp} from '../utils.js';
 import './hg-drawer/hg-drawer-item.js';
 

@@ -1,4 +1,3 @@
-import moment from "moment";
 import diacritics from '../resources/scripts/diacritics.js';
 
 export const headerHeight = 59;

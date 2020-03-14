@@ -1,5 +1,4 @@
 import {LitElement, html, css} from 'lit-element';
-import moment from 'moment';
 
 customElements.define('hg-event-edit-date', class extends LitElement {
   static get properties() {

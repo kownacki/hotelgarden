@@ -1,5 +1,4 @@
 import {LitElement, html, css} from 'lit-element';
-import moment from 'moment';
 import {getData} from "../../utils";
 import sharedStyles from "../../styles/shared-styles";
 import HgContent from "../../elements/hg-content";

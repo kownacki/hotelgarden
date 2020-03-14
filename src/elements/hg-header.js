@@ -1,5 +1,4 @@
 import {LitElement, html, css} from 'lit-element';
-import moment from 'moment';
 import {pathToUid, links} from '../utils.js';
 import './hg-header/hg-header-subnav.js';
 import './hg-header/hg-header-logo.js';
