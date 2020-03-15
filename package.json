@@ -10,6 +10,7 @@
   "private": true,
   "devDependencies": {
     "es-dev-server": "^1.19.0",
+    "firebase": "^7.11.0",
     "firebase-tools": "^7.12.1",
     "rollup": "^1.26.0",
     "rollup-plugin-copy": "^3.1.0",
@@ -41,7 +42,6 @@
     "@polymer/paper-spinner": "^3.0.2",
     "@polymer/paper-styles": "^3.0.1",
     "@polymer/paper-toggle-button": "^3.0.1",
-    "firebase": "^7.2.2",
     "lit-element": "^2.2.1",
     "lit-html": "^1.1.2",
     "pdfmake": "git+https://github.com/kownacki2/pdfmake.git#hotelgarden"

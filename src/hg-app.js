@@ -1,20 +1,3 @@
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import 'firebase/firestore';
-import 'firebase/storage';
-
-firebase.initializeApp({
-  apiKey: "AIzaSyDvamIugzBC3k3WA52KpHeINrfDHfkvnSs",
-  authDomain: "pl-hotelgarden.firebaseapp.com",
-  databaseURL: "https://pl-hotelgarden.firebaseio.com",
-  projectId: "pl-hotelgarden",
-  storageBucket: "pl-hotelgarden.appspot.com",
-  messagingSenderId: "439170507609",
-  appId: "1:439170507609:web:d50495f3bf9c9613702248",
-  measurementId: "G-T7DQCNYLP2"
-});
-
-window.firebase = firebase;
 window.auth = firebase.auth();
 window.db = firebase.firestore();
 window.storage = firebase.storage();
