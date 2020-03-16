@@ -133,7 +133,12 @@ export const ROOM_ID = {
   villaRoom: 55463,
 };
 
-export const openProfitroom = (location, roomId, adults = 2) => {
+let profitroomLoaded = false;
+export const openProfitroom = async (location, roomId, adults = 2) => {
+  if (!profitroomLoaded) {
+    profitroomLoaded = true;
+    await loadScript('https://open.upperbooking.com/js/Booking.js?locale=pl');
+  }
   window.Booking.OpenSite(location, {RoomID: roomId, adults, checkin: moment().format('YYYY-MM-DD'), checkout: moment().add(1, 'day').format('YYYY-MM-DD')});
 };
 
