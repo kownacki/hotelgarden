@@ -1,10 +1,10 @@
 import {LitElement, html, css} from 'lit-element';
 import sharedStyles from '../../styles/shared-styles.js';
 import '../../content/hg-article/hg-intro-article.js';
+import '../../elements/hg-action-button.js';
 import './hg-events/hg-events-add.js';
 import './hg-events/hg-events-list.js';
 
-// favicon rozciągnięta??
 // todo add scrolling to dialogs
 
 customElements.define('hg-events', class extends LitElement {
@@ -35,10 +35,8 @@ customElements.define('hg-events', class extends LitElement {
       h2 {
         margin: 40px 0;
       }
-      mwc-button {
-        display: block;
-        --mdc-theme-primary: var(--primary-color);
-        margin: 40px 0;
+      hg-action-button {
+        margin: 20px 0 10px;
       }
     `];
   }
@@ -48,12 +46,10 @@ customElements.define('hg-events', class extends LitElement {
       ${!this._loggedIn ? '' : html`<hg-events-add></hg-events-add>`}
       <h2>Nadchodzące wydarzenia</h2>
       <hg-events-list></hg-events-list>
-      <mwc-button id="button" raised label="Pokaż minione wydarzenia"
-        @click=${() => {
-          this.shadowRoot.getElementById('past').hidden = false;
-          this.shadowRoot.getElementById('button').hidden = true;
-        }}>
-      </mwc-button>
+      <hg-action-button id="button" @click=${() => {
+        this.shadowRoot.getElementById('past').hidden = false;
+        this.shadowRoot.getElementById('button').hidden = true;
+      }}>Pokaż minione wydarzenia</hg-action-button>
       <div id="past" hidden>
         <h2>Minione wydarzenia</h2>
         <hg-events-list .past=${true}></hg-events-list>

@@ -35,10 +35,6 @@ customElements.define('hg-menu', class extends LitElement {
         display: flex;
         justify-content: center;
       }
-      mwc-button {
-        --mdc-theme-primary: red;
-        --mdc-theme-on-primary: yellow;
-      }
       hg-menu-main {
         flex-grow: 1;
         max-width: 700px;
