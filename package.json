@@ -23,7 +23,7 @@
     "rollup-plugin-terser": "^5.1.2"
   },
   "dependencies": {
-    "@ckeditor/ckeditor5-build-inline": "git+https://github.com/kownacki2/ckeditor5-build-inline.git#stable",
+    "@ckeditor/ckeditor5-build-inline": "git+https://github.com/kownacki/ckeditor5-build-inline.git#stable",
     "@material/mwc-button": "^0.10.0",
     "@material/mwc-formfield": "^0.13.0",
     "@material/mwc-snackbar": "^0.13.0",
@@ -47,6 +47,6 @@
     "@polymer/paper-toggle-button": "^3.0.1",
     "lit-element": "^2.2.1",
     "lit-html": "^1.1.2",
-    "pdfmake": "git+https://github.com/kownacki2/pdfmake.git#hotelgarden"
+    "pdfmake": "git+https://github.com/kownacki/pdfmake.git#hotelgarden"
   }
 }
