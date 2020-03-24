@@ -3,6 +3,7 @@ import {staticProp} from '../../utils.js';
 import HgContent from "../../elements/hg-content";
 import '../../content/hg-article/hg-intro-article.js'
 import '../../content/hg-content-icons.js';
+import '../../content/hg-menu.js'
 import '../../content/hg-article.js'
 import '../../content/hg-mosaic.js'
 import '../../content/hg-content-slider.js';
@@ -16,6 +17,8 @@ customElements.define('hg-grill-garden', class extends HgContent {
     return html`
       <hg-intro-article .uid=${'grill-garden'}></hg-intro-article>
       <hg-content-icons .uid=${'grill-garden'}></hg-content-icons>
+      <h2 class="content-heading">Menu</h2>
+      <hg-menu .uid=${'grill-garden'}></hg-menu> 
       <hg-article .rich=${true} .uid=${'grill-garden-extra1'}></hg-article>
       <hg-mosaic .uid=${'grill-garden'}></hg-mosaic>
       <hg-content-slider .uid=${'grill-garden'}></hg-content-slider>
