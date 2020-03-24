@@ -29,6 +29,7 @@ export default class HgList extends LitElement {
       editing: Boolean,
       // private
       _list: Array,
+      _listNotEmpty: {type: Boolean, reflect: true, attribute: 'list-not-empty'},
       _processing: Boolean,
       _loggedIn: Boolean,
     };
@@ -61,6 +62,7 @@ export default class HgList extends LitElement {
         _.keys,
         ...(this.transform ? [this.transform(this.items)] : [])
       ])(this.items);
+      this._listNotEmpty = !_.isEmpty(this._list);
       this.dispatchEvent(new CustomEvent('list-changed', {detail: this._list}));
     }
   }
@@ -109,6 +111,9 @@ export default class HgList extends LitElement {
         width: calc(100% / var(--columns));
       }
       hg-list-add {
+        display: flex;
+      }
+      :host([list-not-empty]) hg-list-add {
         display: none;
       }
       :host(:hover) hg-list-add {
@@ -119,7 +124,7 @@ export default class HgList extends LitElement {
   render() {
     return html`
       ${(this.addAtStart ? _.reverse : _.identity)([
-        _.isEmpty(this._list) && this.emptyTemplate ? this.emptyTemplate : '',
+        !this._listNotEmpty && this.emptyTemplate ? this.emptyTemplate : '',
         repeat(this._list || [], this.array ? (key) => _.get(`${key}.uid`, this.items) : _.identity, (key, listIndex) =>
           !_.get(key, this.items) ?  '' : html`<hg-list-item
             style="${this.calculateItemTop ? `top: ${this.calculateItemTop(listIndex + ((this._loggedIn && !this.noAdd) ? 1 : 0)) * 100}%` : ''}"
