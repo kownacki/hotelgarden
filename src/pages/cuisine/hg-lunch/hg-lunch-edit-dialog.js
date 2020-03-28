@@ -12,6 +12,7 @@ customElements.define('hg-lunch-edit-dialog', class extends LitElement {
       lunches: Object,
       doc: String,
       dateString: String,
+      weekLength: Number,
       _error: String,
       //
       dialog: Element,
@@ -51,12 +52,12 @@ customElements.define('hg-lunch-edit-dialog', class extends LitElement {
         <div slot="content">
           ${_.map((day) => html`
             <hg-lunch-edit-dialog-day
-              class="${day === 5 ? '' : 'divider'}"
+              class="${day === this.weekLength ? '' : 'divider'}"
               id="${day}"
               .day=${day}
               .lunches=${_.get(day, this.lunches)}>
             </hg-lunch-edit-dialog-day>
-          `, [1, 2, 3, 4, 5])}
+          `, _.range(1, this.weekLength+1))}
           <div class="required-info">* Pole jest wymagane</div>
           ${!this._error ? '' : html`<div class="message">${this._error}</div>`}
         </div>
@@ -77,7 +78,7 @@ customElements.define('hg-lunch-edit-dialog', class extends LitElement {
                 const dayData = this.shadowRoot.getElementById(day).getData();
                 firstUnfilledRequiredInput = firstUnfilledRequiredInput || dayData.firstUnfilledRequiredInput;
                 newLunches = _.setWith(Object, String(day), dayData.values, newLunches);
-              }, [1, 2, 3, 4, 5]);
+              }, _.range(1, this.weekLength+1));
               if (firstUnfilledRequiredInput) {
                 firstUnfilledRequiredInput.focus();
                 firstUnfilledRequiredInput.reportValidity();
@@ -99,7 +100,6 @@ customElements.define('hg-lunch-edit-dialog', class extends LitElement {
               throw error;
             }
             finally {
-              console.log('qwe');
               this.shadowRoot.getElementById('save-button').disabled = false;
             }
           }}>

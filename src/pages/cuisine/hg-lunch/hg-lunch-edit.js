@@ -13,6 +13,7 @@ customElements.define('hg-lunch-edit', class extends LitElement {
       lunches: Object,
       lunchesData: Object,
       config: Object,
+      weekLength: Number,
       _enableDialog: Boolean,
     };
   }
@@ -78,7 +79,8 @@ customElements.define('hg-lunch-edit', class extends LitElement {
           id="dialog"
           .lunches=${this.lunches}
           .doc=${this.lunchesData.doc}
-          .dateString=${this.lunchesData.dateString}>
+          .dateString=${this.lunchesData.dateString}
+          .weekLength=${this.weekLength}>
         </hg-lunch-edit-dialog>
       `}
       <div class="buttons">
@@ -95,7 +97,8 @@ customElements.define('hg-lunch-edit', class extends LitElement {
         <hg-lunch-generate 
           .lunches=${this.lunches}
           .dateString=${this.lunchesData.dateString}
-          .config=${this.config}>
+          .config=${this.config}
+          .weekLength=${this.weekLength}>
         </hg-lunch-generate>
       </div>
     `;

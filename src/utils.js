@@ -158,7 +158,7 @@ export const setMetaDescription = (text) => {
 };
 
 // todo use moment js
-export const getDayOfWeek = (index) => ['poniedziałek', 'wtorek', 'środa', 'czwartek', 'piątek'][index - 1];
+export const getDayOfWeek = (index) => ['poniedziałek', 'wtorek', 'środa', 'czwartek', 'piątek', 'sobota', 'niedziela'][index - 1];
 
 export const urlTo64Base = async (url) => {
   const reader = new FileReader();

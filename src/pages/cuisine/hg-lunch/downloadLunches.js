@@ -49,20 +49,31 @@ const getDay = (lunch, prices, day) => [
   ], [1, 2]),
   '\n',
 ];
-const getBody = (lunches, prices, img, columnGap) => [
+const getBody = (lunches, weekLength, prices, img, columnGap) => [
   {
     columns:
       _.map.convert({cap: false})((column, index) =>
-          [
-            _.map((day) => getDay(_.get(day, lunches), prices, day), column),
-            index === 0 ? [ '\n', {image: img, width: 180}, '\n'] : '',
-          ],
-        [[1, 2], [3, 4, 5]]),
+        [
+          _.map((day) => getDay(_.get(day, lunches), prices, day), column),
+          (index === 0 && weekLength <= 5) ? ['\n', {image: img, width: 180}] : '',
+          (index === 0 && weekLength === 7) ? ['\n', getPriceList(prices, columnGap, true)] : '',
+        ],
+        [
+          _.range(1, Math.floor(weekLength/2) + 1),
+          _.range(Math.floor(weekLength/2) + 1, weekLength + 1),
+        ]
+      ),
     columnGap,
   },
 ];
-const getFooter = (config, columnGap) => [
-  {
+const getPriceList = (prices, columnGap, narrow = false) => {
+  const leftSide = _.toUpper('I + II danie\n\nKarnety i abonamenty');
+  const rightSide = `${_.get('set', prices)}\n\nod 10`;
+  const deliverySection = [
+    _.toUpper('Dostawa'),
+    {text: 'na terenie Oleśnicy przy zamówieniach > 25 zł. Inaczej 5 zł', style: 'smaller'}
+  ];
+  return {
     layout: 'footer',
     table: {
       widths: ['*'],
@@ -73,20 +84,28 @@ const getFooter = (config, columnGap) => [
             style: 'dayHeader',
           },
           '\n',
-          {
-            columns: [
-              _.toUpper('I + II danie\n\nKarnety i abonamenty'),
-              {text: `${_.get('prices.set', config)}\n\nod 10`, width: 40, alignment: 'right'},
-              [_.toUpper('Dostawa'), {text: 'na terenie Oleśnicy przy zamówieniach > 25 zł\ninaczej 5 zł', style: 'smaller'}],
-              {text: '0', width: 40, alignment: 'right'},
-            ],
-            columnGap,
-          }
+          [
+            {
+              columns: narrow
+                ? [
+                  [leftSide + '\n\n', deliverySection],
+                  {text: rightSide + '\n\n\n0', width: 40, alignment: 'right'},
+                ]
+                : [
+                  leftSide,
+                  {text: rightSide, width: 40, alignment: 'right'},
+                  deliverySection,
+                  {text: '0', width: 40, alignment: 'right'},
+                ],
+              columnGap,
+            }
+          ]
         ]],
       ]
     }
-  },
-  '\n',
+  };
+};
+const getFooter = (config) => [
   {
     columns: [
       `tel. ${_.get('phone', config)}`,
@@ -102,7 +121,7 @@ const getPageCount = (pdf) => {
 
 let pdfmakeLoaded = false;
 let resourcesPromise;
-const generate = async (lunches, config, dateString, decrementFontSize) => {
+const generate = async (lunches, weekLength, config, dateString, decrementFontSize) => {
   if (!pdfmakeLoaded) {
     pdfmakeLoaded = true;
     resourcesPromise = Promise.all([
@@ -164,12 +183,24 @@ const generate = async (lunches, config, dateString, decrementFontSize) => {
             [[
               getHeader(config, dateString),
               '\n',
-              getBody(lunches, _.get('prices', config), restaurantLogo, columnGap),
+              getBody(lunches, weekLength, _.get('prices', config), restaurantLogo, columnGap),
             ]],
           ]
         }
       },
-      getFooter(config, columnGap),
+      weekLength < 7 ? ['\n', getPriceList(_.get('prices', config), columnGap)] : '',
+      '\n',
+      {
+        layout: 'addPadding',
+        table: {
+          widths: ['*'],
+          body: [
+            [[
+              getFooter(config),
+            ]],
+          ]
+        }
+      },
     ],
     defaultStyle: {
       font: 'Lato',
@@ -198,7 +229,7 @@ const generate = async (lunches, config, dateString, decrementFontSize) => {
   return pdfMake.createPdf(docDefinition);
 };
 
-export default async (lunches, config, that, dateString) => {
+export default async (lunches, weekLength, config, that, dateString) => {
   const smallestAllowedFont = 8;
   const smallestInitialFont = 14;
 
@@ -207,7 +238,7 @@ export default async (lunches, config, that, dateString) => {
   let pdf;
   let pageCount;
   do {
-     pdf = await generate(lunches, config, dateString, decrementFontSize);
+     pdf = await generate(lunches, weekLength, config, dateString, decrementFontSize);
      await sleep(); // break synchronicity
   } while (
     (pageCount = getPageCount(pdf)) > 1
@@ -218,7 +249,7 @@ export default async (lunches, config, that, dateString) => {
 
   const fileName = `Menu Lunchowe ${dateString.replace(/\./g, '-')}`;
   // cannot download twice from the same generation due to bug: images warping on the second download
-  const generateAndDownload = async (cb) => (await generate(lunches, config, dateString, decrementFontSize)).download(fileName, cb);
+  const generateAndDownload = async (cb) => (await generate(lunches, weekLength, config, dateString, decrementFontSize)).download(fileName, cb);
   return new Promise((resolve) => generateAndDownload(() => resolve({
     decrementFontSize,
     pageCount,

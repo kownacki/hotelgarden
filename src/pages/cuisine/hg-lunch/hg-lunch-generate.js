@@ -10,6 +10,7 @@ customElements.define('hg-lunch-generate', class extends LitElement {
       lunches: Object,
       dateString: Object,
       config: Object,
+      weekLength: Number,
       _loading: Boolean,
       _error: Boolean,
       _decreasingFont: Number,
@@ -42,7 +43,7 @@ customElements.define('hg-lunch-generate', class extends LitElement {
         const minWaitingTime = sleep(1000);
         let result;
         try {
-          result = await downloadLunches(this.lunches, this.config, this, this.dateString);
+          result = await downloadLunches(this.lunches, this.weekLength, this.config, this, this.dateString);
         } catch(error) {
           await minWaitingTime;
           this._error = true;

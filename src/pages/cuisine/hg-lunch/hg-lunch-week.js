@@ -10,6 +10,7 @@ customElements.define('hg-lunch-week', class extends LitElement {
       lunches: Object,
       prices: Object,
       today: Number,
+      weekLength: Number,
     };
   }
   static get styles() {
@@ -91,7 +92,7 @@ customElements.define('hg-lunch-week', class extends LitElement {
                     `}
                 </div>
               </div>
-            `, _.range(this.today <= 5 ? this.today : 1, 6))}
+            `, _.range(this.today <= this.weekLength ? this.today : 1, this.weekLength+1))}
           </div>
       `}
     `;
