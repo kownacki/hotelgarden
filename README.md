@@ -1,14 +1,9 @@
 # hotelgarden.pl
 
-## Installing dependencies
+## Install dependencies
 
 ```
 $ npm install
-```
-
-## Bundle lodash
-```
-$ npm run bundle-lodash
 ```
 
 ## Run for development
@@ -24,4 +19,11 @@ $ npm run build
 ## Deployment
 ```
 $ npm run deploy
+```
+
+## Other
+
+### Bundle lodash
+```
+$ npm run bundle-lodash
 ```
