@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
 import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';
-import {setDocumentTitle, headerHeight, pages} from '../utils.js';
+import {setDocumentTitle, headerHeight, pages, sleep} from '../utils.js';
 
 import '../elements/hg-banner.js';
 import '../elements/hg-footer.js';
@@ -81,13 +81,12 @@ customElements.define('hg-page', class extends LitElement {
   render() {
     return html`
       <app-location use-hash-as-path @route-changed=${async (event) => {
-        await new Promise((resolve) => setTimeout(resolve, seconds === 0 ? 1000 : 500));
+        await sleep(seconds === 0 ? 1000 : 200);
         const hash = event.detail.value.path;
         if (hash && hash !== 'slider' && hash !== 'dialog' && hash !== 'max-widget') {
           const element = this.shadowRoot.getElementById('page').shadowRoot.getElementById(hash);
-          window.scrollTo({
-            top: element.offsetTop - headerHeight - 10,
-          });
+          element.scrollIntoView();
+          window.scrollBy(0, -headerHeight);
         }
       }}></app-location>
       ${this.event

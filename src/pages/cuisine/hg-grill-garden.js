@@ -17,7 +17,7 @@ customElements.define('hg-grill-garden', class extends HgContent {
     return html`
       <hg-intro-article .uid=${'grill-garden'}></hg-intro-article>
       <hg-content-icons .uid=${'grill-garden'}></hg-content-icons>
-      <h2 class="content-heading">Menu</h2>
+      <h2 class="content-heading" id="menu">Menu</h2>
       <hg-menu .uid=${'grill-garden'}></hg-menu>
       <hg-content-slider .uid=${'grill-garden-menu'}></hg-content-slider>
       <hg-article .rich=${true} .uid=${'grill-garden-extra1'}></hg-article>
