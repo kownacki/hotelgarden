@@ -13,7 +13,11 @@ customElements.define('hg-menu-nav', class extends LitElement {
   }
   static get styles() {
     return css`
-      :host {
+      hg-list {
+        max-height: calc(100vh - var(--headerHeight));
+        top: var( --headerHeight);
+        overflow: auto;
+        position: sticky;
       }
     `;
   }

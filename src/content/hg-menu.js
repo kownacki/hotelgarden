@@ -1,4 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
+import {headerHeight} from "../utils";
 import './hg-menu/hg-menu-main.js';
 import './hg-menu/hg-menu-nav.js';
 
@@ -40,7 +41,7 @@ customElements.define('hg-menu', class extends LitElement {
         max-width: 700px;
       }
       hg-menu-nav {
-        width: 340px;
+        min-width: 340px;
         transition: opacity 0.3s ease;
       }
       :host([editing]) hg-menu-nav {
@@ -87,6 +88,8 @@ customElements.define('hg-menu', class extends LitElement {
           @categories-changed=${(event) => this.categories = event.detail}
           @selected-category-changed=${(event) => {
             this.selectedCategory = event.detail;
+            this.scrollIntoView();
+            window.scrollBy(0, -headerHeight);
             // update in case if selectedCategory index unchanged but category object did
             // //todo think if more elegant solution
             // this.shadowRoot.getElementById('main').requestUpdate();
