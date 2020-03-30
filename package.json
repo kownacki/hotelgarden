@@ -2,13 +2,18 @@
   "name": "hotelgarden",
   "scripts": {
     "build": "rollup --config",
-    "bundle-lodash": "rollup --config rollup.lodashBuildConfig.js",
     "dev": "es-dev-server --app-index index.html --node-resolve",
     "deploy": "npm run deploy-hosting && npm run deploy-functions",
     "deploy-hosting": "firebase deploy --only hosting",
-    "deploy-functions": "firebase deploy --only functions"
+    "deploy-functions": "firebase deploy --only functions",
+    "generate-index": "node utils/generateIndex.js",
+    "bundle-lodash": "rollup --config rollup.lodashBuildConfig.js"
   },
   "private": true,
+  "engines": {
+    "node": ">=12",
+    "npm": ">=6"
+  },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^11.0.2",
     "es-dev-server": "^1.19.0",
