@@ -1,8 +1,8 @@
 import {LitElement, html, css} from 'lit-element';
-import {pathToUid, links} from '../utils.js';
+import {pathToUid, pages, links} from '../utils.js';
 import './hg-header/hg-header-subnav.js';
 import './hg-header/hg-header-logo.js';
-import './hg-book/hg-book-button.js';
+import './hg-book/hg-book-order-button.js';
 
 customElements.define('hg-header', class extends LitElement {
   static get properties() {
@@ -101,7 +101,7 @@ customElements.define('hg-header', class extends LitElement {
       :host([scrolled-down]) paper-icon-button, :host([no-banner-image]) paper-icon-button {
         color: var(--primary-color);
       }
-      hg-book-button {
+      hg-book-order-button {
         align-self: center;
         margin: 9px 15px 9px auto;
       }
@@ -112,7 +112,7 @@ customElements.define('hg-header', class extends LitElement {
         a {
           padding: 10px 7px;
         }
-        hg-book-button {
+        hg-book-order-button {
           margin: 9px 7px 9px auto;
         }
         hg-header-logo {
@@ -129,7 +129,7 @@ customElements.define('hg-header', class extends LitElement {
         hg-header-logo {
           margin: auto;
         }
-        hg-book-button {
+        hg-book-order-button {
           margin: 9px 15px;
         }
         nav {
@@ -139,7 +139,7 @@ customElements.define('hg-header', class extends LitElement {
         }
       }
       @media all and (max-width: 479px) {
-        hg-book-button {
+        hg-book-order-button {
           margin: 9px 5px;
         }
       }
@@ -170,7 +170,9 @@ customElements.define('hg-header', class extends LitElement {
               </li>
             `, links)}
           </ul>
-          <hg-book-button></hg-book-button>
+          <hg-book-order-button
+            .order=${pathToUid[this.selected] && (pages[pathToUid[this.selected]].dir === 'cuisine')}>
+          </hg-book-order-button>
         </nav>
       </header>
     `;

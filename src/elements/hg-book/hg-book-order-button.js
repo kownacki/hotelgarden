@@ -3,9 +3,10 @@ import sharedStyles from "../../styles/shared-styles.js";
 import '../hg-action-button.js';
 import './hg-book-dialog';
 
-customElements.define('hg-book-button', class extends LitElement {
+customElements.define('hg-book-order-button', class extends LitElement {
   static get properties() {
     return {
+      order: Boolean,
     };
   }
   static get styles() {
@@ -23,10 +24,11 @@ customElements.define('hg-book-button', class extends LitElement {
   render() {
     return html`
       <hg-action-button 
-        @click=${() => {
+        .url=${this.order ? 'http://burger.hotelgarden.pl' : null}
+        @click=${this.order ? null : () => {
           this.shadowRoot.getElementById('dialog').dialog.open();
         }}>
-        Rezerwuj
+        ${this.order ? 'Zamów' : 'Rezerwuj'}
       </hg-action-button>
       <hg-book-dialog id="dialog"></hg-book-dialog>
     `;
