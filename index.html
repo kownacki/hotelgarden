@@ -37,18 +37,23 @@
     <link rel="preload" href="/resources/fonts/Yellowtail/Yellowtail-Regular.ttf" as="font" crossorigin="anonymous">
   
   
-    <link rel="preload" href="/__/firebase/7.11.0/firebase-app.js" as="script">
+    <link rel="preload" href="/resources/scripts/lodashBundle.js" as="script" crossorigin="anonymous">
   
-    <link rel="preload" href="/__/firebase/7.11.0/firebase-auth.js" as="script">
+    <link rel="preload" href="/resources/scripts/moment.min.js" as="script" >
   
-    <link rel="preload" href="/__/firebase/7.11.0/firebase-firestore.js" as="script">
   
-    <link rel="preload" href="/__/firebase/7.11.0/firebase-storage.js" as="script">
-  
-  <link rel="preload" href="/__/firebase/init.js" as="script">
-  <link rel="preload" href="/resources/scripts/lodashBundle.js" as="script" crossorigin="anonymous">
-  <link rel="preload" href="/resources/scripts/moment.min.js" as="script">
-  <link rel="preload" href="/src/hg-app.js" as="script" crossorigin="anonymous">
+
+  <link rel="preload" href="/__/firebase/7.11.0/firebase-app.js" as="script">
+
+  <link rel="preload" href="/__/firebase/7.11.0/firebase-auth.js" as="script">
+
+  <link rel="preload" href="/__/firebase/7.11.0/firebase-firestore.js" as="script">
+
+  <link rel="preload" href="/__/firebase/7.11.0/firebase-storage.js" as="script">
+
+<link rel="preload" href="/__/firebase/init.js" as="script">
+<link rel="preload" href="/src/hg-app.js" as="script" crossorigin="anonymous">
+
   <link rel="preload" href="/src/styles/shared-styles.js" as="script" crossorigin="anonymous">
   <link rel="preload" href="/src/styles/ck-content.js" as="script" crossorigin="anonymous">
   
@@ -210,20 +215,22 @@
 
   </hg-app>
   
-  <script type="module" src="/resources/scripts/lodashBundle.js"></script>
-  <script src="/resources/scripts/moment.min.js"></script>
-
   
-    <script src="/__/firebase/7.11.0/firebase-app.js"></script>
+    <script src="/resources/scripts/lodashBundle.js" type="module"></script>
   
-    <script src="/__/firebase/7.11.0/firebase-auth.js"></script>
-  
-    <script src="/__/firebase/7.11.0/firebase-firestore.js"></script>
-  
-    <script src="/__/firebase/7.11.0/firebase-storage.js"></script>
+    <script src="/resources/scripts/moment.min.js" ></script>
   
 
   
+
+  <script src="/__/firebase/7.11.0/firebase-app.js"></script>
+
+  <script src="/__/firebase/7.11.0/firebase-auth.js"></script>
+
+  <script src="/__/firebase/7.11.0/firebase-firestore.js"></script>
+
+  <script src="/__/firebase/7.11.0/firebase-storage.js"></script>
+
 <script id="firebase-init"></script>
 <script id="app"></script>  
 <script type="module">
@@ -237,22 +244,10 @@
   // If Loading Firebase SDKs from reserved URLs fails, then it means we are in development and we should import firebase module from npm
   firebaseInitScript.addEventListener("error", async () => {
     window.firebase = (await Promise.all([
-      import('firebase/app'),
-      import('firebase/auth'),
-      import('firebase/firestore'),
-      import('firebase/storage'),
+      import('firebase/app'),import('firebase/auth'),import('firebase/firestore'),import('firebase/storage')
     ]))[0].default;
 
-    firebase.initializeApp({
-      apiKey: "AIzaSyDvamIugzBC3k3WA52KpHeINrfDHfkvnSs",
-      authDomain: "pl-hotelgarden.firebaseapp.com",
-      databaseURL: "https://pl-hotelgarden.firebaseio.com",
-      projectId: "pl-hotelgarden",
-      storageBucket: "pl-hotelgarden.appspot.com",
-      messagingSenderId: "439170507609",
-      appId: "1:439170507609:web:d50495f3bf9c9613702248",
-      measurementId: "G-T7DQCNYLP2"
-    });
+    firebase.initializeApp({"apiKey":"AIzaSyDvamIugzBC3k3WA52KpHeINrfDHfkvnSs","authDomain":"pl-hotelgarden.firebaseapp.com","databaseURL":"https://pl-hotelgarden.firebaseio.com","projectId":"pl-hotelgarden","storageBucket":"pl-hotelgarden.appspot.com","messagingSenderId":"439170507609","appId":"1:439170507609:web:d50495f3bf9c9613702248","measurementId":"G-T7DQCNYLP2"});
     loadApp();
   });
 </script>

@@ -1,6 +1,10 @@
-'use strict';
-var fs = require('fs');
-const _ = require('lodash/fp');
+import fs from 'fs';
+import _ from 'lodash/fp.js';
+import analyticsScript from './generateIndex/analyticsScript.js';
+import preRender from './generateIndex/preRender.js';
+import preloadFirebaseAndApp from './generateIndex/preloadFirebaseAndApp.js';
+import initializeFirebaseAndApp from './generateIndex/initializeFirebaseAndApp.js';
+import tawkToScript from './generateIndex/tawkToScript.js';
 
 const noopTag = (strings, ...keys) => _.flow([_.zip, _.flatten, _.initial, _.map(String), _.join('')])(strings, keys);
 // to trigger syntax highlighting
@@ -18,158 +22,23 @@ const fonts = [
   {family: 'Lato', style: 'italic', weight: '700', path: `${fontsRootPath}Lato/Lato-BoldItalic.ttf`},
   {family: 'Yellowtail', style: 'normal', weight: 'normal', path: `${fontsRootPath}Yellowtail/Yellowtail-Regular.ttf`},
 ];
+const scriptsRootPath =  '/resources/scripts/';
+const scripts = [
+  {path: `${scriptsRootPath}lodashBundle.js`, module: true},
+  {path: `${scriptsRootPath}moment.min.js`},
+];
 const firebaseRootPath = '/__/firebase/7.11.0/';
 const firebaseLibs = ['app', 'auth', 'firestore', 'storage'];
-
-const analyticsScript = `
-<script>
-  if (window.location.hostname === 'www.hotelgarden.pl') {
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-    ga('create', 'UA-56813589-1', 'auto');
-  }
-</script>
-`;
-
-const preRender = `
-<style>
-  .loading {
-    font-family: sans-serif;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-  .loading-dots {
-    font-size: 50px;
-  }
-  .loading {
-    font-family: sans-serif;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-  .loading-dots {
-    font-size: 50px;
-  }
-  noscript {
-    text-align: center;
-    margin: 10px;
-  }
-  @keyframes blink {
-    0% {
-      opacity: .2;
-    }
-    20% {
-      opacity: 1;
-    }
-    100% {
-      opacity: .2;
-    }
-  }
-  .loading span {
-    animation-name: blink;
-    animation-duration: 1.4s;
-    animation-iteration-count: infinite;
-    animation-fill-mode: both;
-  }
-  .loading span:nth-child(2) {
-    animation-delay: .2s;
-  }
-  .loading span:nth-child(3) {
-    animation-delay: .4s;
-  }
-</style>
-<div class="loading">
-  <div class="loading-dots"><span>.</span><span>.</span><span>.</span></div>
-  <noscript>Do wyświetlenia strony potrzebne jest włączenie obsługi JavaScript.</noscript>
-</div>
-`;
-
-const initializeFirebaseAndApp = (namePrefix) => `
-<script id="firebase-init"></script>
-<script id="app"></script>  
-<script type="module">
-  const loadApp = () => {
-    document.getElementById('app').type="module";
-    document.getElementById('app').src="/src/${namePrefix}-app.js";
-  };
-  const firebaseInitScript =  document.getElementById('firebase-init');
-  firebaseInitScript.src="/__/firebase/init.js";
-  firebaseInitScript.addEventListener("load", loadApp);
-  // If Loading Firebase SDKs from reserved URLs fails, then it means we are in development and we should import firebase module from npm
-  firebaseInitScript.addEventListener("error", async () => {
-    window.firebase = (await Promise.all([
-      import('firebase/app'),
-      import('firebase/auth'),
-      import('firebase/firestore'),
-      import('firebase/storage'),
-    ]))[0].default;
-
-    firebase.initializeApp({
-      apiKey: "AIzaSyDvamIugzBC3k3WA52KpHeINrfDHfkvnSs",
-      authDomain: "pl-hotelgarden.firebaseapp.com",
-      databaseURL: "https://pl-hotelgarden.firebaseio.com",
-      projectId: "pl-hotelgarden",
-      storageBucket: "pl-hotelgarden.appspot.com",
-      messagingSenderId: "439170507609",
-      appId: "1:439170507609:web:d50495f3bf9c9613702248",
-      measurementId: "G-T7DQCNYLP2"
-    });
-    loadApp();
-  });
-</script>
-`;
-
-const initializeTawkTo = `
-<script type="text/javascript">
-  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-  let hgDialogOpened;
-  const hideOrShowWidget = () => {
-    if (window.Tawk_API.toggleVisibility) {
-      if (window.loggedIn || hgDialogOpened || (window.pageYOffset === 0 && Tawk_API.isChatMinimized())) {
-        Tawk_API.hideWidget();
-      } else {
-        Tawk_API.showWidget();
-      }
-    }
-  };
-  window.addEventListener('hg-dialog-opened-changed', (event) => {
-    hgDialogOpened = event.detail;
-    hideOrShowWidget();
-  });
-  Tawk_API.onLoad = () => {
-    hideOrShowWidget();
-    window.addEventListener('scroll', _.throttle(100, hideOrShowWidget));
-  };
-  window.addEventListener('scroll', () => {
-    if (!window.loggedIn) {
-      // Wait some time before loading TawkTo so other more important things can happen
-      setTimeout(() => {
-        var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-        s1.defer=true;
-        s1.src='https://embed.tawk.to/5e5d63246d48ff250ad8e6f4/default';
-        s1.charset='UTF-8';
-        s1.setAttribute('crossorigin','*');
-        s0.parentNode.insertBefore(s1,s0);
-      }, 2000);
-    }
-  }, {once: true});
-</script>
-`;
+const firebaseInitializeOptions = {
+  apiKey: "AIzaSyDvamIugzBC3k3WA52KpHeINrfDHfkvnSs",
+  authDomain: "pl-hotelgarden.firebaseapp.com",
+  databaseURL: "https://pl-hotelgarden.firebaseio.com",
+  projectId: "pl-hotelgarden",
+  storageBucket: "pl-hotelgarden.appspot.com",
+  messagingSenderId: "439170507609",
+  appId: "1:439170507609:web:d50495f3bf9c9613702248",
+  measurementId: "G-T7DQCNYLP2"
+};
 
 const indexHtml = `
 <!doctype html>
@@ -187,13 +56,10 @@ const indexHtml = `
   ${_.map((font) => `
     <link rel="preload" href="${font.path}" as="font" crossorigin="anonymous">
   `, fonts).join('')}
-  ${_.map((lib) => `
-    <link rel="preload" href="${firebaseRootPath}firebase-${lib}.js" as="script">
-  `, firebaseLibs).join('')}
-  <link rel="preload" href="/__/firebase/init.js" as="script">
-  <link rel="preload" href="/resources/scripts/lodashBundle.js" as="script" crossorigin="anonymous">
-  <link rel="preload" href="/resources/scripts/moment.min.js" as="script">
-  <link rel="preload" href="/src/${namePrefix}-app.js" as="script" crossorigin="anonymous">
+  ${_.map((script) => `
+    <link rel="preload" href="${script.path}" as="script" ${script.module ? 'crossorigin="anonymous"' : ''}>
+  `, scripts).join('')}
+  ${preloadFirebaseAndApp(namePrefix, firebaseRootPath, firebaseLibs)}
   <link rel="preload" href="/src/styles/shared-styles.js" as="script" crossorigin="anonymous">
   <link rel="preload" href="/src/styles/ck-content.js" as="script" crossorigin="anonymous">
   
@@ -243,16 +109,13 @@ const indexHtml = `
     ${preRender}
   </${namePrefix}-app>
   
-  <script type="module" src="/resources/scripts/lodashBundle.js"></script>
-  <script src="/resources/scripts/moment.min.js"></script>
+  ${_.map((script) => `
+    <script src="${script.path}" ${script.module ? 'type="module"' : ''}></script>
+  `, scripts).join('')}
 
-  ${_.map((lib) => `
-    <script src="${firebaseRootPath}firebase-${lib}.js"></script>
-  `, firebaseLibs).join('')}
-
-  ${initializeFirebaseAndApp(namePrefix)}
+  ${initializeFirebaseAndApp(namePrefix, firebaseInitializeOptions, firebaseRootPath, firebaseLibs)}
   
-  ${initializeTawkTo}
+  ${tawkToScript}
   
   <style id="inline-style"></style>
   <script type="module">
