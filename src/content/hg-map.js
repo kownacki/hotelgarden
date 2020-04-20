@@ -1,5 +1,6 @@
 import {LitElement, html, css} from 'lit-element';
 import {loadScript} from "../utils";
+import apiKey from '../../utils/apiKey.js';
 
 let googleMapsLoaded = false;
 
@@ -13,7 +14,7 @@ customElements.define('hg-map', class extends LitElement {
     if (changedProperties.has('seen')) {
       if (!googleMapsLoaded) {
         googleMapsLoaded = true;
-        await loadScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyDvamIugzBC3k3WA52KpHeINrfDHfkvnSs');
+        await loadScript('https://maps.googleapis.com/maps/api/js?key=' + apiKey);
       }
       const lat = 51.210707;
       const lng = 17.401097;

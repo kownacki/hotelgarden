@@ -1,5 +1,6 @@
 import fs from 'fs';
 import _ from 'lodash/fp.js';
+import apiKey from './apiKey.js';
 import analyticsScript from './generateIndex/analyticsScript.js';
 import preRender from './generateIndex/preRender.js';
 import preloadFirebaseAndApp from './generateIndex/preloadFirebaseAndApp.js';
@@ -30,7 +31,7 @@ const scripts = [
 const firebaseRootPath = '/__/firebase/7.11.0/';
 const firebaseLibs = ['app', 'auth', 'firestore', 'storage'];
 const firebaseInitializeOptions = {
-  apiKey: "AIzaSyDvamIugzBC3k3WA52KpHeINrfDHfkvnSs",
+  apiKey,
   authDomain: "pl-hotelgarden.firebaseapp.com",
   databaseURL: "https://pl-hotelgarden.firebaseio.com",
   projectId: "pl-hotelgarden",
