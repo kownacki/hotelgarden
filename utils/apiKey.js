@@ -1,1 +1,1 @@
-export default 'API_KEY';
+export default 'AIzaSyDvamIugzBC3k3WA52KpHeINrfDHfkvnSs';
