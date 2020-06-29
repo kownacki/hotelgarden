@@ -11,7 +11,7 @@ import './hg-lunch/hg-lunch-edit.js';
 import './hg-lunch/hg-lunch-generate.js';
 
 // set to 5 for mon - fri, set to 7 for mon - sun
-const lunchDaysCount = 7;
+const lunchDaysCount = 5;
 
 customElements.define('hg-lunch', class extends HgContent {
   static get properties() {
