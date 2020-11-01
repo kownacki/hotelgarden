@@ -17,6 +17,9 @@ $ npm run build
 ```
 
 ## Deployment
+Before deploying:
+* run `npm run firebase-login` if you're not logged in to firebase.
+* build
 ```
 $ npm run deploy
 ```
