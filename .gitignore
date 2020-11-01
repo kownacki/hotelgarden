@@ -1,4 +1,5 @@
 .firebase/
+.idea/
 dist/
 node_modules/
 
