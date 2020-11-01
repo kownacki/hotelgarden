@@ -4,6 +4,7 @@ customElements.define('hg-action-button', class extends LitElement {
   static get properties() {
     return {
       url: String,
+      newTab: Boolean,
       lowEmphasis: {type: Boolean, reflect: true, attribute: 'low-emphasis'},
       disabled: {type: Boolean, reflect: true},
     };
@@ -60,7 +61,7 @@ customElements.define('hg-action-button', class extends LitElement {
     return html`
       ${this.url
         ? html`
-          <a href="${this.url}">
+          <a href="${this.url}" target="${this.newTab ? '_blank' : '_self'}">
             <slot></slot>
           </a>
         `
