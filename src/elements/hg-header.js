@@ -127,20 +127,22 @@ customElements.define('hg-header', class extends LitElement {
           display: block;
         }
         hg-header-logo {
-          margin: auto;
+          position: absolute;
+          top: 0;
+          left: calc(50% - 60px);
+          margin: 0;
         }
         hg-book-order-button {
           margin: 9px 15px;
         }
         nav {
-          position: absolute;
-          top: 0;
-          right: 0;
+          flex: none;
+          margin-left: auto;
         }
       }
       @media all and (max-width: 479px) {
         hg-book-order-button {
-          margin: 9px 5px;
+          margin: 7px 5px 6px;
         }
       }
     `;

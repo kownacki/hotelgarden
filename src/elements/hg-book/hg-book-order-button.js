@@ -19,6 +19,13 @@ customElements.define('hg-book-order-button', class extends LitElement {
           --action-button-padding: 10px;
         }
       }
+      @media all and (max-width: 479px) {
+        hg-action-button {
+          font-size: 14px;
+          width: 80px;
+          --action-button-padding: 5px 10px;
+        }
+      }
     `];
   }
   render() {
@@ -31,7 +38,7 @@ customElements.define('hg-book-order-button', class extends LitElement {
         @click=${this.order ? null : () => {
           this.shadowRoot.getElementById('dialog').dialog.open();
         }}>
-        ${this.order ? 'Zamów' : 'Rezerwuj'}
+        ${this.order ? 'Zamów online' : 'Rezerwuj online'}
       </hg-action-button>
       <hg-book-dialog id="dialog"></hg-book-dialog>
     `;

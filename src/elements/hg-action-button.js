@@ -16,6 +16,7 @@ customElements.define('hg-action-button', class extends LitElement {
         font-size: 16px;
         transition: background 0.2s ease;
         border: solid 1px transparent;
+        text-align: center;
         --action-button-padding: 10px 20px;
       }
       :host(:not([low-emphasis])) {
