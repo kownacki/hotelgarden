@@ -32,7 +32,7 @@ customElements.define('hg-book-order-button', class extends LitElement {
     return html`
       <hg-action-button
         .url=${this.order === 'restaurant' ? 'http://www.zamow.hotelgarden.pl'
-          : this.order === 'grill-garden' ? 'http://burger.hotelgarden.pl'
+          : this.order === 'grill-garden' ? 'http://www.zamow.hotelgarden.pl'
           : null}
         .newTab=${Boolean(this.order)}
         @click=${this.order ? null : () => {
