@@ -10,9 +10,6 @@ import './hg-lunch/hg-lunch-week.js';
 import './hg-lunch/hg-lunch-edit.js';
 import './hg-lunch/hg-lunch-generate.js';
 
-// set to 5 for mon - fri, set to 7 for mon - sun
-const lunchDaysCount = 5;
-
 customElements.define('hg-lunch', class extends HgContent {
   static get properties() {
     return {
@@ -21,27 +18,11 @@ customElements.define('hg-lunch', class extends HgContent {
       _lunchesData: Object,
       _lunches: Object,
       _loggedIn: Boolean,
+      _lunchDaysCount: Number,
     };
   }
   constructor() {
     super();
-    (async () => {
-      const lastMonday = moment().startOf('isoWeek');
-      this._lunchesData = _.mapValues((week) => {
-        const date = week === 'current'
-          ? moment().isoWeekday() <= lunchDaysCount ? moment(lastMonday) : moment(lastMonday).add(1, 'week')
-          : moment().isoWeekday() <= lunchDaysCount ? moment(lastMonday).add(1, 'week') : moment(lastMonday).add(2, 'week');
-        return {
-          date,
-          dateString: `${date.format('DD.MM')} — ${moment(date).add(lunchDaysCount-1, 'day').format('DD.MM')}`,
-          doc: `lunches/${date.format('YYYY-MM-DD')}`,
-        };
-      }, {current: 'current', upcoming: 'upcoming'});
-      this._lunches = {
-        current: await getData(this._lunchesData.current.doc) || {},
-        upcoming: await getData(this._lunchesData.upcoming.doc) || {},
-      };
-    })();
     this._unsubscribeLoggedInListener = auth.onAuthStateChanged((user) => this._loggedIn = Boolean(user));
   }
   disconnectedCallback() {
@@ -52,6 +33,28 @@ customElements.define('hg-lunch', class extends HgContent {
     super.updated(changedProperties);
     if (changedProperties.has('config')) {
       this._prices = _.get('lunches.prices', this.config);
+      // set to 5 for mon - fri, set to 7 for mon - sun
+      this._lunchDaysCount = _.get('lunches.lunchDaysCount', this.config);
+
+      (async () => {
+        console.log('!!!')
+        const lastMonday = moment().startOf('isoWeek');
+        this._lunchesData = _.mapValues((week) => {
+          const date = week === 'current'
+            ? moment().isoWeekday() <= this._lunchDaysCount ? moment(lastMonday) : moment(lastMonday).add(1, 'week')
+            : moment().isoWeekday() <= this._lunchDaysCount ? moment(lastMonday).add(1, 'week') : moment(lastMonday).add(2, 'week');
+          return {
+            date,
+            dateString: `${date.format('DD.MM')} — ${moment(date).add(this._lunchDaysCount-1, 'day').format('DD.MM')}`,
+            doc: `lunches/${date.format('YYYY-MM-DD')}`,
+          };
+        }, {current: 'current', upcoming: 'upcoming'});
+        this._lunches = {
+          current: await getData(this._lunchesData.current.doc) || {},
+          upcoming: await getData(this._lunchesData.upcoming.doc) || {},
+        };
+        console.log(this._lunches, '!');
+      })();
     }
   }
   static get styles() {
@@ -111,13 +114,13 @@ customElements.define('hg-lunch', class extends HgContent {
   render() {
     return html`
       <hg-intro-article .uid=${'lunch'}></hg-intro-article>
-      <h2 class="content-heading" id="aktualny-lunch">Aktualne menu lunchowe ${this._lunchesData.current.dateString}</h2>
+      <h2 class="content-heading" id="aktualny-lunch">Aktualne menu lunchowe ${this._lunchesData && this._lunchesData.current.dateString}</h2>
       ${!(this.config && this._lunches) ? '' : html`
         <hg-lunch-week 
           .lunches=${this._lunches.current} 
           .prices=${this._prices} 
           .today=${moment().isoWeekday()}
-          .weekLength=${lunchDaysCount}>
+          .weekLength=${this._lunchDaysCount}>
         </hg-lunch-week>
         ${this._loggedIn
           ? html`
@@ -129,7 +132,7 @@ customElements.define('hg-lunch', class extends HgContent {
                     .lunches=${this._lunches[week]} 
                     .lunchesData=${this._lunchesData[week]} 
                     .config=${_.get('lunches', this.config)}
-                    .weekLength=${lunchDaysCount}
+                    .weekLength=${this._lunchDaysCount}
                     @lunches-changed=${(event) => this._lunches = _.set(week, event.detail, this._lunches)}>
                   </hg-lunch-edit>
                 `, ['current', 'upcoming'])}
@@ -143,7 +146,7 @@ customElements.define('hg-lunch', class extends HgContent {
                   .lunches=${this._lunches.current}
                   .dateString=${this._lunchesData.current.dateString}
                   .config=${_.get('lunches', this.config)}
-                  .weekLength=${lunchDaysCount}>
+                  .weekLength=${this._lunchDaysCount}>
                 </hg-lunch-generate>
               </div>
             `
