@@ -68,10 +68,10 @@ const getBody = (lunches, weekLength, prices, img, columnGap) => [
 ];
 const getPriceList = (prices, columnGap, narrow = false) => {
   const leftSide = _.toUpper('I + II danie\n\nKarnety i abonamenty');
-  const rightSide = `${_.get('set', prices)}\n\nod 10`;
+  const rightSide = `${_.get('set', prices)}\n\n${_.get('subs', prices)}`;
   const deliverySection = [
     _.toUpper('Dostawa'),
-    {text: 'na terenie Oleśnicy przy zamówieniach > 25 zł. Inaczej 5 zł', style: 'smaller'}
+    {text: `na terenie Oleśnicy przy zamówieniach > ${_.get('freeDeliveryFrom', prices)} zł. Inaczej ${_.get('paidDelivery', prices)} zł`, style: 'smaller'}
   ];
   return {
     layout: 'footer',
