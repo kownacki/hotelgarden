@@ -67,7 +67,7 @@ const getBody = (lunches, weekLength, prices, img, columnGap) => [
   },
 ];
 const getPriceList = (prices, columnGap, narrow = false) => {
-  const leftSide = _.toUpper('I + II danie\n\nKarnety i abonamenty');
+  const leftSide = _.toUpper(`I + II danie\n\n${_.get('subs', prices) ? 'Karnety i abonamenty' : ''}`);
   const rightSide = `${_.get('set', prices)}\n\n${_.get('subs', prices)}`;
   const deliverySection = [
     _.toUpper('Dostawa'),
