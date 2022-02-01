@@ -12,8 +12,8 @@
   },
   "private": true,
   "engines": {
-    "node": ">=13",
-    "npm": ">=6"
+    "node": ">=16",
+    "npm": ">=8"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^11.0.2",
