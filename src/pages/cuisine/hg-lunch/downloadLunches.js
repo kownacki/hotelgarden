@@ -109,7 +109,7 @@ const getFooter = (config) => [
   {
     columns: [
       `tel. ${_.get('phone', config)}`,
-      {text: 'FB/restauracjamagnolia', alignment: 'right'},
+      {text: _.get('socialMediaLink', config), alignment: 'right'},
     ],
   },
 ];
