@@ -55,7 +55,7 @@ const getBody = (lunches, weekLength, prices, img, columnGap) => [
       _.map.convert({cap: false})((column, index) =>
         [
           _.map((day) => getDay(_.get(day, lunches), prices, day), column),
-          (index === 0 && weekLength <= 5) ? ['\n', {image: img, width: 158, alignment: 'center'}] : '',
+          (index === 0 && weekLength <= 5) ? ['\n', {image: img, width: 100, alignment: 'center'}] : '',
           (index === 0 && weekLength === 7) ? ['\n', getPriceList(prices, columnGap, true)] : '',
         ],
         [
