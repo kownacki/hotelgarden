@@ -22,13 +22,13 @@ customElements.define('hg-restaurant', class extends HgContent {
   render() {
     return html`
       <hg-intro-article .uid=${'restaurant'}></hg-intro-article>
-      <hg-content-icons .uid=${'restaurant'}></hg-content-icons>
-      <hg-mosaic .uid=${'restaurant'} .buttons=${staticProp({primary: [{url: '#menu', text: 'Zobacz menu'}]})}></hg-mosaic>
+      <!--<hg-content-icons .uid=${'restaurant'}></hg-content-icons>
+      <hg-mosaic .uid=${'restaurant'} .buttons=${staticProp({primary: [{url: '#menu', text: 'Zobacz menu'}]})}></hg-mosaic>-->
       <hg-text-image .uid=${'lunch'} .buttons=${staticProp([{url: '/lunch#aktualny-lunch', text: 'Przejdź do lunchy'}])}></hg-text-image>
-      <hg-content-slider .uid=${'restaurant'}></hg-content-slider>
+      <!--<hg-content-slider .uid=${'restaurant'}></hg-content-slider>
       <hg-reviews-block .uid=${'restaurant'}></hg-reviews-block>
       <hg-article id="menu" .rich=${true} .uid=${'restaurant-extra1'}></hg-article>
-      <hg-menu .uid=${'restaurant'}></hg-menu> 
+      <hg-menu .uid=${'restaurant'}></hg-menu>-->
       <hg-links .path=${'/restauracja'} .superpath=${'/kuchnia'}></hg-links>
     `;
   }
