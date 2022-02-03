@@ -7,7 +7,7 @@
     "public": "dist",
     "rewrites": [
       {
-        "source": "/@(villa-garden|atrakcje-okolicy|opinie|pokoje|konferencje|sale-konferencyjne|kuchnia|lunch|restauracja|grill-garden|wesela|przyjecia-rodzinne|sale-bankietowe|galeria|wydarzenia|kontakt)",
+        "source": "/@(villa-garden|atrakcje-okolicy|opinie|pokoje|konferencje|sale-konferencyjne|kuchnia|lunch|garden-bistro|wesela|przyjecia-rodzinne|sale-bankietowe|galeria|wydarzenia|kontakt)",
         "destination": "/index.html"
       },
       {
@@ -28,8 +28,8 @@
     ],
     "redirects": [
       {
-        "source": "/@(restaurant|sushi)",
-        "destination": "/restauracja",
+        "source": "/@(restaurant|restauracja|grill-garden|sushi)",
+        "destination": "/garden-bistro",
         "type": 301
       },
       {

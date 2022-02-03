@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit-element';
-import {getData} from "../../utils";
-import sharedStyles from "../../styles/shared-styles";
-import HgContent from "../../elements/hg-content";
+import {getData} from "../../utils.js";
+import sharedStyles from "../../styles/shared-styles.js";
+import HgContent from "../../elements/hg-content.js";
 import '../../content/hg-article/hg-intro-article.js';
 import '../../content/hg-article.js';
 import '../../content/hg-content-slider.js';
@@ -154,7 +154,7 @@ customElements.define('hg-lunch', class extends HgContent {
         }
       `}
       <hg-content-slider id="zdjecia" .uid=${'lunch'}></hg-content-slider>
-      <hg-links .path=${'/lunch'} .superpath=${'/kuchnia'}></hg-links>
+      <hg-links .path=${'/lunch'} .superpath=${'/garden-bistro'}></hg-links>
     `;
   }
 });

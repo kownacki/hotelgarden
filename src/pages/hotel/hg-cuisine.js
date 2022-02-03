@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit-element';
-import HgContent from "../../elements/hg-content";
+import HgContent from "../../elements/hg-content.js";
 import {staticProp} from '../../utils.js';
 import '../../content/hg-article/hg-intro-article.js';
 import '../../content/hg-content-icons.js';
@@ -17,7 +17,7 @@ customElements.define('hg-cuisine', class extends HgContent {
       <hg-mosaic .uid=${'cuisine'} .buttons=${staticProp({primary: [{url: '/restauracja#menu', text: 'Zobacz menu'}]})}></hg-mosaic>
       <hg-text-image .uid=${'lunch'} .buttons=${staticProp([{url: '/lunch#aktualny-lunch', text: 'Przejdź do lunchy'}])}></hg-text-image>
       <hg-text-image .swap=${true} .uid=${'cuisine-extra1'} .buttons=${staticProp([{url: '/grill-garden', text: 'Zobacz więcej'}])}></hg-text-image>
-      <hg-links .path=${'/kuchnia'} .superpath=${'/kuchnia'}></hg-links>
+      <hg-links .path=${'/kuchnia'} .superpath=${'/'}></hg-links>
     `;
   }
 });

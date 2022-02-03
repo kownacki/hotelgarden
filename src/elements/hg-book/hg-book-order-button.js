@@ -6,7 +6,7 @@ import './hg-book-dialog';
 customElements.define('hg-book-order-button', class extends LitElement {
   static get properties() {
     return {
-      order: String, // 'restaurant' / 'grill-garden'
+      order: String, // 'restaurant' / null
     };
   }
   static get styles() {
@@ -31,9 +31,7 @@ customElements.define('hg-book-order-button', class extends LitElement {
   render() {
     return html`
       <hg-action-button
-        .url=${this.order === 'restaurant' ? 'http://www.zamow.hotelgarden.pl'
-          : this.order === 'grill-garden' ? 'http://www.zamow.hotelgarden.pl'
-          : null}
+        .url=${this.order === 'restaurant' ? 'http://www.zamow.hotelgarden.pl' : null}
         .newTab=${Boolean(this.order)}
         @click=${this.order ? null : () => {
           this.shadowRoot.getElementById('dialog').dialog.open();

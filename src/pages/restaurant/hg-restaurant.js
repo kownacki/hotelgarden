@@ -1,22 +1,23 @@
 import {LitElement, html, css} from 'lit-element';
-import {staticProp} from '../../utils.js';
 import HgContent from "../../elements/hg-content";
-import '../../content/hg-article/hg-intro-article.js'
+import {staticProp} from '../../utils.js';
+import '../../content/hg-article.js';
+import '../../content/hg-article/hg-intro-article.js';
+import '../../content/hg-contact-block.js';
 import '../../content/hg-content-icons.js';
-import '../../content/hg-menu.js'
-import '../../content/hg-article.js'
-import '../../content/hg-mosaic.js'
-import '../../content/hg-content-slider.js';
+import '../../content/hg-content-slider';
+import '../../content/hg-menu.js';
+import '../../content/hg-mosaic.js';
+import '../../content/hg-links.js';
 import '../../content/hg-reviews-block.js';
 import '../../content/hg-text-image.js';
-import '../../content/hg-contact-block.js';
-import '../../content/hg-links.js';
 
-customElements.define('hg-grill-garden', class extends HgContent {
+customElements.define('hg-restaurant', class extends HgContent {
   render() {
     return html`
       <hg-intro-article .uid=${'grill-garden'}></hg-intro-article>
       <hg-content-icons .uid=${'grill-garden'}></hg-content-icons>
+      <hg-text-image .uid=${'lunch'} .buttons=${staticProp([{url: '/lunch#aktualny-lunch', text: 'Przejdź do lunchy'}])}></hg-text-image>
       <h2 class="content-heading" id="menu">Menu</h2>
       <hg-menu .uid=${'grill-garden'}></hg-menu>
       <hg-content-slider .uid=${'grill-garden-menu'}></hg-content-slider>
@@ -24,9 +25,8 @@ customElements.define('hg-grill-garden', class extends HgContent {
       <hg-mosaic .uid=${'grill-garden'}></hg-mosaic>
       <hg-content-slider .uid=${'grill-garden'}></hg-content-slider>
       <hg-reviews-block .uid=${'grill-garden'}></hg-reviews-block>
-      <hg-text-image .swap=${true} .uid=${'grill-garden'}></hg-text-image>
       <hg-contact-block></hg-contact-block>
-      <hg-links .path=${'/grill-garden'} .superpath=${'/kuchnia'}></hg-links>
+      <hg-links .path=${'/garden-bistro'} .superpath=${'/garden-bistro'}></hg-links>
     `;
   }
 });

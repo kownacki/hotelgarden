@@ -173,8 +173,8 @@ customElements.define('hg-header', class extends LitElement {
             `, links)}
           </ul>
           <hg-book-order-button
-            .order=${(pathToUid[this.selected] && (pages[pathToUid[this.selected]].dir === 'cuisine'))
-              ? (pathToUid[this.selected] === 'grill-garden' ? 'grill-garden' : 'restaurant')
+            .order=${(pathToUid[this.selected] && (pages[pathToUid[this.selected]].dir === 'restaurant'))
+              ? 'restaurant'
               : null}>
           </hg-book-order-button>
         </nav>
