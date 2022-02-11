@@ -1,4 +1,4 @@
-import {LitElement, html, css} from 'lit-element';
+import {LitElement, html, css} from 'lit';
 import {deleteImage, staticProp} from '../../utils.js';
 import '../../elements/hg-list.js';
 import './hg-menu-nav-item.js';

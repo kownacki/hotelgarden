@@ -1,4 +1,4 @@
-import {LitElement, html, css} from 'lit-element';
+import {LitElement, html, css} from 'lit';
 import {pathToUid, pages, links} from '../utils.js';
 import './hg-header/hg-header-subnav.js';
 import './hg-header/hg-header-logo.js';

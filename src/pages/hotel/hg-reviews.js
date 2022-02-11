@@ -1,4 +1,4 @@
-import {LitElement, html, css} from 'lit-element';
+import {LitElement, html, css} from 'lit';
 import '@polymer/paper-checkbox/paper-checkbox.js';
 import {staticProp} from '../../utils.js';
 import '../../content/hg-article/hg-intro-article.js';

@@ -1,4 +1,4 @@
-import {LitElement, html, css} from 'lit-element';
+import {LitElement, html, css} from 'lit';
 import './hg-action-button.js';
 
 customElements.define('hg-action-buttons', class extends LitElement {

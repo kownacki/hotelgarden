@@ -4,7 +4,7 @@ window.storage = firebase.storage();
 
 auth.onAuthStateChanged((user) => {window.loggedIn = Boolean(user) ; hideOrShowWidget()});
 
-import {LitElement, html, css} from 'lit-element';
+import {LitElement, html, css} from 'lit';
 import {pathToUid} from './utils.js';
 import './hg-iconset.js';
 import '@polymer/app-layout/app-drawer/app-drawer.js';

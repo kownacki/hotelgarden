@@ -1,4 +1,4 @@
-import {LitElement, html, css} from 'lit-element';
+import {LitElement, html, css} from 'lit';
 import {updateData, updateImage, deleteImage, getData} from '../utils.js';
 import './hg-slider.js';
 import './hg-image-slider/hg-image-slider-item.js';

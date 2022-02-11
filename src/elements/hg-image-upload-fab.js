@@ -1,4 +1,4 @@
-import {LitElement, html, css} from 'lit-element';
+import {LitElement, html, css} from 'lit';
 import '@polymer/paper-fab';
 import '../edit/hg-image-upload.js';
 

@@ -1,4 +1,4 @@
-import {LitElement, html, css} from 'lit-element';
+import {LitElement, html, css} from 'lit';
 import '../../pages/gallery/hg-gallery/hg-gallery-item.js'
 import '../../edit/hg-delete-item.js'
 

@@ -1,4 +1,4 @@
-import {LitElement, html, css} from 'lit-element';
+import {LitElement, html, css} from 'lit';
 import sharedStyles from '../styles/shared-styles.js'
 import {updateImage} from "../utils";
 import '../edit/hg-editable-image.js';

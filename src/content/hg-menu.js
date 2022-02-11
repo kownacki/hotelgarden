@@ -1,4 +1,4 @@
-import {LitElement, html, css} from 'lit-element';
+import {LitElement, html, css} from 'lit';
 import {headerHeight} from "../utils";
 import './hg-menu/hg-menu-main.js';
 import './hg-menu/hg-menu-nav.js';

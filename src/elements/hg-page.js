@@ -1,5 +1,5 @@
-import {LitElement, html, css} from 'lit-element';
-import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';
+import {LitElement, html, css} from 'lit';
+import {unsafeHTML} from 'lit/directives/unsafe-html.js';
 import {setDocumentTitle, headerHeight, pages, sleep} from '../utils.js';
 
 import '../elements/hg-banner.js';

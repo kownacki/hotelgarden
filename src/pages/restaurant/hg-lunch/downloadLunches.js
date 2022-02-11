@@ -1,4 +1,4 @@
-import {html} from 'lit-element';
+import {html} from 'lit';
 import {getDayOfWeek, urlTo64Base, loadScript, sleep} from '../../../utils.js';
 
 const bodyStyles = getComputedStyle(document.body);

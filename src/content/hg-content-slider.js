@@ -1,4 +1,4 @@
-import {LitElement, html, css} from 'lit-element';
+import {LitElement, html, css} from 'lit';
 import {staticProp} from '../utils.js';
 import '../elements/hg-image-slider.js';
 import '../elements/hg-content-label.js';

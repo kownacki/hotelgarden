@@ -1,4 +1,4 @@
-import {LitElement, html, css} from 'lit-element';
+import {LitElement, html, css} from 'lit';
 import {hyphenate, updateData} from '../../../utils.js';
 
 customElements.define('hg-events-add', class extends LitElement {

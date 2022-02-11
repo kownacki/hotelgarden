@@ -1,4 +1,4 @@
-import {LitElement, html, css} from 'lit-element';
+import {LitElement, html, css} from 'lit';
 import {createImage, deleteImage, updateImage, staticProp} from "../../utils.js";
 import '../../content/hg-article/hg-intro-article.js';
 import '../../edit/hg-image-upload.js';

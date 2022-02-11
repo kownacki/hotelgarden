@@ -1,4 +1,4 @@
-import {LitElement, html, css} from 'lit-element';
+import {LitElement, html, css} from 'lit';
 import {staticProp, ROOM_ID, openProfitroom} from '../../utils.js';
 import sharedStyles from '../../styles/shared-styles.js'
 import '../../content/hg-text-image.js'

@@ -1,5 +1,5 @@
 import HgList from '../hg-list.js';
-import {css} from 'lit-element';
+import {css} from 'lit';
 
 customElements.define('hg-mosaic-list', class extends HgList {
   static get styles() {

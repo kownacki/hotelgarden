@@ -1,4 +1,4 @@
-import {LitElement, html, css} from 'lit-element';
+import {LitElement, html, css} from 'lit';
 import {staticProp, setMetaDescription} from "../../utils";
 import ckContent from "../../styles/ck-content.js";
 import HgContent from '../../elements/hg-content.js';

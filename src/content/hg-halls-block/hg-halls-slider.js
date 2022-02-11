@@ -1,4 +1,4 @@
-import {LitElement, html, css} from 'lit-element';
+import {LitElement, html, css} from 'lit';
 import '../../elements/hg-slider.js';
 import './hg-halls-slider-item.js';
 

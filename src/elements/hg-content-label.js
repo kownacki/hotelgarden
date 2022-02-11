@@ -1,4 +1,4 @@
-import {LitElement, html, css} from 'lit-element';
+import {LitElement, html, css} from 'lit';
 import sharedStyles from '../styles/shared-styles.js';
 
 customElements.define('hg-content-label', class extends LitElement {

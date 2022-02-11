@@ -1,4 +1,4 @@
-import {LitElement, html, css} from 'lit-element';
+import {LitElement, html, css} from 'lit';
 import '../edit/hg-editable-text.js';
 
 customElements.define('hg-icon-info', class extends LitElement {

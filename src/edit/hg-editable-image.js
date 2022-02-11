@@ -1,4 +1,4 @@
-import {LitElement, html, css} from 'lit-element';
+import {LitElement, html, css} from 'lit';
 
 const readFile = (file) => new Promise((resolve) => {
   const reader = new FileReader();

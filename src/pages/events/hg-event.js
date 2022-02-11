@@ -1,4 +1,4 @@
-import {LitElement, html, css} from 'lit-element';
+import {LitElement, html, css} from 'lit';
 import '@polymer/paper-toggle-button/paper-toggle-button.js';
 import {updateData, staticProp, setMetaDescription} from "../../utils.js";
 import sharedStyles from "../../styles/shared-styles";

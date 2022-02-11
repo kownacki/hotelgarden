@@ -1,4 +1,4 @@
-import {LitElement, html, css} from 'lit-element';
+import {LitElement, html, css} from 'lit';
 import {sleep} from "../utils";
 
 customElements.define('hg-image-upload', class extends LitElement {

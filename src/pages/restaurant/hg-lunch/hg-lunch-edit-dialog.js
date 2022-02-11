@@ -1,4 +1,4 @@
-import {LitElement, html, css} from 'lit-element';
+import {LitElement, html, css} from 'lit';
 import '@material/mwc-snackbar';
 import {updateData, sleep} from '../../../utils.js';
 import sharedStyles from '../../../styles/shared-styles.js';

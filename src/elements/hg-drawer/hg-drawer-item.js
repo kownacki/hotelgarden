@@ -1,4 +1,4 @@
-import {LitElement, html, css} from 'lit-element';
+import {LitElement, html, css} from 'lit';
 import {pages} from '../../utils.js';
 
 customElements.define('hg-drawer-item', class extends LitElement {
