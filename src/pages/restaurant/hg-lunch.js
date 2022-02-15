@@ -152,7 +152,7 @@ export class HgLunch extends HgContent {
         }
       `}
       <hg-content-slider id="zdjecia" .uid=${'lunch'}></hg-content-slider>
-      <hg-links .path=${'/lunch'} .superpath=${'/garden-bistro'}></hg-links>
+      <hg-links .path=${'/lunch'} .superpath=${'/garden-bistro'} .includeSuperpath=${true}></hg-links>
     `;
   }
 }
