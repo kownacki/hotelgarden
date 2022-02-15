@@ -37,7 +37,6 @@ export class HgLunch extends HgContent {
       this._lunchDaysCount = _.get('lunches.lunchDaysCount', this.config);
 
       (async () => {
-        console.log('!!!')
         const lastMonday = moment().startOf('isoWeek');
         this._lunchesData = _.mapValues((week) => {
           const date = week === 'current'
@@ -53,7 +52,6 @@ export class HgLunch extends HgContent {
           current: await getData(this._lunchesData.current.doc) || {},
           upcoming: await getData(this._lunchesData.upcoming.doc) || {},
         };
-        console.log(this._lunches, '!');
       })();
     }
   }
