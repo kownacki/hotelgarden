@@ -17,14 +17,12 @@ export class HgMenu extends LitElement {
     super();
     this.categories = {};
     this.selectedCategory = 0;
-    this.categories = {};
-    (async () => {
-      await this.updateComplete;
-      this.categories = (await db.doc('menus/' + this.uid).get()).data();
-      this._dataReady = true;
-    })();
     this._compact = (window.innerWidth < 600);
     window.addEventListener('resize', _.throttle(100, () => this._compact = (window.innerWidth < 600)));
+  }
+  async firstUpdated() {
+    this.categories = (await db.doc('menus/' + this.uid).get()).data();
+    this._dataReady = true;
   }
   static get styles() {
     return css`

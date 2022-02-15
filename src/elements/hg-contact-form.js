@@ -132,18 +132,17 @@ export class HgContactForm extends LitElement {
   constructor() {
     super();
     this._valid = {};
-    (async () => {
-      await this.updateComplete;
-      this.shadowRoot.getElementById('text')
-        .shadowRoot.querySelector('paper-input-container')
-        .shadowRoot.querySelector('.underline').hidden = true;
-      _.map((element) => element.shadowRoot.querySelector('paper-input-container').shadowRoot.querySelector('.underline').hidden = true,
-        this.shadowRoot.querySelectorAll('paper-input'));
-      this.shadowRoot.getElementById('text')
-        .shadowRoot.querySelector('iron-autogrow-textarea').style = `height: ${this.subject ? 276 : 220}px`;
-      this.shadowRoot.getElementById('text')
-        .shadowRoot.querySelector('paper-input-container').style = 'padding-bottom: 20px';
-    })();
+  }
+  firstUpdated() {
+    this.shadowRoot.getElementById('text')
+      .shadowRoot.querySelector('paper-input-container')
+      .shadowRoot.querySelector('.underline').hidden = true;
+    _.map((element) => element.shadowRoot.querySelector('paper-input-container').shadowRoot.querySelector('.underline').hidden = true,
+      this.shadowRoot.querySelectorAll('paper-input'));
+    this.shadowRoot.getElementById('text')
+      .shadowRoot.querySelector('iron-autogrow-textarea').style = `height: ${this.subject ? 276 : 220}px`;
+    this.shadowRoot.getElementById('text')
+      .shadowRoot.querySelector('paper-input-container').style = 'padding-bottom: 20px';
   }
   _sendMessage() {
     this.shadowRoot.getElementById('ajax').body = _.reduce(

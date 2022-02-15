@@ -24,13 +24,9 @@ export class HgTextImage extends LitElement {
       _dataReady: Boolean,
     };
   }
-  constructor() {
-    super();
-    (async () => {
-      await this.updateComplete;
-      this._textImage = (await db.doc('textImage/' + this.uid).get()).data() || {};
-      this._dataReady = true;
-    })();
+  async firstUpdated() {
+    this._textImage = (await db.doc('textImage/' + this.uid).get()).data() || {};
+    this._dataReady = true;
   }
   static get styles() {
     return [sharedStyles, ckContent, css`

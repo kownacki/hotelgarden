@@ -12,13 +12,9 @@ export class HgInfographic extends LitElement {
       _dataReady: Boolean,
     };
   }
-  constructor() {
-    super();
-    (async () => {
-      await this.updateComplete;
-      this._infographic = (await db.doc('infographics/' + this.uid).get()).data();
-      this._dataReady = true;
-    })();
+  async firstUpdated() {
+    this._infographic = (await db.doc('infographics/' + this.uid).get()).data();
+    this._dataReady = true;
   }
   static get styles() {
     return [sharedStyles, css`

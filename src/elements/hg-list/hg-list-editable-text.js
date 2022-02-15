@@ -9,12 +9,12 @@ export class HgListEditableText extends HgEditableText {
   }
   constructor() {
     super();
-    (async () => {
-      await this.updateComplete;
-      this.text = _.get(this.field, this.item);
-      this.ready = true;
-    })();
     this.addEventListener('save', (event) => this.dispatchEvent(new CustomEvent('update', {detail: {path: this.field, data: event.detail}, bubbles: true, composed: true})));
+  }
+  firstUpdated(changedProperties) {
+    super.firstUpdated(changedProperties);
+    this.text = _.get(this.field, this.item);
+    this.ready = true;
   }
   updated(changedProperties) {
     super.updated(changedProperties);

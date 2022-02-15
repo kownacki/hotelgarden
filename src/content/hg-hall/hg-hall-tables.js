@@ -39,19 +39,15 @@ export class HgHallTables extends LitElement {
       }
     `];
   }
-  constructor() {
-    super();
+  async firstUpdated() {
+    //todo refactor ehh....
     (async () => {
-      await this.updateComplete;
-      //todo refactor ehh....
-      (async () => {
-        this._hallTables = (await db.doc('hallTables/' + this.uid).get()).data() || {};
-      })();
-      const hall = (await db.doc('textImage/' + this.uid).get()).data();
-      this._setOutsDoc = 'hallTables/setOuts' + _.capitalize(hall.tent ? 'tent' : hall.narrow ? 'narrow' : hall.hallType);
-      this._setOuts = (await db.doc(this._setOutsDoc).get()).data() || {};
-      this._dataReady = true;
+      this._hallTables = (await db.doc('hallTables/' + this.uid).get()).data() || {};
     })();
+    const hall = (await db.doc('textImage/' + this.uid).get()).data();
+    this._setOutsDoc = 'hallTables/setOuts' + _.capitalize(hall.tent ? 'tent' : hall.narrow ? 'narrow' : hall.hallType);
+    this._setOuts = (await db.doc(this._setOutsDoc).get()).data() || {};
+    this._dataReady = true;
   }
   async updateImage(index, file) {
     this._setOuts = _.set(

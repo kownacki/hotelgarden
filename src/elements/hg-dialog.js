@@ -14,14 +14,10 @@ export class HgDialog extends LitElement {
       scrollable: Element,
     };
   }
-  constructor() {
-    super();
-    (async () => {
-      await this.updateComplete;
-      this.dialog = this.shadowRoot.getElementById('dialog');
-      this.scrollable = this.shadowRoot.getElementById(this.fixedButtons ? 'content' : 'content-and-buttons');
-      this.dispatchEvent(new CustomEvent('dialog-changed', {detail: this.dialog}))
-    })();
+  firstUpdated() {
+    this.dialog = this.shadowRoot.getElementById('dialog');
+    this.scrollable = this.shadowRoot.getElementById(this.fixedButtons ? 'content' : 'content-and-buttons');
+    this.dispatchEvent(new CustomEvent('dialog-changed', {detail: this.dialog}))
   }
   static get styles() {
     return [sharedStyles, css`

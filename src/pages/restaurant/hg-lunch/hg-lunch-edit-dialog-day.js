@@ -16,12 +16,8 @@ export class HgLunchEditDialogDay extends LitElement {
       _animationGoing: Boolean,
     };
   }
-  constructor() {
-    super();
-    (async () => {
-      await this.updateComplete;
-      this._disabled = _.get('disabled', this.lunches);
-    })();
+  firstUpdated() {
+    this._disabled = _.get('disabled', this.lunches);
   }
   async updated(changedProperites) {
     if (changedProperites.has('_disabled')) {

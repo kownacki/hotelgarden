@@ -15,13 +15,9 @@ export class HgMosaic extends LitElement {
       _dataReady: Boolean,
     };
   }
-  constructor() {
-    super();
-    (async () => {
-      await this.updateComplete;
-      this._mosaic = (await db.doc('mosaics/' + this.uid).get()).data() || {};
-      this._dataReady = true;
-    })();
+  async firstUpdated() {
+    this._mosaic = (await db.doc('mosaics/' + this.uid).get()).data() || {};
+    this._dataReady = true;
   }
   static get styles() {
     return [sharedStyles, ckContent, css`

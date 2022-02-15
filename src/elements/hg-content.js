@@ -19,7 +19,6 @@ export default class HgContent extends LitElement {
   constructor() {
     super();
     this._eventToRemove = () => checkChildrenVisibility(this);
-    this._eventToRemove();
     addEventListener('DOMContentLoaded', this._eventToRemove);
     addEventListener('load', this._eventToRemove);
     addEventListener('scroll', this._eventToRemove);

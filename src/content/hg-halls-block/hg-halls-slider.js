@@ -19,15 +19,11 @@ export class HgHallsSlider extends LitElement {
       }
     `;
   }
-  constructor() {
-    super();
-    (async () => {
-      await this.updateComplete;
-      this._halls = _.map.convert({cap: false})(
-        (doc, index) => ({index, ...doc.data()}),
-        (await firebase.firestore().collection('textImage').where("hallType", "==", this.type).get()).docs
-      );
-    })();
+  async firstUpdated() {
+    this._halls = _.map.convert({cap: false})(
+      (doc, index) => ({index, ...doc.data()}),
+      (await firebase.firestore().collection('textImage').where("hallType", "==", this.type).get()).docs
+    );
   }
   render() {
     return html`

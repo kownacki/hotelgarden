@@ -10,13 +10,9 @@ export class HgQuote extends LitElement {
       _dataReady: Boolean,
     };
   }
-  constructor() {
-    super();
-    (async () => {
-      await this.updateComplete;
-      this._quote = (await db.doc('quotes/' + this.uid).get()).data();
-      this._dataReady = true;
-    })();
+  async firstUpdated() {
+    this._quote = (await db.doc('quotes/' + this.uid).get()).data();
+    this._dataReady = true;
   }
   static get styles() {
     return [sharedStyles, css`

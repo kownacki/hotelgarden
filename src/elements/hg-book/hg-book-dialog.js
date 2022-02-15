@@ -15,14 +15,10 @@ export class HgBookDialog extends LitElement {
       _dataReady: Boolean,
     };
   }
-  constructor() {
-    super();
-    (async () => {
-      await this.updateComplete;
-      this._data = await getData('texts/book');
-      this._dataReady = true;
-      this.dialog.notifyResize();
-    })();
+  async firstUpdated() {
+    this._data = await getData('texts/book');
+    this._dataReady = true;
+    this.dialog.notifyResize();
   }
   static get styles() {
     return [sharedStyles, ckContent, css`

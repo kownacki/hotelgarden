@@ -22,11 +22,11 @@ export class HgIntroArticle extends HgArticle {
     super();
     this.richConfig = 'intro';
     this.rich = true;
-    (async () => {
-      await this.updateComplete;
-      this.shadowRoot.getElementById('text').classList.add('big-first-letter', 'vertically-spacious-text');
-      this.shadowRoot.getElementById('hg-text').addEventListener('text-ready', (event) => setMetaDescription(event.detail));
-    })();
+  }
+  firstUpdated(changedProperties) {
+    super.firstUpdated(changedProperties);
+    this.shadowRoot.getElementById('text').classList.add('big-first-letter', 'vertically-spacious-text');
+    this.shadowRoot.getElementById('hg-text').addEventListener('text-ready', (event) => setMetaDescription(event.detail));
   }
 }
 customElements.define('hg-intro-article', HgIntroArticle);
