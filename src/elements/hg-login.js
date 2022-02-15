@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit';
 
-customElements.define('hg-login', class extends LitElement {
+export class HgLogin extends LitElement {
   static get properties() {
     return {
       _loggedIn: String,
@@ -33,4 +33,5 @@ customElements.define('hg-login', class extends LitElement {
       }}>${this._loggedIn ? 'Wyloguj się' : 'Zaloguj się'}</a>
     `;
   }
-});
+}
+customElements.define('hg-login', HgLogin);

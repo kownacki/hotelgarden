@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit';
 
-customElements.define('hg-gallery-item', class extends LitElement {
+export class HgGalleryItem extends LitElement {
   static get properties() {
     return {
       src: String,
@@ -54,4 +54,5 @@ customElements.define('hg-gallery-item', class extends LitElement {
       <paper-icon-button noink .icon=${'zoom-out-map'}></paper-icon-button>
     `;
   }
-});
+}
+customElements.define('hg-gallery-item', HgGalleryItem);

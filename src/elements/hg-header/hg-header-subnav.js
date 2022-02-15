@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit';
 import {pages} from '../../utils.js';
 
-customElements.define('hg-header-subnav', class extends LitElement {
+export class HgHeaderSubnav extends LitElement {
   static get properties() {
     return {
       links: Array,
@@ -55,4 +55,5 @@ customElements.define('hg-header-subnav', class extends LitElement {
       </ul>
     `;
   }
-});
+}
+customElements.define('hg-header-subnav', HgHeaderSubnav);

@@ -3,7 +3,7 @@ import sharedStyles from '../../styles/shared-styles.js'
 import '../../elements/hg-slider.js';
 import '../../elements/hg-review.js';
 
-customElements.define('hg-reviews-slider', class extends LitElement {
+export class HgReviewsSlider extends LitElement {
   static get properties() {
     return {
       reviews: Array,
@@ -26,4 +26,5 @@ customElements.define('hg-reviews-slider', class extends LitElement {
       </hg-slider>
     `;
   }
-});
+}
+customElements.define('hg-reviews-slider', HgReviewsSlider);

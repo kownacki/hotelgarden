@@ -8,7 +8,7 @@ import '../../content/hg-mosaic.js';
 import '../../content/hg-text-image.js';
 import '../../content/hg-links.js';
 
-customElements.define('hg-cuisine', class extends HgContent {
+export class HgCuisine extends HgContent {
   render() {
     return html`
       <hg-intro-article .uid=${'cuisine'}></hg-intro-article>
@@ -22,4 +22,5 @@ customElements.define('hg-cuisine', class extends HgContent {
       <hg-links .path=${'/kuchnia'} .superpath=${'/'}></hg-links>
     `;
   }
-});
+}
+customElements.define('hg-cuisine', HgCuisine);

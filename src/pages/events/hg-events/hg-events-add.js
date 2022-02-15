@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit';
 import {hyphenate, updateData} from '../../../utils.js';
 
-customElements.define('hg-events-add', class extends LitElement {
+export class HgEventsAdd extends LitElement {
   static get properties() {
     return {
       _title: String,
@@ -117,4 +117,5 @@ customElements.define('hg-events-add', class extends LitElement {
       </paper-dialog>
     `;
   }
-});
+}
+customElements.define('hg-events-add', HgEventsAdd);

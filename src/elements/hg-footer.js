@@ -5,7 +5,7 @@ import ckContent from '../styles/ck-content.js';
 import './hg-text.js'
 import './hg-login.js'
 
-customElements.define('hg-footer', class extends LitElement {
+export class HgFooter extends LitElement {
   static get properties() {
     return {};
   }
@@ -81,4 +81,5 @@ customElements.define('hg-footer', class extends LitElement {
       <hg-login></hg-login>
     `;
   }
-});
+}
+customElements.define('hg-footer', HgFooter);

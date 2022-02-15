@@ -5,7 +5,7 @@ import '../../content/hg-article/hg-intro-article.js';
 import '../../content/hg-content-icons.js';
 import './hg-room.js';
 
-customElements.define('hg-rooms', class extends HgContent {
+export class HgRooms extends HgContent {
   static get styles() {
     return [super.styles, sharedStyles, css`
     `];
@@ -21,4 +21,5 @@ customElements.define('hg-rooms', class extends HgContent {
       <hg-content-icons .uid=${'rooms-conditions'}></hg-content-icons>
     `;
   }
-});
+}
+customElements.define('hg-rooms', HgRooms);

@@ -12,7 +12,7 @@ import '../../content/hg-reviews-block.js';
 import '../../content/hg-infographic.js';
 import '../../content/hg-map.js';
 
-customElements.define('hg-landing', class extends HgContent {
+export class HgLanding extends HgContent {
   static get properties() {
     return {
       config: Object,
@@ -35,4 +35,5 @@ customElements.define('hg-landing', class extends HgContent {
       <hg-map class="no-animation"></hg-map>
     `;
   }
-});
+}
+customElements.define('hg-landing', HgLanding);

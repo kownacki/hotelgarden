@@ -7,7 +7,7 @@ import '../../elements/hg-icon-info.js';
 
 const shorten = (text, maxLength) => text.length > maxLength - 3 ? text.slice(0, maxLength - 3) + '...' : text;
 
-customElements.define('hg-halls-slider-item', class extends LitElement {
+export class HgHallsSliderItem extends LitElement {
   static get properties() {
     return {
       hall: Object,
@@ -60,4 +60,5 @@ customElements.define('hg-halls-slider-item', class extends LitElement {
       </hg-action-buttons>
     `;
   }
-});
+}
+customElements.define('hg-halls-slider-item', HgHallsSliderItem);

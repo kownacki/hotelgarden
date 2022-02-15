@@ -4,7 +4,7 @@ import {getDayOfWeek} from '../../../utils.js';
 import './hg-lunch-item.js';
 import './hg-lunch-set.js';
 
-customElements.define('hg-lunch-week', class extends LitElement {
+export class HgLunchWeek extends LitElement {
   static get properties() {
     return {
       lunches: Object,
@@ -97,4 +97,5 @@ customElements.define('hg-lunch-week', class extends LitElement {
       `}
     `;
   }
-});
+}
+customElements.define('hg-lunch-week', HgLunchWeek);

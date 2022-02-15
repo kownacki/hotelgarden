@@ -1,7 +1,7 @@
 import HgList from '../hg-list.js';
 import {css} from 'lit';
 
-customElements.define('hg-mosaic-list', class extends HgList {
+export class HgMosaicList extends HgList {
   static get styles() {
     return [super.styles, css`
       :host {
@@ -94,5 +94,5 @@ customElements.define('hg-mosaic-list', class extends HgList {
         : this.style = null
     ));
   }
-});
-
+}
+customElements.define('hg-mosaic-list', HgMosaicList);

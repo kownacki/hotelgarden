@@ -5,7 +5,7 @@ import '../elements/hg-image.js';
 import './hg-reviews-block/hg-scores.js';
 import './hg-reviews-block/hg-reviews-slider.js';
 
-customElements.define('hg-reviews-block', class extends LitElement {
+export class HgReviewsBlock extends LitElement {
   static get properties() {
     return {
       uid: String,
@@ -102,4 +102,5 @@ customElements.define('hg-reviews-block', class extends LitElement {
       </div>
     `;
   }
-});
+}
+customElements.define('hg-reviews-block', HgReviewsBlock);

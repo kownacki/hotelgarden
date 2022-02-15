@@ -4,7 +4,7 @@ import {array} from '../utils.js';
 import sharedStyles from "../styles/shared-styles";
 
 //todo bug clicking go back when image is displayed breaks website
-customElements.define('hg-slider', class extends LitElement {
+export class HgSlider extends LitElement {
   static get properties() {
     return {
       selected: Number,
@@ -108,4 +108,5 @@ customElements.define('hg-slider', class extends LitElement {
       `}
     `;
   }
-});
+}
+customElements.define('hg-slider', HgSlider);

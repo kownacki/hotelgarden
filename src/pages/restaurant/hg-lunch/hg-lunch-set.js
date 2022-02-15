@@ -3,7 +3,7 @@ import sharedStyles from '../../../styles/shared-styles.js'
 import {staticProp} from "../../../utils";
 import '../../../content/hg-menu/hg-menu-item.js';
 
-customElements.define('hg-lunch-set', class extends LitElement {
+export class HgLunchSet extends LitElement {
   static get properties() {
     return {
       price: String,
@@ -21,4 +21,5 @@ customElements.define('hg-lunch-set', class extends LitElement {
       <hg-menu-item .disableEdit=${true} .item=${staticProp({name: 'I + II Danie', price: this.price})}></hg-menu-item>
     `;
   }
-});
+}
+customElements.define('hg-lunch-set', HgLunchSet);

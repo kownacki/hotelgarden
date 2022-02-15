@@ -4,7 +4,7 @@ import sharedStyles from '../../../styles/shared-styles.js';
 import downloadLunches from './downloadLunches.js';
 import '../../../elements/hg-action-button.js'
 
-customElements.define('hg-lunch-generate', class extends LitElement {
+export class HgLunchGenerate extends LitElement {
   static get properties() {
     return {
       lunches: Object,
@@ -75,4 +75,5 @@ customElements.define('hg-lunch-generate', class extends LitElement {
       </div>
     `;
   }
-});
+}
+customElements.define('hg-lunch-generate', HgLunchGenerate);

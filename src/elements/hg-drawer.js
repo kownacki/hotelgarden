@@ -2,7 +2,7 @@ import {LitElement, html, css} from 'lit';
 import {links, staticProp} from '../utils.js';
 import './hg-drawer/hg-drawer-item.js';
 
-customElements.define('hg-drawer', class extends LitElement {
+export class HgDrawer extends LitElement {
   static get properties() {
     return {
       selected: String,
@@ -71,4 +71,5 @@ customElements.define('hg-drawer', class extends LitElement {
       </nav>
     `;
   }
-});
+}
+customElements.define('hg-drawer', HgDrawer);

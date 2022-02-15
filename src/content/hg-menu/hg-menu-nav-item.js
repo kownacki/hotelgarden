@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit';
 import sharedStyles from '../../styles/shared-styles.js';
 
-customElements.define('hg-menu-nav-item', class extends LitElement {
+export class HgMenuNavItem extends LitElement {
   static get properties() {
     return {
       category: Object,
@@ -45,4 +45,5 @@ customElements.define('hg-menu-nav-item', class extends LitElement {
       <div class="name">${this.category.name}</div>
     `;
   }
-});
+}
+customElements.define('hg-menu-nav-item', HgMenuNavItem);

@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit';
 import './hg-action-button.js';
 
-customElements.define('hg-action-buttons', class extends LitElement {
+export class HgActionButtons extends LitElement {
   static get properties() {
     return {
       buttons: Array,
@@ -26,4 +26,5 @@ customElements.define('hg-action-buttons', class extends LitElement {
       `, this.buttons)}
     `;
   }
-});
+}
+customElements.define('hg-action-buttons', HgActionButtons);

@@ -23,7 +23,7 @@ import './elements/hg-header.js';
 import './elements/hg-page.js';
 import './elements/hg-drawer.js';
 
-customElements.define('hg-app', class extends LitElement {
+export class HgApp extends LitElement {
   static get properties() {
     return {
       _route: Object,
@@ -121,4 +121,5 @@ customElements.define('hg-app', class extends LitElement {
         </app-drawer>`}
     `;
   }
-});
+}
+customElements.define('hg-app', HgApp);

@@ -4,7 +4,7 @@ import './hg-header/hg-header-subnav.js';
 import './hg-header/hg-header-logo.js';
 import './hg-book/hg-book-order-button.js';
 
-customElements.define('hg-header', class extends LitElement {
+export class HgHeader extends LitElement {
   static get properties() {
     return {
       noBannerImage: {type: Boolean, reflect: true, attribute: 'no-banner-image'},
@@ -181,4 +181,5 @@ customElements.define('hg-header', class extends LitElement {
       </header>
     `;
   }
-});
+}
+customElements.define('hg-header', HgHeader);

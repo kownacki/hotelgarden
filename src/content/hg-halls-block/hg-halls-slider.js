@@ -2,7 +2,7 @@ import {LitElement, html, css} from 'lit';
 import '../../elements/hg-slider.js';
 import './hg-halls-slider-item.js';
 
-customElements.define('hg-halls-slider', class extends LitElement {
+export class HgHallsSlider extends LitElement {
   static get properties() {
     return {
       type: String, // 'conference' / 'banquet'
@@ -37,4 +37,5 @@ customElements.define('hg-halls-slider', class extends LitElement {
       </hg-slider>
     `;
   }
-});
+}
+customElements.define('hg-halls-slider', HgHallsSlider);

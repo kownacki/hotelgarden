@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit';
 import sharedStyles from "../styles/shared-styles";
 
-customElements.define('hg-dialog', class extends LitElement {
+export class HgDialog extends LitElement {
   static get properties() {
     return {
       noButtons: Boolean,
@@ -155,4 +155,5 @@ customElements.define('hg-dialog', class extends LitElement {
       </paper-dialog>
     `;
   }
-});
+}
+customElements.define('hg-dialog', HgDialog);

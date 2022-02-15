@@ -6,7 +6,7 @@ import '../edit/hg-editable-image.js';
 import '../edit/hg-editable-text.js';
 import '../elements/hg-action-buttons.js';
 
-customElements.define('hg-mosaic', class extends LitElement {
+export class HgMosaic extends LitElement {
   static get properties() {
     return {
       uid: Number,
@@ -132,4 +132,5 @@ customElements.define('hg-mosaic', class extends LitElement {
       </div>
     `;
   }
-});
+}
+customElements.define('hg-mosaic', HgMosaic);

@@ -7,7 +7,7 @@ import '../hg-action-button.js';
 import '../hg-image.js'
 import '../hg-text.js'
 
-customElements.define('hg-book-dialog', class extends LitElement {
+export class HgBookDialog extends LitElement {
   static get properties() {
     return {
       dialog: Element,
@@ -101,4 +101,5 @@ customElements.define('hg-book-dialog', class extends LitElement {
       </hg-dialog>
     `;
   }
-});
+}
+customElements.define('hg-book-dialog', HgBookDialog);

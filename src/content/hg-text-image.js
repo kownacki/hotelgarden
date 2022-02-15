@@ -8,7 +8,7 @@ import '../elements/hg-image-slider.js';
 import '../elements/hg-icon-info.js';
 import '../elements/hg-action-buttons.js';
 
-customElements.define('hg-text-image', class extends LitElement {
+export class HgTextImage extends LitElement {
   static get properties() {
     return {
       uid: Number,
@@ -138,4 +138,5 @@ customElements.define('hg-text-image', class extends LitElement {
       </div>
     `;
   }
-});
+}
+customElements.define('hg-text-image', HgTextImage);

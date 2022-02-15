@@ -8,7 +8,7 @@ import sharedStyles from "../styles/shared-styles";
 
 const FIELDS = ['name', 'company', 'phone', 'email', 'text'];
 
-customElements.define('hg-contact-form', class extends LitElement {
+export class HgContactForm extends LitElement {
   static get properties() {
     return {
       subject: {type: String, reflect: true},
@@ -231,4 +231,5 @@ customElements.define('hg-contact-form', class extends LitElement {
       </iron-ajax>
     `;
   }
-});
+}
+customElements.define('hg-contact-form', HgContactForm);

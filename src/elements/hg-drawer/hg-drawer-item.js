@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit';
 import {pages} from '../../utils.js';
 
-customElements.define('hg-drawer-item', class extends LitElement {
+export class HgDrawerItem extends LitElement {
   static get properties() {
     return {
       link: Object,
@@ -82,4 +82,5 @@ customElements.define('hg-drawer-item', class extends LitElement {
       `}
     `;
   }
-});
+}
+customElements.define('hg-drawer-item', HgDrawerItem);

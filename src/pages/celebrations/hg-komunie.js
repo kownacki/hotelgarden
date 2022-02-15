@@ -10,7 +10,7 @@ import '../../content/hg-reviews-block.js';
 import '../../content/hg-contact-block.js';
 import '../../content/hg-links.js';
 
-customElements.define('hg-komunie', class extends HgContent {
+export class HgKomunie extends HgContent {
   render() {
     return html`
       <hg-intro-article .uid=${'komunie'}></hg-intro-article>
@@ -24,4 +24,5 @@ customElements.define('hg-komunie', class extends HgContent {
       <hg-links .path=${'/komunie'} .superpath=${'/wesela'} .includeSuperpath=${true}></hg-links>
     `;
   }
-});
+}
+customElements.define('hg-komunie', HgKomunie);

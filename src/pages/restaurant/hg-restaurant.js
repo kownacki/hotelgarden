@@ -12,7 +12,7 @@ import '../../content/hg-links.js';
 import '../../content/hg-reviews-block.js';
 import '../../content/hg-text-image.js';
 
-customElements.define('hg-restaurant', class extends HgContent {
+export class HgRestaurant extends HgContent {
   render() {
     return html`
       <hg-intro-article .uid=${'grill-garden'}></hg-intro-article>
@@ -29,4 +29,5 @@ customElements.define('hg-restaurant', class extends HgContent {
       <hg-links .path=${'/garden-bistro'} .superpath=${'/garden-bistro'}></hg-links>
     `;
   }
-});
+}
+customElements.define('hg-restaurant', HgRestaurant);

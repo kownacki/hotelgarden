@@ -3,7 +3,7 @@ import {headerHeight} from "../utils";
 import './hg-menu/hg-menu-main.js';
 import './hg-menu/hg-menu-nav.js';
 
-customElements.define('hg-menu', class extends LitElement {
+export class HgMenu extends LitElement {
   static get properties() {
     return {
       categories: Object,
@@ -99,4 +99,5 @@ customElements.define('hg-menu', class extends LitElement {
       </section>
     `;
   }
-});
+}
+customElements.define('hg-menu', HgMenu);

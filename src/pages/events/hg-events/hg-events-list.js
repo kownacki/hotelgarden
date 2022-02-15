@@ -4,7 +4,7 @@ import sharedStyles from '../../../styles/shared-styles.js';
 import '../../../elements/hg-list.js';
 import './hg-events-card.js';
 
-customElements.define('hg-events-list', class extends LitElement {
+export class HgEventsList extends LitElement {
   static get properties() {
     return {
       past: Boolean,
@@ -47,4 +47,5 @@ customElements.define('hg-events-list', class extends LitElement {
       </hg-list>
     `;
   }
-});
+}
+customElements.define('hg-events-list', HgEventsList);

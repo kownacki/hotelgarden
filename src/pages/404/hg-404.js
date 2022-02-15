@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit';
 
-customElements.define('hg-404', class extends LitElement {
+export class Hg404 extends LitElement {
   static get properties() {
     return {};
   }
@@ -12,4 +12,5 @@ customElements.define('hg-404', class extends LitElement {
     return html`
     `;
   }
-});
+}
+customElements.define('hg-404', Hg404);

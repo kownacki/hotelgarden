@@ -2,7 +2,7 @@ import {LitElement, html, css} from 'lit';
 import '../../../elements/hg-slider.js';
 import '../../../edit/hg-editable-image.js';
 
-customElements.define('hg-gallery-slider', class extends LitElement {
+export class HgGallerySlider extends LitElement {
   static get properties() {
     return {
       images: Array,
@@ -79,4 +79,5 @@ customElements.define('hg-gallery-slider', class extends LitElement {
       </div>
     `;
   }
-});
+}
+customElements.define('hg-gallery-slider', HgGallerySlider);

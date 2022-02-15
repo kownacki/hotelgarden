@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit';
 
-customElements.define('hg-list-item-configure', class extends LitElement {
+export class HgListItemConfigure extends LitElement {
   static get properties() {
     return {
       configure: Object,
@@ -52,4 +52,5 @@ customElements.define('hg-list-item-configure', class extends LitElement {
       </paper-dialog>
     `;
   }
-});
+}
+customElements.define('hg-list-item-configure', HgListItemConfigure);

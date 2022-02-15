@@ -8,7 +8,7 @@ import '../../elements/hg-banner.js';
 import './hg-event/hg-event-edit-date.js';
 import './hg-events/hg-events-sidebar.js';
 
-customElements.define('hg-event', class extends LitElement {
+export class HgEvent extends LitElement {
   static get properties() {
     return {
       uid: String,
@@ -182,4 +182,5 @@ customElements.define('hg-event', class extends LitElement {
       </div>
     `;
   }
-});
+}
+customElements.define('hg-event', HgEvent);

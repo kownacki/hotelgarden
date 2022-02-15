@@ -3,7 +3,7 @@ import sharedStyles from "../styles/shared-styles";
 import '../content/hg-article.js';
 import '../elements/hg-contact-form.js';
 
-customElements.define('hg-contact-block', class extends LitElement {
+export class HgContactBlock extends LitElement {
   static get properties() {
     return {};
   }
@@ -18,4 +18,5 @@ customElements.define('hg-contact-block', class extends LitElement {
       <hg-contact-form .subject=${'gastro'}></hg-contact-form>
     `;
   }
-});
+}
+customElements.define('hg-contact-block', HgContactBlock);

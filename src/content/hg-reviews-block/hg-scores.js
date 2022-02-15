@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit';
 
-customElements.define('hg-scores', class extends LitElement {
+export class HgScores extends LitElement {
   static get properties() {
     return {
       bookingScores: Object,
@@ -92,4 +92,5 @@ customElements.define('hg-scores', class extends LitElement {
       </div>
     `;
   }
-});
+}
+customElements.define('hg-scores', HgScores);

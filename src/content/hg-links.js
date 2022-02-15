@@ -2,7 +2,7 @@ import {LitElement, html, css} from 'lit';
 import sharedStyles from '../styles/shared-styles.js';
 import {pathToUid, linksMap, pages} from '../utils.js';
 
-customElements.define('hg-links', class extends LitElement {
+export class HgLinks extends LitElement {
   static get properties() {
     return {
       path: String,
@@ -90,4 +90,5 @@ customElements.define('hg-links', class extends LitElement {
       </div>
     `;
   }
-});
+}
+customElements.define('hg-links', HgLinks);

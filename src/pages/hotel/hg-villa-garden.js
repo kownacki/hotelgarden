@@ -7,7 +7,7 @@ import '../../content/hg-links.js';
 
 const VILLA_ROOM_INDEX = 3;
 
-customElements.define('hg-villa-garden', class extends HgContent {
+export class HgVillaGarden extends HgContent {
   render() {
     return html`
       <hg-intro-article .uid=${'villa-garden'}></hg-intro-article>
@@ -18,4 +18,5 @@ customElements.define('hg-villa-garden', class extends HgContent {
       <hg-links .path=${'/villa-garden'} .superpath=${'/'}></hg-links>
     `;
   }
-});
+}
+customElements.define('hg-villa-garden', HgVillaGarden);

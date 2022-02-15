@@ -4,7 +4,7 @@ import sharedStyles from "../styles/shared-styles";
 import '../elements/hg-image.js';
 import './hg-halls-block/hg-halls-slider.js';
 
-customElements.define('hg-halls-block', class extends LitElement {
+export class HgHallsBlock extends LitElement {
   static get properties() {
     return {
       uid: String,
@@ -80,4 +80,5 @@ customElements.define('hg-halls-block', class extends LitElement {
       </div>
     `;
   }
-});
+}
+customElements.define('hg-halls-block', HgHallsBlock);

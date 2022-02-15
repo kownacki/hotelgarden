@@ -2,7 +2,7 @@ import {LitElement, html, css} from 'lit';
 import '../../edit/hg-delete-item.js';
 import './hg-list-item-configure.js';
 
-customElements.define('hg-list-item', class extends LitElement {
+export class HgListItem extends LitElement {
   static get properties() {
     return {
       item: Object,
@@ -116,4 +116,5 @@ customElements.define('hg-list-item', class extends LitElement {
       }
     `;
   }
-});
+}
+customElements.define('hg-list-item', HgListItem);

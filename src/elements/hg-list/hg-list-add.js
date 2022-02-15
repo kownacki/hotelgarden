@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit';
 
-customElements.define('hg-list-add', class extends LitElement {
+export class HgListAdd extends LitElement {
   static get properties() {
     return {
       disable: Boolean,
@@ -31,4 +31,5 @@ customElements.define('hg-list-add', class extends LitElement {
       </paper-icon-button>
     `;
   }
-});
+}
+customElements.define('hg-list-add', HgListAdd);

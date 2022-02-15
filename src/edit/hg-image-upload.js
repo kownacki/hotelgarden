@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit';
 import {sleep} from "../utils";
 
-customElements.define('hg-image-upload', class extends LitElement {
+export class HgImageUpload extends LitElement {
   static get properties() {
     return {
     };
@@ -35,4 +35,5 @@ customElements.define('hg-image-upload', class extends LitElement {
       <input id="input" type="file" accept="image/png, image/jpeg">
     `;
   }
-});
+}
+customElements.define('hg-image-upload', HgImageUpload);

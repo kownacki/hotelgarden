@@ -10,7 +10,7 @@ import '../../content/hg-reviews-block.js';
 import '../../content/hg-contact-block.js';
 import '../../content/hg-links.js';
 
-customElements.define('hg-chrzciny', class extends HgContent {
+export class HgChrzciny extends HgContent {
   render() {
     return html`
       <hg-intro-article .uid=${'chrzciny'}></hg-intro-article>
@@ -24,4 +24,5 @@ customElements.define('hg-chrzciny', class extends HgContent {
       <hg-links .path=${'/chrzciny'} .superpath=${'/wesela'} .includeSuperpath=${true}></hg-links>
     `;
   }
-});
+}
+customElements.define('hg-chrzciny', HgChrzciny);

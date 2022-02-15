@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit';
 import sharedStyles from '../../../styles/shared-styles.js'
 
-customElements.define('hg-events-card', class extends LitElement {
+export class HgEventsCard extends LitElement {
   static get properties() {
     return {
       event: Object,
@@ -103,4 +103,5 @@ customElements.define('hg-events-card', class extends LitElement {
       </a>
     `;
   }
-});
+}
+customElements.define('hg-events-card', HgEventsCard);

@@ -2,7 +2,7 @@ import {LitElement, html, css} from 'lit';
 import sharedStyles from '../../styles/shared-styles.js';
 import '../../elements/hg-list/hg-list-editable-text.js';
 
-customElements.define('hg-menu-item', class extends LitElement {
+export class HgMenuItem extends LitElement {
   static get properties() {
     return {
       item: Object,
@@ -92,4 +92,5 @@ customElements.define('hg-menu-item', class extends LitElement {
       </div>
     `;
   }
-});
+}
+customElements.define('hg-menu-item', HgMenuItem);

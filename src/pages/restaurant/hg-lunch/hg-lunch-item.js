@@ -3,7 +3,7 @@ import sharedStyles from '../../../styles/shared-styles.js';
 import {staticProp} from "../../../utils";
 import '../../../content/hg-menu/hg-menu-item.js';
 
-customElements.define('hg-lunch-item', class extends LitElement {
+export class HgLunchItem extends LitElement {
   static get properties() {
     return {
       lunch: Object,
@@ -30,4 +30,5 @@ customElements.define('hg-lunch-item', class extends LitElement {
       `, [1, 2])}
     `;
   }
-});
+}
+customElements.define('hg-lunch-item', HgLunchItem);

@@ -6,7 +6,7 @@ import '../../content/hg-article.js';
 import '../../elements/hg-contact-form.js';
 import '../../content/hg-map.js';
 
-customElements.define('hg-contact', class extends HgContent {
+export class HgContact extends HgContent {
   constructor() {
     super();
     (async () => {
@@ -33,4 +33,5 @@ customElements.define('hg-contact', class extends HgContent {
       <hg-map class="no-animation"></hg-map>
     `;
   }
-});
+}
+customElements.define('hg-contact', HgContact);

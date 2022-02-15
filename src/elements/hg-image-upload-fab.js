@@ -2,7 +2,7 @@ import {LitElement, html, css} from 'lit';
 import '@polymer/paper-fab';
 import '../edit/hg-image-upload.js';
 
-customElements.define('hg-image-upload-fab', class extends LitElement {
+export class HgImageUploadFab extends LitElement {
   static get properties() {
     return {};
   }
@@ -32,4 +32,5 @@ customElements.define('hg-image-upload-fab', class extends LitElement {
       </paper-fab>
     `;
   }
-});
+}
+customElements.define('hg-image-upload-fab', HgImageUploadFab);

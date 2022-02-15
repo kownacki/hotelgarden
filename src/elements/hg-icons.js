@@ -4,7 +4,7 @@ import './hg-list.js';
 import './hg-icons/hg-icons-add.js';
 import './hg-icons/hg-icons-item.js';
 
-customElements.define('hg-icons', class extends LitElement {
+export class HgIcons extends LitElement {
   static get properties() {
     return {
       uid: String,
@@ -78,4 +78,5 @@ customElements.define('hg-icons', class extends LitElement {
       ${!this._loggedIn ? '' : html`<hg-icons-add id="add"></hg-icons-add>`}
     `;
   }
-});
+}
+customElements.define('hg-icons', HgIcons);

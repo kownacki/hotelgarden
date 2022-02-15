@@ -4,7 +4,7 @@ import sharedStyles from '../styles/shared-styles.js';
 import '../pages/events/hg-events/hg-events-list.js';
 import '../elements/hg-action-button.js';
 
-customElements.define('hg-events-block', class extends LitElement {
+export class HgEventsBlock extends LitElement {
   static get properties() {
     return {
       _eventsNotEmpty: {type: Boolean, reflect: true, attribute: 'events-not-empty'}
@@ -44,4 +44,5 @@ customElements.define('hg-events-block', class extends LitElement {
       <hg-action-button .url=${'/wydarzenia'}>Wszystkie wydarzenia</hg-action-button>
     `;
   }
-});
+}
+customElements.define('hg-events-block', HgEventsBlock);

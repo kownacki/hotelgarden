@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit';
 
-customElements.define('hg-action-button', class extends LitElement {
+export class HgActionButton extends LitElement {
   static get properties() {
     return {
       url: String,
@@ -75,4 +75,5 @@ customElements.define('hg-action-button', class extends LitElement {
       
     `;
   }
-});
+}
+customElements.define('hg-action-button', HgActionButton);

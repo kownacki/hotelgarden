@@ -2,7 +2,7 @@ import {LitElement, html, css} from 'lit';
 import '../../pages/gallery/hg-gallery/hg-gallery-item.js'
 import '../../edit/hg-delete-item.js'
 
-customElements.define('hg-image-slider-item', class extends LitElement {
+export class HgImageSliderItem extends LitElement {
   static get properties() {
     return {
       image: Object,
@@ -38,4 +38,5 @@ customElements.define('hg-image-slider-item', class extends LitElement {
       </hg-delete-item>`}
     `;
   }
-});
+}
+customElements.define('hg-image-slider-item', HgImageSliderItem);

@@ -1,6 +1,6 @@
 import HgEditableText from '../../edit/hg-editable-text.js';
 
-customElements.define('hg-list-editable-text', class extends HgEditableText {
+export class HgListEditableText extends HgEditableText {
   static get properties() {
     return {
       item: Object,
@@ -22,5 +22,5 @@ customElements.define('hg-list-editable-text', class extends HgEditableText {
       this.text = _.get(this.field, this.item);
     }
   }
-});
-
+}
+customElements.define('hg-list-editable-text', HgListEditableText);

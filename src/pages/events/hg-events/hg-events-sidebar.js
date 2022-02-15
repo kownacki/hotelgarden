@@ -3,7 +3,7 @@ import {repeat} from 'lit/directives/repeat';
 import {splitEvents, assignKeys} from '../../../utils.js';
 import sharedStyles from '../../../styles/shared-styles.js';
 
-customElements.define('hg-events-sidebar', class extends LitElement {
+export class HgEventsSidebar extends LitElement {
   static get properties() {
     return {
       selected: String,
@@ -84,4 +84,5 @@ customElements.define('hg-events-sidebar', class extends LitElement {
       </div>
     `;
   }
-});
+}
+customElements.define('hg-events-sidebar', HgEventsSidebar);

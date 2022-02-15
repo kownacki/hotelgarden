@@ -3,7 +3,7 @@ import {staticProp} from '../utils.js';
 import '../elements/hg-image-slider.js';
 import '../elements/hg-content-label.js';
 
-customElements.define('hg-content-slider', class extends LitElement {
+export class HgContentSlider extends LitElement {
   static get properties() {
     return {
       uid: String,
@@ -47,4 +47,5 @@ customElements.define('hg-content-slider', class extends LitElement {
       <hg-content-label .name=${'Slider'}></hg-content-label>
     `;
   }
-});
+}
+customElements.define('hg-content-slider', HgContentSlider);

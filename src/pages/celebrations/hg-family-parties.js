@@ -13,7 +13,7 @@ import '../../content/hg-reviews-block.js';
 import '../../content/hg-contact-block.js';
 import '../../content/hg-links.js';
 
-customElements.define('hg-family-parties', class extends HgContent {
+export class HgFamilyParties extends HgContent {
   static get styles() {
     return [super.styles, sharedStyles, css`
       :host {
@@ -45,4 +45,5 @@ customElements.define('hg-family-parties', class extends HgContent {
       <hg-links .path=${'/przyjecia-rodzinne'} .superpath=${'/wesela'} .includeSuperpath=${true}></hg-links>
     `;
   }
-});
+}
+customElements.define('hg-family-parties', HgFamilyParties);

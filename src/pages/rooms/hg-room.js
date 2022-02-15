@@ -17,7 +17,7 @@ const roomsConfig = [
   ],
 ];
 
-customElements.define('hg-room', class extends LitElement {
+export class HgRoom extends LitElement {
   static get properties() {
     return {
       index: Number,
@@ -59,4 +59,5 @@ customElements.define('hg-room', class extends LitElement {
       </div>
     `;
   }
-});
+}
+customElements.define('hg-room', HgRoom);

@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit';
 
-customElements.define('hg-delete-item', class extends LitElement {
+export class HgDeleteItem extends LitElement {
   static get properties() {
     return {
       name: String,
@@ -51,4 +51,5 @@ customElements.define('hg-delete-item', class extends LitElement {
       </paper-dialog>
     `;
   }
-});
+}
+customElements.define('hg-delete-item', HgDeleteItem);

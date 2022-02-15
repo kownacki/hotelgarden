@@ -6,7 +6,7 @@ import '../../elements/hg-list/hg-mosaic-list.js'
 import './hg-gallery/hg-gallery-item.js';
 import './hg-gallery/hg-gallery-slider.js';
 
-customElements.define('hg-gallery', class extends LitElement {
+export class HgGallery extends LitElement {
   static get properties() {
     return {
       _items: Object,
@@ -67,4 +67,5 @@ customElements.define('hg-gallery', class extends LitElement {
       </hg-gallery-slider>
     `;
   }
-});
+}
+customElements.define('hg-gallery', HgGallery);

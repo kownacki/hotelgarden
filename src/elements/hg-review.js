@@ -2,7 +2,7 @@ import {LitElement, html, css} from 'lit';
 import sharedStyles from "../styles/shared-styles";
 import './hg-list/hg-list-editable-text.js';
 
-customElements.define('hg-review', class extends LitElement {
+export class HgReview extends LitElement {
   static get properties() {
     return {
       review: Object,
@@ -104,4 +104,5 @@ customElements.define('hg-review', class extends LitElement {
       `}
     `;
   }
-});
+}
+customElements.define('hg-review', HgReview);

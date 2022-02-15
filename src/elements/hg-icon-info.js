@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit';
 import '../edit/hg-editable-text.js';
 
-customElements.define('hg-icon-info', class extends LitElement {
+export class HgIconInfo extends LitElement {
   static get properties() {
     return {
       editable: Boolean,
@@ -61,4 +61,5 @@ customElements.define('hg-icon-info', class extends LitElement {
       `, this.items)}
     `;
   }
-});
+}
+customElements.define('hg-icon-info', HgIconInfo);

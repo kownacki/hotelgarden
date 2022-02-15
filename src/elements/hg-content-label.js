@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit';
 import sharedStyles from '../styles/shared-styles.js';
 
-customElements.define('hg-content-label', class extends LitElement {
+export class HgContentLabel extends LitElement {
   static get properties() {
     return {
       name: String,
@@ -32,4 +32,5 @@ customElements.define('hg-content-label', class extends LitElement {
       ${this._loggedIn ? this.name : ''}
     `;
   }
-});
+}
+customElements.define('hg-content-label', HgContentLabel);

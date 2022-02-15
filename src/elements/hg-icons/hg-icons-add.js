@@ -2,7 +2,7 @@ import {LitElement, html, css} from 'lit';
 
 //todo dodać link do strony icons8
 
-customElements.define('hg-icons-add', class extends LitElement {
+export class HgIconsAdd extends LitElement {
   static get properties() {
     return {
       disable: Boolean,
@@ -126,4 +126,5 @@ customElements.define('hg-icons-add', class extends LitElement {
       </paper-dialog>
     `;
   }
-});
+}
+customElements.define('hg-icons-add', HgIconsAdd);

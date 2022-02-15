@@ -6,7 +6,7 @@ import '../../edit/hg-editable-text.js';
 import '../../elements/hg-list.js';
 import './hg-menu-item.js';
 
-customElements.define('hg-menu-main', class extends LitElement {
+export class HgMenuMain extends LitElement {
   static get properties() {
     return {
       uid: String,
@@ -108,4 +108,5 @@ customElements.define('hg-menu-main', class extends LitElement {
       `}
     `;
   }
-});
+}
+customElements.define('hg-menu-main', HgMenuMain);

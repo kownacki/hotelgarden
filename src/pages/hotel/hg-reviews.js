@@ -27,7 +27,7 @@ const configure = {
   `
 };
 
-customElements.define('hg-reviews', class extends LitElement {
+export class HgReviews extends LitElement {
   static get properties() {
     return {
     };
@@ -99,4 +99,5 @@ customElements.define('hg-reviews', class extends LitElement {
       <hg-links .path=${'/opinie'} .superpath=${'/'}></hg-links>
     `;
   }
-});
+}
+customElements.define('hg-reviews', HgReviews);

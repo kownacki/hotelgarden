@@ -7,7 +7,7 @@ import './hg-events/hg-events-list.js';
 
 // todo add scrolling to dialogs
 
-customElements.define('hg-events', class extends LitElement {
+export class HgEvents extends LitElement {
   static get properties() {
     return {
       _loggedIn: Boolean,
@@ -56,4 +56,5 @@ customElements.define('hg-events', class extends LitElement {
       </div>
     `;
   }
-});
+}
+customElements.define('hg-events', HgEvents);

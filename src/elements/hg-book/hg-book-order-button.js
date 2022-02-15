@@ -3,7 +3,7 @@ import sharedStyles from "../../styles/shared-styles.js";
 import '../hg-action-button.js';
 import './hg-book-dialog';
 
-customElements.define('hg-book-order-button', class extends LitElement {
+export class HgBookOrderButton extends LitElement {
   static get properties() {
     return {
       order: String, // 'restaurant' / null
@@ -41,4 +41,5 @@ customElements.define('hg-book-order-button', class extends LitElement {
       <hg-book-dialog id="dialog"></hg-book-dialog>
     `;
   }
-});
+}
+customElements.define('hg-book-order-button', HgBookOrderButton);

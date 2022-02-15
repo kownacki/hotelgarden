@@ -10,7 +10,7 @@ import './hg-lunch/hg-lunch-week.js';
 import './hg-lunch/hg-lunch-edit.js';
 import './hg-lunch/hg-lunch-generate.js';
 
-customElements.define('hg-lunch', class extends HgContent {
+export class HgLunch extends HgContent {
   static get properties() {
     return {
       config: Object,
@@ -157,4 +157,5 @@ customElements.define('hg-lunch', class extends HgContent {
       <hg-links .path=${'/lunch'} .superpath=${'/garden-bistro'}></hg-links>
     `;
   }
-});
+}
+customElements.define('hg-lunch', HgLunch);

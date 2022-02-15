@@ -2,7 +2,7 @@ import {html, css} from 'lit';
 import HgArticle from '../hg-article.js';
 import {setMetaDescription} from "../../utils";
 
-customElements.define('hg-intro-article', class extends HgArticle {
+export class HgIntroArticle extends HgArticle {
   static get properties() {
     return {};
   }
@@ -28,4 +28,5 @@ customElements.define('hg-intro-article', class extends HgArticle {
       this.shadowRoot.getElementById('hg-text').addEventListener('text-ready', (event) => setMetaDescription(event.detail));
     })();
   }
-});
+}
+customElements.define('hg-intro-article', HgIntroArticle);

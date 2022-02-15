@@ -3,7 +3,7 @@ import {deleteImage, staticProp} from '../../utils.js';
 import '../../elements/hg-list.js';
 import './hg-menu-nav-item.js';
 
-customElements.define('hg-menu-nav', class extends LitElement {
+export class HgMenuNav extends LitElement {
   static get properties() {
     return {
       uid: String,
@@ -71,4 +71,5 @@ customElements.define('hg-menu-nav', class extends LitElement {
       </hg-list>
     `;
   }
-});
+}
+customElements.define('hg-menu-nav', HgMenuNav);

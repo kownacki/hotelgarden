@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit';
 
-customElements.define('hg-header-logo', class extends LitElement {
+export class HgHeaderLogo extends LitElement {
   static get properties() {
     return {
       noBannerImage: {type: Boolean, reflect: true, attribute: 'no-banner-image'},
@@ -65,4 +65,5 @@ customElements.define('hg-header-logo', class extends LitElement {
       </a>
     `;
   }
-});
+}
+customElements.define('hg-header-logo', HgHeaderLogo);

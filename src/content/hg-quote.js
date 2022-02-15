@@ -2,7 +2,7 @@ import {LitElement, html, css} from 'lit';
 import sharedStyles from "../styles/shared-styles";
 import '../edit/hg-editable-text.js';
 
-customElements.define('hg-quote', class extends LitElement {
+export class HgQuote extends LitElement {
   static get properties() {
     return {
       uid: Number,
@@ -74,4 +74,5 @@ customElements.define('hg-quote', class extends LitElement {
       </hg-editable-text>
     `;
   }
-});
+}
+customElements.define('hg-quote', HgQuote);

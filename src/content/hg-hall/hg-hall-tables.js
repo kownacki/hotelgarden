@@ -4,7 +4,7 @@ import sharedStyles from '../../styles/shared-styles.js'
 import '../../edit/hg-editable-image.js';
 import '../../edit/hg-editable-text.js';
 
-customElements.define('hg-hall-tables', class extends LitElement {
+export class HgHallTables extends LitElement {
   static get properties() {
     return {
       uid: String,
@@ -88,4 +88,5 @@ customElements.define('hg-hall-tables', class extends LitElement {
       </div>
     `;
   }
-});
+}
+customElements.define('hg-hall-tables', HgHallTables);

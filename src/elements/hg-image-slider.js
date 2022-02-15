@@ -6,7 +6,7 @@ import './hg-image-upload-fab.js';
 import '../pages/gallery/hg-gallery/hg-gallery-slider.js'
 
 //todo esc should close window
-customElements.define('hg-image-slider', class extends LitElement {
+export class HgImageSlider extends LitElement {
   static get properties() {
     return {
       // required params
@@ -109,4 +109,5 @@ customElements.define('hg-image-slider', class extends LitElement {
       </hg-gallery-slider>
     `;
   }
-});
+}
+customElements.define('hg-image-slider', HgImageSlider);

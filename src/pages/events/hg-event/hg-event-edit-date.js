@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit';
 
-customElements.define('hg-event-edit-date', class extends LitElement {
+export class HgEventEditDate extends LitElement {
   static get properties() {
     return {
       date: String,
@@ -50,4 +50,5 @@ customElements.define('hg-event-edit-date', class extends LitElement {
       </paper-dialog>
     `;
   }
-});
+}
+customElements.define('hg-event-edit-date', HgEventEditDate);

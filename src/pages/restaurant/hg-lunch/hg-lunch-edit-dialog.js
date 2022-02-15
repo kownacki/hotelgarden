@@ -6,7 +6,7 @@ import '../../../elements/hg-action-button.js'
 import '../../../elements/hg-dialog.js';
 import './hg-lunch-edit-dialog-day.js';
 
-customElements.define('hg-lunch-edit-dialog', class extends LitElement {
+export class HgLunchEditDialog extends LitElement {
   static get properties() {
     return {
       lunches: Object,
@@ -109,4 +109,5 @@ customElements.define('hg-lunch-edit-dialog', class extends LitElement {
       <mwc-snackbar .leading=${true} id="snackbar-success" labelText="Menu lunchowe ${this.dateString} zostało zapisane."></mwc-snackbar>
     `;
   }
-});
+}
+customElements.define('hg-lunch-edit-dialog', HgLunchEditDialog);

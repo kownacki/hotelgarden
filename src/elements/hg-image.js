@@ -1,7 +1,7 @@
 import {getData, updateImage} from "../utils.js";
 import HgEditableImage from '../edit/hg-editable-image.js';
 
-customElements.define('hg-image', class extends HgEditableImage {
+export class HgImage extends HgEditableImage {
   static get properties() {
     return {
       // required params
@@ -33,4 +33,5 @@ customElements.define('hg-image', class extends HgEditableImage {
   async updateImage(file) {
     this.image = await updateImage(this.path.doc, this.path.field, file, (_.get('name', this.image)));
   }
-});
+}
+customElements.define('hg-image', HgImage);

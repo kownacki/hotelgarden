@@ -5,7 +5,7 @@ import '../../content/hg-article/hg-intro-article.js';
 import '../../content/hg-text-image.js';
 import '../../content/hg-links.js';
 
-customElements.define('hg-surroundings', class extends HgContent {
+export class HgSurroundings extends HgContent {
   static get styles() {
     return [super.styles, css`
       hg-text-image {
@@ -35,4 +35,5 @@ customElements.define('hg-surroundings', class extends HgContent {
       <hg-links .path=${'/atrakcje-okolicy'} .superpath=${'/'}></hg-links>
     `;
   }
-});
+}
+customElements.define('hg-surroundings', HgSurroundings);

@@ -4,7 +4,7 @@ import {updateImage} from "../utils";
 import '../edit/hg-editable-image.js';
 import '../edit/hg-editable-text.js';
 
-customElements.define('hg-infographic', class extends LitElement {
+export class HgInfographic extends LitElement {
   static get properties() {
     return {
       uid: String,
@@ -136,4 +136,5 @@ customElements.define('hg-infographic', class extends LitElement {
       </div>
     `;
   }
-});
+}
+customElements.define('hg-infographic', HgInfographic);

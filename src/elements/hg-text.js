@@ -1,7 +1,7 @@
 import {updateData} from '../utils.js';
 import HgEditableText from '../edit/hg-editable-text.js';
 
-customElements.define('hg-text', class extends HgEditableText {
+export class HgText extends HgEditableText {
   static get properties() {
     return {
       // required params
@@ -27,4 +27,5 @@ customElements.define('hg-text', class extends HgEditableText {
     super();
     this.addEventListener('save', (event) => updateData(this.path.doc, this.path.field, event.detail));
   }
-});
+}
+customElements.define('hg-text', HgText);

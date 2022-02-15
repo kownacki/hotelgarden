@@ -3,7 +3,7 @@ import sharedStyles from '../styles/shared-styles.js';
 import '../elements/hg-icons.js'
 import '../elements/hg-content-label.js';
 
-customElements.define('hg-content-icons', class extends LitElement {
+export class HgContentIcons extends LitElement {
   static get properties() {
     return {
       uid: String,
@@ -39,4 +39,5 @@ customElements.define('hg-content-icons', class extends LitElement {
       <hg-content-label .name=${'Ikony'}></hg-content-label>
     `;
   }
-});
+}
+customElements.define('hg-content-icons', HgContentIcons);

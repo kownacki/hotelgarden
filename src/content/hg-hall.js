@@ -4,7 +4,7 @@ import sharedStyles from '../styles/shared-styles.js'
 import './hg-text-image.js';
 import './hg-hall/hg-hall-tables.js';
 
-customElements.define('hg-hall', class extends LitElement {
+export class HgHall extends LitElement {
   static get properties() {
     return {
       uid: String,
@@ -30,4 +30,5 @@ customElements.define('hg-hall', class extends LitElement {
       </div>
     `;
   }
-});
+}
+customElements.define('hg-hall', HgHall);

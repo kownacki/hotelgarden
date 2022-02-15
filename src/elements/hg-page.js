@@ -31,8 +31,7 @@ import '../pages/404/hg-404.js';
 let seconds = 0;
 setInterval(() => ++seconds, 1000);
 
-
-customElements.define('hg-page', class extends LitElement {
+export class HgPage extends LitElement {
   static get properties() {
     return {
       event: Boolean,
@@ -103,4 +102,5 @@ customElements.define('hg-page', class extends LitElement {
       <hg-footer></hg-footer>
     `;
   }
-});
+}
+customElements.define('hg-page', HgPage);

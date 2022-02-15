@@ -4,7 +4,7 @@ import apiKey from '../../utils/apiKey.js';
 
 let googleMapsLoaded = false;
 
-customElements.define('hg-map', class extends LitElement {
+export class HgMap extends LitElement {
   static get properties() {
     return {
       seen: Boolean,
@@ -61,4 +61,5 @@ customElements.define('hg-map', class extends LitElement {
       <div id="map"></div>
     `;
   }
-});
+}
+customElements.define('hg-map', HgMap);

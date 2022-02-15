@@ -4,7 +4,7 @@ import sharedStyles from '../styles/shared-styles';
 import '../edit/hg-editable-image.js';
 import '../edit/hg-editable-text.js';
 
-customElements.define('hg-banner', class extends LitElement {
+export class HgBanner extends LitElement {
   static get properties() {
     return {
       uid: String,
@@ -107,4 +107,5 @@ customElements.define('hg-banner', class extends LitElement {
       </div>
     `;
   }
-});
+}
+customElements.define('hg-banner', HgBanner);

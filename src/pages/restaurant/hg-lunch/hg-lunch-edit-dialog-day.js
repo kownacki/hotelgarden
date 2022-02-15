@@ -7,7 +7,7 @@ import sharedStyles from '../../../styles/shared-styles.js';
 
 const animationLength = 200;
 
-customElements.define('hg-lunch-edit-dialog-day', class extends LitElement {
+export class HgLunchEditDialogDay extends LitElement {
   static get properties() {
     return {
       day: Number,
@@ -153,4 +153,5 @@ customElements.define('hg-lunch-edit-dialog-day', class extends LitElement {
       </div>
     `;
   }
-});
+}
+customElements.define('hg-lunch-edit-dialog-day', HgLunchEditDialogDay);

@@ -4,7 +4,7 @@ import '../../content/hg-article/hg-intro-article.js';
 import '../../content/hg-hall.js';
 import '../../content/hg-links.js';
 
-customElements.define('hg-banquet-halls', class extends HgContent {
+export class HgBanquetHalls extends HgContent {
   render() {
     return html`
       <hg-intro-article .uid=${'banquet-halls'}></hg-intro-article>
@@ -14,4 +14,5 @@ customElements.define('hg-banquet-halls', class extends HgContent {
       <hg-links .path=${'/sale-bankietowe'} .superpath=${'/wesela'} .includeSuperpath=${true}></hg-links>
     `;
   }
-});
+}
+customElements.define('hg-banquet-halls', HgBanquetHalls);

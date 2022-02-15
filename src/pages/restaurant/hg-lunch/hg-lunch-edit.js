@@ -6,7 +6,7 @@ import '../../../edit/hg-delete-item.js';
 import './hg-lunch-edit-dialog.js';
 import './hg-lunch-generate.js';
 
-customElements.define('hg-lunch-edit', class extends LitElement {
+export class HgLunchEdit extends LitElement {
   static get properties() {
     return {
       isUpcoming: Boolean,
@@ -103,4 +103,5 @@ customElements.define('hg-lunch-edit', class extends LitElement {
       </div>
     `;
   }
-});
+}
+customElements.define('hg-lunch-edit', HgLunchEdit);

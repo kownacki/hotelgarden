@@ -9,7 +9,7 @@ import '../../content/hg-halls-block.js';
 import '../../content/hg-article.js';
 import '../../content/hg-contact-block.js';
 
-customElements.define('hg-conferences', class extends HgContent {
+export class HgConferences extends HgContent {
   render() {
     return html`
       <hg-intro-article .uid=${'conferences'}></hg-intro-article>
@@ -23,4 +23,5 @@ customElements.define('hg-conferences', class extends HgContent {
       <hg-contact-block id="kontakt"></hg-contact-block>
     `;
   }
-});
+}
+customElements.define('hg-conferences', HgConferences);

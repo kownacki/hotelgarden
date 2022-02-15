@@ -2,7 +2,7 @@ import {LitElement, html, css} from 'lit';
 import sharedStyles from '../../styles/shared-styles.js';
 import '../hg-list/hg-list-editable-text.js';
 
-customElements.define('hg-icons-item', class extends LitElement {
+export class HgIconsItem extends LitElement {
   static get properties() {
     return {
       icon: Object,
@@ -81,4 +81,5 @@ customElements.define('hg-icons-item', class extends LitElement {
       </hg-list-editable-text>
     `;
   }
-});
+}
+customElements.define('hg-icons-item', HgIconsItem);

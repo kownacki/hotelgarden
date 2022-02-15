@@ -12,7 +12,7 @@ import '../../content/hg-reviews-block.js';
 import '../../content/hg-contact-block.js';
 import '../../content/hg-links.js';
 
-customElements.define('hg-weddings', class extends HgContent {
+export class HgWeddings extends HgContent {
   render() {
     return html`
       <hg-intro-article .uid=${'weddings'}></hg-intro-article>
@@ -30,4 +30,5 @@ customElements.define('hg-weddings', class extends HgContent {
       <hg-links .path=${'/wesela'} .superpath=${'/wesela'}></hg-links>
     `;
   }
-});
+}
+customElements.define('hg-weddings', HgWeddings);
