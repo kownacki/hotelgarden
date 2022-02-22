@@ -40,6 +40,11 @@ export class HgApp extends LitElement {
   }
   constructor() {
     super();
+
+    const pathString = window.location.pathname;
+    this._path = (pathString.slice(-1) === '/' && pathString.length !== 1) ? pathString.slice(0, -1) : pathString;
+    this._enableDrawer = (window.innerWidth < 1100);
+
     (async () => {
       const promotedEventUid = _.get('uid', (await db.doc('events/promoted').get()).data());
       if (promotedEventUid) {
@@ -52,9 +57,8 @@ export class HgApp extends LitElement {
       }
       this._promotedEventLoaded = true;
     })();
-    const pathString = window.location.pathname;
-    this._path = (pathString.slice(-1) === '/' && pathString.length !== 1) ? pathString.slice(0, -1) : pathString;
-    this._enableDrawer = (window.innerWidth < 1100);
+  }
+  firstUpdated() {
     window.addEventListener('resize', _.throttle(100, () => {
       (window.innerWidth < 1100)
         ? this._enableDrawer = true

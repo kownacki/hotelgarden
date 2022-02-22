@@ -16,27 +16,30 @@ const checkChildrenVisibility = _.throttle(100, (element) => {
 });
 
 export default class HgContent extends LitElement {
-  constructor() {
-    super();
-    this._eventToRemove = () => checkChildrenVisibility(this);
-    addEventListener('DOMContentLoaded', this._eventToRemove);
-    addEventListener('load', this._eventToRemove);
-    addEventListener('scroll', this._eventToRemove);
-    addEventListener('resize', this._eventToRemove);
-    addEventListener('touchmove', this._eventToRemove);
+  firstUpdated() {
+    this._checkChildrenVisibility = () => checkChildrenVisibility(this);
+    this._checkChildrenVisibility();
+    addEventListener('DOMContentLoaded', this._checkChildrenVisibility);
+    addEventListener('load', this._checkChildrenVisibility);
+    addEventListener('scroll', this._checkChildrenVisibility);
+    addEventListener('resize', this._checkChildrenVisibility);
+    addEventListener('touchmove', this._checkChildrenVisibility);
+    // todo is this event listener required to be removed?
     this.addEventListener('check-visibility', (event) => {
-      this._eventToRemove();
+      this._checkChildrenVisibility();
       event.stopPropagation();
     });
     // todo heuristics to catch any not showing content when some movement happens
-    setTimeout(this._eventToRemove, 1000);
+    setTimeout(this._checkChildrenVisibility, 1000);
   }
   disconnectedCallback() {
-    window.removeEventListener('DOMContentLoaded', this._eventToRemove);
-    window.removeEventListener('load', this._eventToRemove);
-    window.removeEventListener('scroll', this._eventToRemove);
-    window.removeEventListener('resize', this._eventToRemove);
-    window.removeEventListener('touchmove', this._eventToRemove);
+    if (this._checkChildrenVisibility) {
+      window.removeEventListener('DOMContentLoaded', this._checkChildrenVisibility);
+      window.removeEventListener('load', this._checkChildrenVisibility);
+      window.removeEventListener('scroll', this._checkChildrenVisibility);
+      window.removeEventListener('resize', this._checkChildrenVisibility);
+      window.removeEventListener('touchmove', this._checkChildrenVisibility);
+    }
     return super.disconnectedCallback();
   }
   static get styles() {
