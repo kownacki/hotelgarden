@@ -2,14 +2,12 @@ import {updateData} from '../utils.js';
 import HgEditableText from '../edit/hg-editable-text.js';
 
 export class HgText extends HgEditableText {
-  static get properties() {
-    return {
-      // required params
-      path: Object, // {doc: String, field: String}
-      // optional params
-      noGetText: Boolean,
-    };
-  }
+  static properties = {
+    // required params
+    path: Object, // {doc: String, field: String}
+    // optional params
+    noGetText: Boolean,
+  };
   // duplicated from hg-list
   updated(changedProperties) {
     if (changedProperties.has('path')) {

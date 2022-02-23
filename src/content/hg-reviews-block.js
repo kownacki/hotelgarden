@@ -6,14 +6,12 @@ import './hg-reviews-block/hg-scores.js';
 import './hg-reviews-block/hg-reviews-slider.js';
 
 export class HgReviewsBlock extends LitElement {
-  static get properties() {
-    return {
-      uid: String,
-      scores: {type: Boolean},
-      bookingScores: Object,
-      _reviews: Array,
-    };
-  }
+  static properties = {
+    uid: String,
+    scores: {type: Boolean},
+    bookingScores: Object,
+    _reviews: Array,
+  };
   static get styles() {
     return [sharedStyles, css`
       :host {

@@ -5,14 +5,12 @@ import './hg-lunch-item.js';
 import './hg-lunch-set.js';
 
 export class HgLunchWeek extends LitElement {
-  static get properties() {
-    return {
-      lunches: Object,
-      prices: Object,
-      today: Number,
-      weekLength: Number,
-    };
-  }
+  static properties = {
+    lunches: Object,
+    prices: Object,
+    today: Number,
+    weekLength: Number,
+  };
   static get styles() {
     return [sharedStyles, css`
       :host {

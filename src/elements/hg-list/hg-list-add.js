@@ -1,12 +1,10 @@
 import {LitElement, html, css} from 'lit';
 
 export class HgListAdd extends LitElement {
-  static get properties() {
-    return {
-      disable: Boolean,
-      opened: {type: Boolean, reflect: true},
-    };
-  }
+  static properties = {
+    disable: Boolean,
+    opened: {type: Boolean, reflect: true},
+  };
   static get styles() {
     return css`
       :host {

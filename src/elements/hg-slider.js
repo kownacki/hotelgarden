@@ -5,15 +5,13 @@ import sharedStyles from "../styles/shared-styles";
 
 //todo bug clicking go back when image is displayed breaks website
 export class HgSlider extends LitElement {
-  static get properties() {
-    return {
-      selected: Number,
-      items: Array,
-      template: Function,
-      double: {type: Boolean, reflect: true},
-      transitionGoing: Boolean,
-    };
-  }
+  static properties = {
+    selected: Number,
+    items: Array,
+    template: Function,
+    double: {type: Boolean, reflect: true},
+    transitionGoing: Boolean,
+  };
   static get styles() {
     return [sharedStyles, css`
       :host {

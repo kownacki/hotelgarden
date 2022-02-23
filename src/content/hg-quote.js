@@ -3,13 +3,11 @@ import sharedStyles from "../styles/shared-styles";
 import '../edit/hg-editable-text.js';
 
 export class HgQuote extends LitElement {
-  static get properties() {
-    return {
-      uid: Number,
-      _quote: Object,
-      _dataReady: Boolean,
-    };
-  }
+  static properties = {
+    uid: Number,
+    _quote: Object,
+    _dataReady: Boolean,
+  };
   async firstUpdated() {
     this._quote = (await db.doc('quotes/' + this.uid).get()).data();
     this._dataReady = true;

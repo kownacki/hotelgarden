@@ -3,23 +3,21 @@ import {headerHeight, moveOutFromShadowDom} from '../utils.js'
 import sharedStyles from "../styles/shared-styles.js";
 
 export default class HgEditableText extends LitElement {
-  static get properties() {
-    return {
-      text: String,
-      ready: {type: Boolean, reflect: true},
-      disabled: Boolean,
-      showControls: Boolean,
-      //todo rich and lessRich into one property
-      rich: Boolean,
-      richConfig: String, // 'mosaic' / 'intro' / default full
-      multiline: {type: Boolean, reflect: true},
-      float: {type: Boolean, reflect: true},
-      _editable: Element,
-      _editor: Element,
-      _editorSet: Boolean,
-      _loggedIn: Boolean,
-    };
-  }
+  static properties = {
+    text: String,
+    ready: {type: Boolean, reflect: true},
+    disabled: Boolean,
+    showControls: Boolean,
+    //todo rich and lessRich into one property
+    rich: Boolean,
+    richConfig: String, // 'mosaic' / 'intro' / default full
+    multiline: {type: Boolean, reflect: true},
+    float: {type: Boolean, reflect: true},
+    _editable: Element,
+    _editor: Element,
+    _editorSet: Boolean,
+    _loggedIn: Boolean,
+  };
   constructor() {
     super();
     this._unsubscribeLoggedInListener = auth.onAuthStateChanged((user) => this._loggedIn = Boolean(user));

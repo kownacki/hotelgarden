@@ -1,11 +1,9 @@
 import {LitElement, html, css} from 'lit';
 
 export class HgLogin extends LitElement {
-  static get properties() {
-    return {
-      _loggedIn: String,
-    };
-  }
+  static properties = {
+    _loggedIn: String,
+  };
   static get styles() {
     return css`
       a {

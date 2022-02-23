@@ -3,13 +3,11 @@ import sharedStyles from '../../styles/shared-styles.js';
 import '../../elements/hg-list/hg-list-editable-text.js';
 
 export class HgMenuItem extends LitElement {
-  static get properties() {
-    return {
-      item: Object,
-      disableEdit: Boolean,
-      isRestaurantMenu: {type: Boolean, reflect: true, attribute: 'is-restaurant-menu'},
-    };
-  }
+  static properties = {
+    item: Object,
+    disableEdit: Boolean,
+    isRestaurantMenu: {type: Boolean, reflect: true, attribute: 'is-restaurant-menu'},
+  };
   static get styles() {
     return [sharedStyles, css`
       :host {

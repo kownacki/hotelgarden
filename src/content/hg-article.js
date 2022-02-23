@@ -7,14 +7,12 @@ import '../elements/hg-text.js';
 import '../elements/hg-content-label.js';
 
 export default class HgArticle extends LitElement {
-  static get properties() {
-    return {
-      uid: Number,
-      rich: Boolean,
-      richConfig: Boolean,
-      classes: Object,
-    };
-  }
+  static properties = {
+    uid: Number,
+    rich: Boolean,
+    richConfig: Boolean,
+    classes: Object,
+  };
   static get styles() {
     return [sharedStyles, ckContent, css`
       :host {

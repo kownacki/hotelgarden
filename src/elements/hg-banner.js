@@ -5,17 +5,15 @@ import '../edit/hg-editable-image.js';
 import '../edit/hg-editable-text.js';
 
 export class HgBanner extends LitElement {
-  static get properties() {
-    return {
-      uid: String,
-      path: Object,
-      useTitleAsHeading: String,
-      noImage: {type: Boolean, reflect: true, attribute: 'no-image'},
-      noSubheading: Boolean,
-      _banner: Object,
-      _dataReady: Boolean,
-    };
-  }
+  static properties = {
+    uid: String,
+    path: Object,
+    useTitleAsHeading: String,
+    noImage: {type: Boolean, reflect: true, attribute: 'no-image'},
+    noSubheading: Boolean,
+    _banner: Object,
+    _dataReady: Boolean,
+  };
   async updated(changedProperties) {
     if (changedProperties.has('uid') && this.uid) {
       this.path = {doc: 'banners/' + this.uid};

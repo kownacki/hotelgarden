@@ -5,11 +5,9 @@ import './hg-text-image.js';
 import './hg-hall/hg-hall-tables.js';
 
 export class HgHall extends LitElement {
-  static get properties() {
-    return {
-      uid: String,
-    };
-  }
+  static properties = {
+    uid: String,
+  };
   static get styles() {
     return [sharedStyles, css`      
     `];

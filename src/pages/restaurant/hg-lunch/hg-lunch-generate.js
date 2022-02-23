@@ -5,18 +5,16 @@ import downloadLunches from './downloadLunches.js';
 import '../../../elements/hg-action-button.js'
 
 export class HgLunchGenerate extends LitElement {
-  static get properties() {
-    return {
-      lunches: Object,
-      dateString: Object,
-      config: Object,
-      weekLength: Number,
-      _loading: Boolean,
-      _error: Boolean,
-      _decreasingFont: Number,
-      _result: Object,
-    };
-  }
+  static properties = {
+    lunches: Object,
+    dateString: Object,
+    config: Object,
+    weekLength: Number,
+    _loading: Boolean,
+    _error: Boolean,
+    _decreasingFont: Number,
+    _result: Object,
+  };
   static get styles() {
     return [sharedStyles, css`
       .result {

@@ -5,14 +5,12 @@ import '../../../elements/hg-list.js';
 import './hg-events-card.js';
 
 export class HgEventsList extends LitElement {
-  static get properties() {
-    return {
-      past: Boolean,
-      max: Number,
-      noNonPublic: Boolean,
-      _loggedIn: Boolean,
-    };
-  }
+  static properties = {
+    past: Boolean,
+    max: Number,
+    noNonPublic: Boolean,
+    _loggedIn: Boolean,
+  };
   static get styles() {
     return [sharedStyles, css`
       :host {

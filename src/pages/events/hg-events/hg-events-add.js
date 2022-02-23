@@ -3,33 +3,15 @@ import '@material/mwc-button';
 import {hyphenate, updateData} from '../../../utils.js';
 
 export class HgEventsAdd extends LitElement {
-  static get properties() {
-    return {
-      _title: String,
-      _address: String,
-      _addressTaken: Boolean,
-      _date: String,
-      _dateCorrect: Boolean,
-      _typing: Boolean,
-      _loading: Boolean,
-    };
-  }
-  constructor() {
-    super();
-    this._checkIfAddressTaken = _.debounce(500, async () => {
-      this._typing = false;
-      if (this._address) {
-        this._loading = true;
-        const title = this._title;
-        const dbResult = _.has(this._address, (await db.doc('events/events').get()).data());
-        this._loading = false;
-        // Avoid race condition. Title could change while db query was going. Only use result if it's still relevant.
-        if (title === this._title) {
-          this._addressTaken = dbResult;
-        }
-      }
-    });
-  }
+  static properties = {
+    _title: String,
+    _address: String,
+    _addressTaken: Boolean,
+    _date: String,
+    _dateCorrect: Boolean,
+    _typing: Boolean,
+    _loading: Boolean,
+  };
   static get styles() {
     return css`
       paper-button {
@@ -51,6 +33,22 @@ export class HgEventsAdd extends LitElement {
         padding: 0 2px;
       }
     `;
+  }
+  constructor() {
+    super();
+    this._checkIfAddressTaken = _.debounce(500, async () => {
+      this._typing = false;
+      if (this._address) {
+        this._loading = true;
+        const title = this._title;
+        const dbResult = _.has(this._address, (await db.doc('events/events').get()).data());
+        this._loading = false;
+        // Avoid race condition. Title could change while db query was going. Only use result if it's still relevant.
+        if (title === this._title) {
+          this._addressTaken = dbResult;
+        }
+      }
+    });
   }
   async addEvent() {
     const title = this._title;

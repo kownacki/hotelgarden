@@ -13,11 +13,9 @@ import '../../content/hg-infographic.js';
 import '../../content/hg-map.js';
 
 export class HgLanding extends HgContent {
-  static get properties() {
-    return {
-      config: Object,
-    };
-  }
+  static properties = {
+    config: Object,
+  };
   render() {
     return html`
       <hg-intro-article .uid=${'landing'}></hg-intro-article>

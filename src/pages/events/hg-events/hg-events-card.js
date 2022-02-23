@@ -2,11 +2,9 @@ import {LitElement, html, css} from 'lit';
 import sharedStyles from '../../../styles/shared-styles.js'
 
 export class HgEventsCard extends LitElement {
-  static get properties() {
-    return {
-      event: Object,
-    };
-  }
+  static properties = {
+    event: Object,
+  };
   static get styles() {
     return [sharedStyles, css`
       :host {

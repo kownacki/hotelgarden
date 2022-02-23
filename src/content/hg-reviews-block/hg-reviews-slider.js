@@ -4,11 +4,9 @@ import '../../elements/hg-slider.js';
 import '../../elements/hg-review.js';
 
 export class HgReviewsSlider extends LitElement {
-  static get properties() {
-    return {
-      reviews: Array,
-    };
-  }
+  static properties = {
+    reviews: Array,
+  };
   static get styles() {
     return [sharedStyles, css`
       hg-slider {

@@ -3,9 +3,6 @@ import '@polymer/paper-fab';
 import '../edit/hg-image-upload.js';
 
 export class HgImageUploadFab extends LitElement {
-  static get properties() {
-    return {};
-  }
   static get styles() {
     return css`
       input {

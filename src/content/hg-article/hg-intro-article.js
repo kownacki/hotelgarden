@@ -3,9 +3,6 @@ import HgArticle from '../hg-article.js';
 import {setMetaDescription} from "../../utils";
 
 export class HgIntroArticle extends HgArticle {
-  static get properties() {
-    return {};
-  }
   static get styles() {
     return [super.styles, css`
       :host {

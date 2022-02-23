@@ -8,13 +8,11 @@ import '../hg-image.js'
 import '../hg-text.js'
 
 export class HgBookDialog extends LitElement {
-  static get properties() {
-    return {
-      dialog: Element,
-      _data: Object,
-      _dataReady: Boolean,
-    };
-  }
+  static properties = {
+    dialog: Element,
+    _data: Object,
+    _dataReady: Boolean,
+  };
   async firstUpdated() {
     this._data = await getData('texts/book');
     this._dataReady = true;

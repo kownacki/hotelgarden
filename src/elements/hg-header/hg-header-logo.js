@@ -1,12 +1,10 @@
 import {LitElement, html, css} from 'lit';
 
 export class HgHeaderLogo extends LitElement {
-  static get properties() {
-    return {
-      noBannerImage: {type: Boolean, reflect: true, attribute: 'no-banner-image'},
-      scrolledDown: {type: Boolean, reflect: true, attribute: 'scrolled-down'},
-    };
-  }
+  static properties = {
+    noBannerImage: {type: Boolean, reflect: true, attribute: 'no-banner-image'},
+    scrolledDown: {type: Boolean, reflect: true, attribute: 'scrolled-down'},
+  };
   static get styles() {
     return css`
       :host {

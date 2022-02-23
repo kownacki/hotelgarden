@@ -4,11 +4,9 @@ import '../elements/hg-image-slider.js';
 import '../elements/hg-content-label.js';
 
 export class HgContentSlider extends LitElement {
-  static get properties() {
-    return {
-      uid: String,
-    };
-  }
+  static properties = {
+    uid: String,
+  };
   static get styles() {
     return css`
       :host {

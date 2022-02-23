@@ -7,11 +7,9 @@ import './hg-gallery/hg-gallery-item.js';
 import './hg-gallery/hg-gallery-slider.js';
 
 export class HgGallery extends LitElement {
-  static get properties() {
-    return {
-      _items: Object,
-    };
-  }
+  static properties = {
+    _items: Object,
+  };
   static get styles() {
     return css`
       :host {

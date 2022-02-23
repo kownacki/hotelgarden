@@ -1,14 +1,12 @@
 import {LitElement, html, css} from 'lit';
 
 export class HgActionButton extends LitElement {
-  static get properties() {
-    return {
-      url: String,
-      newTab: Boolean,
-      lowEmphasis: {type: Boolean, reflect: true, attribute: 'low-emphasis'},
-      disabled: {type: Boolean, reflect: true},
-    };
-  }
+  static properties = {
+    url: String,
+    newTab: Boolean,
+    lowEmphasis: {type: Boolean, reflect: true, attribute: 'low-emphasis'},
+    disabled: {type: Boolean, reflect: true},
+  };
   static get styles() {
     return css`
       :host {

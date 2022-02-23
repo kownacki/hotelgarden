@@ -5,14 +5,12 @@ import './hg-icons/hg-icons-add.js';
 import './hg-icons/hg-icons-item.js';
 
 export class HgIcons extends LitElement {
-  static get properties() {
-    return {
-      uid: String,
-      empty: {type: Boolean, reflect: true},
-      small: {type: Boolean, reflect: true},
-      _loggedIn: Boolean,
-    };
-  }
+  static properties = {
+    uid: String,
+    empty: {type: Boolean, reflect: true},
+    small: {type: Boolean, reflect: true},
+    _loggedIn: Boolean,
+  };
   constructor() {
     super();
     this._unsubscribeLoggedInListener = auth.onAuthStateChanged((user) => this._loggedIn = Boolean(user));

@@ -3,13 +3,11 @@ import sharedStyles from "../styles/shared-styles";
 import './hg-list/hg-list-editable-text.js';
 
 export class HgReview extends LitElement {
-  static get properties() {
-    return {
-      review: Object,
-      editable: Boolean,
-      disableEdit: Boolean,
-    };
-  }
+  static properties = {
+    review: Object,
+    editable: Boolean,
+    disableEdit: Boolean,
+  };
   constructor() {
     super();
     this.classList.add('fixed-height-element');

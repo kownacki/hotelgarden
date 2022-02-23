@@ -2,16 +2,14 @@ import {getData, updateImage} from "../utils.js";
 import HgEditableImage from '../edit/hg-editable-image.js';
 
 export class HgImage extends HgEditableImage {
-  static get properties() {
-    return {
-      // required params
-      path: Object, // {doc: String, [field: String]}
-      // optional params
-      noGetImage: Boolean,
-      // private
-      image: Object,
-    };
-  }
+  static properties = {
+    // required params
+    path: Object, // {doc: String, [field: String]}
+    // optional params
+    noGetImage: Boolean,
+    // private
+    image: Object,
+  };
   constructor() {
     super();
     this.addEventListener('save', (event) => this.updateImage(event.detail));

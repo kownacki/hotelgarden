@@ -5,15 +5,13 @@ import './hg-header/hg-header-logo.js';
 import './hg-book/hg-book-order-button.js';
 
 export class HgHeader extends LitElement {
-  static get properties() {
-    return {
-      noBannerImage: {type: Boolean, reflect: true, attribute: 'no-banner-image'},
-      scrolledDown: {type: Boolean, reflect: true, attribute: 'scrolled-down'},
-      selected: String,
-      promotedEvent: Object,
-      promotedEventLoaded: Boolean,
-    };
-  }
+  static properties = {
+    noBannerImage: {type: Boolean, reflect: true, attribute: 'no-banner-image'},
+    scrolledDown: {type: Boolean, reflect: true, attribute: 'scrolled-down'},
+    selected: String,
+    promotedEvent: Object,
+    promotedEventLoaded: Boolean,
+  };
   constructor() {
     super();
     window.addEventListener('scroll', _.throttle(100, () => this.scrolledDown = window.pageYOffset > 0));

@@ -3,14 +3,12 @@ import sharedStyles from '../styles/shared-styles.js';
 import {pathToUid, linksMap, pages} from '../utils.js';
 
 export class HgLinks extends LitElement {
-  static get properties() {
-    return {
-      path: String,
-      superpath: String,
-      includeSuperpath: Boolean,
-      _links: Array,
-    };
-  }
+  static properties = {
+    path: String,
+    superpath: String,
+    includeSuperpath: Boolean,
+    _links: Array,
+  };
   async firstUpdated() {
     const links = _.filter(
       (link) => link.path !== this.path && (this.includeSuperpath ? true : link.path !== this.superpath),

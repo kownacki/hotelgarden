@@ -1,14 +1,12 @@
 import {LitElement, html, css} from 'lit';
 
 export class HgListItemConfigure extends LitElement {
-  static get properties() {
-    return {
-      configure: Object,
-      item: Object,
-      disable: Boolean,
-      opened: {type: Boolean, reflect: true},
-    };
-  }
+  static properties = {
+    configure: Object,
+    item: Object,
+    disable: Boolean,
+    opened: {type: Boolean, reflect: true},
+  };
   static get styles() {
     return css`
       paper-icon-button {

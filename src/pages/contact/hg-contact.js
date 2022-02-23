@@ -7,18 +7,18 @@ import '../../elements/hg-contact-form.js';
 import '../../content/hg-map.js';
 
 export class HgContact extends HgContent {
-  constructor() {
-    super();
-    (async () => {
-      this._events = (await db.doc('events/events').get()).data() || {};
-    })();
-  }
   static get styles() {
     return [super.styles, ckContent, css`
       hg-article {
         max-width: 1000px;
       }
     `];
+  }
+  constructor() {
+    super();
+    (async () => {
+      this._events = (await db.doc('events/events').get()).data() || {};
+    })();
   }
   render() {
     return html`

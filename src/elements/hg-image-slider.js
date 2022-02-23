@@ -7,18 +7,16 @@ import '../pages/gallery/hg-gallery/hg-gallery-slider.js'
 
 //todo esc should close window
 export class HgImageSlider extends LitElement {
-  static get properties() {
-    return {
-      // required params
-      path: String,
-      // optional params
-      noGetImages: Boolean,
-      images: Object,
-      double: Boolean,
-      // private
-      _loggedIn: Boolean,
-    };
-  }
+  static properties = {
+    // required params
+    path: String,
+    // optional params
+    noGetImages: Boolean,
+    images: Object,
+    double: Boolean,
+    // private
+    _loggedIn: Boolean,
+  };
   constructor() {
     super();
     this._unsubscribeLoggedInListener = auth.onAuthStateChanged((user) => this._loggedIn = Boolean(user));

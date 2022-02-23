@@ -1,12 +1,10 @@
 import {LitElement, html, css} from 'lit';
 
 export class HgEventEditDate extends LitElement {
-  static get properties() {
-    return {
-      date: String,
-      opened: {type: Boolean, reflect: true},
-    };
-  }
+  static properties = {
+    date: String,
+    opened: {type: Boolean, reflect: true},
+  };
   static get styles() {
     return css`
       :host {

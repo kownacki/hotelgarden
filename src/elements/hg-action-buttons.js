@@ -2,11 +2,9 @@ import {LitElement, html, css} from 'lit';
 import './hg-action-button.js';
 
 export class HgActionButtons extends LitElement {
-  static get properties() {
-    return {
-      buttons: Array,
-    };
-  }
+  static properties = {
+    buttons: Array,
+  };
   static get styles() {
     return css`
       :host {

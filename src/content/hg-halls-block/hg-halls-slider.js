@@ -3,12 +3,10 @@ import '../../elements/hg-slider.js';
 import './hg-halls-slider-item.js';
 
 export class HgHallsSlider extends LitElement {
-  static get properties() {
-    return {
-      type: String, // 'conference' / 'banquet'
-      _halls: Array,
-    };
-  }
+  static properties = {
+    type: String, // 'conference' / 'banquet'
+    _halls: Array,
+  };
   static get styles() {
     return css`
       :host {

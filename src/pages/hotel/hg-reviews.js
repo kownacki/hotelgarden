@@ -28,10 +28,6 @@ const configure = {
 };
 
 export class HgReviews extends LitElement {
-  static get properties() {
-    return {
-    };
-  }
   static get styles() {
     return css`
       :host {

@@ -2,12 +2,10 @@ import {LitElement, html, css} from 'lit';
 import sharedStyles from '../styles/shared-styles.js';
 
 export class HgContentLabel extends LitElement {
-  static get properties() {
-    return {
-      name: String,
-      _loggedIn: Boolean,
-    };
-  }
+  static properties = {
+    name: String,
+    _loggedIn: Boolean,
+  };
   static get styles() {
     return [sharedStyles, css`
       :host {

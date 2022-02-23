@@ -1,13 +1,11 @@
 import {LitElement, html, css} from 'lit';
 
 export class HgDeleteItem extends LitElement {
-  static get properties() {
-    return {
-      name: String,
-      disable: Boolean,
-      opened: {type: Boolean, reflect: true},
-    };
-  }
+  static properties = {
+    name: String,
+    disable: Boolean,
+    opened: {type: Boolean, reflect: true},
+  };
   static get styles() {
     return css`
       .warning {

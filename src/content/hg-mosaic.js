@@ -7,14 +7,12 @@ import '../edit/hg-editable-text.js';
 import '../elements/hg-action-buttons.js';
 
 export class HgMosaic extends LitElement {
-  static get properties() {
-    return {
-      uid: Number,
-      buttons: Object,
-      _mosaic: Object,
-      _dataReady: Boolean,
-    };
-  }
+  static properties = {
+    uid: Number,
+    buttons: Object,
+    _mosaic: Object,
+    _dataReady: Boolean,
+  };
   async firstUpdated() {
     this._mosaic = (await db.doc('mosaics/' + this.uid).get()).data() || {};
     this._dataReady = true;

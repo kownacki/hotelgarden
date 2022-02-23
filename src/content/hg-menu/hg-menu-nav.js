@@ -4,13 +4,11 @@ import '../../elements/hg-list.js';
 import './hg-menu-nav-item.js';
 
 export class HgMenuNav extends LitElement {
-  static get properties() {
-    return {
-      uid: String,
-      selectedCategory: Number,
-      categories: Object,
-    };
-  }
+  static properties = {
+    uid: String,
+    selectedCategory: Number,
+    categories: Object,
+  };
   static get styles() {
     return css`
       hg-list {

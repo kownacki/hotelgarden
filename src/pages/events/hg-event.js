@@ -9,18 +9,16 @@ import './hg-event/hg-event-edit-date.js';
 import './hg-events/hg-events-sidebar.js';
 
 export class HgEvent extends LitElement {
-  static get properties() {
-    return {
-      uid: String,
-      _events: Array,
-      _event: Object,
-      _promotedEvent: String,
-      _contentLoading: Boolean,
-      _content: String,
-      _dataReady: Boolean,
-      _loggedIn: Boolean,
-    };
-  }
+  static properties = {
+    uid: String,
+    _events: Array,
+    _event: Object,
+    _promotedEvent: String,
+    _contentLoading: Boolean,
+    _content: String,
+    _dataReady: Boolean,
+    _loggedIn: Boolean,
+  };
   static get styles() {
     return [sharedStyles, ckContent, css`
       .container {

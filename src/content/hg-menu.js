@@ -4,15 +4,13 @@ import './hg-menu/hg-menu-main.js';
 import './hg-menu/hg-menu-nav.js';
 
 export class HgMenu extends LitElement {
-  static get properties() {
-    return {
-      categories: Object,
-      uid: String,
-      selectedCategory: Number,
-      _compact: Boolean,
-      _editing: {type: Boolean, reflect: true, attribute: 'editing'},
-    };
-  }
+  static properties = {
+    categories: Object,
+    uid: String,
+    selectedCategory: Number,
+    _compact: Boolean,
+    _editing: {type: Boolean, reflect: true, attribute: 'editing'},
+  };
   constructor() {
     super();
     this.categories = {};

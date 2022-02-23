@@ -2,13 +2,11 @@ import {LitElement, html, css} from 'lit';
 import '../edit/hg-editable-text.js';
 
 export class HgIconInfo extends LitElement {
-  static get properties() {
-    return {
-      editable: Boolean,
-      items: Array,
-      dataReady: Boolean,
-    };
-  }
+  static properties = {
+    editable: Boolean,
+    items: Array,
+    dataReady: Boolean,
+  };
   static get styles() {
     return css`
       :host {

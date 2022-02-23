@@ -2,13 +2,11 @@ import {LitElement, html, css} from 'lit';
 import {pages} from '../../utils.js';
 
 export class HgDrawerItem extends LitElement {
-  static get properties() {
-    return {
-      link: Object,
-      opened: {type: Boolean, reflect: true},
-      selected: String,
-    };
-  }
+  static properties = {
+    link: Object,
+    opened: {type: Boolean, reflect: true},
+    selected: String,
+  };
   static get styles() {
     // todo arrow to bottom to show that this menu is dropdown
     return css`

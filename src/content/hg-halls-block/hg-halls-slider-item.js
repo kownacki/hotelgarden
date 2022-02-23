@@ -8,11 +8,9 @@ import '../../elements/hg-icon-info.js';
 const shorten = (text, maxLength) => text.length > maxLength - 3 ? text.slice(0, maxLength - 3) + '...' : text;
 
 export class HgHallsSliderItem extends LitElement {
-  static get properties() {
-    return {
-      hall: Object,
-    };
-  }
+  static properties = {
+    hall: Object,
+  };
   static get styles() {
     return [sharedStyles, ckContent, css`
       :host {

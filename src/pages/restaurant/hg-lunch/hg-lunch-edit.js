@@ -7,16 +7,14 @@ import './hg-lunch-edit-dialog.js';
 import './hg-lunch-generate.js';
 
 export class HgLunchEdit extends LitElement {
-  static get properties() {
-    return {
-      isUpcoming: Boolean,
-      lunches: Object,
-      lunchesData: Object,
-      config: Object,
-      weekLength: Number,
-      _enableDialog: Boolean,
-    };
-  }
+  static properties = {
+    isUpcoming: Boolean,
+    lunches: Object,
+    lunchesData: Object,
+    config: Object,
+    weekLength: Number,
+    _enableDialog: Boolean,
+  };
   static get styles() {
     return [sharedStyles, css`
       :host {

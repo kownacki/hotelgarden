@@ -5,13 +5,11 @@ import '../edit/hg-editable-image.js';
 import '../edit/hg-editable-text.js';
 
 export class HgInfographic extends LitElement {
-  static get properties() {
-    return {
-      uid: String,
-      _infographic: Array,
-      _dataReady: Boolean,
-    };
-  }
+  static properties = {
+    uid: String,
+    _infographic: Array,
+    _dataReady: Boolean,
+  };
   async firstUpdated() {
     this._infographic = (await db.doc('infographics/' + this.uid).get()).data();
     this._dataReady = true;

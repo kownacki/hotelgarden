@@ -3,15 +3,13 @@ import {LitElement, html, css} from 'lit';
 //todo dodać link do strony icons8
 
 export class HgIconsAdd extends LitElement {
-  static get properties() {
-    return {
-      disable: Boolean,
-      _availableIcons: Array,
-      _categories: Array,
-      _selected: String,
-      _loading: Boolean,
-    };
-  }
+  static properties = {
+    disable: Boolean,
+    _availableIcons: Array,
+    _categories: Array,
+    _selected: String,
+    _loading: Boolean,
+  };
   constructor() {
     super();
     (async () => {

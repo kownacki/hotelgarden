@@ -5,11 +5,9 @@ import '../pages/events/hg-events/hg-events-list.js';
 import '../elements/hg-action-button.js';
 
 export class HgEventsBlock extends LitElement {
-  static get properties() {
-    return {
-      _eventsNotEmpty: {type: Boolean, reflect: true, attribute: 'events-not-empty'}
-    };
-  }
+  static properties = {
+    _eventsNotEmpty: {type: Boolean, reflect: true, attribute: 'events-not-empty'}
+  };
   static get styles() {
     return [sharedStyles, css`
       :host {

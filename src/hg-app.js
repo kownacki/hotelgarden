@@ -23,20 +23,18 @@ import './elements/hg-page.js';
 import './elements/hg-drawer.js';
 
 export class HgApp extends LitElement {
-  static get properties() {
-    return {
-      _route: Object,
-      _tail: Object,
-      _path: String,
-      _event: String,
-      _uid: String,
-      _noBannerImage: Boolean,
-      _promotedEvent: Object,
-      _promotedEventLoaded: Boolean,
-      _enableDrawer: Boolean,
-      _drawerOnceOpened: Boolean,
-    };
-  }
+  static properties = {
+    _route: Object,
+    _tail: Object,
+    _path: String,
+    _event: String,
+    _uid: String,
+    _noBannerImage: Boolean,
+    _promotedEvent: Object,
+    _promotedEventLoaded: Boolean,
+    _enableDrawer: Boolean,
+    _drawerOnceOpened: Boolean,
+  };
   constructor() {
     super();
 

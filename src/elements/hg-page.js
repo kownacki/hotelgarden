@@ -32,17 +32,15 @@ let seconds = 0;
 setInterval(() => ++seconds, 1000);
 
 export class HgPage extends LitElement {
-  static get properties() {
-    return {
-      event: Boolean,
-      path: String,
-      uid: String,
-      noBannerImage: {type: Boolean, reflect: true, attribute: 'no-banner-image'},
-      eventTitle: String,
-      _defaultTitle: String,
-      _config: Object,
-    };
-  }
+  static properties = {
+    event: Boolean,
+    path: String,
+    uid: String,
+    noBannerImage: {type: Boolean, reflect: true, attribute: 'no-banner-image'},
+    eventTitle: String,
+    _defaultTitle: String,
+    _config: Object,
+  };
   constructor() {
     super();
     (async () => {

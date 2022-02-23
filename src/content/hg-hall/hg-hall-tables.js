@@ -5,15 +5,13 @@ import '../../edit/hg-editable-image.js';
 import '../../edit/hg-editable-text.js';
 
 export class HgHallTables extends LitElement {
-  static get properties() {
-    return {
-      uid: String,
-      _hallTables: Array,
-      _setOuts: Array,
-      _setOutsDoc: String,
-      _dataReady: Boolean,
-    };
-  }
+  static properties = {
+    uid: String,
+    _hallTables: Array,
+    _setOuts: Array,
+    _setOutsDoc: String,
+    _dataReady: Boolean,
+  };
   static get styles() {
     return [sharedStyles, css`
       :host {

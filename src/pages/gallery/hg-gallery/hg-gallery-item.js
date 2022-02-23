@@ -1,11 +1,9 @@
 import {LitElement, html, css} from 'lit';
 
 export class HgGalleryItem extends LitElement {
-  static get properties() {
-    return {
-      src: String,
-    };
-  }
+  static properties = {
+    src: String,
+  };
   static get styles() {
     return css`
       :host {

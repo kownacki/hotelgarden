@@ -6,9 +6,6 @@ import './hg-text.js'
 import './hg-login.js'
 
 export class HgFooter extends LitElement {
-  static get properties() {
-    return {};
-  }
   static get styles() {
     return [sharedStyles, ckContent, css`
       :host {

@@ -8,14 +8,12 @@ import sharedStyles from '../../../styles/shared-styles.js';
 const animationLength = 200;
 
 export class HgLunchEditDialogDay extends LitElement {
-  static get properties() {
-    return {
-      day: Number,
-      lunches: Object,
-      _disabled: Boolean,
-      _animationGoing: Boolean,
-    };
-  }
+  static properties = {
+    day: Number,
+    lunches: Object,
+    _disabled: Boolean,
+    _animationGoing: Boolean,
+  };
   firstUpdated() {
     this._disabled = _.get('disabled', this.lunches);
   }

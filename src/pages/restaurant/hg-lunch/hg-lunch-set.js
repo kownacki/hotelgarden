@@ -4,11 +4,9 @@ import {staticProp} from "../../../utils";
 import '../../../content/hg-menu/hg-menu-item.js';
 
 export class HgLunchSet extends LitElement {
-  static get properties() {
-    return {
-      price: String,
-    };
-  }
+  static properties = {
+    price: String,
+  };
   static get styles() {
     return [sharedStyles, css`
       hg-menu-item {

@@ -18,12 +18,10 @@ const roomsConfig = [
 ];
 
 export class HgRoom extends LitElement {
-  static get properties() {
-    return {
-      index: Number,
-      extraButtons: Array,
-    };
-  }
+  static properties = {
+    index: Number,
+    extraButtons: Array,
+  };
   static get styles() {
     return [sharedStyles, css`
       :host {

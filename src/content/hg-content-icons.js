@@ -4,12 +4,10 @@ import '../elements/hg-icons.js'
 import '../elements/hg-content-label.js';
 
 export class HgContentIcons extends LitElement {
-  static get properties() {
-    return {
-      uid: String,
-      small: {type: Boolean, reflect: true},
-    };
-  }
+  static properties = {
+    uid: String,
+    small: {type: Boolean, reflect: true},
+  };
   static get styles() {
     return [sharedStyles, css`
       :host {

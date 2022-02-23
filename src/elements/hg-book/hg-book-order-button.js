@@ -4,11 +4,9 @@ import '../hg-action-button.js';
 import './hg-book-dialog';
 
 export class HgBookOrderButton extends LitElement {
-  static get properties() {
-    return {
-      order: String, // 'restaurant' / null
-    };
-  }
+  static properties = {
+    order: String, // 'restaurant' / null
+  };
   static get styles() {
     return [sharedStyles, css`      
       hg-action-button {

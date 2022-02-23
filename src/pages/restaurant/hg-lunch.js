@@ -11,16 +11,14 @@ import './hg-lunch/hg-lunch-edit.js';
 import './hg-lunch/hg-lunch-generate.js';
 
 export class HgLunch extends HgContent {
-  static get properties() {
-    return {
-      config: Object,
-      _prices: Object,
-      _lunchesData: Object,
-      _lunches: Object,
-      _loggedIn: Boolean,
-      _lunchDaysCount: Number,
-    };
-  }
+  static properties = {
+    config: Object,
+    _prices: Object,
+    _lunchesData: Object,
+    _lunches: Object,
+    _loggedIn: Boolean,
+    _lunchDaysCount: Number,
+  };
   constructor() {
     super();
     this._unsubscribeLoggedInListener = auth.onAuthStateChanged((user) => this._loggedIn = Boolean(user));

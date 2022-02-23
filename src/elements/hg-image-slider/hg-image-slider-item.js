@@ -3,13 +3,11 @@ import '../../pages/gallery/hg-gallery/hg-gallery-item.js'
 import '../../edit/hg-delete-item.js'
 
 export class HgImageSliderItem extends LitElement {
-  static get properties() {
-    return {
-      image: Object,
-      noDelete: Boolean,
-      _deleteOpened: {type: Boolean, reflect: true, attribute: 'delete-opened'},
-    };
-  }
+  static properties = {
+    image: Object,
+    noDelete: Boolean,
+    _deleteOpened: {type: Boolean, reflect: true, attribute: 'delete-opened'},
+  };
   static get styles() {
     return css`
       :host {

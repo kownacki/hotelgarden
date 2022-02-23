@@ -3,13 +3,11 @@ import sharedStyles from '../../styles/shared-styles.js';
 import '../hg-list/hg-list-editable-text.js';
 
 export class HgIconsItem extends LitElement {
-  static get properties() {
-    return {
-      icon: Object,
-      disableEdit: Boolean,
-      small: {type: Boolean, reflect: true},
-    };
-  }
+  static properties = {
+    icon: Object,
+    disableEdit: Boolean,
+    small: {type: Boolean, reflect: true},
+  };
   static get styles() {
     return [sharedStyles, css`
       :host(:not([small])) {

@@ -2,12 +2,10 @@ import {LitElement, html, css} from 'lit';
 import sharedStyles from '../../styles/shared-styles.js';
 
 export class HgMenuNavItem extends LitElement {
-  static get properties() {
-    return {
-      category: Object,
-      selected: {type: Boolean, reflect: true}
-    };
-  }
+  static properties = {
+    category: Object,
+    selected: {type: Boolean, reflect: true}
+  };
   static get styles() {
     return [sharedStyles, css`
       :host {

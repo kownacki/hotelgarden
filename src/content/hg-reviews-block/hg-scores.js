@@ -1,11 +1,9 @@
 import {LitElement, html, css} from 'lit';
 
 export class HgScores extends LitElement {
-  static get properties() {
-    return {
-      bookingScores: Object,
-    };
-  }
+  static properties = {
+    bookingScores: Object,
+  };
   static get styles() {
     return css`
       :host {

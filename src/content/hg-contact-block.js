@@ -4,9 +4,6 @@ import '../content/hg-article.js';
 import '../elements/hg-contact-form.js';
 
 export class HgContactBlock extends LitElement {
-  static get properties() {
-    return {};
-  }
   static get styles() {
     return [sharedStyles, css`
     `];

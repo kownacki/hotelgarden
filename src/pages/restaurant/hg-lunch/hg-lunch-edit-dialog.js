@@ -7,17 +7,15 @@ import '../../../elements/hg-dialog.js';
 import './hg-lunch-edit-dialog-day.js';
 
 export class HgLunchEditDialog extends LitElement {
-  static get properties() {
-    return {
-      lunches: Object,
-      doc: String,
-      dateString: String,
-      weekLength: Number,
-      _error: String,
-      //
-      dialog: Element,
-    };
-  }
+  static properties = {
+    lunches: Object,
+    doc: String,
+    dateString: String,
+    weekLength: Number,
+    _error: String,
+    //
+    dialog: Element,
+  };
   static get styles() {
     return [sharedStyles, css`
       :host {

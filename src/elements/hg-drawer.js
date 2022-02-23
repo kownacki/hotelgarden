@@ -3,13 +3,11 @@ import {links, staticProp} from '../utils.js';
 import './hg-drawer/hg-drawer-item.js';
 
 export class HgDrawer extends LitElement {
-  static get properties() {
-    return {
-      selected: String,
-      promotedEvent: Object,
-      _nowOpened: HTMLElement,
-    };
-  }
+  static properties = {
+    selected: String,
+    promotedEvent: Object,
+    _nowOpened: HTMLElement,
+  };
   static get styles() {
     return css`
       .header {

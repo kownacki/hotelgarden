@@ -3,22 +3,20 @@ import '../../edit/hg-delete-item.js';
 import './hg-list-item-configure.js';
 
 export class HgListItem extends LitElement {
-  static get properties() {
-    return {
-      item: Object,
-      getItemName: Object,
-      first: Boolean,
-      last: Boolean,
-      noSwap: Boolean,
-      noDelete: Boolean,
-      vertical: {type: Boolean, reflect: true},
-      disableEdit: Boolean,
-      opened: {type: Boolean, reflect: true},
-      configure: Object,
-      _deleteOpened: Boolean,
-      _configureOpened: Boolean,
-    };
-  }
+  static properties = {
+    item: Object,
+    getItemName: Object,
+    first: Boolean,
+    last: Boolean,
+    noSwap: Boolean,
+    noDelete: Boolean,
+    vertical: {type: Boolean, reflect: true},
+    disableEdit: Boolean,
+    opened: {type: Boolean, reflect: true},
+    configure: Object,
+    _deleteOpened: Boolean,
+    _configureOpened: Boolean,
+  };
   static get styles() {
     return css`
       :host {

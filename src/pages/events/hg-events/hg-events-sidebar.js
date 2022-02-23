@@ -4,13 +4,11 @@ import {splitEvents, assignKeys} from '../../../utils.js';
 import sharedStyles from '../../../styles/shared-styles.js';
 
 export class HgEventsSidebar extends LitElement {
-  static get properties() {
-    return {
-      selected: String,
-      events: Object,
-      _upcoming: Array,
-    };
-  }
+  static properties = {
+    selected: String,
+    events: Object,
+    _upcoming: Array,
+  };
   static get styles() {
     return [sharedStyles, css`
       :host {

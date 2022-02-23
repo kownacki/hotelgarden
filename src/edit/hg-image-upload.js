@@ -2,10 +2,6 @@ import {LitElement, html, css} from 'lit';
 import {sleep} from "../utils";
 
 export class HgImageUpload extends LitElement {
-  static get properties() {
-    return {
-    };
-  }
   static get styles() {
     return css`
       :host {

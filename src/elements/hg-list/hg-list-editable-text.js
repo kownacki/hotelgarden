@@ -1,12 +1,10 @@
 import HgEditableText from '../../edit/hg-editable-text.js';
 
 export class HgListEditableText extends HgEditableText {
-  static get properties() {
-    return {
-      item: Object,
-      field: String,
-    };
-  }
+  static properties = {
+    item: Object,
+    field: String,
+  };
   constructor() {
     super();
     this.addEventListener('save', (event) => this.dispatchEvent(new CustomEvent('update', {detail: {path: this.field, data: event.detail}, bubbles: true, composed: true})));

@@ -2,18 +2,16 @@ import {LitElement, html, css} from 'lit';
 import sharedStyles from "../styles/shared-styles";
 
 export class HgDialog extends LitElement {
-  static get properties() {
-    return {
-      noButtons: Boolean,
-      fixedButtons: {type: Boolean, reflect: true, attribute: 'fixed-buttons'},
-      noHeader: Boolean,
-      noClose: {type: Boolean, reflect: true, attribute: 'no-close'},
-      modal: Boolean,
-      //
-      dialog: Element,
-      scrollable: Element,
-    };
-  }
+  static properties = {
+    noButtons: Boolean,
+    fixedButtons: {type: Boolean, reflect: true, attribute: 'fixed-buttons'},
+    noHeader: Boolean,
+    noClose: {type: Boolean, reflect: true, attribute: 'no-close'},
+    modal: Boolean,
+    //
+    dialog: Element,
+    scrollable: Element,
+  };
   firstUpdated() {
     this.dialog = this.shadowRoot.getElementById('dialog');
     this.scrollable = this.shadowRoot.getElementById(this.fixedButtons ? 'content' : 'content-and-buttons');

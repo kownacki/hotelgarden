@@ -2,12 +2,10 @@ import {LitElement, html, css} from 'lit';
 import {pages} from '../../utils.js';
 
 export class HgHeaderSubnav extends LitElement {
-  static get properties() {
-    return {
-      links: Array,
-      selected: String,
-    };
-  }
+  static properties = {
+    links: Array,
+    selected: String,
+  };
   static get styles() {
     return css`
       :host {

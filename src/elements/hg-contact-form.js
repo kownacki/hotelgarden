@@ -9,17 +9,15 @@ import sharedStyles from "../styles/shared-styles";
 const FIELDS = ['name', 'company', 'phone', 'email', 'text'];
 
 export class HgContactForm extends LitElement {
-  static get properties() {
-    return {
-      subject: {type: String, reflect: true},
-      sent: {type: Boolean, reflect: true},
-      formHidden: {type: Boolean, reflect: true, attribute: 'form-hidden'},
-      loading: {type: Boolean, reflect: true},
-      error: {type: Boolean, reflect: true},
-      _fieldsValues: Object,
-      _selectedSubject: String,
-    };
-  }
+  static properties = {
+    subject: {type: String, reflect: true},
+    sent: {type: Boolean, reflect: true},
+    formHidden: {type: Boolean, reflect: true, attribute: 'form-hidden'},
+    loading: {type: Boolean, reflect: true},
+    error: {type: Boolean, reflect: true},
+    _fieldsValues: Object,
+    _selectedSubject: String,
+  };
   static get styles() {
     return [sharedStyles, css`
       :host {

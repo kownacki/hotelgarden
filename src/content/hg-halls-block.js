@@ -5,12 +5,10 @@ import '../elements/hg-image.js';
 import './hg-halls-block/hg-halls-slider.js';
 
 export class HgHallsBlock extends LitElement {
-  static get properties() {
-    return {
-      uid: String,
-      type: String, // 'conference' / 'banquet'
-    };
-  }
+  static properties = {
+    uid: String,
+    type: String, // 'conference' / 'banquet'
+  };
   static get styles() {
     return [sharedStyles, css`
       :host {

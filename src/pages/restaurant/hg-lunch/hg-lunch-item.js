@@ -4,12 +4,10 @@ import {staticProp} from "../../../utils";
 import '../../../content/hg-menu/hg-menu-item.js';
 
 export class HgLunchItem extends LitElement {
-  static get properties() {
-    return {
-      lunch: Object,
-      prices: Object,
-    };
-  }
+  static properties = {
+    lunch: Object,
+    prices: Object,
+  };
   static get styles() {
     return [sharedStyles, css`
       :host {

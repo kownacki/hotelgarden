@@ -7,15 +7,13 @@ import '../../elements/hg-list.js';
 import './hg-menu-item.js';
 
 export class HgMenuMain extends LitElement {
-  static get properties() {
-    return {
-      uid: String,
-      category: Object,
-      categoryIndex: Number,
-      categories: Object,
-      dataReady: Boolean,
-    };
-  }
+  static properties = {
+    uid: String,
+    category: Object,
+    categoryIndex: Number,
+    categories: Object,
+    dataReady: Boolean,
+  };
   static get styles() {
     return [sharedStyles, css`
       :host {

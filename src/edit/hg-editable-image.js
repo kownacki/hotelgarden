@@ -7,18 +7,16 @@ const readFile = (file) => new Promise((resolve) => {
 });
 
 export default class HgEditableImage extends LitElement {
-  static get properties() {
-    return {
-      src: {
-        type: Boolean,
-        reflect: true,
-        attribute: 'not-empty',
-      },
-      sizing: String,
-      presize: {type: Boolean, reflect: true},
-      _loggedIn: Boolean,
-    };
-  }
+  static properties = {
+    src: {
+      type: Boolean,
+      reflect: true,
+      attribute: 'not-empty',
+    },
+    sizing: String,
+    presize: {type: Boolean, reflect: true},
+    _loggedIn: Boolean,
+  };
   constructor() {
     super();
     this._unsubscribeLoggedInListener = auth.onAuthStateChanged((user) => this._loggedIn = Boolean(user));

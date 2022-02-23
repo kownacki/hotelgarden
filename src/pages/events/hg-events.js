@@ -8,11 +8,9 @@ import './hg-events/hg-events-list.js';
 // todo add scrolling to dialogs
 
 export class HgEvents extends LitElement {
-  static get properties() {
-    return {
-      _loggedIn: Boolean,
-    };
-  }
+  static properties = {
+    _loggedIn: Boolean,
+  };
   constructor() {
     super();
     this._unsubscribeLoggedInListener = auth.onAuthStateChanged((user) => this._loggedIn = Boolean(user));

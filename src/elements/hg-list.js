@@ -6,34 +6,32 @@ import './hg-list/hg-list-item.js';
 import './hg-list/hg-list-add.js';
 
 export default class HgList extends LitElement {
-  static get properties() {
-    return {
-      // flags
-      array: Boolean,
-      noGetItems: Boolean,
-      addAtStart: Boolean,
-      noAdd: Boolean,
-      vertical: Boolean,
-      // required params
-      path: Object, // {doc: String, [field: String]}
-      itemTemplate: Function,
-      getItemName: Function,
-      // optional params
-      transform: Function,
-      onAdd: Function,
-      onDelete: Function,
-      configure: Object,
-      emptyTemplate: Object,
-      items: Object,
-      // observables
-      editing: Boolean,
-      // private
-      _list: Array,
-      _listNotEmpty: {type: Boolean, reflect: true, attribute: 'list-not-empty'},
-      _processing: Boolean,
-      _loggedIn: Boolean,
-    };
-  }
+  static properties = {
+    // flags
+    array: Boolean,
+    noGetItems: Boolean,
+    addAtStart: Boolean,
+    noAdd: Boolean,
+    vertical: Boolean,
+    // required params
+    path: Object, // {doc: String, [field: String]}
+    itemTemplate: Function,
+    getItemName: Function,
+    // optional params
+    transform: Function,
+    onAdd: Function,
+    onDelete: Function,
+    configure: Object,
+    emptyTemplate: Object,
+    items: Object,
+    // observables
+    editing: Boolean,
+    // private
+    _list: Array,
+    _listNotEmpty: {type: Boolean, reflect: true, attribute: 'list-not-empty'},
+    _processing: Boolean,
+    _loggedIn: Boolean,
+  };
   constructor() {
     super();
     this._unsubscribeLoggedInListener = auth.onAuthStateChanged((user) => this._loggedIn = Boolean(user));

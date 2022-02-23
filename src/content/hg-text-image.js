@@ -9,21 +9,19 @@ import '../elements/hg-icon-info.js';
 import '../elements/hg-action-buttons.js';
 
 export class HgTextImage extends LitElement {
-  static get properties() {
-    return {
-      uid: Number,
-      buttons: Number,
-      h3: {type: Boolean},
-      noHeading: Boolean,
-      swap: {type: Boolean, reflect: true},
-      iconFields: Array,
-      iconSrcs: Array,
-      iconsAtEnd: {type: Boolean, reflect: true, attribute: 'icons-at-end'},
-      slider: Boolean,
-      _textImage: Object,
-      _dataReady: Boolean,
-    };
-  }
+  static properties = {
+    uid: Number,
+    buttons: Number,
+    h3: {type: Boolean},
+    noHeading: Boolean,
+    swap: {type: Boolean, reflect: true},
+    iconFields: Array,
+    iconSrcs: Array,
+    iconsAtEnd: {type: Boolean, reflect: true, attribute: 'icons-at-end'},
+    slider: Boolean,
+    _textImage: Object,
+    _dataReady: Boolean,
+  };
   async firstUpdated() {
     this._textImage = (await db.doc('textImage/' + this.uid).get()).data() || {};
     this._dataReady = true;

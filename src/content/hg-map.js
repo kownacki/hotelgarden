@@ -5,11 +5,9 @@ import apiKey from '../../utils/apiKey.js';
 let googleMapsLoaded = false;
 
 export class HgMap extends LitElement {
-  static get properties() {
-    return {
-      seen: Boolean,
-    };
-  }
+  static properties = {
+    seen: Boolean,
+  };
   async updated(changedProperties) {
     if (changedProperties.has('seen')) {
       if (!googleMapsLoaded) {

@@ -3,12 +3,10 @@ import '../../../elements/hg-slider.js';
 import '../../../edit/hg-editable-image.js';
 
 export class HgGallerySlider extends LitElement {
-  static get properties() {
-    return {
-      images: Array,
-      selected: Number,
-    };
-  }
+  static properties = {
+    images: Array,
+    selected: Number,
+  };
   static get styles() {
     return css`      
       :host {
