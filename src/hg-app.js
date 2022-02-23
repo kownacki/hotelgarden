@@ -16,7 +16,6 @@ import '@polymer/paper-icon-button';
 import '@polymer/paper-input/paper-input';
 import '@polymer/paper-input/paper-textarea.js';
 import '@polymer/paper-dialog';
-import '@material/mwc-button';
 import '@polymer/paper-styles/color';
 
 import './elements/hg-header.js';

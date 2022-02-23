@@ -78,6 +78,7 @@ const indexHtml = `
       --accent-color: #4f6884;
       --accent-color-dark: #324254;
       --accent-color-rgb: 79, 104, 132;
+      --text-color: var(--secondary-color);
       --placeholder-color: var(--paper-grey-500);
       --placeholder-color-rgb: 158, 158, 158;
       --divider-color: rgba(0, 0, 0, 0.12);
@@ -92,7 +93,15 @@ const indexHtml = `
       --layer-profitroom: 999; /* Profitroom snippet layer*/
       --layer-profitroom-1: 1000;
       font-family: 'Lato', sans-serif;
-      color: var(--secondary-color);
+      color: var(--text-color);
+      /* MWC theming. See https://github.com/material-components/material-web/blob/master/docs/theming.md */
+      --mdc-theme-primary: var(--accent-color);
+      --mdc-theme-secondary: var(--primary-color);
+      /* Bug. See https://github.com/material-components/material-web/issues/2748 */
+      --mdc-switch-selected-pressed-handle-color: var(--mdc-theme-primary);
+      --mdc-switch-selected-focus-handle-color: var(--mdc-theme-primary);
+      --mdc-switch-selected-hover-handle-color: var(--mdc-theme-primary);
+      --mdc-switch-selected-track-color: var(--divider-color);
     }
     ${_.map((font) => css`
       @font-face {

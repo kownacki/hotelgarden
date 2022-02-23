@@ -1,4 +1,5 @@
 import {LitElement, html, css} from 'lit';
+import '@material/mwc-button';
 import {hyphenate, updateData} from '../../../utils.js';
 
 export class HgEventsAdd extends LitElement {

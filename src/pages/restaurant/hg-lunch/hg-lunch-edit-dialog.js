@@ -89,7 +89,7 @@ export class HgLunchEditDialog extends LitElement {
                 this.lunches = newLunches;
                 this.dispatchEvent(new CustomEvent('lunches-changed', {detail: newLunches, composed: true}));
                 this.shadowRoot.getElementById('dialog').dialog.close();
-                this.shadowRoot.getElementById('snackbar-success').open();
+                this.shadowRoot.getElementById('snackbar-success').show();
                 this._error = null;
               }
             }

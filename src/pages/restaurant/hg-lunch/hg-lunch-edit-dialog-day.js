@@ -75,7 +75,6 @@ export class HgLunchEditDialogDay extends LitElement {
         width: 250px;
       }
       mwc-switch {
-        --mdc-theme-secondary:var(--accent-color);
         margin-top: 5px;
       }
       #courses-collapse {
@@ -95,7 +94,6 @@ export class HgLunchEditDialogDay extends LitElement {
         justify-content: space-between;
       }
       mwc-textfield {
-        --mdc-theme-primary: var(--accent-color);
         width: calc(50% - 10px);
         margin-bottom: 5px;
       }
@@ -120,8 +118,8 @@ export class HgLunchEditDialogDay extends LitElement {
         <div class="day">${getDayOfWeek(this.day)}</div>
         <mwc-formfield .label=${this._disabled ? 'Bez lunchu w ten dzień' : 'Lunch dostępny w ten dzień'}>
           <mwc-switch 
-            .checked=${!_.get('disabled', this.lunches)}
-            @change=${(event) => this._disabled = !event.target.checked}>
+            .selected=${!_.get('disabled', this.lunches)}
+            @click=${(event) => this._disabled = !event.target.selected}>
           </mwc-switch>
         </mwc-formfield>
       </div>
