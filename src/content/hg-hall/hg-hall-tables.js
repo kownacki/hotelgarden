@@ -12,31 +12,29 @@ export class HgHallTables extends LitElement {
     _setOutsDoc: String,
     _dataReady: Boolean,
   };
-  static get styles() {
-    return [sharedStyles, css`
-      :host {
-        display: block;
-        margin-bottom: 50px;
-      }
-      .items {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        max-width: 800px;
-        margin: auto;
-        text-align: center;
-      }
-      .items > * {
-        padding: 10px 10px 30px;
-        box-sizing: border-box;
-        width: 25%;
-        min-width: 120px;
-      }
-      p {
-        margin: 8px 0;
-      }
-    `];
-  }
+  static styles = [sharedStyles, css`
+    :host {
+      display: block;
+      margin-bottom: 50px;
+    }
+    .items {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 800px;
+      margin: auto;
+      text-align: center;
+    }
+    .items > * {
+      padding: 10px 10px 30px;
+      box-sizing: border-box;
+      width: 25%;
+      min-width: 120px;
+    }
+    p {
+      margin: 8px 0;
+    }
+  `];
   async firstUpdated() {
     //todo refactor ehh....
     (async () => {

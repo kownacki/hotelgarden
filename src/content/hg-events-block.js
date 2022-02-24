@@ -8,25 +8,23 @@ export class HgEventsBlock extends LitElement {
   static properties = {
     _eventsNotEmpty: {type: Boolean, reflect: true, attribute: 'events-not-empty'}
   };
-  static get styles() {
-    return [sharedStyles, css`
-      :host {
-        display: none;
-      }
-      :host([events-not-empty]) {
-        max-width: 1000px;
-        display: block;
-        margin: 60px auto;
-        padding: 0 20px;
-      }
-      h2 {
-        margin: 60px 0;
-      }
-      hg-action-button {
-        margin: 20px 0;
-      }
-    `];
-  }
+  static styles = [sharedStyles, css`
+    :host {
+      display: none;
+    }
+    :host([events-not-empty]) {
+      max-width: 1000px;
+      display: block;
+      margin: 60px auto;
+      padding: 0 20px;
+    }
+    h2 {
+      margin: 60px 0;
+    }
+    hg-action-button {
+      margin: 20px 0;
+    }
+  `];
   render() {
     return html`
       <h2 class="content-heading">Najbliższe wydarzenia</h2>

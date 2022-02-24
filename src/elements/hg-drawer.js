@@ -8,38 +8,36 @@ export class HgDrawer extends LitElement {
     promotedEvent: Object,
     _nowOpened: HTMLElement,
   };
-  static get styles() {
-    return css`
-      .header {
-        background: white;
-        position: fixed;
-        width: 100%;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-      }
-      paper-icon-button {
-        width: 44px;
-        height: 44px;
-        margin: calc((var(--headerHeight) - 44px) / 2);
-      }
-      nav {
-        display: block;
-        height: calc(100% - var(--headerHeight));
-        margin-top: var(--headerHeight);
-        overflow: auto;
-      }
-      ul {
-        margin: 0;
-        padding: 0;
-        list-style: none;
-      }
-      li {
-        border-bottom: solid 1px var(--placeholder-color);
-      }
-      li:last-child {
-        border-bottom: none;
-      }
-    `;
-  }
+  static styles = css`
+    .header {
+      background: white;
+      position: fixed;
+      width: 100%;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+    paper-icon-button {
+      width: 44px;
+      height: 44px;
+      margin: calc((var(--headerHeight) - 44px) / 2);
+    }
+    nav {
+      display: block;
+      height: calc(100% - var(--headerHeight));
+      margin-top: var(--headerHeight);
+      overflow: auto;
+    }
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    li {
+      border-bottom: solid 1px var(--placeholder-color);
+    }
+    li:last-child {
+      border-bottom: none;
+    }
+  `;
   render() {
     return html`
       <div class="header">

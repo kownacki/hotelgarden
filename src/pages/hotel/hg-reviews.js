@@ -28,41 +28,39 @@ const configure = {
 };
 
 export class HgReviews extends LitElement {
-  static get styles() {
-    return css`
+  static styles = css`
+    :host {
+      display: block;
+      max-width: 1200px;
+      padding: 40px 0;
+      margin: auto;
+    }
+    hg-intro-article {
+      display: none;
+    }
+    hg-list {
+      display: flex;
+      flex-wrap: wrap;
+      --columns: 3;
+    }
+    @media all and (max-width: 1279px) {
       :host {
-        display: block;
-        max-width: 1200px;
-        padding: 40px 0;
-        margin: auto;
-      }
-      hg-intro-article {
-        display: none;
+        max-width: 800px;
       }
       hg-list {
-        display: flex;
-        flex-wrap: wrap;
-        --columns: 3;
+        --columns: 2;
       }
-      @media all and (max-width: 1279px) {
-        :host {
-          max-width: 800px;
-        }
-        hg-list {
-          --columns: 2;
-        }
+    }
+    @media all and (max-width: 839px) {
+      :host {
+        width: 580px;
+        max-width: 100%;
       }
-      @media all and (max-width: 839px) {
-        :host {
-          width: 580px;
-          max-width: 100%;
-        }
-        hg-list {
-          --columns: 1;
-        }
+      hg-list {
+        --columns: 1;
       }
-    `;
-  }
+    }
+  `;
   render() {
     return html`
       <hg-intro-article .uid=${'reviews'}></hg-intro-article>

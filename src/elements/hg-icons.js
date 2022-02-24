@@ -11,6 +11,41 @@ export class HgIcons extends LitElement {
     small: {type: Boolean, reflect: true},
     _loggedIn: Boolean,
   };
+  static styles = css`
+    :host {
+      display: block;
+    }
+    hg-list {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    :host(:not([small])) hg-list {
+      min-height: 131px;
+      justify-content: center;
+    }
+    :host([small]) hg-list {
+      min-height: 60px;
+      margin: 0 -15px;
+    }
+    :host([empty]) {
+      background: rgba(var(--placeholder-color-rgb), 0.5);
+    }
+    @media all and (max-width: 959px) {
+      :host([small]) hg-list {
+        --columns: 3;
+      }
+    }
+    @media all and (max-width: 769px) {
+      :host([small]) hg-list {
+        --columns: 2;
+      }
+    }
+    @media all and (max-width: 479px) {
+      :host([small]) hg-list {
+        --columns: 1;
+      }
+    }
+  `;
   constructor() {
     super();
     this._unsubscribeLoggedInListener = auth.onAuthStateChanged((user) => this._loggedIn = Boolean(user));
@@ -18,43 +53,6 @@ export class HgIcons extends LitElement {
   disconnectedCallback() {
     this._unsubscribeLoggedInListener();
     return super.disconnectedCallback();
-  }
-  static get styles() {
-    return css`
-      :host {
-        display: block;
-      }
-      hg-list {
-        display: flex;
-        flex-wrap: wrap;
-      }
-      :host(:not([small])) hg-list {
-        min-height: 131px;
-        justify-content: center;
-      }
-      :host([small]) hg-list {
-        min-height: 60px;
-        margin: 0 -15px;
-      }
-      :host([empty]) {
-        background: rgba(var(--placeholder-color-rgb), 0.5);
-      }
-      @media all and (max-width: 959px) {
-        :host([small]) hg-list {
-          --columns: 3;
-        }
-      }
-      @media all and (max-width: 769px) {
-        :host([small]) hg-list {
-          --columns: 2;
-        }
-      }
-      @media all and (max-width: 479px) {
-        :host([small]) hg-list {
-          --columns: 1;
-        }
-      }
-    `;
   }
   render() {
     return html`

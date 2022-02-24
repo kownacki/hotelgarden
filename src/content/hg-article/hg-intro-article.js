@@ -3,18 +3,16 @@ import HgArticle from '../hg-article.js';
 import {setMetaDescription} from "../../utils";
 
 export class HgIntroArticle extends HgArticle {
-  static get styles() {
-    return [super.styles, css`
+  static styles = [super.styles, css`
+    :host {
+      margin: 80px auto;
+    }
+    @media all and (max-width: 599px) {
       :host {
-        margin: 80px auto;
+        margin: 40px auto;
       }
-      @media all and (max-width: 599px) {
-        :host {
-          margin: 40px auto;
-        }
-      }
-    `];
-  }
+    }
+  `];
   constructor() {
     super();
     this.richConfig = 'intro';

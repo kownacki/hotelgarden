@@ -8,51 +8,49 @@ export class HgReview extends LitElement {
     editable: Boolean,
     disableEdit: Boolean,
   };
+  static styles = [sharedStyles, css`
+    :host {
+      box-sizing: border-box;
+    }
+    h3 {
+      margin: 0;
+      font-size: 30px;
+      font-style: italic;
+    }
+    p {
+      font-style: italic;
+    }
+    .bottom {
+      margin: 0;
+    }
+    /* todo do I really have to set it? */
+    .bottom hg-list-editable-text  {
+      display: inline;
+    }
+    .author {
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+    @media all and (max-width: 959px) {
+      h3 {
+        font-size: 27px;
+      }
+    }
+    @media all and (max-width: 599px) {
+      h3 {
+        font-size: 24px;
+      }
+      :host {
+        border: none;
+        border-top: solid 1px var(--divider-color);
+        border-bottom:  solid 1px var(--divider-color);
+        border-radius: 0;
+      }
+    }
+  `];
   constructor() {
     super();
     this.classList.add('fixed-height-element');
-  }
-  static get styles() {
-    return [sharedStyles, css`
-      :host {
-        box-sizing: border-box;
-      }
-      h3 {
-        margin: 0;
-        font-size: 30px;
-        font-style: italic;
-      }
-      p {
-        font-style: italic;
-      }
-      .bottom {
-        margin: 0;
-      }
-      /* todo do I really have to set it? */
-      .bottom hg-list-editable-text  {
-        display: inline;
-      }
-      .author {
-        font-weight: 700;
-        color: var(--primary-color);
-      }
-      @media all and (max-width: 959px) {
-        h3 {
-          font-size: 27px;
-        }
-      }
-      @media all and (max-width: 599px) {
-        h3 {
-          font-size: 24px;
-        }
-        :host {
-          border: none;
-          border-top: solid 1px var(--divider-color);
-          border-bottom:  solid 1px var(--divider-color);
-          border-radius: 0;
-        }
-      }
-    `];
   }
   render() {
     return html`

@@ -15,22 +15,20 @@ export class HgLunchGenerate extends LitElement {
     _decreasingFont: Number,
     _result: Object,
   };
-  static get styles() {
-    return [sharedStyles, css`
-      .result {
-        margin-top: 20px;
-        text-align: center;
-      }
-      .error {
-        color: var(--error-color);
-      }
-      a {
-        text-decoration: none;
-        font-weight: 700;
-        color: var(--accent-color);
-      }
-    `];
-  }
+  static styles = [sharedStyles, css`
+    .result {
+      margin-top: 20px;
+      text-align: center;
+    }
+    .error {
+      color: var(--error-color);
+    }
+    a {
+      text-decoration: none;
+      font-weight: 700;
+      color: var(--accent-color);
+    }
+  `];
   render() {
     return html`
       <hg-action-button .disabled=${this._loading} @click=${async () => {

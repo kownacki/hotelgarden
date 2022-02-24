@@ -6,16 +6,14 @@ export class HgContentLabel extends LitElement {
     name: String,
     _loggedIn: Boolean,
   };
-  static get styles() {
-    return [sharedStyles, css`
-      :host {
-        display: none;
-        position: absolute;
-        bottom: 100%;
-        left: 0;
-      }
-    `];
-  }
+  static styles = [sharedStyles, css`
+    :host {
+      display: none;
+      position: absolute;
+      bottom: 100%;
+      left: 0;
+    }
+  `];
   constructor() {
     super();
     this._unsubscribeLoggedInListener = auth.onAuthStateChanged((user) => this._loggedIn = Boolean(user));

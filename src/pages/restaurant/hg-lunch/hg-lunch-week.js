@@ -11,64 +11,62 @@ export class HgLunchWeek extends LitElement {
     today: Number,
     weekLength: Number,
   };
-  static get styles() {
-    return [sharedStyles, css`
-      :host {
-        max-width: 1200px;
-        margin: auto;
-        display: block;
-        margin-bottom: 60px;
+  static styles = [sharedStyles, css`
+    :host {
+      max-width: 1200px;
+      margin: auto;
+      display: block;
+      margin-bottom: 60px;
+    }
+    .items {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .item {
+      width: 50%;
+      box-sizing: border-box;
+      padding: 0 80px;
+    }
+    h3 {
+      text-align: center;
+    }
+    .today-or-tomorrow {
+      font-weight: 400;
+      color: var(--secondary-color);
+    }
+    .item-content {
+      padding: 20px 0;
+    }
+    .no-lunch {
+      text-align: center;
+      padding: 0 20px;
+    }
+    @media all and (max-width: 1023px) {
+      .item {
+        padding: 0 40px;
       }
+    }
+    @media all and (max-width: 719px) {
       .items {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
+        display: block;
       }
       .item {
-        width: 50%;
-        box-sizing: border-box;
-        padding: 0 80px;
-      }
-      h3 {
-        text-align: center;
-      }
-      .today-or-tomorrow {
-        font-weight: 400;
-        color: var(--secondary-color);
-      }
-      .item-content {
-        padding: 20px 0;
-      }
-      .no-lunch {
-        text-align: center;
+        width: auto;
+        max-width: 450px;
+        margin: auto;
         padding: 0 20px;
       }
-      @media all and (max-width: 1023px) {
-        .item {
-          padding: 0 40px;
-        }
+      .item-content {
+        padding: 10px 0;
       }
-      @media all and (max-width: 719px) {
-        .items {
-          display: block;
-        }
-        .item {
-          width: auto;
-          max-width: 450px;
-          margin: auto;
-          padding: 0 20px;
-        }
-        .item-content {
-          padding: 10px 0;
-        }
+    }
+    @media all and (max-width: 599px) {
+      .item {
+        padding: 0 20px;
       }
-      @media all and (max-width: 599px) {
-        .item {
-          padding: 0 20px;
-        }
-      }
-    `];
-  }
+    }
+  `];
   render() {
     return html`
       ${_.isEmpty(this.lunches)

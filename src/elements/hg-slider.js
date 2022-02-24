@@ -12,57 +12,55 @@ export class HgSlider extends LitElement {
     double: {type: Boolean, reflect: true},
     transitionGoing: Boolean,
   };
-  static get styles() {
-    return [sharedStyles, css`
-      :host {
-        display: block;
-        background: white;
-        position: relative;
-        overflow: hidden;
+  static styles = [sharedStyles, css`
+    :host {
+      display: block;
+      background: white;
+      position: relative;
+      overflow: hidden;
+    }
+    #slider {
+      right: -100%;
+      top: 0;
+      width: 300%;
+      height: 100%;
+      position: absolute;
+      display: flex;
+    }
+    @media all and (min-width: 600px) {
+      :host([double]) #slider {
+        right: -50%;
+        width: 200%;
       }
-      #slider {
-        right: -100%;
-        top: 0;
-        width: 300%;
-        height: 100%;
-        position: absolute;
-        display: flex;
-      }
-      @media all and (min-width: 600px) {
-        :host([double]) #slider {
-          right: -50%;
-          width: 200%;
-        }
-      }
-      #slider > * {
-        flex: 1;
-        height: 100%;
-        box-sizing: border-box;
-      }
-      .counter {
-        font-size: 16px;
-        top: 2px;
-        left: 2px;
-        position: absolute;
-        padding: 8px;
-      }
-      paper-icon-button {
-        position: absolute;
-        top: calc(50% - 20px);
-        height: 45px;
-        width: 45px;
-      }
-      paper-icon-button, .counter {
-        background: rgba(255, 255, 255, 0.5);
-      }
-      paper-icon-button#left {
-        left: 2px;
-      }
-      paper-icon-button#right {
-        right: 2px;
-      }
-    `];
-  }
+    }
+    #slider > * {
+      flex: 1;
+      height: 100%;
+      box-sizing: border-box;
+    }
+    .counter {
+      font-size: 16px;
+      top: 2px;
+      left: 2px;
+      position: absolute;
+      padding: 8px;
+    }
+    paper-icon-button {
+      position: absolute;
+      top: calc(50% - 20px);
+      height: 45px;
+      width: 45px;
+    }
+    paper-icon-button, .counter {
+      background: rgba(255, 255, 255, 0.5);
+    }
+    paper-icon-button#left {
+      left: 2px;
+    }
+    paper-icon-button#right {
+      right: 2px;
+    }
+  `];
   constructor() {
     super();
     this.selected = 0;

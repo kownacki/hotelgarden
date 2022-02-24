@@ -8,10 +8,7 @@ export class HgHall extends LitElement {
   static properties = {
     uid: String,
   };
-  static get styles() {
-    return [sharedStyles, css`      
-    `];
-  }
+  static styles = sharedStyles;
   render() {
     return html`
       <div class="divider">

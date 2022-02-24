@@ -18,115 +18,113 @@ export class HgContactForm extends LitElement {
     _fieldsValues: Object,
     _selectedSubject: String,
   };
-  static get styles() {
-    return [sharedStyles, css`
+  static styles = [sharedStyles, css`
+    :host {
+      --height: 346px;
+      --heightMobile: calc(var(--height) * 2);
+      --heightMobileWithSubject: calc(var(--heightMobile) + 92px);
+      --width: 900px;
+      font-size: 18px;
+      display: block;
+      width: var(--width);
+      padding: 0 20px;
+      margin: 20px auto;
+    }
+    .inputs {
+      display: flex;
+      transition: height 0.5s ease-in;
+      overflow: hidden;
+      /* needed for animation */
+      height: var(--height);
+    }
+    :host([sent]) .inputs {
+      height: 0 !important;
+    }
+    .inputs > * {
+      width: 50%;
+    }
+    .inputs > * > * {
+      display: block;
+      margin: 10px 5px;
+    }
+    paper-icon-button {
+      color: var(--accent-color);
+      display: block;
+      width: 50px;
+      height: 50px;
+      margin-left: auto;
+    }
+    paper-icon-button[disabled] {
+      color: var(--disabled-text-color);
+    }
+    paper-input {
+      height: 72px;
+    }
+    paper-input, paper-textarea {
+      padding: 0 12px;
+      border: solid 1px var(--primary-color);
+      --paper-input-container_-_padding: 4px 0 20px;
+      --paper-input-container-shared-input-style_-_font-size: 18px;
+      --paper-font-subhead_-_font-size: 18px;
+      --paper-font-subhead_-_line-height: 1.4em;
+    }
+    :host([subject]) paper-radio-group {
+      display: none;
+    }
+    paper-spinner-lite {
+       display: block;
+       margin-right: 10px;
+       padding: 11px;
+       margin-left: auto;
+       --paper-spinner-color: var(--primary-color);
+     }
+    :host(:not([loading])) paper-spinner-lite {
+      display: none;
+    }
+    :host([loading]) paper-icon-button, :host([sent]) paper-icon-button {
+      display: none;
+    }
+    .about {
+      position: relative;
+      bottom: -2px;
+    }
+    .confirmation {
+      text-align: center;
+    }
+    :host(:not([form-hidden])) .confirmation {
+      display: none;
+    }
+    :host([error]) .sent {
+      display: none;
+    }
+    :host(:not([error])) .error {
+      display: none;
+    }
+    @media all and (max-width: 959px) {
       :host {
-        --height: 346px;
-        --heightMobile: calc(var(--height) * 2);
-        --heightMobileWithSubject: calc(var(--heightMobile) + 92px);
-        --width: 900px;
-        font-size: 18px;
-        display: block;
-        width: var(--width);
-        padding: 0 20px;
-        margin: 20px auto;
+        width: auto;
+        max-width: calc(var(--width) / 2);
       }
       .inputs {
-        display: flex;
-        transition: height 0.5s ease-in;
-        overflow: hidden;
-        /* needed for animation */
-        height: var(--height);
+        flex-direction: column;
       }
-      :host([sent]) .inputs {
-        height: 0 !important;
+      :host(:not([subject])) .inputs {
+        height: var(--heightMobileWithSubject);
+      }
+      :host([subject]) .inputs {
+        height: var(--heightMobile);
       }
       .inputs > * {
-        width: 50%;
+        width: auto;
       }
-      .inputs > * > * {
+      paper-radio-group > * {
         display: block;
-        margin: 10px 5px;
-      }
-      paper-icon-button {
-        color: var(--accent-color);
-        display: block;
-        width: 50px;
-        height: 50px;
-        margin-left: auto;
-      }
-      paper-icon-button[disabled] {
-        color: var(--disabled-text-color);
-      }
-      paper-input {
-        height: 72px;
-      }
-      paper-input, paper-textarea {
-        padding: 0 12px;
-        border: solid 1px var(--primary-color);
-        --paper-input-container_-_padding: 4px 0 20px;
-        --paper-input-container-shared-input-style_-_font-size: 18px;
-        --paper-font-subhead_-_font-size: 18px;
-        --paper-font-subhead_-_line-height: 1.4em;
-      }
-      :host([subject]) paper-radio-group {
-        display: none;
-      }
-      paper-spinner-lite {
-         display: block;
-         margin-right: 10px;
-         padding: 11px;
-         margin-left: auto;
-         --paper-spinner-color: var(--primary-color);
-       }
-      :host(:not([loading])) paper-spinner-lite {
-        display: none;
-      }
-      :host([loading]) paper-icon-button, :host([sent]) paper-icon-button {
-        display: none;
       }
       .about {
-        position: relative;
-        bottom: -2px;
+        bottom: 0;
       }
-      .confirmation {
-        text-align: center;
-      }
-      :host(:not([form-hidden])) .confirmation {
-        display: none;
-      }
-      :host([error]) .sent {
-        display: none;
-      }
-      :host(:not([error])) .error {
-        display: none;
-      }
-      @media all and (max-width: 959px) {
-        :host {
-          width: auto;
-          max-width: calc(var(--width) / 2);
-        }
-        .inputs {
-          flex-direction: column;
-        }
-        :host(:not([subject])) .inputs {
-          height: var(--heightMobileWithSubject);
-        }
-        :host([subject]) .inputs {
-          height: var(--heightMobile);
-        }
-        .inputs > * {
-          width: auto;
-        }
-        paper-radio-group > * {
-          display: block;
-        }
-        .about {
-          bottom: 0;
-        }
-      }
-    `];
-  }
+    }
+  `];
   constructor() {
     super();
     this._valid = {};

@@ -19,65 +19,63 @@ export class HgEvent extends LitElement {
     _dataReady: Boolean,
     _loggedIn: Boolean,
   };
-  static get styles() {
-    return [sharedStyles, ckContent, css`
+  static styles = [sharedStyles, ckContent, css`
+    .container {
+      display: flex;
+      justify-content: center;
+      max-width: 1040px;
+      margin: auto;
+      padding: 20px 20px 40px;
+    }
+    .content {
+      box-sizing: border-box;
+      width: 720px;
+      padding: 0 60px;
+    }
+    .header {
+      display: flex;
+    }
+    .date {
+      font-size: 20px;
+      color: var(--secondary-color);
+      margin-bottom: 10px;
+    }
+    .controls {
+      display: flex;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      margin-bottom: 5px;
+    }
+    .controls > * {
+      display: none;
+    }
+    .header:hover .controls > *, hg-event-edit-date[opened] {
+      display: flex;
+    }
+    paper-toggle-button {
+      margin: 1px 0 1px 20px;
+    }
+    @media all and (max-width: 599px) {
+      .header {
+        display: block;
+      }
+    }
+    @media all and (max-width: 959px) {
       .container {
-        display: flex;
-        justify-content: center;
-        max-width: 1040px;
-        margin: auto;
-        padding: 20px 20px 40px;
+        display: block;
       }
       .content {
-        box-sizing: border-box;
-        width: 720px;
-        padding: 0 60px;
+        max-width: 720px;
+        width: auto;
+        padding: 0;
+        margin: auto;
       }
-      .header {
-        display: flex;
+      hg-events-sidebar {
+        display: block;
+        margin: 40px auto 0;
       }
-      .date {
-        font-size: 20px;
-        color: var(--secondary-color);
-        margin-bottom: 10px;
-      }
-      .controls {
-        display: flex;
-        align-items: flex-start;
-        flex-wrap: wrap;
-        margin-bottom: 5px;
-      }
-      .controls > * {
-        display: none;
-      }
-      .header:hover .controls > *, hg-event-edit-date[opened] {
-        display: flex;
-      }
-      paper-toggle-button {
-        margin: 1px 0 1px 20px;
-      }
-      @media all and (max-width: 599px) {
-        .header {
-          display: block;
-        }
-      }
-      @media all and (max-width: 959px) {
-        .container {
-          display: block;
-        }
-        .content {
-          max-width: 720px;
-          width: auto;
-          padding: 0;
-          margin: auto;
-        }
-        hg-events-sidebar {
-          display: block;
-          margin: 40px auto 0;
-        }
-      }
-    `];
-  }
+    }
+  `];
   constructor() {
     super();
     (async () => {

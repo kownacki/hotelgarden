@@ -10,20 +10,18 @@ export class HgGallery extends LitElement {
   static properties = {
     _items: Object,
   };
-  static get styles() {
-    return css`
-      :host {
-        display: block;
-        margin: 40px auto;
-        width: 100%;
-        max-width: 1300px;
-        padding: 0 0 1px;
-      }
-      hg-intro-article {
-        display: none;
-      }
-    `;
-  }
+  static styles = css`
+    :host {
+      display: block;
+      margin: 40px auto;
+      width: 100%;
+      max-width: 1300px;
+      padding: 0 0 1px;
+    }
+    hg-intro-article {
+      display: none;
+    }
+  `;
   async updateImage(index, file) {
     const oldImageName = _.get(`${index}.image.name`, this._items);
     const list = this.shadowRoot.getElementById('list');

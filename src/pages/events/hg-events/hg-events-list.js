@@ -11,13 +11,11 @@ export class HgEventsList extends LitElement {
     noNonPublic: Boolean,
     _loggedIn: Boolean,
   };
-  static get styles() {
-    return [sharedStyles, css`
-      :host {
-        display: block;
-      }
-    `];
-  }
+  static styles = [sharedStyles, css`
+    :host {
+      display: block;
+    }
+  `];
   constructor() {
     super();
     this._unsubscribeLoggedInListener = auth.onAuthStateChanged((user) => this._loggedIn = Boolean(user));

@@ -17,6 +17,17 @@ export class HgImageSlider extends LitElement {
     // private
     _loggedIn: Boolean,
   };
+  static styles = css`
+    :host {
+      display: block;
+      position: relative;
+      background: rgba(var(--placeholder-color-rgb), 0.5);
+    }
+    hg-slider {
+      background: transparent;
+      height: 100%;
+    }
+  `;
   constructor() {
     super();
     this._unsubscribeLoggedInListener = auth.onAuthStateChanged((user) => this._loggedIn = Boolean(user));
@@ -33,19 +44,6 @@ export class HgImageSlider extends LitElement {
         })();
       }
     }
-  }
-  static get styles() {
-    return css`
-      :host {
-        display: block;
-        position: relative;
-        background: rgba(var(--placeholder-color-rgb), 0.5);
-      }
-      hg-slider {
-        background: transparent;
-        height: 100%;
-      }
-    `;
   }
   async updateImage(index, file) {
     const oldImageName = _.get(`${index}.name`, this.images);

@@ -7,29 +7,27 @@ export class HgGallerySlider extends LitElement {
     images: Array,
     selected: Number,
   };
-  static get styles() {
-    return css`      
-      :host {
-        display: none;
-        background: white;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        position: fixed;
-        z-index: var(--layer-header-1)
-      }
-      hg-slider {
-        height: 100%;
-      }
-      .controls {
-        position: fixed;
-        top: 0;
-        right: 0;
-        background: rgba(255, 255, 255, 0.5);
-      }
-    `;
-  }
+  static styles = css`      
+    :host {
+      display: none;
+      background: white;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      position: fixed;
+      z-index: var(--layer-header-1)
+    }
+    hg-slider {
+      height: 100%;
+    }
+    .controls {
+      position: fixed;
+      top: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.5);
+    }
+  `;
   constructor() {
     // todo remove all window event listeners registered imperatively
     super();

@@ -22,19 +22,17 @@ export class HgRoom extends LitElement {
     index: Number,
     extraButtons: Array,
   };
-  static get styles() {
-    return [sharedStyles, css`
-      :host {
-        display: block;
-      }
-      hg-text-image {
-        margin-bottom: 40px;
-      }
-      hg-content-icons {
-        margin-bottom: 60px;
-      }
-    `];
-  }
+  static styles = [sharedStyles, css`
+    :host {
+      display: block;
+    }
+    hg-text-image {
+      margin-bottom: 40px;
+    }
+    hg-content-icons {
+      margin-bottom: 60px;
+    }
+  `];
   render() {
     return html`
       <div class="divider">

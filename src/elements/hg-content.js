@@ -16,23 +16,21 @@ const checkChildrenVisibility = _.throttle(100, (element) => {
 });
 
 export default class HgContent extends LitElement {
-  static get styles() {
-    return [sharedStyles, css`
-      /* Prevent bugs. Iphone adds style tag as host's last child. */
-      :host > :not(style):not(.no-animation) {
-        transition-property: opacity, top;
-        transition-duration: 0.5s;
-        transition-timing-function: ease-in-out;
-        top: 30px;
-        opacity: 0;
-        position: relative;
-      }
-      :host > .seen:not(.no-animation) {
-        opacity: 1;
-        top: 0;
-      }
-    `];
-  }
+  static styles = [sharedStyles, css`
+    /* Prevent bugs. Iphone adds style tag as host's last child. */
+    :host > :not(style):not(.no-animation) {
+      transition-property: opacity, top;
+      transition-duration: 0.5s;
+      transition-timing-function: ease-in-out;
+      top: 30px;
+      opacity: 0;
+      position: relative;
+    }
+    :host > .seen:not(.no-animation) {
+      opacity: 1;
+      top: 0;
+    }
+  `];
   firstUpdated() {
     this._checkChildrenVisibility = () => checkChildrenVisibility(this);
     this._checkChildrenVisibility();

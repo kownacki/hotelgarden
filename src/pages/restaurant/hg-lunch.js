@@ -19,6 +19,58 @@ export class HgLunch extends HgContent {
     _loggedIn: Boolean,
     _lunchDaysCount: Number,
   };
+  static styles = [sharedStyles, css`
+    h2 {
+      margin: 60px 0 30px;
+    }
+    hg-lunch-week {
+      margin-bottom: 80px;
+    }
+    .generate {
+      text-align: center;
+    }
+    .edit-wrapper {
+      max-width: 1000px;
+      margin: 80px auto;
+      padding: 0 20px;
+    }
+    .edit {
+      border: solid 1px var(--divider-color);
+      display: flex;
+      justify-content: center;
+      padding: 30px;
+      background: rgba(var(--placeholder-color-rgb), 0.03);
+    }
+    .generate {
+      max-width: 700px;
+      margin: 80px auto;
+      padding: 0 20px;
+      text-align: center;
+    }
+    hg-lunch-edit {
+      padding: 40px 20px;
+      width: calc(50% - 80px);
+    }
+    @media all and (max-width: 839px) {
+      .edit {
+        padding: 30px 0;
+      }
+    }
+    @media all and (max-width: 719px) {
+      .edit {
+        display: block;
+      }
+      hg-lunch-edit {
+        width: auto;
+        margin: auto;
+      }
+    }
+    @media all and (max-width: 479px) {
+      .edit-wrapper {
+        padding: 0;
+      }
+    }
+  `];
   constructor() {
     super();
     this._unsubscribeLoggedInListener = auth.onAuthStateChanged((user) => this._loggedIn = Boolean(user));
@@ -52,60 +104,6 @@ export class HgLunch extends HgContent {
         };
       })();
     }
-  }
-  static get styles() {
-    return [sharedStyles, css`
-      h2 {
-        margin: 60px 0 30px;
-      }
-      hg-lunch-week {
-        margin-bottom: 80px;
-      }
-      .generate {
-        text-align: center;
-      }
-      .edit-wrapper {
-        max-width: 1000px;
-        margin: 80px auto;
-        padding: 0 20px;
-      }
-      .edit {
-        border: solid 1px var(--divider-color);
-        display: flex;
-        justify-content: center;
-        padding: 30px;
-        background: rgba(var(--placeholder-color-rgb), 0.03);
-      }
-      .generate {
-        max-width: 700px;
-        margin: 80px auto;
-        padding: 0 20px;
-        text-align: center;
-      }
-      hg-lunch-edit {
-        padding: 40px 20px;
-        width: calc(50% - 80px);
-      }
-      @media all and (max-width: 839px) {
-        .edit {
-          padding: 30px 0;
-        }
-      }
-      @media all and (max-width: 719px) {
-        .edit {
-          display: block;
-        }
-        hg-lunch-edit {
-          width: auto;
-          margin: auto;
-        }
-      }
-      @media all and (max-width: 479px) {
-        .edit-wrapper {
-          padding: 0;
-        }
-      }
-    `];
   }
   render() {
     return html`

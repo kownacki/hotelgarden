@@ -8,49 +8,47 @@ export class HgQuote extends LitElement {
     _quote: Object,
     _dataReady: Boolean,
   };
+  static styles = [sharedStyles, css`
+    :host {
+      display: block;
+      margin: 80px auto;
+      max-width: 500px;
+      padding: 0 100px;
+      position: relative;
+    }
+    :host::before {
+      z-index: -1;
+      content: "";
+      position: absolute;
+      top: -35px; 
+      left: 35px;
+      width: 90px;
+      height: 90px;
+      background: url("/resources/images/quote.png") no-repeat 0 0;
+      background-size: 90px 90px;
+      filter: opacity(6%);
+    }
+    p {
+      font-style: italic;
+    }
+    .author {
+      font-size: 20px;
+      text-align: right;
+      font-family: 'Yellowtail', cursive;
+      margin-right: 20px;
+    }
+    @media all and (max-width: 599px) {
+      :host {
+        padding: 0 40px;
+      }
+      :host:before {
+        left: 10px;
+      }
+    }
+  `];
   async firstUpdated() {
     this._quote = (await db.doc('quotes/' + this.uid).get()).data();
     this._dataReady = true;
-  }
-  static get styles() {
-    return [sharedStyles, css`
-      :host {
-        display: block;
-        margin: 80px auto;
-        max-width: 500px;
-        padding: 0 100px;
-        position: relative;
-      }
-      :host::before {
-        z-index: -1;
-        content: "";
-        position: absolute;
-        top: -35px; 
-        left: 35px;
-        width: 90px;
-        height: 90px;
-        background: url("/resources/images/quote.png") no-repeat 0 0;
-        background-size: 90px 90px;
-        filter: opacity(6%);
-      }
-      p {
-        font-style: italic;
-      }
-      .author {
-        font-size: 20px;
-        text-align: right;
-        font-family: 'Yellowtail', cursive;
-        margin-right: 20px;
-      }
-      @media all and (max-width: 599px) {
-        :host {
-          padding: 0 40px;
-        }
-        :host:before {
-          left: 10px;
-        }
-      }
-    `];
   }
   render() {
     return html`

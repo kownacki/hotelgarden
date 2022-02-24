@@ -6,62 +6,60 @@ import './hg-text.js'
 import './hg-login.js'
 
 export class HgFooter extends LitElement {
-  static get styles() {
-    return [sharedStyles, ckContent, css`
-      :host {
-        color: #949494;
-        display: block;
-        background: var(--secondary-color);
-        position: relative;
-      }
+  static styles = [sharedStyles, ckContent, css`
+    :host {
+      color: #949494;
+      display: block;
+      background: var(--secondary-color);
+      position: relative;
+    }
+    .container {
+      display: flex;
+      align-items: flex-start;
+      max-width: 1000px;
+      padding: 20px;
+      margin: auto;
+    }
+    .container > * {
+      flex: 1;
+    }
+    .image {
+      margin: 10px;
+      text-align: center;
+    }
+    hg-text {
+      margin: 10px 0;
+    }
+    .icons {
+      margin: 10px;
+      text-align: center;
+    }
+    .icons img {
+      margin: 5px;
+      height: 50px;
+    }
+    .icons > a {
+      filter: grayscale(100%);
+    }
+    .icons > a.lighter {
+      filter: grayscale(100%) brightness(200%);
+    }
+    .icons > :hover {
+      transition: filter 0.3s ease;
+      filter: none !important;
+    }
+    hg-login {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
+    @media all and (max-width: 959px) {
       .container {
-        display: flex;
-        align-items: flex-start;
-        max-width: 1000px;
-        padding: 20px;
-        margin: auto;
+        flex-direction: column;
+        align-items: center;
       }
-      .container > * {
-        flex: 1;
-      }
-      .image {
-        margin: 10px;
-        text-align: center;
-      }
-      hg-text {
-        margin: 10px 0;
-      }
-      .icons {
-        margin: 10px;
-        text-align: center;
-      }
-      .icons img {
-        margin: 5px;
-        height: 50px;
-      }
-      .icons > a {
-        filter: grayscale(100%);
-      }
-      .icons > a.lighter {
-        filter: grayscale(100%) brightness(200%);
-      }
-      .icons > :hover {
-        transition: filter 0.3s ease;
-        filter: none !important;
-      }
-      hg-login {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-      }
-      @media all and (max-width: 959px) {
-        .container {
-          flex-direction: column;
-          align-items: center;
-        }
-      }
-    `];
-  }
+    }
+  `];
   render() {
     return html`
       <div class="container">

@@ -6,10 +6,7 @@ import '../../content/hg-content-icons.js';
 import './hg-room.js';
 
 export class HgRooms extends HgContent {
-  static get styles() {
-    return [super.styles, sharedStyles, css`
-    `];
-  }
+  static styles = [super.styles, sharedStyles];
   render() {
     return html`
       <hg-intro-article .uid=${'rooms'}></hg-intro-article>

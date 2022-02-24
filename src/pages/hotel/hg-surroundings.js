@@ -6,13 +6,11 @@ import '../../content/hg-text-image.js';
 import '../../content/hg-links.js';
 
 export class HgSurroundings extends HgContent {
-  static get styles() {
-    return [super.styles, css`
-      hg-text-image {
-        margin-bottom: 40px;
-      }
-    `];
-  }
+  static styles = [super.styles, css`
+    hg-text-image {
+      margin-bottom: 40px;
+    }
+  `];
   render() {
     return html`
       <hg-intro-article .uid=${'surroundings'}></hg-intro-article>

@@ -32,6 +32,24 @@ export default class HgList extends LitElement {
     _processing: Boolean,
     _loggedIn: Boolean,
   };
+  static styles = [sharedStyles, css`
+    :host {
+      display: block;
+    }
+    /* Prevent bugs. Iphone adds style tag as host's last child. */
+    :host > :not(style) {
+      width: calc(100% / var(--columns));
+    }
+    hg-list-add {
+      display: flex;
+    }
+    :host([list-not-empty]) hg-list-add {
+      display: none;
+    }
+    :host(:hover) hg-list-add {
+      display: flex;
+    }
+  `];
   constructor() {
     super();
     this._unsubscribeLoggedInListener = auth.onAuthStateChanged((user) => this._loggedIn = Boolean(user));
@@ -98,26 +116,6 @@ export default class HgList extends LitElement {
     this.items = newItems;
     this.dispatchEvent(new CustomEvent('items-swapped', {detail: [index1, index2]}));
     this._processing = false;
-  }
-  static get styles() {
-    return [sharedStyles, css`
-      :host {
-        display: block;
-      }
-      /* Prevent bugs. Iphone adds style tag as host's last child. */
-      :host > :not(style) {
-        width: calc(100% / var(--columns));
-      }
-      hg-list-add {
-        display: flex;
-      }
-      :host([list-not-empty]) hg-list-add {
-        display: none;
-      }
-      :host(:hover) hg-list-add {
-        display: flex;
-      }
-    `];
   }
   render() {
     return html`

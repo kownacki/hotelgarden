@@ -7,25 +7,23 @@ export class HgBookOrderButton extends LitElement {
   static properties = {
     order: String, // 'restaurant' / null
   };
-  static get styles() {
-    return [sharedStyles, css`      
+  static styles = [sharedStyles, css`      
+    hg-action-button {
+      display: block;
+    }
+    @media all and (max-width: 599px) {
       hg-action-button {
-        display: block;
+        --action-button-padding: 10px;
       }
-      @media all and (max-width: 599px) {
-        hg-action-button {
-          --action-button-padding: 10px;
-        }
+    }
+    @media all and (max-width: 479px) {
+      hg-action-button {
+        font-size: 14px;
+        width: 80px;
+        --action-button-padding: 5px 10px;
       }
-      @media all and (max-width: 479px) {
-        hg-action-button {
-          font-size: 14px;
-          width: 80px;
-          --action-button-padding: 5px 10px;
-        }
-      }
-    `];
-  }
+    }
+  `];
   render() {
     return html`
       <hg-action-button

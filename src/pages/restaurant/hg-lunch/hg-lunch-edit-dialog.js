@@ -16,28 +16,26 @@ export class HgLunchEditDialog extends LitElement {
     //
     dialog: Element,
   };
-  static get styles() {
-    return [sharedStyles, css`
-      :host {
-        position: relative;
-      }
-      hg-dialog {
-        --hg-dialog-width: 800px;
-      }
-      .required-info {
-        font-size: 12px;
-        color: var(--grey-text);
-        margin: 10px 0 20px;
-      }
-      .message {
-        color: var(--error-color);
-        margin-bottom: 20px;
-      }
-      mwc-snackbar {
-        z-index: 104;
-      }
-    `];
-  }
+  static styles = [sharedStyles, css`
+    :host {
+      position: relative;
+    }
+    hg-dialog {
+      --hg-dialog-width: 800px;
+    }
+    .required-info {
+      font-size: 12px;
+      color: var(--grey-text);
+      margin: 10px 0 20px;
+    }
+    .message {
+      color: var(--error-color);
+      margin-bottom: 20px;
+    }
+    mwc-snackbar {
+      z-index: 104;
+    }
+  `];
   render() {
     return html`
       <hg-dialog 

@@ -11,6 +11,23 @@ export class HgEvents extends LitElement {
   static properties = {
     _loggedIn: Boolean,
   };
+  static styles = [sharedStyles, css`
+    :host {
+      max-width: 1000px;
+      display: block;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    hg-intro-article {
+      display: none;
+    }
+    h2 {
+      margin: 40px 0;
+    }
+    hg-action-button {
+      margin: 20px 0 10px;
+    }
+  `];
   constructor() {
     super();
     this._unsubscribeLoggedInListener = auth.onAuthStateChanged((user) => this._loggedIn = Boolean(user));
@@ -18,25 +35,6 @@ export class HgEvents extends LitElement {
   disconnectedCallback() {
     this._unsubscribeLoggedInListener();
     return super.disconnectedCallback();
-  }
-  static get styles() {
-    return [sharedStyles, css`
-      :host {
-        max-width: 1000px;
-        display: block;
-        margin: 40px auto;
-        padding: 0 20px;
-      }
-      hg-intro-article {
-        display: none;
-      }
-      h2 {
-        margin: 40px 0;
-      }
-      hg-action-button {
-        margin: 20px 0 10px;
-      }
-    `];
   }
   render() {
     return html`

@@ -13,45 +13,43 @@ export class HgBookDialog extends LitElement {
     _data: Object,
     _dataReady: Boolean,
   };
+  static styles = [sharedStyles, ckContent, css`
+    :host {
+    }
+    hg-dialog {
+      --hg-dialog-width: 800px;
+    }
+    .container {
+      display: flex;
+      justify-content: space-between;
+    }
+    .container > * {  
+      width: calc(50% - 10px);
+    }
+    h3 {
+      margin: 10px 0
+    }
+    hg-image {
+      width: 100%;
+      height: 180px;
+      margin-bottom: 20px;
+    }
+    hg-action-button {
+      margin: 20px 0;
+    }
+    @media all and (max-width: 599px) {
+      .container {
+        flex-direction: column;
+      }
+      .container > * {
+        width: auto;
+      }
+    }
+  `];
   async firstUpdated() {
     this._data = await getData('texts/book');
     this._dataReady = true;
     this.dialog.notifyResize();
-  }
-  static get styles() {
-    return [sharedStyles, ckContent, css`
-      :host {
-      }
-      hg-dialog {
-        --hg-dialog-width: 800px;
-      }
-      .container {
-        display: flex;
-        justify-content: space-between;
-      }
-      .container > * {  
-        width: calc(50% - 10px);
-      }
-      h3 {
-        margin: 10px 0
-      }
-      hg-image {
-        width: 100%;
-        height: 180px;
-        margin-bottom: 20px;
-      }
-      hg-action-button {
-        margin: 20px 0;
-      }
-      @media all and (max-width: 599px) {
-        .container {
-          flex-direction: column;
-        }
-        .container > * {
-          width: auto;
-        }
-      }
-    `];
   }
   render() {
     return html`

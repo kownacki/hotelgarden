@@ -8,56 +8,54 @@ export class HgMenuItem extends LitElement {
     disableEdit: Boolean,
     isRestaurantMenu: {type: Boolean, reflect: true, attribute: 'is-restaurant-menu'},
   };
-  static get styles() {
-    return [sharedStyles, css`
+  static styles = [sharedStyles, css`
+    :host {
+      display: flex;
+      padding: 0 0 30px;
+    }
+    :host([is-restaurant-menu]) {
+      padding: 15px 50px;
+    }
+    .text  {
+      flex-grow: 1;
+    }
+    .right {
+      margin-left: 40px;
+    }
+    .price {
+      text-align: right;
+      min-width: 40px;
+      color: var(--primary-color);
+    }
+    .name {
+      margin: 0 0 10px;
+    }
+    .description {
+      font-weight: 300;
+      margin: 0 0 10px;
+    }
+    @media all and (max-width: 959px) {
       :host {
-        display: flex;
-        padding: 0 0 30px;
+        padding: 0 0 20px;
       }
       :host([is-restaurant-menu]) {
-        padding: 15px 50px;
+        padding: 10px 20px;
       }
-      .text  {
-        flex-grow: 1;
-      }
+    }
+    @media all and (max-width: 719px) {
       .right {
-        margin-left: 40px;
+        margin-left: 20px;
       }
-      .price {
-        text-align: right;
-        min-width: 40px;
-        color: var(--primary-color);
-      }
-      .name {
-        margin: 0 0 10px;
+    }
+    @media all and (max-width: 599px) {
+      .name, .price {
+        font-size: 18px;
       }
       .description {
-        font-weight: 300;
-        margin: 0 0 10px;
+        font-size: 16px;
       }
-      @media all and (max-width: 959px) {
-        :host {
-          padding: 0 0 20px;
-        }
-        :host([is-restaurant-menu]) {
-          padding: 10px 20px;
-        }
-      }
-      @media all and (max-width: 719px) {
-        .right {
-          margin-left: 20px;
-        }
-      }
-      @media all and (max-width: 599px) {
-        .name, .price {
-          font-size: 18px;
-        }
-        .description {
-          font-size: 16px;
-        }
-      }
-    `];
-  }
+    }
+  `];
   render(){
     return html`
       <div class="text">

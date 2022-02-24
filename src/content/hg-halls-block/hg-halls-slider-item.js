@@ -11,27 +11,25 @@ export class HgHallsSliderItem extends LitElement {
   static properties = {
     hall: Object,
   };
-  static get styles() {
-    return [sharedStyles, ckContent, css`
-      :host {
-        padding: 0 50px;
-      }
-      h3 {
-        margin-top: 0;
-      }
-      p {
-        margin: 0;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-      hg-icon-info {
-        margin-bottom: 20px;
-      }
-      hg-action-buttons {
-        margin-top: 30px;
-      }
-    `];
-  }
+  static styles = [sharedStyles, ckContent, css`
+    :host {
+      padding: 0 50px;
+    }
+    h3 {
+      margin-top: 0;
+    }
+    p {
+      margin: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    hg-icon-info {
+      margin-bottom: 20px;
+    }
+    hg-action-buttons {
+      margin-top: 30px;
+    }
+  `];
   constructor() {
     super();
     this.classList.add('fixed-height-element');

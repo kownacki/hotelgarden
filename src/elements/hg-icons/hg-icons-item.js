@@ -8,64 +8,62 @@ export class HgIconsItem extends LitElement {
     disableEdit: Boolean,
     small: {type: Boolean, reflect: true},
   };
-  static get styles() {
-    return [sharedStyles, css`
+  static styles = [sharedStyles, css`
+    :host(:not([small])) {
+      display: block;
+      width: 140px;
+      padding: 10px;
+      position: relative;
+    }
+    :host([small]) {
+      width: 230px;
+      display: flex;
+      min-height: 60px;
+      margin: 5px 40px 5px 15px;
+    }
+    iron-icon {
+      filter: var(--primary-color-filter)
+    }
+    :host(:not([small])) iron-icon {
+      display: block;
+      margin: auto;
+      width: 60px;
+      height: 60px;
+    }
+    :host([small]) iron-icon {
+      min-width: 40px;
+      height: 40px;
+      margin-right: 10px
+    }
+    .text {
+      margin: 8px 0;
+    }
+    :host(:not([small])) .text {
+      text-align: center;
+    }
+    @media all and (max-width: 959px) {
+      :host([small]) {
+        width: auto;
+      }
+    }
+    @media all and (max-width: 599px) {
       :host(:not([small])) {
-        display: block;
-        width: 140px;
-        padding: 10px;
-        position: relative;
+        width: 120px;
       }
       :host([small]) {
-        width: 230px;
-        display: flex;
-        min-height: 60px;
-        margin: 5px 40px 5px 15px;
-      }
-      iron-icon {
-        filter: var(--primary-color-filter)
+        min-height: auto;
       }
       :host(:not([small])) iron-icon {
-        display: block;
-        margin: auto;
-        width: 60px;
-        height: 60px;
+        width: 50px;
+        height: 50px;
       }
       :host([small]) iron-icon {
-        min-width: 40px;
-        height: 40px;
-        margin-right: 10px
+        min-width: 32px;
+        height: 32px;
+        margin-right: 8px
       }
-      .text {
-        margin: 8px 0;
-      }
-      :host(:not([small])) .text {
-        text-align: center;
-      }
-      @media all and (max-width: 959px) {
-        :host([small]) {
-          width: auto;
-        }
-      }
-      @media all and (max-width: 599px) {
-        :host(:not([small])) {
-          width: 120px;
-        }
-        :host([small]) {
-          min-height: auto;
-        }
-        :host(:not([small])) iron-icon {
-          width: 50px;
-          height: 50px;
-        }
-        :host([small]) iron-icon {
-          min-width: 32px;
-          height: 32px;
-          margin-right: 8px
-        }
-      }
-    `];
-  }
+    }
+  `];
   render() {
     return html`
       <iron-icon .src="${this.icon.url}"></iron-icon>

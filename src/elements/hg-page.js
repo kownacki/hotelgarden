@@ -41,6 +41,18 @@ export class HgPage extends LitElement {
     _defaultTitle: String,
     _config: Object,
   };
+  static styles = css`
+    :host([no-banner-image]) {
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+      padding-top: 150px;
+      box-sizing: border-box;
+    }
+    :host([no-banner-image]) .page {
+      flex: 1;
+    }
+  `;
   constructor() {
     super();
     (async () => {
@@ -59,20 +71,6 @@ export class HgPage extends LitElement {
         setDocumentTitle(_.get(`${this.path}.title`, this._config.seo.urls) || this._defaultTitle, this._config.seo);
       }
     }
-  }
-  static get styles() {
-    return css`
-      :host([no-banner-image]) {
-        display: flex;
-        flex-direction: column;
-        min-height: 100%;
-        padding-top: 150px;
-        box-sizing: border-box;
-      }
-      :host([no-banner-image]) .page {
-        flex: 1;
-      }
-    `
   }
   render() {
     return html`

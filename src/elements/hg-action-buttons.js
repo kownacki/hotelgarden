@@ -5,18 +5,16 @@ export class HgActionButtons extends LitElement {
   static properties = {
     buttons: Array,
   };
-  static get styles() {
-    return css`
-      :host {
-        display: block;
-        margin-right: -10px;
-      }
-      hg-action-button {
-        margin-right: 10px;
-        margin-bottom: 8px;
-      }
-    `;
-  }
+  static styles = css`
+    :host {
+      display: block;
+      margin-right: -10px;
+    }
+    hg-action-button {
+      margin-right: 10px;
+      margin-bottom: 8px;
+    }
+  `;
   render() {
     return html`
       ${_.map((button) => html`

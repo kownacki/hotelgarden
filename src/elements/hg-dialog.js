@@ -12,92 +12,90 @@ export class HgDialog extends LitElement {
     dialog: Element,
     scrollable: Element,
   };
+  static styles = [sharedStyles, css`
+    :host {
+      display: block;
+      position: relative;
+    }
+    paper-dialog {
+      width: var(--hg-dialog-width);
+      display: flex;
+      flex-direction: column;
+      font-size: 18px;
+      margin: 10px;
+    }
+    paper-dialog > * {
+      margin: 0;
+    }
+    header {
+      border-bottom: solid 1px var(--divider-color);
+      line-height: 1.5em;
+      padding: 15px 24px;
+    }
+    :host(:not([no-close])) header {
+      padding: 15px 64px 15px 24px;
+    }
+    .content-and-buttons {
+      padding: 0;
+      overflow: auto;
+      flex: 1;
+    }
+    .content {
+      padding: 0 24px;
+    }
+    :host([fixed-buttons]) .content-and-buttons {
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    :host([fixed-buttons]) .content {
+      overflow: auto;
+      flex: 1;
+    }
+    .buttons {
+      padding: 2px 4px 2px 12px;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+    :host([fixed-buttons]) .buttons {
+      border-top: solid 1px var(--divider-color);
+    }
+    :host(:not([fixed-buttons])) .buttons {
+      padding: 2px 24px 12px 24px;
+    }
+    ::slotted([slot="button"]) {
+      margin: 6px 4px;
+    }
+    paper-icon-button {
+      position: absolute;
+      width: 44px;
+      height: 44px;
+      padding: 8px;
+      top: 8px;
+      right: 8px;
+      z-index: 1;
+    }
+    @media all and (max-width: 839px) {
+      paper-dialog {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+      }
+      :host(:not([no-close])) header {
+        padding: 15px 24px 15px 64px;
+      }
+      paper-icon-button {
+        left: 8px;
+        right: auto;
+      }
+    }
+  `];
   firstUpdated() {
     this.dialog = this.shadowRoot.getElementById('dialog');
     this.scrollable = this.shadowRoot.getElementById(this.fixedButtons ? 'content' : 'content-and-buttons');
     this.dispatchEvent(new CustomEvent('dialog-changed', {detail: this.dialog}))
-  }
-  static get styles() {
-    return [sharedStyles, css`
-      :host {
-        display: block;
-        position: relative;
-      }
-      paper-dialog {
-        width: var(--hg-dialog-width);
-        display: flex;
-        flex-direction: column;
-        font-size: 18px;
-        margin: 10px;
-      }
-      paper-dialog > * {
-        margin: 0;
-      }
-      header {
-        border-bottom: solid 1px var(--divider-color);
-        line-height: 1.5em;
-        padding: 15px 24px;
-      }
-      :host(:not([no-close])) header {
-        padding: 15px 64px 15px 24px;
-      }
-      .content-and-buttons {
-        padding: 0;
-        overflow: auto;
-        flex: 1;
-      }
-      .content {
-        padding: 0 24px;
-      }
-      :host([fixed-buttons]) .content-and-buttons {
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-      }
-      :host([fixed-buttons]) .content {
-        overflow: auto;
-        flex: 1;
-      }
-      .buttons {
-        padding: 2px 4px 2px 12px;
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-end;
-        flex-wrap: wrap;
-      }
-      :host([fixed-buttons]) .buttons {
-        border-top: solid 1px var(--divider-color);
-      }
-      :host(:not([fixed-buttons])) .buttons {
-        padding: 2px 24px 12px 24px;
-      }
-      ::slotted([slot="button"]) {
-        margin: 6px 4px;
-      }
-      paper-icon-button {
-        position: absolute;
-        width: 44px;
-        height: 44px;
-        padding: 8px;
-        top: 8px;
-        right: 8px;
-        z-index: 1;
-      }
-      @media all and (max-width: 839px) {
-        paper-dialog {
-          margin: 0;
-          width: 100%;
-          height: 100%;
-        }
-        :host(:not([no-close])) header {
-          padding: 15px 24px 15px 64px;
-        }
-        paper-icon-button {
-          left: 8px;
-          right: auto;
-        }
-      }
-    `];
   }
   render() {
     return html`

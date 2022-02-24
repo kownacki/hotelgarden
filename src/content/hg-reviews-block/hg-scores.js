@@ -4,66 +4,64 @@ export class HgScores extends LitElement {
   static properties = {
     bookingScores: Object,
   };
-  static get styles() {
-    return css`
-      :host {
-        display: block;
-      }
-      .container {
-        display: flex;
-        justify-content: center;
-        align-content: center;
-        text-align: center;
-      }
-      .container > * {
-        margin: 0 10px;
-      }
-      .property {
-        font-size: 20px;
-        color: var(--primary-color);
-        padding: 20px 0;
-      }
-      .box {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        width: 100px;
-        height: 100px;
-        background: var(--accent-color);
-        color: white;
-        padding: 10px;
-        margin: auto;
-      }
-      .score {
-        font-weight: 300; 
-        font-size: 60px;
-      }
-      .out-of {
-        font-size: 20px;
-      }
-      .booking {
-        display: flex;
-        justify-content: center;
-        margin: 10px 0;
-      }
-      .booking > div {
-        font-size: 20px;
-        margin-right: 10px;
-      }
-      a {
-        display: block;
-        transition: filter 0.3s ease ;
-      }
-      a:hover {
-        filter: brightness(120%);
-      }
-      iron-image {
-        width: 150px;
-        height: 30px;
-        filter: grayscale(90%) var(--primary-color-filter) brightness(120%);
-      }
-    `;
-  }
+  static styles = css`
+    :host {
+      display: block;
+    }
+    .container {
+      display: flex;
+      justify-content: center;
+      align-content: center;
+      text-align: center;
+    }
+    .container > * {
+      margin: 0 10px;
+    }
+    .property {
+      font-size: 20px;
+      color: var(--primary-color);
+      padding: 20px 0;
+    }
+    .box {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 100px;
+      height: 100px;
+      background: var(--accent-color);
+      color: white;
+      padding: 10px;
+      margin: auto;
+    }
+    .score {
+      font-weight: 300; 
+      font-size: 60px;
+    }
+    .out-of {
+      font-size: 20px;
+    }
+    .booking {
+      display: flex;
+      justify-content: center;
+      margin: 10px 0;
+    }
+    .booking > div {
+      font-size: 20px;
+      margin-right: 10px;
+    }
+    a {
+      display: block;
+      transition: filter 0.3s ease ;
+    }
+    a:hover {
+      filter: brightness(120%);
+    }
+    iron-image {
+      width: 150px;
+      height: 30px;
+      filter: grayscale(90%) var(--primary-color-filter) brightness(120%);
+    }
+  `;
   render() {
     return html`
       <div class="container">

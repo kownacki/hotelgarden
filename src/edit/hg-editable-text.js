@@ -18,6 +18,55 @@ export default class HgEditableText extends LitElement {
     _editorSet: Boolean,
     _loggedIn: Boolean,
   };
+  static styles = [sharedStyles, css`
+    :host {
+      display: block;
+      position: relative;
+    }
+    :host(:not([ready])), :host([disabled]) {
+      opacity: 50%;
+    }
+    :host([multiline]) {
+      height: 150px;
+    }
+    :host([multiline][not-empty]) {
+      height: auto;
+    }
+    ::slotted(*) {
+      min-width: 20px;
+      /*todo background only to #editable */
+      background: rgba(var(--placeholder-color-rgb), 0.5);
+    }
+    :host([multiline]) ::slotted(*) {
+      height: 100%;
+    }
+    :host([not-empty]) ::slotted(:not(.ck-focused)) {
+      background: transparent;
+    }
+    ::slotted(.ck-focused) {
+      z-index: var(--layer-header-1);
+      position: relative;
+      /* todo sometimes not working when clicket too fast on load */
+      background: white
+    }
+    .edit {
+      margin-top: 5px;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+    .edit:not([hidden]) {
+      display: flex;
+    }
+    :host([float]) .edit {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      z-index: var(--layer-header-1);
+    }
+    paper-button {
+      background: white;
+    }
+  `];
   constructor() {
     super();
     this._unsubscribeLoggedInListener = auth.onAuthStateChanged((user) => this._loggedIn = Boolean(user));
@@ -138,57 +187,6 @@ export default class HgEditableText extends LitElement {
         this._editable.setAttribute('contenteditable', !(this.disabled || !this.ready || !this._loggedIn));
       }
     }
-  }
-  static get styles() {
-    return [sharedStyles, css`
-      :host {
-        display: block;
-        position: relative;
-      }
-      :host(:not([ready])), :host([disabled]) {
-        opacity: 50%;
-      }
-      :host([multiline]) {
-        height: 150px;
-      }
-      :host([multiline][not-empty]) {
-        height: auto;
-      }
-      ::slotted(*) {
-        min-width: 20px;
-        /*todo background only to #editable */
-        background: rgba(var(--placeholder-color-rgb), 0.5);
-      }
-      :host([multiline]) ::slotted(*) {
-        height: 100%;
-      }
-      :host([not-empty]) ::slotted(:not(.ck-focused)) {
-        background: transparent;
-      }
-      ::slotted(.ck-focused) {
-        z-index: var(--layer-header-1);
-        position: relative;
-        /* todo sometimes not working when clicket too fast on load */
-        background: white
-      }
-      .edit {
-        margin-top: 5px;
-        justify-content: flex-end;
-        flex-wrap: wrap;
-      }
-      .edit:not([hidden]) {
-        display: flex;
-      }
-      :host([float]) .edit {
-        position: absolute;
-        top: 100%;
-        right: 0;
-        z-index: var(--layer-header-1);
-      }
-      paper-button {
-        background: white;
-      }
-    `];
   }
   render() {
     return html`

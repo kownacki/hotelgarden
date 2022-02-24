@@ -17,6 +17,50 @@ export default class HgEditableImage extends LitElement {
     presize: {type: Boolean, reflect: true},
     _loggedIn: Boolean,
   };
+  static styles = css`
+    :host {
+      display: block;
+    }
+    .container {
+      position: relative;
+      height: 100%;
+    }
+    :host(:not([not-empty])) .container {
+      background: rgba(var(--placeholder-color-rgb), 0.5);
+    }
+    :host([presize]:not([not-empty])) {
+      height: 250px;
+    }
+    iron-image {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+    img {
+      display: block;
+      width: 100%;
+    }
+    :host([lower-image]) .image {
+      z-index: -1;
+    }
+    input {
+      display: none;
+    }
+    paper-icon-button {
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      padding: 0 calc(50% - 24px);
+      color: white;
+      --paper-icon-button-ink-color: transparent;
+    }
+    .container:hover paper-icon-button {
+      display: block;
+    }
+  `;
   constructor() {
     super();
     this._unsubscribeLoggedInListener = auth.onAuthStateChanged((user) => this._loggedIn = Boolean(user));
@@ -24,52 +68,6 @@ export default class HgEditableImage extends LitElement {
   disconnectedCallback() {
     this._unsubscribeLoggedInListener();
     return super.disconnectedCallback();
-  }
-  static get styles() {
-    return css`
-      :host {
-        display: block;
-      }
-      .container {
-        position: relative;
-        height: 100%;
-      }
-      :host(:not([not-empty])) .container {
-        background: rgba(var(--placeholder-color-rgb), 0.5);
-      }
-      :host([presize]:not([not-empty])) {
-        height: 250px;
-      }
-      iron-image {
-        display: block;
-        width: 100%;
-        height: 100%;
-      }
-      img {
-        display: block;
-        width: 100%;
-      }
-      :host([lower-image]) .image {
-        z-index: -1;
-      }
-      input {
-        display: none;
-      }
-      paper-icon-button {
-        display: none;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        padding: 0 calc(50% - 24px);
-        color: white;
-        --paper-icon-button-ink-color: transparent;
-      }
-      .container:hover paper-icon-button {
-        display: block;
-      }
-    `;
   }
   render() {
     return html`

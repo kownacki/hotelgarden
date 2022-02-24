@@ -14,6 +14,63 @@ export class HgLunchEditDialogDay extends LitElement {
     _disabled: Boolean,
     _animationGoing: Boolean,
   };
+  static styles = [sharedStyles, css`
+    :host {
+      font-size: 16px;
+      display: block
+    }
+    .subheading {
+      margin: 20px 0;
+      display: flex;
+      justify-content: space-between;
+    }
+    .day {
+      font-size: 18px;
+      margin-right: 20px;
+      line-height: 25px;
+      font-weight: 700;
+    }
+    mwc-formfield {
+      display: block;
+      width: 250px;
+    }
+    mwc-switch {
+      margin-top: 5px;
+    }
+    #courses-collapse {
+      overflow: hidden;
+      transition: height ${animationLength}ms ease-in;
+    }
+    .course {
+      margin: 15px 0;
+      font-weight: 700;
+    }
+    .courses {
+      padding-bottom: 20px;
+    }
+    .textfields {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+    mwc-textfield {
+      width: calc(50% - 10px);
+      margin-bottom: 5px;
+    }
+    @media all and (max-width: 719px) {
+      mwc-textfield {
+        width: 100%;
+      }
+    }
+    @media all and (max-width: 479px) {
+      .subheading {
+        display: block;
+      }
+      mwc-formfield {
+        margin-top: 20px;
+      }
+    }
+  `];
   firstUpdated() {
     this._disabled = _.get('disabled', this.lunches);
   }
@@ -50,65 +107,6 @@ export class HgLunchEditDialogDay extends LitElement {
       }, ['name', 'description'])
     }, [1, 2]);
     return {values, firstUnfilledRequiredInput};
-  }
-  static get styles() {
-    return [sharedStyles, css`
-      :host {
-        font-size: 16px;
-        display: block
-      }
-      .subheading {
-        margin: 20px 0;
-        display: flex;
-        justify-content: space-between;
-      }
-      .day {
-        font-size: 18px;
-        margin-right: 20px;
-        line-height: 25px;
-        font-weight: 700;
-      }
-      mwc-formfield {
-        display: block;
-        width: 250px;
-      }
-      mwc-switch {
-        margin-top: 5px;
-      }
-      #courses-collapse {
-        overflow: hidden;
-        transition: height ${animationLength}ms ease-in;
-      }
-      .course {
-        margin: 15px 0;
-        font-weight: 700;
-      }
-      .courses {
-        padding-bottom: 20px;
-      }
-      .textfields {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-      }
-      mwc-textfield {
-        width: calc(50% - 10px);
-        margin-bottom: 5px;
-      }
-      @media all and (max-width: 719px) {
-        mwc-textfield {
-          width: 100%;
-        }
-      }
-      @media all and (max-width: 479px) {
-        .subheading {
-          display: block;
-        }
-        mwc-formfield {
-          margin-top: 20px;
-        }
-      }
-    `];
   }
   render() {
     return html`

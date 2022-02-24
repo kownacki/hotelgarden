@@ -22,69 +22,67 @@ export class HgTextImage extends LitElement {
     _textImage: Object,
     _dataReady: Boolean,
   };
+  static styles = [sharedStyles, ckContent, css`
+    :host {
+      max-width: 1240px;
+      margin: 80px auto;
+      padding: 0 20px;
+      display: flex;
+    }
+    :host([swap]) {
+      flex-direction: row-reverse;
+    }
+    hg-image, hg-image-slider {
+      width: 50%;
+      height: 400px;
+    }
+    .content {
+      width: 50%;
+      margin: 40px;
+    }
+    h2, h3 {
+      margin-top: 0;
+    }
+    hg-icon-info {
+      margin: 20px 0;
+    }
+    :host([icons-at-end]) hg-icon-info[] {
+      margin-bottom: 0;
+    }
+    hg-action-buttons {
+      margin-top: 30px;
+    }
+    @media all and (max-width: 959px) {
+      :host, :host([swap]) {
+        max-width: 750px;
+        flex-direction: column;
+      }
+      hg-image, hg-image-slider {
+        width: 100%;
+        margin: auto;
+      }
+      .content {
+        width: auto;
+        margin: 30px 0 0;
+      }
+    }
+    @media all and (max-width: 599px) {
+      :host {
+        margin: 60px auto;
+      }
+      hg-image, hg-image-slider {
+        height: 280px;
+      }
+    }
+    @media all and (max-width: 479px) {
+      hg-image, hg-image-slider {
+        height: 200px;
+      }
+    }
+  `];
   async firstUpdated() {
     this._textImage = (await db.doc('textImage/' + this.uid).get()).data() || {};
     this._dataReady = true;
-  }
-  static get styles() {
-    return [sharedStyles, ckContent, css`
-      :host {
-        max-width: 1240px;
-        margin: 80px auto;
-        padding: 0 20px;
-        display: flex;
-      }
-      :host([swap]) {
-        flex-direction: row-reverse;
-      }
-      hg-image, hg-image-slider {
-        width: 50%;
-        height: 400px;
-      }
-      .content {
-        width: 50%;
-        margin: 40px;
-      }
-      h2, h3 {
-        margin-top: 0;
-      }
-      hg-icon-info {
-        margin: 20px 0;
-      }
-      :host([icons-at-end]) hg-icon-info[] {
-        margin-bottom: 0;
-      }
-      hg-action-buttons {
-        margin-top: 30px;
-      }
-      @media all and (max-width: 959px) {
-        :host, :host([swap]) {
-          max-width: 750px;
-          flex-direction: column;
-        }
-        hg-image, hg-image-slider {
-          width: 100%;
-          margin: auto;
-        }
-        .content {
-          width: auto;
-          margin: 30px 0 0;
-        }
-      }
-      @media all and (max-width: 599px) {
-        :host {
-          margin: 60px auto;
-        }
-        hg-image, hg-image-slider {
-          height: 280px;
-        }
-      }
-      @media all and (max-width: 479px) {
-        hg-image, hg-image-slider {
-          height: 200px;
-        }
-      }
-    `];
   }
   async updateData(path, data) {
     updateData('textImage/' + this.uid, path, data);

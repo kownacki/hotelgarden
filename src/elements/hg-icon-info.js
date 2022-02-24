@@ -7,39 +7,37 @@ export class HgIconInfo extends LitElement {
     items: Array,
     dataReady: Boolean,
   };
-  static get styles() {
-    return css`
-      :host {
-        display: flex;
-        flex-wrap: wrap;
-      }
-      /* Prevent bugs. Iphone adds style tag as host's last child. */
-      :host > :not(style) {
-        margin-bottom: 5px;
-        display: flex;
-        align-items: center;
-      }
+  static styles = css`
+    :host {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    /* Prevent bugs. Iphone adds style tag as host's last child. */
+    :host > :not(style) {
+      margin-bottom: 5px;
+      display: flex;
+      align-items: center;
+    }
+    iron-icon {
+      min-width: 40px;
+      height: 40px;
+      filter: var(--primary-color-filter);
+    }
+    .text {
+      min-width: 20px;
+      margin: 0 20px 0 10px;
+    }
+    /* Prevent bugs. Iphone adds style tag as host's last child. */
+    :host > div:last-of-type .text {
+      margin-right: 0;
+    }
+    @media all and (max-width: 599px) {
       iron-icon {
-        min-width: 40px;
-        height: 40px;
-        filter: var(--primary-color-filter);
+        min-width: 32px;
+        height: 32px;
       }
-      .text {
-        min-width: 20px;
-        margin: 0 20px 0 10px;
-      }
-      /* Prevent bugs. Iphone adds style tag as host's last child. */
-      :host > div:last-of-type .text {
-        margin-right: 0;
-      }
-      @media all and (max-width: 599px) {
-        iron-icon {
-          min-width: 32px;
-          height: 32px;
-        }
-      }
-    `;
-  }
+    }
+  `;
   render() {
     return html`
       ${_.map.convert({cap: false})((item, index) => html`

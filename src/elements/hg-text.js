@@ -8,6 +8,10 @@ export class HgText extends HgEditableText {
     // optional params
     noGetText: Boolean,
   };
+  constructor() {
+    super();
+    this.addEventListener('save', (event) => updateData(this.path.doc, this.path.field, event.detail));
+  }
   // duplicated from hg-list
   updated(changedProperties) {
     if (changedProperties.has('path')) {
@@ -20,10 +24,6 @@ export class HgText extends HgEditableText {
       }
     }
     super.updated(changedProperties);
-  }
-  constructor() {
-    super();
-    this.addEventListener('save', (event) => updateData(this.path.doc, this.path.field, event.detail));
   }
 }
 customElements.define('hg-text', HgText);

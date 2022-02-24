@@ -8,6 +8,11 @@ export class HgMap extends LitElement {
   static properties = {
     seen: Boolean,
   };
+  static styles = css`
+    #map {
+      height: 400px;  /* The height is 400 pixels */
+    }
+  `;
   async updated(changedProperties) {
     if (changedProperties.has('seen')) {
       if (!googleMapsLoaded) {
@@ -46,13 +51,6 @@ export class HgMap extends LitElement {
       infoWindow.open(map, marker);
       marker.addListener('click', () => infoWindow.open(map, marker))
     }
-  }
-  static get styles() {
-    return css`
-      #map {
-        height: 400px;  /* The height is 400 pixels */
-      }
-    `;
   }
   render() {
     return html`

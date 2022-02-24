@@ -17,56 +17,54 @@ export class HgListItem extends LitElement {
     _deleteOpened: Boolean,
     _configureOpened: Boolean,
   };
-  static get styles() {
-    return css`
-      :host {
-        display: block;
-        position: relative;
-      }
-      :host(:hover) .controls, :host([opened]) .controls {
-        display: flex;
-      }
-      :host(:hover) paper-icon-button {
-        display: block;
-      }
-      .controls {
-        position: absolute;
-        top: 3px;
-        right: 10px;
-        display: none;
-      }
-      .controls > * {
-        margin: 1px;
-      }
-      paper-icon-button {
-        z-index: 1;
-        background: white;
-        display: none;
-        position: absolute;
-        top: calc(50% - 12px);
-        width: 24px;
-        height: 24px;
-        padding: 0;
-      }
-      .swap-left {
-        left: -12px;
-      }
-      .swap-right {
-        right: -12px;
-      }
-      :host([vertical]) paper-icon-button {
-        top: auto;
-        left: calc(50% - 12px);
-      }
-      :host([vertical]) .swap-left {
-        top: -12px;
-      }
-      :host([vertical]) .swap-right {
-        right: auto;
-        bottom: -12px;
-      }
-    `;
-  }
+  static styles = css`
+    :host {
+      display: block;
+      position: relative;
+    }
+    :host(:hover) .controls, :host([opened]) .controls {
+      display: flex;
+    }
+    :host(:hover) paper-icon-button {
+      display: block;
+    }
+    .controls {
+      position: absolute;
+      top: 3px;
+      right: 10px;
+      display: none;
+    }
+    .controls > * {
+      margin: 1px;
+    }
+    paper-icon-button {
+      z-index: 1;
+      background: white;
+      display: none;
+      position: absolute;
+      top: calc(50% - 12px);
+      width: 24px;
+      height: 24px;
+      padding: 0;
+    }
+    .swap-left {
+      left: -12px;
+    }
+    .swap-right {
+      right: -12px;
+    }
+    :host([vertical]) paper-icon-button {
+      top: auto;
+      left: calc(50% - 12px);
+    }
+    :host([vertical]) .swap-left {
+      top: -12px;
+    }
+    :host([vertical]) .swap-right {
+      right: auto;
+      bottom: -12px;
+    }
+  `;
   updated(changedProperties) {
     if (changedProperties.has('_deleteOpened') || changedProperties.has('_configureOpened')) {
       this.opened = this._deleteOpened || this._configureOpened;

@@ -8,15 +8,13 @@ export class HgLunchItem extends LitElement {
     lunch: Object,
     prices: Object,
   };
-  static get styles() {
-    return [sharedStyles, css`
-      :host {
-        display: block;
-      }
-      hg-menu-item {
-      }
-    `];
-  }
+  static styles = [sharedStyles, css`
+    :host {
+      display: block;
+    }
+    hg-menu-item {
+    }
+  `];
   render() {
     return html`
       ${_.map((course) => html`

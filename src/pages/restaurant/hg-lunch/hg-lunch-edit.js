@@ -15,42 +15,40 @@ export class HgLunchEdit extends LitElement {
     weekLength: Number,
     _enableDialog: Boolean,
   };
-  static get styles() {
-    return [sharedStyles, css`
-      :host {
-        display: block;
-      }
-      .top {
-        text-align: center;
-      }
-      .status {
-        margin-bottom: 20px;
-      }
-      .not-prepared {
-        color: var(--error-color);
-      }
-      .prepared {
-        color: var(--correct-color);
-      }
-      hg-delete-item {
-        position: relative;
-        top: -2px;
-        margin-left: 5px;
-      }
-      .date {
-        font-size: 30px;
-        font-weight: 300;
-        margin: 10px 0;
-      }
-      .buttons {
-        text-align: center;
-      }
-      hg-action-button, hg-lunch-generate {
-        margin: 4px;
-        text-align: center;
-      }
-    `];
-  }
+  static styles = [sharedStyles, css`
+    :host {
+      display: block;
+    }
+    .top {
+      text-align: center;
+    }
+    .status {
+      margin-bottom: 20px;
+    }
+    .not-prepared {
+      color: var(--error-color);
+    }
+    .prepared {
+      color: var(--correct-color);
+    }
+    hg-delete-item {
+      position: relative;
+      top: -2px;
+      margin-left: 5px;
+    }
+    .date {
+      font-size: 30px;
+      font-weight: 300;
+      margin: 10px 0;
+    }
+    .buttons {
+      text-align: center;
+    }
+    hg-action-button, hg-lunch-generate {
+      margin: 4px;
+      text-align: center;
+    }
+  `];
   render() {
     return html`
       <div class="top">

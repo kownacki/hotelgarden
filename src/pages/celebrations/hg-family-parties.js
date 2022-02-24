@@ -14,19 +14,17 @@ import '../../content/hg-contact-block.js';
 import '../../content/hg-links.js';
 
 export class HgFamilyParties extends HgContent {
-  static get styles() {
-    return [super.styles, sharedStyles, css`
-      :host {
-        display: block;
-      }
-      .occasion hg-text-image {
-        margin-bottom: 40px;
-      }
-      .occasion hg-content-icons {
-        margin-bottom: 60px;
-      }
-    `];
-  }
+  static styles = [super.styles, sharedStyles, css`
+    :host {
+      display: block;
+    }
+    .occasion hg-text-image {
+      margin-bottom: 40px;
+    }
+    .occasion hg-content-icons {
+      margin-bottom: 60px;
+    }
+  `];
   render() {
     return html`
       <hg-intro-article .uid=${'family-parties'}></hg-intro-article>

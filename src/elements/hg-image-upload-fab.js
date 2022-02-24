@@ -3,20 +3,18 @@ import '@polymer/paper-fab';
 import '../edit/hg-image-upload.js';
 
 export class HgImageUploadFab extends LitElement {
-  static get styles() {
-    return css`
-      input {
-        display: none;
-      }
-      paper-fab {
-        position: absolute;
-        bottom: 20px;
-        right: 20px;
-        margin: 2px;
-        --paper-fab-keyboard-focus-background: var(--primary-color);
-      }
-    `;
-  }
+  static styles = css`
+    input {
+      display: none;
+    }
+    paper-fab {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      margin: 2px;
+      --paper-fab-keyboard-focus-background: var(--primary-color);
+    }
+  `;
   render() {
     return html`
       <hg-image-upload id="upload"></hg-image-upload>

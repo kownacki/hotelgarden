@@ -14,45 +14,43 @@ export class HgMenuMain extends LitElement {
     categories: Object,
     dataReady: Boolean,
   };
-  static get styles() {
-    return [sharedStyles, css`
-      :host {
-        padding-right: 20px;
-      }
-      header {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        margin-bottom: 30px;
-        position: relative;
-      }
-      .empty {
-        margin-bottom: 30px;
-      }
+  static styles = [sharedStyles, css`
+    :host {
+      padding-right: 20px;
+    }
+    header {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 30px;
+      position: relative;
+    }
+    .empty {
+      margin-bottom: 30px;
+    }
+    hg-editable-image {
+      height: 170px;
+      width: 100%;
+    }
+    .name {
+      width: calc(100% - 40px);
+      max-height: calc(100% - 40px);
+      position: absolute;
+    }
+    h3 {
+      text-transform: uppercase;
+      text-align: center;
+      color: white;
+      text-shadow: 0 0 6px var(--secondary-color);
+      margin: 0;
+    }
+    @media all and (max-width: 839px) {
       hg-editable-image {
-        height: 170px;
-        width: 100%;
+        height: 120px;
       }
-      .name {
-        width: calc(100% - 40px);
-        max-height: calc(100% - 40px);
-        position: absolute;
-      }
-      h3 {
-        text-transform: uppercase;
-        text-align: center;
-        color: white;
-        text-shadow: 0 0 6px var(--secondary-color);
-        margin: 0;
-      }
-      @media all and (max-width: 839px) {
-        hg-editable-image {
-          height: 120px;
-        }
-      }
-    `];
-  }
+    }
+  `];
   updateCategory() {
     this.category = _.set('items', this.shadowRoot.getElementById('list').items, this.category);
     this.categories[this.categoryIndex] = this.category;

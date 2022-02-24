@@ -5,21 +5,19 @@ export class HgListAdd extends LitElement {
     disable: Boolean,
     opened: {type: Boolean, reflect: true},
   };
-  static get styles() {
-    return css`
-      :host {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      paper-icon-button {
-        background: white;
-        width: 60px;
-        height: 60px;
-        padding: 0;
-      }
-    `;
-  }
+  static styles = css`
+    :host {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    paper-icon-button {
+      background: white;
+      width: 60px;
+      height: 60px;
+      padding: 0;
+    }
+  `;
   render() {
     return html`
       <paper-icon-button

@@ -7,16 +7,14 @@ export class HgHallsSlider extends LitElement {
     type: String, // 'conference' / 'banquet'
     _halls: Array,
   };
-  static get styles() {
-    return css`
-      :host {
-        display: block;
-      }
-      hg-slider {
-        height: 100%;
-      }
-    `;
-  }
+  static styles = css`
+    :host {
+      display: block;
+    }
+    hg-slider {
+      height: 100%;
+    }
+  `;
   async firstUpdated() {
     this._halls = _.map.convert({cap: false})(
       (doc, index) => ({index, ...doc.data()}),

@@ -9,16 +9,14 @@ export class HgMenuNav extends LitElement {
     selectedCategory: Number,
     categories: Object,
   };
-  static get styles() {
-    return css`
-      hg-list {
-        max-height: calc(100vh - var(--headerHeight));
-        top: var( --headerHeight);
-        overflow: auto;
-        position: sticky;
-      }
-    `;
-  }
+  static styles = css`
+    hg-list {
+      max-height: calc(100vh - var(--headerHeight));
+      top: var( --headerHeight);
+      overflow: auto;
+      position: sticky;
+    }
+  `;
   selectCategory(index) {
     this.selectedCategory = index;
     this.dispatchEvent(new CustomEvent('selected-category-changed', {detail: index}));

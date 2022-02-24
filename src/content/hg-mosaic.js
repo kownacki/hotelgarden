@@ -13,52 +13,50 @@ export class HgMosaic extends LitElement {
     _mosaic: Object,
     _dataReady: Boolean,
   };
+  static styles = [sharedStyles, ckContent, css`
+    :host {
+      max-width: 1240px;
+      margin: 60px auto;
+      padding: 0 20px;
+      display: block;
+      overflow: auto;
+    }
+    .left {
+      width: calc(45% - 1px);
+      margin-right: 1px;
+      float: left;
+    }
+    .right {
+      width: 55%;
+      float: right;
+    }
+    .content {
+      margin: 0 40px 40px;
+    }
+    hg-action-buttons {
+      margin-top: 30px;
+    }
+    @media all and (max-width: 959px) {
+      :host {
+        max-width: 750px;
+      }
+      .left, .right {
+        float: none;
+        width: 100%;
+      }
+      .content {
+        margin: 20px 0 40px;
+      }
+    }
+    @media all and (max-width: 599px) {
+      :host {
+        margin: 40px auto;
+      }
+    }
+  `];
   async firstUpdated() {
     this._mosaic = (await db.doc('mosaics/' + this.uid).get()).data() || {};
     this._dataReady = true;
-  }
-  static get styles() {
-    return [sharedStyles, ckContent, css`
-      :host {
-        max-width: 1240px;
-        margin: 60px auto;
-        padding: 0 20px;
-        display: block;
-        overflow: auto;
-      }
-      .left {
-        width: calc(45% - 1px);
-        margin-right: 1px;
-        float: left;
-      }
-      .right {
-        width: 55%;
-        float: right;
-      }
-      .content {
-        margin: 0 40px 40px;
-      }
-      hg-action-buttons {
-        margin-top: 30px;
-      }
-      @media all and (max-width: 959px) {
-        :host {
-          max-width: 750px;
-        }
-        .left, .right {
-          float: none;
-          width: 100%;
-        }
-        .content {
-          margin: 20px 0 40px;
-        }
-      }
-      @media all and (max-width: 599px) {
-        :host {
-          margin: 40px auto;
-        }
-      }
-    `];
   }
   async updateData(path, data) {
     updateData('mosaics/' + this.uid, path, data);

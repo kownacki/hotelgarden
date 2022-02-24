@@ -7,13 +7,11 @@ export class HgReviewsSlider extends LitElement {
   static properties = {
     reviews: Array,
   };
-  static get styles() {
-    return [sharedStyles, css`
-      hg-slider {
-        height: 100%;
-      }
-    `];
-  }
+  static styles = [sharedStyles, css`
+    hg-slider {
+      height: 100%;
+    }
+  `];
   render() {
     return html`
       <hg-slider

@@ -5,21 +5,19 @@ export class HgEventEditDate extends LitElement {
     date: String,
     opened: {type: Boolean, reflect: true},
   };
-  static get styles() {
-    return css`
-      :host {
-        margin-left: 8px;
-      }
-      paper-icon-button {
-        width: 24px;
-        height: 24px;
-        padding: 0;
-      }
-      .buttons {
-        margin-top: 10px;
-      }
-    `;
-  }
+  static styles = css`
+    :host {
+      margin-left: 8px;
+    }
+    paper-icon-button {
+      width: 24px;
+      height: 24px;
+      padding: 0;
+    }
+    .buttons {
+      margin-top: 10px;
+    }
+  `;
   render() {
     return html`
       <paper-icon-button 

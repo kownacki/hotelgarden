@@ -10,6 +10,37 @@ export class HgIconsAdd extends LitElement {
     _selected: String,
     _loading: Boolean,
   };
+  static styles = css`
+    .icons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 0 10px;
+      margin: 30px 0;
+    }
+    .icon {
+      width: 80px;
+      text-align: center;
+      padding: 5px;
+    }
+    paper-icon-button {
+      width: 60px;
+      height: 60px;
+      padding: 0;
+    }
+    paper-button {
+      min-width: auto;
+      padding: 5px;
+      margin: 2px;
+    }
+    paper-button[selected] {
+      background: var(--primary-color);
+      color: white;
+    }
+    paper-dialog {
+      overflow: auto;
+    }
+  `;
   constructor() {
     super();
     (async () => {
@@ -26,39 +57,6 @@ export class HgIconsAdd extends LitElement {
       //   }, urls)).then(() => console.log(category));
       // });
     })();
-  }
-  static get styles() {
-    return css`
-      .icons {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        padding: 0 10px;
-        margin: 30px 0;
-      }
-      .icon {
-        width: 80px;
-        text-align: center;
-        padding: 5px;
-      }
-      paper-icon-button {
-        width: 60px;
-        height: 60px;
-        padding: 0;
-      }
-      paper-button {
-        min-width: auto;
-        padding: 5px;
-        margin: 2px;
-      }
-      paper-button[selected] {
-        background: var(--primary-color);
-        color: white;
-      }
-      paper-dialog {
-        overflow: auto;
-      }
-    `;
   }
   async updated(changedProperties) {
     if (changedProperties.has('_selected') && this._selected) {

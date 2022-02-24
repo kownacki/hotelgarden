@@ -4,10 +4,7 @@ import '../content/hg-article.js';
 import '../elements/hg-contact-form.js';
 
 export class HgContactBlock extends LitElement {
-  static get styles() {
-    return [sharedStyles, css`
-    `];
-  }
+  static styles = sharedStyles;
   render() {
     return html`
       <h2 class="content-heading">Skontaktuj się</h2>

@@ -11,6 +11,43 @@ export class HgMenu extends LitElement {
     _compact: Boolean,
     _editing: {type: Boolean, reflect: true, attribute: 'editing'},
   };
+  static styles = css`
+    :host {
+      display: block;
+      margin: 80px 0;
+    }
+    section {
+      display: flex;
+      justify-content: center;
+    }
+    hg-menu-main {
+      flex-grow: 1;
+      max-width: 700px;
+    }
+    hg-menu-nav {
+      min-width: 340px;
+      transition: opacity 0.3s ease;
+    }
+    :host([editing]) hg-menu-nav {
+      opacity: 50%;
+      pointer-events: none;
+    }
+    @media all and (max-width: 959px) {
+      hg-menu-nav {
+        min-width: 240px;
+        width: 240px;
+      }
+    }
+    /* todo better way to view menu */
+    @media all and (max-width: 599px) {
+      section {
+        display: block;
+      }
+      hg-menu-nav {
+        display: none;
+      }
+    }
+  `;
   constructor() {
     super();
     this.categories = {};
@@ -21,45 +58,6 @@ export class HgMenu extends LitElement {
   async firstUpdated() {
     this.categories = (await db.doc('menus/' + this.uid).get()).data();
     this._dataReady = true;
-  }
-  static get styles() {
-    return css`
-      :host {
-        display: block;
-        margin: 80px 0;
-      }
-      section {
-        display: flex;
-        justify-content: center;
-      }
-      hg-menu-main {
-        flex-grow: 1;
-        max-width: 700px;
-      }
-      hg-menu-nav {
-        min-width: 340px;
-        transition: opacity 0.3s ease;
-      }
-      :host([editing]) hg-menu-nav {
-        opacity: 50%;
-        pointer-events: none;
-      }
-      @media all and (max-width: 959px) {
-        hg-menu-nav {
-          min-width: 240px;
-          width: 240px;
-        }
-      }
-      /* todo better way to view menu */
-      @media all and (max-width: 599px) {
-        section {
-          display: block;
-        }
-        hg-menu-nav {
-          display: none;
-        }
-      }
-    `;
   }
   render(){
     return html`

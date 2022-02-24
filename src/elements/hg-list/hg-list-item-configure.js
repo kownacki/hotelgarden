@@ -7,19 +7,17 @@ export class HgListItemConfigure extends LitElement {
     disable: Boolean,
     opened: {type: Boolean, reflect: true},
   };
-  static get styles() {
-    return css`
-      paper-icon-button {
-        background: white;
-        width: 24px;
-        height: 24px;
-        padding: 0;
-      }
-      .buttons {
-        margin: 10px 0;
-      }
-    `;
-  }
+  static styles = css`
+    paper-icon-button {
+      background: white;
+      width: 24px;
+      height: 24px;
+      padding: 0;
+    }
+    .buttons {
+      margin: 10px 0;
+    }
+  `;
   render() {
     return html`
       <paper-icon-button

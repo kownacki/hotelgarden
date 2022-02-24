@@ -12,28 +12,26 @@ export class HgEventsAdd extends LitElement {
     _typing: Boolean,
     _loading: Boolean,
   };
-  static get styles() {
-    return css`
-      paper-button {
-        margin: 0;
-      }
-      .address {
-        font-family: monospace;
-      }
-      .tip {
-        background: rgba(var(--secondary-color-rgb), 20%);
-        padding-top: 10px;
-        padding-bottom: 10px;
-      }
-      paper-input {
-        margin: 0;
-      }
-      #date {
-        margin: 0 24px;
-        padding: 0 2px;
-      }
-    `;
-  }
+  static styles = css`
+    paper-button {
+      margin: 0;
+    }
+    .address {
+      font-family: monospace;
+    }
+    .tip {
+      background: rgba(var(--secondary-color-rgb), 20%);
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+    paper-input {
+      margin: 0;
+    }
+    #date {
+      margin: 0 24px;
+      padding: 0 2px;
+    }
+  `;
   constructor() {
     super();
     this._checkIfAddressTaken = _.debounce(500, async () => {

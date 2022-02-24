@@ -13,21 +13,19 @@ export default class HgArticle extends LitElement {
     richConfig: Boolean,
     classes: Object,
   };
-  static get styles() {
-    return [sharedStyles, ckContent, css`
-      :host {
-        position: relative;
-        display: block;
-        margin: 40px auto;
-        max-width: 700px;
-        padding: 0 20px;
-      }
-      :host(:hover) hg-content-label {
-        left: 20px;
-        display: block;
-      }
-    `];
-  }
+  static styles = [sharedStyles, ckContent, css`
+    :host {
+      position: relative;
+      display: block;
+      margin: 40px auto;
+      max-width: 700px;
+      padding: 0 20px;
+    }
+    :host(:hover) hg-content-label {
+      left: 20px;
+      display: block;
+    }
+  `];
   render() {
     return html`
       <hg-text

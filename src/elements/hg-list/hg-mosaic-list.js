@@ -2,68 +2,66 @@ import HgList from '../hg-list.js';
 import {css} from 'lit';
 
 export class HgMosaicList extends HgList {
-  static get styles() {
-    return [super.styles, css`
+  static styles = [super.styles, css`
+    :host {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    @media all and (min-width: 840px) {
       :host {
-        display: flex;
-        flex-wrap: wrap;
+        position: relative;
+        padding-bottom: calc(100% * (3 / 16));
       }
-      @media all and (min-width: 840px) {
-        :host {
-          position: relative;
-          padding-bottom: calc(100% * (3 / 16));
-        }
-        /* Prevent bugs. Iphone adds style tag as host's last child. */
-        :host > :not(style) {
-          position: absolute;
-          width: calc(100% * (5 / 16));
-          max-width: 100%;
-          height: 100%;
-        }
-        :host > :nth-child(10n + 1), :host > :nth-child(10n + 3), :host > :nth-child(10n + 6) {
-          left: 0;
-        }
-        :host > :nth-child(10n + 5), :host > :nth-child(10n + 8), :host > :nth-child(10n + 10) {
-          right: 0;
-        }
-        :host > :nth-child(10n + 2), :host > :nth-child(10n + 4) {
-          left: calc(100% * (5 / 16));
-        }
-        :host > :nth-child(10n + 7), :host > :nth-child(10n + 9) {
-          right: calc(100% * (5 / 16));
-        }
-        :host > :nth-child(10n + 5), :host > :nth-child(10n + 6) {
-          width: calc(100% * (6 / 16));
-          height: 200%;
-        }
+      /* Prevent bugs. Iphone adds style tag as host's last child. */
+      :host > :not(style) {
+        position: absolute;
+        width: calc(100% * (5 / 16));
+        max-width: 100%;
+        height: 100%;
       }
-      @media all and (max-width: 839px) {
-        /* Prevent bugs. Iphone adds style tag as host's last child. */
-        :host > :not(style) {
-          width: 50%;
-          height: 300px;
-        }
+      :host > :nth-child(10n + 1), :host > :nth-child(10n + 3), :host > :nth-child(10n + 6) {
+        left: 0;
       }
-      @media all and (max-width: 719px) {
-        /* Prevent bugs. Iphone adds style tag as host's last child. */
-        :host > :not(style) {
-          height: 250px;
-        }
+      :host > :nth-child(10n + 5), :host > :nth-child(10n + 8), :host > :nth-child(10n + 10) {
+        right: 0;
       }
-      @media all and (max-width: 599px) {
-        /* Prevent bugs. Iphone adds style tag as host's last child. */
-        :host > :not(style) {
-          height: 200px;
-        }
+      :host > :nth-child(10n + 2), :host > :nth-child(10n + 4) {
+        left: calc(100% * (5 / 16));
       }
-      @media all and (max-width: 479px) {
-        /* Prevent bugs. Iphone adds style tag as host's last child. */
-        :host > :not(style) {
-          height: 150px;
-        }
+      :host > :nth-child(10n + 7), :host > :nth-child(10n + 9) {
+        right: calc(100% * (5 / 16));
       }
-    `];
-  }
+      :host > :nth-child(10n + 5), :host > :nth-child(10n + 6) {
+        width: calc(100% * (6 / 16));
+        height: 200%;
+      }
+    }
+    @media all and (max-width: 839px) {
+      /* Prevent bugs. Iphone adds style tag as host's last child. */
+      :host > :not(style) {
+        width: 50%;
+        height: 300px;
+      }
+    }
+    @media all and (max-width: 719px) {
+      /* Prevent bugs. Iphone adds style tag as host's last child. */
+      :host > :not(style) {
+        height: 250px;
+      }
+    }
+    @media all and (max-width: 599px) {
+      /* Prevent bugs. Iphone adds style tag as host's last child. */
+      :host > :not(style) {
+        height: 200px;
+      }
+    }
+    @media all and (max-width: 479px) {
+      /* Prevent bugs. Iphone adds style tag as host's last child. */
+      :host > :not(style) {
+        height: 150px;
+      }
+    }
+  `];
   calculateItemTop(index) {
     return Math.floor(index/5) * 2 + (_.includes(index%10, [2, 3, 8, 9]) ? 1 : 0);
   }

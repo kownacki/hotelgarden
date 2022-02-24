@@ -35,6 +35,14 @@ export class HgApp extends LitElement {
     _enableDrawer: Boolean,
     _drawerOnceOpened: Boolean,
   };
+  static styles = css`
+    app-drawer {
+      z-index: var(--layer-header-1);
+    }
+    hg-drawer {
+      background: white;
+    }
+  `;
   constructor() {
     super();
 
@@ -79,17 +87,7 @@ export class HgApp extends LitElement {
       }
     }
   }
-  static get styles() {
-    return css`
-      app-drawer {
-        z-index: var(--layer-header-1);
-      }
-      hg-drawer {
-        background: white;
-      }
-    `;
-  }
-  render(){
+  render() {
     return html`
       <app-location @route-changed=${(event) => {
         this._path = event.detail.value.path;

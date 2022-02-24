@@ -2,13 +2,11 @@ import {LitElement, html, css} from 'lit';
 import {sleep} from "../utils";
 
 export class HgImageUpload extends LitElement {
-  static get styles() {
-    return css`
-      :host {
-        display: none;
-      }
-    `;
-  }
+  static styles = css`
+    :host {
+      display: none;
+    }
+  `;
   async upload() {
     return new Promise((resolve) => {
       const input = this.shadowRoot.getElementById('input');

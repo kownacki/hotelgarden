@@ -8,22 +8,20 @@ export class HgImageSliderItem extends LitElement {
     noDelete: Boolean,
     _deleteOpened: {type: Boolean, reflect: true, attribute: 'delete-opened'},
   };
-  static get styles() {
-    return css`
-      :host {
-        position: relative;
-      }
-      hg-delete-item {
-        display: none;
-        position: absolute;
-        top: 15px;
-        right: 15px;
-      }
-      :host(:hover) hg-delete-item, :host([delete-opened]) hg-delete-item {
-        display: block;
-      }
-    `;
-  }
+  static styles = css`
+    :host {
+      position: relative;
+    }
+    hg-delete-item {
+      display: none;
+      position: absolute;
+      top: 15px;
+      right: 15px;
+    }
+    :host(:hover) hg-delete-item, :host([delete-opened]) hg-delete-item {
+      display: block;
+    }
+  `;
   render() {
     return html`
       <hg-gallery-item 

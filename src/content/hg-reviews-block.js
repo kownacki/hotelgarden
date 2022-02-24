@@ -12,78 +12,76 @@ export class HgReviewsBlock extends LitElement {
     bookingScores: Object,
     _reviews: Array,
   };
-  static get styles() {
-    return [sharedStyles, css`
-      :host {
-        display: block;
+  static styles = [sharedStyles, css`
+    :host {
+      display: block;
+      margin: 60px auto;
+    }
+    .container {
+      display: flex;
+      margin: 60px auto 0;
+      flex-direction: row;
+      justify-content: center;
+    }
+    hg-scores, hg-image {
+      display: none;
+      margin: 0 20px;
+    }
+    :host([scores]) hg-scores {
+      display: block;
+    }
+    :host(:not([scores])) hg-image {
+      display: block;
+      width: 480px;
+      max-width: 100%;
+    }
+    hg-reviews-slider {
+      display: block;
+      width: 580px;
+      max-width: 100%;
+      height: 360px;
+      margin: 0 20px;
+    }
+    @media all and (max-width: 1159px) {
+      :host(:not([scores])) {
         margin: 60px auto;
       }
-      .container {
-        display: flex;
-        margin: 60px auto 0;
-        flex-direction: row;
-        justify-content: center;
-      }
-      hg-scores, hg-image {
-        display: none;
-        margin: 0 20px;
-      }
-      :host([scores]) hg-scores {
+      :host(:not([scores])) .container {
         display: block;
+      }
+      :host(:not([scores])) hg-reviews-slider {
+        margin: 40px auto 20px ;
       }
       :host(:not([scores])) hg-image {
+        display: none;
+      }
+    }
+    @media all and (max-width: 959px) {
+      .container {
+        margin: 20px auto 0;
         display: block;
-        width: 480px;
-        max-width: 100%;
       }
       hg-reviews-slider {
-        display: block;
-        width: 580px;
-        max-width: 100%;
-        height: 360px;
-        margin: 0 20px;
+        height: 320px;
+        margin: 40px auto 0;
       }
-      @media all and (max-width: 1159px) {
-        :host(:not([scores])) {
-          margin: 60px auto;
-        }
-        :host(:not([scores])) .container {
-          display: block;
-        }
-        :host(:not([scores])) hg-reviews-slider {
-          margin: 40px auto 20px ;
-        }
-        :host(:not([scores])) hg-image {
-          display: none;
-        }
+    }
+    @media all and (max-width: 599px) {
+      hg-reviews-slider {
+        height: 320px;
       }
-      @media all and (max-width: 959px) {
-        .container {
-          margin: 20px auto 0;
-          display: block;
-        }
-        hg-reviews-slider {
-          height: 320px;
-          margin: 40px auto 0;
-        }
+    }
+    @media all and (max-width: 479px) {
+      hg-reviews-slider {
+        height: 350px;
       }
-      @media all and (max-width: 599px) {
-        hg-reviews-slider {
-          height: 320px;
-        }
+    }
+    @media all and (max-width: 399px) {
+      hg-reviews-slider {
+        height: 420px;
       }
-      @media all and (max-width: 479px) {
-        hg-reviews-slider {
-          height: 350px;
-        }
-      }
-      @media all and (max-width: 399px) {
-        hg-reviews-slider {
-          height: 420px;
-        }
-      }
-    `];
-  }
+    }
+  `];
   constructor() {
     super();
     (async () => {
