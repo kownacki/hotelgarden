@@ -65,9 +65,11 @@ export class HgApp extends LitElement {
   }
   firstUpdated() {
     window.addEventListener('resize', _.throttle(100, () => {
-      (window.innerWidth < 1100)
-        ? this._enableDrawer = true
-        : (this.shadowRoot.getElementById('drawer') && this.shadowRoot.getElementById('drawer').close());
+      if (window.innerWidth < 1100) {
+        this._enableDrawer = true;
+      } else {
+        this.shadowRoot.getElementById('drawer')?.close();
+      }
     }));
   }
   async updated(changedProperties) {

@@ -86,11 +86,13 @@ export class HgMosaicList extends HgList {
     this.array = true;
     this.addAtStart = true;
     this.transform = () => _.reverse;
-    window.addEventListener('resize', _.throttle(100, () =>
-      (this._list && window.innerWidth > 839)
-        ? this.setMargin()
-        : this.style = null
-    ));
+    window.addEventListener('resize', _.throttle(100, () => {
+      if (this._list && window.innerWidth > 839) {
+        this.setMargin();
+      } else {
+        this.style = null;
+      }
+    }));
   }
 }
 customElements.define('hg-mosaic-list', HgMosaicList);
