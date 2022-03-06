@@ -1,8 +1,8 @@
+import {nodeResolve} from '@rollup/plugin-node-resolve';
 import copy from 'rollup-plugin-copy';
 import del from 'rollup-plugin-delete';
-import resolve from 'rollup-plugin-node-resolve';
-import {terser} from 'rollup-plugin-terser';
 import minifyHTML from 'rollup-plugin-minify-html-literals';
+import {terser} from 'rollup-plugin-terser';
 
 export default [{
   input: 'src/hg-app.js',
@@ -23,7 +23,7 @@ export default [{
         {src: 'BingSiteAuth.xml', dest: 'dist'},
       ],
     }),
-    resolve(),
+    nodeResolve(),
     minifyHTML(),
     terser(),
   ],
@@ -34,7 +34,7 @@ export default [{
     format: 'module',
   },
   plugins: [
-    resolve(),
+    nodeResolve(),
     minifyHTML(),
     terser(),
   ],
@@ -45,7 +45,7 @@ export default [{
     format: 'module',
   },
   plugins: [
-    resolve(),
+    nodeResolve(),
     minifyHTML(),
     terser(),
   ],
