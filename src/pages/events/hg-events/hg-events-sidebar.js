@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit';
-import {repeat} from 'lit/directives/repeat';
+import {repeat} from 'lit/directives/repeat.js';
 import {splitEvents, assignKeys} from '../../../utils.js';
 import sharedStyles from '../../../styles/shared-styles.js';
 

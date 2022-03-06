@@ -3,7 +3,7 @@ import HgContent from "../../elements/hg-content.js";
 import {staticProp, pages} from '../../utils.js';
 import '../../content/hg-article/hg-intro-article.js';
 import '../../content/hg-content-icons.js';
-import '../../content/hg-content-slider';
+import '../../content/hg-content-slider.js';
 import '../../content/hg-mosaic.js';
 import '../../content/hg-text-image.js';
 import '../../content/hg-links.js';

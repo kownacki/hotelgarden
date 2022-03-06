@@ -5,7 +5,7 @@ import '../../content/hg-article.js';
 import '../../content/hg-article/hg-intro-article.js';
 import '../../content/hg-contact-block.js';
 import '../../content/hg-content-icons.js';
-import '../../content/hg-content-slider';
+import '../../content/hg-content-slider.js';
 import '../../content/hg-menu.js';
 import '../../content/hg-mosaic.js';
 import '../../content/hg-links.js';

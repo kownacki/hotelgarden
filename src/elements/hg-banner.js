@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit';
-import {updateImage, updateData} from "../utils";
-import sharedStyles from '../styles/shared-styles';
+import {updateImage, updateData} from "../utils.js";
+import sharedStyles from '../styles/shared-styles.js';
 import '../edit/hg-editable-image.js';
 import '../edit/hg-editable-text.js';
 

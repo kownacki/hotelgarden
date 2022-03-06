@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit';
-import {classMap} from 'lit/directives/class-map';
+import {classMap} from 'lit/directives/class-map.js';
 import {staticProp} from '../utils.js';
-import sharedStyles from "../styles/shared-styles";
+import sharedStyles from "../styles/shared-styles.js";
 import ckContent from '../styles/ck-content.js';
 import '../elements/hg-text.js';
 import '../elements/hg-content-label.js';

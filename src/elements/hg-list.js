@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit';
-import {repeat} from 'lit/directives/repeat';
+import {repeat} from 'lit/directives/repeat.js';
 import {array, updateData, generateUid} from "../utils.js";
 import sharedStyles from '../styles/shared-styles.js'
 import './hg-list/hg-list-item.js';

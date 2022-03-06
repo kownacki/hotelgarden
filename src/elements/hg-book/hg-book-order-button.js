@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit';
 import sharedStyles from "../../styles/shared-styles.js";
 import '../hg-action-button.js';
-import './hg-book-dialog';
+import './hg-book-dialog.js';
 
 export class HgBookOrderButton extends LitElement {
   static properties = {
