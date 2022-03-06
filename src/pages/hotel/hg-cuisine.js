@@ -16,9 +16,7 @@ export class HgCuisine extends HgContent {
       <hg-content-slider .uid=${'cuisine'}></hg-content-slider>
       <hg-mosaic .uid=${'cuisine'} .buttons=${staticProp({primary: [{url: `${pages.restaurant.path}#menu`, text: 'Zobacz menu'}]})}></hg-mosaic>
       <hg-text-image .uid=${'lunch'} .buttons=${staticProp([{url: '/lunch#aktualny-lunch', text: 'Przejdź do lunchy'}])}></hg-text-image>
-      <hg-text-image .swap=${true} .uid=${'cuisine-extra1'}>
-      <--  .buttons=${staticProp([{url: '/grill-garden', text: 'Zobacz więcej'}])} !-->
-      </hg-text-image>
+      <hg-text-image .swap=${true} .uid=${'cuisine-extra1'}></hg-text-image>
       <hg-links .path=${'/kuchnia'} .superpath=${'/'}></hg-links>
     `;
   }
