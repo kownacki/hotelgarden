@@ -2,7 +2,7 @@ import fs from 'fs';
 import _ from 'lodash/fp.js';
 import apiKey from './apiKey.js';
 import analyticsScript from './generateIndex/analyticsScript.js';
-import preRender from './generateIndex/preRender.js';
+import {preRender} from './generateIndex/preRender.js';
 import preloadFirebaseAndApp from './generateIndex/preloadFirebaseAndApp.js';
 import initializeFirebaseAndApp from './generateIndex/initializeFirebaseAndApp.js';
 import tawkToScript from './generateIndex/tawkToScript.js';
