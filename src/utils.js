@@ -166,12 +166,32 @@ export const urlTo64Base = async (url) => {
   return new Promise((resolve) => (reader.onloadend = () => resolve(reader.result)));
 };
 
-export const loadScript = (src) => new Promise((resolve) => {
-  const script = document.createElement('script');
-  script.onload = resolve;
-  script.src = src;
-  document.body.append(script);
+/**
+ * Loads source by appending it to document body.
+ * @param {string} tag - Html tag that is going to be created. Usually 'script' for js file or 'link' for css stylesheet.
+ * @param {object} attrs - Object with attribute names as keys and attribute values as values.
+ * @returns {Promise} When source has loaded.
+ */
+export const loadSource = (tag, attrs) => new Promise((resolve) => {
+  const source = document.createElement(tag);
+  source.onload = resolve;
+  Object.assign(source, attrs);
+  document.body.append(source);
 });
+
+/**
+ * Loads script by appending it to document body.
+ * @param {string} src - Source path of script.
+ * @returns {Promise} When script has loaded.
+ */
+export const loadScript = (src) => loadSource('script', {src});
+
+/**
+ * Loads stylesheet by appending it to document body.
+ * @param {string} src - Source path of stylesheet.
+ * @returns {Promise} When stylesheet has loaded.
+ */
+export const loadStylesheet = (src) => loadSource('link', {rel: 'stylesheet', href: src});
 
 export const pathToUid = {
   '/index.html': 'landing',
