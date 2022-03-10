@@ -56,6 +56,11 @@ export class HgBanner extends LitElement {
     :host([no-image]) h1, :host([no-image]) p {
       color: inherit;
     }
+    @media all and (max-width: 599px) {
+      :host(:not([no-image])), hg-editable-image {
+        height: 66%;
+      }
+    }
   `];
   async updated(changedProperties) {
     if (changedProperties.has('uid') && this.uid) {
