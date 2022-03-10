@@ -7,7 +7,7 @@ import {terser} from 'rollup-plugin-terser';
 export default [{
   input: 'src/hg-app.js',
   output: {
-    file: 'dist/src/hg-app.js',
+    dir: 'dist/src',
     format: 'module',
   },
   plugins: [

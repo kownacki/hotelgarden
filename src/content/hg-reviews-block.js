@@ -5,8 +5,8 @@ import {staticProp} from '../utils.js';
 import './hg-reviews-block/hg-reviews-slider.js';
 import './hg-reviews-block/hg-scores.js';
 
-const maxImageWidth = '480';
-const maxImageHeight = '360';
+const maxImageWidth = 480;
+const maxImageHeight = 360;
 
 export class HgReviewsBlock extends LitElement {
   static properties = {
@@ -17,6 +17,10 @@ export class HgReviewsBlock extends LitElement {
   };
   static styles = [sharedStyles, css`
     :host {
+      ${unsafeCSS(`
+        --max-image-width: ${maxImageWidth}px;
+        --max-image-height: ${maxImageHeight}px;
+      `)}
       display: block;
       margin: 60px auto;
     }
@@ -26,25 +30,30 @@ export class HgReviewsBlock extends LitElement {
       flex-direction: row;
       justify-content: center;
     }
+    hg-scores {
+      margin: 0 20px;
+    }
+    hg-image {
+      width: var(--max-image-width);
+      max-width: 100%;
+      height: var(--max-image-height);
+      margin: 0 20px;
+    }
+    hg-reviews-slider {
+      display: block;
+      width: 580px;
+      max-width: 100%;
+      height: var(--max-image-height);
+      margin: 0 20px;
+    }
     hg-scores, hg-image {
       display: none;
-      margin: 0 20px;
     }
     :host([scores]) hg-scores {
       display: block;
     }
     :host(:not([scores])) hg-image {
       display: block;
-      width: ${unsafeCSS(maxImageWidth)}px;
-      max-width: 100%;
-      height: ${unsafeCSS(maxImageHeight)}px;
-    }
-    hg-reviews-slider {
-      display: block;
-      width: 580px;
-      max-width: 100%;
-      height: ${unsafeCSS(maxImageHeight)}px;
-      margin: 0 20px;
     }
     @media all and (max-width: 1159px) {
       :host(:not([scores])) {

@@ -4,8 +4,8 @@ import {staticProp} from '../utils.js';
 import sharedStyles from "../styles/shared-styles";
 import './hg-halls-block/hg-halls-slider.js';
 
-const maxImageWidth = '750';
-const maxImageHeight = '400';
+const maxImageWidth = 750;
+const maxImageHeight = 400;
 
 export class HgHallsBlock extends LitElement {
   static properties = {
@@ -14,6 +14,10 @@ export class HgHallsBlock extends LitElement {
   };
   static styles = [sharedStyles, css`
     :host {
+      ${unsafeCSS(`
+        --max-image-width: ${maxImageWidth}px;
+        --max-image-height: ${maxImageHeight}px;
+      `)}
       display: block;
       margin: 80px 0;
     }
@@ -32,7 +36,7 @@ export class HgHallsBlock extends LitElement {
       flex: 1;
       width: 620px;
       max-width: 100%;
-      height: ${unsafeCSS(maxImageHeight)}px;
+      height: var(--max-image-height);
     }
     @media all and (max-width: 959px) {
       :host {
@@ -44,12 +48,12 @@ export class HgHallsBlock extends LitElement {
       hg-halls-slider {
         width: 600px;
         max-width: 100%;
-        height: ${unsafeCSS(maxImageHeight)}px;
+        height: var(--max-image-height);
         margin: 40px auto 0;
       }
       hg-image {
         margin: auto;
-        width: ${unsafeCSS(maxImageWidth)}px;
+        width: var(--max-image-width);
         max-width: calc(100% - 40px);
       }
     }

@@ -7,8 +7,8 @@ import '../hg-action-button.js';
 import '../hg-dialog.js';
 import '../hg-text.js'
 
-const maxImageWidth = '600';
-const maxImageHeight = '180';
+const maxImageWidth = 600;
+const maxImageHeight = 180;
 
 export class HgBookDialog extends LitElement {
   static properties = {
@@ -18,6 +18,10 @@ export class HgBookDialog extends LitElement {
   };
   static styles = [sharedStyles, ckContent, css`
     :host {
+      ${unsafeCSS(`
+        --max-image-width: ${maxImageWidth}px;
+        --max-image-height: ${maxImageHeight}px;
+      `)}
     }
     hg-dialog {
       --hg-dialog-width: 800px;
@@ -34,7 +38,7 @@ export class HgBookDialog extends LitElement {
     }
     hg-image {
       width: 100%;
-      height: ${unsafeCSS(maxImageHeight)}px;
+      height: var(--max-image-height);
       margin-bottom: 20px;
     }
     hg-action-button {

@@ -3,11 +3,11 @@
   "scripts": {
     "dev": "es-dev-server --app-index index.html --node-resolve",
     "generate-index": "node utils/generateIndex.js",
-    "generate-lodash": "rollup --config rollup.lodashBuildConfig.js",
+    "generate-lodash": "rollup --config rollupConfigs/rollup.lodashBuildConfig.js",
     "generate-docs": "jsdoc src -r -d docs",
     "generate-all": "npm run generate-index && npm run generate-lodash && npm run generate-docs",
     "firebase-login": "firebase login",
-    "build": "rollup --config",
+    "build": "rollup --config rollupConfigs/rollup.config.js",
     "deploy-hosting": "firebase deploy --only hosting",
     "deploy-functions": "firebase deploy --only functions",
     "deploy-all": "npm run deploy-hosting && npm run deploy-functions"

@@ -8,8 +8,8 @@ import '../elements/hg-image-slider.js';
 import '../elements/hg-icon-info.js';
 import '../elements/hg-action-buttons.js';
 
-const maxImageWidth = '750';
-const maxImageHeight = '400';
+const maxImageWidth = 750;
+const maxImageHeight = 400;
 
 export class HgTextImage extends LitElement {
   static properties = {
@@ -27,6 +27,10 @@ export class HgTextImage extends LitElement {
   };
   static styles = [sharedStyles, ckContent, css`
     :host {
+      ${unsafeCSS(`
+        --max-image-width: ${maxImageWidth}px;
+        --max-image-height: ${maxImageHeight}px;
+      `)}
       max-width: 1240px;
       margin: 80px auto;
       padding: 0 20px;
@@ -37,7 +41,7 @@ export class HgTextImage extends LitElement {
     }
     hg-image, hg-image-slider {
       width: 50%;
-      height: ${unsafeCSS(maxImageHeight)}px;
+      height: var(--max-image-height);
     }
     .content {
       width: 50%;
@@ -57,7 +61,7 @@ export class HgTextImage extends LitElement {
     }
     @media all and (max-width: 959px) {
       :host, :host([swap]) {
-        max-width: ${unsafeCSS(maxImageWidth)}px;
+        max-width: var(--max-image-width);
         flex-direction: column;
       }
       hg-image, hg-image-slider {
