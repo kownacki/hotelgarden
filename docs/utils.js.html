@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: utils.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: utils.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import diacritics from '../resources/scripts/diacritics.js';
+
+export const headerHeight = 59;
+
+export const hyphenate = _.flow(
+  _.replace(/'/g, ''),
+  _.toLower,
+  diacritics.remove,
+  _.words,
+  _.join('-'),
+);
+
+export const assignKeys = (field) => _.map.convert({cap: false})((item, key) => ({...item, [field]: key}));
+
+export const splitEvents = (events) => [
+  _.flow([
+    _.filter(_.get('public')),
+    _.filter((event) => moment().isSameOrBefore(event.date, 'day')),
+    _.sortBy('date'),
+  ])(events),
+  _.flow([
+    _.filter(_.get('public')),
+    _.filter((event) => moment().isAfter(event.date, 'day')),
+    _.sortBy('date'),
+  ])(events)
+];
+
+export const generateUid = () => `${Date.now()}${_.padCharsStart('0', 9,  _.random(1, 10**9 - 1))}`;
+
+export const getData = async (doc, path) => {
+  const docData = (await db.doc(doc).get()).data() || {};
+  return path ? _.get(path, docData) : docData;
+};
+
+export const updateData = (doc, path, data) => {
+  return path
+    ? db.doc(doc).set(_.setWith(Object, path, data, {}), {mergeFields: [path]})
+    : db.doc(doc).set(data);
+};
+
+export const createImage = async (file) => {
+  const name = generateUid();
+  const storageRef = storage.ref('images/' + name);
+  await storageRef.put(file);
+  return {name, url: await storageRef.getDownloadURL()};
+};
+export const deleteImage = async (imageName) => {
+  return storage.ref('images/' + imageName).delete()
+};
+export const updateImage = async (doc, path, file, oldImageName) => {
+  if (oldImageName) deleteImage(oldImageName);
+  const image = await createImage(file);
+  updateData(doc, path, image);
+  return image;
+};
+
+export const array = {
+  swapItems: (index1, index2, arr) => {
+    const temp = arr[index1];
+    arr[index1] = arr[index2];
+    arr[index2] = temp;
+    return arr;
+  },
+  nextIndex: (index, arr) => index === arr.length - 1 ? 0 : index + 1,
+  prevIndex: (index, arr) => index === 0 ? arr.length - 1 : index - 1,
+  nextItem: (index, arr) => arr[array.nextIndex(index, arr)],
+  prevItem: (index, arr) => arr[array.prevIndex(index, arr)],
+};
+
+const memoizedParse =_.memoize(JSON.parse);
+export const staticProp = (object) => {
+  return memoizedParse(JSON.stringify(object));
+};
+
+export const sleep = (milliseconds = 0) => new Promise((resolve) => setTimeout(resolve, milliseconds));
+
+export const moveOutFromShadowDom = async (contentsElement) => {
+  await sleep();
+  const id = _.random(0, 1000000000);
+
+  const getHost = (element) => {
+    while (element.parentElement) {
+      element = element.parentElement;
+    }
+    return element.parentNode.host;
+  };
+
+  const getHosts = (element) => {
+    const hosts = [];
+    while (getHost(element)) {
+      element = getHost(element);
+      hosts.push(element);
+    }
+    return hosts;
+  };
+
+  const hosts = getHosts(contentsElement);
+
+  _.forEach(
+    (host) => {
+      const slot = document.createElement("slot");
+      slot.setAttribute('slot', id);
+      slot.setAttribute('name', id);
+      host.appendChild(slot)
+    }, _.initial(hosts)
+  );
+
+  const slot = document.createElement("slot");
+  slot.setAttribute('name', id);
+
+  contentsElement.parentNode.replaceChild(slot, contentsElement);
+
+  contentsElement.setAttribute('slot', id);
+
+  _.last(hosts).appendChild(contentsElement);
+  await sleep();
+};
+
+export const detectMobile = () => navigator.userAgent.match(/Android/i)
+  || navigator.userAgent.match(/webOS/i)
+  || navigator.userAgent.match(/iPhone/i)
+  || navigator.userAgent.match(/iPad/i)
+  || navigator.userAgent.match(/iPod/i)
+  || navigator.userAgent.match(/BlackBerry/i)
+  || navigator.userAgent.match(/Windows Phone/i);
+
+export const ROOM_ID = {
+  doubleClassic: 37985,
+  twin: 37987,
+  tripleClassic: 37984,
+  quadClassic: 37983,
+  superior: 37988,
+  villaRoom: 55463,
+};
+
+let profitroomLoaded = false;
+export const openProfitroom = async (location, roomId, adults = 2) => {
+  if (!profitroomLoaded) {
+    profitroomLoaded = true;
+    await loadScript('https://open.upperbooking.com/js/Booking.js?locale=pl');
+  }
+  window.Booking.OpenSite(location, {RoomID: roomId, adults, checkin: moment().format('YYYY-MM-DD'), checkout: moment().add(1, 'day').format('YYYY-MM-DD')});
+};
+
+export const setDocumentTitle = (title, seo) => document.title = `${title} ${seo.titleSeparator} ${seo.titleSuffix}`;
+
+export const setMetaDescription = (text) => {
+  document.head.querySelector('meta[name="description"]').setAttribute('content',
+    !text ? ''
+      : text.search('&lt;p') === -1
+      ? text
+      : (() => {
+        const el = document.createElement('div');
+        el.innerHTML = _.replace(/&lt;br>/g, ' ', text);
+        return el.getElementsByTagName('p')[0].innerText;
+      })()
+  );
+};
+
+// todo use moment js
+export const getDayOfWeek = (index) => ['poniedziałek', 'wtorek', 'środa', 'czwartek', 'piątek', 'sobota', 'niedziela'][index - 1];
+
+export const urlTo64Base = async (url) => {
+  const reader = new FileReader();
+  reader.readAsDataURL(await (await fetch(url)).blob());
+  return new Promise((resolve) => (reader.onloadend = () => resolve(reader.result)));
+};
+
+/**
+ * Loads source by appending it to document body.
+ * @param {string} tag - Html tag that is going to be created. Usually 'script' for js file or 'link' for css stylesheet.
+ * @param {object} attrs - Object with attribute names as keys and attribute values as values.
+ * @returns {Promise} When source has loaded.
+ */
+export const loadSource = (tag, attrs) => new Promise((resolve) => {
+  const source = document.createElement(tag);
+  source.onload = resolve;
+  Object.assign(source, attrs);
+  document.body.append(source);
+});
+
+/**
+ * Loads script by appending it to document body.
+ * @param {string} src - Source path of script.
+ * @returns {Promise} When script has loaded.
+ */
+export const loadScript = (src) => loadSource('script', {src});
+
+/**
+ * Loads stylesheet by appending it to document body.
+ * @param {string} src - Source path of stylesheet.
+ * @returns {Promise} When stylesheet has loaded.
+ */
+export const loadStylesheet = (src) => loadSource('link', {rel: 'stylesheet', href: src});
+
+export const pathToUid = {
+  '/index.html': 'landing',
+  '/': 'landing',
+  '/villa-garden': 'villa-garden',
+  '/kuchnia': 'cuisine',
+  '/atrakcje-okolicy': 'surroundings',
+  '/opinie': 'reviews',
+  '/pokoje': 'rooms',
+  '/garden-bistro': 'restaurant',
+  '/lunch': 'lunch',
+  // '/catering': 'catering',
+  '/konferencje': 'conferences',
+  '/sale-konferencyjne': 'conference-halls',
+  '/wesela': 'weddings',
+  '/przyjecia-rodzinne': 'family-parties',
+  // '/chrzciny': 'chrzciny',
+  // '/komunie': 'komunie',
+  '/sale-bankietowe': 'banquet-halls',
+  '/galeria': 'gallery',
+  '/wydarzenia': 'events',
+  '/kontakt': 'contact',
+};
+
+export const pages = {
+  'landing': {name: 'O hotelu', path: '/', dir: 'hotel'},
+  'villa-garden': {name: 'Villa Garden', path: '/villa-garden', dir: 'hotel'},
+  'cuisine': {name: 'O naszej kuchni', path: '/kuchnia', dir: 'hotel'},
+  'surroundings': {name: 'Atrakcje okolicy', path: '/atrakcje-okolicy', dir: 'hotel'},
+  'reviews': {name: 'Opinie ', path: '/opinie', dir: 'hotel'},
+  'rooms': {name: 'Pokoje', path: '/pokoje', dir: 'rooms'},
+  'conferences': {name: 'Konferencja w Gardenie', path: '/konferencje', dir: 'conferences'},
+  'conference-halls': {name: 'Sale konferencyjne', path: '/sale-konferencyjne', dir: 'conferences'},
+  'restaurant': {name: 'O restauracji', path: '/garden-bistro', dir: 'restaurant'},
+  'lunch': {name: 'Lunch', path: '/lunch', dir: 'restaurant'},
+  // 'catering': {name: 'Catering', path: '/catering', dir: 'restaurant'},
+  'weddings': {name: 'Wesela', path: '/wesela', dir: 'celebrations'},
+  'family-parties': {name: 'Przyjęcia rodzinne', path: '/przyjecia-rodzinne', dir: 'celebrations'},
+  // 'chrzciny': {name: 'Chrzciny', path: '/chrzciny', dir: 'celebrations'},
+  // 'komunie': {name: 'Komunie', path: '/komunie', dir: 'celebrations'},
+  'banquet-halls': {name: 'Sale bankietowe', path: '/sale-bankietowe', dir: 'celebrations'},
+  'gallery': {name: 'Galeria', path: '/galeria', dir: 'gallery'},
+  'events': {name: 'Wydarzenia', path: '/wydarzenia', dir: 'events'},
+  'contact': {name: 'Kontakt', path: '/kontakt', dir: 'contact'},
+  '404': {name: 'Błąd 404 - strony nie znaleziono', dir: '404'},
+};
+
+export const links = [
+  {
+    name: 'Hotel',
+    path: '/',
+    sublinks: ['landing', 'villa-garden', 'cuisine', 'surroundings', 'reviews'],
+  },
+  pages['rooms'],
+  {
+    name: 'Garden Bistro',
+    path: '/garden-bistro',
+    sublinks: ['restaurant', 'lunch'],
+  }, {
+    name: 'Konferencje',
+    path: '/konferencje',
+    sublinks: ['conferences', 'conference-halls'],
+  }, {
+    name: 'Uroczystości',
+    path: '/wesela',
+    sublinks: ['weddings', 'family-parties', 'banquet-halls'],
+  },
+  pages['gallery'],
+  pages['events'],
+  pages['contact'],
+];
+
+export const linksMap = _.keyBy('path', links);
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="FirebaseAuthController.html">FirebaseAuthController</a></li><li><a href="StateController.html">StateController</a></li></ul><h3>Global</h3><ul><li><a href="global.html#loadScript">loadScript</a></li><li><a href="global.html#loadSource">loadSource</a></li><li><a href="global.html#loadStylesheet">loadStylesheet</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Thu Mar 10 2022 15:09:23 GMT+0100 (czas środkowoeuropejski standardowy)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

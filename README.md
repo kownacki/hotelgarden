@@ -11,27 +11,47 @@ $ npm install
 $ npm run dev
 ```
 
+## Generate files
+
+Generate all using:
+
+```
+$ npm run generate-all
+```
+
+Or separately:
+
+* index.html: `$ npm run generate-index`
+
+* lodashBundle: `$ npm run generate-lodash`
+
+* docs: `$ npm run generate-docs`
+
 ## Building
 ```
 $ npm run build
 ```
 
 ## Deployment
+
+### Hosting
+
 Before deploying:
-* run `npm run firebase-login` if you're not logged in to firebase.
-* build
+1. Install deps.
+2. Run `npm run firebase-login` if you're not logged in to firebase.
+3. Generate all files. 
+4. Build.
+
 ```
-$ npm run deploy
+$ npm run deploy-hosting
 ```
 
-## Other
+### Functions
 
-### Generate index.html
-```
-$ npm run generate-index
-```
+Before deploying:
+1. Install deps in `functions/`.
+2. Run `npm run firebase-login` if you're not logged in to firebase.
 
-### Bundle lodash
 ```
-$ npm run bundle-lodash
+$ npm run deploy-hosting
 ```
