@@ -28,7 +28,7 @@ export class HgLanding extends HgContent {
         secondary: [{url: '/sale-bankietowe', text: 'Zobacz sale'}],
       })}></hg-mosaic>
       <hg-content-slider .uid=${'landing'}></hg-content-slider>
-      <hg-reviews-block .uid=${'landing'} scores .bookingScores=${_.get('bookingScores', this.config)}></hg-reviews-block>
+      <hg-reviews-block .uid=${'landing'} .scores=${true} .bookingScores=${_.get('bookingScores', this.config)}></hg-reviews-block>
       <hg-infographic .uid=${'landing'}></hg-infographic>
       <hg-map class="no-animation"></hg-map>
     `;

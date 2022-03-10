@@ -52,7 +52,9 @@
     "@polymer/paper-styles": "^3.0.1",
     "@polymer/paper-toggle-button": "^3.0.1",
     "lit": "^2.1.3",
+    "mk-firebase-utils": "git+https://github.com/kownacki/mk-firebase-utils.git#master",
     "mk-frontend-web-utils": "git+https://github.com/kownacki/mk-frontend-web-utils.git#master",
+    "mkwc": "git+https://github.com/kownacki/mkwc.git#master",
     "pdfmake": "git+https://github.com/kownacki/pdfmake.git#hotelgarden"
   }
 }

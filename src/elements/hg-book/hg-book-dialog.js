@@ -1,11 +1,14 @@
-import {LitElement, html, css} from 'lit';
+import {LitElement, html, css, unsafeCSS} from 'lit';
 import {staticProp, getData, openProfitroom} from '../../utils.js';
 import sharedStyles from "../../styles/shared-styles";
 import ckContent from '../../styles/ck-content.js'
-import '../hg-dialog.js';
+import '../mkwc/hg-image.js'
 import '../hg-action-button.js';
-import '../hg-image.js'
+import '../hg-dialog.js';
 import '../hg-text.js'
+
+const maxImageWidth = '600';
+const maxImageHeight = '180';
 
 export class HgBookDialog extends LitElement {
   static properties = {
@@ -23,7 +26,7 @@ export class HgBookDialog extends LitElement {
       display: flex;
       justify-content: space-between;
     }
-    .container > * {  
+    .container > * {
       width: calc(50% - 10px);
     }
     h3 {
@@ -31,7 +34,7 @@ export class HgBookDialog extends LitElement {
     }
     hg-image {
       width: 100%;
-      height: 180px;
+      height: ${unsafeCSS(maxImageHeight)}px;
       margin-bottom: 20px;
     }
     hg-action-button {
@@ -74,9 +77,12 @@ export class HgBookDialog extends LitElement {
               </hg-text>
               <hg-image
                 .path=${staticProp({doc: 'texts/book', field: `${location.name}.image`})}
-                .noGetImage=${true}
+                .noGet=${true}
                 .image=${_.get(`${location.name}.image`, this._data)}
-                .sizing=${'cover'}>
+                .ready=${this._dataReady}
+                .fit=${'cover'}
+                .maxWidth=${maxImageWidth}
+                .maxHeight=${maxImageHeight}>
               </hg-image>
               <hg-text
                 .path=${staticProp({doc: 'texts/book', field: `${location.name}.text`})}

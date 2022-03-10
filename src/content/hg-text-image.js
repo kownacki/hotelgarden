@@ -1,12 +1,15 @@
-import {LitElement, html, css} from 'lit';
+import {LitElement, html, css, unsafeCSS} from 'lit';
 import {updateData, staticProp} from "../utils.js";
 import sharedStyles from "../styles/shared-styles";
 import ckContent from '../styles/ck-content.js'
 import '../edit/hg-editable-text.js';
-import '../elements/hg-image.js';
+import '../elements/mkwc/hg-image.js';
 import '../elements/hg-image-slider.js';
 import '../elements/hg-icon-info.js';
 import '../elements/hg-action-buttons.js';
+
+const maxImageWidth = '750';
+const maxImageHeight = '400';
 
 export class HgTextImage extends LitElement {
   static properties = {
@@ -34,7 +37,7 @@ export class HgTextImage extends LitElement {
     }
     hg-image, hg-image-slider {
       width: 50%;
-      height: 400px;
+      height: ${unsafeCSS(maxImageHeight)}px;
     }
     .content {
       width: 50%;
@@ -54,7 +57,7 @@ export class HgTextImage extends LitElement {
     }
     @media all and (max-width: 959px) {
       :host, :host([swap]) {
-        max-width: 750px;
+        max-width: ${unsafeCSS(maxImageWidth)}px;
         flex-direction: column;
       }
       hg-image, hg-image-slider {
@@ -96,11 +99,13 @@ export class HgTextImage extends LitElement {
           .noGetImages=${true}>
         </hg-image-slider>`
         : html`<hg-image
-          presize
           .path=${staticProp({doc: 'textImage/' + this.uid, field: 'images.0'})}
-          .noGetImage=${true}
+          .noGet=${true}
           .image=${_.get('images.0', this._textImage)}
-          .sizing=${'cover'}>
+          .ready=${this._dataReady}
+          .fit=${'cover'}
+          .maxWidth=${maxImageWidth}
+          .maxHeight=${maxImageHeight}>
         </hg-image>`}
       <div class="content">
         ${this.noHeading ? '' : html`<hg-editable-text

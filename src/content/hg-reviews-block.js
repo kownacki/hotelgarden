@@ -1,14 +1,17 @@
-import {LitElement, html, css} from 'lit';
-import {staticProp} from "../utils.js";
-import sharedStyles from "../styles/shared-styles";
-import '../elements/hg-image.js';
-import './hg-reviews-block/hg-scores.js';
+import {LitElement, html, css, unsafeCSS} from 'lit';
+import '../elements/mkwc/hg-image.js';
+import sharedStyles from '../styles/shared-styles.js';
+import {staticProp} from '../utils.js';
 import './hg-reviews-block/hg-reviews-slider.js';
+import './hg-reviews-block/hg-scores.js';
+
+const maxImageWidth = '480';
+const maxImageHeight = '360';
 
 export class HgReviewsBlock extends LitElement {
   static properties = {
     uid: String,
-    scores: {type: Boolean},
+    scores: {type: Boolean, reflect: true},
     bookingScores: Object,
     _reviews: Array,
   };
@@ -32,14 +35,15 @@ export class HgReviewsBlock extends LitElement {
     }
     :host(:not([scores])) hg-image {
       display: block;
-      width: 480px;
+      width: ${unsafeCSS(maxImageWidth)}px;
       max-width: 100%;
+      height: ${unsafeCSS(maxImageHeight)}px;
     }
     hg-reviews-slider {
       display: block;
       width: 580px;
       max-width: 100%;
-      height: 360px;
+      height: ${unsafeCSS(maxImageHeight)}px;
       margin: 0 20px;
     }
     @media all and (max-width: 1159px) {
@@ -93,7 +97,12 @@ export class HgReviewsBlock extends LitElement {
       <h2 class="content-heading">Nasi goście o nas</h2>
       <div class="container">
         <hg-scores .bookingScores=${this.bookingScores}></hg-scores>
-        <hg-image sizing=${'cover'} .path=${staticProp({doc: `images/${this.uid}-reviews-block`})}></hg-image>
+        <hg-image 
+          .path=${staticProp({doc: `images/${this.uid}-reviews-block`})}
+          .fit=${'cover'}
+          .maxWidth=${maxImageWidth}
+          .maxHeight=${maxImageHeight}>
+        </hg-image>
         <hg-reviews-slider .reviews=${this._reviews}></hg-reviews-slider>
       </div>
     `;

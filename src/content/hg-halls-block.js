@@ -1,8 +1,11 @@
-import {LitElement, html, css} from 'lit';
+import {LitElement, html, css, unsafeCSS} from 'lit';
+import '../elements/mkwc/hg-image.js';
 import {staticProp} from '../utils.js';
 import sharedStyles from "../styles/shared-styles";
-import '../elements/hg-image.js';
 import './hg-halls-block/hg-halls-slider.js';
+
+const maxImageWidth = '750';
+const maxImageHeight = '400';
 
 export class HgHallsBlock extends LitElement {
   static properties = {
@@ -29,7 +32,7 @@ export class HgHallsBlock extends LitElement {
       flex: 1;
       width: 620px;
       max-width: 100%;
-      height: 400px;
+      height: ${unsafeCSS(maxImageHeight)}px;
     }
     @media all and (max-width: 959px) {
       :host {
@@ -41,12 +44,12 @@ export class HgHallsBlock extends LitElement {
       hg-halls-slider {
         width: 600px;
         max-width: 100%;
-        height: 400px;
+        height: ${unsafeCSS(maxImageHeight)}px;
         margin: 40px auto 0;
       }
       hg-image {
         margin: auto;
-        width: 750px;
+        width: ${unsafeCSS(maxImageWidth)}px;
         max-width: calc(100% - 40px);
       }
     }
@@ -71,7 +74,12 @@ export class HgHallsBlock extends LitElement {
     return html`
       <h2 class="content-heading">Zobacz sale</h2>
       <div class="container">
-        <hg-image .sizing=${'cover'} .path=${staticProp({doc: `images/${this.uid}-halls-block`})}></hg-image>
+        <hg-image
+          .path=${staticProp({doc: `images/${this.uid}-halls-block`})}
+          .fit=${'cover'}
+          .maxWidth=${maxImageWidth}
+          .maxHeight=${maxImageHeight}>
+        </hg-image>
         <hg-halls-slider .type=${this.type}></hg-halls-slider>
       </div>
     `;

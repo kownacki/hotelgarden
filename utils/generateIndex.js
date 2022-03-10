@@ -53,6 +53,8 @@ const indexHtml = `
   <meta name="description">
   
   <link rel="shortcut icon" href="${faviconPath}">
+  ${'' /*todo don't use external sources */}
+  <link href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" rel="stylesheet">
   
   ${_.map((font) => `
     <link rel="preload" href="${font.path}" as="font" crossorigin="anonymous">
