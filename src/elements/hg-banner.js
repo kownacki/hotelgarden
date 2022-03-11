@@ -1,8 +1,13 @@
 import {LitElement, html, css} from 'lit';
-import {updateImage, updateData} from "../utils.js";
-import sharedStyles from '../styles/shared-styles.js';
-import '../edit/hg-editable-image.js';
 import '../edit/hg-editable-text.js';
+import sharedStyles from '../styles/shared-styles.js';
+import {updateData} from '../utils.js';
+import {firebaseUtils as fb} from '../utils/firebase.js';
+import './mkwc/hg-image.js';
+
+// HDTV resolution
+const maxImageWidth = 1920;
+const maxImageHeight = 1080;
 
 export class HgBanner extends LitElement {
   static properties = {
@@ -19,14 +24,16 @@ export class HgBanner extends LitElement {
       height: 100%;
       display: flex;
     }
-    hg-editable-image {
-      top: 0;
-      left: 0;
-      bottom: 0;
-      right: 0;
+    hg-image {
+      inset: 0;
       position: absolute;
-      background: linear-gradient(to bottom,rgba(0,0,0,.4),transparent 45%);
     }
+    .gradient {
+      inset: 0;
+      position: absolute;
+      pointer-events: none;
+      background: linear-gradient(to bottom,rgba(0,0,0,.4),transparent 45%);
+     }
     .heading {
       background: rgba(var(--secondary-color-rgb), 0.5);
       padding: 20px;
@@ -57,7 +64,7 @@ export class HgBanner extends LitElement {
       color: inherit;
     }
     @media all and (max-width: 599px) {
-      :host(:not([no-image])), hg-editable-image {
+      :host(:not([no-image])), hg-image {
         height: 66%;
       }
     }
@@ -76,22 +83,21 @@ export class HgBanner extends LitElement {
       }
     }
   }
-  updateImage(path, data, oldImageName) {
-    return updateImage(this.path.doc, `${this.path.hasOwnProperty('field') ? `${this.path.field}.` : ''}${path}`, data, oldImageName)
-  }
   updateData(path, data) {
     updateData(this.path.doc, `${this.path.hasOwnProperty('field') ? `${this.path.field}.` : ''}${path}`, data)
   }
   render() {
     return html`
-      ${this.noImage ? '' : html`<hg-editable-image
-        lower-image
-        .src=${_.get('image.url', this._banner)}
-        .sizing=${'cover'}
-        @save=${async (event) => {
-          this._banner.image = await this.updateImage('image', event.detail, (_.get('image.name', this._banner)));
-        }}>
-      </hg-editable-image>`}
+      ${this.noImage ? '' : html`<hg-image
+        .path=${this.path && fb.path(this.path.doc, this.path.field).extend('image')}
+        .noGet=${true}
+        .image=${this._banner?.image}
+        .ready=${this._dataReady}
+        .fit=${'cover'}
+        .maxWidth=${maxImageWidth}
+        .maxHeight=${maxImageHeight}>
+      </hg-image>`}
+      <div class="gradient"></div>
       <div class="heading">
         <hg-editable-text
           .ready=${this._dataReady}
