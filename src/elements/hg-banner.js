@@ -88,16 +88,19 @@ export class HgBanner extends LitElement {
   }
   render() {
     return html`
-      ${this.noImage ? '' : html`<hg-image
-        .path=${this.path && fb.path(this.path.doc, this.path.field).extend('image')}
-        .noGet=${true}
-        .image=${this._banner?.image}
-        .ready=${this._dataReady}
-        .fit=${'cover'}
-        .maxWidth=${maxImageWidth}
-        .maxHeight=${maxImageHeight}>
-      </hg-image>`}
-      <div class="gradient"></div>
+      ${this.noImage ? ''
+        : html`<hg-image
+          .path=${this.path && fb.path(this.path.doc, this.path.field).extend('image')}
+          .noGet=${true}
+          .image=${this._banner?.image}
+          .ready=${this._dataReady}
+          .fit=${'cover'}
+          .maxWidth=${maxImageWidth}
+          .maxHeight=${maxImageHeight}
+          .compressionQuality=${0.7}>
+        </hg-image>
+        <div class="gradient"></div>
+      `}
       <div class="heading">
         <hg-editable-text
           .ready=${this._dataReady}
