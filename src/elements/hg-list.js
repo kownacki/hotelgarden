@@ -24,6 +24,7 @@ export default class HgList extends LitElement {
     configure: Object,
     emptyTemplate: Object,
     items: Object,
+    ready: Boolean,
     // observables
     editing: Boolean,
     // private
@@ -65,11 +66,16 @@ export default class HgList extends LitElement {
     if (changedProperties.has('items')) {
       this.dispatchEvent(new CustomEvent('items-changed', {detail: this.items}));
     }
+    if (changedProperties.has('ready')) {
+      this.dispatchEvent(new CustomEvent('ready-changed', {detail: this.ready}));
+    }
     if (changedProperties.has('path')) {
       if (this.path && !this.noGetItems) {
+        this.ready = false;
         (async () => {
           const doc = (await db.doc(this.path.doc).get()).data() || {};
           this.items = this.path.field ? _.get(this.path.field, doc) : doc;
+          this.ready = true;
         })();
       }
     }

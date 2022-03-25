@@ -1,13 +1,13 @@
 import {LitElement, html, css} from 'lit';
+import {HDTV_WIDTH, HDTV_HEIGHT} from '../../config.js';
 import '../edit/hg-editable-text.js';
 import sharedStyles from '../styles/shared-styles.js';
-import {updateData} from '../utils.js';
 import {firebaseUtils as fb} from '../utils/firebase.js';
+import {updateData} from '../utils.js';
 import './mkwc/hg-image.js';
 
-// HDTV resolution
-const maxImageWidth = 1920;
-const maxImageHeight = 1080;
+const maxImageWidth = HDTV_WIDTH;
+const maxImageHeight = HDTV_HEIGHT;
 
 export class HgBanner extends LitElement {
   static properties = {

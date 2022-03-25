@@ -1,10 +1,17 @@
 import {LitElement, html, css} from 'lit';
+import {HDTV_WIDTH, HDTV_HEIGHT} from '../../../../config.js';
 import '../../../elements/hg-slider.js';
-import '../../../edit/hg-editable-image.js';
+import '../../../elements/mkwc/hg-image.js'
+import {firebaseUtils as fb} from '../../../utils/firebase.js';
+
+const maxImageWidth = HDTV_WIDTH;
+const maxImageHeight = HDTV_HEIGHT;
 
 export class HgGallerySlider extends LitElement {
   static properties = {
+    path: fb.Path,
     images: Array,
+    ready: Boolean,
     selected: Number,
   };
   static styles = css`      
@@ -57,11 +64,18 @@ export class HgGallerySlider extends LitElement {
         @selected-changed=${(event) => this.selected = event.detail}
         .items=${this.images}
         .template=${(image) => html`
-          <hg-editable-image
-            .src=${_.get('url', image)}
-            .sizing=${'contain'}
-            @save=${(event) => this.dispatchEvent(new CustomEvent('save', {detail: {index: image.index, file: event.detail}}))}>
-          </hg-editable-image>
+          <hg-image
+            .path=${this.path?.extend(`${image.index}.image`)}
+            .noGet=${true}
+            .noUpdate=${true}
+            .image=${image}
+            .ready=${this.ready}
+            .fit=${'contain'}
+            .maxWidth=${maxImageWidth}
+            .maxHeight=${maxImageHeight}
+            .compressionQuality=${0.7}
+            @image-uploaded=${(event) => this.dispatchEvent(new CustomEvent('request-image-change', {detail: {index: image.index, file: event.detail}}))}>
+          </hg-image>
         `}>
       </hg-slider>
       <div class="controls">
