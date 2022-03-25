@@ -91,9 +91,6 @@ export class HgBanner extends LitElement {
       ${this.noImage ? ''
         : html`<hg-image
           .path=${this.path && fb.path(this.path.doc, this.path.field).extend('image')}
-          .noGet=${true}
-          .image=${this._banner?.image}
-          .ready=${this._dataReady}
           .fit=${'cover'}
           .maxWidth=${maxImageWidth}
           .maxHeight=${maxImageHeight}
