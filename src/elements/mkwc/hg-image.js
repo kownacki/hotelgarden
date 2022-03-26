@@ -10,11 +10,11 @@ export class HgImage extends MkwcImage {
       this.editingEnabled = loggedIn;
     });
   }
-  getData(path) {
-    return fb.get(path);
+  async getData(path) {
+    return await fb.get(path);
   }
-  updateData(path, file, oldImage) {
-    return fb.updateImage(path, file, (_.get('name', oldImage)));
+  async updateData(path, file, oldImage) {
+    return await fb.updateImage(path, file, oldImage?.name);
   }
 }
 customElements.define('hg-image', HgImage);
