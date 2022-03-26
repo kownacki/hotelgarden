@@ -1,9 +1,10 @@
 import {LitElement, html, css} from 'lit';
-import {updateData, updateImage, deleteImage, getData} from '../utils.js';
+import '../pages/gallery/hg-gallery/hg-gallery-slider.js'
+import {firebaseUtils as fb} from '../utils/firebase.js';
+import {updateData, updateImage, getData} from '../utils.js';
 import './hg-slider.js';
 import './hg-image-slider/hg-image-slider-item.js';
 import './hg-image-upload-fab.js';
-import '../pages/gallery/hg-gallery/hg-gallery-slider.js'
 
 //todo esc should close window
 export class HgImageSlider extends LitElement {
@@ -56,7 +57,7 @@ export class HgImageSlider extends LitElement {
   }
   async deleteItem(index) {
     const image = this.images[index];
-    deleteImage(image.name);
+    fb.deleteImage(image.name);
 
     let newImages;
     newImages = _.toArray(this.images);

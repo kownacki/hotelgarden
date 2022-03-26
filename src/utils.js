@@ -1,4 +1,5 @@
 import diacritics from '../resources/scripts/diacritics.js';
+import {firebaseUtils as fb} from './utils/firebase.js';
 
 export const headerHeight = 59;
 
@@ -44,11 +45,8 @@ export const createImage = async (file) => {
   await storageRef.put(file);
   return {name, url: await storageRef.getDownloadURL()};
 };
-export const deleteImage = async (imageName) => {
-  return storage.ref('images/' + imageName).delete()
-};
 export const updateImage = async (doc, path, file, oldImageName) => {
-  if (oldImageName) deleteImage(oldImageName);
+  if (oldImageName) fb.deleteImage(oldImageName);
   const image = await createImage(file);
   updateData(doc, path, image);
   return image;

@@ -1,5 +1,6 @@
 import {LitElement, html, css} from 'lit';
-import {deleteImage, staticProp} from '../../utils.js';
+import {firebaseUtils as fb} from '../../utils/firebase.js';
+import {staticProp} from '../../utils.js';
 import '../../elements/hg-list.js';
 import './hg-menu-nav-item.js';
 
@@ -60,7 +61,7 @@ export class HgMenuNav extends LitElement {
             @click=${() => this.selectCategory(Number(index))}>
           </hg-menu-nav-item>
         `}
-        .onDelete=${(item) => item.image ? deleteImage(item.image.name) : null}
+        .onDelete=${(item) => item.image ? fb.deleteImage(item.image.name) : null}
         @item-added=${() => {this.updateCategories(); this.selectCategory(_.size(this.categories) - 1)}}
         @item-deleted=${(event) => {this.updateCategories(); this.reselectAfterDelete(Number(event.detail))}}
         @items-swapped=${(event) => {this.updateCategories(); this.reselectAfterSwapped(Number(event.detail[0]), Number(event.detail[1]))}}>

@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit';
-import {createImage, deleteImage, staticProp} from "../../utils.js";
+import {createImage, staticProp} from "../../utils.js";
 import '../../content/hg-article/hg-intro-article.js';
 import '../../edit/hg-image-upload.js';
 import '../../elements/hg-list/hg-mosaic-list.js'
@@ -68,7 +68,7 @@ export class HgGallery extends LitElement {
             ? {...newItem, image: await createImage(uploadResult)}
             : false;
         }}
-        .onDelete=${(item) => {deleteImage(item.image.name)}}
+        .onDelete=${(item) => {fb.deleteImage(item.image.name)}}
         @items-changed=${(event) => this._items = event.detail}>
       </hg-mosaic-list>
       <hg-gallery-slider
