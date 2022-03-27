@@ -65,7 +65,6 @@ export class HgGallerySlider extends LitElement {
         .items=${this.images}
         .template=${(image) => html`
           <hg-image
-            .path=${this.path?.extend(`${image.index}.image`)}
             .noGet=${true}
             .noUpdate=${true}
             .image=${image}

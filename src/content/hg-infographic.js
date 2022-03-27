@@ -3,6 +3,7 @@ import sharedStyles from '../styles/shared-styles.js'
 import {firebaseUtils as fb} from '../utils/firebase.js';
 import {ItemsDbSyncController} from '../utils/ItemsDbSyncController.js';
 import '../edit/hg-editable-text.js';
+import '../elements/mkwc/hg-image.js';
 
 const maxImageWidth = 360;
 const maxImageHeight = 150;
@@ -143,7 +144,6 @@ export class HgInfographic extends LitElement {
               </hg-editable-text>
             </div>
             <hg-image
-              .path=${this._path.extend(`${index}.image`)}
               .noGet=${true}
               .noUpdate=${true}
               .image=${item.image}

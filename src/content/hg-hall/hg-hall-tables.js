@@ -1,19 +1,25 @@
-import {LitElement, html, css} from 'lit';
-import {updateData, updateImage} from "../../utils.js";
+import {LitElement, html, css, unsafeCSS} from 'lit';
+import {updateData} from "../../utils.js";
 import sharedStyles from '../../styles/shared-styles.js'
-import '../../edit/hg-editable-image.js';
+import {firebaseUtils as fb} from '../../utils/firebase.js';
 import '../../edit/hg-editable-text.js';
+import '../../elements/mkwc/hg-image.js';
+
+const maxImageWidth = 200;
 
 export class HgHallTables extends LitElement {
   static properties = {
     uid: String,
-    _hallTables: Array,
-    _setOuts: Array,
+    _hallTables: Object,
+    _setOuts: Object,
     _setOutsDoc: String,
     _dataReady: Boolean,
   };
   static styles = [sharedStyles, css`
     :host {
+      ${unsafeCSS(`
+        --max-image-width: ${maxImageWidth}px;
+      `)}
       display: block;
       margin-bottom: 50px;
     }
@@ -48,7 +54,7 @@ export class HgHallTables extends LitElement {
   async updateImage(index, file) {
     this._setOuts = _.set(
       `${index}.image`,
-      await updateImage(this._setOutsDoc, `${index}.image`, file, (_.get(`${index}.image.name`, this._setOuts))),
+      await fb.updateImage(fb.path(this._setOutsDoc, `${index}.image`), file, (_.get(`${index}.image.name`, this._setOuts))),
       this._setOuts,
     );
   }
@@ -58,11 +64,17 @@ export class HgHallTables extends LitElement {
       <div class="items">
         ${_.map.convert({cap: false})((setOut, index) => html`
           <div>
-            <hg-editable-image
-              presize
-              .src=${_.get(`image.url`, setOut)}
-              @save=${(event) => this.updateImage(index, event.detail)}>
-            </hg-editable-image>
+            <hg-image
+              .noGet=${true}
+              .noUpdate=${true}
+              .image=${setOut.image}
+              .ready=${this._dataReady}
+              .maxWidth=${maxImageWidth}
+              .presize=${true}
+              @image-uploaded=${(event) => {
+                this.updateImage(index, event.detail);
+              }}>
+            </hg-image>
             <hg-editable-text
               .ready=${this._dataReady}
               .text=${_.get(`name`, setOut)}
