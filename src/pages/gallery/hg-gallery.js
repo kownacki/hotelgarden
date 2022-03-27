@@ -34,9 +34,10 @@ export class HgGallery extends LitElement {
       this,
       async (path) => await fb.get(path) || {},
       async (path, index, file, oldItem, items) => {
+        const updatedImage = await fb.updateImageInObject(path, `${index}.image`, file, items);
         return {
           ...oldItem,
-          image: await fb.updateImageInObject(items, path, `${index}.image`, file),
+          image: updatedImage,
         };
       },
       (itemsReady) => this._itemsReady = itemsReady,

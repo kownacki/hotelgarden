@@ -2,7 +2,7 @@ import {DbSyncController} from 'mkwc/DbSyncController.js';
 
 export class ItemsDbSyncController extends DbSyncController {
   constructor(host, getItems, updateItem, onDataReadyChange, onDataChange, options) {
-    const updatedItems = async (path, {index, newItemData}, items) => {
+    const updateItems = async (path, {index, newItemData}, items) => {
       const oldItem = items[index];
       const updatedItem = await updateItem(path, index, newItemData, oldItem, items);
       return {...items, [index]: updatedItem};
@@ -10,7 +10,7 @@ export class ItemsDbSyncController extends DbSyncController {
     return super(
       host,
       getItems,
-      updatedItems,
+      updateItems,
       onDataReadyChange,
       onDataChange,
       options,

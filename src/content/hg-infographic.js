@@ -1,17 +1,26 @@
-import {LitElement, html, css} from 'lit';
+import {LitElement, html, css, unsafeCSS} from 'lit';
 import sharedStyles from '../styles/shared-styles.js'
-import {updateImage} from "../utils";
-import '../edit/hg-editable-image.js';
+import {firebaseUtils as fb} from '../utils/firebase.js';
+import {ItemsDbSyncController} from '../utils/ItemsDbSyncController.js';
 import '../edit/hg-editable-text.js';
 
+const maxImageWidth = 360;
+const maxImageHeight = 150;
+
 export class HgInfographic extends LitElement {
+  _itemsDbSync;
   static properties = {
     uid: String,
-    _infographic: Array,
-    _dataReady: Boolean,
+    _path: fb.Path,
+    _items: Object,
+    _itemsReady: Boolean,
   };
   static styles = [sharedStyles, css`
     :host {
+      ${unsafeCSS(`
+        --max-image-width: ${maxImageWidth}px;
+        --max-image-height: ${maxImageHeight}px;
+      `)}
       display: block;
       max-width: 900px;
       margin: 40px auto;
@@ -39,7 +48,7 @@ export class HgInfographic extends LitElement {
       position: absolute;
     }
     .item > * {
-      height: 150px;
+      height: var(--max-image-height);
     }
     .data {
       background: var(--paper-grey-200);
@@ -85,9 +94,27 @@ export class HgInfographic extends LitElement {
       }
     }
   `];
-  async firstUpdated() {
-    this._infographic = (await db.doc('infographics/' + this.uid).get()).data();
-    this._dataReady = true;
+  constructor() {
+    super();
+    this._itemsDbSync = new ItemsDbSyncController(
+      this,
+      async (path) => await fb.get(path) || {},
+      async (path, index, {field, data}, oldItem, items) => {
+        const updatedData = await fb.updateDataOrImageInObject(field, path, `${index}.${field}`, data, items);
+        return {
+          ...oldItem,
+          [field]: updatedData,
+        };
+      },
+      (itemsReady) => this._itemsReady = itemsReady,
+      (items) => this._items = items,
+    );
+  }
+  async willUpdate(changedProperties) {
+    if (changedProperties.has('uid')) {
+      this._path = fb.path(`infographics/${this.uid}`);
+      this._itemsDbSync.setPath(this._path);
+    }
   }
   render() {
     return html`
@@ -97,34 +124,39 @@ export class HgInfographic extends LitElement {
           <div class="item">
             <div class="data">
               <hg-editable-text
-                .ready=${this._dataReady}
+                .ready=${this._itemsReady}
                 float
                 .text=${item.number}
-                @save=${(event) => db.doc('infographics/' + this.uid).update({[index + '.number']: event.detail})}>
+                @save=${(event) => {
+                  this._itemsDbSync.requestItemUpdate(index, {field: 'number', data: event.detail});
+                }}>
                 <div class="number"></div>
               </hg-editable-text>
               <hg-editable-text
-                .ready=${this._dataReady}
+                .ready=${this._itemsReady}
                 float
                 .text=${item.string}
-                @save=${(event) => db.doc('infographics/' + this.uid).update({[index + '.string']: event.detail})}>
+                @save=${(event) => {
+                  this._itemsDbSync.requestItemUpdate(index, {field: 'string', data: event.detail});
+                }}>
                 <div></div>
               </hg-editable-text>
             </div>
-            <hg-editable-image
-              .src=${_.get('image.url', this._infographic[index])}
-              .sizing=${'cover'}
-              @save=${async (event) => {
-                this._infographic[index].image = await updateImage(
-                  'infographics/' + this.uid, 
-                  `${index}.image`, 
-                  event.detail, 
-                  _.get('image.name', this._infographic[index])
-                );
+            <hg-image
+              .path=${this._path.extend(`${index}.image`)}
+              .noGet=${true}
+              .noUpdate=${true}
+              .image=${item.image}
+              .ready=${this._itemsReady}
+              .fit=${'cover'}
+              .maxWidth=${maxImageWidth}
+              .maxHeight=${maxImageHeight}
+              @image-uploaded=${(event) => {
+                this._itemsDbSync.requestItemUpdate(index, {field: 'image', data: event.detail});
               }}>
-            </hg-editable-image>
+            </hg-image>
           </div>
-        `, this._infographic)}
+        `, this._items)}
       </div>
     `;
   }
