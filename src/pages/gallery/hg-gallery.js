@@ -32,11 +32,11 @@ export class HgGallery extends LitElement {
     this._path = fb.path('gallery/gallery');
     this._itemsDbSync = new ItemsDbSyncController(
       this,
-      async (itemsPath) => await fb.get(itemsPath) || {},
-      async ({itemsPath, itemPath}, file, oldItem, items) => {
+      async (path) => await fb.get(path) || {},
+      async (path, index, file, oldItem, items) => {
         return {
           ...oldItem,
-          image: await fb.updateImageInObject(items, itemsPath, `${itemPath}.image`, file),
+          image: await fb.updateImageInObject(items, path, `${index}.image`, file),
         };
       },
       (itemsReady) => this._itemsReady = itemsReady,
@@ -68,17 +68,20 @@ export class HgGallery extends LitElement {
             ? {...newItem, image: await createImage(uploadResult)}
             : false;
         }}
-        .onDelete=${(item) => {fb.deleteImage(item.image.name)}}
-        @items-changed=${(event) => this._items = event.detail}>
+        .onDelete=${(item) => {
+          fb.deleteImage(item.image.name);
+        }}
+        @items-changed=${(event) => {
+          this._items = event.detail;
+        }}>
       </hg-mosaic-list>
       <hg-gallery-slider
         id="slider" 
         .path=${this._path}
         .images=${_.reverse(_.map.convert({cap: false})((item, index) => ({...item.image, index}), this._items))}
         .ready=${this._itemsReady}
-        @request-image-change=${async (event) => {
-          await this._itemsDbSync.requestItemUpdate(event.detail.index, event.detail.file);
-          this.shadowRoot.getElementById('list').requestUpdate();
+        @request-image-change=${(event) => {
+          this._itemsDbSync.requestItemUpdate(event.detail.index, event.detail.file);
         }}>
       </hg-gallery-slider>
     `;

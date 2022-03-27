@@ -11,10 +11,10 @@ export class HgImage extends MkwcImage {
     });
   }
   async getData(path) {
-    return await fb.get(path);
+    return fb.get(path);
   }
   async updateData(path, file, oldImage) {
-    return await fb.updateImage(path, file, oldImage?.name);
+    return fb.updateImage(path, file, oldImage?.name);
   }
 }
 customElements.define('hg-image', HgImage);
