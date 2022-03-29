@@ -5,6 +5,7 @@ import '../../edit/hg-delete-item.js'
 export class HgImageSliderItem extends LitElement {
   static properties = {
     image: Object,
+    ready: Boolean,
     noDelete: Boolean,
     _deleteOpened: {type: Boolean, reflect: true, attribute: 'delete-opened'},
   };
@@ -24,8 +25,9 @@ export class HgImageSliderItem extends LitElement {
   `;
   render() {
     return html`
-      <hg-gallery-item 
-        .src=${_.get('url', this.image)}
+      <hg-gallery-item
+        .ready=${this.ready}
+        .image=${this.image}
         @click=${() => this.dispatchEvent(new CustomEvent('click-image'))}>
       </hg-gallery-item>
       ${this.noDelete ? '' : html`<hg-delete-item 
