@@ -1,3 +1,4 @@
+import {isElementVisible} from 'mk-frontend-web-utils/dom.js';
 import diacritics from '../resources/scripts/diacritics.js';
 import {firebaseUtils as fb} from './utils/firebase.js';
 
@@ -10,6 +11,15 @@ export const hyphenate = _.flow(
   _.words,
   _.join('-'),
 );
+
+export const checkChildrenVisibility = _.throttle(100, (element) => {
+  _.map((child) => {
+    if (isElementVisible(child)) {
+      child.classList.add('seen');
+      child.seen = true;
+    }
+  }, element.shadowRoot.children);
+});
 
 export const assignKeys = (field) => _.map.convert({cap: false})((item, key) => ({...item, [field]: key}));
 

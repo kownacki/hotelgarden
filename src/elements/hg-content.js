@@ -1,19 +1,6 @@
 import {LitElement, css} from 'lit';
 import sharedStyles from '../styles/shared-styles.js';
-
-const isElementVisible = (element) => {
-  const rect = element.getBoundingClientRect();
-  return !(rect.top >= window.innerHeight) && !(rect.bottom <= 0);
-};
-
-const checkChildrenVisibility = _.throttle(100, (element) => {
-  _.map((child) => {
-    if (isElementVisible(child)) {
-      child.classList.add('seen');
-      child.seen = true;
-    }
-  }, element.shadowRoot.children);
-});
+import {checkChildrenVisibility} from '../utils.js';
 
 export default class HgContent extends LitElement {
   static styles = [sharedStyles, css`
