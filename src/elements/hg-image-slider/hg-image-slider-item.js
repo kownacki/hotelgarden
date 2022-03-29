@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit';
-import '../../pages/gallery/hg-gallery/hg-gallery-item.js'
 import '../../edit/hg-delete-item.js'
+import '../hg-element-with-enlarge/hg-image-with-enlarge.js'
 
 export class HgImageSliderItem extends LitElement {
   static properties = {
@@ -12,6 +12,13 @@ export class HgImageSliderItem extends LitElement {
   static styles = css`
     :host {
       position: relative;
+    }
+    hg-image-with-enlarge {
+      width: 100%;
+      height: 100%;
+      /* todo not really transparent due to grey background? */
+      border: solid 1px transparent;
+      box-sizing: border-box;
     }
     hg-delete-item {
       display: none;
@@ -25,11 +32,11 @@ export class HgImageSliderItem extends LitElement {
   `;
   render() {
     return html`
-      <hg-gallery-item
+      <hg-image-with-enlarge
         .ready=${this.ready}
         .image=${this.image}
         @click=${() => this.dispatchEvent(new CustomEvent('click-image'))}>
-      </hg-gallery-item>
+      </hg-image-with-enlarge>
       ${this.noDelete ? '' : html`<hg-delete-item 
         .name=${_.get('name', this.image)}
         @opened-changed=${(event) => this._deleteOpened = event.target.opened}>

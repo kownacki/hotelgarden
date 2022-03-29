@@ -61,7 +61,7 @@ export class HgGallery extends LitElement {
             @click=${() => {
               this.shadowRoot.getElementById('window-slider').open(_.size(this._items) - Number(index) - 1);
             }}>
-            </hg-gallery-item>
+          </hg-gallery-item>
         `}
         .getItemName=${(item) => `obraz "${item.uid}"`}
         .onAdd=${async (newItem) => {
