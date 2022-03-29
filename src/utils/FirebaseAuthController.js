@@ -1,4 +1,4 @@
-import {StateController} from './StateController.js';
+import {SubscriptionController} from './SubscriptionController.js';
 
 /**
  * Lit Element controller which notifies about firebase auth state changes and stores it.
@@ -7,7 +7,7 @@ import {StateController} from './StateController.js';
 export class FirebaseAuthController {
   loggedIn;
   _onLoggedInChange;
-  _state;
+  _subscription;
   /**
    * @param {object} host
    * @param {function(loggedIn:boolean)} [onLoggedInChange] - Called on loggedIn change.
@@ -15,12 +15,16 @@ export class FirebaseAuthController {
   constructor(host, onLoggedInChange) {
     host.addController(this);
     this._onLoggedInChange = onLoggedInChange;
-    this._state = new StateController(host, (setState) => {
+    this._subscription = new SubscriptionController(host, () => {
       return firebase.auth().onAuthStateChanged((user) => {
-        this.loggedIn = Boolean(user);
-        setState(this.loggedIn);
-        this._onLoggedInChange?.(this.loggedIn);
+        this._setLoggedIn(Boolean(user));
       });
     });
+  }
+  _setLoggedIn(value) {
+    if (value !== this.loggedIn) {
+      this.loggedIn = value;
+      this._onLoggedInChange?.(value);
+    }
   }
 }

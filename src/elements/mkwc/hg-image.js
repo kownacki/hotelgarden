@@ -13,10 +13,10 @@ export class HgImageWithoutEditing extends MkwcImage {
 customElements.define('hg-image-without-editing', HgImageWithoutEditing);
 
 export class HgImage extends HgImageWithoutEditing {
-  loggedIn;
+  firebaseAuth;
   constructor() {
     super();
-    this.loggedIn = new FirebaseAuthController(this, (loggedIn) => {
+    this.firebaseAuth = new FirebaseAuthController(this, (loggedIn) => {
       this.editingEnabled = loggedIn;
     });
   }
