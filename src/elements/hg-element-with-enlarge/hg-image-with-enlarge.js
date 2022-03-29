@@ -21,6 +21,7 @@ export class HgImageWithEnlarge extends LitElement {
       <hg-element-with-enlarge>
         <hg-image-without-editing
           .ready=${this.ready}
+          .noGet=${true}
           .image=${this.image}
           .fit=${'cover'}>
         </hg-image-without-editing>
