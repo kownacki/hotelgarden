@@ -77,8 +77,7 @@ export class HgGallery extends LitElement {
         }}>
       </hg-mosaic-list>
       <hg-gallery-slider
-        id="slider" 
-        .path=${this._path}
+        id="slider"
         .images=${_.reverse(_.map.convert({cap: false})((item, index) => ({...item.image, index}), this._items))}
         .ready=${this._itemsReady}
         @request-image-change=${(event) => {

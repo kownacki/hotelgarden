@@ -1,11 +1,9 @@
 import {LitElement, html, css} from 'lit';
 import '../../../elements/hg-slider.js';
-import {firebaseUtils as fb} from '../../../utils/firebase.js';
 import './hg-gallery-slider-item.js';
 
 export class HgGallerySlider extends LitElement {
   static properties = {
-    path: fb.Path,
     images: Array,
     ready: Boolean,
     selected: Number,
