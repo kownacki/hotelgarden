@@ -1,8 +1,8 @@
 import {LitElement, html, css} from 'lit';
-import '../../../elements/hg-slider.js';
-import './hg-gallery-slider-item.js';
+import './hg-slider.js';
+import './hg-window-slider/hg-window-slider-item.js';
 
-export class HgGallerySlider extends LitElement {
+export class HgWindowSlider extends LitElement {
   static properties = {
     images: Array,
     ready: Boolean,
@@ -58,13 +58,13 @@ export class HgGallerySlider extends LitElement {
         @selected-changed=${(event) => this.selected = event.detail}
         .items=${this.images}
         .template=${(image) => html`
-          <hg-gallery-slider-item
+          <hg-window-slider-item
             .ready=${this.ready}
             .image=${image}
             @request-image-change=${(event) => {
               this.dispatchEvent(new CustomEvent('request-image-change', {detail: event.detail}));
             }}>
-          </hg-gallery-slider-item>
+          </hg-window-slider-item>
         `}>
       </hg-slider>
       <div class="controls">
@@ -79,4 +79,4 @@ export class HgGallerySlider extends LitElement {
     `;
   }
 }
-customElements.define('hg-gallery-slider', HgGallerySlider);
+customElements.define('hg-window-slider', HgWindowSlider);

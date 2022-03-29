@@ -1,12 +1,12 @@
 import {LitElement, html, css} from 'lit';
-import {createImage, staticProp} from "../../utils.js";
+import {createImage, staticProp} from '../../utils.js';
 import '../../content/hg-article/hg-intro-article.js';
 import '../../edit/hg-image-upload.js';
 import '../../elements/hg-list/hg-mosaic-list.js'
+import '../../elements/hg-window-slider.js';
 import {firebaseUtils as fb} from '../../utils/firebase.js';
 import {ItemsDbSyncController} from '../../utils/ItemsDbSyncController.js';
 import './hg-gallery/hg-gallery-item.js';
-import './hg-gallery/hg-gallery-slider.js';
 
 export class HgGallery extends LitElement {
   _itemsDbSync;
@@ -59,7 +59,7 @@ export class HgGallery extends LitElement {
             .ready=${this._itemsReady}
             .image=${item.image}
             @click=${() => {
-              this.shadowRoot.getElementById('slider').open(_.size(this._items) - Number(index) - 1);
+              this.shadowRoot.getElementById('window-slider').open(_.size(this._items) - Number(index) - 1);
             }}>
             </hg-gallery-item>
         `}
@@ -77,14 +77,14 @@ export class HgGallery extends LitElement {
           this._items = event.detail;
         }}>
       </hg-mosaic-list>
-      <hg-gallery-slider
-        id="slider"
+      <hg-window-slider
+        id="window-slider"
         .ready=${this._itemsReady}
         .images=${_.reverse(_.map.convert({cap: false})((item, index) => ({...item.image, index}), this._items))}
         @request-image-change=${(event) => {
           this._itemsDbSync.requestItemUpdate(event.detail.index, event.detail.file);
         }}>
-      </hg-gallery-slider>
+      </hg-window-slider>
     `;
   }
 }

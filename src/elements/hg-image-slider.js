@@ -1,10 +1,10 @@
 import {LitElement, html, css} from 'lit';
-import '../pages/gallery/hg-gallery/hg-gallery-slider.js'
 import {firebaseUtils as fb} from '../utils/firebase.js';
 import {updateData, updateImage, getData} from '../utils.js';
-import './hg-slider.js';
 import './hg-image-slider/hg-image-slider-item.js';
 import './hg-image-upload-fab.js';
+import './hg-slider.js';
+import './hg-window-slider.js';
 
 //todo esc should close window
 export class HgImageSlider extends LitElement {
@@ -86,7 +86,7 @@ export class HgImageSlider extends LitElement {
             .image=${image}
             .noDelete=${!this._loggedIn}
             @request-delete=${() => this.deleteItem(image.index)}
-            @click-image=${() => !this.shadowRoot.getElementById('content-slider').transitionGoing && this.shadowRoot.getElementById('gallery-slider').open(image.index)}>
+            @click-image=${() => !this.shadowRoot.getElementById('content-slider').transitionGoing && this.shadowRoot.getElementById('window-slider').open(image.index)}>
           </hg-image-slider-item>
         `}>
       </hg-slider>`}
@@ -99,16 +99,16 @@ export class HgImageSlider extends LitElement {
           contentSlider.requestUpdate();
         }}>
       </hg-image-upload-fab>`}
-      <hg-gallery-slider
-        id="gallery-slider"
+      <hg-window-slider
+        id="window-slider"
         .ready=${this._imagesReady}
         .images=${_.map.convert({cap: false})((image, index) => ({index: Number(index), ...image}), this.images)}
         @request-image-change=${async (event) => {
           await this.updateImage(event.detail.index, event.detail.file);
           this.requestUpdate();
-          this.shadowRoot.getElementById('gallery-slider').requestUpdate();
+          this.shadowRoot.getElementById('window-slider').requestUpdate();
         }}>
-      </hg-gallery-slider>
+      </hg-window-slider>
     `;
   }
 }

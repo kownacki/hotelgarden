@@ -1,12 +1,12 @@
 import {LitElement, html, css} from 'lit';
-import {HDTV_WIDTH, HDTV_HEIGHT} from '../../../../config.js';
-import '../../../elements/mkwc/hg-image.js';
-import sharedStyles from '../../../styles/shared-styles.js';
+import {HDTV_WIDTH, HDTV_HEIGHT} from '../../../config.js';
+import sharedStyles from '../../styles/shared-styles.js';
+import '../mkwc/hg-image.js';
 
 const maxImageWidth = HDTV_WIDTH;
 const maxImageHeight = HDTV_HEIGHT;
 
-export class HgGallerySliderItem extends LitElement {
+export class HgWindowSliderItem extends LitElement {
   static properties = {
     image: Object,
     ready: Boolean,
@@ -35,4 +35,4 @@ export class HgGallerySliderItem extends LitElement {
     `;
   }
 }
-customElements.define('hg-gallery-slider-item', HgGallerySliderItem);
+customElements.define('hg-window-slider-item', HgWindowSliderItem);
