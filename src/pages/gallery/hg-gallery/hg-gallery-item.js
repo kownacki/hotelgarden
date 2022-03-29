@@ -1,10 +1,13 @@
 import {LitElement, html, css} from 'lit';
 import '../../../elements/hg-element-with-enlarge/hg-image-with-enlarge.js';
+import {VisibilityController} from '../../../utils/VisibilityController.js';
 
 export class HgGalleryItem extends LitElement {
+  visibility;
   static properties = {
     image: Object,
     ready: Boolean,
+    _onceInProximity: Boolean,
   };
   static styles = css`
     :host {
@@ -19,10 +22,19 @@ export class HgGalleryItem extends LitElement {
       height: 100%;
     }
   `;
+  constructor() {
+    super();
+    this.visibility = new VisibilityController(this, undefined, (inProximity) => {
+      if (inProximity && !this._onceInProximity) {
+        this._onceInProximity = true;
+      }
+    });
+  }
   render() {
+    const ready = this.ready && this._onceInProximity;
     return html`
       <hg-image-with-enlarge
-        .ready=${this.ready}
+        .ready=${ready}
         .image=${this.image}>
       </hg-image-with-enlarge>
     `;
