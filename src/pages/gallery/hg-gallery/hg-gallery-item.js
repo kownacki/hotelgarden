@@ -1,8 +1,10 @@
 import {LitElement, html, css} from 'lit';
+import '../../../elements/mkwc/hg-image.js';
 
 export class HgGalleryItem extends LitElement {
   static properties = {
-    src: String,
+    image: Object,
+    ready: Boolean,
   };
   static styles = css`
     :host {
@@ -15,10 +17,9 @@ export class HgGalleryItem extends LitElement {
       position: relative;
       overflow: hidden;
     }
-    iron-image {
+    hg-image-without-editing {
       width: 100%;
       height: 100%;
-      display: block;
       transition: width 0.1s linear, height 0.1s linear, margin 0.1s linear, filter 0.1s linear;
     }
     paper-icon-button {
@@ -33,7 +34,7 @@ export class HgGalleryItem extends LitElement {
       transition: padding 0.1s linear;
     }
     @media all and (min-width: 960px) {
-      :host(:hover) iron-image {
+      :host(:hover) hg-image-without-editing {
         margin: -5% -5%;
         width: 110%;
         height: 110%;
@@ -46,7 +47,11 @@ export class HgGalleryItem extends LitElement {
   `;
   render() {
     return html`
-      <iron-image .src=${this.src} .sizing=${'cover'}></iron-image>
+      <hg-image-without-editing
+        .ready=${this.ready}
+        .image=${this.image}
+        .fit=${'cover'}>
+      </hg-image-without-editing>
       <paper-icon-button noink .icon=${'zoom-out-map'}></paper-icon-button>
     `;
   }

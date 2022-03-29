@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import {HDTV_WIDTH, HDTV_HEIGHT} from '../../../../config.js';
-import '../../../elements/mkwc/hg-image.js'
+import '../../../elements/mkwc/hg-image.js';
 import sharedStyles from '../../../styles/shared-styles.js';
 
 const maxImageWidth = HDTV_WIDTH;
@@ -8,8 +8,8 @@ const maxImageHeight = HDTV_HEIGHT;
 
 export class HgGallerySliderItem extends LitElement {
   static properties = {
-    ready: Boolean,
     image: Object,
+    ready: Boolean,
   };
   static styles = [sharedStyles, css`
     hg-image {

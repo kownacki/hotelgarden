@@ -56,7 +56,8 @@ export class HgGallery extends LitElement {
         .items=${this._items}
         .itemTemplate=${(item, index) => html`
           <hg-gallery-item
-            .src=${item.image.url}
+            .ready=${this._itemsReady}
+            .image=${item.image}
             @click=${() => {
               this.shadowRoot.getElementById('slider').open(_.size(this._items) - Number(index) - 1);
             }}>
@@ -78,8 +79,8 @@ export class HgGallery extends LitElement {
       </hg-mosaic-list>
       <hg-gallery-slider
         id="slider"
-        .images=${_.reverse(_.map.convert({cap: false})((item, index) => ({...item.image, index}), this._items))}
         .ready=${this._itemsReady}
+        .images=${_.reverse(_.map.convert({cap: false})((item, index) => ({...item.image, index}), this._items))}
         @request-image-change=${(event) => {
           this._itemsDbSync.requestItemUpdate(event.detail.index, event.detail.file);
         }}>
