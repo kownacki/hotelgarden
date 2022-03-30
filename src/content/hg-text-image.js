@@ -1,17 +1,20 @@
 import {LitElement, html, css, unsafeCSS} from 'lit';
-import {updateData, staticProp} from "../utils.js";
-import sharedStyles from "../styles/shared-styles";
-import ckContent from '../styles/ck-content.js'
+import {DbSyncController} from 'mkwc/DbSyncController.js';
 import '../edit/hg-editable-text.js';
 import '../elements/mkwc/hg-image.js';
 import '../elements/hg-image-slider.js';
 import '../elements/hg-icon-info.js';
 import '../elements/hg-action-buttons.js';
+import ckContent from '../styles/ck-content.js'
+import sharedStyles from '../styles/shared-styles';
+import {firebaseUtils as fb} from '../utils/firebase.js';
+import {updateData} from '../utils.js';
 
 const maxImageWidth = 750;
 const maxImageHeight = 400;
 
 export class HgTextImage extends LitElement {
+  _dbSync;
   static properties = {
     uid: Number,
     buttons: Number,
@@ -22,8 +25,9 @@ export class HgTextImage extends LitElement {
     iconSrcs: Array,
     iconsAtEnd: {type: Boolean, reflect: true, attribute: 'icons-at-end'},
     slider: Boolean,
+    _path: fb.Path,
     _textImage: Object,
-    _dataReady: Boolean,
+    _ready: Boolean,
   };
   static styles = [sharedStyles, ckContent, css`
     :host {
@@ -87,9 +91,21 @@ export class HgTextImage extends LitElement {
       }
     }
   `];
-  async firstUpdated() {
-    this._textImage = (await db.doc('textImage/' + this.uid).get()).data() || {};
-    this._dataReady = true;
+  constructor() {
+    super();
+    this._dbSync = new DbSyncController(
+      this,
+      async (path) => await fb.get(path) || {},
+      undefined,
+      (ready) => this._ready = ready,
+      (textImage) => this._textImage = textImage,
+    );
+  }
+  async willUpdate(changedProperties) {
+    if (changedProperties.has('uid')) {
+      this._path = fb.path(`textImage/${this.uid}`);
+      this._dbSync.setPath(this._path);
+    }
   }
   async updateData(path, data) {
     updateData('textImage/' + this.uid, path, data);
@@ -98,39 +114,39 @@ export class HgTextImage extends LitElement {
     return html`
       ${this.slider
         ? html`<hg-image-slider
-          .path=${staticProp({doc: 'textImage/' + this.uid, field: 'images'})}
-          .images=${_.get('images', this._textImage)}
+          .path=${this._path.extend('images')}
+          .images=${this._textImage?.images}
           .noGetImages=${true}>
         </hg-image-slider>`
         : html`<hg-image
-          .path=${staticProp({doc: 'textImage/' + this.uid, field: 'images.0'})}
+          .path=${this._path.extend('images.0')}
           .noGet=${true}
-          .image=${_.get('images.0', this._textImage)}
-          .ready=${this._dataReady}
+          .image=${this._textImage?.images?.[0]}
+          .ready=${this._ready}
           .fit=${'cover'}
           .maxWidth=${maxImageWidth}
           .maxHeight=${maxImageHeight}>
         </hg-image>`}
       <div class="content">
         ${this.noHeading ? '' : html`<hg-editable-text
-          .ready=${this._dataReady}
-          .text=${_.get('heading', this._textImage)}
+          .ready=${this._ready}
+          .text=${this._textImage?.heading}
           @save=${(event) => this.updateData('heading', event.detail)}>
           ${!this.h3 ? html`<h2></h2>` : html`<h3></h3>`}
         </hg-editable-text>`}
         ${(this.iconsAtEnd ? _.reverse : _.identity)([
           _.isEmpty(this.iconFields) ? '' : html`<hg-icon-info
             .editable=${true}
-            .dataReady=${this._dataReady}
+            .dataReady=${this._ready}
             .items=${_.zipWith((text, src) => ({text, src}), _.map(_.get(_, this._textImage), this.iconFields), this.iconSrcs)}
             @save=${(event) => this.updateData(`${this.iconFields[event.detail.index]}`, event.detail.text)}>
           </hg-icon-info>`,
           html`<hg-editable-text
-            .ready=${this._dataReady}
+            .ready=${this._ready}
             .rich=${true}
             .richConfig=${'mosaic'}
             multiline
-            .text=${_.get('text', this._textImage)}
+            .text=${this._textImage?.text}
             @save=${(event) => this.updateData('text', event.detail)}>
             <div class="text ck-content"></div>
           </hg-editable-text>`,
