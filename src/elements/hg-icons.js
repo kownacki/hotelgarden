@@ -1,10 +1,12 @@
 import {LitElement, html, css} from 'lit';
-import {staticProp} from "../utils.js";
+import {staticProp} from '../utils.js';
+import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
 import './hg-list.js';
 import './hg-icons/hg-icons-add.js';
 import './hg-icons/hg-icons-item.js';
 
 export class HgIcons extends LitElement {
+  _firebaseAuth;
   static properties = {
     uid: String,
     empty: {type: Boolean, reflect: true},
@@ -48,11 +50,9 @@ export class HgIcons extends LitElement {
   `;
   constructor() {
     super();
-    this._unsubscribeLoggedInListener = auth.onAuthStateChanged((user) => this._loggedIn = Boolean(user));
-  }
-  disconnectedCallback() {
-    this._unsubscribeLoggedInListener();
-    return super.disconnectedCallback();
+    this._firebaseAuth = new FirebaseAuthController(this, (loggedIn) => {
+      this._loggedIn = loggedIn;
+    });
   }
   render() {
     return html`

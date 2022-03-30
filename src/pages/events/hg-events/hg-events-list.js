@@ -1,10 +1,12 @@
 import {LitElement, html, css} from 'lit';
-import {staticProp} from "../../../utils";
-import sharedStyles from '../../../styles/shared-styles.js';
 import '../../../elements/hg-list.js';
+import sharedStyles from '../../../styles/shared-styles.js';
+import {FirebaseAuthController} from '../../../utils/FirebaseAuthController.js';
+import {staticProp} from '../../../utils';
 import './hg-events-card.js';
 
 export class HgEventsList extends LitElement {
+  _firebaseAuth;
   static properties = {
     past: Boolean,
     max: Number,
@@ -18,11 +20,9 @@ export class HgEventsList extends LitElement {
   `];
   constructor() {
     super();
-    this._unsubscribeLoggedInListener = auth.onAuthStateChanged((user) => this._loggedIn = Boolean(user));
-  }
-  disconnectedCallback() {
-    this._unsubscribeLoggedInListener();
-    return super.disconnectedCallback();
+    this._firebaseAuth = new FirebaseAuthController(this, (loggedIn) => {
+      this._loggedIn = loggedIn;
+    });
   }
   render() {
     return html`

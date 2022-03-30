@@ -1,11 +1,13 @@
 import {LitElement, html, css} from 'lit';
 import {repeat} from 'lit/directives/repeat.js';
-import {array, updateData, generateUid} from "../utils.js";
 import sharedStyles from '../styles/shared-styles.js'
+import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
+import {array, updateData, generateUid} from '../utils.js';
 import './hg-list/hg-list-item.js';
 import './hg-list/hg-list-add.js';
 
 export default class HgList extends LitElement {
+  _firebaseAuth;
   static properties = {
     // flags
     array: Boolean,
@@ -53,11 +55,9 @@ export default class HgList extends LitElement {
   `];
   constructor() {
     super();
-    this._unsubscribeLoggedInListener = auth.onAuthStateChanged((user) => this._loggedIn = Boolean(user));
-  }
-  disconnectedCallback() {
-    this._unsubscribeLoggedInListener();
-    return super.disconnectedCallback();
+    this._firebaseAuth = new FirebaseAuthController(this, (loggedIn) => {
+      this._loggedIn = loggedIn;
+    });
   }
   updated(changedProperties) {
     if (changedProperties.has('editing')) {

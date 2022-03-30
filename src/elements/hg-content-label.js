@@ -1,7 +1,9 @@
 import {LitElement, html, css} from 'lit';
 import sharedStyles from '../styles/shared-styles.js';
+import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
 
 export class HgContentLabel extends LitElement {
+  _firebaseAuth;
   static properties = {
     name: String,
     _loggedIn: Boolean,
@@ -16,12 +18,10 @@ export class HgContentLabel extends LitElement {
   `];
   constructor() {
     super();
-    this._unsubscribeLoggedInListener = auth.onAuthStateChanged((user) => this._loggedIn = Boolean(user));
+    this._firebaseAuth = new FirebaseAuthController(this, (loggedIn) => {
+      this._loggedIn = loggedIn;
+    });
     this.classList.add('smaller-text');
-  }
-  disconnectedCallback() {
-    this._unsubscribeLoggedInListener();
-    return super.disconnectedCallback();
   }
   render() {
     return html`

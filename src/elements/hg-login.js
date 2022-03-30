@@ -1,6 +1,8 @@
 import {LitElement, html, css} from 'lit';
+import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
 
 export class HgLogin extends LitElement {
+  _firebaseAuth;
   static properties = {
     _loggedIn: String,
   };
@@ -16,7 +18,9 @@ export class HgLogin extends LitElement {
   `;
   constructor() {
     super();
-    auth.onAuthStateChanged((user) => this._loggedIn = Boolean(user));
+    this._firebaseAuth = new FirebaseAuthController(this, (loggedIn) => {
+      this._loggedIn = loggedIn;
+    });
   }
   render() {
     return html`

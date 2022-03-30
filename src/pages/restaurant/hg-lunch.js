@@ -1,16 +1,18 @@
 import {LitElement, html, css} from 'lit';
-import {getData} from "../../utils.js";
 import sharedStyles from "../../styles/shared-styles.js";
 import HgContent from "../../elements/hg-content.js";
 import '../../content/hg-article/hg-intro-article.js';
 import '../../content/hg-article.js';
 import '../../content/hg-content-slider.js';
 import '../../content/hg-links.js';
+import {FirebaseAuthController} from '../../utils/FirebaseAuthController.js';
+import {getData} from '../../utils.js';
 import './hg-lunch/hg-lunch-week.js';
 import './hg-lunch/hg-lunch-edit.js';
 import './hg-lunch/hg-lunch-generate.js';
 
 export class HgLunch extends HgContent {
+  _firebaseAuth;
   static properties = {
     config: Object,
     _prices: Object,
@@ -73,11 +75,9 @@ export class HgLunch extends HgContent {
   `];
   constructor() {
     super();
-    this._unsubscribeLoggedInListener = auth.onAuthStateChanged((user) => this._loggedIn = Boolean(user));
-  }
-  disconnectedCallback() {
-    this._unsubscribeLoggedInListener();
-    return super.disconnectedCallback();
+    this._firebaseAuth = new FirebaseAuthController(this, (loggedIn) => {
+      this._loggedIn = loggedIn;
+    });
   }
   updated(changedProperties) {
     super.updated(changedProperties);

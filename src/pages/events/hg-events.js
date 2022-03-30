@@ -2,12 +2,14 @@ import {LitElement, html, css} from 'lit';
 import sharedStyles from '../../styles/shared-styles.js';
 import '../../content/hg-article/hg-intro-article.js';
 import '../../elements/hg-action-button.js';
+import {FirebaseAuthController} from '../../utils/FirebaseAuthController.js';
 import './hg-events/hg-events-add.js';
 import './hg-events/hg-events-list.js';
 
 // todo add scrolling to dialogs
 
 export class HgEvents extends LitElement {
+  _firebaseAuth;
   static properties = {
     _loggedIn: Boolean,
   };
@@ -30,11 +32,9 @@ export class HgEvents extends LitElement {
   `];
   constructor() {
     super();
-    this._unsubscribeLoggedInListener = auth.onAuthStateChanged((user) => this._loggedIn = Boolean(user));
-  }
-  disconnectedCallback() {
-    this._unsubscribeLoggedInListener();
-    return super.disconnectedCallback();
+    this._firebaseAuth = new FirebaseAuthController(this, (loggedIn) => {
+      this._loggedIn = loggedIn;
+    });
   }
   render() {
     return html`

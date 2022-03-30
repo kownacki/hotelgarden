@@ -1,5 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import {firebaseUtils as fb} from '../utils/firebase.js';
+import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
 import {updateData, updateImage, getData} from '../utils.js';
 import './hg-image-slider/hg-image-slider-item.js';
 import './hg-image-upload-fab.js';
@@ -8,6 +9,7 @@ import './hg-window-slider.js';
 
 //todo esc should close window
 export class HgImageSlider extends LitElement {
+  _firebaseAuth;
   static properties = {
     // required params
     path: String,
@@ -32,11 +34,9 @@ export class HgImageSlider extends LitElement {
   `;
   constructor() {
     super();
-    this._unsubscribeLoggedInListener = auth.onAuthStateChanged((user) => this._loggedIn = Boolean(user));
-  }
-  disconnectedCallback() {
-    this._unsubscribeLoggedInListener();
-    return super.disconnectedCallback();
+    this._firebaseAuth = new FirebaseAuthController(this, (loggedIn) => {
+      this._loggedIn = loggedIn;
+    });
   }
   updated(changedProperties) {
     if (changedProperties.has('path')) {

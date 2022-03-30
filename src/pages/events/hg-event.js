@@ -1,14 +1,16 @@
 import {LitElement, html, css} from 'lit';
 import '@polymer/paper-toggle-button/paper-toggle-button.js';
-import {updateData, staticProp, setMetaDescription} from "../../utils.js";
-import sharedStyles from "../../styles/shared-styles";
+import sharedStyles from '../../styles/shared-styles';
 import ckContent from '../../styles/ck-content.js'
+import {FirebaseAuthController} from '../../utils/FirebaseAuthController.js';
+import {updateData, staticProp, setMetaDescription} from '../../utils.js';
 import '../../edit/hg-editable-text.js';
 import '../../elements/hg-banner.js';
 import './hg-event/hg-event-edit-date.js';
 import './hg-events/hg-events-sidebar.js';
 
 export class HgEvent extends LitElement {
+  _firebaseAuth;
   static properties = {
     uid: String,
     _events: Array,
@@ -81,11 +83,9 @@ export class HgEvent extends LitElement {
     (async () => {
       this._promotedEvent = _.get('uid', (await db.doc('events/promoted').get()).data());
     })();
-    this._unsubscribeLoggedInListener = auth.onAuthStateChanged((user) => this._loggedIn = Boolean(user));
-  }
-  disconnectedCallback() {
-    this._unsubscribeLoggedInListener();
-    return super.disconnectedCallback();
+    this._firebaseAuth = new FirebaseAuthController(this, (loggedIn) => {
+      this._loggedIn = loggedIn;
+    });
   }
   async updated(changedProperties) {
     if (changedProperties.has('uid')) {
