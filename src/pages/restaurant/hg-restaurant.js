@@ -20,10 +20,9 @@ export class HgRestaurant extends HgContent {
       <hg-text-image .uid=${'lunch'} .buttons=${staticProp([{url: '/lunch#aktualny-lunch', text: 'Przejdź do lunchy'}])}></hg-text-image>
       <h2 class="content-heading" id="menu">Menu</h2>
       <hg-menu .uid=${'grill-garden'}></hg-menu>
-      <hg-content-slider .uid=${'grill-garden-menu'}></hg-content-slider>
+      <hg-content-slider .uid=${'grill-garden'}></hg-content-slider>
       <hg-article .rich=${true} .uid=${'grill-garden-extra1'}></hg-article>
       <hg-mosaic .uid=${'grill-garden'}></hg-mosaic>
-      <hg-content-slider .uid=${'grill-garden'}></hg-content-slider>
       <hg-reviews-block .uid=${'grill-garden'}></hg-reviews-block>
       <hg-contact-block></hg-contact-block>
       <hg-links .path=${'/garden-bistro'} .superpath=${'/garden-bistro'}></hg-links>
