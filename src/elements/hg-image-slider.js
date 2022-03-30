@@ -14,10 +14,10 @@ export class HgImageSlider extends LitElement {
     // optional params
     noGetImages: Boolean,
     images: Object,
+    ready: Boolean,
     double: Boolean,
     // private
     _loggedIn: Boolean,
-    _imagesReady: Boolean,
   };
   static styles = css`
     :host {
@@ -42,9 +42,9 @@ export class HgImageSlider extends LitElement {
     if (changedProperties.has('path')) {
       if (this.path && !this.noGetImages) {
         (async () => {
-          this._imagesReady = false;
+          this.ready = false;
           this.images = await getData(this.path.doc, this.path.field);
-          this._imagesReady = true;
+          this.ready = true;
         })();
       }
     }
@@ -82,7 +82,7 @@ export class HgImageSlider extends LitElement {
         .items=${_.map.convert({cap: false})((image, index) => ({index: Number(index), ...image}), this.images)}
         .template=${(image) => html`
           <hg-image-slider-item
-            .ready=${this._imagesReady}
+            .ready=${this.ready}
             .image=${image}
             .noDelete=${!this._loggedIn}
             @request-delete=${() => this.deleteItem(image.index)}
@@ -101,7 +101,7 @@ export class HgImageSlider extends LitElement {
       </hg-image-upload-fab>`}
       <hg-window-slider
         id="window-slider"
-        .ready=${this._imagesReady}
+        .ready=${this.ready}
         .images=${_.map.convert({cap: false})((image, index) => ({index: Number(index), ...image}), this.images)}
         @request-image-change=${async (event) => {
           await this.updateImage(event.detail.index, event.detail.file);

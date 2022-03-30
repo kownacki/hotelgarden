@@ -116,6 +116,7 @@ export class HgTextImage extends LitElement {
         ? html`<hg-image-slider
           .path=${this._path.extend('images')}
           .images=${this._textImage?.images}
+          .ready=${this._ready}
           .noGetImages=${true}>
         </hg-image-slider>`
         : html`<hg-image
