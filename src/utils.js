@@ -49,19 +49,6 @@ export const updateData = (doc, path, data) => {
     : db.doc(doc).set(data);
 };
 
-export const createImage = async (file) => {
-  const name = generateUid();
-  const storageRef = storage.ref('images/' + name);
-  await storageRef.put(file);
-  return {name, url: await storageRef.getDownloadURL()};
-};
-export const updateImage = async (doc, path, file, oldImageName) => {
-  if (oldImageName) fb.deleteImage(oldImageName);
-  const image = await createImage(file);
-  updateData(doc, path, image);
-  return image;
-};
-
 export const array = {
   swapItems: (index1, index2, arr) => {
     const temp = arr[index1];

@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit';
-import {createImage, staticProp} from '../../utils.js';
+import {staticProp} from '../../utils.js';
 import '../../content/hg-article/hg-intro-article.js';
 import '../../edit/hg-image-upload.js';
 import '../../elements/hg-list/hg-mosaic-list.js'
@@ -67,7 +67,7 @@ export class HgGallery extends LitElement {
         .onAdd=${async (newItem) => {
           const uploadResult = await this.shadowRoot.getElementById('upload').upload();
           return uploadResult
-            ? {...newItem, image: await createImage(uploadResult)}
+            ? {...newItem, image: await fb.createImage(uploadResult)}
             : false;
         }}
         .onDelete=${(item) => {

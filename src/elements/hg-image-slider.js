@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit';
 import {firebaseUtils as fb} from '../utils/firebase.js';
 import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
-import {updateData, updateImage, getData} from '../utils.js';
+import {updateData, getData} from '../utils.js';
 import './hg-image-slider/hg-image-slider-item.js';
 import './hg-image-upload-fab.js';
 import './hg-slider.js';
@@ -51,7 +51,7 @@ export class HgImageSlider extends LitElement {
   }
   async updateImage(index, file) {
     const oldImageName = _.get(`${index}.name`, this.images);
-    const newImage = await updateImage(this.path.doc, _.join('.', _.compact([this.path.field, String(index)])), file, oldImageName);
+    const newImage = await fb.updateImage(fb.path(this.path.doc, _.join('.', _.compact([this.path.field, String(index)]))), file, oldImageName);
     if (index === _.size(this.images)) {
       this.images = _.set(index, newImage, this.images);
     } else {
