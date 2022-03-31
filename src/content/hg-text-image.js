@@ -1,6 +1,6 @@
 import {LitElement, html, css, unsafeCSS} from 'lit';
 import '../edit/hg-editable-text.js';
-import '../elements/mkwc/hg-image.js';
+import '../elements/mkwc/hg-editable-image.js';
 import '../elements/hg-image-slider.js';
 import '../elements/hg-icon-info.js';
 import '../elements/hg-action-buttons.js';
@@ -43,7 +43,7 @@ export class HgTextImage extends LitElement {
     :host([swap]) {
       flex-direction: row-reverse;
     }
-    hg-image, hg-image-slider {
+    hg-editable-image, hg-image-slider {
       width: 50%;
       height: var(--max-image-height);
     }
@@ -68,7 +68,7 @@ export class HgTextImage extends LitElement {
         max-width: var(--max-image-width);
         flex-direction: column;
       }
-      hg-image, hg-image-slider {
+      hg-editable-image, hg-image-slider {
         width: 100%;
         margin: auto;
       }
@@ -81,12 +81,12 @@ export class HgTextImage extends LitElement {
       :host {
         margin: 60px auto;
       }
-      hg-image, hg-image-slider {
+      hg-editable-image, hg-image-slider {
         height: 280px;
       }
     }
     @media all and (max-width: 479px) {
-      hg-image, hg-image-slider {
+      hg-editable-image, hg-image-slider {
         height: 200px;
       }
     }
@@ -121,10 +121,8 @@ export class HgTextImage extends LitElement {
           .ready=${this._ready}
           .noGetImages=${true}>
         </hg-image-slider>`
-        : html`<hg-image
-          .noGet=${true}
-          .noUpdate=${true}
-          .image=${this._textImage?.images?.[0]}
+        : html`<hg-editable-image
+          .src=${this._textImage?.images?.[0]?.url}
           .ready=${this._ready}
           .fit=${'cover'}
           .maxWidth=${maxImageWidth}
@@ -132,7 +130,7 @@ export class HgTextImage extends LitElement {
           @image-uploaded=${({detail: blob}) => {
             this._objectDbSync.requestFieldUpdate('images.0', {type: 'image', data: blob});
           }}>
-        </hg-image>`}
+        </hg-editable-image>`}
       <div class="content">
         ${this.noHeading ? '' : html`<hg-editable-text
           .ready=${this._ready}

@@ -33,8 +33,8 @@ export class HgImageSliderItem extends LitElement {
   render() {
     return html`
       <hg-image-with-enlarge
+        .src=${this.image?.url}
         .ready=${this.ready}
-        .image=${this.image}
         @click=${() => this.dispatchEvent(new CustomEvent('click-image'))}>
       </hg-image-with-enlarge>
       ${this.noDelete ? '' : html`<hg-delete-item 

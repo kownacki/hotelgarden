@@ -1,6 +1,6 @@
 import {LitElement, html, css, unsafeCSS} from 'lit';
 import '../edit/hg-editable-text.js';
-import '../elements/mkwc/hg-image.js';
+import '../elements/mkwc/hg-editable-image.js';
 import '../elements/hg-action-buttons.js';
 import ckContent from '../styles/ck-content.js'
 import sharedStyles from '../styles/shared-styles';
@@ -87,17 +87,15 @@ export class HgMosaic extends LitElement {
   render() {
     return html`
       <div class="left">
-        <hg-image
-          .noGet=${true}
-          .noUpdate=${true}
-          .image=${this._mosaic?.primary?.image}
+        <hg-editable-image
+          .src=${this._mosaic?.primary?.image?.url}
           .ready=${this._ready}
           .maxWidth=${maxImageWidth}
           .presize=${true}
           @image-uploaded=${({detail: blob}) => {
             this._objectDbSync.requestFieldUpdate('primary.image', {type: 'image', data: blob});
           }}>
-        </hg-image>
+        </hg-editable-image>
       </div>
       <div class="right">
         <div class="content">
@@ -118,17 +116,15 @@ export class HgMosaic extends LitElement {
           </hg-editable-text>
           ${!_.get('primary', this.buttons) ? '' : html`<hg-action-buttons .buttons=${this.buttons.primary}></hg-action-buttons>`}
         </div>
-        <hg-image
-          .noGet=${true}
-          .noUpdate=${true}
-          .image=${this._mosaic?.secondary?.image}
+        <hg-editable-image
+          .src=${this._mosaic?.secondary?.image?.url}
           .ready=${this._ready}
           .maxWidth=${maxImageWidth}
           .presize=${true}
           @image-uploaded=${({detail: blob}) => {
             this._objectDbSync.requestFieldUpdate('secondary.image', {type: 'image', data: blob});
           }}>
-        </hg-image>
+        </hg-editable-image>
       </div>
       <div class="left">
         <div class="content">

@@ -1,5 +1,5 @@
 import {LitElement, html, css, unsafeCSS} from 'lit';
-import '../elements/mkwc/hg-image.js';
+import '../elements/mkwc/hg-editable-image-with-sync.js';
 import sharedStyles from '../styles/shared-styles.js';
 import {staticProp} from '../utils.js';
 import './hg-reviews-block/hg-reviews-slider.js';
@@ -33,7 +33,7 @@ export class HgReviewsBlock extends LitElement {
     hg-scores {
       margin: 0 20px;
     }
-    hg-image {
+    hg-editable-image-with-sync {
       width: var(--max-image-width);
       max-width: 100%;
       height: var(--max-image-height);
@@ -46,13 +46,13 @@ export class HgReviewsBlock extends LitElement {
       height: var(--max-image-height);
       margin: 0 20px;
     }
-    hg-scores, hg-image {
+    hg-scores, hg-editable-image-with-sync {
       display: none;
     }
     :host([scores]) hg-scores {
       display: block;
     }
-    :host(:not([scores])) hg-image {
+    :host(:not([scores])) hg-editable-image-with-sync {
       display: block;
     }
     @media all and (max-width: 1159px) {
@@ -65,7 +65,7 @@ export class HgReviewsBlock extends LitElement {
       :host(:not([scores])) hg-reviews-slider {
         margin: 40px auto 20px ;
       }
-      :host(:not([scores])) hg-image {
+      :host(:not([scores])) hg-editable-image-with-sync {
         display: none;
       }
     }
@@ -106,12 +106,12 @@ export class HgReviewsBlock extends LitElement {
       <h2 class="content-heading">Nasi goście o nas</h2>
       <div class="container">
         <hg-scores .bookingScores=${this.bookingScores}></hg-scores>
-        <hg-image 
+        <hg-editable-image-with-sync
           .path=${staticProp({doc: `images/${this.uid}-reviews-block`})}
           .fit=${'cover'}
           .maxWidth=${maxImageWidth}
           .maxHeight=${maxImageHeight}>
-        </hg-image>
+        </hg-editable-image-with-sync>
         <hg-reviews-slider .reviews=${this._reviews}></hg-reviews-slider>
       </div>
     `;

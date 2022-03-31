@@ -1,9 +1,9 @@
 import {LitElement, html, css, unsafeCSS} from 'lit';
-import {updateData} from "../../utils.js";
+import '../../edit/hg-editable-text.js';
+import '../../elements/mkwc/hg-editable-image.js';
 import sharedStyles from '../../styles/shared-styles.js'
 import {firebaseUtils as fb} from '../../utils/firebase.js';
-import '../../edit/hg-editable-text.js';
-import '../../elements/mkwc/hg-image.js';
+import {updateData} from '../../utils.js';
 
 const maxImageWidth = 200;
 
@@ -64,17 +64,15 @@ export class HgHallTables extends LitElement {
       <div class="items">
         ${_.map.convert({cap: false})((setOut, index) => html`
           <div>
-            <hg-image
-              .noGet=${true}
-              .noUpdate=${true}
-              .image=${setOut.image}
+            <hg-editable-image
+              .src=${setOut.image?.url}
               .ready=${this._dataReady}
               .maxWidth=${maxImageWidth}
               .presize=${true}
               @image-uploaded=${(event) => {
                 this.updateImage(index, event.detail);
               }}>
-            </hg-image>
+            </hg-editable-image>
             <hg-editable-text
               .ready=${this._dataReady}
               .text=${_.get(`name`, setOut)}

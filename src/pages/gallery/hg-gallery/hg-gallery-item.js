@@ -34,8 +34,8 @@ export class HgGalleryItem extends LitElement {
     const ready = this.ready && this._onceInProximity;
     return html`
       <hg-image-with-enlarge
-        .ready=${ready}
-        .image=${this.image}>
+        .src=${this.image?.url}
+        .ready=${ready}>
       </hg-image-with-enlarge>
     `;
   }

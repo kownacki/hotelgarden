@@ -1,6 +1,6 @@
 import {LitElement, html, css, unsafeCSS} from 'lit';
 import '../../edit/hg-editable-text.js';
-import '../../elements/mkwc/hg-image.js';
+import '../../elements/mkwc/hg-editable-image.js';
 import '../../elements/hg-list.js';
 import sharedStyles from '../../styles/shared-styles.js'
 import {firebaseUtils as fb} from '../../utils/firebase.js';
@@ -36,7 +36,7 @@ export class HgMenuMain extends LitElement {
     .empty {
       margin-bottom: 30px;
     }
-    hg-image {
+    hg-editable-image {
       height: var(--max-image-height);
       width: 100%;
     }
@@ -53,7 +53,7 @@ export class HgMenuMain extends LitElement {
       margin: 0;
     }
     @media all and (max-width: 839px) {
-      hg-image {
+      hg-editable-image {
         height: 120px;
       }
     }
@@ -78,16 +78,14 @@ export class HgMenuMain extends LitElement {
     return html`
       ${_.isEmpty(this.categories) ? 'Brak kategorii' : html`
         <header>
-          <hg-image
-            .noGet=${true}
-            .noUpdate=${true}
-            .image=${this.category?.image}
+          <hg-editable-image
+            .src=${this.category.image?.url}
             .ready=${true}
             .fit=${'cover'}
             .maxWidth=${maxImageWidth}
             .maxHeight=${maxImageHeight}
             @image-uploaded=${({detail: blob}) => this.updateImage(blob)}>
-          </hg-image>
+          </hg-editable-image>
           <hg-editable-text
             .ready=${true}
             float

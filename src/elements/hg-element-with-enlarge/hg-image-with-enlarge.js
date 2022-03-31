@@ -4,7 +4,7 @@ import '../mkwc/hg-image.js';
 
 export class HgImageWithEnlarge extends LitElement {
   static properties = {
-    image: Object,
+    src: String,
     ready: Boolean,
   };
   static styles = css`
@@ -19,12 +19,11 @@ export class HgImageWithEnlarge extends LitElement {
   render() {
     return html`
       <hg-element-with-enlarge>
-        <hg-image-without-editing
+        <hg-image
+          .src=${this.src}
           .ready=${this.ready}
-          .noGet=${true}
-          .image=${this.image}
           .fit=${'cover'}>
-        </hg-image-without-editing>
+        </hg-image>
       </hg-element-with-enlarge>
     `;
   }

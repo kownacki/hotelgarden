@@ -4,7 +4,7 @@ import {ObjectDbSyncController} from '../../utils/ObjectDbSyncController.js';
 import {staticProp, openProfitroom} from '../../utils.js';
 import sharedStyles from '../../styles/shared-styles.js';
 import ckContent from '../../styles/ck-content.js'
-import '../mkwc/hg-image.js'
+import '../mkwc/hg-editable-image.js'
 import '../hg-action-button.js';
 import '../hg-dialog.js';
 import '../hg-text.js'
@@ -38,7 +38,7 @@ export class HgBookDialog extends LitElement {
     h3 {
       margin: 10px 0
     }
-    hg-image {
+    hg-editable-image {
       width: 100%;
       height: var(--max-image-height);
       margin-bottom: 20px;
@@ -93,10 +93,8 @@ export class HgBookDialog extends LitElement {
                 .ready=${this._dataReady}>
                 <h3></h3>
               </hg-text>
-              <hg-image
-                .noGet=${true}
-                .noUpdate=${true}
-                .image=${this._data?.[location.name]?.image}
+              <hg-editable-image
+                .src=${this._data?.[location.name]?.image?.url}
                 .ready=${this._dataReady}
                 .fit=${'cover'}
                 .maxWidth=${maxImageWidth}
@@ -104,7 +102,7 @@ export class HgBookDialog extends LitElement {
                 @image-uploaded=${({detail: blob}) => {
                   this._objectDbSync.requestFieldUpdate(`${location.name}.image`, {type: 'image', data: blob});
                 }}>
-              </hg-image>
+              </hg-editable-image>
               <hg-text
                 .path=${staticProp({doc: 'texts/book', field: `${location.name}.text`})}
                 .rich=${true}

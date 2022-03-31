@@ -2,8 +2,8 @@ import {LitElement, html, css, unsafeCSS} from 'lit';
 import sharedStyles from '../styles/shared-styles.js'
 import {firebaseUtils as fb} from '../utils/firebase.js';
 import {ItemsDbSyncController} from '../utils/ItemsDbSyncController.js';
+import '../elements/mkwc/hg-editable-image.js';
 import '../edit/hg-editable-text.js';
-import '../elements/mkwc/hg-image.js';
 
 const maxImageWidth = 360;
 const maxImageHeight = 150;
@@ -143,10 +143,8 @@ export class HgInfographic extends LitElement {
                 <div></div>
               </hg-editable-text>
             </div>
-            <hg-image
-              .noGet=${true}
-              .noUpdate=${true}
-              .image=${item.image}
+            <hg-editable-image
+              .src=${item.image?.url}
               .ready=${this._itemsReady}
               .fit=${'cover'}
               .maxWidth=${maxImageWidth}
@@ -154,7 +152,7 @@ export class HgInfographic extends LitElement {
               @image-uploaded=${(event) => {
                 this._itemsDbSync.requestItemUpdate(index, {field: 'image', data: event.detail});
               }}>
-            </hg-image>
+            </hg-editable-image>
           </div>
         `, this._items)}
       </div>

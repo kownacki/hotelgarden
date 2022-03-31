@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit';
 import {HDTV_WIDTH, HDTV_HEIGHT} from '../../../config.js';
 import sharedStyles from '../../styles/shared-styles.js';
-import '../mkwc/hg-image.js';
+import '../mkwc/hg-editable-image.js';
 
 const maxImageWidth = HDTV_WIDTH;
 const maxImageHeight = HDTV_HEIGHT;
@@ -12,17 +12,15 @@ export class HgWindowSliderItem extends LitElement {
     ready: Boolean,
   };
   static styles = [sharedStyles, css`
-    hg-image {
-      --mkwc-editable-image-placeholder-color: transparent;
+    hg-editable-image {
+      --mkwc-image-placeholder-color: transparent;
       height: 100%;
     }
   `];
   render() {
     return html`
-      <hg-image
-        .noGet=${true}
-        .noUpdate=${true}
-        .image=${this.image}
+      <hg-editable-image
+        .src=${this.image?.url}
         .ready=${this.ready}
         .fit=${'contain'}
         .maxWidth=${maxImageWidth}
@@ -31,7 +29,7 @@ export class HgWindowSliderItem extends LitElement {
         @image-uploaded=${(event) => {
           this.dispatchEvent(new CustomEvent('request-image-change', {detail: {index: this.image.index, file: event.detail}}));
         }}>
-      </hg-image>
+      </hg-editable-image>
     `;
   }
 }

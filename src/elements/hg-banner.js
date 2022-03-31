@@ -1,10 +1,10 @@
 import {LitElement, html, css} from 'lit';
 import {HDTV_WIDTH, HDTV_HEIGHT} from '../../config.js';
 import '../edit/hg-editable-text.js';
+import '../elements/mkwc/hg-editable-image-with-sync.js';
 import sharedStyles from '../styles/shared-styles.js';
 import {firebaseUtils as fb} from '../utils/firebase.js';
 import {updateData} from '../utils.js';
-import './mkwc/hg-image.js';
 
 const maxImageWidth = HDTV_WIDTH;
 const maxImageHeight = HDTV_HEIGHT;
@@ -24,7 +24,7 @@ export class HgBanner extends LitElement {
       height: 100%;
       display: flex;
     }
-    hg-image {
+    hg-editable-image-with-sync {
       inset: 0;
       position: absolute;
     }
@@ -64,7 +64,7 @@ export class HgBanner extends LitElement {
       color: inherit;
     }
     @media all and (max-width: 599px) {
-      :host(:not([no-image])), hg-image {
+      :host(:not([no-image])), hg-editable-image-with-sync {
         height: 66%;
       }
     }
@@ -89,13 +89,13 @@ export class HgBanner extends LitElement {
   render() {
     return html`
       ${this.noImage ? ''
-        : html`<hg-image
+        : html`<hg-editable-image-with-sync
           .path=${this.path && fb.path(this.path.doc, this.path.field).extend('image')}
           .fit=${'cover'}
           .maxWidth=${maxImageWidth}
           .maxHeight=${maxImageHeight}
           .compressionQuality=${0.7}>
-        </hg-image>
+        </hg-editable-image-with-sync>
         <div class="gradient"></div>
       `}
       <div class="heading">
