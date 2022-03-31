@@ -1,11 +1,14 @@
-import {LitElement, html, css} from 'lit';
-import '../../edit/hg-editable-image.js';
+import {LitElement, html, css, unsafeCSS} from 'lit';
 import '../../edit/hg-editable-text.js';
+import '../../elements/mkwc/hg-image.js';
 import '../../elements/hg-list.js';
 import sharedStyles from '../../styles/shared-styles.js'
 import {firebaseUtils as fb} from '../../utils/firebase.js';
 import {updateData, staticProp} from '../../utils.js';
 import './hg-menu-item.js';
+
+const maxImageWidth = 700;
+const maxImageHeight = 170;
 
 export class HgMenuMain extends LitElement {
   static properties = {
@@ -13,10 +16,13 @@ export class HgMenuMain extends LitElement {
     category: Object,
     categoryIndex: Number,
     categories: Object,
-    dataReady: Boolean,
   };
   static styles = [sharedStyles, css`
     :host {
+      ${unsafeCSS(`
+        --max-image-width: ${maxImageWidth}px;
+        --max-image-height: ${maxImageHeight}px;
+      `)}
       padding-right: 20px;
     }
     header {
@@ -30,8 +36,8 @@ export class HgMenuMain extends LitElement {
     .empty {
       margin-bottom: 30px;
     }
-    hg-editable-image {
-      height: 170px;
+    hg-image {
+      height: var(--max-image-height);
       width: 100%;
     }
     .name {
@@ -47,7 +53,7 @@ export class HgMenuMain extends LitElement {
       margin: 0;
     }
     @media all and (max-width: 839px) {
-      hg-editable-image {
+      hg-image {
         height: 120px;
       }
     }
@@ -72,11 +78,16 @@ export class HgMenuMain extends LitElement {
     return html`
       ${_.isEmpty(this.categories) ? 'Brak kategorii' : html`
         <header>
-          <hg-editable-image
-            .src=${_.get('image.url', this.category)}
-            .sizing=${'cover'}
-            @save=${(event) => this.updateImage(event.detail)}>
-          </hg-editable-image>
+          <hg-image
+            .noGet=${true}
+            .noUpdate=${true}
+            .image=${this.category?.image}
+            .ready=${true}
+            .fit=${'cover'}
+            .maxWidth=${maxImageWidth}
+            .maxHeight=${maxImageHeight}
+            @image-uploaded=${({detail: blob}) => this.updateImage(blob)}>
+          </hg-image>
           <hg-editable-text
             .ready=${true}
             float
