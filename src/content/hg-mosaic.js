@@ -1,17 +1,17 @@
 import {LitElement, html, css, unsafeCSS} from 'lit';
-import {DbSyncController} from 'mkwc/DbSyncController.js';
 import '../edit/hg-editable-text.js';
 import '../elements/mkwc/hg-image.js';
 import '../elements/hg-action-buttons.js';
 import ckContent from '../styles/ck-content.js'
 import sharedStyles from '../styles/shared-styles';
+import {ObjectDbSyncController} from '../utils/ObjectDbSyncController.js';
 import {firebaseUtils as fb} from '../utils/firebase.js';
 import {updateData} from '../utils.js';
 
 const maxImageWidth = 750;
 
 export class HgMosaic extends LitElement {
-  _dbSync;
+  _objectDbSync;
   static properties = {
     uid: Number,
     buttons: Object,
@@ -65,10 +65,12 @@ export class HgMosaic extends LitElement {
   `];
   constructor() {
     super();
-    this._dbSync = new DbSyncController(
+    this._objectDbSync = new ObjectDbSyncController(
       this,
       async (path) => await fb.get(path) || {},
-      undefined,
+      async (objectPath, dataPath, {type, data}, oldData, object) => {
+        return fb.updateDataOrImageInObject(type, objectPath, dataPath, data, object);
+      },
       (ready) => this._ready = ready,
       (mosaic) => this._mosaic = mosaic,
     );
@@ -76,7 +78,7 @@ export class HgMosaic extends LitElement {
   async willUpdate(changedProperties) {
     if (changedProperties.has('uid')) {
       this._path = fb.path(`mosaics/${this.uid}`);
-      this._dbSync.setPath(this._path);
+      this._objectDbSync.setPath(this._path);
     }
   }
   async updateData(path, data) {
@@ -86,12 +88,15 @@ export class HgMosaic extends LitElement {
     return html`
       <div class="left">
         <hg-image
-          .path=${this._path.extend('primary.image')}
           .noGet=${true}
+          .noUpdate=${true}
           .image=${this._mosaic?.primary?.image}
           .ready=${this._ready}
           .maxWidth=${maxImageWidth}
-          .presize=${true}>
+          .presize=${true}
+          @image-uploaded=${({detail: blob}) => {
+            this._objectDbSync.requestFieldUpdate('primary.image', {type: 'image', data: blob});
+          }}>
         </hg-image>
       </div>
       <div class="right">
@@ -114,12 +119,15 @@ export class HgMosaic extends LitElement {
           ${!_.get('primary', this.buttons) ? '' : html`<hg-action-buttons .buttons=${this.buttons.primary}></hg-action-buttons>`}
         </div>
         <hg-image
-          .path=${this._path.extend('secondary.image')}
           .noGet=${true}
+          .noUpdate=${true}
           .image=${this._mosaic?.secondary?.image}
           .ready=${this._ready}
           .maxWidth=${maxImageWidth}
-          .presize=${true}>
+          .presize=${true}
+          @image-uploaded=${({detail: blob}) => {
+            this._objectDbSync.requestFieldUpdate('secondary.image', {type: 'image', data: blob});
+          }}>
         </hg-image>
       </div>
       <div class="left">

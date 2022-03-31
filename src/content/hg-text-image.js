@@ -1,5 +1,4 @@
 import {LitElement, html, css, unsafeCSS} from 'lit';
-import {DbSyncController} from 'mkwc/DbSyncController.js';
 import '../edit/hg-editable-text.js';
 import '../elements/mkwc/hg-image.js';
 import '../elements/hg-image-slider.js';
@@ -8,13 +7,14 @@ import '../elements/hg-action-buttons.js';
 import ckContent from '../styles/ck-content.js'
 import sharedStyles from '../styles/shared-styles';
 import {firebaseUtils as fb} from '../utils/firebase.js';
+import {ObjectDbSyncController} from '../utils/ObjectDbSyncController.js';
 import {updateData} from '../utils.js';
 
 const maxImageWidth = 750;
 const maxImageHeight = 400;
 
 export class HgTextImage extends LitElement {
-  _dbSync;
+  _objectDbSync;
   static properties = {
     uid: Number,
     buttons: Number,
@@ -93,10 +93,12 @@ export class HgTextImage extends LitElement {
   `];
   constructor() {
     super();
-    this._dbSync = new DbSyncController(
+    this._objectDbSync = new ObjectDbSyncController(
       this,
       async (path) => await fb.get(path) || {},
-      undefined,
+      async (objectPath, dataPath, {type, data}, oldData, object) => {
+        return fb.updateDataOrImageInObject(type, objectPath, dataPath, data, object);
+      },
       (ready) => this._ready = ready,
       (textImage) => this._textImage = textImage,
     );
@@ -104,7 +106,7 @@ export class HgTextImage extends LitElement {
   async willUpdate(changedProperties) {
     if (changedProperties.has('uid')) {
       this._path = fb.path(`textImage/${this.uid}`);
-      this._dbSync.setPath(this._path);
+      this._objectDbSync.setPath(this._path);
     }
   }
   async updateData(path, data) {
@@ -120,13 +122,16 @@ export class HgTextImage extends LitElement {
           .noGetImages=${true}>
         </hg-image-slider>`
         : html`<hg-image
-          .path=${this._path.extend('images.0')}
           .noGet=${true}
+          .noUpdate=${true}
           .image=${this._textImage?.images?.[0]}
           .ready=${this._ready}
           .fit=${'cover'}
           .maxWidth=${maxImageWidth}
-          .maxHeight=${maxImageHeight}>
+          .maxHeight=${maxImageHeight}
+          @image-uploaded=${({detail: blob}) => {
+            this._objectDbSync.requestFieldUpdate('images.0', {type: 'image', data: blob});
+          }}>
         </hg-image>`}
       <div class="content">
         ${this.noHeading ? '' : html`<hg-editable-text

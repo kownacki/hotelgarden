@@ -1,6 +1,8 @@
 import {LitElement, html, css, unsafeCSS} from 'lit';
-import {staticProp, getData, openProfitroom} from '../../utils.js';
-import sharedStyles from "../../styles/shared-styles";
+import {firebaseUtils as fb} from '../../utils/firebase.js';
+import {ObjectDbSyncController} from '../../utils/ObjectDbSyncController.js';
+import {staticProp, openProfitroom} from '../../utils.js';
+import sharedStyles from '../../styles/shared-styles.js';
 import ckContent from '../../styles/ck-content.js'
 import '../mkwc/hg-image.js'
 import '../hg-action-button.js';
@@ -53,10 +55,22 @@ export class HgBookDialog extends LitElement {
       }
     }
   `];
-  async firstUpdated() {
-    this._data = await getData('texts/book');
-    this._dataReady = true;
-    this.dialog.notifyResize();
+  constructor() {
+    super();
+    this._path = fb.path('texts/book');
+    this._objectDbSync = new ObjectDbSyncController(
+      this,
+      async (path) => await fb.get(path) || {},
+      async (objectPath, dataPath, {type, data}, oldData, object) => {
+        return fb.updateDataOrImageInObject(type, objectPath, dataPath, data, object);
+      },
+      (ready) => this._dataReady = ready,
+      (data) => {
+        this._data = data;
+        this.dialog.notifyResize();
+      }
+    );
+    this._objectDbSync.setPath(this._path);
   }
   render() {
     return html`
@@ -80,13 +94,16 @@ export class HgBookDialog extends LitElement {
                 <h3></h3>
               </hg-text>
               <hg-image
-                .path=${staticProp({doc: 'texts/book', field: `${location.name}.image`})}
                 .noGet=${true}
-                .image=${_.get(`${location.name}.image`, this._data)}
+                .noUpdate=${true}
+                .image=${this._data?.[location.name]?.image}
                 .ready=${this._dataReady}
                 .fit=${'cover'}
                 .maxWidth=${maxImageWidth}
-                .maxHeight=${maxImageHeight}>
+                .maxHeight=${maxImageHeight}
+                @image-uploaded=${({detail: blob}) => {
+                  this._objectDbSync.requestFieldUpdate(`${location.name}.image`, {type: 'image', data: blob});
+                }}>
               </hg-image>
               <hg-text
                 .path=${staticProp({doc: 'texts/book', field: `${location.name}.text`})}
