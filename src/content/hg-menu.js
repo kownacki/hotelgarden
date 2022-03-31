@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit';
-import {headerHeight} from "../utils";
+import {headerHeight} from '../utils.js';
 import './hg-menu/hg-menu-main.js';
 import './hg-menu/hg-menu-nav.js';
 

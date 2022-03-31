@@ -1,9 +1,9 @@
 import {LitElement, html, css} from 'lit';
-import {staticProp} from '../../utils.js';
-import HgContent from "../../elements/hg-content";
 import '../../content/hg-article/hg-intro-article.js';
-import '../rooms/hg-room.js';
 import '../../content/hg-links.js';
+import HgContent from '../../elements/hg-content.js';
+import {staticProp} from '../../utils.js';
+import '../rooms/hg-room.js';
 
 const VILLA_ROOM_INDEX = 3;
 

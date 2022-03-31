@@ -1,9 +1,9 @@
 import {LitElement, html, css} from 'lit';
-import {staticProp, updateData} from "../../utils.js";
-import sharedStyles from "../../styles/shared-styles.js";
 import ckContent from '../../styles/ck-content.js'
+import sharedStyles from '../../styles/shared-styles.js';
 import '../../elements/hg-action-buttons.js';
 import '../../elements/hg-icon-info.js';
+import {staticProp} from '../../utils.js';
 
 const shorten = (text, maxLength) => text.length > maxLength - 3 ? text.slice(0, maxLength - 3) + '...' : text;
 

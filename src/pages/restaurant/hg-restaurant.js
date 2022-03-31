@@ -1,6 +1,4 @@
 import {LitElement, html, css} from 'lit';
-import HgContent from "../../elements/hg-content";
-import {staticProp} from '../../utils.js';
 import '../../content/hg-article.js';
 import '../../content/hg-article/hg-intro-article.js';
 import '../../content/hg-contact-block.js';
@@ -11,6 +9,8 @@ import '../../content/hg-mosaic.js';
 import '../../content/hg-links.js';
 import '../../content/hg-reviews-block.js';
 import '../../content/hg-text-image.js';
+import HgContent from '../../elements/hg-content.js';
+import {staticProp} from '../../utils.js';
 
 export class HgRestaurant extends HgContent {
   render() {

@@ -1,15 +1,15 @@
 import {LitElement, html, css} from 'lit';
-import sharedStyles from "../../styles/shared-styles.js";
-import HgContent from "../../elements/hg-content.js";
 import '../../content/hg-article/hg-intro-article.js';
 import '../../content/hg-article.js';
 import '../../content/hg-content-slider.js';
 import '../../content/hg-links.js';
+import HgContent from '../../elements/hg-content.js';
+import sharedStyles from '../../styles/shared-styles.js';
 import {FirebaseAuthController} from '../../utils/FirebaseAuthController.js';
 import {getData} from '../../utils.js';
-import './hg-lunch/hg-lunch-week.js';
 import './hg-lunch/hg-lunch-edit.js';
 import './hg-lunch/hg-lunch-generate.js';
+import './hg-lunch/hg-lunch-week.js';
 
 export class HgLunch extends HgContent {
   _firebaseAuth;

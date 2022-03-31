@@ -1,9 +1,9 @@
 import {LitElement, html, css} from 'lit';
-import {staticProp} from "../utils";
-import sharedStyles from "../styles/shared-styles";
 import ckContent from '../styles/ck-content.js';
-import './hg-text.js'
+import sharedStyles from '../styles/shared-styles.js';
+import {staticProp} from '../utils.js';
 import './hg-login.js'
+import './hg-text.js'
 
 export class HgFooter extends LitElement {
   static styles = [sharedStyles, ckContent, css`

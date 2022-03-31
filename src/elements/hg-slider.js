@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit';
 import {repeat} from 'lit/directives/repeat.js';
+import sharedStyles from '../styles/shared-styles.js';
 import {array} from '../utils.js';
-import sharedStyles from "../styles/shared-styles";
 
 //todo bug clicking go back when image is displayed breaks website
 export class HgSlider extends LitElement {

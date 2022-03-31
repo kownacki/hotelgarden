@@ -1,8 +1,8 @@
 import {LitElement, html, css} from 'lit';
-import sharedStyles from '../../styles/shared-styles.js'
-import HgContent from "../../elements/hg-content";
 import '../../content/hg-article/hg-intro-article.js';
 import '../../content/hg-content-icons.js';
+import HgContent from '../../elements/hg-content.js';
+import sharedStyles from '../../styles/shared-styles.js'
 import './hg-room.js';
 
 export class HgRooms extends HgContent {

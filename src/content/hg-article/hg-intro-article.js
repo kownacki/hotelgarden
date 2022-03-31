@@ -1,6 +1,6 @@
 import {html, css} from 'lit';
+import {setMetaDescription} from '../../utils.js';
 import HgArticle from '../hg-article.js';
-import {setMetaDescription} from "../../utils";
 
 export class HgIntroArticle extends HgArticle {
   static styles = [super.styles, css`

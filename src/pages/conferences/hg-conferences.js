@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import {staticProp} from '../../utils.js';
-import HgContent from "../../elements/hg-content.js";
+import HgContent from '../../elements/hg-content.js';
 import '../../content/hg-article/hg-intro-article.js';
 import '../../content/hg-content-icons.js';
 import '../../content/hg-content-slider.js';

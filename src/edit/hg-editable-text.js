@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit';
+import sharedStyles from '../styles/shared-styles.js';
 import {headerHeight, moveOutFromShadowDom} from '../utils.js'
-import sharedStyles from "../styles/shared-styles.js";
 
 export default class HgEditableText extends LitElement {
   static properties = {

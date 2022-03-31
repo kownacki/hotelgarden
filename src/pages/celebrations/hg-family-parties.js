@@ -1,7 +1,6 @@
 import {LitElement, html, css} from 'lit';
-import {staticProp} from '../../utils.js';
-import sharedStyles from "../../styles/shared-styles.js";
-import HgContent from "../../elements/hg-content";
+import sharedStyles from '../../styles/shared-styles.js';
+import HgContent from '../../elements/hg-content.js';
 import '../../content/hg-article/hg-intro-article.js';
 import '../../content/hg-quote.js';
 import '../../content/hg-content-icons.js';
@@ -12,6 +11,7 @@ import '../../content/hg-halls-block.js';
 import '../../content/hg-reviews-block.js';
 import '../../content/hg-contact-block.js';
 import '../../content/hg-links.js';
+import {staticProp} from '../../utils.js';
 
 export class HgFamilyParties extends HgContent {
   static styles = [super.styles, sharedStyles, css`

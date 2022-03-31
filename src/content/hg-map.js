@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit';
-import {loadScript} from "../utils";
 import apiKey from '../../utils/apiKey.js';
+import {loadScript} from '../utils.js';
 
 let googleMapsLoaded = false;
 

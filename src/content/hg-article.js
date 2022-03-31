@@ -1,10 +1,10 @@
 import {LitElement, html, css} from 'lit';
 import {classMap} from 'lit/directives/class-map.js';
-import {staticProp} from '../utils.js';
-import sharedStyles from "../styles/shared-styles.js";
 import ckContent from '../styles/ck-content.js';
-import '../elements/hg-text.js';
+import sharedStyles from '../styles/shared-styles.js';
 import '../elements/hg-content-label.js';
+import '../elements/hg-text.js';
+import {staticProp} from '../utils.js';
 
 export default class HgArticle extends LitElement {
   static properties = {

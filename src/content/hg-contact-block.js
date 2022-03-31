@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit';
-import sharedStyles from "../styles/shared-styles";
 import '../content/hg-article.js';
 import '../elements/hg-contact-form.js';
+import sharedStyles from '../styles/shared-styles';
 
 export class HgContactBlock extends LitElement {
   static styles = sharedStyles;

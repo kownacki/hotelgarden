@@ -3,8 +3,8 @@ import '@polymer/iron-ajax/iron-ajax.js';
 import '@polymer/paper-radio-button/paper-radio-button.js';
 import '@polymer/paper-radio-group/paper-radio-group.js';
 import '@polymer/paper-spinner/paper-spinner-lite.js';
+import sharedStyles from '../styles/shared-styles.js';
 import {sleep} from '../utils.js'
-import sharedStyles from "../styles/shared-styles";
 
 const FIELDS = ['name', 'company', 'phone', 'email', 'text'];
 

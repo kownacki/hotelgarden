@@ -1,10 +1,10 @@
 import {LitElement, html, css} from 'lit';
-import {staticProp, setMetaDescription} from "../../utils";
-import ckContent from "../../styles/ck-content.js";
-import HgContent from '../../elements/hg-content.js';
 import '../../content/hg-article.js';
-import '../../elements/hg-contact-form.js';
 import '../../content/hg-map.js';
+import '../../elements/hg-contact-form.js';
+import HgContent from '../../elements/hg-content.js';
+import ckContent from '../../styles/ck-content.js';
+import {staticProp, setMetaDescription} from '../../utils.js';
 
 export class HgContact extends HgContent {
   static styles = [super.styles, ckContent, css`

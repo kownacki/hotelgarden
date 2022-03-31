@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit';
-import {sleep} from "../utils";
+import {sleep} from '../utils.js';
 
 export class HgImageUpload extends LitElement {
   static styles = css`

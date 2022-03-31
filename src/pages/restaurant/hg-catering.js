@@ -1,12 +1,12 @@
 import {LitElement, html, css} from 'lit';
-import HgContent from "../../elements/hg-content.js";
-import '../../content/hg-article/hg-intro-article.js'
-import '../../content/hg-content-icons.js';
-import '../../content/hg-mosaic.js'
-import '../../content/hg-content-slider.js';
-import '../../content/hg-reviews-block.js';
+import '../../content/hg-article/hg-intro-article.js';
 import '../../content/hg-contact-block.js';
+import '../../content/hg-content-icons.js';
+import '../../content/hg-content-slider.js';
 import '../../content/hg-links.js';
+import '../../content/hg-mosaic.js';
+import '../../content/hg-reviews-block.js';
+import HgContent from '../../elements/hg-content.js';
 
 export class HgCatering extends HgContent {
   render() {
