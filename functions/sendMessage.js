@@ -1,12 +1,11 @@
-'use strict';
-
-const _ = require('lodash/fp');
-const admin = require('firebase-admin');
-const moment = require('moment-timezone');
+import _ from 'lodash/fp.js';
+import admin from 'firebase-admin';
+import moment from 'moment-timezone';
 moment.locale('pl');
-const nodemailer = require('nodemailer');
+import nodemailer from 'nodemailer';
 
-const corsAsync = require('./cors-async')({origin: true});
+import corsAsyncLib from './cors-async.js';
+const corsAsync = corsAsyncLib({origin: true});
 
 const generateUid = (timestamp = Date.now()) => `${timestamp}${_.padCharsStart('0', 9,  _.random(1, 10**9 - 1))}`;
 
@@ -39,7 +38,7 @@ const sendMail = async (body) => {
   return mailOptions.to;
 };
 
-module.exports = async (req, res) => {
+export const sendMessage = async (req, res) => {
   const now = Date.now();
   await corsAsync(req, res);
   if (JSON.stringify(req.body).length > MAX_MESSAGE_SIZE) {

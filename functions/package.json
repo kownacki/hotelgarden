@@ -1,6 +1,7 @@
 {
   "name": "functions",
   "description": "Cloud Functions for Firebase",
+  "main": "esmProxyIndex.js",
   "scripts": {
     "serve": "firebase serve --only functions",
     "shell": "firebase functions:shell",
@@ -10,11 +11,12 @@
   },
   "private": true,
   "engines": {
-    "node": "16",
+    "node": "14",
     "npm": ">=8"
   },
   "dependencies": {
     "cors": "^2.8.5",
+    "esm": "^3.2.25",
     "firebase-admin": "^8.0.0",
     "firebase-functions": "^3.1.0",
     "lodash": "^4.17.21",
