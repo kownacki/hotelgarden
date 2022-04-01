@@ -15,13 +15,13 @@
     "npm": ">=8"
   },
   "dependencies": {
-    "cors": "^2.8.5",
     "esm": "^3.2.25",
     "firebase-admin": "^10.0.2",
     "firebase-functions": "^3.19.0",
     "lodash": "^4.17.21",
-    "moment-timezone": "^0.5.27",
-    "nodemailer": "^4.4.2"
+    "mk-firebase-functions-utils": "./mk-firebase-functions-utils-0.1.0.tgz",
+    "mk-firebase-utils": "./mk-firebase-utils-0.1.0.tgz",
+    "moment-timezone": "^0.5.27"
   },
   "devDependencies": {
     "firebase-functions-test": "^0.1.6"
