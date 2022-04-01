@@ -21,7 +21,7 @@
     "firebase-functions": "^3.19.0",
     "lodash": "^4.17.21",
     "moment-timezone": "^0.5.27",
-    "nodemailer": "^4.4.2"
+    "nodemailer": "^6.6.1"
   },
   "devDependencies": {
     "firebase-functions-test": "^0.1.6"
