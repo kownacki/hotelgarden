@@ -41,7 +41,8 @@ const firebaseInitializeOptions = {
   measurementId: "G-T7DQCNYLP2"
 };
 
-const indexHtml = `
+const createPlaceholder = (name) => `\$\{${name}\}`;
+const getIndexHtml = (titlePlaceholder) => `
 <!doctype html>
 <html lang="pl">
 <head>
@@ -49,7 +50,7 @@ const indexHtml = `
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title></title>
+  <title>${titlePlaceholder ? createPlaceholder('title') : ''}</title>
   <meta name="description">
   
   <link rel="shortcut icon" href="${faviconPath}">
@@ -140,4 +141,5 @@ const indexHtml = `
 </html>
 `;
 
-fs.writeFileSync('index.html', indexHtml);
+fs.writeFileSync('index.html', getIndexHtml());
+fs.writeFileSync('functions/createIndex.js', `export const createIndex = (title) => \`${_.replace(/\\/g, '\\\\', getIndexHtml(true))}\`;`);
