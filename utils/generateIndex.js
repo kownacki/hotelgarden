@@ -142,4 +142,4 @@ const getIndexHtml = (titlePlaceholder) => `
 `;
 
 fs.writeFileSync('index.html', getIndexHtml());
-fs.writeFileSync('functions/createIndex.js', `export const createIndex = (title) => \`${_.replace(/\\/g, '\\\\', getIndexHtml(true))}\`;`);
+fs.writeFileSync('functions/src/createIndex.js', `export const createIndex = (title) => \`${_.replace(/\\/g, '\\\\', getIndexHtml(true))}\`;`);

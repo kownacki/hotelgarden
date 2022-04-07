@@ -1,17 +1,30 @@
-import _ from 'lodash/fp.js';
+import {Request, Response} from 'firebase-functions';
+import _ from 'lodash/fp';
+// @ts-ignore see https://github.com/microsoft/TypeScript/issues/33079
 import {sendMessage as mkSendMessage} from 'mk-firebase-functions-utils/sendMessage';
-import moment from 'moment-timezone';
+import moment from 'moment';
+import 'moment-timezone';
 import {createPath as createDbPath, get as getFromDb, update as updateInDb, generateUid} from './database';
+import {RequestWithBody, AdminConfigSendMessage} from './types';
 
 moment.locale('pl');
 
 // Rough limit, to prevent attacks
 const MAX_MESSAGE_SIZE = 10000;
 
-export const sendMessage = async (req, res) => {
-  const body = req.body;
+interface SendMessageRequestBody {
+  subject: 'hotel' | 'gastro',
+  name: string,
+  company: string,
+  phone: string,
+  email: string,
+  text: string,
+}
+
+export const sendMessage = async (req: Request, res: Response) => {
+  const body = (req as RequestWithBody<SendMessageRequestBody>).body;
   const timeAtFunctionStart = Date.now();
-  const config = await getFromDb(createDbPath('_config/admin', 'sendMessage'));
+  const config:AdminConfigSendMessage = await getFromDb(createDbPath('_config/admin', 'sendMessage'));
   const options = {
     mailOptions: {
       to: config.mailOptions.to[body.subject],
@@ -34,6 +47,6 @@ export const sendMessage = async (req, res) => {
     ..._.mapValues(_.replace(/\n/g, '\\n'), body),
     to: options.mailOptions.to,
     timestamp: timeAtFunctionStart,
-    time: moment(options.timestamp).tz('Poland').format('LLLL'),
+    time: moment(timeAtFunctionStart).tz('Poland').format('LLLL'),
   });
 };
