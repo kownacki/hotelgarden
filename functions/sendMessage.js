@@ -1,7 +1,7 @@
 import _ from 'lodash/fp.js';
 import {sendMessage as mkSendMessage} from 'mk-firebase-functions-utils/sendMessage.js';
 import moment from 'moment-timezone';
-import {firebaseUtils as fb} from './firebase.js';
+import {createPath as createDbPath, get as getFromDb, update as updateInDb, generateUid} from './database';
 
 moment.locale('pl');
 
@@ -10,7 +10,7 @@ const MAX_MESSAGE_SIZE = 10000;
 
 export const sendMessage = async (req, res) => {
   const now = Date.now();
-  const config = await fb.get(fb.path('_config/admin', 'sendMessage'));
+  const config = await getFromDb(createDbPath('_config/admin', 'sendMessage'));
   const options = {
     mailOptions: {
       to: config.mailOptions.to[req.body.subject],
@@ -30,7 +30,7 @@ export const sendMessage = async (req, res) => {
     maxMessageSize: MAX_MESSAGE_SIZE,
   };
   await mkSendMessage(req, res, options);
-  await fb.update(fb.path(`sentMessages/${fb.generateUid(now)}`), {
+  await updateInDb(createDbPath(`sentMessages/${generateUid(now)}`), {
     ..._.mapValues(_.replace(/\n/g, '\\n'), req.body),
     to: options.mailOptions.to,
     timestamp: options.timestamp,
