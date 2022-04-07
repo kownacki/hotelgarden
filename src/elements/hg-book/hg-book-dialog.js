@@ -1,5 +1,5 @@
 import {LitElement, html, css, unsafeCSS} from 'lit';
-import {firebaseUtils as fb} from '../../utils/firebase.js';
+import {createDbPath, getFromDb, updateDataOrImageInObjectInDb} from '../../utils/database.js';
 import {ObjectDbSyncController} from '../../utils/ObjectDbSyncController.js';
 import {staticProp, openProfitroom} from '../../utils.js';
 import sharedStyles from '../../styles/shared-styles.js';
@@ -57,12 +57,12 @@ export class HgBookDialog extends LitElement {
   `];
   constructor() {
     super();
-    this._path = fb.path('texts/book');
+    this._path = createDbPath('texts/book');
     this._objectDbSync = new ObjectDbSyncController(
       this,
-      async (path) => await fb.get(path) || {},
+      async (path) => await getFromDb(path) || {},
       async (objectPath, dataPath, {type, data}, oldData, object) => {
-        return fb.updateDataOrImageInObject(type, objectPath, dataPath, data, object);
+        return updateDataOrImageInObjectInDb(type, objectPath, dataPath, data, object);
       },
       (ready) => this._dataReady = ready,
       (data) => {

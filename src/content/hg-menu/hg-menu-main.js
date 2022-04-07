@@ -3,7 +3,7 @@ import '../../edit/hg-editable-text.js';
 import '../../elements/mkwc/hg-editable-image.js';
 import '../../elements/hg-list.js';
 import sharedStyles from '../../styles/shared-styles.js'
-import {firebaseUtils as fb} from '../../utils/firebase.js';
+import {createDbPath, updateImageInDb} from '../../utils/database.js';
 import {updateData, staticProp} from '../../utils.js';
 import './hg-menu-item.js';
 
@@ -68,7 +68,7 @@ export class HgMenuMain extends LitElement {
     this.dispatchEvent(new CustomEvent('category-changed'));
   }
   async updateImage(file) {
-    this.category.image = await fb.updateImage(fb.path('menus/' + this.uid, `${this.categoryIndex}.image`), file, (_.get('image.name', this.category)));
+    this.category.image = await updateImageInDb(createDbPath('menus/' + this.uid, `${this.categoryIndex}.image`), file, (_.get('image.name', this.category)));
     //todo it fixes bug when switching to category without image after adding image but causes flickering
     this.requestUpdate();
     this.dispatchEvent(new CustomEvent('category-changed'));

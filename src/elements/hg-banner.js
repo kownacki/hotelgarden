@@ -3,7 +3,7 @@ import {HDTV_WIDTH, HDTV_HEIGHT} from '../../config.js';
 import '../edit/hg-editable-text.js';
 import '../elements/mkwc/hg-editable-image-with-sync.js';
 import sharedStyles from '../styles/shared-styles.js';
-import {firebaseUtils as fb} from '../utils/firebase.js';
+import {createDbPath} from '../utils/database.js';
 import {updateData} from '../utils.js';
 
 const maxImageWidth = HDTV_WIDTH;
@@ -90,7 +90,7 @@ export class HgBanner extends LitElement {
     return html`
       ${this.noImage ? ''
         : html`<hg-editable-image-with-sync
-          .path=${this.path && fb.path(this.path.doc, this.path.field).extend('image')}
+          .path=${this.path && createDbPath(this.path.doc, this.path.field).extend('image')}
           .fit=${'cover'}
           .maxWidth=${maxImageWidth}
           .maxHeight=${maxImageHeight}

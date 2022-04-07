@@ -1,6 +1,6 @@
 import {LitElement, html, css, unsafeCSS} from 'lit';
 import sharedStyles from '../styles/shared-styles.js'
-import {firebaseUtils as fb} from '../utils/firebase.js';
+import {createDbPath, DbPath, getFromDb, updateDataOrImageInObjectInDb} from '../utils/database.js';
 import {ItemsDbSyncController} from '../utils/ItemsDbSyncController.js';
 import '../elements/mkwc/hg-editable-image.js';
 import '../edit/hg-editable-text.js';
@@ -12,7 +12,7 @@ export class HgInfographic extends LitElement {
   _itemsDbSync;
   static properties = {
     uid: String,
-    _path: fb.Path,
+    _path: DbPath,
     _items: Object,
     _itemsReady: Boolean,
   };
@@ -99,9 +99,9 @@ export class HgInfographic extends LitElement {
     super();
     this._itemsDbSync = new ItemsDbSyncController(
       this,
-      async (path) => await fb.get(path) || {},
+      async (path) => await getFromDb(path) || {},
       async (path, index, {field, data}, oldItem, items) => {
-        const updatedData = await fb.updateDataOrImageInObject(field, path, `${index}.${field}`, data, items);
+        const updatedData = await updateDataOrImageInObjectInDb(field, path, `${index}.${field}`, data, items);
         return {
           ...oldItem,
           [field]: updatedData,
@@ -113,7 +113,7 @@ export class HgInfographic extends LitElement {
   }
   async willUpdate(changedProperties) {
     if (changedProperties.has('uid')) {
-      this._path = fb.path(`infographics/${this.uid}`);
+      this._path = createDbPath(`infographics/${this.uid}`);
       this._itemsDbSync.setPath(this._path);
     }
   }

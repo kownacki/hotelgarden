@@ -1,6 +1,5 @@
 import {isElementVisible} from 'mk-frontend-web-utils/dom.js';
 import diacritics from '../resources/scripts/diacritics.js';
-import {firebaseUtils as fb} from './utils/firebase.js';
 
 export const headerHeight = 59;
 

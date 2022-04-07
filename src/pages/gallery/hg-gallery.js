@@ -4,14 +4,14 @@ import '../../content/hg-article/hg-intro-article.js';
 import '../../edit/hg-image-upload.js';
 import '../../elements/hg-list/hg-mosaic-list.js'
 import '../../elements/hg-window-slider.js';
-import {firebaseUtils as fb} from '../../utils/firebase.js';
+import {createDbPath, createImageInDb, deleteImageInDb, DbPath, getFromDb, updateImageInObjectInDb} from '../../utils/database.js';
 import {ItemsDbSyncController} from '../../utils/ItemsDbSyncController.js';
 import './hg-gallery/hg-gallery-item.js';
 
 export class HgGallery extends LitElement {
   _itemsDbSync;
   static properties = {
-    _path: fb.Path,
+    _path: DbPath,
     _items: Object,
     _itemsReady: Boolean,
   };
@@ -29,12 +29,12 @@ export class HgGallery extends LitElement {
   `;
   constructor() {
     super();
-    this._path = fb.path('gallery/gallery');
+    this._path = createDbPath('gallery/gallery');
     this._itemsDbSync = new ItemsDbSyncController(
       this,
-      async (path) => await fb.get(path) || {},
+      async (path) => await getFromDb(path) || {},
       async (path, index, file, oldItem, items) => {
-        const updatedImage = await fb.updateImageInObject(path, `${index}.image`, file, items);
+        const updatedImage = await updateImageInObjectInDb(path, `${index}.image`, file, items);
         return {
           ...oldItem,
           image: updatedImage,
@@ -67,11 +67,11 @@ export class HgGallery extends LitElement {
         .onAdd=${async (newItem) => {
           const uploadResult = await this.shadowRoot.getElementById('upload').upload();
           return uploadResult
-            ? {...newItem, image: await fb.createImage(uploadResult)}
+            ? {...newItem, image: await createImageInDb(uploadResult)}
             : false;
         }}
         .onDelete=${(item) => {
-          fb.deleteImage(item.image.name);
+          deleteImageInDb(item.image.name);
         }}
         @items-changed=${(event) => {
           this._items = event.detail;

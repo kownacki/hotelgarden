@@ -6,7 +6,7 @@ import '../elements/hg-icon-info.js';
 import '../elements/hg-action-buttons.js';
 import ckContent from '../styles/ck-content.js'
 import sharedStyles from '../styles/shared-styles';
-import {firebaseUtils as fb} from '../utils/firebase.js';
+import {createDbPath, DbPath, getFromDb, updateDataOrImageInObjectInDb} from '../utils/database.js';
 import {ObjectDbSyncController} from '../utils/ObjectDbSyncController.js';
 import {updateData} from '../utils.js';
 
@@ -25,7 +25,7 @@ export class HgTextImage extends LitElement {
     iconSrcs: Array,
     iconsAtEnd: {type: Boolean, reflect: true, attribute: 'icons-at-end'},
     slider: Boolean,
-    _path: fb.Path,
+    _path: DbPath,
     _textImage: Object,
     _ready: Boolean,
   };
@@ -95,9 +95,9 @@ export class HgTextImage extends LitElement {
     super();
     this._objectDbSync = new ObjectDbSyncController(
       this,
-      async (path) => await fb.get(path) || {},
+      async (path) => await getFromDb(path) || {},
       async (objectPath, dataPath, {type, data}, oldData, object) => {
-        return fb.updateDataOrImageInObject(type, objectPath, dataPath, data, object);
+        return updateDataOrImageInObjectInDb(type, objectPath, dataPath, data, object);
       },
       (ready) => this._ready = ready,
       (textImage) => this._textImage = textImage,
@@ -105,7 +105,7 @@ export class HgTextImage extends LitElement {
   }
   async willUpdate(changedProperties) {
     if (changedProperties.has('uid')) {
-      this._path = fb.path(`textImage/${this.uid}`);
+      this._path = createDbPath(`textImage/${this.uid}`);
       this._objectDbSync.setPath(this._path);
     }
   }

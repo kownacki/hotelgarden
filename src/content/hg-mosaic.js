@@ -5,7 +5,7 @@ import '../elements/hg-action-buttons.js';
 import ckContent from '../styles/ck-content.js'
 import sharedStyles from '../styles/shared-styles';
 import {ObjectDbSyncController} from '../utils/ObjectDbSyncController.js';
-import {firebaseUtils as fb} from '../utils/firebase.js';
+import {createDbPath, DbPath, getFromDb, updateDataOrImageInObjectInDb} from '../utils/database.js';
 import {updateData} from '../utils.js';
 
 const maxImageWidth = 750;
@@ -15,7 +15,7 @@ export class HgMosaic extends LitElement {
   static properties = {
     uid: Number,
     buttons: Object,
-    _path: fb.Path,
+    _path: DbPath,
     _mosaic: Object,
     _ready: Boolean,
   };
@@ -67,9 +67,9 @@ export class HgMosaic extends LitElement {
     super();
     this._objectDbSync = new ObjectDbSyncController(
       this,
-      async (path) => await fb.get(path) || {},
+      async (path) => await getFromDb(path) || {},
       async (objectPath, dataPath, {type, data}, oldData, object) => {
-        return fb.updateDataOrImageInObject(type, objectPath, dataPath, data, object);
+        return updateDataOrImageInObjectInDb(type, objectPath, dataPath, data, object);
       },
       (ready) => this._ready = ready,
       (mosaic) => this._mosaic = mosaic,
@@ -77,7 +77,7 @@ export class HgMosaic extends LitElement {
   }
   async willUpdate(changedProperties) {
     if (changedProperties.has('uid')) {
-      this._path = fb.path(`mosaics/${this.uid}`);
+      this._path = createDbPath(`mosaics/${this.uid}`);
       this._objectDbSync.setPath(this._path);
     }
   }

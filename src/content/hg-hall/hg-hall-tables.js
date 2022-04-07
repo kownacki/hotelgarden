@@ -2,7 +2,7 @@ import {LitElement, html, css, unsafeCSS} from 'lit';
 import '../../edit/hg-editable-text.js';
 import '../../elements/mkwc/hg-editable-image.js';
 import sharedStyles from '../../styles/shared-styles.js'
-import {firebaseUtils as fb} from '../../utils/firebase.js';
+import {createDbPath, updateImageInDb} from '../../utils/database.js';
 import {updateData} from '../../utils.js';
 
 const maxImageWidth = 200;
@@ -54,7 +54,7 @@ export class HgHallTables extends LitElement {
   async updateImage(index, file) {
     this._setOuts = _.set(
       `${index}.image`,
-      await fb.updateImage(fb.path(this._setOutsDoc, `${index}.image`), file, (_.get(`${index}.image.name`, this._setOuts))),
+      await updateImageInDb(createDbPath(this._setOutsDoc, `${index}.image`), file, (_.get(`${index}.image.name`, this._setOuts))),
       this._setOuts,
     );
   }
