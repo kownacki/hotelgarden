@@ -60,7 +60,7 @@ export class HgPage extends LitElement {
     })();
   }
   updated(changedProperties) {
-    if (changedProperties.has('uid')) {
+    if (changedProperties.has('uid') && !this.event) {
       this._defaultTitle = pages[this.uid].name;
     }
     if ((changedProperties.has('_config') || changedProperties.has('uid')) && !this.event) {
