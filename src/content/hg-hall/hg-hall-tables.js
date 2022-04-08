@@ -2,18 +2,22 @@ import {LitElement, html, css, unsafeCSS} from 'lit';
 import '../../edit/hg-editable-text.js';
 import '../../elements/mkwc/hg-editable-image.js';
 import sharedStyles from '../../styles/shared-styles.js'
-import {createDbPath, updateImageInDb} from '../../utils/database.js';
-import {updateData} from '../../utils.js';
+import {DbPath, createDbPath, getFromDb, updateDataOrImageInObjectInDb} from '../../utils/database.js';
+import {ObjectDbSyncController} from '../../utils/ObjectDbSyncController.js';
 
 const maxImageWidth = 200;
 
 export class HgHallTables extends LitElement {
+  _hallTablesObjectDbSync;
+  _setOutsObjectDbSync;
   static properties = {
     uid: String,
+    _hallTablesPath: DbPath,
     _hallTables: Object,
+    _hallTablesReady: Boolean,
+    _setOutsPath: DbPath,
     _setOuts: Object,
-    _setOutsDoc: String,
-    _dataReady: Boolean,
+    _setOutsReady: Boolean,
   };
   static styles = [sharedStyles, css`
     :host {
@@ -41,22 +45,36 @@ export class HgHallTables extends LitElement {
       margin: 8px 0;
     }
   `];
-  async firstUpdated() {
-    //todo refactor ehh....
-    (async () => {
-      this._hallTables = (await db.doc('hallTables/' + this.uid).get()).data() || {};
-    })();
-    const hall = (await db.doc('textImage/' + this.uid).get()).data();
-    this._setOutsDoc = 'hallTables/setOuts' + _.capitalize(hall.tent ? 'tent' : hall.narrow ? 'narrow' : hall.hallType);
-    this._setOuts = (await db.doc(this._setOutsDoc).get()).data() || {};
-    this._dataReady = true;
-  }
-  async updateImage(index, file) {
-    this._setOuts = _.set(
-      `${index}.image`,
-      await updateImageInDb(createDbPath(this._setOutsDoc, `${index}.image`), file, (_.get(`${index}.image.name`, this._setOuts))),
-      this._setOuts,
+  constructor() {
+    super();
+    this._hallTablesObjectDbSync = new ObjectDbSyncController(
+      this,
+      async (path) => await getFromDb(path) || {},
+      async (objectPath, dataPath, {type, data}, oldData, object) => {
+        return updateDataOrImageInObjectInDb(type, objectPath, dataPath, data, object);
+      },
+      (ready) => this._hallTablesReady = ready,
+      (hallTables) => this._hallTables = hallTables,
     );
+    this._setOutsObjectDbSync = new ObjectDbSyncController(
+      this,
+      async (path) => await getFromDb(path) || {},
+      async (objectPath, dataPath, {type, data}, oldData, object) => {
+        return updateDataOrImageInObjectInDb(type, objectPath, dataPath, data, object);
+      },
+      (ready) => this._setOutsReady = ready,
+      (setOuts) => this._setOuts = setOuts,
+    );
+  }
+  async willUpdate(changedProperties) {
+    if (changedProperties.has('uid')) {
+      this._hallTablesPath = createDbPath(`hallTables/${this.uid}`);
+      this._hallTablesObjectDbSync.setPath(this._hallTablesPath);
+
+      const hall = await getFromDb(createDbPath(`textImage/${this.uid}`));
+      this._setOutsPath = createDbPath(`hallTables/setOuts${_.capitalize(hall.tent ? 'tent' : hall.narrow ? 'narrow' : hall.hallType)}`);
+      this._setOutsObjectDbSync.setPath(this._setOutsPath);
+    }
   }
   render() {
     return html`
@@ -66,23 +84,27 @@ export class HgHallTables extends LitElement {
           <div>
             <hg-editable-image
               .src=${setOut.image?.url}
-              .ready=${this._dataReady}
+              .ready=${this._setOutsReady}
               .maxWidth=${maxImageWidth}
               .presize=${true}
-              @image-uploaded=${(event) => {
-                this.updateImage(index, event.detail);
+              @image-uploaded=${({detail: blob}) => {
+                this._setOutsObjectDbSync.requestFieldUpdate(`${index}.image`, {type: 'image', data: blob});
               }}>
             </hg-editable-image>
             <hg-editable-text
-              .ready=${this._dataReady}
-              .text=${_.get(`name`, setOut)}
-              @save=${(event) => updateData(this._setOutsDoc, `${index}.name`, event.detail)}>
+              .ready=${this._setOutsReady}
+              .text=${setOut.name}
+              @save=${({detail: text}) => {
+                this._setOutsObjectDbSync.requestFieldUpdate(`${index}.name`, {type: 'data', data: text});
+              }}>
               <p></p>
             </hg-editable-text>
             <hg-editable-text
-              .ready=${this._dataReady}
+              .ready=${this._hallTablesReady}
               .text=${_.get(`${index}.text1`, this._hallTables)}
-              @save=${(event) => updateData('hallTables/' + this.uid, `${index}.text1`, event.detail)}>
+              @save=${({detail: text}) => {
+                this._hallTablesObjectDbSync.requestFieldUpdate(`${index}.text1`, {type: 'data', data: text});
+              }}>
               <p class="smaller-text"></p>
             </hg-editable-text>
           </div>

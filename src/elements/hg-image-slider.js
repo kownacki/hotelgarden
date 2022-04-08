@@ -1,7 +1,6 @@
 import {LitElement, html, css} from 'lit';
-import {createDbPath, deleteImageInDb, updateImageInDb} from '../utils/database.js';
+import {DbPath, deleteImageInDb, getFromDb, updateInDb, updateImageInDb} from '../utils/database.js';
 import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
-import {updateData, getData} from '../utils.js';
 import './hg-image-slider/hg-image-slider-item.js';
 import './hg-image-upload-fab.js';
 import './hg-slider.js';
@@ -12,7 +11,7 @@ export class HgImageSlider extends LitElement {
   _firebaseAuth;
   static properties = {
     // required params
-    path: String,
+    path: DbPath,
     // optional params
     noGetImages: Boolean,
     images: Object,
@@ -43,7 +42,7 @@ export class HgImageSlider extends LitElement {
       if (this.path && !this.noGetImages) {
         (async () => {
           this.ready = false;
-          this.images = await getData(this.path.doc, this.path.field);
+          this.images = await getFromDb(this.path);
           this.ready = true;
         })();
       }
@@ -51,7 +50,7 @@ export class HgImageSlider extends LitElement {
   }
   async updateImage(index, file) {
     const oldImageName = _.get(`${index}.name`, this.images);
-    const newImage = await updateImageInDb(createDbPath(this.path.doc, _.join('.', _.compact([this.path.field, String(index)]))), file, oldImageName);
+    const newImage = await updateImageInDb(this.path.extend(String(index)), file, oldImageName);
     if (index === _.size(this.images)) {
       this.images = _.set(index, newImage, this.images);
     } else {
@@ -67,7 +66,7 @@ export class HgImageSlider extends LitElement {
     newImages.splice(index, 1);
     newImages = {...newImages};
 
-    updateData(this.path.doc, this.path.field, newImages);
+    updateInDb(this.path, newImages);
     if (this.shadowRoot.getElementById('content-slider').selected === _.size(newImages)) {
       --this.shadowRoot.getElementById('content-slider').selected;
     }

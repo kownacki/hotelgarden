@@ -4,6 +4,7 @@ import '../../content/hg-map.js';
 import '../../elements/hg-contact-form.js';
 import HgContent from '../../elements/hg-content.js';
 import ckContent from '../../styles/ck-content.js';
+import {createDbPath, getFromDb} from '../../utils/database.js';
 import {staticProp, setMetaDescription} from '../../utils.js';
 
 export class HgContact extends HgContent {
@@ -15,7 +16,7 @@ export class HgContact extends HgContent {
   constructor() {
     super();
     (async () => {
-      this._events = (await db.doc('events/events').get()).data() || {};
+      this._events = await getFromDb(createDbPath('events/events'));
     })();
   }
   render() {

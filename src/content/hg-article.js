@@ -4,7 +4,7 @@ import ckContent from '../styles/ck-content.js';
 import sharedStyles from '../styles/shared-styles.js';
 import '../elements/hg-content-label.js';
 import '../elements/hg-text.js';
-import {staticProp} from '../utils.js';
+import {createDbPath} from '../utils/database.js';
 
 export default class HgArticle extends LitElement {
   static properties = {
@@ -30,7 +30,7 @@ export default class HgArticle extends LitElement {
     return html`
       <hg-text
         id="hg-text"
-        .path=${staticProp({doc: 'articles/' + this.uid, field: 'text'})}
+        .path=${createDbPath(`articles/${this.uid}`, 'text')}
         .rich=${this.rich}
         .richConfig=${this.richConfig}
         .multiline=${true}>

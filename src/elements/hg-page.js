@@ -1,5 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import {unsafeHTML} from 'lit/directives/unsafe-html.js';
+import {createDbPath, getFromDb} from '../utils/database.js';
 import {setDocumentTitle, headerHeight, pages, sleep} from '../utils.js';
 
 import '../elements/hg-banner.js';
@@ -56,7 +57,7 @@ export class HgPage extends LitElement {
   constructor() {
     super();
     (async () => {
-      this._config = (await db.doc('_config/client').get()).data() || {};
+      this._config = await getFromDb(createDbPath('_config/client')) || {};
     })();
   }
   updated(changedProperties) {

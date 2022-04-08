@@ -1,10 +1,6 @@
-window.auth = firebase.auth();
-window.db = firebase.firestore();
-window.storage = firebase.storage();
-
-auth.onAuthStateChanged((user) => {window.loggedIn = Boolean(user) ; hideOrShowWidget()});
-
 import {LitElement, html, css} from 'lit';
+import {onAuthStateChanged} from 'firebase/auth';
+import {auth, createDbPath, getFromDb} from './utils/database.js';
 import {pathToUid} from './utils.js';
 import './hg-iconset.js';
 import '@polymer/app-layout/app-drawer/app-drawer.js';
@@ -21,6 +17,12 @@ import '@polymer/paper-styles/color.js';
 import './elements/hg-header.js';
 import './elements/hg-page.js';
 import './elements/hg-drawer.js';
+
+// For index.html !
+onAuthStateChanged(auth, (user) => {
+  window.loggedIn = Boolean(user);
+  hideOrShowWidget();
+})
 
 export class HgApp extends LitElement {
   static properties = {
@@ -51,9 +53,9 @@ export class HgApp extends LitElement {
     this._enableDrawer = (window.innerWidth < 1100);
 
     (async () => {
-      const promotedEventUid = _.get('uid', (await db.doc('events/promoted').get()).data());
+      const promotedEventUid = await getFromDb(createDbPath('events/promoted', 'uid'));
       if (promotedEventUid) {
-        const events = (await db.doc('events/events').get()).data();
+        const events = await getFromDb(createDbPath('events/events'));
         this._promotedEvent = {
           uid: promotedEventUid,
           title: _.get(promotedEventUid + '.title', events),

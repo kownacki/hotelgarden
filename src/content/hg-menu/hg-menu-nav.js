@@ -1,6 +1,5 @@
 import {LitElement, html, css} from 'lit';
-import {deleteImageInDb} from '../../utils/database.js';
-import {staticProp} from '../../utils.js';
+import {createDbPath, deleteImageInDb} from '../../utils/database.js';
 import '../../elements/hg-list.js';
 import './hg-menu-nav-item.js';
 
@@ -52,7 +51,7 @@ export class HgMenuNav extends LitElement {
         .vertical=${true}
         .noGetItems=${true},
         .items=${this.categories}
-        .path=${staticProp({doc: 'menus/' + this.uid})}
+        .path=${createDbPath('menus/' + this.uid)}
         .getItemName=${(category) => `kategorię${category.name ? ` "${category.name}"`: ''} i wszystkie zawierające się w niej pozycje`}
         .itemTemplate=${(category, index) => html`
           <hg-menu-nav-item

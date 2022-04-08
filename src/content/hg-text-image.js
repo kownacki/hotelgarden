@@ -8,7 +8,6 @@ import ckContent from '../styles/ck-content.js'
 import sharedStyles from '../styles/shared-styles';
 import {createDbPath, DbPath, getFromDb, updateDataOrImageInObjectInDb} from '../utils/database.js';
 import {ObjectDbSyncController} from '../utils/ObjectDbSyncController.js';
-import {updateData} from '../utils.js';
 
 const maxImageWidth = 750;
 const maxImageHeight = 400;
@@ -109,9 +108,6 @@ export class HgTextImage extends LitElement {
       this._objectDbSync.setPath(this._path);
     }
   }
-  async updateData(path, data) {
-    updateData('textImage/' + this.uid, path, data);
-  }
   render() {
     return html`
       ${this.slider
@@ -135,7 +131,9 @@ export class HgTextImage extends LitElement {
         ${this.noHeading ? '' : html`<hg-editable-text
           .ready=${this._ready}
           .text=${this._textImage?.heading}
-          @save=${(event) => this.updateData('heading', event.detail)}>
+          @save=${({detail: text}) => {
+            this._objectDbSync.requestFieldUpdate('heading', {type: 'data', data: text});
+          }}>
           ${!this.h3 ? html`<h2></h2>` : html`<h3></h3>`}
         </hg-editable-text>`}
         ${(this.iconsAtEnd ? _.reverse : _.identity)([
@@ -143,7 +141,9 @@ export class HgTextImage extends LitElement {
             .editable=${true}
             .dataReady=${this._ready}
             .items=${_.zipWith((text, src) => ({text, src}), _.map(_.get(_, this._textImage), this.iconFields), this.iconSrcs)}
-            @save=${(event) => this.updateData(`${this.iconFields[event.detail.index]}`, event.detail.text)}>
+            @save=${({detail: {index, text}}) => {
+              this._objectDbSync.requestFieldUpdate(`${this.iconFields[index]}`, {type: 'data', data: text});
+            }}>
           </hg-icon-info>`,
           html`<hg-editable-text
             .ready=${this._ready}
@@ -151,7 +151,9 @@ export class HgTextImage extends LitElement {
             .richConfig=${'mosaic'}
             multiline
             .text=${this._textImage?.text}
-            @save=${(event) => this.updateData('text', event.detail)}>
+            @save=${({detail: text}) => {
+              this._objectDbSync.requestFieldUpdate('text', {type: 'data', data: text});
+            }}>
             <div class="text ck-content"></div>
           </hg-editable-text>`,
         ])}

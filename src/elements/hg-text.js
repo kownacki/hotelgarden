@@ -1,23 +1,23 @@
-import {updateData} from '../utils.js';
+import {DbPath, getFromDb, updateInDb} from '../utils/database.js';
 import HgEditableText from '../edit/hg-editable-text.js';
 
 export class HgText extends HgEditableText {
   static properties = {
     // required params
-    path: Object, // {doc: String, field: String}
+    path: DbPath,
     // optional params
     noGetText: Boolean,
   };
   constructor() {
     super();
-    this.addEventListener('save', (event) => updateData(this.path.doc, this.path.field, event.detail));
+    this.addEventListener('save', (event) => updateInDb(this.path, event.detail));
   }
   // duplicated from hg-list
   updated(changedProperties) {
     if (changedProperties.has('path')) {
       if (this.path && !this.noGetText) {
         (async () => {
-          this.text = _.get(this.path.field, (await db.doc(this.path.doc).get()).data());
+          this.text = await getFromDb(this.path);
           this.ready = true;
           this.dispatchEvent(new CustomEvent('text-ready', {detail: this.text, composed: true}));
         })();

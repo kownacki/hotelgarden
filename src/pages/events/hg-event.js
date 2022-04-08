@@ -3,7 +3,8 @@ import '@polymer/paper-toggle-button/paper-toggle-button.js';
 import sharedStyles from '../../styles/shared-styles';
 import ckContent from '../../styles/ck-content.js'
 import {FirebaseAuthController} from '../../utils/FirebaseAuthController.js';
-import {updateData, staticProp, setMetaDescription} from '../../utils.js';
+import {createDbPath, getFromDb, updateInDb} from '../../utils/database.js';
+import {updateData, setMetaDescription} from '../../utils.js';
 import '../../edit/hg-editable-text.js';
 import '../../elements/hg-banner.js';
 import './hg-event/hg-event-edit-date.js';
@@ -81,7 +82,7 @@ export class HgEvent extends LitElement {
   constructor() {
     super();
     (async () => {
-      this._promotedEvent = _.get('uid', (await db.doc('events/promoted').get()).data());
+      this._promotedEvent = await getFromDb(createDbPath('events/promoted', 'uid'));
     })();
     this._firebaseAuth = new FirebaseAuthController(this, (loggedIn) => {
       this._loggedIn = loggedIn;
@@ -91,7 +92,7 @@ export class HgEvent extends LitElement {
     if (changedProperties.has('uid')) {
       this._dataReady = false;
       const uid = this.uid;
-      this._events = (await db.doc('events/events').get()).data() || {};
+      this._events = await getFromDb(createDbPath('events/events'));
       if (this.uid === uid) {
         this._dataReady = true;
         this._event = this._events[this.uid];
@@ -99,7 +100,7 @@ export class HgEvent extends LitElement {
       }
       if (this._event) {
         this._contentLoading = true;
-        this._content = (await db.doc('eventsContents/' + this.uid).get()).get('content');
+        this._content = await getFromDb(createDbPath(`eventsContents/${this.uid}`, 'content'));
         setMetaDescription(this._content);
         this._contentLoading = false;
       } else {
@@ -112,9 +113,9 @@ export class HgEvent extends LitElement {
   }
   render() {
     return html`
-      <hg-banner 
+      <hg-banner
         .uid=${this._dataReady && !this._event ? 'event-not-found' : undefined}
-        .path=${this._dataReady && this._event ? staticProp({doc: 'events/events', field: this.uid}) : undefined}
+        .path=${this._dataReady && this._event ? createDbPath('events/events', this.uid) : undefined}
         .noImage=${this._dataReady && !this._event}
         .noSubheading=${true} 
         .useTitleAsHeading=${this._dataReady && this._event}>
@@ -152,7 +153,9 @@ export class HgEvent extends LitElement {
                       id="promote"
                       .checked=${moment().isSameOrBefore(this._event.date, 'day') && this._promotedEvent === this.uid}
                       .disabled=${moment().isAfter(this._event.date, 'day')}
-                      @click=${() => db.doc('events/promoted').set({uid: this.shadowRoot.getElementById('promote').checked ? this.uid : null})}>
+                      @click=${() => {
+                        updateInDb(createDbPath('events/promoted', 'uid'), this.shadowRoot.getElementById('promote').checked ? this.uid : null);
+                      }}>
                       Promuj
                     </paper-toggle-button>
                   </div>
@@ -168,7 +171,7 @@ export class HgEvent extends LitElement {
               .text=${this._content}
               @save=${(event) => {
                 this._content = event.detail;
-                db.doc('eventsContents/' + this.uid).set({content: event.detail});
+                updateInDb(createDbPath(`eventsContents/${this.uid}`), {content: event.detail});
               }}>
               <div class="ck-content smaller-text"></div>
             </hg-editable-text>`}

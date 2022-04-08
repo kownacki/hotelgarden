@@ -1,6 +1,7 @@
 import {LitElement, html, css} from 'lit';
 import '@material/mwc-button';
-import {hyphenate, updateData} from '../../../utils.js';
+import {createDbPath, getFromDb, updateInDb} from '../../../utils/database.js';
+import {hyphenate} from '../../../utils.js';
 
 export class HgEventsAdd extends LitElement {
   static properties = {
@@ -39,7 +40,7 @@ export class HgEventsAdd extends LitElement {
       if (this._address) {
         this._loading = true;
         const title = this._title;
-        const dbResult = _.has(this._address, (await db.doc('events/events').get()).data());
+        const dbResult = _.has(this._address, await getFromDb(createDbPath('events/events')));
         this._loading = false;
         // Avoid race condition. Title could change while db query was going. Only use result if it's still relevant.
         if (title === this._title) {
@@ -52,12 +53,12 @@ export class HgEventsAdd extends LitElement {
     const title = this._title;
     const date = this._date;
     const address = this._address;
-    if (!address || _.has(address, (await db.doc('events/events').get()).data())) {
+    if (!address || _.has(address, await getFromDb(createDbPath('events/events')))) {
       alert(`Operacja nie powiodła się. Adres "${address}" jest zajęty lub nieprawidłowy.`);
       this._checkIfAddressTaken();
     } else {
       // todo transaction to avoid race condition
-      updateData('events/events', address, {title, date});
+      updateInDb(createDbPath('events/events', address), {title, date});
       window.history.pushState(null, null, '/wydarzenia/' + address);
       this.dispatchEvent(new CustomEvent('location-changed', {composed: true, bubbles: true}));
     }

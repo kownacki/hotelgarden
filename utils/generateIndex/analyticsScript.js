@@ -1,5 +1,5 @@
 // add analytics script
-export default `
+export const analyticsScript = `
 <script>
   if (window.location.hostname === 'www.hotelgarden.pl') {
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

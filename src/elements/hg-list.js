@@ -2,7 +2,8 @@ import {LitElement, html, css} from 'lit';
 import {repeat} from 'lit/directives/repeat.js';
 import sharedStyles from '../styles/shared-styles.js'
 import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
-import {array, updateData, generateUid} from '../utils.js';
+import {DbPath, getFromDb, updateInDb} from '../utils/database.js';
+import {array, generateUid} from '../utils.js';
 import './hg-list/hg-list-item.js';
 import './hg-list/hg-list-add.js';
 
@@ -16,7 +17,7 @@ export default class HgList extends LitElement {
     noAdd: Boolean,
     vertical: Boolean,
     // required params
-    path: Object, // {doc: String, [field: String]}
+    path: DbPath,
     itemTemplate: Function,
     getItemName: Function,
     // optional params
@@ -73,8 +74,7 @@ export default class HgList extends LitElement {
       if (this.path && !this.noGetItems) {
         this.ready = false;
         (async () => {
-          const doc = (await db.doc(this.path.doc).get()).data() || {};
-          this.items = this.path.field ? _.get(this.path.field, doc) : doc;
+          this.items = await getFromDb(this.path) || {};
           this.ready = true;
         })();
       }
@@ -88,8 +88,8 @@ export default class HgList extends LitElement {
       this.dispatchEvent(new CustomEvent('list-changed', {detail: this._list}));
     }
   }
-  updateData(path, data) {
-    return updateData(this.path.doc, _.join('.', _.compact([this.path.field, path])), data);
+  updateData(field, data) {
+    return updateInDb(this.path.extend(field), data);
   }
   async updateItem(key, field, data) {
     this._processing = true;

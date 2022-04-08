@@ -1,21 +1,23 @@
 import {LitElement, html, css} from 'lit';
 import {HDTV_WIDTH, HDTV_HEIGHT} from '../../config.js';
 import '../edit/hg-editable-text.js';
-import '../elements/mkwc/hg-editable-image-with-sync.js';
+import '../elements/mkwc/hg-editable-image.js';
 import sharedStyles from '../styles/shared-styles.js';
-import {createDbPath} from '../utils/database.js';
-import {updateData} from '../utils.js';
+import {DbPath, createDbPath, getFromDb, updateDataOrImageInObjectInDb} from '../utils/database.js';
+import {ObjectDbSyncController} from '../utils/ObjectDbSyncController.js';
 
 const maxImageWidth = HDTV_WIDTH;
 const maxImageHeight = HDTV_HEIGHT;
 
 export class HgBanner extends LitElement {
+  _objectDbSync;
   static properties = {
     uid: String,
-    path: Object,
+    path: DbPath,
     useTitleAsHeading: String,
     noImage: {type: Boolean, reflect: true, attribute: 'no-image'},
     noSubheading: Boolean,
+    _path: DbPath,
     _banner: Object,
     _dataReady: Boolean,
   };
@@ -24,7 +26,7 @@ export class HgBanner extends LitElement {
       height: 100%;
       display: flex;
     }
-    hg-editable-image-with-sync {
+    hg-editable-image {
       inset: 0;
       position: absolute;
     }
@@ -64,51 +66,65 @@ export class HgBanner extends LitElement {
       color: inherit;
     }
     @media all and (max-width: 599px) {
-      :host(:not([no-image])), hg-editable-image-with-sync {
+      :host(:not([no-image])), hg-editable-image {
         height: 66%;
       }
     }
   `];
-  async updated(changedProperties) {
+  constructor() {
+    super();
+    this._objectDbSync = new ObjectDbSyncController(
+      this,
+      async (path) => await getFromDb(path) || {},
+      async (objectPath, dataPath, {type, data}, oldData, object) => {
+        return updateDataOrImageInObjectInDb(type, objectPath, dataPath, data, object);
+      },
+      (ready) => this._dataReady = ready,
+      (banner) => this._banner = banner,
+    );
+  }
+  async willUpdate(changedProperties) {
     if (changedProperties.has('uid') && this.uid) {
-      this.path = {doc: 'banners/' + this.uid};
+      this._path = createDbPath(`banners/${this.uid}`);
     }
     if (changedProperties.has('path') && this.path) {
-      this._dataReady = false;
-      const path = this.path;
-      const doc = (await db.doc(this.path.doc).get()).data();
-      if (_.isEqual(this.path, path)) {
-        this._banner = (this.path.field ? _.get(this.path.field, doc) : doc) || {};
-        this._dataReady = true;
-      }
+      this._path = this.path;
     }
-  }
-  updateData(path, data) {
-    updateData(this.path.doc, `${this.path.hasOwnProperty('field') ? `${this.path.field}.` : ''}${path}`, data)
+    if (changedProperties.has('_path')) {
+      this._objectDbSync.setPath(this._path);
+    }
   }
   render() {
     return html`
       ${this.noImage ? ''
-        : html`<hg-editable-image-with-sync
-          .path=${this.path && createDbPath(this.path.doc, this.path.field).extend('image')}
+        : html`<hg-editable-image
+          .src=${this._banner?.image?.url}
+          .ready=${this._dataReady}
           .fit=${'cover'}
           .maxWidth=${maxImageWidth}
           .maxHeight=${maxImageHeight}
-          .compressionQuality=${0.7}>
-        </hg-editable-image-with-sync>
+          .compressionQuality=${0.7}
+          @image-uploaded=${({detail: blob}) => {
+            this._objectDbSync.requestFieldUpdate('image', {type: 'image', data: blob});
+          }}>
+        </hg-editable-image>
         <div class="gradient"></div>
       `}
       <div class="heading">
         <hg-editable-text
           .ready=${this._dataReady}
-          .text=${_.get(this.useTitleAsHeading ? 'title' : 'heading', this._banner) || ''}
-          @save=${(event) => this.updateData(this.useTitleAsHeading ? 'title' : 'heading', event.detail)}>
+          .text=${this._banner?.[this.useTitleAsHeading ? 'title' : 'heading'] || ''}
+          @save=${({detail: text}) => {
+            this._objectDbSync.requestFieldUpdate(this.useTitleAsHeading ? 'title' : 'heading', {type: 'data', data: text});
+          }}>
           <h1 class="horizontally-spacious-text"></h1>
         </hg-editable-text>
         ${this.noSubheading ? '' : html`<hg-editable-text
           .ready=${this._dataReady}
-          .text=${_.get('subheading', this._banner) || ''}
-          @save=${(event) => this.updateData('subheading', event.detail)}>
+          .text=${this._banner?.subheading || ''}
+          @save=${({detail: text}) => {
+            this._objectDbSync.requestFieldUpdate('subheading', {type: 'data', data: text});
+          }}>
           <p class="horizontally-spacious-text"></p>
         </hg-editable-text>`}
       </div>

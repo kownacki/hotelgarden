@@ -1,5 +1,7 @@
 import {LitElement, html, css} from 'lit';
-
+import {collection, getDocs, query, where} from 'firebase/firestore';
+import {ref, listAll} from 'firebase/storage';
+import {db, storage} from '../../utils/database.js';
 //todo dodać link do strony icons8
 
 export class HgIconsAdd extends LitElement {
@@ -44,7 +46,7 @@ export class HgIconsAdd extends LitElement {
   constructor() {
     super();
     (async () => {
-      this._categories = _.map('name', (await storage.ref('icons').listAll()).prefixes);
+      this._categories = _.map('name', (await listAll(ref(storage, 'icons'))).prefixes);
       this._categories = _.remove(_.isEqual('other'), this._categories);
       this._categories.push('other');
 
@@ -62,8 +64,8 @@ export class HgIconsAdd extends LitElement {
     if (changedProperties.has('_selected') && this._selected) {
       this._loading = true;
       const selected = this._selected;
-      const iconsRefs = (await db.collection('icons').where('category', "==", selected).get()).docs;
-      const icons = _.map(_.method('data'), iconsRefs);
+      const iconsQuerySnapshot = await getDocs(query(collection(db, 'icons'), where('category', '==', selected)));
+      const icons = iconsQuerySnapshot.docs.map((iconDocSnapshot) => iconDocSnapshot.data());
       // Avoid race condition. Title could change while query was going. Only use result if it's still relevant.
       if (selected === this._selected) {
         this._availableIcons = icons;

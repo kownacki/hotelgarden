@@ -12,7 +12,7 @@
   "private": true,
   "engines": {
     "node": "14",
-    "npm": ">=8"
+    "npm": "8"
   },
   "dependencies": {
     "firebase-admin": "^10.0.2",

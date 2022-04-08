@@ -1,47 +1,72 @@
 import fs from 'fs';
 import _ from 'lodash/fp.js';
-import apiKey from './apiKey.js';
-import analyticsScript from './generateIndex/analyticsScript.js';
+import {analyticsScript} from './generateIndex/analyticsScript.js';
 import {preRender} from './generateIndex/preRender.js';
-import preloadFirebaseAndApp from './generateIndex/preloadFirebaseAndApp.js';
-import initializeFirebaseAndApp from './generateIndex/initializeFirebaseAndApp.js';
-import tawkToScript from './generateIndex/tawkToScript.js';
+import {tawkToScript} from './generateIndex/tawkToScript.js';
 
 const noopTag = (strings, ...keys) => _.flow([_.zip, _.flatten, _.initial, _.map(String), _.join('')])(strings, keys);
 // to trigger syntax highlighting
 const css = noopTag;
 
-const namePrefix = 'hg';
-const faviconPath = '/resources/images/favicon.ico';
-const fontsRootPath =  '/resources/fonts/';
-const fonts = [
-  {family: 'Lato', style: 'normal', weight: '400', path: `${fontsRootPath}Lato/Lato-Regular.ttf`},
-  {family: 'Lato', style: 'italic', weight: '400', path: `${fontsRootPath}Lato/Lato-Italic.ttf`},
-  {family: 'Lato', style: 'normal', weight: '300', path: `${fontsRootPath}Lato/Lato-Light.ttf`},
-  {family: 'Lato', style: 'italic', weight: '300', path: `${fontsRootPath}Lato/Lato-LightItalic.ttf`},
-  {family: 'Lato', style: 'normal', weight: '700', path: `${fontsRootPath}Lato/Lato-Bold.ttf`},
-  {family: 'Lato', style: 'italic', weight: '700', path: `${fontsRootPath}Lato/Lato-BoldItalic.ttf`},
-  {family: 'Yellowtail', style: 'normal', weight: 'normal', path: `${fontsRootPath}Yellowtail/Yellowtail-Regular.ttf`},
-];
-const scriptsRootPath =  '/resources/scripts/';
-const scripts = [
-  {path: `${scriptsRootPath}lodashBundle.js`, module: true},
-  {path: `${scriptsRootPath}moment.min.js`},
-];
-const firebaseRootPath = '/__/firebase/7.11.0/';
-const firebaseLibs = ['app', 'auth', 'firestore', 'storage'];
-const firebaseInitializeOptions = {
-  apiKey,
-  authDomain: "pl-hotelgarden.firebaseapp.com",
-  databaseURL: "https://pl-hotelgarden.firebaseio.com",
-  projectId: "pl-hotelgarden",
-  storageBucket: "pl-hotelgarden.appspot.com",
-  messagingSenderId: "439170507609",
-  appId: "1:439170507609:web:d50495f3bf9c9613702248",
-  measurementId: "G-T7DQCNYLP2"
-};
+const createJsResourcePreloadLink = (path, module = false) => `
+  <link rel="preload" href="${path}" as="script" ${module ? 'crossorigin="anonymous"' : ''}>
+`;
+
+const createFontResourcePreloadLink = (path) => `
+  <link rel="preload" href="${path}" as="font" crossorigin="anonymous">
+`;
+
+const createFontFace = (path, {family, style, weight}) => css`
+  @font-face {
+    font-family: '${family}';
+    font-style: ${style};
+    font-weight: ${weight};
+    font-display: swap;
+    src: url(${path}) format('truetype');
+  }
+`;
+
+const createScript = (path, module = false) => `
+  <script src="${path}" ${module ? 'type="module"' : ''}></script>
+`;
 
 const createPlaceholder = (name) => `\$\{${name}\}`;
+
+const namePrefix = 'hg';
+const faviconPath = '/resources/images/favicon.ico';
+const fontsRootPath = '/resources/fonts/';
+const scriptsRootPath = '/resources/scripts/';
+
+const getFontResource = (path, {family, style, weight}) => {
+  return {
+    preload: createFontResourcePreloadLink(path),
+    fontFace: createFontFace(path, {family, style, weight}),
+  };
+}
+
+const fontResources = [
+  getFontResource(`${fontsRootPath}Lato/Lato-Regular.ttf`, {family: 'Lato', style: 'normal', weight: '400'}),
+  getFontResource(`${fontsRootPath}Lato/Lato-Italic.ttf`, {family: 'Lato', style: 'italic', weight: '400'}),
+  getFontResource(`${fontsRootPath}Lato/Lato-Light.ttf`, {family: 'Lato', style: 'normal', weight: '300'}),
+  getFontResource(`${fontsRootPath}Lato/Lato-LightItalic.ttf`, {family: 'Lato', style: 'italic', weight: '300'}),
+  getFontResource(`${fontsRootPath}Lato/Lato-Bold.ttf`, {family: 'Lato', style: 'normal', weight: '700'}),
+  getFontResource(`${fontsRootPath}Lato/Lato-BoldItalic.ttf`, {family: 'Lato', style: 'italic', weight: '700'}),
+  getFontResource(`${fontsRootPath}Yellowtail/Yellowtail-Regular.ttf`, {family: 'Yellowtail', style: 'normal', weight: 'normal'}),
+];
+
+const getJsResource = (path, module = false) => {
+  return {
+    preload: createJsResourcePreloadLink(path, module),
+    script: createScript(path, module),
+  }
+}
+
+const jsResources = [
+  getJsResource(`${scriptsRootPath}lodashBundle.js`, true),
+  getJsResource(`${scriptsRootPath}moment.min.js`),
+  getJsResource(`/src/${namePrefix}-app.js`, true),
+];
+
 const getIndexHtml = (titlePlaceholder) => `
 <!doctype html>
 <html lang="pl">
@@ -56,14 +81,11 @@ const getIndexHtml = (titlePlaceholder) => `
   <link rel="shortcut icon" href="${faviconPath}">
   ${'' /*todo don't use external sources */}
   <link href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" rel="stylesheet">
+
+  ${fontResources.map((fontResource) => fontResource.preload).join('')}
   
-  ${_.map((font) => `
-    <link rel="preload" href="${font.path}" as="font" crossorigin="anonymous">
-  `, fonts).join('')}
-  ${_.map((script) => `
-    <link rel="preload" href="${script.path}" as="script" ${script.module ? 'crossorigin="anonymous"' : ''}>
-  `, scripts).join('')}
-  ${preloadFirebaseAndApp(namePrefix, firebaseRootPath, firebaseLibs)}
+  ${jsResources.map((jsResource) => jsResource.preload).join('')}
+
   <link rel="preload" href="/src/styles/shared-styles.js" as="script" crossorigin="anonymous">
   <link rel="preload" href="/src/styles/ck-content.js" as="script" crossorigin="anonymous">
   
@@ -106,28 +128,17 @@ const getIndexHtml = (titlePlaceholder) => `
       --mdc-switch-selected-hover-handle-color: var(--mdc-theme-primary);
       --mdc-switch-selected-track-color: var(--divider-color);
     }
-    ${_.map((font) => css`
-      @font-face {
-        font-family: '${font.family}';
-        font-style: ${font.style};
-        font-weight: ${font.weight};
-        font-display: swap;
-        src: url(${font.path}) format('truetype');
-      }
-    `, fonts).join('')}
+
+    ${fontResources.map((fontResource) => fontResource.fontFace).join('')}
   </style>
 </head>
 <body>
   <${namePrefix}-app>
     ${preRender}
   </${namePrefix}-app>
-  
-  ${_.map((script) => `
-    <script src="${script.path}" ${script.module ? 'type="module"' : ''}></script>
-  `, scripts).join('')}
 
-  ${initializeFirebaseAndApp(namePrefix, firebaseInitializeOptions, firebaseRootPath, firebaseLibs)}
-  
+  ${jsResources.map((jsResource) => jsResource.script).join('')}
+
   ${tawkToScript}
   
   <style id="inline-style"></style>

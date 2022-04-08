@@ -5,8 +5,8 @@ import '../../content/hg-content-slider.js';
 import '../../content/hg-links.js';
 import HgContent from '../../elements/hg-content.js';
 import sharedStyles from '../../styles/shared-styles.js';
+import {createDbPath, getFromDb} from '../../utils/database.js';
 import {FirebaseAuthController} from '../../utils/FirebaseAuthController.js';
-import {getData} from '../../utils.js';
 import './hg-lunch/hg-lunch-edit.js';
 import './hg-lunch/hg-lunch-generate.js';
 import './hg-lunch/hg-lunch-week.js';
@@ -99,8 +99,8 @@ export class HgLunch extends HgContent {
           };
         }, {current: 'current', upcoming: 'upcoming'});
         this._lunches = {
-          current: await getData(this._lunchesData.current.doc) || {},
-          upcoming: await getData(this._lunchesData.upcoming.doc) || {},
+          current: await getFromDb(createDbPath(this._lunchesData.current.doc)) || {},
+          upcoming: await getFromDb(createDbPath(this._lunchesData.upcoming.doc)) || {},
         };
       })();
     }

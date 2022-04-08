@@ -1,4 +1,6 @@
 import {LitElement, html, css} from 'lit';
+import {GoogleAuthProvider, signOut, signInWithPopup} from 'firebase/auth';
+import {auth} from '../utils/database.js';
 import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
 
 export class HgLogin extends LitElement {
@@ -26,9 +28,9 @@ export class HgLogin extends LitElement {
     return html`
       <a @click=${() => {
         if (auth.currentUser) {
-          auth.signOut();
+          signOut(auth);
         } else {
-          auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+          signInWithPopup(auth, new GoogleAuthProvider());
         }
       }}>${this._loggedIn ? 'Wyloguj się' : 'Zaloguj się'}</a>
     `;

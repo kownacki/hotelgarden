@@ -1,5 +1,6 @@
 import {isElementVisible} from 'mk-frontend-web-utils/dom.js';
 import diacritics from '../resources/scripts/diacritics.js';
+import {createDbPath, updateInDb} from './utils/database.js';
 
 export const headerHeight = 59;
 
@@ -37,15 +38,8 @@ export const splitEvents = (events) => [
 
 export const generateUid = () => `${Date.now()}${_.padCharsStart('0', 9,  _.random(1, 10**9 - 1))}`;
 
-export const getData = async (doc, path) => {
-  const docData = (await db.doc(doc).get()).data() || {};
-  return path ? _.get(path, docData) : docData;
-};
-
-export const updateData = (doc, path, data) => {
-  return path
-    ? db.doc(doc).set(_.setWith(Object, path, data, {}), {mergeFields: [path]})
-    : db.doc(doc).set(data);
+export const updateData = async (doc, path, data) => {
+  return updateInDb(createDbPath(doc, path), data);
 };
 
 export const array = {

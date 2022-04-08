@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit';
-import {staticProp} from '../utils.js';
 import '../elements/hg-image-slider.js';
 import '../elements/hg-content-label.js';
+import {createDbPath} from '../utils/database.js';
 
 export class HgContentSlider extends LitElement {
   static properties = {
@@ -39,7 +39,7 @@ export class HgContentSlider extends LitElement {
   `;
   render() {
     return html`
-      <hg-image-slider .double=${true} .path=${staticProp({doc: 'contentSliders/' + this.uid})}></hg-image-slider>      
+      <hg-image-slider .double=${true} .path=${createDbPath(`contentSliders/${this.uid}`)}></hg-image-slider>      
       <hg-content-label .name=${'Slider'}></hg-content-label>
     `;
   }

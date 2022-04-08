@@ -1,7 +1,7 @@
 import {LitElement, html, css, unsafeCSS} from 'lit';
 import {createDbPath, getFromDb, updateDataOrImageInObjectInDb} from '../../utils/database.js';
 import {ObjectDbSyncController} from '../../utils/ObjectDbSyncController.js';
-import {staticProp, openProfitroom} from '../../utils.js';
+import {openProfitroom} from '../../utils.js';
 import sharedStyles from '../../styles/shared-styles.js';
 import ckContent from '../../styles/ck-content.js'
 import '../mkwc/hg-editable-image.js'
@@ -77,7 +77,7 @@ export class HgBookDialog extends LitElement {
       <hg-dialog id="dialog" .noButtons=${true} @dialog-changed=${() => this.dialog = this.shadowRoot.getElementById('dialog').dialog}>
         <hg-text
           slot="header"
-          .path=${staticProp({doc: 'texts/book', field: 'heading'})}
+          .path=${createDbPath('texts/book', 'heading')}
           .noGetText=${true}
           .text=${_.get('heading', this._data)}
           .ready=${this._dataReady}>
@@ -87,7 +87,7 @@ export class HgBookDialog extends LitElement {
           ${_.map((location) => html`
             <div>
               <hg-text
-                .path=${staticProp({doc: 'texts/book', field: `${location.name}.heading`})}
+                .path=${createDbPath('texts/book', `${location.name}.heading`)}
                 .noGetText=${true}
                 .text=${_.get(`${location.name}.heading`, this._data)}
                 .ready=${this._dataReady}>
@@ -104,7 +104,7 @@ export class HgBookDialog extends LitElement {
                 }}>
               </hg-editable-image>
               <hg-text
-                .path=${staticProp({doc: 'texts/book', field: `${location.name}.text`})}
+                .path=${createDbPath('texts/book', `${location.name}.text`)}
                 .rich=${true}
                 .noGetText=${true}
                 .text=${_.get(`${location.name}.text`, this._data)}

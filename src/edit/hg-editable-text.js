@@ -1,4 +1,6 @@
 import {LitElement, html, css} from 'lit';
+import {onAuthStateChanged} from 'firebase/auth'
+import {auth} from '../utils/database.js';
 import sharedStyles from '../styles/shared-styles.js';
 import {headerHeight, moveOutFromShadowDom} from '../utils.js'
 
@@ -69,7 +71,7 @@ export default class HgEditableText extends LitElement {
   `];
   constructor() {
     super();
-    this._unsubscribeLoggedInListener = auth.onAuthStateChanged((user) => this._loggedIn = Boolean(user));
+    this._unsubscribeLoggedInListener = onAuthStateChanged(auth, (user) => this._loggedIn = Boolean(user));
   }
   disconnectedCallback() {
     this._unsubscribeLoggedInListener();

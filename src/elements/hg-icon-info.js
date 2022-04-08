@@ -48,7 +48,9 @@ export class HgIconInfo extends LitElement {
               .ready=${this.dataReady}
               .float=${true}
               .text=${item.text}
-              @save=${(event) => this.dispatchEvent(new CustomEvent('save', {detail: {index, text: event.detail}}))}>
+              @save=${({detail: text}) => {
+                this.dispatchEvent(new CustomEvent('save', {detail: {index, text}}));
+              }}>
               <div class="text"></div>
             </hg-editable-text>`
             : html`<div class="text">${item.text}</div>`

@@ -1,7 +1,7 @@
 import {LitElement, html, css, unsafeCSS} from 'lit';
 import '../elements/mkwc/hg-editable-image-with-sync.js';
 import sharedStyles from '../styles/shared-styles.js';
-import {staticProp} from '../utils.js';
+import {createDbPath} from '../utils/database.js';
 import './hg-halls-block/hg-halls-slider.js';
 
 const maxImageWidth = 750;
@@ -79,7 +79,7 @@ export class HgHallsBlock extends LitElement {
       <h2 class="content-heading">Zobacz sale</h2>
       <div class="container">
         <hg-editable-image-with-sync
-          .path=${staticProp({doc: `images/${this.uid}-halls-block`})}
+          .path=${createDbPath(`images/${this.uid}-halls-block`)}
           .fit=${'cover'}
           .maxWidth=${maxImageWidth}
           .maxHeight=${maxImageHeight}>

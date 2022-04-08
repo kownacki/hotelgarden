@@ -1,8 +1,4 @@
 {
-  "firestore": {
-    "rules": "firestore.rules",
-    "indexes": "firestore.indexes.json"
-  },
   "hosting": {
     "public": "dist",
     "rewrites": [
@@ -57,8 +53,5 @@
         "type": 301
       }
     ]
-  },
-  "storage": {
-    "rules": "storage.rules"
   }
 }

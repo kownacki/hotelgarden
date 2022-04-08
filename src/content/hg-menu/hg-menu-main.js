@@ -4,7 +4,7 @@ import '../../elements/mkwc/hg-editable-image.js';
 import '../../elements/hg-list.js';
 import sharedStyles from '../../styles/shared-styles.js'
 import {createDbPath, updateImageInDb} from '../../utils/database.js';
-import {updateData, staticProp} from '../../utils.js';
+import {updateData} from '../../utils.js';
 import './hg-menu-item.js';
 
 const maxImageWidth = 700;
@@ -103,7 +103,7 @@ export class HgMenuMain extends LitElement {
           .vertical=${true}
           .noGetItems=${true}
           .items=${_.get('items', this.category)}
-          .path=${staticProp({doc: 'menus/' + this.uid, field: `${this.categoryIndex}.items`})}
+          .path=${createDbPath(`menus/${this.uid}`, `${this.categoryIndex}.items`)}
           .getItemName=${(item) => `pozycję${item.name ? ` "${item.name}"`: ''}`}
           .itemTemplate=${(item, index, disableEdit) => 
             html`<hg-menu-item .item=${item} .disableEdit=${disableEdit} .isRestaurantMenu=${true}></hg-menu-nav-item>

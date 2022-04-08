@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit';
-import {staticProp} from '../utils.js';
+import {createDbPath} from '../utils/database.js';
 import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
 import './hg-list.js';
 import './hg-icons/hg-icons-add.js';
@@ -58,7 +58,7 @@ export class HgIcons extends LitElement {
     return html`
       <hg-list
         .array=${true}
-        .path=${staticProp({doc: 'iconBlocks/' + this.uid})}
+        .path=${createDbPath(`iconBlocks/${this.uid}`)}
         .getItemName=${() => 'ikonę'}
         .itemTemplate=${(icon, index, disableEdit) => html`
           <hg-icons-item .small=${this.small} .icon=${icon} .disableEdit=${disableEdit}></hg-icons-item>

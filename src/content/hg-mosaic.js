@@ -4,16 +4,15 @@ import '../elements/mkwc/hg-editable-image.js';
 import '../elements/hg-action-buttons.js';
 import ckContent from '../styles/ck-content.js'
 import sharedStyles from '../styles/shared-styles';
-import {ObjectDbSyncController} from '../utils/ObjectDbSyncController.js';
 import {createDbPath, DbPath, getFromDb, updateDataOrImageInObjectInDb} from '../utils/database.js';
-import {updateData} from '../utils.js';
+import {ObjectDbSyncController} from '../utils/ObjectDbSyncController.js';
 
 const maxImageWidth = 750;
 
 export class HgMosaic extends LitElement {
   _objectDbSync;
   static properties = {
-    uid: Number,
+    uid: String,
     buttons: Object,
     _path: DbPath,
     _mosaic: Object,
@@ -81,9 +80,6 @@ export class HgMosaic extends LitElement {
       this._objectDbSync.setPath(this._path);
     }
   }
-  async updateData(path, data) {
-    updateData('mosaics/' + this.uid, path, data);
-  }
   render() {
     return html`
       <div class="left">
@@ -102,7 +98,9 @@ export class HgMosaic extends LitElement {
           <hg-editable-text
             .ready=${this._ready}
             .text=${_.get('primary.heading', this._mosaic)}
-            @save=${(event) => this.updateData('primary.heading', event.detail)}>
+            @save=${({detail: text}) => {
+              this._objectDbSync.requestFieldUpdate('primary.heading', {type: 'data', data: text});
+            }}>
             <h2></h2>
           </hg-editable-text>
           <hg-editable-text
@@ -111,7 +109,9 @@ export class HgMosaic extends LitElement {
             .rich=${true}
             .richConfig=${'mosaic'}
             .text=${_.get('primary.text', this._mosaic)}
-            @save=${(event) => this.updateData('primary.text', event.detail)}>
+            @save=${({detail: text}) => {
+              this._objectDbSync.requestFieldUpdate('primary.text', {type: 'data', data: text});
+            }}>
             <div class="ck-content"></div>
           </hg-editable-text>
           ${!_.get('primary', this.buttons) ? '' : html`<hg-action-buttons .buttons=${this.buttons.primary}></hg-action-buttons>`}
@@ -131,7 +131,9 @@ export class HgMosaic extends LitElement {
            <hg-editable-text
             .ready=${this._ready}
             .text=${_.get('secondary.heading', this._mosaic)}
-            @save=${(event) => this.updateData('secondary.heading', event.detail)}>
+            @save=${({detail: text}) => {
+              this._objectDbSync.requestFieldUpdate('secondary.heading', {type: 'data', data: text});
+            }}>
             <h2></h2>
           </hg-editable-text>
           <hg-editable-text
@@ -140,7 +142,9 @@ export class HgMosaic extends LitElement {
             .rich=${true}
             .richConfig=${'mosaic'}
             .text=${_.get('secondary.text', this._mosaic)}
-            @save=${(event) => this.updateData('secondary.text', event.detail)}>
+            @save=${({detail: text}) => {
+              this._objectDbSync.requestFieldUpdate('secondary.text', {type: 'data', data: text});
+            }}>
             <div class="ck-content"></div>
           </hg-editable-text>
           ${!_.get('secondary', this.buttons) ? '' : html`<hg-action-buttons .buttons=${this.buttons.secondary}></hg-action-buttons>`}

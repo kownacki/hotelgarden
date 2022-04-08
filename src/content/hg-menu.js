@@ -1,4 +1,5 @@
 import {LitElement, html, css} from 'lit';
+import {createDbPath, getFromDb} from '../utils/database.js'
 import {headerHeight} from '../utils.js';
 import './hg-menu/hg-menu-main.js';
 import './hg-menu/hg-menu-nav.js';
@@ -56,7 +57,7 @@ export class HgMenu extends LitElement {
     window.addEventListener('resize', _.throttle(100, () => this._compact = (window.innerWidth < 600)));
   }
   async firstUpdated() {
-    this.categories = (await db.doc('menus/' + this.uid).get()).data();
+    this.categories = await getFromDb(createDbPath(`menus/${this.uid}`));
     this._dataReady = true;
   }
   render(){

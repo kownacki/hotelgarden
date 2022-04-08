@@ -1,4 +1,4 @@
-export default `
+export const tawkToScript = `
 <script type="text/javascript">
   var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
   let hgDialogOpened;

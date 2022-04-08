@@ -1,10 +1,10 @@
 import {LitElement, html, css} from 'lit';
 import '@polymer/paper-checkbox/paper-checkbox.js';
-import {staticProp} from '../../utils.js';
 import '../../content/hg-article/hg-intro-article.js';
 import '../../elements/hg-list.js';
 import '../../elements/hg-review.js';
 import '../../content/hg-links.js';
+import {createDbPath} from '../../utils/database.js';
 
 const reviewBlocks = ['landing', 'restaurant', 'grill-garden', 'weddings', 'family-parties'];
 
@@ -68,7 +68,7 @@ export class HgReviews extends LitElement {
         .array=${true}
         .addAtStart=${true}
         .transform=${() => _.reverse}
-        .path=${staticProp({doc: 'reviews/reviews'})}
+        .path=${createDbPath('reviews/reviews')}
         .getItemName=${(item) => `opinię${item.heading ? ` "${item.heading}"`: ''}`}
         .itemTemplate=${(review, index, disableEdit) => html`
           <style>

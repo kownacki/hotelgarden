@@ -1,3 +1,5 @@
+import {onAuthStateChanged} from 'firebase/auth';
+import {auth} from './database.js';
 import {SubscriptionController} from './SubscriptionController.js';
 
 /**
@@ -16,7 +18,7 @@ export class FirebaseAuthController {
     host.addController(this);
     this._onLoggedInChange = onLoggedInChange;
     this._subscription = new SubscriptionController(host, () => {
-      return firebase.auth().onAuthStateChanged((user) => {
+      return onAuthStateChanged(auth, (user) => {
         this._setLoggedIn(Boolean(user));
       });
     });

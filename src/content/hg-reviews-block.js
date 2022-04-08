@@ -1,7 +1,7 @@
 import {LitElement, html, css, unsafeCSS} from 'lit';
 import '../elements/mkwc/hg-editable-image-with-sync.js';
 import sharedStyles from '../styles/shared-styles.js';
-import {staticProp} from '../utils.js';
+import {createDbPath, getFromDb} from '../utils/database.js';
 import './hg-reviews-block/hg-reviews-slider.js';
 import './hg-reviews-block/hg-scores.js';
 
@@ -98,7 +98,8 @@ export class HgReviewsBlock extends LitElement {
   constructor() {
     super();
     (async () => {
-      this._reviews = _.reverse(_.filter((review) => _.includes(this.uid, review.display), _.toArray((await db.doc('reviews/reviews').get()).data())));
+      const allReviews = await getFromDb(createDbPath('reviews/reviews'));
+      this._reviews = _.reverse(_.filter((review) => _.includes(this.uid, review.display), _.toArray(allReviews)));
     })();
   }
   render() {
@@ -107,7 +108,7 @@ export class HgReviewsBlock extends LitElement {
       <div class="container">
         <hg-scores .bookingScores=${this.bookingScores}></hg-scores>
         <hg-editable-image-with-sync
-          .path=${staticProp({doc: `images/${this.uid}-reviews-block`})}
+          .path=${createDbPath(`images/${this.uid}-reviews-block`)}
           .fit=${'cover'}
           .maxWidth=${maxImageWidth}
           .maxHeight=${maxImageHeight}>

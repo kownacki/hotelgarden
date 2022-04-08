@@ -1,8 +1,8 @@
 import {LitElement, html, css} from 'lit';
 import '../../../elements/hg-list.js';
 import sharedStyles from '../../../styles/shared-styles.js';
+import {createDbPath} from '../../../utils/database.js';
 import {FirebaseAuthController} from '../../../utils/FirebaseAuthController.js';
-import {staticProp} from '../../../utils';
 import './hg-events-card.js';
 
 export class HgEventsList extends LitElement {
@@ -35,7 +35,7 @@ export class HgEventsList extends LitElement {
           ...(!this.past ? [] : [_.reverse]),
           ...(!this.max ? [] : [_.take(this.max)]),
         ])}
-        .path=${staticProp({doc: 'events/events'})}
+        .path=${createDbPath('events/events')}
         .emptyTemplate=${html`<p style="font-size: 20px">Brak ${!this.past ? 'nadchodzących' : 'minionych'} wydarzeń</p>`}
         .getItemName=${(item) => `wydarzenie "${item.title}"`}       
         .itemTemplate=${(event, uid) => html`<hg-events-card .event=${{uid, ...event}}></hg-events-card>`}
