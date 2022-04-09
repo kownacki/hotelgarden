@@ -1,16 +1,15 @@
 import {initializeApp}  from 'firebase-admin/app';
-import {getFirestore, SetOptions} from 'firebase-admin/firestore';
-import {getGet, getUpdate} from 'mk-firebase-utils';
+import {getFirestore} from 'firebase-admin/firestore';
 
-initializeApp();
+export const app = initializeApp();
+export const db = getFirestore(app);
 
-export * from 'mk-firebase-utils';
-
-export const get = getGet((doc: string) => {
-  return getFirestore().doc(doc).get();
-});
-
-export const update = getUpdate((doc: string, data: any, options?: SetOptions) => {
-  const docRef = getFirestore().doc(doc);
-  return options ? docRef.set(data, options) : docRef.set(data);
-});
+export {
+  Path as DbPath,
+  createPath as createDbPath,
+  generateUid as generateDbUid,
+  get as getFromDb,
+  update as updateInDb,
+}
+// @ts-ignore see https://github.com/microsoft/TypeScript/issues/33079
+from 'mk-firebase-utils/admin';

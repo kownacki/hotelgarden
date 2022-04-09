@@ -4,7 +4,7 @@ import _ from 'lodash/fp';
 import {sendMessage as mkSendMessage} from 'mk-firebase-functions-utils/sendMessage';
 import moment from 'moment';
 import 'moment-timezone';
-import {createPath as createDbPath, get as getFromDb, update as updateInDb, generateUid} from './database';
+import {createDbPath, generateDbUid, getFromDb, updateInDb} from './database';
 import {RequestWithBody, AdminConfigSendMessage} from './types';
 
 moment.locale('pl');
@@ -43,7 +43,7 @@ export const sendMessage = async (req: Request, res: Response) => {
     maxMessageSize: MAX_MESSAGE_SIZE,
   };
   await mkSendMessage(req, res, options);
-  await updateInDb(createDbPath(`sentMessages/${generateUid(timeAtFunctionStart)}`), {
+  await updateInDb(createDbPath(`sentMessages/${generateDbUid(timeAtFunctionStart)}`), {
     ..._.mapValues(_.replace(/\n/g, '\\n'), body),
     to: options.mailOptions.to,
     timestamp: timeAtFunctionStart,

@@ -1,13 +1,13 @@
-import {getFirestore} from 'firebase-admin/firestore';
 import {Request, Response} from 'firebase-functions';
 import {createIndex} from './createIndex';
+import {db} from './database';
 import {ClientConfig, ClientConfigSeo} from './types';
 
 let seo: ClientConfigSeo;
 let resolveSeoReady: (value?: unknown) => void;
 const seoReady = new Promise((resolve) => resolveSeoReady = resolve);
 
-getFirestore().doc('_config/client').onSnapshot((doc) => {
+db.doc('_config/client').onSnapshot((doc) => {
   seo = (doc.data() as ClientConfig).seo ;
   resolveSeoReady();
 });
