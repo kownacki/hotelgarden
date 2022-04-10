@@ -58,7 +58,7 @@ export class HgEventsAdd extends LitElement {
       this._checkIfAddressTaken();
     } else {
       // todo transaction to avoid race condition
-      updateInDb(createDbPath('events/events', address), {title, date});
+      updateInDb(createDbPath('events/events', address), {title, date, public: false});
       window.history.pushState(null, null, '/wydarzenia/' + address);
       this.dispatchEvent(new CustomEvent('location-changed', {composed: true, bubbles: true}));
     }
