@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import {onAuthStateChanged} from 'firebase/auth';
-import {pathToUid} from '../utils/urlStructure.js';
+import {getEventUid, isEventPath, pathToUid} from '../utils/urlStructure.js';
 import {auth, createDbPath, getFromDb} from './utils/database.js';
 import './hg-iconset.js';
 import '@polymer/app-layout/app-drawer/app-drawer.js';
@@ -74,20 +74,22 @@ export class HgApp extends LitElement {
       }
     }));
   }
-  async updated(changedProperties) {
+  willUpdate(changedProperties) {
+    if (isEventPath(this._path)) {
+      this._event = true;
+      this._uid = getEventUid(this._path);
+      this._noBannerImage = false;
+    } else {
+      this._event = false;
+      this._uid = pathToUid[this._path] || '404';
+      this._noBannerImage = _.includes(this._uid, ['contact', 'gallery', '404']);
+    }
+  }
+  updated(changedProperties) {
     if (changedProperties.has('_path')) {
       if (window.location.hostname === 'www.hotelgarden.pl') {
         ga('set', 'page', this._path);
         ga('send', 'pageview');
-      }
-      if (/^\/wydarzenia\/[^\/]+$/.test(this._path)) {
-        this._event = true;
-        this._uid =_.replace('/wydarzenia/', '', this._path);
-        this._noBannerImage = false;
-      } else {
-        this._event = false;
-        this._uid = pathToUid[this._path] || '404';
-        this._noBannerImage = _.includes(this._uid, ['contact', 'gallery', '404']);
       }
     }
   }
@@ -105,7 +107,7 @@ export class HgApp extends LitElement {
         .promotedEventLoaded=${this._promotedEventLoaded}
         @open-drawer=${() => this.shadowRoot.getElementById('drawer').open()}>
       </hg-header>
-      <hg-page 
+      <hg-page
         .event=${this._event}
         .path=${this._path}
         .uid=${this._uid}

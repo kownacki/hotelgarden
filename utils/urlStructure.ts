@@ -126,3 +126,11 @@ export const links = [
 ];
 
 export const linksMap = keyBy(links, 'path');
+
+export const isEventPath = (path: string) => {
+  return path.startsWith('/wydarzenia/');
+}
+
+export const getEventUid = (path: string) => {
+  return path.replace('/wydarzenia/', '');
+}

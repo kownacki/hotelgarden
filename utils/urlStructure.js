@@ -75,3 +75,9 @@ export const links = [
     pages['contact'],
 ];
 export const linksMap = keyBy(links, 'path');
+export const isEventPath = (path) => {
+    return path.startsWith('/wydarzenia/');
+};
+export const getEventUid = (path) => {
+    return path.replace('/wydarzenia/', '');
+};

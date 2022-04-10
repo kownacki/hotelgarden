@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit';
-import {pages} from '../../../utils/urlStructure.js';
+import {isEventPath, pages} from '../../../utils/urlStructure.js';
 
 export class HgDrawerItem extends LitElement {
   static properties = {
@@ -49,7 +49,7 @@ export class HgDrawerItem extends LitElement {
     return html`
       <div class="item"
         ?selected=${(this.link.path === this.selected && !this.link.sublinks)
-          || (this.link.path === '/wydarzenia' && _.startsWith('/wydarzenia', this.selected))}>
+          || (this.link.path === '/wydarzenia' && (this.selected === '/wydarzenia' || isEventPath(this.selected)))}>
         ${this.link.sublinks 
           ? html`<div
               @click=${() => this.opened = !this.opened}>

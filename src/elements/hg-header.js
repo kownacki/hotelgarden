@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit';
-import {pathToUid, pages, links} from '../../utils/urlStructure.js';
+import {isEventPath, pathToUid, pages, links} from '../../utils/urlStructure.js';
 import './hg-header/hg-header-subnav.js';
 import './hg-header/hg-header-logo.js';
 import './hg-book/hg-book-order-button.js';
@@ -158,7 +158,7 @@ export class HgHeader extends LitElement {
                 <a 
                   href="${link.path}"
                   ?selected=${link.path === this.selected
-                    || (link.path === '/wydarzenia' && _.startsWith('/wydarzenia', this.selected))
+                    || (link.path === '/wydarzenia' && (this.selected === '/wydarzenia' || isEventPath(this.selected)))
                     || _.includes(pathToUid[this.selected], link.sublinks)}>
                   ${link.name}
                 </a>
