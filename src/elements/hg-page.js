@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import {unsafeHTML} from 'lit/directives/unsafe-html.js';
-import {pages} from '../../utils/urlStructure.js';
+import {getDefaultTitle} from '../../utils/seo.js';
 import {createDbPath, getFromDb} from '../utils/database.js';
 import {setDocumentTitle, headerHeight, sleep} from '../utils.js';
 
@@ -17,13 +17,10 @@ import '../pages/hotel/hg-reviews.js';
 import '../pages/rooms/hg-rooms.js';
 import '../pages/restaurant/hg-restaurant.js';
 import '../pages/restaurant/hg-lunch.js';
-// import '../pages/restaurant/hg-catering.js';
 import '../pages/conferences/hg-conferences.js';
 import '../pages/conferences/hg-conference-halls.js';
 import '../pages/celebrations/hg-weddings.js';
 import '../pages/celebrations/hg-family-parties.js';
-// import '../pages/celebrations/hg-chrzciny.js';
-// import '../pages/celebrations/hg-komunie.js';
 import '../pages/celebrations/hg-banquet-halls.js';
 import '../pages/gallery/hg-gallery.js';
 import '../pages/events/hg-events.js';
@@ -40,6 +37,7 @@ export class HgPage extends LitElement {
     uid: String,
     noBannerImage: {type: Boolean, reflect: true, attribute: 'no-banner-image'},
     eventTitle: String,
+    _initialPage: Boolean,
     _defaultTitle: String,
     _config: Object,
   };
@@ -57,21 +55,28 @@ export class HgPage extends LitElement {
   `;
   constructor() {
     super();
+    this._initialPage = true;
     (async () => {
       this._config = await getFromDb(createDbPath('_config/client')) || {};
     })();
   }
-  updated(changedProperties) {
-    if (changedProperties.has('uid') && !this.event) {
-      this._defaultTitle = pages[this.uid].name;
+  willUpdate(changedProperties) {
+    if (changedProperties.has('uid') && changedProperties.get('uid') !== undefined) {
+      this._initialPage = false;
     }
-    if ((changedProperties.has('_config') || changedProperties.has('uid')) && !this.event) {
-      this.shadowRoot.getElementById('page').config = this._config;
+    if (changedProperties.has('uid') && !this.event) {
+      this._defaultTitle = getDefaultTitle(this.uid);
     }
     if (changedProperties.has('_defaultTitle') || changedProperties.has('_config')) {
-      if (this._config) {
-        setDocumentTitle(_.get(`${this.path}.title`, this._config.seo.urls) || this._defaultTitle, this._config.seo);
+      if (!this._initialPage && this._config) {
+        const seoPageTitle = this._config.seo.urls?.[this.path]?.title;
+        setDocumentTitle(seoPageTitle || this._defaultTitle, this._config.seo);
       }
+    }
+  }
+  updated(changedProperties) {
+    if ((changedProperties.has('_config') || changedProperties.has('uid')) && !this.event) {
+      this.shadowRoot.getElementById('page').config = this._config;
     }
   }
   render() {

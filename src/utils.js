@@ -1,6 +1,7 @@
 import {isElementVisible} from 'mk-frontend-web-utils/dom.js';
 import diacritics from '../resources/scripts/diacritics.js';
 import {createDbPath, updateInDb} from './utils/database.js';
+import {createDocumentTitle} from '../utils/seo.js';
 
 export const headerHeight = 59;
 
@@ -130,7 +131,9 @@ export const openProfitroom = async (location, roomId, adults = 2) => {
   window.Booking.OpenSite(location, {RoomID: roomId, adults, checkin: moment().format('YYYY-MM-DD'), checkout: moment().add(1, 'day').format('YYYY-MM-DD')});
 };
 
-export const setDocumentTitle = (title, seo) => document.title = `${title} ${seo.titleSeparator} ${seo.titleSuffix}`;
+export const setDocumentTitle = (title, seoConfig) => {
+  document.title = createDocumentTitle(title, seoConfig);
+}
 
 export const setMetaDescription = (text) => {
   document.head.querySelector('meta[name="description"]').setAttribute('content',

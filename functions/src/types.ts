@@ -1,5 +1,4 @@
 import {Request} from 'firebase-functions';
-import {Path} from '../../utils/urlStructure';
 
 export interface RequestWithBody<ReqBody> extends Request {
   body: ReqBody,
@@ -24,14 +23,4 @@ export interface AdminConfigSendMessage {
 
 export interface AdminConfig {
   sendMessage: AdminConfigSendMessage,
-}
-
-export interface ClientConfigSeo {
-  titleSeparator: string,
-  titleSuffix: string,
-  urls: Record<Path, {title?: string}>,
-}
-
-export interface ClientConfig {
-  seo: ClientConfigSeo,
 }

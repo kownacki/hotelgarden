@@ -1,5 +1,5 @@
+import {ClientConfig} from '../../utils/types';
 import {db} from './database';
-import {ClientConfig} from './types';
 
 let clientConfig: ClientConfig;
 let resolveClientConfigReady: (value?: unknown) => void;
