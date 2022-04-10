@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit';
 import {onAuthStateChanged} from 'firebase/auth';
+import {pathToUid} from '../utils/urlStructure.js';
 import {auth, createDbPath, getFromDb} from './utils/database.js';
-import {pathToUid} from './utils.js';
 import './hg-iconset.js';
 import '@polymer/app-layout/app-drawer/app-drawer.js';
 import '@polymer/app-route/app-location.js';

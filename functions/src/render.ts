@@ -1,24 +1,25 @@
 import {Request, Response} from 'firebase-functions';
+import {pages, pathToUid, Path} from '../../utils/urlStructure';
+import {getClientConfig} from './config';
 import {createIndex} from './createIndex';
-import {db} from './database';
-import {ClientConfig, ClientConfigSeo} from './types';
+import {ClientConfigSeo} from './types';
 
-let seo: ClientConfigSeo;
-let resolveSeoReady: (value?: unknown) => void;
-const seoReady = new Promise((resolve) => resolveSeoReady = resolve);
+const getDefaultTitle = (path: Path) => {
+  const pageUid = pathToUid[path];
+  return pages[pageUid].name;
+}
 
-db.doc('_config/client').onSnapshot((doc) => {
-  seo = (doc.data() as ClientConfig).seo ;
-  resolveSeoReady();
-});
-
-const createDocumentTitle = (title: string, seo: ClientConfigSeo) => `${title} ${seo.titleSeparator} ${seo.titleSuffix}`;
+const createDocumentTitle = (title: string, seoConfig: ClientConfigSeo) => {
+  return `${title} ${seoConfig.titleSeparator} ${seoConfig.titleSuffix}`;
+}
 
 export const render = async (req: Request, res: Response) => {
-  await seoReady;
+  const path = req.path as Path;
+  const defaultTitle = getDefaultTitle(path);
+  const config = await getClientConfig();
 
-  const pageTitle = seo.urls?.[req.path]?.title;
-  const fullTitle = createDocumentTitle(pageTitle || '', seo);
+  const seoPageTitle = config.seo.urls?.[path]?.title;
+  const fullTitle = createDocumentTitle(seoPageTitle || defaultTitle, config.seo);
 
   res.status(200).send(createIndex(fullTitle));
 };

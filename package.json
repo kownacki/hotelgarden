@@ -9,6 +9,7 @@
     "generate-docs": "jsdoc src -r -d docs",
     "generate-all": "npm run generate-index && npm run generate-lodash && npm run generate-docs",
     "firebase-login": "firebase login",
+    "build-ts": "tsc --project tsconfig.build.json",
     "build": "rollup --config rollupConfigs/rollup.config.js",
     "deploy-hosting": "firebase deploy --only hosting",
     "deploy-functions": "firebase deploy --only functions",
@@ -17,20 +18,6 @@
   "engines": {
     "node": "14",
     "npm": "8"
-  },
-  "devDependencies": {
-    "@rollup/plugin-commonjs": "^21.0.3",
-    "@rollup/plugin-node-resolve": "^13.1.3",
-    "es-dev-server": "^2.1.0",
-    "firebase": "^9.6.10",
-    "firebase-tools": "^10.6.0",
-    "jsdoc": "^3.6.10",
-    "lodash": "^4.17.21",
-    "rollup": "^2.70.1",
-    "rollup-plugin-copy": "^3.4.0",
-    "rollup-plugin-delete": "^2.0.0",
-    "rollup-plugin-minify-html-literals": "^1.2.6",
-    "rollup-plugin-terser": "^7.0.2"
   },
   "dependencies": {
     "@ckeditor/ckeditor5-build-inline": "git+https://github.com/kownacki/ckeditor5-build-inline.git#stable",
@@ -61,5 +48,21 @@
     "mk-frontend-web-utils": "git+https://github.com/kownacki/mk-frontend-web-utils.git#master",
     "mkwc": "git+https://github.com/kownacki/mkwc.git#master",
     "pdfmake": "git+https://github.com/kownacki/pdfmake.git#hotelgarden"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^21.0.3",
+    "@rollup/plugin-node-resolve": "^13.1.3",
+    "@types/lodash-es": "^4.17.6",
+    "es-dev-server": "^2.1.0",
+    "firebase": "^9.6.10",
+    "firebase-tools": "^10.6.0",
+    "jsdoc": "^3.6.10",
+    "lodash": "^4.17.21",
+    "rollup": "^2.70.1",
+    "rollup-plugin-copy": "^3.4.0",
+    "rollup-plugin-delete": "^2.0.0",
+    "rollup-plugin-minify-html-literals": "^1.2.6",
+    "rollup-plugin-terser": "^7.0.2",
+    "typescript": "^4.6.3"
   }
 }

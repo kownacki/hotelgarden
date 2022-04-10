@@ -1,7 +1,8 @@
 import {LitElement, html, css} from 'lit';
 import {unsafeHTML} from 'lit/directives/unsafe-html.js';
+import {pages} from '../../utils/urlStructure.js';
 import {createDbPath, getFromDb} from '../utils/database.js';
-import {setDocumentTitle, headerHeight, pages, sleep} from '../utils.js';
+import {setDocumentTitle, headerHeight, sleep} from '../utils.js';
 
 import '../elements/hg-banner.js';
 import '../elements/hg-footer.js';

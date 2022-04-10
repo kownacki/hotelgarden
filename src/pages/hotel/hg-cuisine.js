@@ -1,4 +1,5 @@
 import {LitElement, html, css} from 'lit';
+import {pages} from '../../../utils/urlStructure.js';
 import '../../content/hg-article/hg-intro-article.js';
 import '../../content/hg-content-icons.js';
 import '../../content/hg-content-slider.js';
@@ -6,7 +7,7 @@ import '../../content/hg-links.js';
 import '../../content/hg-mosaic.js';
 import '../../content/hg-text-image.js';
 import HgContent from '../../elements/hg-content.js';
-import {staticProp, pages} from '../../utils.js';
+import {staticProp} from '../../utils.js';
 
 export class HgCuisine extends HgContent {
   render() {

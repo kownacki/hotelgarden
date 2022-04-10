@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit';
+import {pathToUid, linksMap, pages} from '../../utils/urlStructure.js';
 import sharedStyles from '../styles/shared-styles.js';
 import {createDbPath, getFromDb} from '../utils/database.js';
-import {pathToUid, linksMap, pages} from '../utils.js';
 
 export class HgLinks extends LitElement {
   static properties = {

@@ -1,6 +1,6 @@
 {
   "name": "functions",
-  "main": "dist/index.js",
+  "main": "dist/functions/src/index.js",
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
     "serve": "firebase serve --only functions",

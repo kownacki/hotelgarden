@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit';
-import {pages} from '../../utils.js';
+import {pages} from '../../../utils/urlStructure.js';
 
 export class HgDrawerItem extends LitElement {
   static properties = {

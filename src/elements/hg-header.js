@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit';
-import {pathToUid, pages, links} from '../utils.js';
+import {pathToUid, pages, links} from '../../utils/urlStructure.js';
 import './hg-header/hg-header-subnav.js';
 import './hg-header/hg-header-logo.js';
 import './hg-book/hg-book-order-button.js';
