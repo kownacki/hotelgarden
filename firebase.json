@@ -3,12 +3,8 @@
     "public": "dist",
     "rewrites": [
       {
-        "source": "@(villa-garden|atrakcje-okolicy|opinie|pokoje|konferencje|sale-konferencyjne|kuchnia|lunch|garden-bistro|wesela|przyjecia-rodzinne|sale-bankietowe|galeria|wydarzenia|kontakt|test|test2|test3)",
+        "source": "**",
         "function": "render"
-      },
-      {
-        "source": "/wydarzenia/*",
-        "destination": "/index.html"
       }
     ],
     "headers": [

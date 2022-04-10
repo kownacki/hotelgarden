@@ -13,3 +13,19 @@ export {
 }
 // @ts-ignore see https://github.com/microsoft/TypeScript/issues/33079
 from 'mk-firebase-utils/admin';
+
+export const listenToDb = <Data>(doc: string): [() => Data, Promise<unknown>] => {
+  let data: Data;
+  let resolveDataReady: (value?: unknown) => void;
+  const dataReady = new Promise((resolve) => resolveDataReady = resolve);
+
+  db.doc(doc).onSnapshot((doc) => {
+    data = doc.data() as Data;
+    resolveDataReady();
+  });
+
+  return [
+    () => data,
+    dataReady,
+  ];
+};

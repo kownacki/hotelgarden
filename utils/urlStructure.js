@@ -18,9 +18,6 @@ export const pathToUid = {
     '/galeria': 'gallery',
     '/wydarzenia': 'events',
     '/kontakt': 'contact',
-    '/test': 'test',
-    '/test2': 'test2',
-    '/test3': 'test3',
 };
 export const paths = Object.keys(pathToUid);
 export const pages = {
@@ -34,20 +31,13 @@ export const pages = {
     'conference-halls': { name: 'Sale konferencyjne', path: '/sale-konferencyjne', dir: 'conferences' },
     'restaurant': { name: 'O restauracji', path: '/garden-bistro', dir: 'restaurant' },
     'lunch': { name: 'Lunch', path: '/lunch', dir: 'restaurant' },
-    // 'catering': {name: 'Catering', path: '/catering', dir: 'restaurant'},
     'weddings': { name: 'Wesela', path: '/wesela', dir: 'celebrations' },
     'family-parties': { name: 'Przyjęcia rodzinne', path: '/przyjecia-rodzinne', dir: 'celebrations' },
-    // 'chrzciny': {name: 'Chrzciny', path: '/chrzciny', dir: 'celebrations'},
-    // 'komunie': {name: 'Komunie', path: '/komunie', dir: 'celebrations'},
     'banquet-halls': { name: 'Sale bankietowe', path: '/sale-bankietowe', dir: 'celebrations' },
     'gallery': { name: 'Galeria', path: '/galeria', dir: 'gallery' },
     'events': { name: 'Wydarzenia', path: '/wydarzenia', dir: 'events' },
     'contact': { name: 'Kontakt', path: '/kontakt', dir: 'contact' },
     '404': { name: 'Błąd 404 - strony nie znaleziono', path: NOT_FOUND_404, dir: '404' },
-    //
-    'test': { name: 'Test', path: '/test', dir: '' },
-    'test2': { name: 'Test 2', path: '/test2', dir: '' },
-    'test3': { name: 'Test 3', path: '/test3', dir: '' },
 };
 export const pageUids = Object.keys(pages);
 export const links = [
@@ -75,6 +65,9 @@ export const links = [
     pages['contact'],
 ];
 export const linksMap = keyBy(links, 'path');
+export const isValidPath = (path, events) => {
+    return paths.includes(path) || (isEventPath(path) && Object.keys(events).includes(getEventUid(path)));
+};
 export const isEventPath = (path) => {
     return path.startsWith('/wydarzenia/');
 };

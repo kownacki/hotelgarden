@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import {unsafeHTML} from 'lit/directives/unsafe-html.js';
-import {getDefaultTitle} from '../../utils/seo.js';
+import {getDefaultTitle, appendSuffixToTitle} from '../../utils/seo.js';
 import {createDbPath, getFromDb} from '../utils/database.js';
 import {setDocumentTitle, headerHeight, sleep} from '../utils.js';
 
@@ -68,9 +68,10 @@ export class HgPage extends LitElement {
       this._defaultTitle = getDefaultTitle(this.uid);
     }
     if (changedProperties.has('_defaultTitle') || changedProperties.has('_config')) {
-      if (!this._initialPage && this._config) {
+      if (!this._initialPage && this._defaultTitle && this._config) {
         const seoPageTitle = this._config.seo.urls?.[this.path]?.title;
-        setDocumentTitle(seoPageTitle || this._defaultTitle, this._config.seo);
+        const fullTitle = appendSuffixToTitle(seoPageTitle || this._defaultTitle, this._config.seo);
+        setDocumentTitle(fullTitle);
       }
     }
   }

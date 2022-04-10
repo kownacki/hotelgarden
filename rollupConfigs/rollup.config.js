@@ -14,8 +14,8 @@ export default [{
     del({targets: 'dist'}),
     copy({
       targets: [
-        {src: 'index.html', dest: 'dist'},
-        {src: 'index.html', dest: 'dist', rename: '404.html'},
+        // {src: 'index.html', dest: 'dist'},
+        // {src: 'index.html', dest: 'dist', rename: '404.html'},
         {src: 'resources', dest: 'dist'},
         {src: 'node_modules/@ckeditor', dest: 'dist/node_modules'},
         {src: 'node_modules/pdfmake/build', dest: 'dist/node_modules/pdfmake'},
