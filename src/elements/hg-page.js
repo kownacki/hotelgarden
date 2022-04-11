@@ -2,7 +2,7 @@ import {LitElement, html, css} from 'lit';
 import {html as staticHtml, unsafeStatic} from 'lit/static-html.js';
 import {getDefaultTitle, appendSuffixToTitle} from '../../utils/seo.js';
 import {createDbPath, getFromDb} from '../utils/database.js';
-import {setDocumentTitle, headerHeight, sleep} from '../utils.js';
+import {setDocumentTitle, setMetaDescription, headerHeight, sleep} from '../utils.js';
 
 import '../elements/hg-banner.js';
 import '../elements/hg-footer.js';
@@ -30,11 +30,12 @@ import '../pages/404/hg-404.js';
 let seconds = 0;
 setInterval(() => ++seconds, 1000);
 
-const getContentElement = (pageUid, config) => {
+const getContentElement = (pageUid, config, handleSetMetaDescription) => {
   return staticHtml`
     <hg-${unsafeStatic(pageUid)}
       class="page"
-      .config=${config}>
+      .config=${config}
+      @set-meta-description=${({detail: text}) => handleSetMetaDescription(text)}>
     </hg-${unsafeStatic(pageUid)}>
   `;
 };
@@ -77,11 +78,17 @@ export class HgPage extends LitElement {
       this._defaultTitle = getDefaultTitle(this.uid);
     }
     if (changedProperties.has('_defaultTitle') || changedProperties.has('_config')) {
+      //todo maybe add reloading config?
       if (!this._initialPage && this._defaultTitle && this._config) {
         const seoPageTitle = this._config.seo.urls?.[this.path]?.title;
         const fullTitle = appendSuffixToTitle(seoPageTitle || this._defaultTitle, this._config.seo);
         setDocumentTitle(fullTitle);
       }
+    }
+  }
+  _handleSetMetaDescription(text) {
+    if (!this._initialPage) {
+      setMetaDescription(text);
     }
   }
   render() {
@@ -99,11 +106,16 @@ export class HgPage extends LitElement {
         ? html`<hg-event 
           .uid=${this.uid}
           class="page"
-          @title-loaded=${(event) => this._defaultTitle = event.detail || 'Wydarzenie bez tytułu'}>
+          @title-loaded=${({detail: title}) => {
+            this._defaultTitle = title || 'Wydarzenie bez tytułu';
+          }}
+          @set-meta-description=${({detail: text}) => {
+            this._handleSetMetaDescription(text);
+          }}>
         </hg-event>`
         : html`
           <hg-banner .noImage=${this.noBannerImage} .uid=${this.uid}></hg-banner>
-          ${this.uid ? getContentElement(this.uid, this._config) : ''}
+          ${this.uid ? getContentElement(this.uid, this._config, (text) => this._handleSetMetaDescription(text)) : ''}
         `}
       <hg-footer></hg-footer>
     `;

@@ -33,7 +33,10 @@ export default class HgArticle extends LitElement {
         .path=${createDbPath(`articles/${this.uid}`, 'text')}
         .rich=${this.rich}
         .richConfig=${this.richConfig}
-        .multiline=${true}>
+        .multiline=${true}
+        @text-ready=${({detail: text}) => {
+          this.dispatchEvent(new CustomEvent('text-ready', {detail: text}));
+        }}>
         <div id="text" class="ck-content ${this.classes ? classMap(this.classes) : ''}"></div>
       </hg-text>
       <hg-content-label .name=${'Pole tekstowe'}></hg-content-label>

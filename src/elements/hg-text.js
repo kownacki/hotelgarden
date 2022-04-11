@@ -19,7 +19,7 @@ export class HgText extends HgEditableText {
         (async () => {
           this.text = await getFromDb(this.path);
           this.ready = true;
-          this.dispatchEvent(new CustomEvent('text-ready', {detail: this.text, composed: true}));
+          this.dispatchEvent(new CustomEvent('text-ready', {detail: this.text}));
         })();
       }
     }

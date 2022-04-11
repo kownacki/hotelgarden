@@ -12,9 +12,11 @@ export const appendSuffixToTitle = (title: string, seoConfig: ClientConfigSeo) =
 // path must be valid
 const getPageTitle = (path: Path, seoConfig: ClientConfigSeo, events: Events) => {
   let title: string;
+  //todo co z 'Nie znaleziono wydarzenia'?
   if (isEventPath(path)) {
     const eventUid = getEventUid(path);
-    title = events[eventUid].title;
+    //todo block events without title
+    title = events[eventUid].title || 'Wydarzenie bez tytułu';
   } else {
     const pageUid = pathToUid[path];
     const defaultTitle = getDefaultTitle(pageUid);

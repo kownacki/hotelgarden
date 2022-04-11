@@ -4,7 +4,7 @@ import sharedStyles from '../../styles/shared-styles';
 import ckContent from '../../styles/ck-content.js'
 import {FirebaseAuthController} from '../../utils/FirebaseAuthController.js';
 import {createDbPath, getFromDb, updateInDb} from '../../utils/database.js';
-import {updateData, setMetaDescription} from '../../utils.js';
+import {updateData} from '../../utils.js';
 import '../../edit/hg-editable-text.js';
 import '../../elements/hg-banner.js';
 import './hg-event/hg-event-edit-date.js';
@@ -101,7 +101,7 @@ export class HgEvent extends LitElement {
       if (this._event) {
         this._contentLoading = true;
         this._content = await getFromDb(createDbPath(`eventsContents/${this.uid}`, 'content'));
-        setMetaDescription(this._content);
+        this.dispatchEvent(new CustomEvent('set-meta-description', {detail: this._content}));
         this._contentLoading = false;
       } else {
         this.dispatchEvent(new CustomEvent('event-not-found', {composed: true}))

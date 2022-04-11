@@ -5,7 +5,7 @@ import '../../elements/hg-contact-form.js';
 import HgContent from '../../elements/hg-content.js';
 import ckContent from '../../styles/ck-content.js';
 import {createDbPath, getFromDb} from '../../utils/database.js';
-import {staticProp, setMetaDescription} from '../../utils.js';
+import {staticProp} from '../../utils.js';
 
 export class HgContact extends HgContent {
   static styles = [super.styles, ckContent, css`
@@ -26,7 +26,9 @@ export class HgContact extends HgContent {
         .rich=${true} 
         .uid=${'contact'} 
         .classes=${staticProp({'smaller-text': true})}
-        @text-ready=${(event) => setMetaDescription(event.detail)}>
+        @text-ready=${({detail: text}) => {
+          this.dispatchEvent(new CustomEvent('set-meta-description', {detail: text, composed: true}));
+        }}>
       </hg-article>
       <hg-contact-form class="no-animation"></hg-contact-form>
       <hg-map class="no-animation"></hg-map>
