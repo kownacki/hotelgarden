@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit';
-import {unsafeHTML} from 'lit/directives/unsafe-html.js';
+import {html as staticHtml, unsafeStatic} from 'lit/static-html.js';
 import {getDefaultTitle, appendSuffixToTitle} from '../../utils/seo.js';
 import {createDbPath, getFromDb} from '../utils/database.js';
 import {setDocumentTitle, headerHeight, sleep} from '../utils.js';
@@ -29,6 +29,15 @@ import '../pages/404/hg-404.js';
 
 let seconds = 0;
 setInterval(() => ++seconds, 1000);
+
+const getContentElement = (pageUid, config) => {
+  return staticHtml`
+    <hg-${unsafeStatic(pageUid)}
+      class="page"
+      .config=${config}>
+    </hg-${unsafeStatic(pageUid)}>
+  `;
+};
 
 export class HgPage extends LitElement {
   static properties = {
@@ -75,11 +84,6 @@ export class HgPage extends LitElement {
       }
     }
   }
-  updated(changedProperties) {
-    if ((changedProperties.has('_config') || changedProperties.has('uid')) && !this.event) {
-      this.shadowRoot.getElementById('page').config = this._config;
-    }
-  }
   render() {
     return html`
       <app-location use-hash-as-path @route-changed=${async (event) => {
@@ -99,9 +103,7 @@ export class HgPage extends LitElement {
         </hg-event>`
         : html`
           <hg-banner .noImage=${this.noBannerImage} .uid=${this.uid}></hg-banner>
-          ${!this.uid ? '' : unsafeHTML(`
-            <hg-${this.uid} id="page" class="page"></hg-${this.uid}>
-          `)}
+          ${this.uid ? getContentElement(this.uid, this._config) : ''}
         `}
       <hg-footer></hg-footer>
     `;
