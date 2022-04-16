@@ -1,16 +1,24 @@
 // @ts-ignore see https://github.com/microsoft/TypeScript/issues/33079
 import {Image} from 'mk-firebase-utils/web';
-import {Path} from './urlStructure';
+import {StaticPath, PageUid} from './urlStructure';
 
 export interface ClientConfigSeo {
   titleSeparator: string,
   titleSuffix: string,
-  urls: Record<Path, {title?: string}>,
+  urls: Record<StaticPath, {title?: string}>,
 }
 
 export interface ClientConfig {
   seo: ClientConfigSeo,
 }
+
+export interface PageDbData {
+  seo: {
+    description: string,
+  }
+}
+
+export type PagesDbData = Record<PageUid, PageDbData>;
 
 export interface Event {
   date: string,

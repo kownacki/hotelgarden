@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import {onAuthStateChanged} from 'firebase/auth';
-import {getEventUid, isEventPath, pathToUid} from '../utils/urlStructure.js';
+import {getEventUid, isEventPath, staticPathToPageUid} from '../utils/urlStructure.js';
 import {auth, createDbPath, getFromDb} from './utils/database.js';
 import './hg-iconset.js';
 import '@polymer/app-layout/app-drawer/app-drawer.js';
@@ -81,7 +81,7 @@ export class HgApp extends LitElement {
       this._noBannerImage = false;
     } else {
       this._event = false;
-      this._uid = pathToUid[this._path] || '404';
+      this._uid = staticPathToPageUid[this._path] || '404';
       this._noBannerImage = _.includes(this._uid, ['contact', 'gallery', '404']);
     }
   }

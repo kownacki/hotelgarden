@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit';
-import {pages} from '../../../utils/urlStructure.js';
+import {pagesStaticData} from '../../../utils/urlStructure.js';
 import '../../content/hg-article/hg-intro-article.js';
 import '../../content/hg-content-icons.js';
 import '../../content/hg-content-slider.js';
@@ -15,7 +15,7 @@ export class HgCuisine extends HgContent {
       <hg-intro-article .uid=${'cuisine'}></hg-intro-article>
       <hg-content-icons .uid=${'cuisine'}></hg-content-icons>
       <hg-content-slider .uid=${'cuisine'}></hg-content-slider>
-      <hg-mosaic .uid=${'cuisine'} .buttons=${staticProp({primary: [{url: `${pages.restaurant.path}#menu`, text: 'Zobacz menu'}]})}></hg-mosaic>
+      <hg-mosaic .uid=${'cuisine'} .buttons=${staticProp({primary: [{url: `${pagesStaticData.restaurant.path}#menu`, text: 'Zobacz menu'}]})}></hg-mosaic>
       <hg-text-image .uid=${'lunch'} .buttons=${staticProp([{url: '/lunch#aktualny-lunch', text: 'Przejdź do lunchy'}])}></hg-text-image>
       <hg-text-image .swap=${true} .uid=${'cuisine-extra1'}></hg-text-image>
       <hg-links .path=${'/kuchnia'} .superpath=${'/'}></hg-links>

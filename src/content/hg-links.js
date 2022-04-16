@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit';
-import {pathToUid, linksMap, pages} from '../../utils/urlStructure.js';
+import {staticPathToPageUid, linksMap, pagesStaticData} from '../../utils/urlStructure.js';
 import sharedStyles from '../styles/shared-styles.js';
 import {createDbPath, getFromDb} from '../utils/database.js';
 
@@ -65,10 +65,10 @@ export class HgLinks extends LitElement {
   async firstUpdated() {
     const links = _.filter(
       (link) => link.path !== this.path && (this.includeSuperpath ? true : link.path !== this.superpath),
-      _.map(_.get(_, pages), linksMap[this.superpath].sublinks),
+      _.map(_.get(_, pagesStaticData), linksMap[this.superpath].sublinks),
     );
     const banners = await Promise.all(_.map(
-      (link) => getFromDb(createDbPath(`banners/${pathToUid[link.path]}`, 'image.url')),
+      (link) => getFromDb(createDbPath(`banners/${staticPathToPageUid[link.path]}`, 'image.url')),
       links,
     ));
     this._links = _.map(([link, bannerImage]) => ({...link, image: bannerImage}), _.zip(links, banners));

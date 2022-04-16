@@ -1,6 +1,6 @@
 import { keyBy } from 'lodash-es';
 export const NOT_FOUND_404 = 'NOT_FOUND_404';
-export const pathToUid = {
+export const staticPathToPageUid = {
     '/index.html': 'landing',
     '/': 'landing',
     '/villa-garden': 'villa-garden',
@@ -19,8 +19,8 @@ export const pathToUid = {
     '/wydarzenia': 'events',
     '/kontakt': 'contact',
 };
-export const paths = Object.keys(pathToUid);
-export const pages = {
+export const staticPaths = Object.keys(staticPathToPageUid);
+export const pagesStaticData = {
     'landing': { name: 'O hotelu', path: '/', dir: 'hotel' },
     'villa-garden': { name: 'Villa Garden', path: '/villa-garden', dir: 'hotel' },
     'cuisine': { name: 'O naszej kuchni', path: '/kuchnia', dir: 'hotel' },
@@ -39,14 +39,15 @@ export const pages = {
     'contact': { name: 'Kontakt', path: '/kontakt', dir: 'contact' },
     '404': { name: 'Błąd 404 - strony nie znaleziono', path: NOT_FOUND_404, dir: '404' },
 };
-export const pageUids = Object.keys(pages);
+export const pageUids = Object.keys(pagesStaticData);
+export const staticPathPageUids = pageUids.filter((pageUid) => pageUid !== '404');
 export const links = [
     {
         name: 'Hotel',
         path: '/',
         sublinks: ['landing', 'villa-garden', 'cuisine', 'surroundings', 'reviews'],
     },
-    pages['rooms'],
+    pagesStaticData['rooms'],
     {
         name: 'Garden Bistro',
         path: '/garden-bistro',
@@ -60,17 +61,23 @@ export const links = [
         path: '/wesela',
         sublinks: ['weddings', 'family-parties', 'banquet-halls'],
     },
-    pages['gallery'],
-    pages['events'],
-    pages['contact'],
+    pagesStaticData['gallery'],
+    pagesStaticData['events'],
+    pagesStaticData['contact'],
 ];
 export const linksMap = keyBy(links, 'path');
-export const isValidPath = (path, events) => {
-    return paths.includes(path) || (isEventPath(path) && Object.keys(events).includes(getEventUid(path)));
+export const getEventUid = (path) => {
+    return path.replace('/wydarzenia/', '');
+};
+export const isValidStaticPath = (path) => {
+    return staticPaths.includes(path);
 };
 export const isEventPath = (path) => {
     return path.startsWith('/wydarzenia/');
 };
-export const getEventUid = (path) => {
-    return path.replace('/wydarzenia/', '');
+export const isValidEventPath = (path, events) => {
+    return isEventPath(path) && Object.keys(events).includes(getEventUid(path));
+};
+export const isValidPath = (path, events) => {
+    return isValidStaticPath(path) || isValidEventPath(path, events);
 };

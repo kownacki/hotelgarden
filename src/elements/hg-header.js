@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit';
-import {isEventPath, pathToUid, pages, links} from '../../utils/urlStructure.js';
+import {isEventPath, staticPathToPageUid, pagesStaticData, links} from '../../utils/urlStructure.js';
 import './hg-header/hg-header-subnav.js';
 import './hg-header/hg-header-logo.js';
 import './hg-book/hg-book-order-button.js';
@@ -159,7 +159,7 @@ export class HgHeader extends LitElement {
                   href="${link.path}"
                   ?selected=${link.path === this.selected
                     || (link.path === '/wydarzenia' && (this.selected === '/wydarzenia' || isEventPath(this.selected)))
-                    || _.includes(pathToUid[this.selected], link.sublinks)}>
+                    || _.includes(staticPathToPageUid[this.selected], link.sublinks)}>
                   ${link.name}
                 </a>
                 ${!link.sublinks ? '' : html`
@@ -169,7 +169,7 @@ export class HgHeader extends LitElement {
             `, links)}
           </ul>
           <hg-book-order-button
-            .order=${(pathToUid[this.selected] && (pages[pathToUid[this.selected]].dir === 'restaurant'))
+            .order=${(staticPathToPageUid[this.selected] && (pagesStaticData[staticPathToPageUid[this.selected]].dir === 'restaurant'))
               ? 'restaurant'
               : null}>
           </hg-book-order-button>

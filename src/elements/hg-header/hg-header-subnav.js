@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit';
-import {pages} from '../../../utils/urlStructure.js';
+import {pagesStaticData} from '../../../utils/urlStructure.js';
 
 export class HgHeaderSubnav extends LitElement {
   static properties = {
@@ -47,7 +47,7 @@ export class HgHeaderSubnav extends LitElement {
       <ul>
         ${_.map((link) => html`
           <li><a href="${link.path}" ?selected=${link.path === this.selected}>${link.name}</a></li>
-        `, _.map(_.get(_, pages), this.links))}
+        `, _.map(_.get(_, pagesStaticData), this.links))}
       </ul>
     `;
   }

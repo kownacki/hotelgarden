@@ -1,5 +1,5 @@
 import {keyBy} from 'lodash';
-import {Events} from './types';
+import {Events, EventUid} from './types';
 
 export type PageUid =
   | 'landing'
@@ -20,7 +20,9 @@ export type PageUid =
   | 'contact'
   | '404';
 
-export type Path =
+export type StaticPathPageUid = Exclude<PageUid, '404'>;
+
+export type StaticPath =
   | '/index.html'
   | '/'
   | '/villa-garden'
@@ -41,7 +43,7 @@ export type Path =
 
 export const NOT_FOUND_404 = 'NOT_FOUND_404';
 
-export const pathToUid: Record<Path, PageUid> = {
+export const staticPathToPageUid: Record<StaticPath, StaticPathPageUid> = {
   '/index.html': 'landing',
   '/': 'landing',
   '/villa-garden': 'villa-garden',
@@ -61,9 +63,9 @@ export const pathToUid: Record<Path, PageUid> = {
   '/kontakt': 'contact',
 };
 
-export const paths = Object.keys(pathToUid);
+export const staticPaths = Object.keys(staticPathToPageUid) as StaticPath[];
 
-export const pages: Record<PageUid, {name: string, path: Path | 'NOT_FOUND_404', dir: string}> = {
+export const pagesStaticData: Record<PageUid, {name: string, path: StaticPath | 'NOT_FOUND_404', dir: string}> = {
   'landing': {name: 'O hotelu', path: '/', dir: 'hotel'},
   'villa-garden': {name: 'Villa Garden', path: '/villa-garden', dir: 'hotel'},
   'cuisine': {name: 'O naszej kuchni', path: '/kuchnia', dir: 'hotel'},
@@ -83,7 +85,8 @@ export const pages: Record<PageUid, {name: string, path: Path | 'NOT_FOUND_404',
   '404': {name: 'Błąd 404 - strony nie znaleziono', path: NOT_FOUND_404, dir: '404'},
 };
 
-export const pageUids = Object.keys(pages);
+export const pageUids = Object.keys(pagesStaticData) as PageUid[];
+export const staticPathPageUids = pageUids.filter((pageUid) => pageUid !== '404') as StaticPathPageUid[];
 
 export const links = [
   {
@@ -91,7 +94,7 @@ export const links = [
     path: '/',
     sublinks: ['landing', 'villa-garden', 'cuisine', 'surroundings', 'reviews'],
   },
-  pages['rooms'],
+  pagesStaticData['rooms'],
   {
     name: 'Garden Bistro',
     path: '/garden-bistro',
@@ -105,21 +108,29 @@ export const links = [
     path: '/wesela',
     sublinks: ['weddings', 'family-parties', 'banquet-halls'],
   },
-  pages['gallery'],
-  pages['events'],
-  pages['contact'],
+  pagesStaticData['gallery'],
+  pagesStaticData['events'],
+  pagesStaticData['contact'],
 ];
 
 export const linksMap = keyBy(links, 'path');
 
-export const isValidPath = (path: string, events: Events) => {
-  return paths.includes(path) || (isEventPath(path) && Object.keys(events).includes(getEventUid(path)));
-}
+export const getEventUid = (path: string): EventUid => {
+  return path.replace('/wydarzenia/', '');
+};
+
+export const isValidStaticPath = (path: string) => {
+  return staticPaths.includes(path as StaticPath)
+};
 
 export const isEventPath = (path: string) => {
   return path.startsWith('/wydarzenia/');
-}
+};
 
-export const getEventUid = (path: string) => {
-  return path.replace('/wydarzenia/', '');
-}
+export const isValidEventPath = (path: string, events: Events) => {
+  return isEventPath(path) && Object.keys(events).includes(getEventUid(path));
+};
+
+export const isValidPath = (path: string, events: Events) => {
+  return isValidStaticPath(path) || isValidEventPath(path, events);
+};

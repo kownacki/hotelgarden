@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit';
-import {isEventPath, pages} from '../../../utils/urlStructure.js';
+import {isEventPath, pagesStaticData} from '../../../utils/urlStructure.js';
 
 export class HgDrawerItem extends LitElement {
   static properties = {
@@ -73,7 +73,7 @@ export class HgDrawerItem extends LitElement {
                 ${sublink.name}
               </a>
             </li>
-          `, _.map(_.get(_, pages), this.link.sublinks))}
+          `, _.map(_.get(_, pagesStaticData), this.link.sublinks))}
         </ul>
       `}
     `;
