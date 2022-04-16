@@ -67,7 +67,7 @@ const jsResources = [
   getJsResource(`/src/${namePrefix}-app.js`, true),
 ];
 
-const getIndexHtml = (titlePlaceholder) => `
+const getIndexHtml = (seoPlaceholders) => `
 <!doctype html>
 <html lang="pl">
 <head>
@@ -75,8 +75,8 @@ const getIndexHtml = (titlePlaceholder) => `
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>${titlePlaceholder ? createPlaceholder('title') : ''}</title>
-  <meta name="description">
+  <title>${seoPlaceholders ? createPlaceholder('title') : ''}</title>
+  <meta name="description" ${seoPlaceholders ? `content="${createPlaceholder('metaDescription')}"` : ''}>
   
   <link rel="shortcut icon" href="${faviconPath}">
   ${'' /*todo don't use external sources */}
@@ -140,7 +140,7 @@ const getIndexHtml = (titlePlaceholder) => `
   ${jsResources.map((jsResource) => jsResource.script).join('')}
 
   ${tawkToScript}
-  
+
   <style id="inline-style"></style>
   <script type="module">
     import sharedStyles from '/src/styles/shared-styles.js';
@@ -153,4 +153,4 @@ const getIndexHtml = (titlePlaceholder) => `
 `;
 
 fs.writeFileSync('index.html', getIndexHtml());
-fs.writeFileSync('functions/src/createIndex.js', `export const createIndex = (title) => \`${_.replace(/\\/g, '\\\\', getIndexHtml(true))}\`;`);
+fs.writeFileSync('functions/src/createIndex.js', `export const createIndex = (title, metaDescription) => \`${_.replace(/\\/g, '\\\\', getIndexHtml(true))}\`;`);

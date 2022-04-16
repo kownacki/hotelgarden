@@ -1,4 +1,4 @@
-export const createIndex = (title) => `
+export const createIndex = (title, metaDescription) => `
 <!doctype html>
 <html lang="pl">
 <head>
@@ -17,7 +17,7 @@ export const createIndex = (title) => `
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>${title}</title>
-  <meta name="description">
+  <meta name="description" content="${metaDescription}">
   
   <link rel="shortcut icon" href="/resources/images/favicon.ico">
   
@@ -251,7 +251,7 @@ export const createIndex = (title) => `
   }, {once: true});
 </script>
 
-  
+
   <style id="inline-style"></style>
   <script type="module">
     import sharedStyles from '/src/styles/shared-styles.js';
