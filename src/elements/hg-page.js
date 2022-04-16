@@ -88,6 +88,7 @@ export class HgPage extends LitElement {
   }
   _handleSetMetaDescription(text) {
     if (!this._initialPage) {
+      // todo on meta description change też się nie updatuje a powinno
       setMetaDescription(text);
     }
   }

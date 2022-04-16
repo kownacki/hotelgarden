@@ -4,8 +4,8 @@ import '../../content/hg-map.js';
 import '../../elements/hg-contact-form.js';
 import HgContent from '../../elements/hg-content.js';
 import ckContent from '../../styles/ck-content.js';
-import {createDbPath, getFromDb} from '../../utils/database.js';
-import {staticProp} from '../../utils.js';
+import {createDbPath, getFromDb, updateInDb} from '../../utils/database.js';
+import {cleanTextForMetaDescription, staticProp} from '../../utils.js';
 
 export class HgContact extends HgContent {
   static styles = [super.styles, ckContent, css`
@@ -23,11 +23,16 @@ export class HgContact extends HgContent {
     return html`
       <hg-article
         class="no-animation"
-        .rich=${true} 
-        .uid=${'contact'} 
+        .rich=${true}
+        .uid=${'contact'}
         .classes=${staticProp({'smaller-text': true})}
         @text-ready=${({detail: text}) => {
           this.dispatchEvent(new CustomEvent('set-meta-description', {detail: text, composed: true}));
+        }}
+        @save=${({detail: text}) => {
+          const cleanedText = cleanTextForMetaDescription(text);
+          updateInDb(createDbPath('pages/contact', `seo.description`), cleanedText);
+          this.dispatchEvent(new CustomEvent('set-meta-description', {detail: cleanedText, composed: true}));
         }}>
       </hg-article>
       <hg-contact-form class="no-animation"></hg-contact-form>

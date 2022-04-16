@@ -1,7 +1,6 @@
 import {isElementVisible} from 'mk-frontend-web-utils/dom.js';
 import diacritics from '../resources/scripts/diacritics.js';
 import {createDbPath, updateInDb} from './utils/database.js';
-import {appendSuffixToTitle} from '../utils/seo.js';
 
 export const headerHeight = 59;
 
@@ -135,17 +134,22 @@ export const setDocumentTitle = (title) => {
   document.title = title;
 }
 
+export const removeHtmlTagsAndGetFirstP = (text) => {
+  const el = document.createElement('div');
+  el.innerHTML = _.replace(/<br>/g, ' ', text);
+  return el.getElementsByTagName('p')[0].innerText;
+}
+
+export const cleanTextForMetaDescription = (text) => {
+  return !text ? ''
+    : text.search('<p') === -1
+    ? text
+    : removeHtmlTagsAndGetFirstP(text);
+}
+
 export const setMetaDescription = (text) => {
-  document.head.querySelector('meta[name="description"]').setAttribute('content',
-    !text ? ''
-      : text.search('<p') === -1
-      ? text
-      : (() => {
-        const el = document.createElement('div');
-        el.innerHTML = _.replace(/<br>/g, ' ', text);
-        return el.getElementsByTagName('p')[0].innerText;
-      })()
-  );
+  const cleanedText = cleanTextForMetaDescription(text);
+  document.head.querySelector('meta[name="description"]').setAttribute('content', cleanedText);
 };
 
 // todo use moment js

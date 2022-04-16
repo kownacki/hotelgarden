@@ -36,6 +36,9 @@ export default class HgArticle extends LitElement {
         .multiline=${true}
         @text-ready=${({detail: text}) => {
           this.dispatchEvent(new CustomEvent('text-ready', {detail: text}));
+        }}
+        @save=${({detail: text}) => {
+          this.dispatchEvent(new CustomEvent('save', {detail: text}));
         }}>
         <div id="text" class="ck-content ${this.classes ? classMap(this.classes) : ''}"></div>
       </hg-text>
