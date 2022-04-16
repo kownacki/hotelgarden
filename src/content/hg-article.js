@@ -8,7 +8,7 @@ import {createDbPath} from '../utils/database.js';
 
 export default class HgArticle extends LitElement {
   static properties = {
-    uid: Number,
+    uid: String,
     rich: Boolean,
     richConfig: Boolean,
     classes: Object,

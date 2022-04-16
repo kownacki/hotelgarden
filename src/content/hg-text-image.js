@@ -15,7 +15,7 @@ const maxImageHeight = 400;
 export class HgTextImage extends LitElement {
   _objectDbSync;
   static properties = {
-    uid: Number,
+    uid: String,
     buttons: Number,
     h3: {type: Boolean},
     noHeading: Boolean,
