@@ -1,8 +1,8 @@
 import {Request, Response} from 'firebase-functions';
-import {createFullPageTitle, createFull404PageTitle} from '../../utils/seo';
-import {isValidPath, Path} from '../../utils/urlStructure';
+import {createFullPageTitle, createFull404PageTitle} from '../../../utils/seo';
+import {isValidPath, Path} from '../../../utils/urlStructure';
+import {createIndex} from '../createIndex';
 import {getClientConfig} from './config';
-import {createIndex} from './createIndex';
 import {getEvents} from './events';
 
 const seoConfigPromise = getClientConfig().then((config) => config.seo);

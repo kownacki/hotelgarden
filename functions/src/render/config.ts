@@ -1,5 +1,5 @@
-import {ClientConfig} from '../../utils/types';
-import {listenToDb} from './database';
+import {ClientConfig} from '../../../utils/types';
+import {listenToDb} from '../database';
 
 const [getClientConfigUnsafe, clientConfigReady] = listenToDb<ClientConfig>('_config/client');
 

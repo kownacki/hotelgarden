@@ -4,8 +4,8 @@ import _ from 'lodash/fp';
 import {sendMessage as mkSendMessage} from 'mk-firebase-functions-utils/sendMessage';
 import moment from 'moment';
 import 'moment-timezone';
-import {createDbPath, generateDbUid, getFromDb, updateInDb} from './database';
-import {RequestWithBody, AdminConfigSendMessage} from './types';
+import {createDbPath, generateDbUid, getFromDb, updateInDb} from '../database';
+import {RequestWithBody, AdminConfigSendMessage} from '../types';
 
 moment.locale('pl');
 

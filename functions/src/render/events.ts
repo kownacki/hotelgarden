@@ -1,5 +1,5 @@
-import {Events} from '../../utils/types';
-import {listenToDb} from './database';
+import {Events} from '../../../utils/types';
+import {listenToDb} from '../database';
 
 const [getEventsUnsafe, eventsReady] = listenToDb<Events>('events/events');
 
