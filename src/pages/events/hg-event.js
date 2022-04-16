@@ -4,7 +4,7 @@ import sharedStyles from '../../styles/shared-styles';
 import ckContent from '../../styles/ck-content.js'
 import {FirebaseAuthController} from '../../utils/FirebaseAuthController.js';
 import {createDbPath, getFromDb, updateInDb} from '../../utils/database.js';
-import {updateData} from '../../utils.js';
+import {cleanTextForMetaDescription, updateData} from '../../utils.js';
 import '../../edit/hg-editable-text.js';
 import '../../elements/hg-banner.js';
 import './hg-event/hg-event-edit-date.js';
@@ -169,9 +169,12 @@ export class HgEvent extends LitElement {
               multiline
               id="text"
               .text=${this._content}
-              @save=${(event) => {
-                this._content = event.detail;
-                updateInDb(createDbPath(`eventsContents/${this.uid}`), {content: event.detail});
+              @save=${({detail: text}) => {
+                this._content = text;
+                updateInDb(createDbPath(`eventsContents/${this.uid}`, 'content'), text);
+                const cleanedText = cleanTextForMetaDescription(text);
+                updateInDb(createDbPath(`eventsData/${this.uid}`, 'seo.description'), cleanedText);
+                this.dispatchEvent(new CustomEvent('set-meta-description', {detail: cleanedText}));
               }}>
               <div class="ck-content smaller-text"></div>
             </hg-editable-text>`}

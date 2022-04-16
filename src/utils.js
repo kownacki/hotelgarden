@@ -136,7 +136,7 @@ export const setDocumentTitle = (title) => {
 
 export const removeHtmlTagsAndGetFirstP = (text) => {
   const el = document.createElement('div');
-  el.innerHTML = _.replace(/<br>/g, ' ', text);
+  el.innerHTML = text.replace(/<br>/g, ' ');
   return el.getElementsByTagName('p')[0].innerText;
 }
 
