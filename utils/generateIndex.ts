@@ -30,7 +30,10 @@ const createScript = (path: string, module = false) => `
   <script src="${path}" ${module ? 'type="module"' : ''}></script>
 `;
 
-const createPlaceholder = (name: string) => `\$\{${name}\}`;
+
+const placeholderOpening = `\$\{`;
+const placeholderEnding = `\}`;
+const createPlaceholder = (name: string) => `${placeholderOpening}${name}${placeholderEnding}`;
 
 const namePrefix = 'hg';
 const faviconPath = '/resources/images/favicon.ico';
@@ -67,7 +70,7 @@ const jsResources = [
   getJsResource(`/src/${namePrefix}-app.js`, true),
 ];
 
-const getIndexHtml = ({title, description}: {title?: boolean, description?: boolean} = {}) => `
+const getIndexHtml = ({title, description, jsonLd}: {title?: boolean, description?: boolean, jsonLd?: boolean} = {}) => `
 <!doctype html>
 <html lang="pl">
 <head>
@@ -77,6 +80,12 @@ const getIndexHtml = ({title, description}: {title?: boolean, description?: bool
 
   <title>${title ? createPlaceholder('title') : ''}</title>
   <meta name="description" ${description ? `content="${createPlaceholder('metaDescription')}"` : ''}>
+
+  ${jsonLd ? `
+    ${placeholderOpening}
+      jsonLd ? \`<script type="application/ld+json">${createPlaceholder('jsonLd')}</script>\` : ''
+    ${placeholderEnding}
+  ` : ''}
   
   <link rel="shortcut icon" href="${faviconPath}">
   ${'' /*todo don't use external sources */}
@@ -154,8 +163,8 @@ const getIndexHtml = ({title, description}: {title?: boolean, description?: bool
 
 fs.writeFileSync('index.html', getIndexHtml());
 
-const indexWithPlaceholders = getIndexHtml({title: true, description: true}).replace(/\\/g, '\\\\');
+const indexWithPlaceholders = getIndexHtml({title: true, description: true, jsonLd: true}).replace(/\\/g, '\\\\');
 fs.writeFileSync(
-  'functions/src/createIndex.js',
-  `export const createIndex = (title, metaDescription) => \`${indexWithPlaceholders}\`;`,
+  'functions/src/createIndex.ts',
+  `export const createIndex = (title: string, metaDescription: string = '', jsonLd?: string) => \`${indexWithPlaceholders}\`;`,
 );

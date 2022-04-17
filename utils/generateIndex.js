@@ -24,7 +24,9 @@ const createFontFace = (path, { family, style, weight }) => css `
 const createScript = (path, module = false) => `
   <script src="${path}" ${module ? 'type="module"' : ''}></script>
 `;
-const createPlaceholder = (name) => `\$\{${name}\}`;
+const placeholderOpening = `\$\{`;
+const placeholderEnding = `\}`;
+const createPlaceholder = (name) => `${placeholderOpening}${name}${placeholderEnding}`;
 const namePrefix = 'hg';
 const faviconPath = '/resources/images/favicon.ico';
 const fontsRootPath = '/resources/fonts/';
@@ -55,7 +57,7 @@ const jsResources = [
     getJsResource(`${scriptsRootPath}moment.min.js`),
     getJsResource(`/src/${namePrefix}-app.js`, true),
 ];
-const getIndexHtml = ({ title, description } = {}) => `
+const getIndexHtml = ({ title, description, jsonLd } = {}) => `
 <!doctype html>
 <html lang="pl">
 <head>
@@ -65,6 +67,12 @@ const getIndexHtml = ({ title, description } = {}) => `
 
   <title>${title ? createPlaceholder('title') : ''}</title>
   <meta name="description" ${description ? `content="${createPlaceholder('metaDescription')}"` : ''}>
+
+  ${jsonLd ? `
+    ${placeholderOpening}
+      jsonLd ? \`<script type="application/ld+json">${createPlaceholder('jsonLd')}</script>\` : ''
+    ${placeholderEnding}
+  ` : ''}
   
   <link rel="shortcut icon" href="${faviconPath}">
   ${'' /*todo don't use external sources */}
@@ -140,5 +148,5 @@ const getIndexHtml = ({ title, description } = {}) => `
 </html>
 `;
 fs.writeFileSync('index.html', getIndexHtml());
-const indexWithPlaceholders = getIndexHtml({ title: true, description: true }).replace(/\\/g, '\\\\');
-fs.writeFileSync('functions/src/createIndex.js', `export const createIndex = (title, metaDescription) => \`${indexWithPlaceholders}\`;`);
+const indexWithPlaceholders = getIndexHtml({ title: true, description: true, jsonLd: true }).replace(/\\/g, '\\\\');
+fs.writeFileSync('functions/src/createIndex.ts', `export const createIndex = (title: string, metaDescription: string = '', jsonLd?: string) => \`${indexWithPlaceholders}\`;`);
