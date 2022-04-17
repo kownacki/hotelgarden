@@ -2,7 +2,7 @@ import {LitElement, html, css} from 'lit';
 import {html as staticHtml, unsafeStatic} from 'lit/static-html.js';
 import {getDefaultTitle, appendSuffixToTitle} from '../../utils/seo.js';
 import {createDbPath, getFromDb} from '../utils/database.js';
-import {setDocumentTitle, setMetaDescription, headerHeight, sleep} from '../utils.js';
+import {setDocumentTitle, setMetaDescription, setStructuredData, headerHeight, sleep} from '../utils.js';
 
 import '../elements/hg-banner.js';
 import '../elements/hg-footer.js';
@@ -30,7 +30,8 @@ import '../pages/404/hg-404.js';
 let seconds = 0;
 setInterval(() => ++seconds, 1000);
 
-const getContentElement = (pageUid, config, handleSetMetaDescription) => {
+const getContentElement = (pageUid, config, handleSetMetaDescription, handleSetJsonLd) => {
+  handleSetJsonLd(''); //todo refactor when setting structured data for pages
   return staticHtml`
     <hg-${unsafeStatic(pageUid)}
       class="page"
@@ -92,6 +93,12 @@ export class HgPage extends LitElement {
       setMetaDescription(text);
     }
   }
+  _handleSetJsonLd(jsonLd) {
+    if (!this._initialPage) {
+      // todo on set structured data change też się nie updatuje a powinno
+      setStructuredData(jsonLd);
+    }
+  }
   render() {
     return html`
       <app-location use-hash-as-path @route-changed=${async (event) => {
@@ -112,11 +119,19 @@ export class HgPage extends LitElement {
           }}
           @set-meta-description=${({detail: text}) => {
             this._handleSetMetaDescription(text);
+          }}
+          @set-json-ld=${({detail: jsonLd}) => {
+            this._handleSetJsonLd(jsonLd);
           }}>
         </hg-event>`
         : html`
           <hg-banner .noImage=${this.noBannerImage} .uid=${this.uid}></hg-banner>
-          ${this.uid ? getContentElement(this.uid, this._config, (text) => this._handleSetMetaDescription(text)) : ''}
+          ${this.uid ? getContentElement(
+            this.uid,
+            this._config,
+            (text) => this._handleSetMetaDescription(text),
+            (jsonLd) => this._handleSetJsonLd(jsonLd),
+          ) : ''}
         `}
       <hg-footer></hg-footer>
     `;

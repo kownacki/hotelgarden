@@ -57,6 +57,13 @@ const jsResources = [
     getJsResource(`${scriptsRootPath}moment.min.js`),
     getJsResource(`/src/${namePrefix}-app.js`, true),
 ];
+/*
+  ${jsonLd ? `
+    ${placeholderOpening}
+      jsonLd ? \`<script type="application/ld+json">${createPlaceholder('jsonLd')}</script>\` : ''
+    ${placeholderEnding}
+  ` : ''}
+ */
 const getIndexHtml = ({ title, description, jsonLd } = {}) => `
 <!doctype html>
 <html lang="pl">
@@ -68,11 +75,7 @@ const getIndexHtml = ({ title, description, jsonLd } = {}) => `
   <title>${title ? createPlaceholder('title') : ''}</title>
   <meta name="description" ${description ? `content="${createPlaceholder('metaDescription')}"` : ''}>
 
-  ${jsonLd ? `
-    ${placeholderOpening}
-      jsonLd ? \`<script type="application/ld+json">${createPlaceholder('jsonLd')}</script>\` : ''
-    ${placeholderEnding}
-  ` : ''}
+  <script type="application/ld+json">${jsonLd ? createPlaceholder('jsonLd') : ''}</script>
   
   <link rel="shortcut icon" href="${faviconPath}">
   ${'' /*todo don't use external sources */}
@@ -149,4 +152,4 @@ const getIndexHtml = ({ title, description, jsonLd } = {}) => `
 `;
 fs.writeFileSync('index.html', getIndexHtml());
 const indexWithPlaceholders = getIndexHtml({ title: true, description: true, jsonLd: true }).replace(/\\/g, '\\\\');
-fs.writeFileSync('functions/src/createIndex.ts', `export const createIndex = (title: string, metaDescription: string = '', jsonLd?: string) => \`${indexWithPlaceholders}\`;`);
+fs.writeFileSync('functions/src/createIndex.ts', `export const createIndex = (title: string, metaDescription: string = '', jsonLd: string = '') => \`${indexWithPlaceholders}\`;`);

@@ -1,5 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import '@polymer/paper-toggle-button/paper-toggle-button.js';
+import {createEventJsonLd} from '../../../utils/seo';
 import sharedStyles from '../../styles/shared-styles';
 import ckContent from '../../styles/ck-content.js'
 import {FirebaseAuthController} from '../../utils/FirebaseAuthController.js';
@@ -99,6 +100,8 @@ export class HgEvent extends LitElement {
         this.dispatchEvent(new CustomEvent('title-loaded', {detail: this._event ? this._event.title : 'Nie znaleziono wydarzenia'}))
       }
       if (this._event) {
+        const eventJsonLd = createEventJsonLd(this._event);
+        this.dispatchEvent(new CustomEvent('set-json-ld', {detail: eventJsonLd}));
         this._contentLoading = true;
         this._content = await getFromDb(createDbPath(`eventsContents/${this.uid}`, 'content'));
         this.dispatchEvent(new CustomEvent('set-meta-description', {detail: this._content}));

@@ -1,33 +1,11 @@
 import {Request, Response} from 'firebase-functions';
-import {createFull404PageTitle, createFullPageTitle, createFullEventTitle} from '../../../utils/seo';
-import {EventsListItem} from '../../../utils/types';
+import {createFull404PageTitle, createFullPageTitle, createFullEventTitle, createEventJsonLd} from '../../../utils/seo';
 import {getEventUid, isValidStaticPath, isValidEventPath, StaticPath, staticPathToPageUid} from '../../../utils/urlStructure';
 import {createIndex} from '../createIndex';
 import {getClientConfig} from './config';
 import {getEventDbData} from './eventsData';
 import {getEventsList} from './eventsList';
 import {getPageDbData} from './pagesData';
-
-const getEventJsonLd = (eventListItem: EventsListItem) => {
-  return JSON.stringify({
-    '@context': 'http://schema.org/',
-    '@type': 'Event',
-    location: {
-      '@type': 'Place',
-      name: 'Hotel Garden',
-      address: {
-        '@type': 'PostalAddress',
-        streetAddress: 'ul. Podchorążych 2A',
-        addressLocality: 'Oleśnica',
-        postalCode: '56-400',
-        addressRegion: 'Dolnośląskie',
-        addressCountry: 'PL',
-      },
-    },
-    name: eventListItem.title,
-    startDate: eventListItem.date,
-  });
-}
 
 export const render = async (req: Request, res: Response) => {
   const path = req.path;
@@ -47,7 +25,7 @@ export const render = async (req: Request, res: Response) => {
     const fullTitle = createFullEventTitle(eventUid, seoConfig, eventsList);
     const eventDbData = await getEventDbData(eventUid);
     const description = eventDbData.seo?.description;
-    const jsonLd = getEventJsonLd(eventsList[eventUid]);
+    const jsonLd = createEventJsonLd(eventsList[eventUid]);
     const index = createIndex(fullTitle, description, jsonLd);
     res.status(200).send(index);
   } else {

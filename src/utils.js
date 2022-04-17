@@ -152,6 +152,10 @@ export const setMetaDescription = (text) => {
   document.head.querySelector('meta[name="description"]').setAttribute('content', cleanedText);
 };
 
+export const setStructuredData = (jsonLd) => {
+  document.head.querySelector('script[type="application/ld+json"]').innerHTML = jsonLd;
+}
+
 // todo use moment js
 export const getDayOfWeek = (index) => ['poniedziałek', 'wtorek', 'środa', 'czwartek', 'piątek', 'sobota', 'niedziela'][index - 1];
 

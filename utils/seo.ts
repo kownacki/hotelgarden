@@ -1,4 +1,4 @@
-import {ClientConfigSeo, EventsList, EventUid} from './types';
+import {ClientConfigSeo, EventsList, EventsListItem, EventUid} from './types';
 import {isEventPath, getEventUid, PageUid, pagesStaticData, StaticPath, staticPathToPageUid} from './urlStructure';
 
 export const getDefaultTitle = (uid: PageUid) => {
@@ -51,4 +51,25 @@ export const createFullValidPageOrEventTitle = (path: StaticPath, seoConfig: Cli
 
 export const createFull404PageTitle = (seoConfig: ClientConfigSeo) => {
   return appendSuffixToTitle(getDefaultTitle('404'), seoConfig);
+}
+
+export const createEventJsonLd = (event: EventsListItem) => {
+  return JSON.stringify({
+    '@context': 'http://schema.org/',
+    '@type': 'Event',
+    location: {
+      '@type': 'Place',
+      name: 'Hotel Garden',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'ul. Podchorążych 2A',
+        addressLocality: 'Oleśnica',
+        postalCode: '56-400',
+        addressRegion: 'Dolnośląskie',
+        addressCountry: 'PL',
+      },
+    },
+    name: event.title,
+    startDate: event.date,
+  });
 }

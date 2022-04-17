@@ -1,4 +1,4 @@
-export const createIndex = (title: string, metaDescription: string = '', jsonLd?: string) => `
+export const createIndex = (title: string, metaDescription: string = '', jsonLd: string = '') => `
 <!doctype html>
 <html lang="pl">
 <head>
@@ -19,11 +19,7 @@ export const createIndex = (title: string, metaDescription: string = '', jsonLd?
   <title>${title}</title>
   <meta name="description" content="${metaDescription}">
 
-  
-    ${
-      jsonLd ? `<script type="application/ld+json">${jsonLd}</script>` : ''
-    }
-  
+  <script type="application/ld+json">${jsonLd}</script>
   
   <link rel="shortcut icon" href="/resources/images/favicon.ico">
   

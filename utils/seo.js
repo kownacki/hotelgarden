@@ -44,3 +44,23 @@ export const createFullValidPageOrEventTitle = (path, seoConfig, eventsList) => 
 export const createFull404PageTitle = (seoConfig) => {
     return appendSuffixToTitle(getDefaultTitle('404'), seoConfig);
 };
+export const createEventJsonLd = (event) => {
+    return JSON.stringify({
+        '@context': 'http://schema.org/',
+        '@type': 'Event',
+        location: {
+            '@type': 'Place',
+            name: 'Hotel Garden',
+            address: {
+                '@type': 'PostalAddress',
+                streetAddress: 'ul. Podchorążych 2A',
+                addressLocality: 'Oleśnica',
+                postalCode: '56-400',
+                addressRegion: 'Dolnośląskie',
+                addressCountry: 'PL',
+            },
+        },
+        name: event.title,
+        startDate: event.date,
+    });
+};
