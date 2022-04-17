@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit';
-import {HDTV_WIDTH, HDTV_HEIGHT} from '../../config.js';
+import {HDTV_WIDTH, HDTV_HEIGHT} from '../../utils/config.js';
 import '../edit/hg-editable-text.js';
 import '../elements/mkwc/hg-editable-image.js';
 import sharedStyles from '../styles/shared-styles.js';

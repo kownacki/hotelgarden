@@ -3,10 +3,10 @@ import {getAuth} from 'firebase/auth';
 import {getFirestore} from 'firebase/firestore';
 import {getStorage} from 'firebase/storage';
 import {update as updateInDb, updateImage as updateImageInDb} from 'mk-firebase-utils/web';
-import apiKey from '../../utils/apiKey.js';
+import {API_KEY} from '../../utils/config.js';
 
 const firebaseInitializeOptions = {
-  apiKey,
+  apiKey: API_KEY,
   authDomain: "pl-hotelgarden.firebaseapp.com",
   databaseURL: "https://pl-hotelgarden.firebaseio.com",
   projectId: "pl-hotelgarden",
