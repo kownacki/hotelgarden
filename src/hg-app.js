@@ -55,11 +55,11 @@ export class HgApp extends LitElement {
     (async () => {
       const promotedEventUid = await getFromDb(createDbPath('events/promoted', 'uid'));
       if (promotedEventUid) {
-        const events = await getFromDb(createDbPath('events/events'));
+        const eventsList = await getFromDb(createDbPath('events/events'));
         this._promotedEvent = {
           uid: promotedEventUid,
-          title: _.get(promotedEventUid + '.title', events),
-          date: _.get(promotedEventUid + '.date', events),
+          title: _.get(promotedEventUid + '.title', eventsList),
+          date: _.get(promotedEventUid + '.date', eventsList),
         };
       }
       this._promotedEventLoaded = true;

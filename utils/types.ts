@@ -13,20 +13,28 @@ export interface ClientConfig {
 }
 
 export interface PageDbData {
-  seo: {
-    description: string,
+  seo?: {
+    description?: string,
   }
 }
 
 export type PagesDbData = Record<PageUid, PageDbData>;
 
-export interface Event {
+export type EventUid = string;
+
+export interface EventsListItem {
   date: string,
   image?: Image,
   public: boolean,
   title: string,
 }
 
-export type EventUid = string;
+export type EventsList = Record<EventUid, EventsListItem>;
 
-export type Events = Record<EventUid, Event>;
+export interface EventDbData {
+  seo?: {
+    description?: string,
+  }
+}
+
+export type EventsDbData = Record<EventUid, EventDbData>;

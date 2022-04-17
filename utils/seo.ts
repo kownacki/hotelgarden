@@ -1,4 +1,4 @@
-import {ClientConfigSeo, Events, EventUid} from './types';
+import {ClientConfigSeo, EventsList, EventUid} from './types';
 import {isEventPath, getEventUid, PageUid, pagesStaticData, StaticPath, staticPathToPageUid} from './urlStructure';
 
 export const getDefaultTitle = (uid: PageUid) => {
@@ -15,18 +15,18 @@ export const getPageTitle = (pageUid: PageUid, seoConfig: ClientConfigSeo) => {
   return seoTitle || defaultTitle;
 }
 
-export const getEventTitle = (eventUid: EventUid, events: Events) => {
+export const getEventTitle = (eventUid: EventUid, eventsList: EventsList) => {
   //todo block events without title
-  return events[eventUid].title || 'Wydarzenie bez tytułu';
+  return eventsList[eventUid].title || 'Wydarzenie bez tytułu';
 }
 
 // path to page or event must be valid
-const getPageOrEventTitle = (path: string, seoConfig: ClientConfigSeo, events: Events) => {
+const getPageOrEventTitle = (path: string, seoConfig: ClientConfigSeo, eventsList: EventsList) => {
   let title: string;
   //todo co z 'Nie znaleziono wydarzenia'?
   if (isEventPath(path)) {
     const eventUid = getEventUid(path);
-    title = getEventTitle(eventUid, events);
+    title = getEventTitle(eventUid, eventsList);
   } else {
     const pageUid = staticPathToPageUid[path as StaticPath];
     title = getPageTitle(pageUid, seoConfig);
@@ -39,13 +39,13 @@ export const createFullPageTitle = (pageUid: PageUid, seoConfig: ClientConfigSeo
   return appendSuffixToTitle(pageTitle, seoConfig);
 }
 
-export const createFullEventTitle = (eventUid: EventUid, seoConfig: ClientConfigSeo, events: Events) => {
-  const eventTitle = getEventTitle(eventUid, events);
+export const createFullEventTitle = (eventUid: EventUid, seoConfig: ClientConfigSeo, eventsList: EventsList) => {
+  const eventTitle = getEventTitle(eventUid, eventsList);
   return appendSuffixToTitle(eventTitle, seoConfig);
 }
 
-export const createFullValidPageOrEventTitle = (path: StaticPath, seoConfig: ClientConfigSeo, events: Events) => {
-  const pageTitle = getPageOrEventTitle(path, seoConfig, events);
+export const createFullValidPageOrEventTitle = (path: StaticPath, seoConfig: ClientConfigSeo, eventsList: EventsList) => {
+  const pageTitle = getPageOrEventTitle(path, seoConfig, eventsList);
   return appendSuffixToTitle(pageTitle, seoConfig);
 }
 

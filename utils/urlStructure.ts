@@ -1,5 +1,5 @@
 import {keyBy} from 'lodash';
-import {Events, EventUid} from './types';
+import {EventsList, EventUid} from './types';
 
 export type PageUid =
   | 'landing'
@@ -127,10 +127,10 @@ export const isEventPath = (path: string) => {
   return path.startsWith('/wydarzenia/');
 };
 
-export const isValidEventPath = (path: string, events: Events) => {
-  return isEventPath(path) && Object.keys(events).includes(getEventUid(path));
+export const isValidEventPath = (path: string, eventsList: EventsList) => {
+  return isEventPath(path) && Object.keys(eventsList).includes(getEventUid(path));
 };
 
-export const isValidPath = (path: string, events: Events) => {
-  return isValidStaticPath(path) || isValidEventPath(path, events);
+export const isValidPath = (path: string, eventsList: EventsList) => {
+  return isValidStaticPath(path) || isValidEventPath(path, eventsList);
 };

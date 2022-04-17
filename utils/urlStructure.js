@@ -75,9 +75,9 @@ export const isValidStaticPath = (path) => {
 export const isEventPath = (path) => {
     return path.startsWith('/wydarzenia/');
 };
-export const isValidEventPath = (path, events) => {
-    return isEventPath(path) && Object.keys(events).includes(getEventUid(path));
+export const isValidEventPath = (path, eventsList) => {
+    return isEventPath(path) && Object.keys(eventsList).includes(getEventUid(path));
 };
-export const isValidPath = (path, events) => {
-    return isValidStaticPath(path) || isValidEventPath(path, events);
+export const isValidPath = (path, eventsList) => {
+    return isValidStaticPath(path) || isValidEventPath(path, eventsList);
 };
