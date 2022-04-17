@@ -1,18 +1,22 @@
 import fs from 'fs';
 import _ from 'lodash/fp.js';
-import { analyticsScript } from './generateIndex/analyticsScript.js';
-import { preRender } from './generateIndex/preRender.js';
-import { tawkToScript } from './generateIndex/tawkToScript.js';
-const noopTag = (strings, ...keys) => _.flow([_.zip, _.flatten, _.initial, _.map(String), _.join('')])(strings, keys);
+import {analyticsScript} from './generateIndex/analyticsScript.js';
+import {preRender} from './generateIndex/preRender.js';
+import {tawkToScript} from './generateIndex/tawkToScript.js';
+
+const noopTag = (strings: TemplateStringsArray, ...keys: string[]) => _.flow([_.zip, _.flatten, _.initial, _.map(String), _.join('')])(strings, keys);
 // to trigger syntax highlighting
 const css = noopTag;
-const createJsResourcePreloadLink = (path, module = false) => `
+
+const createJsResourcePreloadLink = (path: string, module = false) => `
   <link rel="preload" href="${path}" as="script" ${module ? 'crossorigin="anonymous"' : ''}>
 `;
-const createFontResourcePreloadLink = (path) => `
+
+const createFontResourcePreloadLink = (path: string) => `
   <link rel="preload" href="${path}" as="font" crossorigin="anonymous">
 `;
-const createFontFace = (path, { family, style, weight }) => css `
+
+const createFontFace = (path: string, {family, style, weight}: {family: string, style: string, weight: string}) => css`
   @font-face {
     font-family: '${family}';
     font-style: ${style};
@@ -21,41 +25,49 @@ const createFontFace = (path, { family, style, weight }) => css `
     src: url(${path}) format('truetype');
   }
 `;
-const createScript = (path, module = false) => `
+
+const createScript = (path: string, module = false) => `
   <script src="${path}" ${module ? 'type="module"' : ''}></script>
 `;
-const createPlaceholder = (name) => `\$\{${name}\}`;
+
+const createPlaceholder = (name: string) => `\$\{${name}\}`;
+
 const namePrefix = 'hg';
 const faviconPath = '/resources/images/favicon.ico';
 const fontsRootPath = '/resources/fonts/';
 const scriptsRootPath = '/resources/scripts/';
-const getFontResource = (path, { family, style, weight }) => {
-    return {
-        preload: createFontResourcePreloadLink(path),
-        fontFace: createFontFace(path, { family, style, weight }),
-    };
-};
+
+const getFontResource = (path: string, {family, style, weight}: {family: string, style: string, weight: string}) => {
+  return {
+    preload: createFontResourcePreloadLink(path),
+    fontFace: createFontFace(path, {family, style, weight}),
+  };
+}
+
 const fontResources = [
-    getFontResource(`${fontsRootPath}Lato/Lato-Regular.ttf`, { family: 'Lato', style: 'normal', weight: '400' }),
-    getFontResource(`${fontsRootPath}Lato/Lato-Italic.ttf`, { family: 'Lato', style: 'italic', weight: '400' }),
-    getFontResource(`${fontsRootPath}Lato/Lato-Light.ttf`, { family: 'Lato', style: 'normal', weight: '300' }),
-    getFontResource(`${fontsRootPath}Lato/Lato-LightItalic.ttf`, { family: 'Lato', style: 'italic', weight: '300' }),
-    getFontResource(`${fontsRootPath}Lato/Lato-Bold.ttf`, { family: 'Lato', style: 'normal', weight: '700' }),
-    getFontResource(`${fontsRootPath}Lato/Lato-BoldItalic.ttf`, { family: 'Lato', style: 'italic', weight: '700' }),
-    getFontResource(`${fontsRootPath}Yellowtail/Yellowtail-Regular.ttf`, { family: 'Yellowtail', style: 'normal', weight: 'normal' }),
+  getFontResource(`${fontsRootPath}Lato/Lato-Regular.ttf`, {family: 'Lato', style: 'normal', weight: '400'}),
+  getFontResource(`${fontsRootPath}Lato/Lato-Italic.ttf`, {family: 'Lato', style: 'italic', weight: '400'}),
+  getFontResource(`${fontsRootPath}Lato/Lato-Light.ttf`, {family: 'Lato', style: 'normal', weight: '300'}),
+  getFontResource(`${fontsRootPath}Lato/Lato-LightItalic.ttf`, {family: 'Lato', style: 'italic', weight: '300'}),
+  getFontResource(`${fontsRootPath}Lato/Lato-Bold.ttf`, {family: 'Lato', style: 'normal', weight: '700'}),
+  getFontResource(`${fontsRootPath}Lato/Lato-BoldItalic.ttf`, {family: 'Lato', style: 'italic', weight: '700'}),
+  getFontResource(`${fontsRootPath}Yellowtail/Yellowtail-Regular.ttf`, {family: 'Yellowtail', style: 'normal', weight: 'normal'}),
 ];
-const getJsResource = (path, module = false) => {
-    return {
-        preload: createJsResourcePreloadLink(path, module),
-        script: createScript(path, module),
-    };
-};
+
+const getJsResource = (path: string, module = false) => {
+  return {
+    preload: createJsResourcePreloadLink(path, module),
+    script: createScript(path, module),
+  }
+}
+
 const jsResources = [
-    getJsResource(`${scriptsRootPath}lodashBundle.js`, true),
-    getJsResource(`${scriptsRootPath}moment.min.js`),
-    getJsResource(`/src/${namePrefix}-app.js`, true),
+  getJsResource(`${scriptsRootPath}lodashBundle.js`, true),
+  getJsResource(`${scriptsRootPath}moment.min.js`),
+  getJsResource(`/src/${namePrefix}-app.js`, true),
 ];
-const getIndexHtml = ({ title, description } = {}) => `
+
+const getIndexHtml = ({title, description}: {title?: boolean, description?: boolean} = {}) => `
 <!doctype html>
 <html lang="pl">
 <head>
@@ -139,6 +151,11 @@ const getIndexHtml = ({ title, description } = {}) => `
   </body>
 </html>
 `;
+
 fs.writeFileSync('index.html', getIndexHtml());
-const indexWithPlaceholders = getIndexHtml({ title: true, description: true }).replace(/\\/g, '\\\\');
-fs.writeFileSync('functions/src/createIndex.js', `export const createIndex = (title, metaDescription) => \`${indexWithPlaceholders}\`;`);
+
+const indexWithPlaceholders = getIndexHtml({title: true, description: true}).replace(/\\/g, '\\\\');
+fs.writeFileSync(
+  'functions/src/createIndex.js',
+  `export const createIndex = (title, metaDescription) => \`${indexWithPlaceholders}\`;`,
+);

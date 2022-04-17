@@ -1,5 +1,6 @@
 // @ts-ignore see https://github.com/microsoft/TypeScript/issues/33079
-import { loadingDots } from 'mk-frontend-web-utils/loadingDots.js';
+import {loadingDots} from 'mk-frontend-web-utils/loadingDots.js';
+
 export const preRender = `
 <style>
   ${loadingDots.css()}
