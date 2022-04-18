@@ -1,4 +1,7 @@
 import { keyBy } from 'lodash-es';
+export const ROOT_URL = 'https://www.hotelgarden.pl';
+export const EVENTS_ROOT_PATH = '/wydarzenia/';
+export const SITEMAP_PATH = '/sitemap.xml';
 export const NOT_FOUND_404 = 'NOT_FOUND_404';
 export const staticPathToPageUid = {
     '/index.html': 'landing',
@@ -41,6 +44,11 @@ export const pagesStaticData = {
 };
 export const pageUids = Object.keys(pagesStaticData);
 export const staticPathPageUids = pageUids.filter((pageUid) => pageUid !== '404');
+// todo remove /index.html - make redirect
+//export const canonicalStaticPaths = staticPaths.filter((path) => path !== '/index.html');
+export const canonicalStaticPaths = staticPathPageUids.map((pageUid) => {
+    return pagesStaticData[pageUid].path;
+});
 export const links = [
     {
         name: 'Hotel',
@@ -66,14 +74,20 @@ export const links = [
     pagesStaticData['contact'],
 ];
 export const linksMap = keyBy(links, 'path');
+export const createFullUrl = (path) => {
+    return path === '/' ? ROOT_URL : `${ROOT_URL}${path}`;
+};
 export const getEventUid = (path) => {
-    return path.replace('/wydarzenia/', '');
+    return path.replace(EVENTS_ROOT_PATH, '');
+};
+export const createEventPath = (eventUid) => {
+    return `${EVENTS_ROOT_PATH}${eventUid}`;
 };
 export const isValidStaticPath = (path) => {
     return staticPaths.includes(path);
 };
 export const isEventPath = (path) => {
-    return path.startsWith('/wydarzenia/');
+    return path.startsWith(EVENTS_ROOT_PATH);
 };
 export const isValidEventPath = (path, eventsList) => {
     return isEventPath(path) && Object.keys(eventsList).includes(getEventUid(path));

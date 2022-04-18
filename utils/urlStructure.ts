@@ -1,6 +1,10 @@
 import {keyBy} from 'lodash';
 import {EventsList, EventUid} from './types';
 
+export const ROOT_URL = 'https://www.hotelgarden.pl';
+export const EVENTS_ROOT_PATH = '/wydarzenia/';
+export const SITEMAP_PATH = '/sitemap.xml';
+
 export type PageUid =
   | 'landing'
   | 'villa-garden'
@@ -88,6 +92,12 @@ export const pagesStaticData: Record<PageUid, {name: string, path: StaticPath | 
 export const pageUids = Object.keys(pagesStaticData) as PageUid[];
 export const staticPathPageUids = pageUids.filter((pageUid) => pageUid !== '404') as StaticPathPageUid[];
 
+// todo remove /index.html - make redirect
+//export const canonicalStaticPaths = staticPaths.filter((path) => path !== '/index.html');
+export const canonicalStaticPaths = staticPathPageUids.map((pageUid) => {
+  return pagesStaticData[pageUid].path;
+});
+
 export const links = [
   {
     name: 'Hotel',
@@ -115,16 +125,24 @@ export const links = [
 
 export const linksMap = keyBy(links, 'path');
 
+export const createFullUrl = (path: string) => {
+  return path === '/' ? ROOT_URL : `${ROOT_URL}${path}`;
+}
+
 export const getEventUid = (path: string): EventUid => {
-  return path.replace('/wydarzenia/', '');
+  return path.replace(EVENTS_ROOT_PATH, '');
 };
+
+export const createEventPath = (eventUid: EventUid) => {
+  return `${EVENTS_ROOT_PATH}${eventUid}`;
+}
 
 export const isValidStaticPath = (path: string) => {
   return staticPaths.includes(path as StaticPath)
 };
 
 export const isEventPath = (path: string) => {
-  return path.startsWith('/wydarzenia/');
+  return path.startsWith(EVENTS_ROOT_PATH);
 };
 
 export const isValidEventPath = (path: string, eventsList: EventsList) => {

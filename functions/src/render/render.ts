@@ -1,10 +1,19 @@
 import {Request, Response} from 'firebase-functions';
 import {createFull404PageTitle, createFullPageTitle, createFullEventTitle, createEventJsonLd} from '../../../utils/seo';
-import {getEventUid, isValidStaticPath, isValidEventPath, StaticPath, staticPathToPageUid} from '../../../utils/urlStructure';
+import {
+  getEventUid,
+  isValidStaticPath,
+  isValidEventPath,
+  StaticPath,
+  staticPathToPageUid,
+  SITEMAP_PATH,
+} from '../../../utils/urlStructure';
 import {createIndex} from '../createIndex';
 import {getClientConfig} from './config';
+import {createSitemap} from './createSitemap';
 import {getEventDbData} from './eventsData';
 import {getEventsList} from './eventsList';
+import {getAllPublicUrls} from './getAllPublicUrls';
 import {getPageDbData} from './pagesData';
 
 export const render = async (req: Request, res: Response) => {
@@ -12,7 +21,11 @@ export const render = async (req: Request, res: Response) => {
   const seoConfig = await getClientConfig().then((config) => config.seo);
   const eventsList = await getEventsList();
 
-  if (isValidStaticPath(path)) {
+  if (path === SITEMAP_PATH) {
+    const urls = getAllPublicUrls(eventsList);
+    const sitemap = createSitemap(urls);
+    res.status(200).send(sitemap);
+  } else if (isValidStaticPath(path)) {
     const staticPath = path as StaticPath;
     const pageUid = staticPathToPageUid[staticPath];
     const fullTitle = createFullPageTitle(pageUid, seoConfig);
