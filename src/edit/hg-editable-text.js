@@ -1,10 +1,10 @@
 import {LitElement, html, css} from 'lit';
-import {onAuthStateChanged} from 'firebase/auth'
-import {auth} from '../utils/database.js';
 import sharedStyles from '../styles/shared-styles.js';
+import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
 import {headerHeight, moveOutFromShadowDom} from '../utils.js'
 
 export default class HgEditableText extends LitElement {
+  _firebaseAuth;
   static properties = {
     text: String,
     ready: {type: Boolean, reflect: true},
@@ -71,11 +71,9 @@ export default class HgEditableText extends LitElement {
   `];
   constructor() {
     super();
-    this._unsubscribeLoggedInListener = onAuthStateChanged(auth, (user) => this._loggedIn = Boolean(user));
-  }
-  disconnectedCallback() {
-    this._unsubscribeLoggedInListener();
-    return super.disconnectedCallback();
+    this._firebaseAuth = new FirebaseAuthController(this, (loggedIn) => {
+      this._loggedIn = loggedIn;
+    });
   }
   setEditable() {
     let slotted = this.querySelector('*');
