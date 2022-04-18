@@ -1,3 +1,4 @@
+import {PromiseTrigger} from '../../utils/general';
 import {db} from './database';
 
 export type DataReady = Promise<unknown>;
@@ -7,17 +8,16 @@ export type ListenToDbReturn<Data> = [DataReady, GetData<Data>, Unsubscribe];
 
 export const listenToDb = <Data>(doc: string, onData?: (data: Data) => void): ListenToDbReturn<Data> => {
   let data: Data;
-  let resolveDataReady: (value?: unknown) => void;
-  const dataReady = new Promise((resolve) => resolveDataReady = resolve);
+  const dataReady = new PromiseTrigger();
 
   const unsubscribe = db.doc(doc).onSnapshot((doc) => {
     data = doc.data() as Data;
-    resolveDataReady();
+    dataReady.resolve();
     onData?.(data);
   });
 
   return [
-    dataReady,
+    dataReady.promise,
     () => data,
     unsubscribe,
   ];
