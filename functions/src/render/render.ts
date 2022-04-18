@@ -10,10 +10,9 @@ import {
 } from '../../../utils/urlStructure';
 import {createIndex} from '../createIndex';
 import {getClientConfig} from './config';
-import {createSitemap} from './createSitemap';
+import {createHotelGardenSitemap} from './createHotelGardenSitemap';
 import {getEventDbData} from './eventsData';
 import {getEventsList} from './eventsList';
-import {getAllPublicUrls} from './getAllPublicUrls';
 import {getPageDbData} from './pagesData';
 
 export const render = async (req: Request, res: Response) => {
@@ -22,8 +21,7 @@ export const render = async (req: Request, res: Response) => {
   const eventsList = await getEventsList();
 
   if (path === SITEMAP_PATH) {
-    const urls = getAllPublicUrls(eventsList).sort();
-    const sitemap = createSitemap(urls);
+    const sitemap = createHotelGardenSitemap(eventsList);
     res.status(200).send(sitemap);
   } else if (isValidStaticPath(path)) {
     const staticPath = path as StaticPath;
