@@ -16,11 +16,11 @@
   },
   "dependencies": {
     "firebase-admin": "^10.0.2",
-    "firebase-functions": "^3.20.0",
+    "firebase-functions": "^3.20.1",
     "lodash": "^4.17.21",
     "mk-firebase-functions-utils": "./mk-firebase-functions-utils-0.1.0.tgz",
     "mk-firebase-utils": "./mk-firebase-utils-0.1.0.tgz",
-    "moment": "^2.29.2",
+    "moment": "^2.29.3",
     "moment-timezone": "^0.5.27",
     "node-fetch": "^2.6.7"
   },
