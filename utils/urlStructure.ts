@@ -27,7 +27,6 @@ export type PageUid =
 export type StaticPathPageUid = Exclude<PageUid, '404'>;
 
 export type StaticPath =
-  | '/index.html'
   | '/'
   | '/villa-garden'
   | '/kuchnia'
@@ -47,8 +46,8 @@ export type StaticPath =
 
 export const NOT_FOUND_404 = 'NOT_FOUND_404';
 
+// All static paths are canonical
 export const staticPathToPageUid: Record<StaticPath, StaticPathPageUid> = {
-  '/index.html': 'landing',
   '/': 'landing',
   '/villa-garden': 'villa-garden',
   '/kuchnia': 'cuisine',
@@ -91,12 +90,6 @@ export const pagesStaticData: Record<PageUid, {name: string, path: StaticPath | 
 
 export const pageUids = Object.keys(pagesStaticData) as PageUid[];
 export const staticPathPageUids = pageUids.filter((pageUid) => pageUid !== '404') as StaticPathPageUid[];
-
-// todo remove /index.html - make redirect
-//export const canonicalStaticPaths = staticPaths.filter((path) => path !== '/index.html');
-export const canonicalStaticPaths = staticPathPageUids.map((pageUid) => {
-  return pagesStaticData[pageUid].path;
-});
 
 export const links = [
   {

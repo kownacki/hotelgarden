@@ -3,8 +3,8 @@ export const ROOT_URL = 'https://www.hotelgarden.pl';
 export const EVENTS_ROOT_PATH = '/wydarzenia/';
 export const SITEMAP_PATH = '/sitemap.xml';
 export const NOT_FOUND_404 = 'NOT_FOUND_404';
+// All static paths are canonical
 export const staticPathToPageUid = {
-    '/index.html': 'landing',
     '/': 'landing',
     '/villa-garden': 'villa-garden',
     '/kuchnia': 'cuisine',
@@ -44,11 +44,6 @@ export const pagesStaticData = {
 };
 export const pageUids = Object.keys(pagesStaticData);
 export const staticPathPageUids = pageUids.filter((pageUid) => pageUid !== '404');
-// todo remove /index.html - make redirect
-//export const canonicalStaticPaths = staticPaths.filter((path) => path !== '/index.html');
-export const canonicalStaticPaths = staticPathPageUids.map((pageUid) => {
-    return pagesStaticData[pageUid].path;
-});
 export const links = [
     {
         name: 'Hotel',

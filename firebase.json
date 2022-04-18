@@ -20,6 +20,11 @@
     ],
     "redirects": [
       {
+        "source": "/index.html",
+        "destination": "/",
+        "type": 301
+      },
+      {
         "source": "/@(restaurant|restauracja|grill-garden|sushi)",
         "destination": "/garden-bistro",
         "type": 301
