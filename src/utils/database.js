@@ -1,5 +1,4 @@
 import {initializeApp} from 'firebase/app';
-import {getAuth} from 'firebase/auth';
 import {getFirestore} from 'firebase/firestore';
 import {getStorage} from 'firebase/storage';
 import {update as updateInDb, updateImage as updateImageInDb} from 'mk-firebase-utils/web';
@@ -17,7 +16,7 @@ const firebaseInitializeOptions = {
 };
 
 export const app = initializeApp(firebaseInitializeOptions);
-export const auth = getAuth(app);
+export const authDeferred = import('./auth.js');
 export const db = getFirestore(app);
 export const storage = getStorage(app);
 

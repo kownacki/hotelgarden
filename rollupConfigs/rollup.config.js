@@ -28,9 +28,6 @@ export default [{
   ],
   manualChunks(id) {
     id = id.replace(/\\/g, '/');
-    if (id.includes('node_modules/@firebase') || id.includes('node_modules/firebase')) {
-      return 'firebase';
-    }
     if (id.includes('node_modules/@material')) {
       return 'material-elements';
     }

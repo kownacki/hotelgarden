@@ -1,5 +1,4 @@
-import {onAuthStateChanged} from 'firebase/auth';
-import {auth} from './database.js';
+import {authDeferred} from './database.js';
 import {SubscriptionController} from './SubscriptionController.js';
 
 /**
@@ -17,11 +16,15 @@ export class FirebaseAuthController {
   constructor(host, onLoggedInChange) {
     host.addController(this);
     this._onLoggedInChange = onLoggedInChange;
-    this._subscription = new SubscriptionController(host, () => {
-      return onAuthStateChanged(auth, (user) => {
-        this._setLoggedIn(Boolean(user));
+
+    (async () => {
+      const {auth, onAuthStateChanged} = await authDeferred;
+      this._subscription = new SubscriptionController(host, () => {
+        return onAuthStateChanged(auth, (user) => {
+          this._setLoggedIn(Boolean(user));
+        });
       });
-    });
+    })();
   }
   _setLoggedIn(value) {
     if (value !== this.loggedIn) {

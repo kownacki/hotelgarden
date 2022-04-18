@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit';
-import {GoogleAuthProvider, signOut, signInWithPopup} from 'firebase/auth';
-import {auth} from '../utils/database.js';
+import {until} from 'lit/directives/until.js';
+import {authDeferred} from '../utils/database.js';
 import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
 
 export class HgLogin extends LitElement {
@@ -26,13 +26,15 @@ export class HgLogin extends LitElement {
   }
   render() {
     return html`
-      <a @click=${() => {
-        if (auth.currentUser) {
-          signOut(auth);
-        } else {
-          signInWithPopup(auth, new GoogleAuthProvider());
-        }
-      }}>${this._loggedIn ? 'Wyloguj się' : 'Zaloguj się'}</a>
+      ${until(authDeferred.then(({auth, signOut, signInWithPopup, GoogleAuthProvider}) => html`
+        <a @click=${() => {
+          if (auth.currentUser) {
+            signOut(auth);
+          } else {
+            signInWithPopup(auth, new GoogleAuthProvider());
+          }
+        }}>${this._loggedIn ? 'Wyloguj się' : 'Zaloguj się'}</a>
+      `))}
     `;
   }
 }

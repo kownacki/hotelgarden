@@ -14,8 +14,8 @@ export class SubscriptionController {
    * @param {SubscriptionController~addSubscription} addSubscription - Function that is going to be used to add subscription.
    */
   constructor(host, addSubscription) {
-    host.addController(this);
     this._addSubscription = addSubscription;
+    host.addController(this);
   }
   hostConnected() {
     this._unsubscribe = this._addSubscription();

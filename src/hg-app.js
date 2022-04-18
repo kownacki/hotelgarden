@@ -1,7 +1,6 @@
 import {LitElement, html, css} from 'lit';
-import {onAuthStateChanged} from 'firebase/auth';
 import {getEventUid, isEventPath, staticPathToPageUid} from '../utils/urlStructure.js';
-import {auth, createDbPath, getFromDb} from './utils/database.js';
+import {authDeferred, createDbPath, getFromDb} from './utils/database.js';
 import './hg-iconset.js';
 import '@polymer/app-layout/app-drawer/app-drawer.js';
 import '@polymer/app-route/app-location.js';
@@ -19,10 +18,12 @@ import './elements/hg-page.js';
 import './elements/hg-drawer.js';
 
 // For index.html !
-onAuthStateChanged(auth, (user) => {
-  window.loggedIn = Boolean(user);
-  hideOrShowWidget();
-})
+authDeferred.then(({auth, onAuthStateChanged}) => {
+  onAuthStateChanged(auth, (user) => {
+    window.loggedIn = Boolean(user);
+    hideOrShowWidget();
+  });
+});
 
 export class HgApp extends LitElement {
   static properties = {
