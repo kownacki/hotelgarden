@@ -1,5 +1,5 @@
-import {EventsList} from '../../../utils/types';
-import {staticPaths, createFullUrl, createEventPath} from '../../../utils/urlStructure';
+import {EventsList} from '../../../../utils/types';
+import {staticPaths, createFullUrl, createEventPath} from '../../../../utils/urlStructure';
 
 const getPublicEventsUids = (eventsList: EventsList) => {
   return Object.entries(eventsList)

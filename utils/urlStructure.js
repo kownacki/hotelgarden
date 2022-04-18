@@ -1,7 +1,4 @@
 import { keyBy } from 'lodash-es';
-export const ROOT_URL = 'https://www.hotelgarden.pl';
-export const EVENTS_ROOT_PATH = '/wydarzenia/';
-export const SITEMAP_PATH = '/sitemap.xml';
 export const NOT_FOUND_404 = 'NOT_FOUND_404';
 // All static paths are canonical
 export const staticPathToPageUid = {
@@ -90,3 +87,7 @@ export const isValidEventPath = (path, eventsList) => {
 export const isValidPath = (path, eventsList) => {
     return isValidStaticPath(path) || isValidEventPath(path, eventsList);
 };
+export const ROOT_URL = 'https://www.hotelgarden.pl';
+export const EVENTS_ROOT_PATH = '/wydarzenia/';
+export const SITEMAP_PATH = '/sitemap.xml';
+export const SITEMAP_URL = createFullUrl(SITEMAP_PATH);

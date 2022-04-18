@@ -1,10 +1,6 @@
 import {keyBy} from 'lodash';
 import {EventsList, EventUid} from './types';
 
-export const ROOT_URL = 'https://www.hotelgarden.pl';
-export const EVENTS_ROOT_PATH = '/wydarzenia/';
-export const SITEMAP_PATH = '/sitemap.xml';
-
 export type PageUid =
   | 'landing'
   | 'villa-garden'
@@ -145,3 +141,8 @@ export const isValidEventPath = (path: string, eventsList: EventsList) => {
 export const isValidPath = (path: string, eventsList: EventsList) => {
   return isValidStaticPath(path) || isValidEventPath(path, eventsList);
 };
+
+export const ROOT_URL = 'https://www.hotelgarden.pl';
+export const EVENTS_ROOT_PATH = '/wydarzenia/';
+export const SITEMAP_PATH = '/sitemap.xml';
+export const SITEMAP_URL = createFullUrl(SITEMAP_PATH);
