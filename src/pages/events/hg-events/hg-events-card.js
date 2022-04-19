@@ -1,4 +1,5 @@
 import {LitElement, html, css} from 'lit';
+import '../../../elements/mkwc/hg-image.js';
 import sharedStyles from '../../../styles/shared-styles.js'
 
 export class HgEventsCard extends LitElement {
@@ -24,7 +25,7 @@ export class HgEventsCard extends LitElement {
       text-decoration: none;
       display: flex;
     }
-    iron-image {
+    hg-image {
       width: 300px;
       min-width: 300px;
       height: 200px;
@@ -64,7 +65,7 @@ export class HgEventsCard extends LitElement {
       }
     }
     @media all and (max-width: 839px) {
-      iron-image {
+      hg-image {
         width: 200px;
         min-width: 200px;
         height: 250px;
@@ -74,7 +75,7 @@ export class HgEventsCard extends LitElement {
       .content {
         padding: 20px;
       }
-      iron-image {
+      hg-image {
         width: 100%;
         min-width: auto;
         height: 200px;
@@ -87,7 +88,11 @@ export class HgEventsCard extends LitElement {
   render() {
     return html`
       <a href="/wydarzenia/${this.event.uid}">
-        <iron-image .src=${_.get('image.url', this.event)} .sizing=${'cover'}></iron-image>
+        <hg-image
+          .src=${_.get('image.url', this.event)}
+          .ready=${true}
+          .fit=${'cover'}>
+        </hg-image>
         <div class="content">
           <div class="header">
             <div class="date">${this.event.date.split('-').reverse().join(' / ')}</div>

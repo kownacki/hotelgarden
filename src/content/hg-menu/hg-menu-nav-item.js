@@ -1,4 +1,5 @@
 import {LitElement, html, css} from 'lit';
+import '../../elements/mkwc/hg-image.js';
 import sharedStyles from '../../styles/shared-styles.js';
 
 export class HgMenuNavItem extends LitElement {
@@ -13,10 +14,9 @@ export class HgMenuNavItem extends LitElement {
       align-items: center;
       transition: background-color 0.3s ease, color 0.2s ease;
     }
-    iron-image {
+    hg-image {
       width: 40%;
       height: 80px;
-      background: var(--placeholder-color);
     }
     .name {
       font-size: 18px;
@@ -37,7 +37,11 @@ export class HgMenuNavItem extends LitElement {
   `];
   render() {
     return html`
-      <iron-image .sizing=${'cover'} .src=${_.get('url', this.category.image)}></iron-image>
+      <hg-image
+        .src=${_.get('url', this.category.image)}
+        .ready=${true}
+        .fit=${'cover'}>
+      </hg-image>
       <div class="name">${this.category.name}</div>
     `;
   }

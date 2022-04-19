@@ -1,4 +1,5 @@
 import {LitElement, html, css} from 'lit';
+import '../../elements/mkwc/hg-image.js';
 
 export class HgScores extends LitElement {
   static properties = {
@@ -56,7 +57,7 @@ export class HgScores extends LitElement {
     a:hover {
       filter: brightness(120%);
     }
-    iron-image {
+    hg-image {
       width: 150px;
       height: 30px;
       filter: grayscale(90%) var(--primary-color-filter) brightness(120%);
@@ -83,7 +84,11 @@ export class HgScores extends LitElement {
       <div class="booking">
         <div>na</div>
         <a href="https://www.booking.com/hotel/pl/garden">
-          <iron-image .src=${'/resources/images/booking.png'} .sizing=${'cover'}></iron-image>
+          <hg-image
+            .src=${'/resources/images/booking.png'}
+            .ready=${true}
+            .fit=${'cover'}>
+          </hg-image>
         </a>
       </div>
     `;

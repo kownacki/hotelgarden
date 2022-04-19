@@ -5,7 +5,6 @@ import './hg-iconset.js';
 import '@polymer/app-layout/app-drawer/app-drawer.js';
 import '@polymer/app-route/app-location.js';
 import '@polymer/iron-icon';
-import '@polymer/iron-image';
 import '@polymer/paper-icon-button';
 import '@polymer/paper-input/paper-input.js';
 import '@polymer/paper-input/paper-textarea.js';

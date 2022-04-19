@@ -1,5 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import {staticPathToPageUid, linksMap, pagesStaticData} from '../../utils/urlStructure.js';
+import '../elements/mkwc/hg-image.js';
 import sharedStyles from '../styles/shared-styles.js';
 import {createDbPath, getFromDb} from '../utils/database.js';
 
@@ -34,7 +35,7 @@ export class HgLinks extends LitElement {
     a:hover {
       background: rgba(var(--primary-color-rgb), 0.25);
     }
-    iron-image {
+    hg-image {
       width: 100%;
       height: 350px;
     }
@@ -51,7 +52,7 @@ export class HgLinks extends LitElement {
       }
     }
     @media all and (max-width: 599px) {
-      iron-image{
+      hg-image{
         height: 200px;
       }
     }
@@ -79,7 +80,11 @@ export class HgLinks extends LitElement {
       <div class="links">
         ${_.map((link) => html`
           <a href="${link.path}">
-            <iron-image .src=${link.image} .sizing=${'cover'}></iron-image>
+            <hg-image
+              .src=${link.image}
+              .ready=${true}
+              .fit=${'cover'}>
+            </hg-image>
             <div class="name">${link.name}</div>
           </a>
         `, this._links)}
