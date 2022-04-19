@@ -2,7 +2,6 @@ import {LitElement, html, css} from 'lit';
 import '@polymer/iron-ajax/iron-ajax.js';
 import '@polymer/paper-radio-button/paper-radio-button.js';
 import '@polymer/paper-radio-group/paper-radio-group.js';
-import '@polymer/paper-spinner/paper-spinner-lite.js';
 import sharedStyles from '../styles/shared-styles.js';
 import {sleep} from '../utils.js'
 
@@ -47,16 +46,6 @@ export class HgContactForm extends LitElement {
       display: block;
       margin: 10px 5px;
     }
-    paper-icon-button {
-      color: var(--accent-color);
-      display: block;
-      width: 50px;
-      height: 50px;
-      margin-left: auto;
-    }
-    paper-icon-button[disabled] {
-      color: var(--disabled-text-color);
-    }
     paper-input {
       height: 72px;
     }
@@ -71,14 +60,23 @@ export class HgContactForm extends LitElement {
     :host([subject]) paper-radio-group {
       display: none;
     }
-    paper-spinner-lite {
-       display: block;
-       margin-right: 10px;
-       padding: 11px;
-       margin-left: auto;
-       --paper-spinner-color: var(--primary-color);
+    .controls {
+      display: flex;
+      justify-content: flex-end;
+    }
+    paper-icon-button {
+      color: var(--accent-color);
+      display: block;
+      width: 50px;
+      height: 50px;
+    }
+    paper-icon-button[disabled] {
+      color: var(--disabled-text-color);
+    }
+    mwc-circular-progress {
+      padding: 5px;
      }
-    :host(:not([loading])) paper-spinner-lite {
+    :host(:not([loading])) mwc-circular-progress {
       display: none;
     }
     :host([loading]) paper-icon-button, :host([sent]) paper-icon-button {
@@ -128,6 +126,10 @@ export class HgContactForm extends LitElement {
   constructor() {
     super();
     this._valid = {};
+  }
+  connectedCallback() {
+    import('@material/mwc-circular-progress');
+    super.connectedCallback();
   }
   firstUpdated() {
     this.shadowRoot.getElementById('text')
@@ -182,7 +184,7 @@ export class HgContactForm extends LitElement {
         </div>
         <div>
           <paper-radio-group 
-            id="subject" 
+            id="subject"
             .selected=${this.subject ? this.subject : null}
             @selected-changed=${(event) => this._selectedSubject = event.detail.value}>
             <span class="about">Dotyczy*:</span> 
@@ -199,12 +201,14 @@ export class HgContactForm extends LitElement {
           </paper-textarea>    
         </div>
       </div>
-      <paper-icon-button
-        @click=${this._sendMessage}
-        .disabled=${!_.every(_.get(_, this._fieldsValues), _.without(['company'], FIELDS)) || !this._selectedSubject}
-        .icon=${'send'}>
-      </paper-icon-button>
-      <paper-spinner-lite active></paper-spinner-lite>
+      <div class="controls">
+        <paper-icon-button
+          @click=${this._sendMessage}
+          .disabled=${!_.every(_.get(_, this._fieldsValues), _.without(['company'], FIELDS)) || !this._selectedSubject}
+          .icon=${'send'}>
+        </paper-icon-button>
+        <mwc-circular-progress .indeterminate=${true} .density=${-2}></mwc-circular-progress>
+      </div>
       <div class="confirmation">
         <span class="sent">Wiadomość została wysłana.</span>
         <span class="error">Wysyłanie wiadomości nie powiodło się. Skorzystaj z danych podanych w kontakcie.</span>
