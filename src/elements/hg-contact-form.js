@@ -1,21 +1,26 @@
 import {LitElement, html, css} from 'lit';
+import '@material/mwc-radio';
 import '@polymer/iron-ajax/iron-ajax.js';
-import '@polymer/paper-radio-button/paper-radio-button.js';
-import '@polymer/paper-radio-group/paper-radio-group.js';
 import sharedStyles from '../styles/shared-styles.js';
+import '../utils/fixes/mwc-formfield-fixed.js';
 import {sleep} from '../utils.js'
 
 const FIELDS = ['name', 'company', 'phone', 'email', 'text'];
 
+export const HgContactFormSubject = {
+  HOTEL: 'hotel',
+  GASTRO: 'gastro',
+};
+
 export class HgContactForm extends LitElement {
   static properties = {
-    subject: {type: String, reflect: true},
+    preselectedSubject: {type: String, reflect: true, attribute: 'preselected-subject'}, // HgContactFormSubject
     sent: {type: Boolean, reflect: true},
     formHidden: {type: Boolean, reflect: true, attribute: 'form-hidden'},
     loading: {type: Boolean, reflect: true},
     error: {type: Boolean, reflect: true},
     _fieldsValues: Object,
-    _selectedSubject: String,
+    _selectedSubject: String, // HgContactFormSubject
   };
   static styles = [sharedStyles, css`
     :host {
@@ -57,8 +62,21 @@ export class HgContactForm extends LitElement {
       --paper-font-subhead_-_font-size: 18px;
       --paper-font-subhead_-_line-height: 1.4em;
     }
-    :host([subject]) paper-radio-group {
+    .subjects {
+      display: flex;
+      align-items: center;
+    }
+    :host([preselected-subject]) .subjects {
       display: none;
+    }
+    .about-container {
+      display: flex;
+      height: 48px;
+      align-items: center;
+      margin-right: 10px;
+    }
+    mwc-formfield-fixed {
+      margin-right: 10px;
     }
     .controls {
       display: flex;
@@ -82,10 +100,6 @@ export class HgContactForm extends LitElement {
     :host([loading]) paper-icon-button, :host([sent]) paper-icon-button {
       display: none;
     }
-    .about {
-      position: relative;
-      bottom: -2px;
-    }
     .confirmation {
       text-align: center;
     }
@@ -106,27 +120,22 @@ export class HgContactForm extends LitElement {
       .inputs {
         flex-direction: column;
       }
-      :host(:not([subject])) .inputs {
+      :host(:not([preselected-subject])) .inputs {
         height: var(--heightMobileWithSubject);
       }
-      :host([subject]) .inputs {
+      :host([preselected-subject]) .inputs {
         height: var(--heightMobile);
       }
       .inputs > * {
         width: auto;
       }
-      paper-radio-group > * {
-        display: block;
-      }
-      .about {
-        bottom: 0;
+      .subjects {
+        margin-top: 0;
+        flex-direction: column;
+        align-items: flex-start;
       }
     }
   `];
-  constructor() {
-    super();
-    this._valid = {};
-  }
   connectedCallback() {
     import('@material/mwc-circular-progress');
     super.connectedCallback();
@@ -138,7 +147,7 @@ export class HgContactForm extends LitElement {
     _.map((element) => element.shadowRoot.querySelector('paper-input-container').shadowRoot.querySelector('.underline').hidden = true,
       this.shadowRoot.querySelectorAll('paper-input'));
     this.shadowRoot.getElementById('text')
-      .shadowRoot.querySelector('iron-autogrow-textarea').style = `height: ${this.subject ? 276 : 220}px`;
+      .shadowRoot.querySelector('iron-autogrow-textarea').style = `height: ${this.preselectedSubject ? 276 : 218}px`;
     this.shadowRoot.getElementById('text')
       .shadowRoot.querySelector('paper-input-container').style = 'padding-bottom: 20px';
   }
@@ -148,7 +157,7 @@ export class HgContactForm extends LitElement {
       {},
       FIELDS,
     );
-    this.shadowRoot.getElementById('ajax').body.subject = this.shadowRoot.getElementById('subject').selected;
+    this.shadowRoot.getElementById('ajax').body.subject = this.preselectedSubject || this._selectedSubject;
     this.shadowRoot.getElementById('ajax').generateRequest();
   }
   render() {
@@ -183,14 +192,23 @@ export class HgContactForm extends LitElement {
           ])}
         </div>
         <div>
-          <paper-radio-group 
-            id="subject"
-            .selected=${this.subject ? this.subject : null}
-            @selected-changed=${(event) => this._selectedSubject = event.detail.value}>
-            <span class="about">Dotyczy*:</span> 
-            <paper-radio-button name="hotel">Noclegi</paper-radio-button>
-            <paper-radio-button name="gastro">Gastronomia</paper-radio-button>
-          </paper-radio-group>
+          <div class="subjects">
+            <div class="about-container">
+              <div class="about">Dotyczy*:</div>
+            </div>
+            <mwc-formfield-fixed .label=${'Noclegi'}>
+              <mwc-radio
+                name="subject"
+                @click=${() => this._selectedSubject = HgContactFormSubject.HOTEL}>
+              </mwc-radio>
+            </mwc-formfield-fixed>
+            <mwc-formfield-fixed .label=${'Gastronomia'}>
+              <mwc-radio
+                name="subject"
+                @click=${() => this._selectedSubject = HgContactFormSubject.GASTRO}>
+              </mwc-radio>
+            </mwc-formfield-fixed>
+          </div>
           <paper-textarea
             id="text"
             auto-validate
@@ -204,7 +222,7 @@ export class HgContactForm extends LitElement {
       <div class="controls">
         <paper-icon-button
           @click=${this._sendMessage}
-          .disabled=${!_.every(_.get(_, this._fieldsValues), _.without(['company'], FIELDS)) || !this._selectedSubject}
+          .disabled=${!_.every(_.get(_, this._fieldsValues), _.without(['company'], FIELDS)) || !(this.preselectedSubject || this._selectedSubject)}
           .icon=${'send'}>
         </paper-icon-button>
         <mwc-circular-progress .indeterminate=${true} .density=${-2}></mwc-circular-progress>

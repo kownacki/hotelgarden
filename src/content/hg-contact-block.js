@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import '../content/hg-article.js';
-import '../elements/hg-contact-form.js';
+import {HgContactFormSubject} from '../elements/hg-contact-form.js';
 import sharedStyles from '../styles/shared-styles';
 
 export class HgContactBlock extends LitElement {
@@ -9,7 +9,7 @@ export class HgContactBlock extends LitElement {
     return html`
       <h2 class="content-heading">Skontaktuj się</h2>
       <hg-article .rich=${true} .uid=${'contact-block'}></hg-article>
-      <hg-contact-form .subject=${'gastro'}></hg-contact-form>
+      <hg-contact-form .preselectedSubject=${HgContactFormSubject.GASTRO}></hg-contact-form>
     `;
   }
 }
