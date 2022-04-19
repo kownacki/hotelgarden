@@ -4,6 +4,7 @@ import '../../../edit/hg-cms-buttons-container.js';
 import sharedStyles from '../../../styles/shared-styles.js';
 import {createDbPath, getFromDb, updateInDb} from '../../../utils/database.js';
 import {hyphenate} from '../../../utils.js';
+import './hg-events-add/hg-events-add-name.js';
 
 export class HgEventsAdd extends LitElement {
   static properties = {
@@ -23,9 +24,6 @@ export class HgEventsAdd extends LitElement {
       background: rgba(var(--secondary-color-rgb), 20%);
       padding-top: 10px;
       padding-bottom: 10px;
-    }
-    paper-input {
-      margin: 0;
     }
     #date {
       margin: 0 24px;
@@ -89,18 +87,14 @@ export class HgEventsAdd extends LitElement {
               this._dateCorrect = !_.isEmpty(this._date) && this._date >= moment().format('YYYY-MM-DD');
             }}> 
           <span style="color: red">${this._date && !this._dateCorrect ? 'Data nie może być miniona' : ''}</span>
-          <paper-input
-            id="name"
-            .label=${'Nazwa wydarzenia'}
-            ?invalid=${this._title && !this._address}
-            error-message="Tytuł wydarzenia musi zawierać litery lub cyfry"
-            @value-changed=${(event) => {
+          <hg-events-add-name
+            @input-changed=${({detail: name}) => {
               this._typing = true;
-              this._title = event.detail.value;
+              this._title = name;
               this._address = hyphenate(this._title);
               this._checkIfAddressTaken();
             }}>
-          </paper-input>
+          </hg-events-add-name>
           <p ?hidden=${!this._address} class="address">
             hotelgarden.pl/wydarzenia/${this._address}
           </p>
