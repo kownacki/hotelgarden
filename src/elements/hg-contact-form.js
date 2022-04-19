@@ -1,16 +1,12 @@
 import {LitElement, html, css} from 'lit';
-import '@material/mwc-radio';
 import '@polymer/iron-ajax/iron-ajax.js';
 import sharedStyles from '../styles/shared-styles.js';
-import '../utils/fixes/mwc-formfield-fixed.js';
 import {sleep} from '../utils.js'
+import './hg-contact-form/hg-contact-form-subject-select.js';
 
 const FIELDS = ['name', 'company', 'phone', 'email', 'text'];
 
-export const HgContactFormSubject = {
-  HOTEL: 'hotel',
-  GASTRO: 'gastro',
-};
+export {HgContactFormSubject} from './hg-contact-form/hg-contact-form-subject-select.js';
 
 export class HgContactForm extends LitElement {
   static properties = {
@@ -48,7 +44,6 @@ export class HgContactForm extends LitElement {
       width: 50%;
     }
     .inputs > * > * {
-      display: block;
       margin: 10px 5px;
     }
     paper-input {
@@ -62,21 +57,8 @@ export class HgContactForm extends LitElement {
       --paper-font-subhead_-_font-size: 18px;
       --paper-font-subhead_-_line-height: 1.4em;
     }
-    .subjects {
-      display: flex;
-      align-items: center;
-    }
-    :host([preselected-subject]) .subjects {
+    :host([preselected-subject]) hg-contact-form-subject-select {
       display: none;
-    }
-    .about-container {
-      display: flex;
-      height: 48px;
-      align-items: center;
-      margin-right: 10px;
-    }
-    mwc-formfield-fixed {
-      margin-right: 10px;
     }
     .controls {
       display: flex;
@@ -129,10 +111,8 @@ export class HgContactForm extends LitElement {
       .inputs > * {
         width: auto;
       }
-      .subjects {
+      .inputs > * > hg-contact-form-subject-select {
         margin-top: 0;
-        flex-direction: column;
-        align-items: flex-start;
       }
     }
   `];
@@ -192,23 +172,9 @@ export class HgContactForm extends LitElement {
           ])}
         </div>
         <div>
-          <div class="subjects">
-            <div class="about-container">
-              <div class="about">Dotyczy*:</div>
-            </div>
-            <mwc-formfield-fixed .label=${'Noclegi'}>
-              <mwc-radio
-                name="subject"
-                @click=${() => this._selectedSubject = HgContactFormSubject.HOTEL}>
-              </mwc-radio>
-            </mwc-formfield-fixed>
-            <mwc-formfield-fixed .label=${'Gastronomia'}>
-              <mwc-radio
-                name="subject"
-                @click=${() => this._selectedSubject = HgContactFormSubject.GASTRO}>
-              </mwc-radio>
-            </mwc-formfield-fixed>
-          </div>
+          <hg-contact-form-subject-select
+            @selected-subject=${({detail: subject}) => this._selectedSubject = subject}>
+          </hg-contact-form-subject-select>
           <paper-textarea
             id="text"
             auto-validate
