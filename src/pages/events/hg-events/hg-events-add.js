@@ -1,5 +1,7 @@
 import {LitElement, html, css} from 'lit';
 import '@material/mwc-button';
+import '../../../edit/hg-cms-buttons-container.js';
+import sharedStyles from '../../../styles/shared-styles.js';
 import {createDbPath, getFromDb, updateInDb} from '../../../utils/database.js';
 import {hyphenate} from '../../../utils.js';
 
@@ -13,10 +15,7 @@ export class HgEventsAdd extends LitElement {
     _typing: Boolean,
     _loading: Boolean,
   };
-  static styles = css`
-    paper-button {
-      margin: 0;
-    }
+  static styles = [sharedStyles, css`
     .address {
       font-family: monospace;
     }
@@ -32,7 +31,7 @@ export class HgEventsAdd extends LitElement {
       margin: 0 24px;
       padding: 0 2px;
     }
-  `;
+  `];
   constructor() {
     super();
     this._checkIfAddressTaken = _.debounce(500, async () => {
@@ -65,10 +64,14 @@ export class HgEventsAdd extends LitElement {
   };
   render() {
     return html`
-      <paper-button raised @click=${() => this.shadowRoot.getElementById('dialog').open()}>
-        <iron-icon .icon=${'add'} ></iron-icon>
-        Nowe wydarzenie
-      </paper-button>
+      <mwc-button
+        class="cms"
+        emphasis
+        .raised=${true}
+        .icon=${'add'}
+        .label=${'Nowe wydarzenie'}
+        @click=${() => this.shadowRoot.getElementById('dialog').open()}>
+      </mwc-button>
       <paper-dialog id="dialog">
         <div>Dodaj wydarzenie</div>
         <p class="tip">
@@ -109,9 +112,24 @@ export class HgEventsAdd extends LitElement {
             ? html`<span style="color: red">zajęty</span>`
             : html`<span style="color: green">dostępny</span>`}<br>
         </p>
-        <mwc-button raised label="Dodaj" @click=${this.addEvent} 
-          ?disabled=${!this._address || !this._dateCorrect || this._addressTaken || this._typing || this._loading}>
-        </mwc-button>
+        <div class="buttons">
+          <hg-cms-buttons-container>
+            <mwc-button
+              class="cms"
+              .raised=${true}
+              .label=${'Anuluj'}
+              @click=${() => this.shadowRoot.getElementById('dialog').close()}>
+            </mwc-button>
+            <mwc-button
+              class="cms"
+              emphasis
+              .raised=${true}
+              .label=${'Dodaj'}
+              .disabled=${!this._address || !this._dateCorrect || this._addressTaken || this._typing || this._loading}
+              @click=${this.addEvent}>
+            </mwc-button>
+          </hg-cms-buttons-container>
+        </div>
       </paper-dialog>
     `;
   }

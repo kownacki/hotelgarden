@@ -1,6 +1,9 @@
 import {LitElement, html, css} from 'lit';
+import '@material/mwc-button';
 import {collection, getDocs, query, where} from 'firebase/firestore';
 import {ref, listAll} from 'firebase/storage';
+import '../../edit/hg-cms-buttons-container.js';
+import sharedStyles from '../../styles/shared-styles.js';
 import {db, storage} from '../../utils/database.js';
 //todo dodać link do strony icons8
 
@@ -12,7 +15,7 @@ export class HgIconsAdd extends LitElement {
     _selected: String,
     _loading: Boolean,
   };
-  static styles = css`
+  static styles = [sharedStyles, css`
     .icons {
       display: flex;
       flex-wrap: wrap;
@@ -30,19 +33,10 @@ export class HgIconsAdd extends LitElement {
       height: 60px;
       padding: 0;
     }
-    paper-button {
-      min-width: auto;
-      padding: 5px;
-      margin: 2px;
-    }
-    paper-button[selected] {
-      background: var(--primary-color);
-      color: white;
-    }
     paper-dialog {
       overflow: auto;
     }
-  `;
+  `];
   constructor() {
     super();
     (async () => {
@@ -102,13 +96,18 @@ export class HgIconsAdd extends LitElement {
           id="text"
           .label=${'Tekst pod ikoną'}>
         </paper-input>
-        <div>
+        <hg-cms-buttons-container .alignToLeft=${true}>
           ${_.map((category) => html`
-            <paper-button raised @click=${() => this._selected = category} ?selected=${category === this._selected}>
-              ${_.replace('-', ' ', category)}
-            </paper-button>
+            <mwc-button
+              class="cms"
+              .raised=${true}
+              .dense=${true}
+              .label=${_.replace('-', ' ', category)}
+              ?selected=${category === this._selected}
+              @click=${() => this._selected = category}>
+            </mwc-button>
           `, this._categories)}
-        </div>
+        </hg-cms-buttons-container>
         <div class="icons">
           <!--todo This can lag a bit due to how many images are rendered. Optimize. -->
           ${this._loading ? 'loading...' : !this._selected ? '' : _.map((icon) => html`

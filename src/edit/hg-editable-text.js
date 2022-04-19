@@ -1,4 +1,6 @@
 import {LitElement, html, css} from 'lit';
+import '@material/mwc-button';
+import '../edit/hg-cms-buttons-container.js';
 import sharedStyles from '../styles/shared-styles.js';
 import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
 import {headerHeight, moveOutFromShadowDom} from '../utils.js'
@@ -52,21 +54,13 @@ export default class HgEditableText extends LitElement {
       background: white
     }
     .edit {
-      margin-top: 5px;
-      justify-content: flex-end;
-      flex-wrap: wrap;
-    }
-    .edit:not([hidden]) {
-      display: flex;
+      margin-top: 6px;
     }
     :host([float]) .edit {
       position: absolute;
       top: 100%;
       right: 0;
       z-index: var(--layer-header-1);
-    }
-    paper-button {
-      background: white;
     }
   `];
   constructor() {
@@ -192,9 +186,12 @@ export default class HgEditableText extends LitElement {
     return html`
       <slot id="text"></slot>
       ${!this._loggedIn ? '' : html`
-        <div class="edit smaller-text" ?hidden=${!this.showControls}>
-          <paper-button
-            raised
+        <div class="edit" ?hidden=${!this.showControls}>
+          <hg-cms-buttons-container>
+            <mwc-button
+            class="cms"
+            .raised=${true}
+            .label=${'Cofnij'}
             @click=${() => {
               this.rich ? this._editor.setData(this.text || '') : (this._editable.innerHTML = this.text || '');
               this.showControls = false;
@@ -202,17 +199,19 @@ export default class HgEditableText extends LitElement {
                 this.removeAttribute('not-empty');
               }
             }}>
-            Cofnij
-          </paper-button>
-          <paper-button
-            raised
+          </mwc-button>
+          <mwc-button
+            class="cms"
+            emphasis
+            .raised=${true}
+            .label=${'Zapisz'}
             @click=${() => {
               this.showControls = false;
               this.text = this._editable.textContent || '';
               this.dispatchEvent(new CustomEvent('save', {detail: this.rich ? this._editor.getData() : this.text}));
             }}>
-            Zapisz
-          </paper-button>
+          </mwc-button>
+          </hg-cms-buttons-container>
         </div>
       `}
     `;

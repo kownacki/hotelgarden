@@ -1,4 +1,7 @@
 import {LitElement, html, css} from 'lit';
+import '@material/mwc-button';
+import '../../edit/hg-cms-buttons-container.js';
+import sharedStyles from '../../styles/shared-styles.js';
 
 export class HgListItemConfigure extends LitElement {
   static properties = {
@@ -7,7 +10,7 @@ export class HgListItemConfigure extends LitElement {
     disable: Boolean,
     opened: {type: Boolean, reflect: true},
   };
-  static styles = css`
+  static styles = [sharedStyles, css`
     paper-icon-button {
       background: white;
       width: 24px;
@@ -15,9 +18,9 @@ export class HgListItemConfigure extends LitElement {
       padding: 0;
     }
     .buttons {
-      margin: 10px 0;
+      margin-top: 10px;
     }
-  `;
+  `];
   render() {
     return html`
       <paper-icon-button
@@ -36,14 +39,27 @@ export class HgListItemConfigure extends LitElement {
         }}>
         ${this.configure.template(this.item)}
         <div class="buttons">
-          <paper-button raised @click=${() => this.shadowRoot.getElementById('dialog').close()}>Anuluj</paper-button>   
-          <paper-button raised @click=${() => {
-            this.shadowRoot.getElementById('dialog').close();
-            const field = this.configure.field;
-            const newData = this.configure.getData(this);
-            this.item[field] = newData;
-            this.dispatchEvent(new CustomEvent('update', {detail: {path: field, data: newData}, composed: true}));
-          }}>Zapisz</paper-button>
+          <hg-cms-buttons-container>
+            <mwc-button
+              class="cms"
+              .raised=${true}
+              .label=${'Anuluj'}
+              @click=${() => this.shadowRoot.getElementById('dialog').close()}>
+            </mwc-button>
+            <mwc-button
+              class="cms"
+              emphasis
+              .raised=${true}
+              .label=${'Zapisz'}
+              @click=${() => {
+                this.shadowRoot.getElementById('dialog').close();
+                const field = this.configure.field;
+                const newData = this.configure.getData(this);
+                this.item[field] = newData;
+                this.dispatchEvent(new CustomEvent('update', {detail: {path: field, data: newData}, composed: true}));
+              }}>
+            </mwc-button>
+          </hg-cms-buttons-container>
         </div>
       </paper-dialog>
     `;

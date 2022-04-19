@@ -74,6 +74,14 @@ export default css`
     flex-direction: column;
     justify-content: center;
   }
+  .cms {
+    --mdc-theme-primary: white;
+    --mdc-theme-on-primary: black; 
+  }
+  .cms[selected], .cms[emphasis] {
+    --mdc-theme-primary: black;
+    --mdc-theme-on-primary: white;
+  }
   @media all and (max-width: 959px) {
     body, :host {
       font-size: 18px;

@@ -1,4 +1,7 @@
 import {LitElement, html, css} from 'lit';
+import '@material/mwc-button';
+import '../edit/hg-cms-buttons-container.js';
+import sharedStyles from '../styles/shared-styles.js';
 
 export class HgDeleteItem extends LitElement {
   static properties = {
@@ -6,7 +9,7 @@ export class HgDeleteItem extends LitElement {
     disable: Boolean,
     opened: {type: Boolean, reflect: true},
   };
-  static styles = css`
+  static styles = [sharedStyles, css`
     .warning {
       color: var(--error-color);
       padding: 10px;
@@ -18,10 +21,7 @@ export class HgDeleteItem extends LitElement {
       height: 24px;
       padding: 0;
     }
-    .buttons {
-      display: flex;
-    }
-  `;
+  `];
   render() {
     return html`
       <paper-icon-button 
@@ -38,11 +38,23 @@ export class HgDeleteItem extends LitElement {
           Usunięte dane nie mogą być przywrócone.
         </div>
         <div class="buttons">
-          <paper-button raised @click=${() => this.shadowRoot.getElementById('dialog').close()}>Anuluj</paper-button>   
-          <paper-button raised @click=${() => {
-            this.shadowRoot.getElementById('dialog').close();
-            this.dispatchEvent(new CustomEvent('request-delete', {composed: true}));
-          }}>Usuń</paper-button>
+          <hg-cms-buttons-container>
+            <mwc-button
+              class="cms"
+              .raised=${true}
+              .label=${'Anuluj'}
+              @click=${() => this.shadowRoot.getElementById('dialog').close()}>
+            </mwc-button>
+            <mwc-button
+              class="cms"
+              .raised=${true}
+              .label=${'Usuń'}
+              @click=${() => {
+                this.shadowRoot.getElementById('dialog').close();
+                this.dispatchEvent(new CustomEvent('request-delete', {composed: true}));
+              }}>
+            </mwc-button>
+          </hg-cms-buttons-container>
         </div>
       </paper-dialog>
     `;

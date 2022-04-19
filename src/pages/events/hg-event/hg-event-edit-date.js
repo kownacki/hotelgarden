@@ -1,11 +1,14 @@
 import {LitElement, html, css} from 'lit';
+import '@material/mwc-button';
+import '../../../edit/hg-cms-buttons-container.js';
+import sharedStyles from '../../../styles/shared-styles.js';
 
 export class HgEventEditDate extends LitElement {
   static properties = {
     date: String,
     opened: {type: Boolean, reflect: true},
   };
-  static styles = css`
+  static styles = [sharedStyles, css`
     :host {
       margin-left: 8px;
     }
@@ -17,7 +20,7 @@ export class HgEventEditDate extends LitElement {
     .buttons {
       margin-top: 10px;
     }
-  `;
+  `];
   render() {
     return html`
       <paper-icon-button 
@@ -37,11 +40,24 @@ export class HgEventEditDate extends LitElement {
           min="${moment().format('YYYY-MM-DD')}"
           .value=${this.date}>
         <div class="buttons">
-          <paper-button raised @click=${() => this.shadowRoot.getElementById('dialog').close()}>Anuluj</paper-button>   
-          <paper-button raised @click=${() => {
-            this.shadowRoot.getElementById('dialog').close();
-            this.dispatchEvent(new CustomEvent('save', {detail: this.shadowRoot.getElementById('date').value, composed: true}));
-          }}>Zapisz</paper-button>
+          <hg-cms-buttons-container>
+            <mwc-button
+              class="cms"
+              .raised=${true}
+              .label=${'Anuluj'}
+              @click=${() => this.shadowRoot.getElementById('dialog').close()}>
+            </mwc-button>
+            <mwc-button
+              class="cms"
+              emphasis
+              .raised=${true}
+              .label=${'Zapisz'}
+              @click=${() => {
+                this.shadowRoot.getElementById('dialog').close();
+                this.dispatchEvent(new CustomEvent('save', {detail: this.shadowRoot.getElementById('date').value, composed: true}));
+              }}>
+            </mwc-button>
+          </hg-cms-buttons-container>
         </div>
       </paper-dialog>
     `;
