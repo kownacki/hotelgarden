@@ -23,45 +23,43 @@ export class HgListItemConfigure extends LitElement {
   `];
   render() {
     return html`
-      <paper-icon-button
-        .icon=${this.configure.icon}
-        ?disabled=${this.disable}
-        @click=${() => this.shadowRoot.getElementById('dialog').open()}>
-      </paper-icon-button>
-      <paper-dialog
-        id="dialog"
-        @opened-changed=${(event) => {
-          this.opened = event.target.opened;
-          if (this.opened) {
-            this.configure.setData(this, this.item);
-          }
-          this.dispatchEvent(new CustomEvent('opened-changed'));
-        }}>
-        ${this.configure.template(this.item)}
-        <div class="buttons">
-          <hg-cms-buttons-container>
-            <mwc-button
-              class="cms"
-              .raised=${true}
-              .label=${'Anuluj'}
-              @click=${() => this.shadowRoot.getElementById('dialog').close()}>
-            </mwc-button>
-            <mwc-button
-              class="cms"
-              emphasis
-              .raised=${true}
-              .label=${'Zapisz'}
-              @click=${() => {
-                this.shadowRoot.getElementById('dialog').close();
-                const field = this.configure.field;
-                const newData = this.configure.getData(this);
-                this.item[field] = newData;
-                this.dispatchEvent(new CustomEvent('update', {detail: {path: field, data: newData}, composed: true}));
-              }}>
-            </mwc-button>
-          </hg-cms-buttons-container>
-        </div>
-      </paper-dialog>
+      <div class="cms">
+        <paper-icon-button
+          .icon=${this.configure.icon}
+          ?disabled=${this.disable}
+          @click=${() => this.shadowRoot.getElementById('dialog').open()}>
+        </paper-icon-button>
+        <paper-dialog
+          id="dialog"
+          @opened-changed=${(event) => {
+            this.opened = event.target.opened;
+            if (this.opened) {
+              this.configure.setData(this, this.item);
+            }
+            this.dispatchEvent(new CustomEvent('opened-changed'));
+          }}>
+          ${this.configure.template(this.item)}
+          <div class="buttons">
+            <hg-cms-buttons-container>
+              <mwc-button
+                .label=${'Anuluj'}
+                @click=${() => this.shadowRoot.getElementById('dialog').close()}>
+              </mwc-button>
+              <mwc-button
+                .raised=${true}
+                .label=${'Zapisz'}
+                @click=${() => {
+                  this.shadowRoot.getElementById('dialog').close();
+                  const field = this.configure.field;
+                  const newData = this.configure.getData(this);
+                  this.item[field] = newData;
+                  this.dispatchEvent(new CustomEvent('update', {detail: {path: field, data: newData}, composed: true}));
+                }}>
+              </mwc-button>
+            </hg-cms-buttons-container>
+          </div>
+        </paper-dialog>
+      </div>
     `;
   }
 }

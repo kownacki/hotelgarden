@@ -64,73 +64,69 @@ export class HgEventsAdd extends LitElement {
   };
   render() {
     return html`
-      <mwc-button
-        class="cms"
-        emphasis
-        .raised=${true}
-        .icon=${'add'}
-        .label=${'Nowe wydarzenie'}
-        @click=${() => this.shadowRoot.getElementById('dialog').open()}>
-      </mwc-button>
-      <paper-dialog id="dialog">
-        <div>Dodaj wydarzenie</div>
-        <p class="tip">
-          <span style="color: var(--primary-color)">Podpowiedź:</span> 
-          Gdy dodajesz cykliczne wydarzenie, umieść w nazwie rok lub edycję wydarzenia. Np "Sylwester 2020", 
-          "Open Mic vol. V". Dzięki temu unikniesz konfliktu nazw, a twoje wydarzenie będzie łatwiej znaleźć.<br><br>
-           <span style="color: red">Uwaga:</span> Zmiana nazwy wydarzenia po utworzeniu NIE będzie skutkować zmianą adresu URL.
-        </p>
-        <input 
-          type="date"
-          name="date" 
-          id="date" 
-          min="${moment().format('YYYY-MM-DD')}"
-          @input=${(event) => {
-            this._date = event.target.value;
-            this._dateCorrect = !_.isEmpty(this._date) && this._date >= moment().format('YYYY-MM-DD');
-          }}> 
-        <span style="color: red">${this._date && !this._dateCorrect ? 'Data nie może być miniona' : ''}</span>
-        <paper-input 
-          id="name" 
-          .label=${'Nazwa wydarzenia'}
-          ?invalid=${this._title && !this._address}
-          error-message="Tytuł wydarzenia musi zawierać litery lub cyfry"
-          @value-changed=${(event) => {
-            this._typing = true;
-            this._title = event.detail.value;
-            this._address = hyphenate(this._title);
-            this._checkIfAddressTaken();
-          }}>
-        </paper-input>
-        <p ?hidden=${!this._address} class="address">
-          hotelgarden.pl/wydarzenia/${this._address}
-        </p>
-        <p ?hidden=${!this._loading}>Ładowanie...</p>
-        <p ?hidden=${!this._address || this._typing || this._loading}>
-          Adres wydarzenia 
-          ${this._addressTaken
-            ? html`<span style="color: red">zajęty</span>`
-            : html`<span style="color: green">dostępny</span>`}<br>
-        </p>
-        <div class="buttons">
-          <hg-cms-buttons-container>
-            <mwc-button
-              class="cms"
-              .raised=${true}
-              .label=${'Anuluj'}
-              @click=${() => this.shadowRoot.getElementById('dialog').close()}>
-            </mwc-button>
-            <mwc-button
-              class="cms"
-              emphasis
-              .raised=${true}
-              .label=${'Dodaj'}
-              .disabled=${!this._address || !this._dateCorrect || this._addressTaken || this._typing || this._loading}
-              @click=${this.addEvent}>
-            </mwc-button>
-          </hg-cms-buttons-container>
-        </div>
-      </paper-dialog>
+      <div class="cms">
+        <mwc-button
+          .raised=${true}
+          .icon=${'add'}
+          .label=${'Nowe wydarzenie'}
+          @click=${() => this.shadowRoot.getElementById('dialog').open()}>
+        </mwc-button>
+        <paper-dialog id="dialog">
+          <div>Dodaj wydarzenie</div>
+          <p class="tip">
+            <span style="color: var(--primary-color)">Podpowiedź:</span> 
+            Gdy dodajesz cykliczne wydarzenie, umieść w nazwie rok lub edycję wydarzenia. Np "Sylwester 2020", 
+            "Open Mic vol. V". Dzięki temu unikniesz konfliktu nazw, a twoje wydarzenie będzie łatwiej znaleźć.<br><br>
+             <span style="color: red">Uwaga:</span> Zmiana nazwy wydarzenia po utworzeniu NIE będzie skutkować zmianą adresu URL.
+          </p>
+          <input 
+            type="date"
+            name="date" 
+            id="date" 
+            min="${moment().format('YYYY-MM-DD')}"
+            @input=${(event) => {
+              this._date = event.target.value;
+              this._dateCorrect = !_.isEmpty(this._date) && this._date >= moment().format('YYYY-MM-DD');
+            }}> 
+          <span style="color: red">${this._date && !this._dateCorrect ? 'Data nie może być miniona' : ''}</span>
+          <paper-input
+            id="name"
+            .label=${'Nazwa wydarzenia'}
+            ?invalid=${this._title && !this._address}
+            error-message="Tytuł wydarzenia musi zawierać litery lub cyfry"
+            @value-changed=${(event) => {
+              this._typing = true;
+              this._title = event.detail.value;
+              this._address = hyphenate(this._title);
+              this._checkIfAddressTaken();
+            }}>
+          </paper-input>
+          <p ?hidden=${!this._address} class="address">
+            hotelgarden.pl/wydarzenia/${this._address}
+          </p>
+          <p ?hidden=${!this._loading}>Ładowanie...</p>
+          <p ?hidden=${!this._address || this._typing || this._loading}>
+            Adres wydarzenia 
+            ${this._addressTaken
+              ? html`<span style="color: red">zajęty</span>`
+              : html`<span style="color: green">dostępny</span>`}<br>
+          </p>
+          <div class="buttons">
+            <hg-cms-buttons-container>
+              <mwc-button
+                .label=${'Anuluj'}
+                @click=${() => this.shadowRoot.getElementById('dialog').close()}>
+              </mwc-button>
+              <mwc-button
+                .raised=${true}
+                .label=${'Dodaj'}
+                .disabled=${!this._address || !this._dateCorrect || this._addressTaken || this._typing || this._loading}
+                @click=${this.addEvent}>
+              </mwc-button>
+            </hg-cms-buttons-container>
+          </div>
+        </paper-dialog>
+      </div>
     `;
   }
 }

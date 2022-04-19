@@ -186,31 +186,28 @@ export default class HgEditableText extends LitElement {
     return html`
       <slot id="text"></slot>
       ${!this._loggedIn ? '' : html`
-        <div class="edit" ?hidden=${!this.showControls}>
+        <div class="cms edit" ?hidden=${!this.showControls}>
           <hg-cms-buttons-container>
             <mwc-button
-            class="cms"
-            .raised=${true}
-            .label=${'Cofnij'}
-            @click=${() => {
-              this.rich ? this._editor.setData(this.text || '') : (this._editable.innerHTML = this.text || '');
-              this.showControls = false;
-              if (!this.text) {
-                this.removeAttribute('not-empty');
-              }
-            }}>
-          </mwc-button>
-          <mwc-button
-            class="cms"
-            emphasis
-            .raised=${true}
-            .label=${'Zapisz'}
-            @click=${() => {
-              this.showControls = false;
-              this.text = this._editable.textContent || '';
-              this.dispatchEvent(new CustomEvent('save', {detail: this.rich ? this._editor.getData() : this.text}));
-            }}>
-          </mwc-button>
+              .raised=${true}
+              .label=${'Cofnij'}
+              @click=${() => {
+                this.rich ? this._editor.setData(this.text || '') : (this._editable.innerHTML = this.text || '');
+                this.showControls = false;
+                if (!this.text) {
+                  this.removeAttribute('not-empty');
+                }
+              }}>
+            </mwc-button>
+            <mwc-button
+              .raised=${true}
+              .label=${'Zapisz'}
+              @click=${() => {
+                this.showControls = false;
+                this.text = this._editable.textContent || '';
+                this.dispatchEvent(new CustomEvent('save', {detail: this.rich ? this._editor.getData() : this.text}));
+              }}>
+            </mwc-button>
           </hg-cms-buttons-container>
         </div>
       `}

@@ -86,6 +86,7 @@ export class HgIconsAdd extends LitElement {
     return html`
       <paper-dialog 
         id="dialog"
+        class="cms"
         @opened-changed=${(event) => {
           if (!event.detail.value) {
             this.dispatchEvent(new CustomEvent('icon-selected', {detail: false}))
@@ -99,11 +100,10 @@ export class HgIconsAdd extends LitElement {
         <hg-cms-buttons-container .alignToLeft=${true}>
           ${_.map((category) => html`
             <mwc-button
-              class="cms"
-              .raised=${true}
+              .outlined=${category !== this._selected}
+              .raised=${category === this._selected}
               .dense=${true}
               .label=${_.replace('-', ' ', category)}
-              ?selected=${category === this._selected}
               @click=${() => this._selected = category}>
             </mwc-button>
           `, this._categories)}

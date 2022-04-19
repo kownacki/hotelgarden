@@ -24,39 +24,37 @@ export class HgDeleteItem extends LitElement {
   `];
   render() {
     return html`
-      <paper-icon-button 
-        ?disabled=${this.disable}
-        .icon=${'delete'}
-        @click=${() => this.shadowRoot.getElementById('dialog').open()}>
-      </paper-icon-button>
-      <paper-dialog 
-        id="dialog" 
-        @opened-changed=${(event) => {this.opened = event.target.opened; this.dispatchEvent(new CustomEvent('opened-changed'))}}>
-        <div class="warning">
-          <iron-icon .icon=${'warning'}></iron-icon>
-          Czy na pewno usunąć ${this.name}? 
-          Usunięte dane nie mogą być przywrócone.
-        </div>
-        <div class="buttons">
-          <hg-cms-buttons-container>
-            <mwc-button
-              class="cms"
-              .raised=${true}
-              .label=${'Anuluj'}
-              @click=${() => this.shadowRoot.getElementById('dialog').close()}>
-            </mwc-button>
-            <mwc-button
-              class="cms"
-              .raised=${true}
-              .label=${'Usuń'}
-              @click=${() => {
-                this.shadowRoot.getElementById('dialog').close();
-                this.dispatchEvent(new CustomEvent('request-delete', {composed: true}));
-              }}>
-            </mwc-button>
-          </hg-cms-buttons-container>
-        </div>
-      </paper-dialog>
+      <div class="cms">
+        <paper-icon-button 
+          ?disabled=${this.disable}
+          .icon=${'delete'}
+          @click=${() => this.shadowRoot.getElementById('dialog').open()}>
+        </paper-icon-button>
+        <paper-dialog
+          id="dialog"
+          @opened-changed=${(event) => {this.opened = event.target.opened; this.dispatchEvent(new CustomEvent('opened-changed'))}}>
+          <div class="warning">
+            <iron-icon .icon=${'warning'}></iron-icon>
+            Czy na pewno usunąć ${this.name}? 
+            Usunięte dane nie mogą być przywrócone.
+          </div>
+          <div class="buttons">
+            <hg-cms-buttons-container>
+              <mwc-button
+                .label=${'Anuluj'}
+                @click=${() => this.shadowRoot.getElementById('dialog').close()}>
+              </mwc-button>
+              <mwc-button
+                .label=${'Usuń'}
+                @click=${() => {
+                  this.shadowRoot.getElementById('dialog').close();
+                  this.dispatchEvent(new CustomEvent('request-delete', {composed: true}));
+                }}>
+              </mwc-button>
+            </hg-cms-buttons-container>
+          </div>
+        </paper-dialog>
+      </div>
     `;
   }
 }

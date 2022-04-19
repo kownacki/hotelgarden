@@ -23,43 +23,41 @@ export class HgEventEditDate extends LitElement {
   `];
   render() {
     return html`
-      <paper-icon-button 
-        .icon=${'edit'}
-         @click=${() => this.shadowRoot.getElementById('dialog').open()}>
-      </paper-icon-button>
-      <paper-dialog 
-        id="dialog"
-        @opened-changed=${(event) => {this.opened = event.target.opened; this.dispatchEvent(new CustomEvent('opened-changed'))}}>
-        <div>
-          Zmień datę wydarzenia
-        </div>
-        <input 
-          type="date"
-          name="date" 
-          id="date" 
-          min="${moment().format('YYYY-MM-DD')}"
-          .value=${this.date}>
-        <div class="buttons">
-          <hg-cms-buttons-container>
-            <mwc-button
-              class="cms"
-              .raised=${true}
-              .label=${'Anuluj'}
-              @click=${() => this.shadowRoot.getElementById('dialog').close()}>
-            </mwc-button>
-            <mwc-button
-              class="cms"
-              emphasis
-              .raised=${true}
-              .label=${'Zapisz'}
-              @click=${() => {
-                this.shadowRoot.getElementById('dialog').close();
-                this.dispatchEvent(new CustomEvent('save', {detail: this.shadowRoot.getElementById('date').value, composed: true}));
-              }}>
-            </mwc-button>
-          </hg-cms-buttons-container>
-        </div>
-      </paper-dialog>
+      <div class="cms">
+        <paper-icon-button 
+          .icon=${'edit'}
+           @click=${() => this.shadowRoot.getElementById('dialog').open()}>
+        </paper-icon-button>
+        <paper-dialog 
+          id="dialog"
+          @opened-changed=${(event) => {this.opened = event.target.opened; this.dispatchEvent(new CustomEvent('opened-changed'))}}>
+          <div>
+            Zmień datę wydarzenia
+          </div>
+          <input 
+            type="date"
+            name="date" 
+            id="date" 
+            min="${moment().format('YYYY-MM-DD')}"
+            .value=${this.date}>
+          <div class="buttons">
+            <hg-cms-buttons-container>
+              <mwc-button
+                .label=${'Anuluj'}
+                @click=${() => this.shadowRoot.getElementById('dialog').close()}>
+              </mwc-button>
+              <mwc-button
+                .raised=${true}
+                .label=${'Zapisz'}
+                @click=${() => {
+                  this.shadowRoot.getElementById('dialog').close();
+                  this.dispatchEvent(new CustomEvent('save', {detail: this.shadowRoot.getElementById('date').value, composed: true}));
+                }}>
+              </mwc-button>
+            </hg-cms-buttons-container>
+          </div>
+        </paper-dialog>
+      </div>
     `;
   }
 }
