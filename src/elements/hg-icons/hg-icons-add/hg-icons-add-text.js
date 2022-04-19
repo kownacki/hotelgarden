@@ -1,9 +1,10 @@
 import {LitElement, html, css} from 'lit';
-import sharedStyles from '../../../../styles/shared-styles.js';
-import '../../../../utils/fixes/mwc-textfield-fixed.js';
+import sharedStyles from '../../../styles/shared-styles.js';
+import '../../../utils/fixes/mwc-textfield-fixed.js';
 
-export class HgEventsAddName extends LitElement {
+export class HgIconsAddText extends LitElement {
   static properties = {
+    text: String,
   };
   static styles = [sharedStyles, css`
     :host {
@@ -14,15 +15,15 @@ export class HgEventsAddName extends LitElement {
     }
   `];
   _handleValueChange(value) {
-    this.dispatchEvent(new CustomEvent('name-change', {detail: value}));
+    this.text = value;
   }
   render() {
     return html`
       <mwc-textfield-fixed
-        .label=${'Nazwa wydarzenia'}
+        .label=${'Tekst pod ikoną'}
         @value-change=${({detail: value}) => this._handleValueChange(value)}>
       </mwc-textfield-fixed>
     `;
   }
 }
-customElements.define('hg-events-add-name', HgEventsAddName);
+customElements.define('hg-icons-add-text', HgIconsAddText);

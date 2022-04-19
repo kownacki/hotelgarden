@@ -29,6 +29,9 @@ export class HgEventsAdd extends LitElement {
       margin: 0 24px;
       padding: 0 2px;
     }
+    hg-events-add-name {
+      margin: 20px 0 ;
+    }
   `];
   constructor() {
     super();
@@ -88,7 +91,7 @@ export class HgEventsAdd extends LitElement {
             }}> 
           <span style="color: red">${this._date && !this._dateCorrect ? 'Data nie może być miniona' : ''}</span>
           <hg-events-add-name
-            @input-changed=${({detail: name}) => {
+            @name-change=${({detail: name}) => {
               this._typing = true;
               this._title = name;
               this._address = hyphenate(this._title);

@@ -5,6 +5,7 @@ import {ref, listAll} from 'firebase/storage';
 import '../../edit/hg-cms-buttons-container.js';
 import sharedStyles from '../../styles/shared-styles.js';
 import {db, storage} from '../../utils/database.js';
+import './hg-icons-add/hg-icons-add-text.js';
 //todo dodać link do strony icons8
 
 export class HgIconsAdd extends LitElement {
@@ -35,6 +36,9 @@ export class HgIconsAdd extends LitElement {
     }
     paper-dialog {
       overflow: auto;
+    }
+    hg-icons-add-text {
+      margin: 20px 0;
     }
   `];
   constructor() {
@@ -75,7 +79,7 @@ export class HgIconsAdd extends LitElement {
       this.addEventListener('icon-selected', (event) => {
         if (event.detail) {
           this.shadowRoot.getElementById('dialog').close();
-          resolve({text: this.shadowRoot.getElementById('text').value, url: event.detail});
+          resolve({text: this.shadowRoot.getElementById('text').text, url: event.detail});
         } else {
           resolve(false);
         }
@@ -93,10 +97,9 @@ export class HgIconsAdd extends LitElement {
           }
         }}>
         <div>Dodaj ikonę</div>
-        <paper-input
-          id="text"
-          .label=${'Tekst pod ikoną'}>
-        </paper-input>
+        <hg-icons-add-text
+          id="text">
+        </hg-icons-add-text>
         <hg-cms-buttons-container .alignToLeft=${true}>
           ${_.map((category) => html`
             <mwc-button
