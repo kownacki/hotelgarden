@@ -1,197 +1,149 @@
 import {LitElement, html, css} from 'lit';
-import '@polymer/iron-ajax/iron-ajax.js';
+import '@material/mwc-button';
 import sharedStyles from '../styles/shared-styles.js';
-import {sleep} from '../utils.js'
-import './hg-contact-form/hg-contact-form-subject-select.js';
-
-const FIELDS = ['name', 'company', 'phone', 'email', 'text'];
+import {findInvalidInputs} from '../utils/form.js';
+import {sleep, scrollIntoView} from '../utils.js';
+import './hg-contact-form/hg-contact-form-first-part.js';
+import './hg-contact-form/hg-contact-form-loading.js';
+import './hg-contact-form/hg-contact-form-second-part.js';
 
 export {HgContactFormSubject} from './hg-contact-form/hg-contact-form-subject-select.js';
+
+export const HgContactFormField = {
+  NAME: 'name',
+  COMPANY: 'company',
+  PHONE: 'phone',
+  EMAIL: 'email',
+  SUBJECT: 'subject',
+  TEXT: 'text',
+};
 
 export class HgContactForm extends LitElement {
   static properties = {
     preselectedSubject: {type: String, reflect: true, attribute: 'preselected-subject'}, // HgContactFormSubject
+    // observables
     sent: {type: Boolean, reflect: true},
-    formHidden: {type: Boolean, reflect: true, attribute: 'form-hidden'},
     loading: {type: Boolean, reflect: true},
     error: {type: Boolean, reflect: true},
-    _fieldsValues: Object,
-    _selectedSubject: String, // HgContactFormSubject
+    // private
+    _checkValidity: Boolean,
   };
   static styles = [sharedStyles, css`
     :host {
-      --height: 346px;
-      --heightMobile: calc(var(--height) * 2);
-      --heightMobileWithSubject: calc(var(--heightMobile) + 92px);
       --width: 900px;
       font-size: 18px;
       display: block;
       width: var(--width);
+      max-width: calc(100% - 40px);
       padding: 0 20px;
       margin: 20px auto;
     }
-    .inputs {
+    .parts {
       display: flex;
-      transition: height 0.5s ease-in;
-      overflow: hidden;
-      /* needed for animation */
-      height: var(--height);
     }
-    :host([sent]) .inputs {
-      height: 0 !important;
+    .parts > * {
+      flex: 1;
     }
-    .inputs > * {
-      width: 50%;
+    hg-contact-form-first-part {
+      margin-right: 20px;
     }
-    .inputs > * > * {
-      margin: 10px 5px;
-    }
-    paper-input {
-      height: 72px;
-    }
-    paper-input, paper-textarea {
-      padding: 0 12px;
-      border: solid 1px var(--primary-color);
-      --paper-input-container_-_padding: 4px 0 20px;
-      --paper-input-container-shared-input-style_-_font-size: 18px;
-      --paper-font-subhead_-_font-size: 18px;
-      --paper-font-subhead_-_line-height: 1.4em;
-    }
-    :host([preselected-subject]) hg-contact-form-subject-select {
-      display: none;
+    .required-info {
+      font-size: 12px;
+      color: var(--grey-text);
+      margin: 20px 0;
     }
     .controls {
       display: flex;
       justify-content: flex-end;
     }
-    paper-icon-button {
-      color: var(--accent-color);
-      display: block;
-      width: 50px;
-      height: 50px;
+    mwc-button {
+      padding: 7px 0;
     }
-    paper-icon-button[disabled] {
-      color: var(--disabled-text-color);
-    }
-    mwc-circular-progress {
-      padding: 5px;
-     }
-    :host(:not([loading])) mwc-circular-progress {
-      display: none;
-    }
-    :host([loading]) paper-icon-button, :host([sent]) paper-icon-button {
+    :host([loading]) mwc-button, :host([sent]) mwc-button, :host([error]) mwc-button {
       display: none;
     }
     .confirmation {
       text-align: center;
     }
-    :host(:not([form-hidden])) .confirmation {
-      display: none;
-    }
-    :host([error]) .sent {
+    :host(:not([sent])) .sent {
       display: none;
     }
     :host(:not([error])) .error {
       display: none;
     }
-    @media all and (max-width: 959px) {
-      :host {
-        width: auto;
-        max-width: calc(var(--width) / 2);
-      }
-      .inputs {
+    @media all and (max-width: 769px) {
+      .parts {
         flex-direction: column;
       }
-      :host(:not([preselected-subject])) .inputs {
-        height: var(--heightMobileWithSubject);
-      }
-      :host([preselected-subject]) .inputs {
-        height: var(--heightMobile);
-      }
-      .inputs > * {
-        width: auto;
-      }
-      .inputs > * > hg-contact-form-subject-select {
-        margin-top: 0;
+      hg-contact-form-first-part {
+        margin-right: 0;
       }
     }
   `];
-  connectedCallback() {
-    import('@material/mwc-circular-progress');
-    super.connectedCallback();
+  _getBothPartsFieldsData() {
+    return {
+      firstPart: this.shadowRoot.getElementById('first-part').getData(),
+      secondPart: this.shadowRoot.getElementById('second-part').getData(),
+    };
   }
-  firstUpdated() {
-    this.shadowRoot.getElementById('text')
-      .shadowRoot.querySelector('paper-input-container')
-      .shadowRoot.querySelector('.underline').hidden = true;
-    _.map((element) => element.shadowRoot.querySelector('paper-input-container').shadowRoot.querySelector('.underline').hidden = true,
-      this.shadowRoot.querySelectorAll('paper-input'));
-    this.shadowRoot.getElementById('text')
-      .shadowRoot.querySelector('iron-autogrow-textarea').style = `height: ${this.preselectedSubject ? 276 : 218}px`;
-    this.shadowRoot.getElementById('text')
-      .shadowRoot.querySelector('paper-input-container').style = 'padding-bottom: 20px';
+  _getSendMessageRequestBodyParam(fieldData) {
+    return fieldData.name === HgContactFormField.SUBJECT
+      ? this.preselectedSubject || fieldData.value
+      : fieldData.value;
   }
-  _sendMessage() {
-    this.shadowRoot.getElementById('ajax').body = _.reduce(
-      (body, id) => _.set(id, this.shadowRoot.getElementById(id).value, body),
-      {},
-      FIELDS,
-    );
-    this.shadowRoot.getElementById('ajax').body.subject = this.preselectedSubject || this._selectedSubject;
-    this.shadowRoot.getElementById('ajax').generateRequest();
+  _createSendMessageRequestBody(fieldsData) {
+    const body = {};
+    fieldsData
+      .forEach((fieldData) => {
+        body[fieldData.name] = this._getSendMessageRequestBodyParam(fieldData);
+      });
+    return body;
+  }
+  async _sendMessage() {
+    this._checkValidity = true;
+    // allow checkValidity to propagate
+    await sleep();
+    const bothPartsFieldsData = this._getBothPartsFieldsData();
+    const fieldsData = [...bothPartsFieldsData.firstPart, ...bothPartsFieldsData.secondPart];
+    const invalidFields = findInvalidInputs(fieldsData);
+    if (invalidFields.length) {
+      invalidFields.forEach((fieldData) => fieldData.reportValidity());
+      const firstInvalidField = invalidFields[0];
+      firstInvalidField.input.focus();
+      scrollIntoView(firstInvalidField.input);
+    } else {
+      const sendMessageRequestBody = this._createSendMessageRequestBody(fieldsData);
+      await import('@polymer/iron-ajax/iron-ajax.js');
+      this.shadowRoot.getElementById('ajax').body = sendMessageRequestBody;
+      this.shadowRoot.getElementById('ajax').generateRequest();
+    }
   }
   render() {
     return html`
-      <div class="inputs">
-        <div>
-          ${_.map((input) => html`
-            <paper-input
-              id="${input.id}"
-              .maxlength=${'1000'}
-              .autoValidate=${input.id !== 'email'}
-              .required=${input.id !== 'company'}
-              .errorMessage=${input.id === 'email' ? 'Niepoprawny email' : 'Pole wymagane'}
-              .label=${input.label}
-              @value-changed=${async (event) => {
-                this._fieldsValues = _.set(
-                  input.id,
-                  input.id === 'email' ? /\S+@\S+\.\S+/.test(event.detail.value) : event.detail.value, 
-                  this._fieldsValues
-                );
-                if (event.detail.value !== '' && input.id === 'email') {
-                  // todo what if there are trailing and starting additional characters?
-                  this.shadowRoot.getElementById(input.id).invalid = !/\S+@\S+\.\S+/.test(event.detail.value)
-                }
-              }}>
-            </paper-input>
-          `, [
-            {id: 'name', label: 'Imię i nazwisko*'},
-            {id: 'company', label: 'Firma'},
-            {id: 'phone', label: 'Nr. tel*'},
-            {id: 'email', label: 'Adres email*'},
-          ])}
+      <div>
+        <div class="parts">
+          <hg-contact-form-first-part
+            id="first-part"
+            .checkValidity=${this._checkValidity}
+            .disabled=${this.loading || this.sent || this.error}>
+          </hg-contact-form-first-part>
+          <hg-contact-form-second-part
+            id="second-part"
+            .noSubjects=${Boolean(this.preselectedSubject)}
+            .checkValidity=${this._checkValidity}
+            .disabled=${this.loading || this.sent || this.error}>
+          </hg-contact-form-second-part>
         </div>
-        <div>
-          <hg-contact-form-subject-select
-            @selected-subject=${({detail: subject}) => this._selectedSubject = subject}>
-          </hg-contact-form-subject-select>
-          <paper-textarea
-            id="text"
-            auto-validate
-            .required=${true}
-            .errorMessage=${'Pole wymagane'}
-            .label=${'Co możemy dla Państwa zrobić?*'}
-            @value-changed=${(event) => this._fieldsValues = _.set('text', event.detail.value, this._fieldsValues)}>
-          </paper-textarea>    
-        </div>
+        <div class="required-info">* Pole jest wymagane</div>
       </div>
       <div class="controls">
-        <paper-icon-button
-          @click=${this._sendMessage}
-          .disabled=${!_.every(_.get(_, this._fieldsValues), _.without(['company'], FIELDS)) || !(this.preselectedSubject || this._selectedSubject)}
-          .icon=${'send'}>
-        </paper-icon-button>
-        <mwc-circular-progress .indeterminate=${true} .density=${-2}></mwc-circular-progress>
+        <mwc-button
+          .raised=${true}
+          .label=${'Wyślij'}
+          .icon=${'send'}
+          @click=${this._sendMessage}>
+        </mwc-button>
+        <hg-contact-form-loading ?hidden=${!this.loading}></hg-contact-form-loading>
       </div>
       <div class="confirmation">
         <span class="sent">Wiadomość została wysłana.</span>
@@ -206,8 +158,6 @@ export class HgContactForm extends LitElement {
           this.loading = event.detail.value;
           if (!this.loading) {
             this.sent = true;
-            await sleep(500);
-            this.formHidden = true;
           }
         }}
         @last-error-changed=${(event) => this.error = Boolean(event.detail.value)}>

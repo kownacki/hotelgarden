@@ -9,6 +9,7 @@
     "target": "es2017"
   },
   "include": [
-    "utils/**/*.ts"
+    "utils/**/*.ts",
+    "src/**/*.ts"
   ]
 }

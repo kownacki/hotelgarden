@@ -12,6 +12,9 @@ export class HgContact extends HgContent {
     hg-article {
       max-width: 1000px;
     }
+    hg-contact-form {
+      margin-bottom: 80px;
+    }
   `];
   constructor() {
     super();
