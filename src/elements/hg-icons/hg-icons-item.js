@@ -21,16 +21,16 @@ export class HgIconsItem extends LitElement {
       min-height: 60px;
       margin: 5px 40px 5px 15px;
     }
-    iron-icon {
+    img {
       filter: var(--primary-color-filter)
     }
-    :host(:not([small])) iron-icon {
+    :host(:not([small])) img {
       display: block;
       margin: auto;
       width: 60px;
       height: 60px;
     }
-    :host([small]) iron-icon {
+    :host([small]) img {
       min-width: 40px;
       height: 40px;
       margin-right: 10px
@@ -53,11 +53,11 @@ export class HgIconsItem extends LitElement {
       :host([small]) {
         min-height: auto;
       }
-      :host(:not([small])) iron-icon {
+      :host(:not([small])) img {
         width: 50px;
         height: 50px;
       }
-      :host([small]) iron-icon {
+      :host([small]) img {
         min-width: 32px;
         height: 32px;
         margin-right: 8px
@@ -66,7 +66,7 @@ export class HgIconsItem extends LitElement {
   `];
   render() {
     return html`
-      <iron-icon .src="${this.icon.url}"></iron-icon>
+      <img src=${this.icon.url}/>
       <hg-list-editable-text
         id="editable"
         .float=${true}

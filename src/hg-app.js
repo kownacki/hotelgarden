@@ -1,10 +1,8 @@
 import {LitElement, html, css} from 'lit';
 import {getEventUid, isEventPath, staticPathToPageUid} from '../utils/urlStructure.js';
 import {authDeferred, createDbPath, getFromDb} from './utils/database.js';
-import './hg-iconset.js';
 import '@polymer/app-layout/app-drawer/app-drawer.js';
 import '@polymer/app-route/app-location.js';
-import '@polymer/iron-icon';
 import '@polymer/paper-icon-button';
 import '@polymer/paper-dialog';
 import '@polymer/paper-styles/color.js';

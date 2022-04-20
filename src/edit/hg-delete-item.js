@@ -10,16 +10,23 @@ export class HgDeleteItem extends LitElement {
     opened: {type: Boolean, reflect: true},
   };
   static styles = [sharedStyles, css`
-    .warning {
-      color: var(--error-color);
-      padding: 10px;
-      background: var(--paper-red-100);
-    }
     paper-icon-button {
       background: white;
       width: 24px;
       height: 24px;
       padding: 0;
+    }
+    .warning {
+      display: flex;
+      color: var(--error-color);
+      padding: 10px;
+      background: var(--paper-red-100);
+    }
+    mwc-icon {
+      margin-right: 10px;
+    }
+    .warning-text {
+      margin-top: 3px;
     }
   `];
   render() {
@@ -34,9 +41,11 @@ export class HgDeleteItem extends LitElement {
           id="dialog"
           @opened-changed=${(event) => {this.opened = event.target.opened; this.dispatchEvent(new CustomEvent('opened-changed'))}}>
           <div class="warning">
-            <iron-icon .icon=${'warning'}></iron-icon>
-            Czy na pewno usunąć ${this.name}? 
-            Usunięte dane nie mogą być przywrócone.
+            <mwc-icon>warning</mwc-icon>
+            <div class="warning-text">
+              Czy na pewno usunąć ${this.name}?
+              Usunięte dane nie mogą być przywrócone.
+            </div>
           </div>
           <div class="buttons">
             <hg-cms-buttons-container>

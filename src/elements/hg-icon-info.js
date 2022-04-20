@@ -18,7 +18,7 @@ export class HgIconInfo extends LitElement {
       display: flex;
       align-items: center;
     }
-    iron-icon {
+    img {
       min-width: 40px;
       height: 40px;
       filter: var(--primary-color-filter);
@@ -32,7 +32,7 @@ export class HgIconInfo extends LitElement {
       margin-right: 0;
     }
     @media all and (max-width: 599px) {
-      iron-icon {
+      img {
         min-width: 32px;
         height: 32px;
       }
@@ -42,7 +42,7 @@ export class HgIconInfo extends LitElement {
     return html`
       ${_.map.convert({cap: false})((item, index) => html`
         <div>
-          <iron-icon .src=${item.src}></iron-icon>
+          <img src=${item.src}/>
           ${this.editable 
             ? html`<hg-editable-text
               .ready=${this.dataReady}

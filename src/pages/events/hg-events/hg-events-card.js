@@ -1,4 +1,5 @@
 import {LitElement, html, css} from 'lit';
+import '@material/mwc-button';
 import '../../../elements/mkwc/hg-image.js';
 import sharedStyles from '../../../styles/shared-styles.js'
 
@@ -54,9 +55,8 @@ export class HgEventsCard extends LitElement {
       color: var(--primary-color);
       font-size: 18px;
     }
-    iron-icon {
-      height: 22px;
-      width: 22px;
+    mwc-icon {
+      --mdc-icon-size: 22px;
       vertical-align: text-bottom;
     }
     @media all and (max-width: 839px) {
@@ -99,7 +99,7 @@ export class HgEventsCard extends LitElement {
             <h3>${this.event.public ? '' : html`<span class="non-public">Niepubliczne </span>`}${this.event.title}</h3>
           </div>
           <p>${this.event.description}</p>
-          <div class="more">Zobacz więcej <iron-icon .icon=${'add'}></iron-icon></div>
+          <div class="more">Zobacz więcej <mwc-icon>add</mwc-icon></div>
         </div>
       </a>
     `;
