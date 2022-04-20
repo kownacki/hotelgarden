@@ -4,6 +4,7 @@ import _ from 'lodash/fp';
 import {sendMessage as mkSendMessage} from 'mk-firebase-functions-utils/sendMessage';
 import moment from 'moment';
 import 'moment-timezone';
+import {SendMessageRequestBody} from '../../../utils/sendMessage';
 import {createDbPath, generateDbUid, getFromDb, updateInDb} from '../database';
 import {RequestWithBody, AdminConfigSendMessage} from '../types';
 
@@ -11,15 +12,6 @@ moment.locale('pl');
 
 // Rough limit, to prevent attacks
 const MAX_MESSAGE_SIZE = 10000;
-
-interface SendMessageRequestBody {
-  subject: 'hotel' | 'gastro',
-  name: string,
-  company: string,
-  phone: string,
-  email: string,
-  text: string,
-}
 
 export const sendMessage = async (req: Request, res: Response) => {
   const body = (req as RequestWithBody<SendMessageRequestBody>).body;
