@@ -34,6 +34,7 @@ const getContentElement = (pageUid, config, handleSetMetaDescription, handleSetJ
   handleSetJsonLd(''); //todo refactor when setting structured data for pages
   return staticHtml`
     <hg-${unsafeStatic(pageUid)}
+      id="page"
       class="page"
       .config=${config}
       @set-meta-description=${({detail: text}) => handleSetMetaDescription(text)}>
