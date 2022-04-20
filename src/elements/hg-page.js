@@ -2,7 +2,7 @@ import {LitElement, html, css} from 'lit';
 import {html as staticHtml, unsafeStatic} from 'lit/static-html.js';
 import {getDefaultTitle, appendSuffixToTitle} from '../../utils/seo.js';
 import {createDbPath, getFromDb} from '../utils/database.js';
-import {setDocumentTitle, setMetaDescription, setStructuredData, headerHeight, sleep} from '../utils.js';
+import {setDocumentTitle, setMetaDescription, setStructuredData, scrollIntoView, sleep} from '../utils.js';
 
 import '../elements/hg-banner.js';
 import '../elements/hg-footer.js';
@@ -107,8 +107,7 @@ export class HgPage extends LitElement {
         const hash = event.detail.value.path;
         if (hash && hash !== 'slider' && hash !== 'dialog' && hash !== 'max-widget') {
           const element = this.shadowRoot.getElementById('page').shadowRoot.getElementById(hash);
-          element.scrollIntoView();
-          window.scrollBy(0, -headerHeight);
+          scrollIntoView(element);
         }
       }}></app-location>
       ${this.event

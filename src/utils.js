@@ -1,4 +1,4 @@
-import {isElementVisible} from 'mk-frontend-web-utils/dom.js';
+import {isElementVisible, isElementInProximity} from 'mk-frontend-web-utils/dom.js';
 import diacritics from '../resources/scripts/diacritics.js';
 import {createDbPath, updateInDb} from './utils/database.js';
 
@@ -103,6 +103,15 @@ export const moveOutFromShadowDom = async (contentsElement) => {
   _.last(hosts).appendChild(contentsElement);
   await sleep();
 };
+
+export const scrollIntoView = (element, scrollable = window) => {
+  const elementTopOffset = (scrollable === window ? headerHeight : 0) + 10;
+  const elementBottomOffset = elementTopOffset + element.clientHeight;
+  if (!isElementInProximity(element, -elementBottomOffset)) {
+    element.scrollIntoView();
+    scrollable.scrollBy(0, -elementTopOffset);
+  }
+}
 
 export const detectMobile = () => navigator.userAgent.match(/Android/i)
   || navigator.userAgent.match(/webOS/i)

@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import '@material/mwc-snackbar';
-import {updateData, sleep} from '../../../utils.js';
+import {updateData, sleep, scrollIntoView} from '../../../utils.js';
 import sharedStyles from '../../../styles/shared-styles.js';
 import '../../../elements/hg-action-button.js'
 import '../../../elements/hg-dialog.js';
@@ -78,8 +78,7 @@ export class HgLunchEditDialog extends LitElement {
               if (firstUnfilledRequiredInput) {
                 firstUnfilledRequiredInput.focus();
                 firstUnfilledRequiredInput.reportValidity();
-                firstUnfilledRequiredInput.scrollIntoView();
-                this.shadowRoot.getElementById('dialog').scrollable.scrollBy(0, -10);
+                scrollIntoView(firstUnfilledRequiredInput, this.shadowRoot.getElementById('dialog').scrollable);
               } else {
                 await updateData(this.doc, null, newLunches);
                 this.lunches = newLunches;

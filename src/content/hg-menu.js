@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import {createDbPath, getFromDb} from '../utils/database.js'
-import {headerHeight} from '../utils.js';
+import {scrollIntoView} from '../utils.js';
 import './hg-menu/hg-menu-main.js';
 import './hg-menu/hg-menu-nav.js';
 
@@ -83,8 +83,7 @@ export class HgMenu extends LitElement {
           @categories-changed=${(event) => this.categories = event.detail}
           @selected-category-changed=${(event) => {
             this.selectedCategory = event.detail;
-            this.scrollIntoView();
-            window.scrollBy(0, -headerHeight);
+            scrollIntoView(this);
             // update in case if selectedCategory index unchanged but category object did
             // //todo think if more elegant solution
             // this.shadowRoot.getElementById('main').requestUpdate();
