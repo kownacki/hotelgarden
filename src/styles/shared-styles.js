@@ -4,6 +4,10 @@ export default css`
   body, :host {
     font-size: 20px;
   }
+  paper-dialog {
+    font-size: 18px;
+    max-width: 840px;
+  }
   .smaller-text {
     font-size: 18px;
   }
@@ -79,7 +83,7 @@ export default css`
     --mdc-theme-on-primary: white;
   }
   @media all and (max-width: 959px) {
-    body, :host {
+    body, :host, paper-dialog {
       font-size: 18px;
     }
     .smaller-text {
