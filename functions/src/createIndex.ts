@@ -61,18 +61,19 @@ export const createIndex = (title: string, metaDescription: string = '', jsonLd:
       --primary-color: #847850;
       --primary-color-rgb: 132, 120, 80;
       --primary-color-filter: invert(52%) sepia(3%) saturate(4587%) hue-rotate(9deg) brightness(88%) contrast(88%);
-      --secondary-color: var(--paper-grey-800);
+      --secondary-color: #424242; /* md-grey-800 */
       --secondary-color-rgb: 117, 117, 117;
       --accent-color: #4f6884;
       --accent-color-dark: #324254;
       --accent-color-rgb: 79, 104, 132;
       --text-color: var(--secondary-color);
-      --placeholder-color: var(--paper-grey-500);
+      --placeholder-color: #9e9e9e; /* md-grey-500 */
       --placeholder-color-rgb: 158, 158, 158;
       --divider-color: rgba(0, 0, 0, 0.12);
       --grey-text: rgba(0, 0, 0, 0.6);
-      --error-color: var(--paper-red-800);
-      --correct-color: var(--paper-green-800);
+      --error-color: #c62828; /* md-red-800 */
+      --error-background-color: #ffcdd2; /* md-red-100 */
+      --correct-color: #2e7d32; /* md-green-800 */
       --logotype-color: #84979E;
       --logotype-color-filter: invert(73%) sepia(6%) saturate(853%) hue-rotate(150deg) brightness(91%) contrast(79%);
       --headerHeight: 60px;

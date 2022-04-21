@@ -1,4 +1,5 @@
 import {LitElement, html, css, unsafeCSS} from 'lit';
+import materialColors from 'material-colors';
 import sharedStyles from '../styles/shared-styles.js'
 import {createDbPath, DbPath, getFromDb, updateDataOrImageInObjectInDb} from '../utils/database.js';
 import {ItemsDbSyncController} from '../utils/ItemsDbSyncController.js';
@@ -19,6 +20,7 @@ export class HgInfographic extends LitElement {
   static styles = [sharedStyles, css`
     :host {
       ${unsafeCSS(`
+        --item-background-color: ${materialColors.grey['200']};
         --max-image-width: ${maxImageWidth}px;
         --max-image-height: ${maxImageHeight}px;
       `)}
@@ -38,7 +40,7 @@ export class HgInfographic extends LitElement {
     }
     .item::after {
       border-right: 20px solid transparent;
-      border-bottom: 20px solid var(--paper-grey-200);
+      border-bottom: 20px solid var(--item-background-color);
       border-left: 20px solid transparent;
       content: '';
       top: calc(50% - 20px);
@@ -52,7 +54,7 @@ export class HgInfographic extends LitElement {
       height: var(--max-image-height);
     }
     .data {
-      background: var(--paper-grey-200);
+      background: var(--item-background-color);
       color: var(--primary-color);
       text-align: center;
       display: flex;
@@ -74,7 +76,7 @@ export class HgInfographic extends LitElement {
       }
       .item:nth-child(2)::after, .item:nth-child(5)::after {;
         top: calc(50%);
-        border-top: 20px solid var(--paper-grey-200);
+        border-top: 20px solid var(--item-background-color);
         border-bottom: none;
       }
     }
@@ -90,7 +92,7 @@ export class HgInfographic extends LitElement {
       }
       .item:nth-child(even)::after {
         top: calc(50%);
-        border-top: 20px solid var(--paper-grey-200);
+        border-top: 20px solid var(--item-background-color);
         border-bottom: none;
       }
     }

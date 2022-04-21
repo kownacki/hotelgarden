@@ -19,7 +19,7 @@ export class HgDeleteItem extends LitElement {
       display: flex;
       color: var(--error-color);
       padding: 10px;
-      background: var(--paper-red-100);
+      background: var(--error-background-color);
     }
     mwc-icon {
       margin-right: 10px;
