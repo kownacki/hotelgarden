@@ -1,8 +1,9 @@
 import {LitElement, html, css} from 'lit';
-import '@polymer/paper-toggle-button/paper-toggle-button.js';
+import '@material/mwc-switch';
 import {createEventJsonLd} from '../../../utils/seo';
 import sharedStyles from '../../styles/shared-styles';
 import ckContent from '../../styles/ck-content.js'
+import '../../utils/fixes/mwc-formfield-fixed.js';
 import {FirebaseAuthController} from '../../utils/FirebaseAuthController.js';
 import {createDbPath, getFromDb, updateInDb} from '../../utils/database.js';
 import {cleanTextForMetaDescription, updateData} from '../../utils.js';
@@ -48,21 +49,17 @@ export class HgEvent extends LitElement {
       display: flex;
       align-items: flex-start;
       flex-wrap: wrap;
-      margin-bottom: 5px;
+      margin-bottom: 10px;
     }
-    .controls > * {
-      display: none;
+    hg-event-edit-date {
+      margin-left: 5px;
     }
-    .header:hover .controls > *, hg-event-edit-date[opened] {
-      display: flex;
+    mwc-formfield-fixed {
+      margin-top: 2px;
+      margin-left: 14px;
     }
-    paper-toggle-button {
-      margin: 1px 0 1px 20px;
-    }
-    @media all and (max-width: 599px) {
-      .header {
-        display: block;
-      }
+    mwc-switch {
+      margin-right: 2px;
     }
     @media all and (max-width: 959px) {
       .container {
@@ -77,6 +74,14 @@ export class HgEvent extends LitElement {
       hg-events-sidebar {
         display: block;
         margin: 40px auto 0;
+      }
+    }
+    @media all and (max-width: 599px) {
+      .header {
+        display: block;
+      }
+      hg-event-edit-date {
+        margin-left: 0;
       }
     }
   `];
@@ -136,7 +141,7 @@ export class HgEvent extends LitElement {
                 ${this._event.date.split('-').reverse().join(' / ')}
               </div>
               ${!this._loggedIn ? '' : html`
-                <div class="controls smaller-text">
+                <div class="cms controls smaller-text">
                   <hg-event-edit-date 
                     .date=${this._event.date}
                     @save=${(event) => {
@@ -145,22 +150,26 @@ export class HgEvent extends LitElement {
                       this.updateData('date', event.detail);
                     }}>
                   </hg-event-edit-date>
-                  <paper-toggle-button
-                    id="public"
-                    .checked=${this._event.public}
-                    @click=${() => this.updateData('public', this.shadowRoot.getElementById('public').checked)}>
-                    Publiczne
-                  </paper-toggle-button>
-                  <div title="${moment().isAfter(this._event.date, 'day') ? 'Nie można promować minionego wydarzenia' : ''}">
-                    <paper-toggle-button
-                      id="promote"
-                      .checked=${moment().isSameOrBefore(this._event.date, 'day') && this._promotedEvent === this.uid}
-                      .disabled=${moment().isAfter(this._event.date, 'day')}
+                  <mwc-formfield-fixed .label=${'Publiczne'}>
+                    <mwc-switch
+                      id="public"
+                      .selected=${this._event.public}
                       @click=${() => {
-                        updateInDb(createDbPath('events/promoted', 'uid'), this.shadowRoot.getElementById('promote').checked ? this.uid : null);
+                        this.updateData('public', this.shadowRoot.getElementById('public').selected)
                       }}>
-                      Promuj
-                    </paper-toggle-button>
+                    </mwc-switch>
+                  </mwc-formfield-fixed>
+                  <div title="${moment().isAfter(this._event.date, 'day') ? 'Nie można promować minionego wydarzenia' : ''}">
+                    <mwc-formfield-fixed .label=${'Promuj'}>
+                      <mwc-switch
+                        id="promote"
+                        .selected=${moment().isSameOrBefore(this._event.date, 'day') && this._promotedEvent === this.uid}
+                        .disabled=${moment().isAfter(this._event.date, 'day')}
+                        @click=${() => {
+                          updateInDb(createDbPath('events/promoted', 'uid'), this.shadowRoot.getElementById('promote').selected ? this.uid : null);
+                        }}>
+                      </mwc-switch>
+                    </mwc-formfield-fixed>
                   </div>
                 </div>
               `}

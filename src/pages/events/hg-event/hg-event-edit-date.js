@@ -10,9 +10,6 @@ export class HgEventEditDate extends LitElement {
     opened: {type: Boolean, reflect: true},
   };
   static styles = [sharedStyles, css`
-    :host {
-      margin-left: 8px;
-    }
     .buttons {
       margin-top: 10px;
     }
