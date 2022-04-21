@@ -22,6 +22,7 @@
   "dependencies": {
     "@ckeditor/ckeditor5-build-inline": "git+https://github.com/kownacki/ckeditor5-build-inline.git#stable",
     "@material/mwc-button": "^0.25.3",
+    "@material/mwc-checkbox": "^0.25.3",
     "@material/mwc-circular-progress": "^0.25.3",
     "@material/mwc-fab": "^0.25.3",
     "@material/mwc-formfield": "^0.25.3",
@@ -34,7 +35,6 @@
     "@polymer/app-layout": "^3.1.0",
     "@polymer/app-route": "^3.0.2",
     "@polymer/iron-ajax": "^3.0.1",
-    "@polymer/paper-checkbox": "^3.1.0",
     "@polymer/paper-dialog": "^3.0.1",
     "@polymer/paper-styles": "^3.0.1",
     "lit": "^2.2.2",

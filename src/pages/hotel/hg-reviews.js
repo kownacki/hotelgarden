@@ -1,9 +1,10 @@
 import {LitElement, html, css} from 'lit';
-import '@polymer/paper-checkbox/paper-checkbox.js';
+import '@material/mwc-checkbox';
 import '../../content/hg-article/hg-intro-article.js';
 import '../../elements/hg-list.js';
 import '../../elements/hg-review.js';
 import '../../content/hg-links.js';
+import '../../utils/fixes/mwc-formfield-fixed.js';
 import {createDbPath} from '../../utils/database.js';
 
 const reviewBlocks = ['landing', 'restaurant', 'grill-garden', 'weddings', 'family-parties'];
@@ -14,18 +15,26 @@ const configure = {
   icon: 'settings',
   field: 'display',
   getData: (that) => {
-    const checkboxes = that.shadowRoot.getElementById('dialog').querySelectorAll('paper-checkbox');
+    const checkboxes = that.shadowRoot.getElementById('dialog').querySelectorAll('mwc-checkbox');
     return _.filter.convert({cap: false})((reviewBlock, index) => checkboxes[index].checked, reviewBlocks);
   },
   setData: (that, review) => {
-    const checkboxes = that.shadowRoot.getElementById('dialog').querySelectorAll('paper-checkbox');
+    const checkboxes = that.shadowRoot.getElementById('dialog').querySelectorAll('mwc-checkbox');
     return _.map(([checkbox, reviewBlock]) => checkbox.checked = _.includes(reviewBlock, review.display), _.zip(checkboxes, reviewBlocks));
   },
   template: (review) => html`
     <div>
       Wyświetlaj opinię "${review.heading}" w:
     </div>
-    ${_.map((reviewBlock) => html`<paper-checkbox>${reviewBlock}</paper-checkbox>`, reviewBlocks)}
+    <div>
+      ${reviewBlocks.map((reviewBlock) => html`
+        <div>
+          <mwc-formfield-fixed .label=${reviewBlock}>
+            <mwc-checkbox></mwc-checkbox>
+          </mwc-formfield-fixed>
+        </div>
+    `)}
+    </div>
   `
 };
 
