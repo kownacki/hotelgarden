@@ -1,5 +1,4 @@
 import {LitElement, html, css} from 'lit';
-import {staticProp} from '../../utils.js';
 import '../../content/hg-article/hg-intro-article.js';
 import '../../edit/hg-image-upload.js';
 import '../../elements/hg-list/hg-mosaic-list.js'
@@ -51,7 +50,7 @@ export class HgGallery extends LitElement {
       <hg-image-upload id="upload"></hg-image-upload>
       <hg-mosaic-list
         id="list"
-        .path=${staticProp({doc: 'gallery/gallery'})}
+        .path=${this._path}
         .noGetItems=${true}
         .items=${this._items}
         .itemTemplate=${(item, index) => html`
