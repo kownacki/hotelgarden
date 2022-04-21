@@ -83,6 +83,10 @@ export default css`
     --mdc-theme-on-primary: white;
     --mdc-theme-secondary: black;
     --mdc-theme-on-secondary: white;
+    /* Bug. See https://github.com/material-components/material-web/issues/2748 */
+    --mdc-switch-selected-pressed-handle-color: var(--mdc-theme-primary);
+    --mdc-switch-selected-focus-handle-color: var(--mdc-theme-primary);
+    --mdc-switch-selected-hover-handle-color: var(--mdc-theme-primary);
   }
   @media all and (max-width: 959px) {
     body, :host, paper-dialog {

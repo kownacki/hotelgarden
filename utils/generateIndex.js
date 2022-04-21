@@ -126,6 +126,9 @@ const getIndexHtml = ({ title, description, jsonLd } = {}) => `
       --mdc-switch-selected-focus-handle-color: var(--mdc-theme-primary);
       --mdc-switch-selected-hover-handle-color: var(--mdc-theme-primary);
       --mdc-switch-selected-track-color: var(--divider-color);
+      --mdc-switch-selected-pressed-track-color: var(--divider-color);
+      --mdc-switch-selected-focus-track-color: var(--divider-color);
+      --mdc-switch-selected-hover-track-color: var(--divider-color);
     }
 
     ${fontResources.map((fontResource) => fontResource.fontFace).join('')}
