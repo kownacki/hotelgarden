@@ -1,6 +1,7 @@
 import {LitElement, html, css} from 'lit';
 import {links} from '../../utils/urlStructure.js';
 import {staticProp} from '../utils.js';
+import './hg-drawer/hg-drawer-close.js';
 import './hg-drawer/hg-drawer-item.js';
 
 export class HgDrawer extends LitElement {
@@ -16,9 +17,8 @@ export class HgDrawer extends LitElement {
       width: 100%;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     }
-    paper-icon-button {
-      width: 44px;
-      height: 44px;
+    hg-drawer-close {
+      display: block;
       margin: calc((var(--headerHeight) - 44px) / 2);
     }
     nav {
@@ -42,7 +42,9 @@ export class HgDrawer extends LitElement {
   render() {
     return html`
       <div class="header">
-        <paper-icon-button .icon=${'close'} @click=${() => this.dispatchEvent(new CustomEvent('close-drawer'))}></paper-icon-button>
+        <hg-drawer-close
+          @click=${() => this.dispatchEvent(new CustomEvent('close-drawer'))}>
+        </hg-drawer-close>
       </div>
       <nav>
         <ul>

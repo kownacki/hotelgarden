@@ -44,13 +44,15 @@ export default class HgList extends LitElement {
     :host > :not(style) {
       width: calc(100% / var(--columns));
     }
-    hg-list-add {
+    .add-container {
       display: flex;
+      justify-content: center;
+      align-items: center;
     }
-    :host([list-not-empty]) hg-list-add {
+    :host([list-not-empty]) .add-container {
       display: none;
     }
-    :host(:hover) hg-list-add {
+    :host(:hover) .add-container {
       display: flex;
     }
   `];
@@ -146,21 +148,25 @@ export default class HgList extends LitElement {
             ${this.itemTemplate(this.items[key], key, this._processing || this.editing)}
           </hg-list-item>`
         ),
-        (!this._loggedIn || this.noAdd) ? '' : html`<hg-list-add 
-          .disable=${this._processing || this.editing}
-          @add=${async () => {
-            this._processing = true;
-            let newItem = {uid: generateUid()};
-            newItem = this.onAdd ? await this.onAdd(newItem) : newItem;
-            if (newItem) {
-              await this.updateData(String(_.size(this.items)), newItem);
-              //todo use firebase.firestore.FieldValue.arrayUnion  
-              this.items = _.set(_.size(this.items), newItem, this.items);
-              this.dispatchEvent(new CustomEvent('item-added'));
-            }
-            this._processing = false;
-        }}>
-        </hg-list-add>`
+        (!this._loggedIn || this.noAdd) ? '' : html`
+          <div class="add-container">
+            <hg-list-add
+              .disabled=${this._processing || this.editing}
+              @click=${async () => {
+                this._processing = true;
+                let newItem = {uid: generateUid()};
+                newItem = this.onAdd ? await this.onAdd(newItem) : newItem;
+                if (newItem) {
+                  await this.updateData(String(_.size(this.items)), newItem);
+                  //todo use firebase.firestore.FieldValue.arrayUnion  
+                  this.items = _.set(_.size(this.items), newItem, this.items);
+                  this.dispatchEvent(new CustomEvent('item-added'));
+                }
+                this._processing = false;
+              }}>
+            </hg-list-add>
+          </div>
+        `
       ])}
     `;
   }

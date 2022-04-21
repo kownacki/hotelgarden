@@ -1,11 +1,12 @@
 import {LitElement, html, css} from 'lit';
 import '../../edit/hg-delete-item.js';
 import './hg-list-item-configure.js';
+import './hg-list-item-swap.js';
 
 export class HgListItem extends LitElement {
   static properties = {
     item: Object,
-    getItemName: Object,
+    getItemName: Function,
     first: Boolean,
     last: Boolean,
     noSwap: Boolean,
@@ -22,30 +23,25 @@ export class HgListItem extends LitElement {
       display: block;
       position: relative;
     }
-    :host(:hover) .controls, :host([opened]) .controls {
-      display: flex;
+    .controls {
+      display: none;
     }
-    :host(:hover) paper-icon-button {
+    :host(:hover) .controls, :host([opened]) .controls {
       display: block;
     }
-    .controls {
+    .controls-top {
+      display: flex;
       position: absolute;
       top: 3px;
       right: 10px;
-      display: none;
     }
-    .controls > * {
+    .controls-top > * {
       margin: 1px;
     }
-    paper-icon-button {
+    hg-list-item-swap {
       z-index: 1;
-      background: white;
-      display: none;
       position: absolute;
       top: calc(50% - 12px);
-      width: 24px;
-      height: 24px;
-      padding: 0;
     }
     .swap-left {
       left: -12px;
@@ -53,7 +49,7 @@ export class HgListItem extends LitElement {
     .swap-right {
       right: -12px;
     }
-    :host([vertical]) paper-icon-button {
+    :host([vertical]) hg-list-item-swap {
       top: auto;
       left: calc(50% - 12px);
     }
@@ -84,32 +80,42 @@ export class HgListItem extends LitElement {
     return html`
       <slot></slot>
       <div class="controls">
-        ${!this.configure ? '' : html`<hg-list-item-configure 
-          .configure=${this.configure}
-          .item=${this.item}
-          .disable=${this.disableEdit}
-          @opened-changed=${(event) => this._configureOpened = event.target.opened}>
-        </hg-list-item-configure>`}
-        ${this.noDelete ? '' : html`<hg-delete-item
-          .disable=${this.disableEdit} 
-          .name=${this.getItemName(this.item)} 
-          @opened-changed=${(event) => this._deleteOpened = event.target.opened}>
-        </hg-delete-item>`}
+        <div class="controls-top">
+          ${!this.configure ? '' : html`
+            <hg-list-item-configure 
+              .configure=${this.configure}
+              .item=${this.item}
+              .disabled=${this.disableEdit}
+              @opened-changed=${(event) => this._configureOpened = event.target.opened}>
+            </hg-list-item-configure>
+          `}
+          ${this.noDelete ? '' : html`
+            <hg-delete-item
+              .disabled=${this.disableEdit} 
+              .name=${this.getItemName(this.item)} 
+              @opened-changed=${(event) => this._deleteOpened = event.target.opened}>
+            </hg-delete-item>
+          `}
+        </div>
+        ${this.noSwap ? '' : [
+          (this.first ? '' : html`
+            <hg-list-item-swap
+              class="swap-left"
+              .disabled=${this.disableEdit}
+              .vertical=${this.vertical}
+              @click=${() => this.dispatchEvent(new CustomEvent('swap', {detail: -1}))}>
+            </hg-list-item-swap>
+          `),
+          (this.last ? '' : html`
+            <hg-list-item-swap
+              class="swap-right"
+              .disabled=${this.disableEdit}
+              .vertical=${this.vertical}
+              @click=${() => this.dispatchEvent(new CustomEvent('swap', {detail: +1}))}>
+            </hg-list-item-swap>
+          `)
+        ]}
       </div>
-      ${this.noSwap ? '' :
-        [(this.first ? '' : html`<paper-icon-button
-          class="swap-left"
-          .icon=${this.vertical ? 'swap-vert' : 'swap-horiz'}
-          ?disabled=${this.disableEdit}
-          @click=${() => this.dispatchEvent(new CustomEvent('swap', {detail: -1}))}>
-        </paper-icon-button>`),
-        (this.last ? '' : html`<paper-icon-button
-          class="swap-right"
-          .icon=${this.vertical ? 'swap-vert' : 'swap-horiz'}
-          ?disabled=${this.disableEdit}
-          @click=${() => this.dispatchEvent(new CustomEvent('swap', {detail: +1}))}>
-        </paper-icon-button>`)]
-      }
     `;
   }
 }

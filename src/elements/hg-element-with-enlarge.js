@@ -1,4 +1,5 @@
 import {LitElement, html, css} from 'lit';
+import 'mkwc/fixes/mwc-icon-button-fixed.js';
 
 export class HgElementWithEnlarge extends LitElement {
   static styles = css`
@@ -12,16 +13,19 @@ export class HgElementWithEnlarge extends LitElement {
       height: 100%;
       transition: width 0.1s linear, height 0.1s linear, margin 0.1s linear, filter 0.1s linear;
     }
-    paper-icon-button {
+    .zoom-container {
+      inset: 0;
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      padding: 0 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    mwc-icon-button-fixed {
       color: white;
-      --paper-icon-button-ink-color: transparent;
-      transition: padding 0.1s linear;
+      --mdc-icon-fixed-size-transition: 0.1s linear;
+      --mdc-icon-size: 0;
+      --mdc-ripple-color: transparent;
+      visibility: hidden;
     }
     @media all and (min-width: 960px) {
       :host(:hover) ::slotted(*) {
@@ -30,15 +34,21 @@ export class HgElementWithEnlarge extends LitElement {
         height: 110%;
         filter: brightness(50%);
       }
-      :host(:hover) paper-icon-button {
-        padding: 0 calc(50% - 24px);
+      :host(:hover) {
+        cursor: pointer;
+      }
+      :host(:hover) mwc-icon-button-fixed {
+        --mdc-icon-size: 48px;
+        visibility: visible;
       }
     }
   `;
   render() {
     return html`
       <slot></slot>
-      <paper-icon-button noink .icon=${'zoom-out-map'}></paper-icon-button>
+      <div class="zoom-container">
+        <mwc-icon-button-fixed .icon=${'zoom_out_map'}></mwc-icon-button-fixed>
+      </div>
     `;
   }
 }

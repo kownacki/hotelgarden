@@ -8,6 +8,8 @@ import {createDbPath} from '../../utils/database.js';
 
 const reviewBlocks = ['landing', 'restaurant', 'grill-garden', 'weddings', 'family-parties'];
 
+//todo implement vertical swap
+
 const configure = {
   icon: 'settings',
   field: 'display',

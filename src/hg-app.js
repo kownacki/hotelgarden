@@ -3,7 +3,6 @@ import {getEventUid, isEventPath, staticPathToPageUid} from '../utils/urlStructu
 import {authDeferred, createDbPath, getFromDb} from './utils/database.js';
 import '@polymer/app-layout/app-drawer/app-drawer.js';
 import '@polymer/app-route/app-location.js';
-import '@polymer/paper-icon-button';
 import '@polymer/paper-dialog';
 import '@polymer/paper-styles/color.js';
 

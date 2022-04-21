@@ -2,20 +2,18 @@ import {LitElement, html, css} from 'lit';
 import '@material/mwc-button';
 import '../../edit/hg-cms-buttons-container.js';
 import sharedStyles from '../../styles/shared-styles.js';
+import '../ui/hg-icon-button.js';
 
 export class HgListItemConfigure extends LitElement {
   static properties = {
     configure: Object,
     item: Object,
-    disable: Boolean,
+    disabled: Boolean,
     opened: {type: Boolean, reflect: true},
   };
   static styles = [sharedStyles, css`
-    paper-icon-button {
+    hg-icon-button {
       background: white;
-      width: 24px;
-      height: 24px;
-      padding: 0;
     }
     .buttons {
       margin-top: 10px;
@@ -24,11 +22,12 @@ export class HgListItemConfigure extends LitElement {
   render() {
     return html`
       <div class="cms">
-        <paper-icon-button
+        <hg-icon-button
+          .size=${'compact'}
           .icon=${this.configure.icon}
-          ?disabled=${this.disable}
+          .disabled=${this.disabled}
           @click=${() => this.shadowRoot.getElementById('dialog').open()}>
-        </paper-icon-button>
+        </hg-icon-button>
         <paper-dialog
           id="dialog"
           @opened-changed=${(event) => {

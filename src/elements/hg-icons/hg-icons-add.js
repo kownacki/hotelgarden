@@ -5,6 +5,7 @@ import {ref, listAll} from 'firebase/storage';
 import '../../edit/hg-cms-buttons-container.js';
 import sharedStyles from '../../styles/shared-styles.js';
 import {db, storage} from '../../utils/database.js';
+import '../ui/hg-icon-button.js'
 import './hg-icons-add/hg-icons-add-text.js';
 //todo dodać link do strony icons8
 
@@ -17,6 +18,9 @@ export class HgIconsAdd extends LitElement {
     _loading: Boolean,
   };
   static styles = [sharedStyles, css`
+    paper-dialog {
+      overflow: auto;
+    }
     .icons {
       display: flex;
       flex-wrap: wrap;
@@ -29,13 +33,8 @@ export class HgIconsAdd extends LitElement {
       text-align: center;
       padding: 5px;
     }
-    paper-icon-button {
-      width: 60px;
-      height: 60px;
-      padding: 0;
-    }
-    paper-dialog {
-      overflow: auto;
+    mwc-icon-button {
+      --mdc-icon-size: 60px;
     }
     hg-icons-add-text {
       margin: 20px 0;
@@ -79,7 +78,8 @@ export class HgIconsAdd extends LitElement {
       this.addEventListener('icon-selected', (event) => {
         if (event.detail) {
           this.shadowRoot.getElementById('dialog').close();
-          resolve({text: this.shadowRoot.getElementById('text').text, url: event.detail});
+          const iconText = this.shadowRoot.getElementById('text').text || '';
+          resolve({text: iconText, url: event.detail});
         } else {
           resolve(false);
         }
@@ -115,10 +115,13 @@ export class HgIconsAdd extends LitElement {
           <!--todo This can lag a bit due to how many images are rendered. Optimize. -->
           ${this._loading ? 'loading...' : !this._selected ? '' : _.map((icon) => html`
             <div class="icon">
-              <paper-icon-button
-                .src=${icon.url}
-                @click=${(event) => this.dispatchEvent(new CustomEvent('icon-selected', {detail: event.target.src}))}>
-              </paper-icon-button>
+              <hg-icon-button
+                .size=${'large'}
+                @click=${() => {
+                  this.dispatchEvent(new CustomEvent('icon-selected', {detail: icon.url}));
+                }}>
+                <img src=${icon.url} alt=${`${icon.name} icon`}/>
+              </hg-icon-button>
               <div>${icon.name}</div>
             </div>
           `, this._availableIcons)}

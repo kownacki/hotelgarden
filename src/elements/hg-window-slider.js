@@ -1,6 +1,7 @@
 import {LitElement, html, css} from 'lit';
 import './hg-slider.js';
 import './hg-window-slider/hg-window-slider-item.js';
+import './ui/hg-icon-button.js';
 
 export class HgWindowSlider extends LitElement {
   static properties = {
@@ -68,13 +69,14 @@ export class HgWindowSlider extends LitElement {
         `}>
       </hg-slider>
       <div class="controls">
-        <paper-icon-button
+        <hg-icon-button
+          .size=${'normal'}
           .icon=${'close'}
           @click=${() => {
             window.history.back();
             this.close();
           }}>
-        </paper-icon-button>
+        </hg-icon-button>
       </div>
     `;
   }

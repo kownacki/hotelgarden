@@ -1,5 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import {isEventPath, staticPathToPageUid, pagesStaticData, links} from '../../utils/urlStructure.js';
+import './ui/hg-icon-button.js';
 import './hg-header/hg-header-subnav.js';
 import './hg-header/hg-header-logo.js';
 import './hg-book/hg-book-order-button.js';
@@ -79,10 +80,8 @@ export class HgHeader extends LitElement {
     a:hover, a[selected] {
       background: rgba(var(--primary-color-rgb), 90%);
     }
-    paper-icon-button {
+    hg-icon-button {
       display: none;
-      width: 44px;
-      height: 44px;
       margin: 8px;
       color: white;
       position: absolute;
@@ -91,7 +90,7 @@ export class HgHeader extends LitElement {
       align-self: center;
       margin: 0 20px;
     }
-    :host([scrolled-down]) paper-icon-button, :host([no-banner-image]) paper-icon-button {
+    :host([scrolled-down]) hg-icon-button, :host([no-banner-image]) hg-icon-button {
       color: var(--primary-color);
     }
     hg-book-order-button {
@@ -116,7 +115,7 @@ export class HgHeader extends LitElement {
       ul {
         display: none;
       }
-      paper-icon-button {
+      hg-icon-button {
         display: block;
       }
       hg-header-logo {
@@ -147,7 +146,13 @@ export class HgHeader extends LitElement {
     return html`
       <header>
         ${!this.promotedEventLoaded ? ''
-          : html`<paper-icon-button .icon=${'menu'} @click=${() => this.dispatchEvent(new CustomEvent('open-drawer'))}></paper-icon-button>`}
+          : html`
+            <hg-icon-button
+              .size=${'normal'}
+              .icon=${'menu'}
+              @click=${() => this.dispatchEvent(new CustomEvent('open-drawer'))}>
+            </hg-icon-button>
+          `}
         <hg-header-logo .scrolledDown=${this.scrolledDown} .noBannerImage=${this.noBannerImage}></hg-header-logo>
         <nav>
           <ul>

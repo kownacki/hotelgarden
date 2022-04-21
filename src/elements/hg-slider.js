@@ -2,6 +2,7 @@ import {LitElement, html, css} from 'lit';
 import {repeat} from 'lit/directives/repeat.js';
 import sharedStyles from '../styles/shared-styles.js';
 import {array} from '../utils.js';
+import './hg-slider/hg-slider-move.js'
 
 //todo bug clicking go back when image is displayed breaks website
 export class HgSlider extends LitElement {
@@ -45,19 +46,17 @@ export class HgSlider extends LitElement {
       position: absolute;
       padding: 8px;
     }
-    paper-icon-button {
+    hg-slider-move {
       position: absolute;
       top: calc(50% - 20px);
-      height: 45px;
-      width: 45px;
     }
-    paper-icon-button, .counter {
+    hg-slider-move, .counter {
       background: rgba(255, 255, 255, 0.5);
     }
-    paper-icon-button#left {
+    hg-slider-move#left {
       left: 2px;
     }
-    paper-icon-button#right {
+    hg-slider-move#right {
       right: 2px;
     }
   `];
@@ -91,16 +90,16 @@ export class HgSlider extends LitElement {
       </div>
       ${_.size(this.items) < 2 ? '' : html`
         <div class="counter">${this.selected + 1} / ${_.size(this.items)}</div>
-        <paper-icon-button
+        <hg-slider-move
           id="left"
-          .icon=${'chevron-left'}
+          .direction=${'left'}
           @click=${() => !this.transitionGoing && this.move('left')}>
-        </paper-icon-button>
-        <paper-icon-button
+        </hg-slider-move>
+        <hg-slider-move
           id="right"
-          .icon=${'chevron-right'}
+          .direction=${'right'}
           @click=${() => !this.transitionGoing && this.move('right')}>
-        </paper-icon-button>
+        </hg-slider-move>
       `}
     `;
   }

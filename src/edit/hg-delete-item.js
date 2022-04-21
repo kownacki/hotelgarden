@@ -1,20 +1,19 @@
 import {LitElement, html, css} from 'lit';
 import '@material/mwc-button';
 import '../edit/hg-cms-buttons-container.js';
+import '../elements/ui/hg-icon-button.js';
 import sharedStyles from '../styles/shared-styles.js';
 
 export class HgDeleteItem extends LitElement {
   static properties = {
     name: String,
-    disable: Boolean,
+    disabled: Boolean,
     opened: {type: Boolean, reflect: true},
   };
   static styles = [sharedStyles, css`
-    paper-icon-button {
+    hg-icon-button {
+      display: block;
       background: white;
-      width: 24px;
-      height: 24px;
-      padding: 0;
     }
     .warning {
       display: flex;
@@ -32,11 +31,12 @@ export class HgDeleteItem extends LitElement {
   render() {
     return html`
       <div class="cms">
-        <paper-icon-button 
-          ?disabled=${this.disable}
+        <hg-icon-button
+          .size=${'compact'}
           .icon=${'delete'}
+          .disabled=${this.disabled}
           @click=${() => this.shadowRoot.getElementById('dialog').open()}>
-        </paper-icon-button>
+        </hg-icon-button>
         <paper-dialog
           id="dialog"
           @opened-changed=${(event) => {this.opened = event.target.opened; this.dispatchEvent(new CustomEvent('opened-changed'))}}>

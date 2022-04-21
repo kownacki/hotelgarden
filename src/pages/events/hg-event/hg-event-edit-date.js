@@ -1,6 +1,7 @@
 import {LitElement, html, css} from 'lit';
 import '@material/mwc-button';
 import '../../../edit/hg-cms-buttons-container.js';
+import '../../../elements/ui/hg-icon-button.js';
 import sharedStyles from '../../../styles/shared-styles.js';
 
 export class HgEventEditDate extends LitElement {
@@ -12,11 +13,6 @@ export class HgEventEditDate extends LitElement {
     :host {
       margin-left: 8px;
     }
-    paper-icon-button {
-      width: 24px;
-      height: 24px;
-      padding: 0;
-    }
     .buttons {
       margin-top: 10px;
     }
@@ -24,10 +20,11 @@ export class HgEventEditDate extends LitElement {
   render() {
     return html`
       <div class="cms">
-        <paper-icon-button 
+        <hg-icon-button
+          .size=${'compact'}
           .icon=${'edit'}
            @click=${() => this.shadowRoot.getElementById('dialog').open()}>
-        </paper-icon-button>
+        </hg-icon-button>
         <paper-dialog 
           id="dialog"
           @opened-changed=${(event) => {this.opened = event.target.opened; this.dispatchEvent(new CustomEvent('opened-changed'))}}>

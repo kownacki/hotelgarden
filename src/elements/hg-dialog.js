@@ -1,5 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import sharedStyles from '../styles/shared-styles.js';
+import './hg-dialog/hg-dialog-close.js';
 
 export class HgDialog extends LitElement {
   static properties = {
@@ -68,11 +69,9 @@ export class HgDialog extends LitElement {
     ::slotted([slot="button"]) {
       margin: 6px 4px;
     }
-    paper-icon-button {
+    hg-dialog-close  {
       position: absolute;
-      width: 44px;
-      height: 44px;
-      padding: 8px;
+      padding: 0;
       top: 8px;
       right: 8px;
       z-index: 1;
@@ -86,7 +85,7 @@ export class HgDialog extends LitElement {
       :host(:not([no-close])) header {
         padding: 15px 24px 15px 64px;
       }
-      paper-icon-button {
+      hg-dialog-close {
         left: 8px;
         right: auto;
       }
@@ -124,10 +123,9 @@ export class HgDialog extends LitElement {
           }
         }}>
         ${this.noClose ? '' : html`
-          <paper-icon-button 
-            .icon=${'close'} 
+          <hg-dialog-close
             @click=${() => this.dialog.close()}>
-          </paper-icon-button>
+          </hg-dialog-close>
         `}
         ${this.noHeader ? '' : html`
           <header class="bigger-text">
