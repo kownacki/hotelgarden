@@ -81,6 +81,8 @@ export default css`
   .cms {
     --mdc-theme-primary: black;
     --mdc-theme-on-primary: white;
+    --mdc-theme-secondary: black;
+    --mdc-theme-on-secondary: white;
   }
   @media all and (max-width: 959px) {
     body, :host, paper-dialog {

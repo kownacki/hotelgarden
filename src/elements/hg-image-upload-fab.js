@@ -1,30 +1,29 @@
 import {LitElement, html, css} from 'lit';
-import '@polymer/paper-fab';
+import '@material/mwc-fab';
 import '../edit/hg-image-upload.js';
+import sharedStyles from '../styles/shared-styles.js';
 
 export class HgImageUploadFab extends LitElement {
-  static styles = css`
-    input {
-      display: none;
-    }
-    paper-fab {
+  static styles = [sharedStyles, css`
+    mwc-fab {
       position: absolute;
       bottom: 20px;
       right: 20px;
       margin: 2px;
-      --paper-fab-keyboard-focus-background: var(--primary-color);
     }
-  `;
+  `];
   render() {
     return html`
-      <hg-image-upload id="upload"></hg-image-upload>
-      <paper-fab
-        .icon=${'add'}
-        @click=${async() => {
-          // todo when cancelling there is error
-          this.dispatchEvent(new CustomEvent('upload', {detail: await this.shadowRoot.getElementById('upload').upload()}));
-        }}>
-      </paper-fab>
+      <div class="cms">
+        <hg-image-upload id="upload"></hg-image-upload>
+        <mwc-fab
+          .icon=${'add'}
+          @click=${async() => {
+            // todo when cancelling there is error
+            this.dispatchEvent(new CustomEvent('upload', {detail: await this.shadowRoot.getElementById('upload').upload()}));
+          }}>
+        </mwc-fab>
+      </div>
     `;
   }
 }
