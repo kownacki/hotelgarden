@@ -1,73 +1,42 @@
 import {LitElement, html, css} from 'lit';
-import {links} from '../../utils/urlStructure.js';
-import {staticProp} from '../utils.js';
-import './hg-drawer/hg-drawer-close.js';
-import './hg-drawer/hg-drawer-item.js';
+import '@polymer/app-layout/app-drawer/app-drawer.js';
+import './hg-drawer/hg-drawer-content.js';
 
 export class HgDrawer extends LitElement {
   static properties = {
     selected: String,
     promotedEvent: Object,
-    _nowOpened: HTMLElement,
+    // observables
+    drawer: Element,
+    _drawerOnceOpened: Boolean
   };
   static styles = css`
-    .header {
-      background: white;
-      position: fixed;
-      width: 100%;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    }
-    hg-drawer-close {
-      display: block;
-      margin: calc((var(--headerHeight) - 44px) / 2);
-    }
-    nav {
-      display: block;
-      height: calc(100% - var(--headerHeight));
-      margin-top: var(--headerHeight);
-      overflow: auto;
-    }
-    ul {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-    li {
-      border-bottom: solid 1px var(--placeholder-color);
-    }
-    li:last-child {
-      border-bottom: none;
+    app-drawer {
+      z-index: var(--layer-header-1);
     }
   `;
+  firstUpdated() {
+    this.drawer = this.shadowRoot.getElementById('drawer');
+  }
   render() {
     return html`
-      <div class="header">
-        <hg-drawer-close
-          @click=${() => this.dispatchEvent(new CustomEvent('close-drawer'))}>
-        </hg-drawer-close>
-      </div>
-      <nav>
-        <ul>
-          ${!this.promotedEvent || moment().isAfter(this.promotedEvent.date, 'day') ? ''
-            : html`<li class="event">
-              <hg-drawer-item .link=${staticProp({
-                path: '/wydarzenia/' + this.promotedEvent.uid,
-                name: this.promotedEvent.title,
-              })}>
-              </hg-drawer-item>
-            </li>`
+      <app-drawer
+        id="drawer"
+        .swipeOpen=${true}
+        @opened-changed=${({detail: opened}) => {
+          if (opened) {
+            this._drawerOnceOpened = true;
           }
-          ${_.map((link) => html`
-            <li>
-              <hg-drawer-item 
-                .link=${link} 
-                .selected=${this.selected}
-                .opened=${_.some(['path', this.selected], link.sublinks)}>
-              </hg-drawer-item>        
-            </li>
-          `, links)}
-        </ul>
-      </nav>
+        }}>
+        ${!this._drawerOnceOpened ? ''
+          : html`
+            <hg-drawer-content
+              .selected=${this.selected}
+              .promotedEvent=${this.promotedEvent}
+              @close-drawer=${() => this.shadowRoot.getElementById('drawer').close()}>
+            </hg-drawer-content>
+          `}
+      </app-drawer>
     `;
   }
 }
