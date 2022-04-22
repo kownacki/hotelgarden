@@ -4,7 +4,6 @@ import '@polymer/paper-dialog';
 import {getEventUid, isEventPath, staticPathToPageUid} from '../utils/urlStructure.js';
 import './elements/hg-header.js';
 import './elements/hg-page.js';
-import './elements/hg-drawer.js';
 import {authDeferred, createDbPath, getFromDb} from './utils/database.js';
 
 // For index.html !
@@ -87,7 +86,10 @@ export class HgApp extends LitElement {
         .selected=${this._path}
         .promotedEvent=${this._promotedEvent}
         .promotedEventLoaded=${this._promotedEventLoaded}
-        @open-drawer=${() => this.shadowRoot.getElementById('drawer')?.drawer?.open()}>
+        @open-drawer=${async () => {
+          await import('./elements/hg-drawer.js');
+          this.shadowRoot.getElementById('drawer')?.drawer?.open();
+        }}>
       </hg-header>
       <hg-page
         .event=${this._event}
