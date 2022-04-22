@@ -7,9 +7,10 @@ export class HgPageLoading extends LitElement {
   static styles = css`
     :host {
       display: block;
+      height: 500px;
     }
     mkwc-loading-dots {
-      height: 100px;
+      height: 100%;
     }
   `;
   render() {

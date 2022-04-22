@@ -134,7 +134,7 @@ export class HgPage extends LitElement {
               this._handleSetJsonLd(jsonLd);
             }}>
           </hg-event>
-        `))
+        `), html`<hg-page-loading></hg-page-loading>`)
         : html`
           <hg-banner .noImage=${this.noBannerImage} .uid=${this.uid}></hg-banner>
           ${!this.uid ? '' : until(getContentElement(
