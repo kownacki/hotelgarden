@@ -1,6 +1,5 @@
 import {LitElement, html, css} from 'lit';
 import '@polymer/app-route/app-location.js';
-import '@polymer/paper-dialog';
 import {getEventUid, isEventPath, staticPathToPageUid} from '../utils/urlStructure.js';
 import './elements/hg-header.js';
 import './elements/hg-page.js';

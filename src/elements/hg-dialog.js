@@ -1,4 +1,5 @@
 import {LitElement, html, css} from 'lit';
+import '@polymer/paper-dialog';
 import sharedStyles from '../styles/shared-styles.js';
 import './hg-dialog/hg-dialog-close.js';
 

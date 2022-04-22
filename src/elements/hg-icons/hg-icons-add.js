@@ -1,5 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import '@material/mwc-button';
+import '@polymer/paper-dialog';
 import {collection, getDocs, query, where} from 'firebase/firestore';
 import {ref, listAll} from 'firebase/storage';
 import '../../edit/hg-cms-buttons-container.js';

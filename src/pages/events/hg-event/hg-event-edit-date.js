@@ -1,5 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import '@material/mwc-button';
+import '@polymer/paper-dialog';
 import '../../../edit/hg-cms-buttons-container.js';
 import '../../../elements/ui/hg-icon-button.js';
 import sharedStyles from '../../../styles/shared-styles.js';
