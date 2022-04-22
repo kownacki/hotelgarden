@@ -26,15 +26,6 @@ export default [{
     minifyHTML(),
     terser(),
   ],
-  manualChunks(id) {
-    id = id.replace(/\\/g, '/');
-    if (id.includes('node_modules/@material')) {
-      return 'material-elements';
-    }
-    if (id.includes('node_modules/@polymer')) {
-      return 'legacy-polymer-elements';
-    }
-  }
 }, {
   input: 'src/styles/shared-styles.js',
   output: {
