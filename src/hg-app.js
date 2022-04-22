@@ -87,9 +87,12 @@ export class HgApp extends LitElement {
         .promotedEvent=${this._promotedEvent}
         .promotedEventLoaded=${this._promotedEventLoaded}
         @open-drawer=${async () => {
-          await import('./elements/hg-drawer.js');
-          await sleep();
-          this.shadowRoot.getElementById('drawer')?.drawer?.open();
+          if (!this._drawer) {
+            await import('./elements/hg-drawer.js');
+            await sleep();
+            this._drawer = this.shadowRoot.getElementById('drawer').drawer;
+          }
+          this._drawer.open();
         }}>
       </hg-header>
       <hg-page
