@@ -1,36 +1,45 @@
 import {LitElement, html, css} from 'lit';
+import {until} from 'lit/directives/until.js';
 import {html as staticHtml, unsafeStatic} from 'lit/static-html.js';
 import {getDefaultTitle, appendSuffixToTitle} from '../../utils/seo.js';
 import {createDbPath, getFromDb} from '../utils/database.js';
 import {setDocumentTitle, setMetaDescription, setStructuredData, scrollIntoView, sleep} from '../utils.js';
-
 import '../elements/hg-banner.js';
 import '../elements/hg-footer.js';
+import './hg-page/hg-page-loading.js';
 
 // todo put hg-event in elements
-import '../pages/events/hg-event.js';
-import '../pages/hotel/hg-landing.js';
-import '../pages/hotel/hg-villa-garden.js';
-import '../pages/hotel/hg-cuisine.js';
-import '../pages/hotel/hg-surroundings.js';
-import '../pages/hotel/hg-reviews.js';
-import '../pages/rooms/hg-rooms.js';
-import '../pages/restaurant/hg-restaurant.js';
-import '../pages/restaurant/hg-lunch.js';
-import '../pages/conferences/hg-conferences.js';
-import '../pages/conferences/hg-conference-halls.js';
-import '../pages/celebrations/hg-weddings.js';
-import '../pages/celebrations/hg-family-parties.js';
-import '../pages/celebrations/hg-banquet-halls.js';
-import '../pages/gallery/hg-gallery.js';
-import '../pages/events/hg-events.js';
-import '../pages/contact/hg-contact.js';
-import '../pages/404/hg-404.js';
+
+// Use static strings as identifiers to correctly trigger rollup code-splitting
+const pagesModulesImports = {
+  'landing': () => import('../pages/hotel/hg-landing.js'),
+  'villa-garden': () => import('../pages/hotel/hg-villa-garden.js'),
+  'cuisine': () => import('../pages/hotel/hg-cuisine.js'),
+  'surroundings': () => import('../pages/hotel/hg-surroundings.js'),
+  'reviews': () => import('../pages/hotel/hg-reviews.js'),
+  'rooms': () => import('../pages/rooms/hg-rooms.js'),
+  'conferences': () => import('../pages/conferences/hg-conferences.js'),
+  'conference-halls': () => import('../pages/conferences/hg-conference-halls.js'),
+  'restaurant': () => import('../pages/restaurant/hg-restaurant.js'),
+  'lunch': () => import('../pages/restaurant/hg-lunch.js'),
+  'weddings': () => import('../pages/celebrations/hg-weddings.js'),
+  'family-parties': () => import('../pages/celebrations/hg-family-parties.js'),
+  'banquet-halls': () => import('../pages/celebrations/hg-banquet-halls.js'),
+  'gallery': () => import('../pages/gallery/hg-gallery.js'),
+  'events': () => import('../pages/events/hg-events.js'),
+  'contact': () => import('../pages/contact/hg-contact.js'),
+  '404': () => import('../pages/404/hg-404.js'),
+};
+
+const importPageModule = (pageUid) => {
+  return pagesModulesImports[pageUid]();
+}
 
 let seconds = 0;
 setInterval(() => ++seconds, 1000);
 
-const getContentElement = (pageUid, config, handleSetMetaDescription, handleSetJsonLd) => {
+const getContentElement = async (pageUid, config, handleSetMetaDescription, handleSetJsonLd) => {
+  await importPageModule(pageUid);
   handleSetJsonLd(''); //todo refactor when setting structured data for pages
   return staticHtml`
     <hg-${unsafeStatic(pageUid)}
@@ -111,27 +120,29 @@ export class HgPage extends LitElement {
         }
       }}></app-location>
       ${this.event
-        ? html`<hg-event 
-          .uid=${this.uid}
-          class="page"
-          @title-loaded=${({detail: title}) => {
-            this._defaultTitle = title || 'Wydarzenie bez tytułu';
-          }}
-          @set-meta-description=${({detail: text}) => {
-            this._handleSetMetaDescription(text);
-          }}
-          @set-json-ld=${({detail: jsonLd}) => {
-            this._handleSetJsonLd(jsonLd);
-          }}>
-        </hg-event>`
+        ? until(import('../pages/events/hg-event.js').then(() => html`
+          <hg-event
+            .uid=${this.uid}
+            class="page"
+            @title-loaded=${({detail: title}) => {
+              this._defaultTitle = title || 'Wydarzenie bez tytułu';
+            }}
+            @set-meta-description=${({detail: text}) => {
+              this._handleSetMetaDescription(text);
+            }}
+            @set-json-ld=${({detail: jsonLd}) => {
+              this._handleSetJsonLd(jsonLd);
+            }}>
+          </hg-event>
+        `))
         : html`
           <hg-banner .noImage=${this.noBannerImage} .uid=${this.uid}></hg-banner>
-          ${this.uid ? getContentElement(
+          ${!this.uid ? '' : until(getContentElement(
             this.uid,
             this._config,
             (text) => this._handleSetMetaDescription(text),
             (jsonLd) => this._handleSetJsonLd(jsonLd),
-          ) : ''}
+          ), html`<hg-page-loading></hg-page-loading>`)}
         `}
       <hg-footer></hg-footer>
     `;

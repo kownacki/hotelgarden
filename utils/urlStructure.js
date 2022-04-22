@@ -91,3 +91,4 @@ export const ROOT_URL = 'https://www.hotelgarden.pl';
 export const EVENTS_ROOT_PATH = '/wydarzenia/';
 export const SITEMAP_PATH = '/sitemap.xml';
 export const SITEMAP_URL = createFullUrl(SITEMAP_PATH);
+export const PAGES_SRC_PATH = '/src/pages/';
