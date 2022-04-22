@@ -1,7 +1,5 @@
 import {LitElement, html, css} from 'lit';
-import '../../edit/hg-delete-item.js';
-import './hg-list-item-configure.js';
-import './hg-list-item-swap.js';
+import {until} from 'lit/directives/until.js';
 
 export class HgListItem extends LitElement {
   static properties = {
@@ -81,40 +79,46 @@ export class HgListItem extends LitElement {
       <slot></slot>
       <div class="controls">
         <div class="controls-top">
-          ${!this.configure ? '' : html`
-            <hg-list-item-configure 
-              .configure=${this.configure}
-              .item=${this.item}
-              .disabled=${this.disableEdit}
-              @opened-changed=${(event) => this._configureOpened = event.target.opened}>
-            </hg-list-item-configure>
-          `}
-          ${this.noDelete ? '' : html`
-            <hg-delete-item
-              .disabled=${this.disableEdit} 
-              .name=${this.getItemName(this.item)} 
-              @opened-changed=${(event) => this._deleteOpened = event.target.opened}>
-            </hg-delete-item>
-          `}
+          ${!this.configure ? '' : until(import('./hg-list-item-configure.js').then(() => {
+            return html`
+              <hg-list-item-configure
+                .configure=${this.configure}
+                .item=${this.item}
+                .disabled=${this.disableEdit}
+                @opened-changed=${(event) => this._configureOpened = event.target.opened}>
+              </hg-list-item-configure>
+            `;
+          }))}
+          ${this.noDelete ? '' : until(import('../../edit/hg-delete-item.js').then(() => {
+            return html`
+              <hg-delete-item
+                .disabled=${this.disableEdit}
+                .name=${this.getItemName(this.item)}
+                @opened-changed=${(event) => this._deleteOpened = event.target.opened}>
+              </hg-delete-item>
+            `;
+          }))}
         </div>
-        ${this.noSwap ? '' : [
-          (this.first ? '' : html`
-            <hg-list-item-swap
-              class="swap-left"
-              .disabled=${this.disableEdit}
-              .vertical=${this.vertical}
-              @click=${() => this.dispatchEvent(new CustomEvent('swap', {detail: -1}))}>
-            </hg-list-item-swap>
-          `),
-          (this.last ? '' : html`
-            <hg-list-item-swap
-              class="swap-right"
-              .disabled=${this.disableEdit}
-              .vertical=${this.vertical}
-              @click=${() => this.dispatchEvent(new CustomEvent('swap', {detail: +1}))}>
-            </hg-list-item-swap>
-          `)
-        ]}
+        ${this.noSwap ? '' : until(import('./hg-list-item-swap.js').then(() => {
+          return [
+            (this.first ? '' : html`
+              <hg-list-item-swap
+                class="swap-left"
+                .disabled=${this.disableEdit}
+                .vertical=${this.vertical}
+                @click=${() => this.dispatchEvent(new CustomEvent('swap', {detail: -1}))}>
+              </hg-list-item-swap>
+            `),
+            (this.last ? '' : html`
+              <hg-list-item-swap
+                class="swap-right"
+                .disabled=${this.disableEdit}
+                .vertical=${this.vertical}
+                @click=${() => this.dispatchEvent(new CustomEvent('swap', {detail: +1}))}>
+              </hg-list-item-swap>
+            `)
+          ];
+        }))}
       </div>
     `;
   }

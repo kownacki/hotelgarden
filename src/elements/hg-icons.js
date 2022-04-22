@@ -1,8 +1,8 @@
 import {LitElement, html, css} from 'lit';
+import {until} from 'lit/directives/until.js';
 import {createDbPath} from '../utils/database.js';
 import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
 import './hg-list.js';
-import './hg-icons/hg-icons-add.js';
 import './hg-icons/hg-icons-item.js';
 
 export class HgIcons extends LitElement {
@@ -71,7 +71,9 @@ export class HgIcons extends LitElement {
         }}
         @items-changed=${(event) => this.empty = _.isEmpty(event.detail)}>
       </hg-list>
-      ${!this._loggedIn ? '' : html`<hg-icons-add id="add"></hg-icons-add>`}
+      ${!this._loggedIn ? '' : until(import('./hg-icons/hg-icons-add.js').then(() => {
+        return html`<hg-icons-add id="add"></hg-icons-add>`;
+      }))}
     `;
   }
 }

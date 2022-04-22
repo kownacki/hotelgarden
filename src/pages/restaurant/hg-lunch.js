@@ -1,4 +1,5 @@
 import {LitElement, html, css} from 'lit';
+import {until} from 'lit/directives/until.js';
 import '../../content/hg-article/hg-intro-article.js';
 import '../../content/hg-article.js';
 import '../../content/hg-content-slider.js';
@@ -7,7 +8,6 @@ import HgContent from '../../elements/hg-content.js';
 import sharedStyles from '../../styles/shared-styles.js';
 import {createDbPath, getFromDb} from '../../utils/database.js';
 import {FirebaseAuthController} from '../../utils/FirebaseAuthController.js';
-import './hg-lunch/hg-lunch-edit.js';
 import './hg-lunch/hg-lunch-generate.js';
 import './hg-lunch/hg-lunch-week.js';
 
@@ -117,22 +117,24 @@ export class HgLunch extends HgContent {
           .weekLength=${this._lunchDaysCount}>
         </hg-lunch-week>
         ${this._loggedIn
-          ? html`
-            <div class="edit-wrapper">
-              <div class="edit">
-                ${_.map((week) => html`
-                  <hg-lunch-edit
-                    .isUpcoming=${week === 'upcoming'}
-                    .lunches=${this._lunches[week]} 
-                    .lunchesData=${this._lunchesData[week]} 
-                    .config=${_.get('lunches', this.config)}
-                    .weekLength=${this._lunchDaysCount}
-                    @lunches-changed=${(event) => this._lunches = _.set(week, event.detail, this._lunches)}>
-                  </hg-lunch-edit>
-                `, ['current', 'upcoming'])}
+          ? until(import('./hg-lunch/hg-lunch-edit.js').then(() => {
+            return html`
+              <div class="edit-wrapper">
+                <div class="edit">
+                  ${_.map((week) => html`
+                    <hg-lunch-edit
+                      .isUpcoming=${week === 'upcoming'}
+                      .lunches=${this._lunches[week]} 
+                      .lunchesData=${this._lunchesData[week]} 
+                      .config=${_.get('lunches', this.config)}
+                      .weekLength=${this._lunchDaysCount}
+                      @lunches-changed=${(event) => this._lunches = _.set(week, event.detail, this._lunches)}>
+                    </hg-lunch-edit>
+                  `, ['current', 'upcoming'])}
+                </div>
               </div>
-            </div>
-          `
+            `;
+          }))
           : !_.isEmpty(this._lunches.current) 
             ? html`
               <div class="generate">

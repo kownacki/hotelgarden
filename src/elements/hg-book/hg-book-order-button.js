@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit';
 import sharedStyles from '../../styles/shared-styles.js';
 import '../hg-action-button.js';
-import './hg-book-dialog.js';
+import {sleep} from '../../utils.js';
 
 export class HgBookOrderButton extends LitElement {
   static properties = {
@@ -29,7 +29,9 @@ export class HgBookOrderButton extends LitElement {
       <hg-action-button
         .url=${this.order === 'restaurant' ? 'http://www.zamow.hotelgarden.pl' : null}
         .newTab=${Boolean(this.order)}
-        @click=${this.order ? null : () => {
+        @click=${this.order ? null : async () => {
+          await import('./hg-book-dialog.js');
+          await sleep();
           this.shadowRoot.getElementById('dialog').dialog.open();
         }}>
         ${this.order ? 'Zamów online' : 'Rezerwuj online'}

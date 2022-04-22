@@ -3,6 +3,7 @@ import '@polymer/app-route/app-location.js';
 import {getEventUid, isEventPath, staticPathToPageUid} from '../utils/urlStructure.js';
 import './elements/hg-header.js';
 import './elements/hg-page.js';
+import {sleep} from './utils.js';
 import {authDeferred, createDbPath, getFromDb} from './utils/database.js';
 
 // For index.html !
@@ -87,6 +88,7 @@ export class HgApp extends LitElement {
         .promotedEventLoaded=${this._promotedEventLoaded}
         @open-drawer=${async () => {
           await import('./elements/hg-drawer.js');
+          await sleep();
           this.shadowRoot.getElementById('drawer')?.drawer?.open();
         }}>
       </hg-header>

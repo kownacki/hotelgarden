@@ -1,4 +1,5 @@
 import {LitElement, html, css} from 'lit';
+import {until} from 'lit/directives/until.js';
 import '@material/mwc-switch';
 import {createEventJsonLd} from '../../../utils/seo';
 import sharedStyles from '../../styles/shared-styles';
@@ -9,7 +10,6 @@ import {createDbPath, getFromDb, updateInDb} from '../../utils/database.js';
 import {cleanTextForMetaDescription, updateData} from '../../utils.js';
 import '../../edit/hg-editable-text.js';
 import '../../elements/hg-banner.js';
-import './hg-event/hg-event-edit-date.js';
 import './hg-events/hg-events-sidebar.js';
 
 export class HgEvent extends LitElement {
@@ -140,39 +140,41 @@ export class HgEvent extends LitElement {
                     : 'Odbyło się'}
                 ${this._event.date.split('-').reverse().join(' / ')}
               </div>
-              ${!this._loggedIn ? '' : html`
-                <div class="cms controls smaller-text">
-                  <hg-event-edit-date 
-                    .date=${this._event.date}
-                    @save=${(event) => {
-                      this._event.date = event.detail;
-                      this.requestUpdate();
-                      this.updateData('date', event.detail);
-                    }}>
-                  </hg-event-edit-date>
-                  <mwc-formfield-fixed .label=${'Publiczne'}>
-                    <mwc-switch
-                      id="public"
-                      .selected=${this._event.public}
-                      @click=${() => {
-                        this.updateData('public', this.shadowRoot.getElementById('public').selected)
+              ${!this._loggedIn ? '' : until(import('./hg-event/hg-event-edit-date.js').then(() => {
+                return html`
+                  <div class="cms controls smaller-text">
+                    <hg-event-edit-date 
+                      .date=${this._event.date}
+                      @save=${(event) => {
+                        this._event.date = event.detail;
+                        this.requestUpdate();
+                        this.updateData('date', event.detail);
                       }}>
-                    </mwc-switch>
-                  </mwc-formfield-fixed>
-                  <div title="${moment().isAfter(this._event.date, 'day') ? 'Nie można promować minionego wydarzenia' : ''}">
-                    <mwc-formfield-fixed .label=${'Promuj'}>
+                    </hg-event-edit-date>
+                    <mwc-formfield-fixed .label=${'Publiczne'}>
                       <mwc-switch
-                        id="promote"
-                        .selected=${moment().isSameOrBefore(this._event.date, 'day') && this._promotedEvent === this.uid}
-                        .disabled=${moment().isAfter(this._event.date, 'day')}
+                        id="public"
+                        .selected=${this._event.public}
                         @click=${() => {
-                          updateInDb(createDbPath('events/promoted', 'uid'), this.shadowRoot.getElementById('promote').selected ? this.uid : null);
+                          this.updateData('public', this.shadowRoot.getElementById('public').selected)
                         }}>
                       </mwc-switch>
                     </mwc-formfield-fixed>
+                    <div title="${moment().isAfter(this._event.date, 'day') ? 'Nie można promować minionego wydarzenia' : ''}">
+                      <mwc-formfield-fixed .label=${'Promuj'}>
+                        <mwc-switch
+                          id="promote"
+                          .selected=${moment().isSameOrBefore(this._event.date, 'day') && this._promotedEvent === this.uid}
+                          .disabled=${moment().isAfter(this._event.date, 'day')}
+                          @click=${() => {
+                            updateInDb(createDbPath('events/promoted', 'uid'), this.shadowRoot.getElementById('promote').selected ? this.uid : null);
+                          }}>
+                        </mwc-switch>
+                      </mwc-formfield-fixed>
+                    </div>
                   </div>
-                </div>
-              `}
+                `;
+              }))}
             </div>
             <div class="divider"></div>
             ${this._contentLoading ? '' : html`<hg-editable-text 

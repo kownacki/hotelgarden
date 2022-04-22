@@ -1,9 +1,9 @@
 import {LitElement, html, css} from 'lit';
+import {until} from 'lit/directives/until.js';
 import sharedStyles from '../../styles/shared-styles.js';
 import '../../content/hg-article/hg-intro-article.js';
 import '../../elements/hg-action-button.js';
 import {FirebaseAuthController} from '../../utils/FirebaseAuthController.js';
-import './hg-events/hg-events-add.js';
 import './hg-events/hg-events-list.js';
 
 // todo add scrolling to dialogs
@@ -39,7 +39,9 @@ export class HgEvents extends LitElement {
   render() {
     return html`
       <hg-intro-article .uid=${'events'}></hg-intro-article>
-      ${!this._loggedIn ? '' : html`<hg-events-add></hg-events-add>`}
+      ${!this._loggedIn ? '' : until(import('./hg-events/hg-events-add.js').then(() => {
+        return html`<hg-events-add></hg-events-add>`;
+      }))}
       <h2>Nadchodzące wydarzenia</h2>
       <hg-events-list></hg-events-list>
       <hg-action-button id="button" @click=${() => {

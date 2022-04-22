@@ -1,11 +1,11 @@
 import {LitElement, html, css} from 'lit';
+import {until} from 'lit/directives/until.js';
 import {repeat} from 'lit/directives/repeat.js';
 import sharedStyles from '../styles/shared-styles.js'
 import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
 import {DbPath, getFromDb, updateInDb} from '../utils/database.js';
 import {array, generateUid} from '../utils.js';
 import './hg-list/hg-list-item.js';
-import './hg-list/hg-list-add.js';
 
 export default class HgList extends LitElement {
   _firebaseAuth;
@@ -148,25 +148,27 @@ export default class HgList extends LitElement {
             ${this.itemTemplate(this.items[key], key, this._processing || this.editing)}
           </hg-list-item>`
         ),
-        (!this._loggedIn || this.noAdd) ? '' : html`
-          <div class="add-container">
-            <hg-list-add
-              .disabled=${this._processing || this.editing}
-              @click=${async () => {
-                this._processing = true;
-                let newItem = {uid: generateUid()};
-                newItem = this.onAdd ? await this.onAdd(newItem) : newItem;
-                if (newItem) {
-                  await this.updateData(String(_.size(this.items)), newItem);
-                  //todo use firebase.firestore.FieldValue.arrayUnion  
-                  this.items = _.set(_.size(this.items), newItem, this.items);
-                  this.dispatchEvent(new CustomEvent('item-added'));
-                }
-                this._processing = false;
-              }}>
-            </hg-list-add>
-          </div>
-        `
+        (!this._loggedIn || this.noAdd) ? '' : until(import('./hg-list/hg-list-add.js').then(() => {
+          return html`
+            <div class="add-container">
+              <hg-list-add
+                .disabled=${this._processing || this.editing}
+                @click=${async () => {
+                  this._processing = true;
+                  let newItem = {uid: generateUid()};
+                  newItem = this.onAdd ? await this.onAdd(newItem) : newItem;
+                  if (newItem) {
+                    await this.updateData(String(_.size(this.items)), newItem);
+                    //todo use firebase.firestore.FieldValue.arrayUnion  
+                    this.items = _.set(_.size(this.items), newItem, this.items);
+                    this.dispatchEvent(new CustomEvent('item-added'));
+                  }
+                  this._processing = false;
+                }}>
+              </hg-list-add>
+            </div>
+          `;
+        })),
       ])}
     `;
   }

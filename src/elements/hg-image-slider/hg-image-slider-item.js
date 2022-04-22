@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit';
-import '../../edit/hg-delete-item.js'
-import '../hg-element-with-enlarge/hg-image-with-enlarge.js'
+import {until} from 'lit/directives/until.js';
+import '../hg-element-with-enlarge/hg-image-with-enlarge.js';
 
 export class HgImageSliderItem extends LitElement {
   static properties = {
@@ -37,10 +37,14 @@ export class HgImageSliderItem extends LitElement {
         .ready=${this.ready}
         @click=${() => this.dispatchEvent(new CustomEvent('click-image'))}>
       </hg-image-with-enlarge>
-      ${this.noDelete ? '' : html`<hg-delete-item 
-        .name=${_.get('name', this.image)}
-        @opened-changed=${(event) => this._deleteOpened = event.target.opened}>
-      </hg-delete-item>`}
+      ${this.noDelete ? '' : until(import('../../edit/hg-delete-item.js').then(() => {
+        return html`
+          <hg-delete-item
+            .name=${_.get('name', this.image)}
+            @opened-changed=${(event) => this._deleteOpened = event.target.opened}>
+          </hg-delete-item>
+        `;
+      }))}
     `;
   }
 }

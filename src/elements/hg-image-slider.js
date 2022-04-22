@@ -1,8 +1,8 @@
 import {LitElement, html, css} from 'lit';
+import {until} from 'lit/directives/until.js';
 import {DbPath, deleteImageInDb, getFromDb, updateInDb, updateImageInDb} from '../utils/database.js';
 import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
 import './hg-image-slider/hg-image-slider-item.js';
-import './hg-image-upload-fab.js';
 import './hg-slider.js';
 import './hg-window-slider.js';
 
@@ -89,15 +89,19 @@ export class HgImageSlider extends LitElement {
           </hg-image-slider-item>
         `}>
       </hg-slider>`}
-      ${!this._loggedIn ? '' : html`<hg-image-upload-fab
-        @upload=${async (event) => {
-          const index = _.size(this.images);
-          await this.updateImage(index, event.detail);
-          const contentSlider = this.shadowRoot.getElementById('content-slider');
-          contentSlider.selected = (contentSlider.double && window.innerWidth >= 600) ? index - 1 : index;
-          contentSlider.requestUpdate();
-        }}>
-      </hg-image-upload-fab>`}
+      ${!this._loggedIn ? '' : until(import('./hg-image-upload-fab.js').then(() => {
+        return html`
+          <hg-image-upload-fab
+            @upload=${async (event) => {
+              const index = _.size(this.images);
+              await this.updateImage(index, event.detail);
+              const contentSlider = this.shadowRoot.getElementById('content-slider');
+              contentSlider.selected = (contentSlider.double && window.innerWidth >= 600) ? index - 1 : index;
+              contentSlider.requestUpdate();
+            }}>
+          </hg-image-upload-fab>
+        `;
+      }))}
       <hg-window-slider
         id="window-slider"
         .ready=${this.ready}
