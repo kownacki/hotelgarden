@@ -1,8 +1,9 @@
 import {LitElement, html, css} from 'lit';
 import {until} from 'lit/directives/until.js';
 import '@material/mwc-switch';
-import {createEventJsonLd} from '../../../utils/seo';
-import sharedStyles from '../../styles/shared-styles';
+import {isEventUpcoming, isEventPast, isEventToday} from '../../../utils/events.js';
+import {createEventJsonLd} from '../../../utils/seo.js';
+import sharedStyles from '../../styles/shared-styles.js';
 import ckContent from '../../styles/ck-content.js'
 import '../../utils/fixes/mwc-formfield-fixed.js';
 import {FirebaseAuthController} from '../../utils/FirebaseAuthController.js';
@@ -10,18 +11,18 @@ import {createDbPath, getFromDb, updateInDb} from '../../utils/database.js';
 import {cleanTextForMetaDescription, updateData} from '../../utils.js';
 import '../../edit/hg-editable-text.js';
 import '../../elements/hg-banner.js';
+import '../../elements/hg-page/hg-page-loading.js';
 import './hg-events/hg-events-sidebar.js';
 
 export class HgEvent extends LitElement {
   _firebaseAuth;
   static properties = {
-    uid: String,
-    _events: Array,
-    _event: Object,
-    _promotedEvent: String,
-    _contentLoading: Boolean,
+    eventData: Object, // EventData
+    eventsList: Object, // EventsList
+    promotedEventData: Object, // EventData | undefined
+    promotedEventLoaded: Boolean,
     _content: String,
-    _dataReady: Boolean,
+    _contentReady: Boolean,
     _loggedIn: Boolean,
   };
   static styles = [sharedStyles, ckContent, css`
@@ -87,87 +88,64 @@ export class HgEvent extends LitElement {
   `];
   constructor() {
     super();
-    (async () => {
-      this._promotedEvent = await getFromDb(createDbPath('events/promoted', 'uid'));
-    })();
     this._firebaseAuth = new FirebaseAuthController(this, (loggedIn) => {
       this._loggedIn = loggedIn;
     });
   }
-  async updated(changedProperties) {
-    if (changedProperties.has('uid')) {
-      this._dataReady = false;
-      const uid = this.uid;
-      this._events = await getFromDb(createDbPath('events/events'));
-      if (this.uid === uid) {
-        this._dataReady = true;
-        this._event = this._events[this.uid];
-        this.dispatchEvent(new CustomEvent('title-loaded', {detail: this._event ? this._event.title : 'Nie znaleziono wydarzenia'}))
-      }
-      if (this._event) {
-        const eventJsonLd = createEventJsonLd(this._event);
-        this.dispatchEvent(new CustomEvent('set-json-ld', {detail: eventJsonLd}));
-        this._contentLoading = true;
-        this._content = await getFromDb(createDbPath(`eventsContents/${this.uid}`, 'content'));
-        this.dispatchEvent(new CustomEvent('set-meta-description', {detail: this._content}));
-        this._contentLoading = false;
-      } else {
-        this.dispatchEvent(new CustomEvent('event-not-found', {composed: true}))
-      }
+  async willUpdate(changedProperties) {
+    if (changedProperties.has('eventData') && this.eventData.event) {
+      const eventJsonLd = createEventJsonLd(this.eventData.event);
+      this.dispatchEvent(new CustomEvent('set-json-ld', {detail: eventJsonLd}));
+      this._content = await getFromDb(createDbPath(`eventsContents/${this.eventData.uid}`, 'content'));
+      this.dispatchEvent(new CustomEvent('set-meta-description', {detail: this._content}));
+      this._contentReady = true;
     }
   }
   async updateData(path, data) {
-    return updateData('events/events', `${this.uid}.${path}`, data);
+    return updateData('events/events', `${this.eventData.uid}.${path}`, data);
   }
   render() {
     return html`
-      <hg-banner
-        .uid=${this._dataReady && !this._event ? 'event-not-found' : undefined}
-        .path=${this._dataReady && this._event ? createDbPath('events/events', this.uid) : undefined}
-        .noImage=${this._dataReady && !this._event}
-        .noSubheading=${true} 
-        .useTitleAsHeading=${this._dataReady && this._event}>
-      </hg-banner>
       <div class="container">
-        ${!(this._dataReady && this._event) ? '' : html`
+        ${!this.eventData.event ? '' : html`
           <div class="content">
             <div class="header">
               <div class="date">
-                ${moment().isBefore(this._event.date, 'day')
+                ${isEventUpcoming(this.eventData.event)
                   ? 'Odbędzie się'
-                  : moment().isSame(this._event.date, 'day')
+                  : isEventToday(this.eventData.event)
                     ? 'Dzisiaj'
                     : 'Odbyło się'}
-                ${this._event.date.split('-').reverse().join(' / ')}
+                ${this.eventData.event.date.split('-').reverse().join(' / ')}
               </div>
               ${!this._loggedIn ? '' : until(import('./hg-event/hg-event-edit-date.js').then(() => {
                 return html`
                   <div class="cms controls smaller-text">
                     <hg-event-edit-date 
-                      .date=${this._event.date}
-                      @save=${(event) => {
-                        this._event.date = event.detail;
+                      .date=${this.eventData.event.date}
+                      @save=${({detail: date}) => {
+                        this.eventData.event.date = date;
                         this.requestUpdate();
-                        this.updateData('date', event.detail);
+                        this.updateData('date', date);
                       }}>
                     </hg-event-edit-date>
                     <mwc-formfield-fixed .label=${'Publiczne'}>
                       <mwc-switch
                         id="public"
-                        .selected=${this._event.public}
+                        .selected=${this.eventData.event.public}
                         @click=${() => {
                           this.updateData('public', this.shadowRoot.getElementById('public').selected)
                         }}>
                       </mwc-switch>
                     </mwc-formfield-fixed>
-                    <div title="${moment().isAfter(this._event.date, 'day') ? 'Nie można promować minionego wydarzenia' : ''}">
+                    <div title=${isEventPast(this.eventData.event) ? 'Nie można promować minionego wydarzenia' : ''}>
                       <mwc-formfield-fixed .label=${'Promuj'}>
                         <mwc-switch
                           id="promote"
-                          .selected=${moment().isSameOrBefore(this._event.date, 'day') && this._promotedEvent === this.uid}
-                          .disabled=${moment().isAfter(this._event.date, 'day')}
+                          .selected=${isEventUpcoming(this.eventData.event) && this.promotedEventData?.uid === this.eventData.uid}
+                          .disabled=${isEventPast(this.eventData.event)}
                           @click=${() => {
-                            updateInDb(createDbPath('events/promoted', 'uid'), this.shadowRoot.getElementById('promote').selected ? this.uid : null);
+                            updateInDb(createDbPath('events/promoted', 'uid'), this.shadowRoot.getElementById('promote').selected ? this.eventData.uid : null);
                           }}>
                         </mwc-switch>
                       </mwc-formfield-fixed>
@@ -177,24 +155,32 @@ export class HgEvent extends LitElement {
               }))}
             </div>
             <div class="divider"></div>
-            ${this._contentLoading ? '' : html`<hg-editable-text 
-              .ready=${true}
-              .rich=${true}
-              multiline
-              id="text"
-              .text=${this._content}
-              @save=${({detail: text}) => {
-                this._content = text;
-                updateInDb(createDbPath(`eventsContents/${this.uid}`, 'content'), text);
-                const cleanedText = cleanTextForMetaDescription(text);
-                updateInDb(createDbPath(`eventsData/${this.uid}`, 'seo.description'), cleanedText);
-                this.dispatchEvent(new CustomEvent('set-meta-description', {detail: cleanedText}));
-              }}>
-              <div class="ck-content smaller-text"></div>
-            </hg-editable-text>`}
+            ${this._contentReady
+              ? html`
+                <hg-editable-text 
+                  multiline
+                  id="text"
+                  .ready=${true}
+                  .rich=${true}
+                  .text=${this._content}
+                  @save=${({detail: text}) => {
+                    this._content = text;
+                    updateInDb(createDbPath(`eventsContents/${this.eventData.uid}`, 'content'), text);
+                    const cleanedText = cleanTextForMetaDescription(text);
+                    updateInDb(createDbPath(`eventsData/${this.eventData.uid}`, 'seo.description'), cleanedText);
+                    this.dispatchEvent(new CustomEvent('set-meta-description', {detail: cleanedText}));
+                  }}>
+                  <div class="ck-content smaller-text"></div>
+                </hg-editable-text>
+              `
+              : html`<hg-page-loading></hg-page-loading>`
+            }
           </div>
         `}
-        ${!this._dataReady ? '' : html`<hg-events-sidebar .selected=${this.uid} .events=${this._events}></hg-events-sidebar>`}
+        <hg-events-sidebar
+          .selected=${this.eventData.uid}
+          .events=${this.eventsList}>
+        </hg-events-sidebar>
       </div>
     `;
   }

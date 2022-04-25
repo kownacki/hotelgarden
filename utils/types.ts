@@ -31,6 +31,11 @@ export interface EventsListItem {
 
 export type EventsList = Record<EventUid, EventsListItem>;
 
+export interface EventData {
+  uid: EventUid,
+  event?: EventsListItem,
+}
+
 export interface EventDbData {
   seo?: {
     description?: string,
