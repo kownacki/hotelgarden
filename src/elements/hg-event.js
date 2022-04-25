@@ -10,7 +10,7 @@ import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
 import {createDbPath, getFromDb, updateInDb} from '../utils/database.js';
 import {cleanTextForMetaDescription, updateData} from '../utils.js';
 import '../edit/hg-editable-text.js';
-import './hg-event/hg-events-sidebar.js';
+import './hg-event/hg-event-sidebar.js';
 import './hg-page/hg-page-loading.js';
 
 export class HgEvent extends LitElement {
@@ -71,7 +71,7 @@ export class HgEvent extends LitElement {
         padding: 0;
         margin: auto;
       }
-      hg-events-sidebar {
+      hg-event-sidebar {
         display: block;
         margin: 40px auto 0;
       }
@@ -176,10 +176,10 @@ export class HgEvent extends LitElement {
             }
           </div>
         `}
-        <hg-events-sidebar
+        <hg-event-sidebar
           .selected=${this.eventData.uid}
           .events=${this.eventsList}>
-        </hg-events-sidebar>
+        </hg-event-sidebar>
       </div>
     `;
   }
