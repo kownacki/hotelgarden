@@ -148,13 +148,12 @@ export class HgPage extends LitElement {
       </hg-page-banner>
       ${this.contentType === ContentType.EVENT
         ? until(import('./hg-event.js').then(() => {
-          return !this.eventDataReady ? html`<hg-page-loading></hg-page-loading>`: html`
+          return (this.eventDataReady && this.promotedEventLoaded) ? html`
             <hg-event
               class="page"
               .eventData=${this.eventData}
               .eventsList=${this.eventsList}
               .promotedEventData=${this.promotedEventData}
-              .promotedEventLoaded=${this.promotedEventLoaded}
               @set-meta-description=${({detail: text}) => {
                 this._handleSetMetaDescription(text);
               }}
@@ -162,7 +161,7 @@ export class HgPage extends LitElement {
                 this._handleSetJsonLd(jsonLd);
               }}>
             </hg-event>
-          `;
+          ` : html`<hg-page-loading></hg-page-loading>`;
         }), html`<hg-page-loading></hg-page-loading>`)
         : html`
           ${!this.pageUid ? '' : until(getContentElement(

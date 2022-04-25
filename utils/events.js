@@ -13,9 +13,19 @@ export const isEventTodayOrUpcoming = (event) => {
 export const isEventPast = (event) => {
     return !isEventTodayOrUpcoming(event);
 };
+export const getWhenEventHappens = (event) => {
+    return isEventUpcoming(event)
+        ? 'Odbędzie się'
+        : isEventToday(event)
+            ? 'Dzisiaj'
+            : 'Odbyło się';
+};
+export const getEventFormattedDate = (event) => {
+    return event.date.split('-').reverse().join(' / ');
+};
 export const getPromotedEventData = (promotedEventUid, eventsList) => {
-    const promotedEvent = eventsList === null || eventsList === void 0 ? void 0 : eventsList[promotedEventUid];
-    return promotedEvent && isEventUpcoming(promotedEvent)
+    const promotedEvent = promotedEventUid && eventsList[promotedEventUid];
+    return promotedEvent && isEventTodayOrUpcoming(promotedEvent)
         ? {
             uid: promotedEventUid,
             event: promotedEvent,
