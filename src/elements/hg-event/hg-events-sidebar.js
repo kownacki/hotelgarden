@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit';
 import {repeat} from 'lit/directives/repeat.js';
-import {splitEvents, assignKeys} from '../../../utils.js';
-import sharedStyles from '../../../styles/shared-styles.js';
+import {splitEvents, assignKeys} from '../../utils.js';
+import sharedStyles from '../../styles/shared-styles.js';
 
 export class HgEventsSidebar extends LitElement {
   static properties = {

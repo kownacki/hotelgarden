@@ -147,7 +147,7 @@ export class HgPage extends LitElement {
         .noBannerImage=${this.noBannerImage}>
       </hg-page-banner>
       ${this.contentType === ContentType.EVENT
-        ? until(import('../pages/events/hg-event.js').then(() => {
+        ? until(import('./hg-event.js').then(() => {
           return !this.eventDataReady ? html`<hg-page-loading></hg-page-loading>`: html`
             <hg-event
               class="page"

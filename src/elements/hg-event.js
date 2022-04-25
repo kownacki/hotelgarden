@@ -1,18 +1,17 @@
 import {LitElement, html, css} from 'lit';
 import {until} from 'lit/directives/until.js';
 import '@material/mwc-switch';
-import {isEventUpcoming, isEventPast, isEventToday} from '../../../utils/events.js';
-import {createEventJsonLd} from '../../../utils/seo.js';
-import sharedStyles from '../../styles/shared-styles.js';
-import ckContent from '../../styles/ck-content.js'
-import '../../utils/fixes/mwc-formfield-fixed.js';
-import {FirebaseAuthController} from '../../utils/FirebaseAuthController.js';
-import {createDbPath, getFromDb, updateInDb} from '../../utils/database.js';
-import {cleanTextForMetaDescription, updateData} from '../../utils.js';
-import '../../edit/hg-editable-text.js';
-import '../../elements/hg-banner.js';
-import '../../elements/hg-page/hg-page-loading.js';
-import './hg-events/hg-events-sidebar.js';
+import {isEventUpcoming, isEventPast, isEventToday} from '../../utils/events.js';
+import {createEventJsonLd} from '../../utils/seo.js';
+import sharedStyles from '../styles/shared-styles.js';
+import ckContent from '../styles/ck-content.js'
+import '../utils/fixes/mwc-formfield-fixed.js';
+import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
+import {createDbPath, getFromDb, updateInDb} from '../utils/database.js';
+import {cleanTextForMetaDescription, updateData} from '../utils.js';
+import '../edit/hg-editable-text.js';
+import './hg-event/hg-events-sidebar.js';
+import './hg-page/hg-page-loading.js';
 
 export class HgEvent extends LitElement {
   _firebaseAuth;
