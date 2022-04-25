@@ -17,6 +17,7 @@ export default class HgEditableText extends LitElement {
     richConfig: String, // 'mosaic' / 'intro' / default full
     multiline: {type: Boolean, reflect: true},
     float: {type: Boolean, reflect: true},
+    editingEnabled: Boolean,
     _editable: Element,
     _editor: Element,
     _editorSet: Boolean,
@@ -65,6 +66,7 @@ export default class HgEditableText extends LitElement {
   `];
   constructor() {
     super();
+    this.editingEnabled = true;
     this._firebaseAuth = new FirebaseAuthController(this, (loggedIn) => {
       this._loggedIn = loggedIn;
     });
@@ -163,8 +165,8 @@ export default class HgEditableText extends LitElement {
       this._editable.innerHTML = this.text || (this.rich ? '<p></p>' : '');
       this.text ? this.setAttribute('not-empty', '') : this.removeAttribute('not-empty');
     }
-    if (changedProperties.has('_editable') || (changedProperties.has('_loggedIn'))) {
-      if (this._editable && this._loggedIn) {
+    if (changedProperties.has('_editable') || changedProperties.has('_loggedIn') || changedProperties.has('editingEnabled')) {
+      if (this._editable && this._loggedIn && this.editingEnabled) {
         if (!this._editorSet) {
           this._editorSet = true;
           this.setEditor();
@@ -173,19 +175,20 @@ export default class HgEditableText extends LitElement {
     }
     if (changedProperties.has('disabled')
       || changedProperties.has('ready')
+      || changedProperties.has('editingEnabled')
       || changedProperties.has('_editable')
       || changedProperties.has('_loggedIn')
     ) {
       if (this._editable) {
         //todo empty textfield has height 0 when contenteditable set to false
-        this._editable.setAttribute('contenteditable', !(this.disabled || !this.ready || !this._loggedIn));
+        this._editable.setAttribute('contenteditable', !this.disabled && this.ready && this._loggedIn && this.editingEnabled);
       }
     }
   }
   render() {
     return html`
       <slot id="text"></slot>
-      ${!this._loggedIn ? '' : html`
+      ${!(this._loggedIn && this.editingEnabled) ? '' : html`
         <div class="cms edit" ?hidden=${!this.showControls}>
           <hg-cms-buttons-container>
             <mwc-button
