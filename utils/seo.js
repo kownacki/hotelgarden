@@ -11,17 +11,17 @@ export const getPageTitle = (pageUid, seoConfig) => {
     const seoTitle = pageUid === '404' ? null : (_b = (_a = seoConfig.urls) === null || _a === void 0 ? void 0 : _a[pagesStaticData[pageUid].path]) === null || _b === void 0 ? void 0 : _b.title;
     return seoTitle || defaultTitle;
 };
-export const getEventTitle = (eventUid, eventsList) => {
+export const getEventTitle = (event) => {
     //todo block events without title
-    return eventsList[eventUid].title || 'Wydarzenie bez tytułu';
+    return event.title || 'Wydarzenie bez tytułu';
 };
 // path to page or event must be valid
 const getPageOrEventTitle = (path, seoConfig, eventsList) => {
     let title;
-    //todo co z 'Nie znaleziono wydarzenia'?
     if (isEventPath(path)) {
         const eventUid = getEventUid(path);
-        title = getEventTitle(eventUid, eventsList);
+        const event = eventsList[eventUid];
+        title = getEventTitle(event);
     }
     else {
         const pageUid = staticPathToPageUid[path];
@@ -34,7 +34,8 @@ export const createFullPageTitle = (pageUid, seoConfig) => {
     return appendSuffixToTitle(pageTitle, seoConfig);
 };
 export const createFullEventTitle = (eventUid, seoConfig, eventsList) => {
-    const eventTitle = getEventTitle(eventUid, eventsList);
+    const event = eventsList[eventUid];
+    const eventTitle = getEventTitle(event);
     return appendSuffixToTitle(eventTitle, seoConfig);
 };
 export const createFullValidPageOrEventTitle = (path, seoConfig, eventsList) => {

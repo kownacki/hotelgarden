@@ -1,11 +1,12 @@
 import {LitElement, html, css} from 'lit';
 import {until} from 'lit/directives/until.js';
 import {html as staticHtml, unsafeStatic} from 'lit/static-html.js';
-import {getDefaultTitle, appendSuffixToTitle} from '../../utils/seo.js';
+import {getDefaultTitle, appendSuffixToTitle, getEventTitle} from '../../utils/seo.js';
 import {createDbPath, getFromDb} from '../utils/database.js';
 import {setDocumentTitle, setMetaDescription, setStructuredData, scrollIntoView, sleep} from '../utils.js';
-import '../elements/hg-banner.js';
 import '../elements/hg-footer.js';
+import {ContentType} from '../hg-app.js';
+import './hg-page/hg-page-banner.js';
 import './hg-page/hg-page-loading.js';
 
 // todo put hg-event in elements
@@ -53,11 +54,15 @@ const getContentElement = async (pageUid, config, handleSetMetaDescription, hand
 
 export class HgPage extends LitElement {
   static properties = {
-    event: Boolean,
     path: String,
-    uid: String,
+    contentType: String, // ContentType
+    pageUid: String, // PageUid
+    eventData: Object, // EventData | undefined
+    eventsList: Object, // EventsList | undefined
+    eventDataReady: Boolean,
+    promotedEventData: Object, // EventData | undefined
+    promotedEventLoaded: Boolean,
     noBannerImage: {type: Boolean, reflect: true, attribute: 'no-banner-image'},
-    eventTitle: String,
     _initialPage: Boolean,
     _defaultTitle: String,
     _config: Object,
@@ -81,12 +86,25 @@ export class HgPage extends LitElement {
       this._config = await getFromDb(createDbPath('_config/client')) || {};
     })();
   }
+  _getEventTitle(eventData) {
+    return eventData.event
+      ? getEventTitle(eventData.event)
+      : 'Nie znaleziono wydarzenia';
+  }
   willUpdate(changedProperties) {
-    if (changedProperties.has('uid') && changedProperties.get('uid') !== undefined) {
-      this._initialPage = false;
+    if (changedProperties.has('path')) {
+      if (this.contentType === ContentType.PAGE) {
+        this._defaultTitle = getDefaultTitle(this.pageUid);
+      }
     }
-    if (changedProperties.has('uid') && !this.event) {
-      this._defaultTitle = getDefaultTitle(this.uid);
+    if (changedProperties.has('path') || changedProperties.has('eventDataReady')) {
+      // Check if it's still on an event page
+      if (this.contentType === ContentType.EVENT && this.eventDataReady) {
+        this._defaultTitle = this._getEventTitle(this.eventData);
+      }
+    }
+    if (changedProperties.has('path') && changedProperties.get('path') !== undefined) {
+      this._initialPage = false;
     }
     if (changedProperties.has('_defaultTitle') || changedProperties.has('_config')) {
       //todo maybe add reloading config?
@@ -119,26 +137,36 @@ export class HgPage extends LitElement {
           scrollIntoView(element);
         }
       }}></app-location>
-      ${this.event
-        ? until(import('../pages/events/hg-event.js').then(() => html`
-          <hg-event
-            .uid=${this.uid}
-            class="page"
-            @title-loaded=${({detail: title}) => {
-              this._defaultTitle = title || 'Wydarzenie bez tytułu';
-            }}
-            @set-meta-description=${({detail: text}) => {
-              this._handleSetMetaDescription(text);
-            }}
-            @set-json-ld=${({detail: jsonLd}) => {
-              this._handleSetJsonLd(jsonLd);
-            }}>
-          </hg-event>
-        `), html`<hg-page-loading></hg-page-loading>`)
+      <hg-page-banner
+        .path=${this.path}
+        .contentType=${this.contentType}
+        .pageUid=${this.pageUid}
+        .eventData=${this.eventData}
+        .eventDataReady=${this.eventDataReady}
+        .defaultTitle=${this._defaultTitle}
+        .noBannerImage=${this.noBannerImage}>
+      </hg-page-banner>
+      ${this.contentType === ContentType.EVENT
+        ? until(import('../pages/events/hg-event.js').then(() => {
+          return !this.eventDataReady ? html`<hg-page-loading></hg-page-loading>`: html`
+            <hg-event
+              class="page"
+              .eventData=${this.eventData}
+              .eventsList=${this.eventsList}
+              .promotedEventData=${this.promotedEventData}
+              .promotedEventLoaded=${this.promotedEventLoaded}
+              @set-meta-description=${({detail: text}) => {
+                this._handleSetMetaDescription(text);
+              }}
+              @set-json-ld=${({detail: jsonLd}) => {
+                this._handleSetJsonLd(jsonLd);
+              }}>
+            </hg-event>
+          `;
+        }), html`<hg-page-loading></hg-page-loading>`)
         : html`
-          <hg-banner .noImage=${this.noBannerImage} .uid=${this.uid}></hg-banner>
-          ${!this.uid ? '' : until(getContentElement(
-            this.uid,
+          ${!this.pageUid ? '' : until(getContentElement(
+            this.pageUid,
             this._config,
             (text) => this._handleSetMetaDescription(text),
             (jsonLd) => this._handleSetJsonLd(jsonLd),

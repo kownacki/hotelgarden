@@ -5,6 +5,7 @@ import './elements/hg-header.js';
 import './elements/hg-page.js';
 import {sleep} from './utils.js';
 import {authDeferred, createDbPath, getFromDb} from './utils/database.js';
+import {getPromotedEventData} from '../utils/events.js';
 
 // For index.html !
 authDeferred.then(({auth, onAuthStateChanged}) => {
@@ -14,13 +15,21 @@ authDeferred.then(({auth, onAuthStateChanged}) => {
   });
 });
 
+export const ContentType = {
+  PAGE: 'page',
+  EVENT: 'event',
+};
+
 export class HgApp extends LitElement {
   static properties = {
     _path: String,
-    _event: String,
-    _uid: String,
+    _contentType: String, // ContentType
+    _pageUid: String, // PageUid | EventUid (depending on content type)
+    _eventsList: Object, // EventsList | undefined
+    _eventData: Object, // EventData | undefined
+    _eventDataReady: Boolean,
     _noBannerImage: Boolean,
-    _promotedEvent: Object,
+    _promotedEventData: Object, // EventData | undefined
     _promotedEventLoaded: Boolean,
     _enableDrawer: Boolean,
   };
@@ -32,19 +41,6 @@ export class HgApp extends LitElement {
     const pathString = window.location.pathname;
     this._path = (pathString.slice(-1) === '/' && pathString.length !== 1) ? pathString.slice(0, -1) : pathString;
     this._enableDrawer = (window.innerWidth < 1100);
-
-    (async () => {
-      const promotedEventUid = await getFromDb(createDbPath('events/promoted', 'uid'));
-      if (promotedEventUid) {
-        const eventsList = await getFromDb(createDbPath('events/events'));
-        this._promotedEvent = {
-          uid: promotedEventUid,
-          title: _.get(promotedEventUid + '.title', eventsList),
-          date: _.get(promotedEventUid + '.date', eventsList),
-        };
-      }
-      this._promotedEventLoaded = true;
-    })();
   }
   firstUpdated() {
     window.addEventListener('resize', _.throttle(100, () => {
@@ -55,15 +51,43 @@ export class HgApp extends LitElement {
       }
     }));
   }
+  async _getPromotedEvent(eventsListPromise) {
+    const promotedEventUid = await getFromDb(createDbPath('events/promoted', 'uid'));
+    const eventsList = await eventsListPromise;
+    this._promotedEventData = getPromotedEventData(promotedEventUid, eventsList);
+    this._promotedEventLoaded = true;
+  }
+  async _getEventData(eventsListPromise) {
+    this._eventDataReady = false;
+    const uid = getEventUid(this._path);
+    this._eventsList = await eventsListPromise;
+    const event = this._eventsList[uid];
+    this._eventData = {
+      uid,
+      event,
+    };
+    this._eventDataReady = true;
+    this._noBannerImage = !event;
+  }
+  _getPageData() {
+    this._pageUid = staticPathToPageUid[this._path] || '404';
+    this._noBannerImage = ['contact', 'gallery', '404'].includes(this._pageUid);
+  }
   willUpdate(changedProperties) {
-    if (isEventPath(this._path)) {
-      this._event = true;
-      this._uid = getEventUid(this._path);
-      this._noBannerImage = false;
-    } else {
-      this._event = false;
-      this._uid = staticPathToPageUid[this._path] || '404';
-      this._noBannerImage = _.includes(this._uid, ['contact', 'gallery', '404']);
+    if (changedProperties.has('_path')) {
+      (async () => {
+        const eventsListPromise = getFromDb(createDbPath('events/events'));
+        this._getPromotedEvent(eventsListPromise);
+
+        if (isEventPath(this._path)) {
+          this._contentType = ContentType.EVENT;
+          this._getEventData(eventsListPromise);
+        } else {
+          this._contentType = ContentType.PAGE;
+          this._eventData = undefined;
+          this._getPageData();
+        }
+      })();
     }
   }
   updated(changedProperties) {
@@ -84,7 +108,7 @@ export class HgApp extends LitElement {
         id="header"
         .noBannerImage=${this._noBannerImage}
         .selected=${this._path}
-        .promotedEvent=${this._promotedEvent}
+        .promotedEventData=${this._promotedEventData}
         .promotedEventLoaded=${this._promotedEventLoaded}
         @open-drawer=${async () => {
           if (!this._drawer) {
@@ -96,18 +120,22 @@ export class HgApp extends LitElement {
         }}>
       </hg-header>
       <hg-page
-        .event=${this._event}
         .path=${this._path}
-        .uid=${this._uid}
-        .noBannerImage=${this._noBannerImage}
-        @event-not-found=${() => this._noBannerImage = true}>
+        .contentType=${this._contentType}
+        .pageUid=${this._pageUid}
+        .eventData=${this._eventData}
+        .eventsList=${this._eventsList}
+        .eventDataReady=${this._eventDataReady}
+        .promotedEventData=${this._promotedEventData}
+        .promotedEventLoaded=${this._promotedEventLoaded}
+        .noBannerImage=${this._noBannerImage}>
       </hg-page>
       <!--todo somehow prevent scrolling parent when on android -->
       ${!this._promotedEventLoaded || !this._enableDrawer ? '' : html`
         <hg-drawer
           id="drawer"
           .selected=${this._path}
-          .promotedEvent=${this._promotedEvent}>
+          .promotedEventData=${this._promotedEventData}>
         </hg-drawer>
       `}
     `;

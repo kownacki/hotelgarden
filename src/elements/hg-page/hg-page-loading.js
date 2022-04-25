@@ -7,7 +7,7 @@ export class HgPageLoading extends LitElement {
   static styles = css`
     :host {
       display: block;
-      height: 500px;
+      height: 300px;
     }
     mkwc-loading-dots {
       height: 100%;
