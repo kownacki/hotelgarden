@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit';
-import {links} from '../../../utils/urlStructure.js';
+import {createEventPath, links} from '../../../utils/urlStructure.js';
 import {staticProp} from '../../utils.js';
 import './hg-drawer-close.js';
 import './hg-drawer-item.js';
@@ -7,8 +7,7 @@ import './hg-drawer-item.js';
 export class HgDrawerContent extends LitElement {
   static properties = {
     selected: String,
-    promotedEvent: Object,
-    _nowOpened: HTMLElement,
+    promotedEventData: Object, // EventData | undefined
   };
   static styles = css`
     :host {
@@ -50,16 +49,17 @@ export class HgDrawerContent extends LitElement {
       </div>
       <nav>
         <ul>
-          ${!this.promotedEvent || moment().isAfter(this.promotedEvent.date, 'day') ? ''
+          ${!this.promotedEventData
+            ? ''
             : html`<li class="event">
               <hg-drawer-item .link=${staticProp({
-                path: '/wydarzenia/' + this.promotedEvent.uid,
-                name: this.promotedEvent.title,
+                path: createEventPath(this.promotedEventData.uid),
+                name: this.promotedEventData.event.title,
               })}>
               </hg-drawer-item>
             </li>`
           }
-          ${_.map((link) => html`
+          ${links.map((link) => html`
             <li>
               <hg-drawer-item 
                 .link=${link} 
@@ -67,7 +67,7 @@ export class HgDrawerContent extends LitElement {
                 .opened=${_.some(['path', this.selected], link.sublinks)}>
               </hg-drawer-item>        
             </li>
-          `, links)}
+          `)}
         </ul>
       </nav>
     `;

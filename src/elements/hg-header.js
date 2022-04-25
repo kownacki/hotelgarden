@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit';
-import {isEventPath, staticPathToPageUid, pagesStaticData, links} from '../../utils/urlStructure.js';
+import {isEventPath, staticPathToPageUid, pagesStaticData, links, createEventPath} from '../../utils/urlStructure.js';
 import './ui/hg-icon-button.js';
 import './hg-header/hg-header-subnav.js';
 import './hg-header/hg-header-logo.js';
@@ -10,7 +10,7 @@ export class HgHeader extends LitElement {
     noBannerImage: {type: Boolean, reflect: true, attribute: 'no-banner-image'},
     scrolledDown: {type: Boolean, reflect: true, attribute: 'scrolled-down'},
     selected: String,
-    promotedEvent: Object,
+    promotedEventData: Object, // EventData | undefined
     promotedEventLoaded: Boolean,
   };
   static styles = css`
@@ -156,22 +156,29 @@ export class HgHeader extends LitElement {
         <hg-header-logo .scrolledDown=${this.scrolledDown} .noBannerImage=${this.noBannerImage}></hg-header-logo>
         <nav>
           <ul>
-            ${!this.promotedEvent || moment().isAfter(this.promotedEvent.date, 'day') ? '' 
-              : html`<li class="event"><a href="/wydarzenia/${this.promotedEvent.uid}">${this.promotedEvent.title}</a></li>`}
-            ${!this.promotedEventLoaded ? '' :_.map((link) => html`
-              <li>
-                <a 
-                  href="${link.path}"
-                  ?selected=${link.path === this.selected
-                    || (link.path === '/wydarzenia' && (this.selected === '/wydarzenia' || isEventPath(this.selected)))
-                    || _.includes(staticPathToPageUid[this.selected], link.sublinks)}>
-                  ${link.name}
-                </a>
-                ${!link.sublinks ? '' : html`
-                  <hg-header-subnav .links=${link.sublinks} .selected=${this.selected}></hg-header-subnav>
-                `}
-              </li>
-            `, links)}
+            ${!this.promotedEventLoaded ? '' : html`
+              ${!this.promotedEventData ? '' : html`
+                <li class="event">
+                  <a href=${createEventPath(this.promotedEventData.uid)}>
+                    ${this.promotedEventData.event.title}
+                  </a>
+                </li>
+              `}
+              ${links.map((link) => html`
+                <li>
+                  <a 
+                    href="${link.path}"
+                    ?selected=${link.path === this.selected
+                      || (link.path === '/wydarzenia' && (this.selected === '/wydarzenia' || isEventPath(this.selected)))
+                      || _.includes(staticPathToPageUid[this.selected], link.sublinks)}>
+                    ${link.name}
+                  </a>
+                  ${!link.sublinks ? '' : html`
+                    <hg-header-subnav .links=${link.sublinks} .selected=${this.selected}></hg-header-subnav>
+                  `}
+                </li>
+              `)}
+            `}
           </ul>
           <hg-book-order-button
             .order=${(staticPathToPageUid[this.selected] && (pagesStaticData[staticPathToPageUid[this.selected]].dir === 'restaurant'))

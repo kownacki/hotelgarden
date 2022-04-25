@@ -5,7 +5,7 @@ import './hg-drawer/hg-drawer-content.js';
 export class HgDrawer extends LitElement {
   static properties = {
     selected: String,
-    promotedEvent: Object,
+    promotedEventData: Object, // EventData | undefined
     // observables
     drawer: Element,
     _drawerOnceOpened: Boolean
@@ -32,7 +32,7 @@ export class HgDrawer extends LitElement {
           : html`
             <hg-drawer-content
               .selected=${this.selected}
-              .promotedEvent=${this.promotedEvent}
+              .promotedEventData=${this.promotedEventData}
               @close-drawer=${() => this.shadowRoot.getElementById('drawer').close()}>
             </hg-drawer-content>
           `}
