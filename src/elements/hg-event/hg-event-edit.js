@@ -1,6 +1,5 @@
 import {LitElement, html, css} from 'lit';
 import '@material/mwc-snackbar';
-import '@material/mwc-switch';
 import {isEventUpcoming, isEventPast} from '../../../utils/events.js';
 import sharedStyles from '../../styles/shared-styles.js';
 import './hg-event-edit/hg-event-edit-date.js';

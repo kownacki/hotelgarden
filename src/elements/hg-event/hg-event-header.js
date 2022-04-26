@@ -1,5 +1,4 @@
 import {LitElement, html, css} from 'lit';
-import '@material/mwc-switch';
 import {until} from 'lit/directives/until.js';
 import {getWhenEventHappens, getEventFormattedDate} from '../../../utils/events.js';
 import sharedStyles from '../../styles/shared-styles.js';
