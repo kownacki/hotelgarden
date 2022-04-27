@@ -227,6 +227,7 @@ export const createIndex = (
   </hg-app>
   
   <script type="module">
+    window.environment = 'production';
     window.initialData = {
       eventsList: ${eventsListSerialized},
       promotedEventUid: ${promotedEventUidSerialized},

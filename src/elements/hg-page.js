@@ -63,7 +63,7 @@ export class HgPage extends LitElement {
     promotedEventData: Object, // EventData | undefined
     promotedEventLoaded: Boolean,
     noBannerImage: {type: Boolean, reflect: true, attribute: 'no-banner-image'},
-    _initialPage: Boolean,
+    initialPage: Boolean,
     _defaultTitle: String,
     _config: Object,
   };
@@ -81,7 +81,6 @@ export class HgPage extends LitElement {
   `;
   constructor() {
     super();
-    this._initialPage = true;
     (async () => {
       this._config = await getFromDb(createDbPath('_config/client')) || {};
     })();
@@ -103,12 +102,9 @@ export class HgPage extends LitElement {
         this._defaultTitle = this._getEventTitle(this.eventData);
       }
     }
-    if (changedProperties.has('path') && changedProperties.get('path') !== undefined) {
-      this._initialPage = false;
-    }
     if (changedProperties.has('_defaultTitle') || changedProperties.has('_config')) {
       //todo maybe add reloading config?
-      if (!this._initialPage && this._defaultTitle && this._config) {
+      if (!this.initialPage && this._defaultTitle && this._config) {
         const seoPageTitle = this._config.seo.urls?.[this.path]?.title;
         const fullTitle = appendSuffixToTitle(seoPageTitle || this._defaultTitle, this._config.seo);
         setDocumentTitle(fullTitle);
@@ -116,13 +112,13 @@ export class HgPage extends LitElement {
     }
   }
   _handleSetMetaDescription(text) {
-    if (!this._initialPage) {
+    if (!this.initialPage) {
       // todo on meta description change też się nie updatuje a powinno
       setMetaDescription(text);
     }
   }
   _handleSetJsonLd(jsonLd) {
-    if (!this._initialPage) {
+    if (!this.initialPage) {
       // todo on set structured data change też się nie updatuje a powinno
       setStructuredData(jsonLd);
     }

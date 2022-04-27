@@ -82,6 +82,7 @@ const jsResources = [
 
 
 const getIndexHtml = (
+  production: boolean,
   {title, description, jsonLd}: {title?: boolean, description?: boolean, jsonLd?: boolean} = {},
   {eventsList, promotedEventUid, banner}: {eventsList?: boolean, promotedEventUid?: boolean, banner?: boolean} = {},
 ) => `
@@ -161,6 +162,7 @@ const getIndexHtml = (
   </${namePrefix}-app>
   
   <script type="module">
+    window.environment = '${production ? 'production' : 'development'}';
     window.initialData = {
       eventsList: ${eventsList ? createPlaceholder('eventsListSerialized') : undefined},
       promotedEventUid: ${promotedEventUid ? createPlaceholder('promotedEventUidSerialized') : undefined},
@@ -183,9 +185,10 @@ const getIndexHtml = (
 </html>
 `;
 
-fs.writeFileSync('index.html', getIndexHtml());
+fs.writeFileSync('index.html', getIndexHtml(false));
 
 const indexWithPlaceholders = getIndexHtml(
+  true,
   {title: true, description: true, jsonLd: true},
   {eventsList: true, promotedEventUid: true, banner: true},
 ).replace(/\\/g, '\\\\');
