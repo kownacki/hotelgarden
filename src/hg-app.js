@@ -3,7 +3,7 @@ import '@polymer/app-route/app-location.js';
 import {getEventUid, isEventPath, staticPathToPageUid} from '../utils/urlStructure.js';
 import './elements/hg-header.js';
 import './elements/hg-page.js';
-import {sleep} from './utils.js';
+import {sleep, isProductionEnvironment} from './utils.js';
 import {authDeferred, createDbPath, getFromDb} from './utils/database.js';
 import {getPromotedEventData} from '../utils/events.js';
 
@@ -38,7 +38,8 @@ export class HgApp extends LitElement {
   `;
   constructor() {
     super();
-    this._initialPage = true;
+    // In development there is no upfront data from server, so disable this option.
+    this._initialPage = isProductionEnvironment();
 
     const pathString = window.location.pathname;
     this._path = (pathString.slice(-1) === '/' && pathString.length !== 1) ? pathString.slice(0, -1) : pathString;
@@ -52,6 +53,9 @@ export class HgApp extends LitElement {
         this.shadowRoot.getElementById('drawer')?.drawer?.close();
       }
     }));
+  }
+  _getPageUid(path) {
+    return staticPathToPageUid[path] || '404';
   }
   _getDataPromises(initialPage, initialData) {
     if (initialPage) {
@@ -75,7 +79,7 @@ export class HgApp extends LitElement {
     return await dataPromises.eventsList;
   }
   _getPageData(path) {
-    const pageUid = staticPathToPageUid[path] || '404';
+    const pageUid = this._getPageUid(path);
     return {
       pageUid,
       noBannerImage: ['contact', 'gallery', '404'].includes(pageUid),
@@ -99,8 +103,7 @@ export class HgApp extends LitElement {
     }
     if (changedProperties.has('_path')) {
       this._contentType = isEventPath(this._path) ? ContentType.EVENT : ContentType.PAGE;
-      const initialPage = this._initialPage && window.environment === 'production';
-      const dataPromises = this._getDataPromises(initialPage, window.initialData);
+      const dataPromises = this._getDataPromises(this._initialPage, window.initialData);
 
       (async () => {
         this._promotedEventData = await this._getPromotedEventData(dataPromises);

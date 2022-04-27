@@ -4,6 +4,14 @@ import {createDbPath, updateInDb} from './utils/database.js';
 
 export const headerHeight = 59;
 
+export const isProductionEnvironment = () => {
+  return window.environment === 'production';
+};
+
+export const isDevelopmentEnvironment = () => {
+  return window.environment === 'development';
+};
+
 export const hyphenate = _.flow(
   _.replace(/'/g, ''),
   _.toLower,

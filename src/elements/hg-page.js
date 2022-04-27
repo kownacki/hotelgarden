@@ -140,7 +140,8 @@ export class HgPage extends LitElement {
         .eventData=${this.eventData}
         .eventDataReady=${this.eventDataReady}
         .defaultTitle=${this._defaultTitle}
-        .noBannerImage=${this.noBannerImage}>
+        .noBannerImage=${this.noBannerImage}
+        .initialPage=${this.initialPage}>
       </hg-page-banner>
       ${this.contentType === ContentType.EVENT
         ? until(import('./hg-event.js').then(() => {

@@ -14,6 +14,7 @@ export class HgPageBanner extends LitElement {
     eventDataReady: Boolean,
     defaultTitle: String,
     noBannerImage: Boolean,
+    initialPage: Boolean,
     _bannerData: Object, // {image, title} | {image, heading} | undefined
     _bannerReady: Boolean,
   };
@@ -25,7 +26,7 @@ export class HgPageBanner extends LitElement {
       this,
       async (path) => {
         if (this.contentType === ContentType.PAGE) {
-          return await getFromDb(path) || {}
+          return (this.initialPage ? window.initialData.banner : await getFromDb(path)) || {};
         } else {
           return {
             image: this.eventData.event?.image,
