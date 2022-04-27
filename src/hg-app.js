@@ -75,19 +75,17 @@ export class HgApp extends LitElement {
   }
   willUpdate(changedProperties) {
     if (changedProperties.has('_path')) {
-      (async () => {
-        const eventsListPromise = getFromDb(createDbPath('events/events'));
-        this._getPromotedEvent(eventsListPromise);
+      const eventsListPromise = getFromDb(createDbPath('events/events'));
+      this._getPromotedEvent(eventsListPromise);
 
-        if (isEventPath(this._path)) {
-          this._contentType = ContentType.EVENT;
-          this._getEventData(eventsListPromise);
-        } else {
-          this._contentType = ContentType.PAGE;
-          this._eventData = undefined;
-          this._getPageData();
-        }
-      })();
+      if (isEventPath(this._path)) {
+        this._contentType = ContentType.EVENT;
+        this._getEventData(eventsListPromise);
+      } else {
+        this._contentType = ContentType.PAGE;
+        this._eventData = undefined;
+        this._getPageData();
+      }
     }
   }
   updated(changedProperties) {
