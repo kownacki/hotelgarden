@@ -33,8 +33,8 @@ const createScript = (path: string, module = false) => `
 `;
 
 
-const placeholderOpening = `\$\{`;
-const placeholderEnding = `\}`;
+const placeholderOpening = '\$\{';
+const placeholderEnding = '\}';
 const createPlaceholder = (name: string) => `${placeholderOpening}${name}${placeholderEnding}`;
 
 const namePrefix = 'hg';
@@ -80,7 +80,11 @@ const jsResources = [
   ` : ''}
  */
 
-const getIndexHtml = ({title, description, jsonLd}: {title?: boolean, description?: boolean, jsonLd?: boolean} = {}) => `
+
+const getIndexHtml = (
+  {title, description, jsonLd}: {title?: boolean, description?: boolean, jsonLd?: boolean} = {},
+  {eventsList, promotedEventUid, banner}: {eventsList?: boolean, promotedEventUid?: boolean, banner?: boolean} = {},
+) => `
 <!doctype html>
 <html lang="pl">
 <head>
@@ -155,6 +159,14 @@ const getIndexHtml = ({title, description, jsonLd}: {title?: boolean, descriptio
   <${namePrefix}-app>
     ${preRender}
   </${namePrefix}-app>
+  
+  <script type="module">
+    window.initialData = {
+      eventsList: ${eventsList ? createPlaceholder('eventsListSerialized') : undefined},
+      promotedEventUid: ${promotedEventUid ? createPlaceholder('promotedEventUidSerialized') : undefined},
+      banner: ${banner ? createPlaceholder('bannerSerialized') : undefined},
+    };
+  </script>
 
   ${jsResources.map((jsResource) => jsResource.script).join('')}
 
@@ -173,8 +185,14 @@ const getIndexHtml = ({title, description, jsonLd}: {title?: boolean, descriptio
 
 fs.writeFileSync('index.html', getIndexHtml());
 
-const indexWithPlaceholders = getIndexHtml({title: true, description: true, jsonLd: true}).replace(/\\/g, '\\\\');
+const indexWithPlaceholders = getIndexHtml(
+  {title: true, description: true, jsonLd: true},
+  {eventsList: true, promotedEventUid: true, banner: true},
+).replace(/\\/g, '\\\\');
+
+const createIndexTemplate = fs.readFileSync('functions/src/createIndexTemplate.ts');
+
 fs.writeFileSync(
   'functions/src/createIndex.ts',
-  `export const createIndex = (title: string, metaDescription: string = '', jsonLd: string = '') => \`${indexWithPlaceholders}\`;`,
+  createIndexTemplate.toString().replace('\`\`', `\`${indexWithPlaceholders}\``),
 );

@@ -1,4 +1,17 @@
 import {Request} from 'firebase-functions';
+import {EventsList, EventUid, Banner} from '../../utils/types';
+
+export interface CreateIndexSeoParam {
+  title: string,
+  metaDescription?: string,
+  jsonLd?: string,
+}
+
+export interface CreateIndexDataParam {
+  eventsList: EventsList,
+  promotedEventUid: EventUid | null,
+  banner?: Banner,
+}
 
 export interface RequestWithBody<ReqBody> extends Request {
   body: ReqBody,

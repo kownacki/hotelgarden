@@ -26,8 +26,8 @@ const createFontFace = (path, { family, style, weight }) => css `
 const createScript = (path, module = false) => `
   <script src="${path}" ${module ? 'type="module"' : ''}></script>
 `;
-const placeholderOpening = `\$\{`;
-const placeholderEnding = `\}`;
+const placeholderOpening = '\$\{';
+const placeholderEnding = '\}';
 const createPlaceholder = (name) => `${placeholderOpening}${name}${placeholderEnding}`;
 const namePrefix = 'hg';
 const faviconPath = '/resources/images/favicon.ico';
@@ -66,7 +66,7 @@ const jsResources = [
     ${placeholderEnding}
   ` : ''}
  */
-const getIndexHtml = ({ title, description, jsonLd } = {}) => `
+const getIndexHtml = ({ title, description, jsonLd } = {}, { eventsList, promotedEventUid, banner } = {}) => `
 <!doctype html>
 <html lang="pl">
 <head>
@@ -141,6 +141,14 @@ const getIndexHtml = ({ title, description, jsonLd } = {}) => `
   <${namePrefix}-app>
     ${preRender}
   </${namePrefix}-app>
+  
+  <script type="module">
+    window.initialData = {
+      eventsList: ${eventsList ? createPlaceholder('eventsListSerialized') : undefined},
+      promotedEventUid: ${promotedEventUid ? createPlaceholder('promotedEventUidSerialized') : undefined},
+      banner: ${banner ? createPlaceholder('bannerSerialized') : undefined},
+    };
+  </script>
 
   ${jsResources.map((jsResource) => jsResource.script).join('')}
 
@@ -157,5 +165,6 @@ const getIndexHtml = ({ title, description, jsonLd } = {}) => `
 </html>
 `;
 fs.writeFileSync('index.html', getIndexHtml());
-const indexWithPlaceholders = getIndexHtml({ title: true, description: true, jsonLd: true }).replace(/\\/g, '\\\\');
-fs.writeFileSync('functions/src/createIndex.ts', `export const createIndex = (title: string, metaDescription: string = '', jsonLd: string = '') => \`${indexWithPlaceholders}\`;`);
+const indexWithPlaceholders = getIndexHtml({ title: true, description: true, jsonLd: true }, { eventsList: true, promotedEventUid: true, banner: true }).replace(/\\/g, '\\\\');
+const createIndexTemplate = fs.readFileSync('functions/src/createIndexTemplate.ts');
+fs.writeFileSync('functions/src/createIndex.ts', createIndexTemplate.toString().replace('\`\`', `\`${indexWithPlaceholders}\``));

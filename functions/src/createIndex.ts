@@ -1,4 +1,17 @@
-export const createIndex = (title: string, metaDescription: string = '', jsonLd: string = '') => `
+import {CreateIndexDataParam, CreateIndexSeoParam} from './types';
+import {serializeData} from './utils';
+
+export const createIndex = (
+  {title, metaDescription, jsonLd}: CreateIndexSeoParam,
+  {eventsList, promotedEventUid, banner}: CreateIndexDataParam,
+) => {
+  // @ts-ignore
+  const eventsListSerialized = serializeData(eventsList);
+  // @ts-ignore
+  const promotedEventUidSerialized = serializeData(promotedEventUid);
+  // @ts-ignore
+  const bannerSerialized = serializeData(banner);
+  return `
 <!doctype html>
 <html lang="pl">
 <head>
@@ -212,6 +225,14 @@ export const createIndex = (title: string, metaDescription: string = '', jsonLd:
   
 
   </hg-app>
+  
+  <script type="module">
+    window.initialData = {
+      eventsList: ${eventsListSerialized},
+      promotedEventUid: ${promotedEventUidSerialized},
+      banner: ${bannerSerialized},
+    };
+  </script>
 
   
   <script src="/resources/scripts/lodashBundle.js" type="module"></script>
@@ -268,3 +289,4 @@ export const createIndex = (title: string, metaDescription: string = '', jsonLd:
   </body>
 </html>
 `;
+};

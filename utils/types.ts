@@ -43,3 +43,15 @@ export interface EventDbData {
 }
 
 export type EventsDbData = Record<EventUid, EventDbData>;
+
+export interface PromotedEventDbData {
+  uid: EventUid | null,
+}
+
+export interface Banner {
+  heading?: string,
+  image?: Image,
+  subheading?: string,
+}
+
+export type BannersDbData = Record<PageUid, Banner>;

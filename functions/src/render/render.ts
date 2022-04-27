@@ -9,16 +9,19 @@ import {
   SITEMAP_PATH,
 } from '../../../utils/urlStructure';
 import {createIndex} from '../createIndex';
+import {getBanner} from './banners';
 import {getClientConfig} from './config';
 import {getEventDbData} from './eventsData';
 import {getEventsList} from './eventsList';
 import {getPageDbData} from './pagesData';
+import {getPromotedEvent} from './promotedEvent';
 import {getSitemap} from './sitemap/hotelGardenSitemap';
 
 export const render = async (req: Request, res: Response) => {
   const path = req.path;
   const seoConfig = await getClientConfig().then((config) => config.seo);
   const eventsList = await getEventsList();
+  const promotedEventUid = await getPromotedEvent().then((promotedEvent) => promotedEvent.uid);
 
   if (path === SITEMAP_PATH) {
     const sitemap = await getSitemap();
@@ -26,22 +29,23 @@ export const render = async (req: Request, res: Response) => {
   } else if (isValidStaticPath(path)) {
     const staticPath = path as StaticPath;
     const pageUid = staticPathToPageUid[staticPath];
-    const fullTitle = createFullPageTitle(pageUid, seoConfig);
+    const title = createFullPageTitle(pageUid, seoConfig);
     const pageDbData = await getPageDbData(pageUid);
-    const description = pageDbData.seo?.description;
-    const index = createIndex(fullTitle, description);
+    const banner = await getBanner(pageUid);
+    const metaDescription = pageDbData.seo?.description;
+    const index = createIndex({title, metaDescription}, {eventsList, promotedEventUid, banner});
     res.status(200).send(index);
   } else if (isValidEventPath(path, eventsList)) {
     const eventUid = getEventUid(path);
-    const fullTitle = createFullEventTitle(eventUid, seoConfig, eventsList);
+    const title = createFullEventTitle(eventUid, seoConfig, eventsList);
     const eventDbData = await getEventDbData(eventUid);
-    const description = eventDbData.seo?.description;
+    const metaDescription = eventDbData.seo?.description;
     const jsonLd = createEventJsonLd(eventsList[eventUid]);
-    const index = createIndex(fullTitle, description, jsonLd);
+    const index = createIndex({title, metaDescription, jsonLd}, {eventsList, promotedEventUid});
     res.status(200).send(index);
   } else {
-    const fullTitle = createFull404PageTitle(seoConfig);
-    const index = createIndex(fullTitle);
+    const title = createFull404PageTitle(seoConfig);
+    const index = createIndex({title}, {eventsList, promotedEventUid});
     res.status(404).send(index);
   }
 };
