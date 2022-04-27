@@ -6,6 +6,12 @@ export const createIndex = (
   {eventsList, promotedEventUid, banner}: CreateIndexDataParam,
 ) => {
   // @ts-ignore
+  title = title || '';
+  // @ts-ignore
+  metaDescription = metaDescription || '';
+  // @ts-ignore
+  jsonLd = jsonLd || '';
+  // @ts-ignore
   const eventsListSerialized = serializeData(eventsList);
   // @ts-ignore
   const promotedEventUidSerialized = serializeData(promotedEventUid);
