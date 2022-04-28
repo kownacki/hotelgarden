@@ -1,9 +1,10 @@
 import {LitElement, html, css} from 'lit';
+import {until} from 'lit/directives/until.js';
 import '../../content/hg-article/hg-intro-article.js';
-import '../../edit/hg-image-upload.js';
 import '../../elements/hg-list/hg-mosaic-list.js'
 import '../../elements/hg-window-slider.js';
 import {createDbPath, createImageInDb, deleteImageInDb, DbPath, getFromDb, updateImageInObjectInDb} from '../../utils/database.js';
+import {FirebaseAuthController} from '../../utils/FirebaseAuthController.js';
 import {ItemsDbSyncController} from '../../utils/ItemsDbSyncController.js';
 import './hg-gallery/hg-gallery-item.js';
 
@@ -13,6 +14,7 @@ export class HgGallery extends LitElement {
     _path: DbPath,
     _items: Object,
     _itemsReady: Boolean,
+    _loggedIn: Boolean,
   };
   static styles = css`
     :host {
@@ -28,6 +30,9 @@ export class HgGallery extends LitElement {
   `;
   constructor() {
     super();
+    this._firebaseAuth = new FirebaseAuthController(this, (loggedIn) => {
+      this._loggedIn = loggedIn;
+    });
     this._path = createDbPath('gallery/gallery');
     this._itemsDbSync = new ItemsDbSyncController(
       this,
@@ -47,7 +52,11 @@ export class HgGallery extends LitElement {
   render() {
     return html`
       <hg-intro-article .uid=${'gallery'}></hg-intro-article>
-      <hg-image-upload id="upload"></hg-image-upload>
+      ${!this._loggedIn ? '' : until(import('mkwc/edit/mkwc-image-upload.js').then(() => {
+        return html`
+          <mkwc-image-upload id="upload"></mkwc-image-upload>
+        `;
+      }))}
       <hg-mosaic-list
         id="list"
         .path=${this._path}

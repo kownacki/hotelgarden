@@ -92,9 +92,9 @@ export class HgImageSlider extends LitElement {
       ${!this._loggedIn ? '' : until(import('./hg-image-upload-fab.js').then(() => {
         return html`
           <hg-image-upload-fab
-            @upload=${async (event) => {
+            @upload=${async ({detail: file}) => {
               const index = _.size(this.images);
-              await this.updateImage(index, event.detail);
+              await this.updateImage(index, file);
               const contentSlider = this.shadowRoot.getElementById('content-slider');
               contentSlider.selected = (contentSlider.double && window.innerWidth >= 600) ? index - 1 : index;
               contentSlider.requestUpdate();

@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import '@material/mwc-fab';
-import '../edit/hg-image-upload.js';
+import 'mkwc/edit/mkwc-image-upload.js';
 import sharedStyles from '../styles/shared-styles.js';
 
 export class HgImageUploadFab extends LitElement {
@@ -15,12 +15,14 @@ export class HgImageUploadFab extends LitElement {
   render() {
     return html`
       <div class="cms">
-        <hg-image-upload id="upload"></hg-image-upload>
+        <mkwc-image-upload id="upload"></mkwc-image-upload>
         <mwc-fab
           .icon=${'add'}
           @click=${async() => {
-            // todo when cancelling there is error
-            this.dispatchEvent(new CustomEvent('upload', {detail: await this.shadowRoot.getElementById('upload').upload()}));
+            let file = await this.shadowRoot.getElementById('upload').upload();
+            if (file) {
+              this.dispatchEvent(new CustomEvent('upload', {detail: file}));
+            }
           }}>
         </mwc-fab>
       </div>
