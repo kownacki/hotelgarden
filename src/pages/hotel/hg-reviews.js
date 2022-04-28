@@ -6,8 +6,9 @@ import '../../elements/hg-review.js';
 import '../../content/hg-links.js';
 import '../../utils/fixes/mwc-formfield-fixed.js';
 import {createDbPath} from '../../utils/database.js';
+import {pagesStaticData} from '../../../utils/urlStructure.js';
 
-const reviewBlocks = ['landing', 'restaurant', 'grill-garden', 'weddings', 'family-parties'];
+const reviewBlocks = ['landing', 'restaurant', 'weddings', 'family-parties'];
 
 //todo implement vertical swap
 
@@ -16,24 +17,27 @@ const configure = {
   field: 'display',
   getData: (that) => {
     const checkboxes = that.shadowRoot.getElementById('dialog').querySelectorAll('mwc-checkbox');
-    return _.filter.convert({cap: false})((reviewBlock, index) => checkboxes[index].checked, reviewBlocks);
+    return reviewBlocks.filter((reviewBlock, index) => checkboxes[index].checked);
   },
   setData: (that, review) => {
     const checkboxes = that.shadowRoot.getElementById('dialog').querySelectorAll('mwc-checkbox');
-    return _.map(([checkbox, reviewBlock]) => checkbox.checked = _.includes(reviewBlock, review.display), _.zip(checkboxes, reviewBlocks));
+    return _.zip(checkboxes, reviewBlocks).map(([checkbox, reviewBlock]) => checkbox.checked = review.display.includes(reviewBlock));
   },
   template: (review) => html`
     <div>
       Wyświetlaj opinię "${review.heading}" w:
     </div>
     <div>
-      ${reviewBlocks.map((reviewBlock) => html`
-        <div>
-          <mwc-formfield-fixed .label=${reviewBlock}>
-            <mwc-checkbox></mwc-checkbox>
-          </mwc-formfield-fixed>
-        </div>
-    `)}
+      ${reviewBlocks.map((reviewBlock) => {
+        const pageData = pagesStaticData[reviewBlock];
+        return html`
+          <div>
+            <mwc-formfield-fixed .label=${`${pageData.path} (${pageData.name})`}>
+              <mwc-checkbox></mwc-checkbox>
+            </mwc-formfield-fixed>
+          </div>
+        `;
+      })}
     </div>
   `
 };
