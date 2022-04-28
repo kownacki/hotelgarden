@@ -29,6 +29,11 @@ export class HgImageSliderItem extends LitElement {
     :host(:hover) hg-delete-item, :host([delete-opened]) hg-delete-item {
       display: block;
     }
+    @media all and (max-width: 959px) {
+      hg-delete-item {
+        display: block;
+      }
+    }
   `;
   render() {
     return html`

@@ -58,6 +58,11 @@ export class HgListItem extends LitElement {
       right: auto;
       bottom: -12px;
     }
+    @media all and (max-width: 959px) {
+      .controls {
+        display: block;
+      }
+    }
   `;
   updated(changedProperties) {
     if (changedProperties.has('_deleteOpened') || changedProperties.has('_configureOpened')) {

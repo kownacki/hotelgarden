@@ -49,12 +49,6 @@ export default class HgList extends LitElement {
       justify-content: center;
       align-items: center;
     }
-    :host([list-not-empty]) .add-container {
-      display: none;
-    }
-    :host(:hover) .add-container {
-      display: flex;
-    }
   `];
   constructor() {
     super();
