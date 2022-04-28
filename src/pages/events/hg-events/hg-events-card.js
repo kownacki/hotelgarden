@@ -96,7 +96,7 @@ export class HgEventsCard extends LitElement {
         <div class="content">
           <div class="header">
             <div class="date">${this.event.date.split('-').reverse().join(' / ')}</div>
-            <h3>${this.event.public ? '' : html`<span class="non-public">Niepubliczne </span>`}${this.event.title}</h3>
+            <h3>${this.event.public ? '' : html`<span class="non-public">Niepubliczne</span>&nbsp;`}${this.event.title}</h3>
           </div>
           <p>${this.event.description}</p>
           <div class="more">Zobacz więcej <mwc-icon>add</mwc-icon></div>
