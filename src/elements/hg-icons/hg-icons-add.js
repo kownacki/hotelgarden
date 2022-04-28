@@ -44,9 +44,13 @@ export class HgIconsAdd extends LitElement {
   constructor() {
     super();
     (async () => {
-      this._categories = _.map('name', (await listAll(ref(storage, 'icons'))).prefixes);
-      this._categories = _.remove(_.isEqual('other'), this._categories);
-      this._categories.push('other');
+      const categories = (await listAll(ref(storage, 'icons'))).prefixes
+        .map((prefix) => prefix.name)
+        .filter((category) => category !== 'other');
+      categories.push('other');
+
+      this._categories = categories;
+      this.shadowRoot.getElementById('dialog')?.notifyResize();
 
       // odtwórz icons w firestore na podstawie icons w storage
       // this._categories.map(async (category) => {
@@ -102,15 +106,15 @@ export class HgIconsAdd extends LitElement {
           id="text">
         </hg-icons-add-text>
         <hg-cms-buttons-container .alignToLeft=${true}>
-          ${_.map((category) => html`
+          ${!this._categories ? 'loading...' : this._categories.map((category) => html`
             <mwc-button
               .outlined=${category !== this._selected}
               .raised=${category === this._selected}
               .dense=${true}
-              .label=${_.replace('-', ' ', category)}
+              .label=${category.replace('-', ' ')}
               @click=${() => this._selected = category}>
             </mwc-button>
-          `, this._categories)}
+          `)}
         </hg-cms-buttons-container>
         <div class="icons">
           <!--todo This can lag a bit due to how many images are rendered. Optimize. -->

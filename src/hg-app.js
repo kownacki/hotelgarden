@@ -21,6 +21,7 @@ export const ContentType = {
 };
 
 export class HgApp extends LitElement {
+  _drawer;
   static properties = {
     _path: String,
     _initialPage: Boolean,

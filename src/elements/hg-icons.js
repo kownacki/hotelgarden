@@ -2,10 +2,12 @@ import {LitElement, html, css} from 'lit';
 import {until} from 'lit/directives/until.js';
 import {createDbPath} from '../utils/database.js';
 import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
+import {sleep} from '../utils.js';
 import './hg-list.js';
 import './hg-icons/hg-icons-item.js';
 
 export class HgIcons extends LitElement {
+  _addDialog;
   _firebaseAuth;
   static properties = {
     uid: String,
@@ -64,7 +66,12 @@ export class HgIcons extends LitElement {
           <hg-icons-item .small=${this.small} .icon=${icon} .disableEdit=${disableEdit}></hg-icons-item>
         `}
         .onAdd=${async (newItem) => {
-          const addResult = await this.shadowRoot.getElementById('add').getIcon();
+          if (!this._addDialog) {
+            await import('./hg-icons/hg-icons-add.js');
+            await sleep();
+            this._addDialog = this.shadowRoot.getElementById('add');
+          }
+          const addResult = await this._addDialog.getIcon();
           return addResult 
             ? {...newItem, ...addResult}
             : false;
