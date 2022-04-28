@@ -4,6 +4,7 @@ import '@polymer/paper-dialog';
 import '../../../edit/hg-cms-buttons-container.js';
 import sharedStyles from '../../../styles/shared-styles.js';
 import '../../ui/hg-icon-button.js';
+import './hg-event-edit-date/hg-event-edit-date-picker.js';
 
 export class HgEventEditDate extends LitElement {
   static properties = {
@@ -11,8 +12,8 @@ export class HgEventEditDate extends LitElement {
     opened: {type: Boolean, reflect: true},
   };
   static styles = [sharedStyles, css`
-    .buttons {
-      margin-top: 10px;
+    hg-event-edit-date-picker {
+      margin-bottom: 10px;
     }
   `];
   render() {
@@ -27,12 +28,10 @@ export class HgEventEditDate extends LitElement {
         <div>
           Zmień datę wydarzenia
         </div>
-        <input 
-          type="date"
-          name="date" 
-          id="date" 
-          min="${moment().format('YYYY-MM-DD')}"
-          .value=${this.date}>
+        <hg-event-edit-date-picker
+          id="picker"
+         .date=${this.date}>
+        </hg-event-edit-date-picker>
         <div class="buttons">
           <hg-cms-buttons-container>
             <mwc-button
@@ -44,7 +43,8 @@ export class HgEventEditDate extends LitElement {
               .label=${'Zapisz'}
               @click=${() => {
                 this.shadowRoot.getElementById('dialog').close();
-                this.dispatchEvent(new CustomEvent('request-date-change', {detail: this.shadowRoot.getElementById('date').value, composed: true}));
+                const newDate = this.shadowRoot.getElementById('picker').picker.value;
+                this.dispatchEvent(new CustomEvent('request-date-change', {detail: newDate, composed: true}));
               }}>
             </mwc-button>
           </hg-cms-buttons-container>
