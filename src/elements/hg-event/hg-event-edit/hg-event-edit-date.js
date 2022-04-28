@@ -2,9 +2,9 @@ import {LitElement, html, css} from 'lit';
 import '@material/mwc-button';
 import '@polymer/paper-dialog';
 import '../../../edit/hg-cms-buttons-container.js';
+import '../../../edit/hg-date-picker.js';
 import sharedStyles from '../../../styles/shared-styles.js';
 import '../../ui/hg-icon-button.js';
-import './hg-event-edit-date/hg-event-edit-date-picker.js';
 
 export class HgEventEditDate extends LitElement {
   static properties = {
@@ -12,7 +12,7 @@ export class HgEventEditDate extends LitElement {
     opened: {type: Boolean, reflect: true},
   };
   static styles = [sharedStyles, css`
-    hg-event-edit-date-picker {
+    hg-date-picker {
       margin-bottom: 10px;
     }
   `];
@@ -28,10 +28,10 @@ export class HgEventEditDate extends LitElement {
         <div>
           Zmień datę wydarzenia
         </div>
-        <hg-event-edit-date-picker
+        <hg-date-picker
           id="picker"
          .date=${this.date}>
-        </hg-event-edit-date-picker>
+        </hg-date-picker>
         <div class="buttons">
           <hg-cms-buttons-container>
             <mwc-button

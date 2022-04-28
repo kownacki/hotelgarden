@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit';
-import sharedStyles from '../../../../styles/shared-styles.js';
+import sharedStyles from '../styles/shared-styles.js';
 
-export class HgEventEditDatePicker extends LitElement {
+export class HgDatePicker extends LitElement {
   static properties = {
     date: String,
     // observables
@@ -22,8 +22,11 @@ export class HgEventEditDatePicker extends LitElement {
         type="date"
         name="date" 
         min="${moment().format('YYYY-MM-DD')}"
-        .value=${this.date}>
+        .value=${this.date}
+        @input=${() => {
+          this.dispatchEvent(new CustomEvent('date-changed', {detail: this.picker.value}));
+        }}>
     `;
   }
 }
-customElements.define('hg-event-edit-date-picker', HgEventEditDatePicker);
+customElements.define('hg-date-picker', HgDatePicker);

@@ -2,6 +2,7 @@ import {LitElement, html, css} from 'lit';
 import '@material/mwc-button';
 import '@polymer/paper-dialog';
 import '../../../edit/hg-cms-buttons-container.js';
+import '../../../edit/hg-date-picker.js';
 import sharedStyles from '../../../styles/shared-styles.js';
 import {createDbPath, getFromDb, updateInDb} from '../../../utils/database.js';
 import {hyphenate} from '../../../utils.js';
@@ -18,17 +19,22 @@ export class HgEventsAdd extends LitElement {
     _loading: Boolean,
   };
   static styles = [sharedStyles, css`
-    .address {
-      font-family: monospace;
-    }
     .tip {
       background: rgba(var(--secondary-color-rgb), 20%);
       padding-top: 10px;
       padding-bottom: 10px;
     }
-    #date {
-      margin: 0 24px;
-      padding: 0 2px;
+    .date-info {
+      color: var(--error-color);
+    }
+    .address {
+      overflow-wrap: anywhere;
+    }
+    .address-info {
+      min-height: 1.5em;
+    }
+    .address-url {
+      font-family: monospace;
     }
     hg-events-add-name {
       margin: 20px 0 ;
@@ -64,6 +70,9 @@ export class HgEventsAdd extends LitElement {
       this.dispatchEvent(new CustomEvent('location-changed', {composed: true, bubbles: true}));
     }
   };
+  updated(changedProperties) {
+    this.shadowRoot.getElementById('dialog').notifyResize();
+  }
   render() {
     return html`
       <div class="cms">
@@ -79,18 +88,22 @@ export class HgEventsAdd extends LitElement {
             <span style="color: var(--primary-color)">Podpowiedź:</span> 
             Gdy dodajesz cykliczne wydarzenie, umieść w nazwie rok lub edycję wydarzenia. Np "Sylwester 2020", 
             "Open Mic vol. V". Dzięki temu unikniesz konfliktu nazw, a twoje wydarzenie będzie łatwiej znaleźć.<br><br>
-             <span style="color: red">Uwaga:</span> Zmiana nazwy wydarzenia po utworzeniu NIE będzie skutkować zmianą adresu URL.
+             <span style="color: var(--error-color)">Uwaga:</span> Zmiana nazwy wydarzenia po utworzeniu NIE będzie skutkować zmianą adresu URL.
           </p>
-          <input 
-            type="date"
-            name="date" 
-            id="date" 
-            min="${moment().format('YYYY-MM-DD')}"
-            @input=${(event) => {
-              this._date = event.target.value;
-              this._dateCorrect = !_.isEmpty(this._date) && this._date >= moment().format('YYYY-MM-DD');
-            }}> 
-          <span style="color: red">${this._date && !this._dateCorrect ? 'Data nie może być miniona' : ''}</span>
+          <div class="smaller-text">
+            Wybierz datę
+          </div>
+          <hg-date-picker
+            id="picker"
+            @date-changed=${({detail: date}) => {
+              this._date = date;
+              this._dateCorrect = this._date && this._date >= moment().format('YYYY-MM-DD');
+            }}>
+          </hg-date-picker>
+          <div class="date-info smaller-text">
+            ${this._date && !this._dateCorrect ? 'Data nie może być miniona' : ''}
+            ${!this._date ? 'Data jest wymagana' : ''}
+          </div>
           <hg-events-add-name
             @name-change=${({detail: name}) => {
               this._typing = true;
@@ -99,16 +112,20 @@ export class HgEventsAdd extends LitElement {
               this._checkIfAddressTaken();
             }}>
           </hg-events-add-name>
-          <p ?hidden=${!this._address} class="address">
-            hotelgarden.pl/wydarzenia/${this._address}
-          </p>
-          <p ?hidden=${!this._loading}>Ładowanie...</p>
-          <p ?hidden=${!this._address || this._typing || this._loading}>
-            Adres wydarzenia 
-            ${this._addressTaken
-              ? html`<span style="color: red">zajęty</span>`
-              : html`<span style="color: green">dostępny</span>`}<br>
-          </p>
+          <div class="smaller-text">
+            <p class="address">
+              Adres: <span class="address-url">hotelgarden.pl/wydarzenia/${this._address || '...'}</span>
+            </p>
+            <p class="address-info">
+              ${this._loading ? 'Ładowanie...' : ''}
+              ${!this._address || this._typing || this._loading 
+                ? ''
+                : this._addressTaken
+                ? html`Adres wydarzenia <span style="color: red">zajęty</span>`
+                : html`Adres wydarzenia <span style="color: green">dostępny</span>`
+              }
+            </p>
+          </div>
           <div class="buttons">
             <hg-cms-buttons-container>
               <mwc-button
