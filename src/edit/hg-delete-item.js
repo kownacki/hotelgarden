@@ -13,7 +13,7 @@ export class HgDeleteItem extends LitElement {
   };
   static styles = [sharedStyles, css`
     hg-icon-button {
-      display: block;
+      display: inline-block;
       background: white;
     }
     .warning {
