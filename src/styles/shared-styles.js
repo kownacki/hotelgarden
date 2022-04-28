@@ -7,6 +7,7 @@ export default css`
   paper-dialog {
     font-size: 18px;
     max-width: 840px;
+    overflow-y: auto;
   }
   .smaller-text {
     font-size: 18px;
