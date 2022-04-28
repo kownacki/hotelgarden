@@ -80,7 +80,7 @@ export class HgReview extends LitElement {
               .disabled=${this.disableEdit && !this.shadowRoot.getElementById('author').showControls}
               .item=${this.review} 
               .field=${'author'}>
-              <span class="author smaller-text"></span>,
+              <span class="author smaller-text"></span>,&nbsp;
             </hg-list-editable-text>
             <hg-list-editable-text 
               float 
