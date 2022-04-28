@@ -3,7 +3,7 @@ import {until} from 'lit/directives/until.js';
 import {createDbPath} from '../utils/database.js';
 import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
 import {sleep} from '../utils.js';
-import './hg-list.js';
+import './hg-list-old.js';
 import './hg-icons/hg-icons-item.js';
 
 export class HgIcons extends LitElement {
@@ -19,15 +19,15 @@ export class HgIcons extends LitElement {
     :host {
       display: block;
     }
-    hg-list {
+    hg-list-old {
       display: flex;
       flex-wrap: wrap;
     }
-    :host(:not([small])) hg-list {
+    :host(:not([small])) hg-list-old {
       min-height: 131px;
       justify-content: center;
     }
-    :host([small]) hg-list {
+    :host([small]) hg-list-old {
       min-height: 60px;
       margin: 0 -15px;
     }
@@ -35,17 +35,17 @@ export class HgIcons extends LitElement {
       background: rgba(var(--placeholder-color-rgb), 0.5);
     }
     @media all and (max-width: 959px) {
-      :host([small]) hg-list {
+      :host([small]) hg-list-old {
         --columns: 3;
       }
     }
     @media all and (max-width: 769px) {
-      :host([small]) hg-list {
+      :host([small]) hg-list-old {
         --columns: 2;
       }
     }
     @media all and (max-width: 479px) {
-      :host([small]) hg-list {
+      :host([small]) hg-list-old {
         --columns: 1;
       }
     }
@@ -58,7 +58,7 @@ export class HgIcons extends LitElement {
   }
   render() {
     return html`
-      <hg-list
+      <hg-list-old
         .array=${true}
         .path=${createDbPath(`iconBlocks/${this.uid}`)}
         .getItemName=${() => 'ikonę'}
@@ -77,7 +77,7 @@ export class HgIcons extends LitElement {
             : false;
         }}
         @items-changed=${(event) => this.empty = _.isEmpty(event.detail)}>
-      </hg-list>
+      </hg-list-old>
       ${!this._loggedIn ? '' : until(import('./hg-icons/hg-icons-add.js').then(() => {
         return html`<hg-icons-add id="add"></hg-icons-add>`;
       }))}

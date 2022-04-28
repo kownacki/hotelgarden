@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit';
 import '../ui/hg-icon-button.js';
 
-export class HgListAdd extends LitElement {
+export class HgListOldAdd extends LitElement {
   static properties = {
     disabled: Boolean,
   };
@@ -17,4 +17,4 @@ export class HgListAdd extends LitElement {
     `;
   }
 }
-customElements.define('hg-list-add', HgListAdd);
+customElements.define('hg-list-old-add', HgListOldAdd);

@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit';
 import '@material/mwc-checkbox';
 import '../../content/hg-article/hg-intro-article.js';
-import '../../elements/hg-list.js';
+import '../../elements/hg-list-old.js';
 import '../../elements/hg-review.js';
 import '../../content/hg-links.js';
 import '../../utils/fixes/mwc-formfield-fixed.js';
@@ -53,7 +53,7 @@ export class HgReviews extends LitElement {
     hg-intro-article {
       display: none;
     }
-    hg-list {
+    hg-list-old {
       display: flex;
       flex-wrap: wrap;
       --columns: 3;
@@ -62,7 +62,7 @@ export class HgReviews extends LitElement {
       :host {
         max-width: 800px;
       }
-      hg-list {
+      hg-list-old {
         --columns: 2;
       }
     }
@@ -71,7 +71,7 @@ export class HgReviews extends LitElement {
         width: 580px;
         max-width: 100%;
       }
-      hg-list {
+      hg-list-old {
         --columns: 1;
       }
     }
@@ -79,7 +79,7 @@ export class HgReviews extends LitElement {
   render() {
     return html`
       <hg-intro-article .uid=${'reviews'}></hg-intro-article>
-      <hg-list
+      <hg-list-old
         .array=${true}
         .addAtStart=${true}
         .transform=${() => _.reverse}
@@ -104,7 +104,7 @@ export class HgReviews extends LitElement {
           <hg-review .review=${review} .editable=${true} .disableEdit=${disableEdit}></hg-review>
         `}
         .configure=${configure}>
-      </hg-list>
+      </hg-list-old>
       <hg-links .path=${'/opinie'} .superpath=${'/'}></hg-links>
     `;
   }

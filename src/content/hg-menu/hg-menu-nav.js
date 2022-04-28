@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import {createDbPath, deleteImageInDb} from '../../utils/database.js';
-import '../../elements/hg-list.js';
+import '../../elements/hg-list-old.js';
 import './hg-menu-nav-item.js';
 
 export class HgMenuNav extends LitElement {
@@ -10,7 +10,7 @@ export class HgMenuNav extends LitElement {
     categories: Object,
   };
   static styles = css`
-    hg-list {
+    hg-list-old {
       max-height: calc(100vh - var(--headerHeight));
       top: var( --headerHeight);
       overflow: auto;
@@ -45,7 +45,7 @@ export class HgMenuNav extends LitElement {
   }
   render() {
     return html`
-      <hg-list
+      <hg-list-old
         id="list"
         .array=${true}
         .vertical=${true}
@@ -64,7 +64,7 @@ export class HgMenuNav extends LitElement {
         @item-added=${() => {this.updateCategories(); this.selectCategory(_.size(this.categories) - 1)}}
         @item-deleted=${(event) => {this.updateCategories(); this.reselectAfterDelete(Number(event.detail))}}
         @items-swapped=${(event) => {this.updateCategories(); this.reselectAfterSwapped(Number(event.detail[0]), Number(event.detail[1]))}}>
-      </hg-list>
+      </hg-list-old>
     `;
   }
 }

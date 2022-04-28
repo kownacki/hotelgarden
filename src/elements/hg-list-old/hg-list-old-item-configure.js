@@ -5,7 +5,7 @@ import '../../edit/hg-cms-buttons-container.js';
 import sharedStyles from '../../styles/shared-styles.js';
 import '../ui/hg-icon-button.js';
 
-export class HgListItemConfigure extends LitElement {
+export class HgListOldItemConfigure extends LitElement {
   static properties = {
     configure: Object,
     item: Object,
@@ -63,4 +63,4 @@ export class HgListItemConfigure extends LitElement {
     `;
   }
 }
-customElements.define('hg-list-item-configure', HgListItemConfigure);
+customElements.define('hg-list-old-item-configure', HgListOldItemConfigure);

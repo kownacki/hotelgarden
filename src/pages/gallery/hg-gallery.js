@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit';
 import {until} from 'lit/directives/until.js';
 import '../../content/hg-article/hg-intro-article.js';
-import '../../elements/hg-list/hg-mosaic-list.js'
+import '../../elements/hg-list-old/hg-mosaic-list-old.js'
 import '../../elements/hg-window-slider.js';
 import {createDbPath, createImageInDb, deleteImageInDb, DbPath, getFromDb, updateImageInObjectInDb} from '../../utils/database.js';
 import {FirebaseAuthController} from '../../utils/FirebaseAuthController.js';
@@ -57,7 +57,7 @@ export class HgGallery extends LitElement {
           <mkwc-image-upload id="upload"></mkwc-image-upload>
         `;
       }))}
-      <hg-mosaic-list
+      <hg-mosaic-list-old
         id="list"
         .path=${this._path}
         .noGetItems=${true}
@@ -84,7 +84,7 @@ export class HgGallery extends LitElement {
         @items-changed=${(event) => {
           this._items = event.detail;
         }}>
-      </hg-mosaic-list>
+      </hg-mosaic-list-old>
       <hg-window-slider
         id="window-slider"
         .ready=${this._itemsReady}

@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit';
 import '../ui/hg-icon-button.js';
 
-export class HgListItemSwap extends LitElement {
+export class HgListOldItemSwap extends LitElement {
   static properties = {
     vertical: {type: Boolean, reflect: true},
     disabled: Boolean,
@@ -21,4 +21,4 @@ export class HgListItemSwap extends LitElement {
     `;
   }
 }
-customElements.define('hg-list-item-swap', HgListItemSwap);
+customElements.define('hg-list-old-item-swap', HgListOldItemSwap);

@@ -12,7 +12,7 @@ export class HgText extends HgEditableText {
     super();
     this.addEventListener('save', (event) => updateInDb(this.path, event.detail));
   }
-  // duplicated from hg-list
+  // duplicated from hg-list-old
   updated(changedProperties) {
     if (changedProperties.has('path')) {
       if (this.path && !this.noGetText) {

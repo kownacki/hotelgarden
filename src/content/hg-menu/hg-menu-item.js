@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import sharedStyles from '../../styles/shared-styles.js';
-import '../../elements/hg-list/hg-list-editable-text.js';
+import '../../elements/hg-list-old/hg-list-old-editable-text.js';
 
 export class HgMenuItem extends LitElement {
   static properties = {
@@ -59,32 +59,32 @@ export class HgMenuItem extends LitElement {
   render(){
     return html`
       <div class="text">
-        <hg-list-editable-text
+        <hg-list-old-editable-text
           float
           id="name"
           .disabled=${this.disableEdit && !_.get('showControls', this.shadowRoot.getElementById('name'))}
           .item=${this.item} 
           .field=${'name'}>
           <div class="name"></div>
-        </hg-list-editable-text>
-        <hg-list-editable-text
+        </hg-list-old-editable-text>
+        <hg-list-old-editable-text
           float
           id="description"
           .disabled=${this.disableEdit && !_.get('showControls', this.shadowRoot.getElementById('description'))}
           .item=${this.item} 
           .field=${'description'}>
           <div class="description smaller-text"></div>
-        </hg-list-editable-text>
+        </hg-list-old-editable-text>
       </div>
       <div class="right">
-        <hg-list-editable-text
+        <hg-list-old-editable-text
           float
           id="price"
           .disabled=${this.disableEdit && !_.get('showControls', this.shadowRoot.getElementById('price'))}
           .item=${this.item} 
           .field=${'price'}>
           <div class="price"></div>
-        </hg-list-editable-text>
+        </hg-list-old-editable-text>
       </div>
     `;
   }

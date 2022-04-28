@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import sharedStyles from '../../styles/shared-styles.js';
-import '../hg-list/hg-list-editable-text.js';
+import '../hg-list-old/hg-list-old-editable-text.js';
 
 export class HgIconsItem extends LitElement {
   static properties = {
@@ -67,14 +67,14 @@ export class HgIconsItem extends LitElement {
   render() {
     return html`
       <img src=${this.icon.url}/>
-      <hg-list-editable-text
+      <hg-list-old-editable-text
         id="editable"
         .float=${true}
         .item=${this.icon} 
         .disabled=${this.disableEdit && !this.shadowRoot.getElementById('editable').showControls}
         .field=${'text'}>
         <div class="text smaller-text"></div>
-      </hg-list-editable-text>
+      </hg-list-old-editable-text>
     `;
   }
 }

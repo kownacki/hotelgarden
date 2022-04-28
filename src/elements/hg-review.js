@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import sharedStyles from '../styles/shared-styles.js';
-import './hg-list/hg-list-editable-text.js';
+import './hg-list-old/hg-list-old-editable-text.js';
 
 export class HgReview extends LitElement {
   static properties = {
@@ -24,7 +24,7 @@ export class HgReview extends LitElement {
       margin: 0;
     }
     /* todo do I really have to set it? */
-    .bottom hg-list-editable-text  {
+    .bottom hg-list-old-editable-text  {
       display: inline;
     }
     .author {
@@ -56,15 +56,15 @@ export class HgReview extends LitElement {
     return html`
       ${this.editable
         ? html`
-          <hg-list-editable-text
+          <hg-list-old-editable-text
             float
             id="heading"
             .disabled=${this.disableEdit && !this.shadowRoot.getElementById('heading').showControls}
             .item=${this.review} 
             .field=${'heading'}>
             <h3></h3>
-          </hg-list-editable-text>
-          <hg-list-editable-text 
+          </hg-list-old-editable-text>
+          <hg-list-old-editable-text 
             float 
             multiline
             id="text"
@@ -72,24 +72,24 @@ export class HgReview extends LitElement {
             .item=${this.review} 
             .field=${'text'}>
             <p class="smaller-text"></p>
-          </hg-list-editable-text>
+          </hg-list-old-editable-text>
           <p class="bottom">
-            <hg-list-editable-text 
+            <hg-list-old-editable-text 
               float 
               id="author"
               .disabled=${this.disableEdit && !this.shadowRoot.getElementById('author').showControls}
               .item=${this.review} 
               .field=${'author'}>
               <span class="author smaller-text"></span>,&nbsp;
-            </hg-list-editable-text>
-            <hg-list-editable-text 
+            </hg-list-old-editable-text>
+            <hg-list-old-editable-text 
               float 
               id="platform"
               .disabled=${this.disableEdit && !this.shadowRoot.getElementById('platform').showControls}
               .item=${this.review} 
               .field=${'platform'}>
               <span class="platform smaller-text"></span>
-            </hg-list-editable-text>
+            </hg-list-old-editable-text>
           </p>`
         : html`
           <h3>${this.review.heading}</h3>

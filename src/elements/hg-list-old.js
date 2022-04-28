@@ -5,9 +5,9 @@ import sharedStyles from '../styles/shared-styles.js'
 import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
 import {DbPath, getFromDb, updateInDb} from '../utils/database.js';
 import {array, generateUid} from '../utils.js';
-import './hg-list/hg-list-item.js';
+import './hg-list-old/hg-list-old-item.js';
 
-export default class HgList extends LitElement {
+export default class HgListOld extends LitElement {
   _firebaseAuth;
   static properties = {
     // flags
@@ -124,7 +124,7 @@ export default class HgList extends LitElement {
       ${(this.addAtStart ? _.reverse : _.identity)([
         !this._listNotEmpty && this.emptyTemplate ? this.emptyTemplate : '',
         repeat(this._list || [], this.array ? (key) => _.get(`${key}.uid`, this.items) : _.identity, (key, listIndex) =>
-          !_.get(key, this.items) ?  '' : html`<hg-list-item
+          !_.get(key, this.items) ?  '' : html`<hg-list-old-item
             style="${this.calculateItemTop ? `top: ${this.calculateItemTop(listIndex + ((this._loggedIn && !this.noAdd) ? 1 : 0)) * 100}%` : ''}"
             .item=${this.items[key]}
             .getItemName=${this.getItemName}
@@ -140,12 +140,12 @@ export default class HgList extends LitElement {
             @update=${(event) => this.updateItem(key, event.detail.path, event.detail.data)}
             @show-controls-changed=${(event) => this.editing = event.detail}>
             ${this.itemTemplate(this.items[key], key, this._processing || this.editing)}
-          </hg-list-item>`
+          </hg-list-old-item>`
         ),
-        (!this._loggedIn || this.noAdd) ? '' : until(import('./hg-list/hg-list-add.js').then(() => {
+        (!this._loggedIn || this.noAdd) ? '' : until(import('./hg-list-old/hg-list-old-add.js').then(() => {
           return html`
             <div class="add-container">
-              <hg-list-add
+              <hg-list-old-add
                 .disabled=${this._processing || this.editing}
                 @click=${async () => {
                   this._processing = true;
@@ -159,7 +159,7 @@ export default class HgList extends LitElement {
                   }
                   this._processing = false;
                 }}>
-              </hg-list-add>
+              </hg-list-old-add>
             </div>
           `;
         })),
@@ -167,4 +167,4 @@ export default class HgList extends LitElement {
     `;
   }
 }
-customElements.define('hg-list', HgList);
+customElements.define('hg-list-old', HgListOld);

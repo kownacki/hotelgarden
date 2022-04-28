@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit';
-import '../../../elements/hg-list.js';
+import '../../../elements/hg-list-old.js';
 import sharedStyles from '../../../styles/shared-styles.js';
 import {createDbPath, deleteImageInDb} from '../../../utils/database.js';
 import {FirebaseAuthController} from '../../../utils/FirebaseAuthController.js';
@@ -26,7 +26,7 @@ export class HgEventsList extends LitElement {
   }
   render() {
     return html`
-      <hg-list
+      <hg-list-old
         .noAdd=${true}
         .transform=${(items) => _.flow([
           ...(this._loggedIn && !this.noNonPublic ? [] : [_.filter((key) => items[key].public)]),
@@ -45,7 +45,7 @@ export class HgEventsList extends LitElement {
           }
         }}
         @list-changed=${(event) => this.dispatchEvent(new CustomEvent('events-changed', {detail: event.detail}))}>
-      </hg-list>
+      </hg-list-old>
     `;
   }
 }

@@ -1,7 +1,7 @@
 import {LitElement, html, css, unsafeCSS} from 'lit';
 import '../../edit/hg-editable-text.js';
 import '../../elements/mkwc/hg-editable-image.js';
-import '../../elements/hg-list.js';
+import '../../elements/hg-list-old.js';
 import sharedStyles from '../../styles/shared-styles.js'
 import {createDbPath, updateImageInDb} from '../../utils/database.js';
 import {updateData} from '../../utils.js';
@@ -97,7 +97,7 @@ export class HgMenuMain extends LitElement {
           </hg-editable-text>
         </header>
         ${_.isEmpty(this.category.items) ? html`<div class="empty">Brak pozycji w kategorii</div>`: ''}
-        <hg-list
+        <hg-list-old
           id="list"
           .array=${true}
           .vertical=${true}
@@ -110,7 +110,7 @@ export class HgMenuMain extends LitElement {
           `}
           @item-added=${() => this.updateCategory()}
           @item-deleted=${() => this.updateCategory()}>
-        </hg-list>
+        </hg-list-old>
       `}
     `;
   }
