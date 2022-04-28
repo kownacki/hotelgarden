@@ -39,7 +39,7 @@ export class HgMenuItem extends LitElement {
         padding: 0 0 20px;
       }
       :host([is-restaurant-menu]) {
-        padding: 10px 20px;
+        padding: 10px 30px 10px 20px;
       }
     }
     @media all and (max-width: 719px) {

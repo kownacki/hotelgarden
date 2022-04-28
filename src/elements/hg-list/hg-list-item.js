@@ -31,7 +31,7 @@ export class HgListItem extends LitElement {
       display: flex;
       position: absolute;
       top: 3px;
-      right: 10px;
+      right: 3px;
     }
     .controls-top > * {
       margin: 1px;
