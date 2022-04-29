@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit';
 import {sleep} from '../utils.js';
 import sharedStyles from '../styles/shared-styles.js';
-import '../pages/events/hg-events/hg-events-list.js';
+import '../pages/events/hg-events/hg-events-and-news-list.js';
 import '../elements/hg-action-button.js';
 
 export class HgEventsBlock extends LitElement {
@@ -28,7 +28,7 @@ export class HgEventsBlock extends LitElement {
   render() {
     return html`
       <h2 class="content-heading">Najbliższe wydarzenia</h2>
-      <hg-events-list 
+      <hg-events-and-news-list 
         .max=${2} 
         .noNonPublic=${true}
         @events-changed=${async (event) => {
@@ -36,7 +36,7 @@ export class HgEventsBlock extends LitElement {
           await sleep(); // wait for styles to apply
           this.dispatchEvent(new CustomEvent('check-visibility', {composed: true}));
         }}>
-      </hg-events-list>
+      </hg-events-and-news-list>
       <hg-action-button .url=${'/wydarzenia'}>Wszystkie wydarzenia</hg-action-button>
     `;
   }

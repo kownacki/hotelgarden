@@ -5,7 +5,7 @@ import {createDbPath, deleteImageInDb} from '../../../utils/database.js';
 import {FirebaseAuthController} from '../../../utils/FirebaseAuthController.js';
 import './hg-events-card.js';
 
-export class HgEventsList extends LitElement {
+export class HgEventsAndNewsList extends LitElement {
   _firebaseAuth;
   static properties = {
     past: Boolean,
@@ -49,4 +49,4 @@ export class HgEventsList extends LitElement {
     `;
   }
 }
-customElements.define('hg-events-list', HgEventsList);
+customElements.define('hg-events-and-news-list', HgEventsAndNewsList);

@@ -4,7 +4,7 @@ import sharedStyles from '../../styles/shared-styles.js';
 import '../../content/hg-article/hg-intro-article.js';
 import '../../elements/hg-action-button.js';
 import {FirebaseAuthController} from '../../utils/FirebaseAuthController.js';
-import './hg-events/hg-events-list.js';
+import './hg-events/hg-events-and-news-list.js';
 
 // todo add scrolling to dialogs
 
@@ -43,14 +43,14 @@ export class HgEvents extends LitElement {
         return html`<hg-events-add></hg-events-add>`;
       }))}
       <h2>Nadchodzące wydarzenia</h2>
-      <hg-events-list></hg-events-list>
+      <hg-events-and-news-list></hg-events-and-news-list>
       <hg-action-button id="button" @click=${() => {
         this.shadowRoot.getElementById('past').hidden = false;
         this.shadowRoot.getElementById('button').hidden = true;
       }}>Pokaż minione wydarzenia</hg-action-button>
       <div id="past" hidden>
         <h2>Minione wydarzenia</h2>
-        <hg-events-list .past=${true}></hg-events-list>
+        <hg-events-and-news-list .past=${true}></hg-events-and-news-list>
       </div>
     `;
   }
