@@ -67,7 +67,7 @@ const jsResources = [
     ${placeholderEnding}
   ` : ''}
  */
-const getIndexHtml = (production, { title, description, jsonLd } = {}, { eventsList, promotedEventUid, banner } = {}) => `
+const getIndexHtml = (production, preloads = false, { title, description, jsonLd } = {}, { eventsList, promotedEventUid, banner } = {}) => `
 <!doctype html>
 <html lang="pl">
 <head>
@@ -90,6 +90,8 @@ const getIndexHtml = (production, { title, description, jsonLd } = {}, { eventsL
 
   <link rel="preload" href="/src/styles/shared-styles.js" as="script" crossorigin="anonymous">
   <link rel="preload" href="/src/styles/ck-content.js" as="script" crossorigin="anonymous">
+  
+  ${preloads ? createPlaceholder('preloads') : ''}
   
   <style>
     html, body {
@@ -167,6 +169,6 @@ const getIndexHtml = (production, { title, description, jsonLd } = {}, { eventsL
 </html>
 `;
 fs.writeFileSync('index.html', getIndexHtml(false));
-const indexWithPlaceholders = getIndexHtml(true, { title: true, description: true, jsonLd: true }, { eventsList: true, promotedEventUid: true, banner: true }).replace(/\\/g, '\\\\');
+const indexWithPlaceholders = getIndexHtml(true, true, { title: true, description: true, jsonLd: true }, { eventsList: true, promotedEventUid: true, banner: true }).replace(/\\/g, '\\\\');
 const createIndexTemplate = fs.readFileSync('functions/src/createIndexTemplate.ts');
 fs.writeFileSync('functions/src/createIndex.ts', createIndexTemplate.toString().replace('\`\`', `\`${indexWithPlaceholders}\``));

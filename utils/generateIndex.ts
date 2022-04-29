@@ -84,6 +84,7 @@ const jsResources = [
 
 const getIndexHtml = (
   production: boolean,
+  preloads: boolean = false,
   {title, description, jsonLd}: {title?: boolean, description?: boolean, jsonLd?: boolean} = {},
   {eventsList, promotedEventUid, banner}: {eventsList?: boolean, promotedEventUid?: boolean, banner?: boolean} = {},
 ) => `
@@ -109,6 +110,8 @@ const getIndexHtml = (
 
   <link rel="preload" href="/src/styles/shared-styles.js" as="script" crossorigin="anonymous">
   <link rel="preload" href="/src/styles/ck-content.js" as="script" crossorigin="anonymous">
+  
+  ${preloads ? createPlaceholder('preloads') : ''}
   
   <style>
     html, body {
@@ -189,6 +192,7 @@ const getIndexHtml = (
 fs.writeFileSync('index.html', getIndexHtml(false));
 
 const indexWithPlaceholders = getIndexHtml(
+  true,
   true,
   {title: true, description: true, jsonLd: true},
   {eventsList: true, promotedEventUid: true, banner: true},

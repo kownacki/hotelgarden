@@ -1,5 +1,8 @@
 import {Request} from 'firebase-functions';
+import {PreloadLinkAttrs} from '../../utils/html';
 import {EventsList, EventUid, Banner} from '../../utils/types';
+
+export type CreateIndexPreloadsParam = PreloadLinkAttrs[];
 
 export interface CreateIndexSeoParam {
   title: string,

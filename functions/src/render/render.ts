@@ -1,4 +1,5 @@
 import {Request, Response} from 'firebase-functions';
+import {PreloadLinkAttrs} from '../../../utils/html';
 import {createFull404PageTitle, createFullPageTitle, createFullEventTitle, createEventJsonLd} from '../../../utils/seo';
 import {
   getEventUid,
@@ -33,19 +34,22 @@ export const render = async (req: Request, res: Response) => {
     const pageDbData = await getPageDbData(pageUid);
     const banner = await getBanner(pageUid);
     const metaDescription = pageDbData.seo?.description;
-    const index = createIndex({title, metaDescription}, {eventsList, promotedEventUid, banner});
+    const preloads: PreloadLinkAttrs[] = banner.image ? [{href: banner.image.url, as: 'image'}] : [];
+    const index = createIndex(preloads, {title, metaDescription}, {eventsList, promotedEventUid, banner});
     res.status(200).send(index);
   } else if (isValidEventPath(path, eventsList)) {
     const eventUid = getEventUid(path);
+    const event = eventsList[eventUid];
     const title = createFullEventTitle(eventUid, seoConfig, eventsList);
     const eventDbData = await getEventDbData(eventUid);
     const metaDescription = eventDbData.seo?.description;
     const jsonLd = createEventJsonLd(eventsList[eventUid]);
-    const index = createIndex({title, metaDescription, jsonLd}, {eventsList, promotedEventUid});
+    const preloads: PreloadLinkAttrs[] = event.image ? [{href: event.image.url, as: 'image'}] : [];
+    const index = createIndex(preloads, {title, metaDescription, jsonLd}, {eventsList, promotedEventUid});
     res.status(200).send(index);
   } else {
     const title = createFull404PageTitle(seoConfig);
-    const index = createIndex({title}, {eventsList, promotedEventUid});
+    const index = createIndex([], {title}, {eventsList, promotedEventUid});
     res.status(404).send(index);
   }
 };

@@ -1,10 +1,16 @@
-import {CreateIndexDataParam, CreateIndexSeoParam} from './types';
+import {createPreloadLink} from '../../utils/html';
+import {CreateIndexDataParam, CreateIndexSeoParam, CreateIndexPreloadsParam} from './types';
 import {serializeData} from './utils';
 
 export const createIndex = (
+  preloads: CreateIndexPreloadsParam,
   {title, metaDescription, jsonLd}: CreateIndexSeoParam,
   {eventsList, promotedEventUid, banner}: CreateIndexDataParam,
 ) => {
+  // @ts-ignore
+  preloads = preloads.map((preloadLinkAttrs) => {
+    return createPreloadLink(preloadLinkAttrs);
+  }).join('');
   // @ts-ignore
   title = title || '';
   // @ts-ignore
