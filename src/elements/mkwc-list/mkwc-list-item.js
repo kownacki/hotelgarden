@@ -3,7 +3,7 @@ import sharedStyles from '../../styles/shared-styles.js'
 
 export default class MkwcListItem extends LitElement {
   static properties = {
-    transformedItem: Object, // {uid: string, originalItem: ItemType}
+    itemData: Object, // ItemDataType
   };
   static styles = [sharedStyles, css`
   `];

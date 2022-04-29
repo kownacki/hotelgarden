@@ -3,26 +3,29 @@ import {repeat} from 'lit/directives/repeat.js';
 import {until} from 'lit/directives/until.js';
 import {when} from 'lit/directives/when.js';
 import sharedStyles from '../styles/shared-styles.js'
-import {generateUid} from '../utils.js';
 import './mkwc-list/mkwc-list-item.js';
 
 /*
   interface ControlOptions {
     getTemplate: () => unknown,
   }
+  interface AddControlOptions extends ControlOptions {
+    createNewItem: () => unknown,
+  }
  */
 
-export default class MkwcList extends LitElement { // <ItemType>
+export default class MkwcList extends LitElement { // <ItemDataType>
   static properties = {
     // required params
-    items: Array, // ItemType[]
+    items: Array, // {uid: string, data: ItemDataType}[]
     ready: Boolean,
-    getItemTemplate: Function, // (item: ItemType, index: number) => unknown
+    getItemTemplate: Function, // (itemData: ItemDataType, index: number) => unknown
     // optional
     editingEnabled: Boolean,
-    controls: Object, // {add?: ControlOptions, delete?: ControlOptions, swap?: ControlOptions, configure?: ControlOptions}
+    controls: Object, // {add?: AddControlOptions, delete?: ControlOptions, swap?: ControlOptions, configure?: ControlOptions}
+    // observables
+    processing: Boolean,
     // private
-    _transformedItems: Array, // {uid: string, originalItem: ItemType}[]
   };
   static styles = [sharedStyles, css`
     :host {
@@ -42,28 +45,18 @@ export default class MkwcList extends LitElement { // <ItemType>
     super();
     this.controls = {};
   }
-  willUpdate(changedProperties) {
-    if (changedProperties.has('items')) {
-      this._transformedItems = this.items.map((item) => {
-        return {
-          uid: generateUid(),
-          originalItem: item,
-        };
-      });
-    }
-  }
   render() {
     return html`
       ${when(
         this.ready,
         () => repeat(
-          this._transformedItems,
-          (transformedItem) => transformedItem.uid,
-          (transformedItem, index) => html`
+          this.items,
+          (item) => item.uid,
+          (item, index) => html`
             <mkwc-list-item
-              .transformedItem=${transformedItem}
+              .item=${item}
               .editingEnabled=${this.editingEnabled}>
-              ${this.getItemTemplate(transformedItem.originalItem, index)}
+              ${this.getItemTemplate(item.data, index)}
             </mkwc-list-item>
           `,
         ),
@@ -73,7 +66,14 @@ export default class MkwcList extends LitElement { // <ItemType>
         () => until(import('./mkwc-list/mkwc-list-add.js').then(() => {
           return html`
             <div class="add-container">
-              <mkwc-list-add>
+              <mkwc-list-add
+                @click=${async () => {
+                  this.processing = true;
+                  const newItem = await this.controls.add.createNewItem();
+                  const newItems = [...this.items, newItem];
+                  this.dispatchEvent(new CustomEvent('request-items-change', {detail: newItems}));
+                  this.processing = false;
+                }}>
                 ${this.controls.add.getTemplate()}
               </mkwc-list-add>
             </div>
