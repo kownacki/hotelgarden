@@ -3,9 +3,9 @@ import {when} from 'lit/directives/when.js';
 import {repeat} from 'lit/directives/repeat.js';
 import sharedStyles from '../styles/shared-styles.js'
 import {generateUid} from '../utils.js';
-import './hg-list/hg-list-item.js';
+import './mkwc-list/mkwc-list-item.js';
 
-export default class HgList extends LitElement {
+export default class MkwcList extends LitElement {
   static properties = {
     // required params
     items: Array, // ItemType[]
@@ -39,14 +39,14 @@ export default class HgList extends LitElement {
           this._transformedItems,
           (transformedItem) => transformedItem.uid,
           (transformedItem, index) => html`
-            <hg-list-item
+            <mkwc-list-item
               .transformedItem=${transformedItem}>
               ${this.getItemTemplate(transformedItem.originalItem, index)}
-            </hg-list-item>
+            </mkwc-list-item>
           `,
         ),
       )}
     `;
   }
 }
-customElements.define('hg-list', HgList);
+customElements.define('mkwc-list', MkwcList);

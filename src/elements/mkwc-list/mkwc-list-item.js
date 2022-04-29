@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit';
 import sharedStyles from '../../styles/shared-styles.js'
 
-export default class HgListItem extends LitElement {
+export default class MkwcListItem extends LitElement {
   static properties = {
     transformedItem: Object, // {uid: string, originalItem: ItemType}
   };
@@ -16,4 +16,4 @@ export default class HgListItem extends LitElement {
     `;
   }
 }
-customElements.define('hg-list-item', HgListItem);
+customElements.define('mkwc-list-item', MkwcListItem);
