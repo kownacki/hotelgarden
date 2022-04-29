@@ -16,12 +16,6 @@ export class HgContact extends HgContent {
       margin-bottom: 80px;
     }
   `];
-  constructor() {
-    super();
-    (async () => {
-      this._events = await getFromDb(createDbPath('events/events'));
-    })();
-  }
   render() {
     return html`
       <hg-article
