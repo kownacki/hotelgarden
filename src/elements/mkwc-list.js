@@ -35,11 +35,6 @@ export default class MkwcList extends LitElement { // <ItemDataType>
     :host > :not(style) {
       width: calc(100% / var(--mkwc-list-items-columns));
     }
-    .add-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
   `];
   constructor() {
     super();
@@ -65,18 +60,17 @@ export default class MkwcList extends LitElement { // <ItemDataType>
         this.editingEnabled && this.controls.add,
         () => until(import('./mkwc-list/mkwc-list-add.js').then(() => {
           return html`
-            <div class="add-container">
-              <mkwc-list-add
-                @click=${async () => {
-                  this.processing = true;
-                  const newItem = await this.controls.add.createNewItem();
-                  const newItems = [...this.items, newItem];
-                  this.dispatchEvent(new CustomEvent('request-items-change', {detail: newItems}));
-                  this.processing = false;
-                }}>
-                ${this.controls.add.getTemplate()}
-              </mkwc-list-add>
-            </div>
+            <mkwc-list-add
+              .addControl=${this.controls.add}
+              @processing-changed=${(processing) => {
+                this.processing = processing;
+              }}
+              @request-add-item=${({detail: newItem}) => {
+                const newItems = [...this.items, newItem];
+                this.dispatchEvent(new CustomEvent('request-items-change', {detail: newItems}));
+              }}>
+              ${this.controls.add.getTemplate()}
+            </mkwc-list-add>
           `;
         })),
       )}
