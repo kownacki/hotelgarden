@@ -5,18 +5,19 @@ import materialColors from 'material-colors';
 import {analyticsScript} from './generateIndex/analyticsScript.js';
 import {preRender} from './generateIndex/preRender.js';
 import {tawkToScript} from './generateIndex/tawkToScript.js';
+import {createPreloadLink} from './html.js';
 
 const noopTag = (strings: TemplateStringsArray, ...keys: string[]) => _.flow([_.zip, _.flatten, _.initial, _.map(String), _.join('')])(strings, keys);
 // to trigger syntax highlighting
 const css = noopTag;
 
-const createJsResourcePreloadLink = (path: string, module = false) => `
-  <link rel="preload" href="${path}" as="script" ${module ? 'crossorigin="anonymous"' : ''}>
-`;
+const createJsResourcePreloadLink = (path: string, module = false) => {
+  return createPreloadLink({href: path, as: 'script', crossorigin: module ? 'anonymous' : undefined});
+};
 
-const createFontResourcePreloadLink = (path: string) => `
-  <link rel="preload" href="${path}" as="font" crossorigin="anonymous">
-`;
+const createFontResourcePreloadLink = (path: string) => {
+  return createPreloadLink({href: path, as: 'font', crossorigin: 'anonymous'});
+};
 
 const createFontFace = (path: string, {family, style, weight}: {family: string, style: string, weight: string}) => css`
   @font-face {

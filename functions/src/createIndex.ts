@@ -45,28 +45,28 @@ export const createIndex = (
   <link href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" rel="stylesheet">
 
   
-  <link rel="preload" href="/resources/fonts/Lato/Lato-Regular.ttf" as="font" crossorigin="anonymous">
-
-  <link rel="preload" href="/resources/fonts/Lato/Lato-Italic.ttf" as="font" crossorigin="anonymous">
-
-  <link rel="preload" href="/resources/fonts/Lato/Lato-Light.ttf" as="font" crossorigin="anonymous">
-
-  <link rel="preload" href="/resources/fonts/Lato/Lato-LightItalic.ttf" as="font" crossorigin="anonymous">
-
-  <link rel="preload" href="/resources/fonts/Lato/Lato-Bold.ttf" as="font" crossorigin="anonymous">
-
-  <link rel="preload" href="/resources/fonts/Lato/Lato-BoldItalic.ttf" as="font" crossorigin="anonymous">
-
-  <link rel="preload" href="/resources/fonts/Yellowtail/Yellowtail-Regular.ttf" as="font" crossorigin="anonymous">
-
+    <link rel="preload" href="/resources/fonts/Lato/Lato-Regular.ttf" as="font" crossorigin="anonymous">
+  
+    <link rel="preload" href="/resources/fonts/Lato/Lato-Italic.ttf" as="font" crossorigin="anonymous">
+  
+    <link rel="preload" href="/resources/fonts/Lato/Lato-Light.ttf" as="font" crossorigin="anonymous">
+  
+    <link rel="preload" href="/resources/fonts/Lato/Lato-LightItalic.ttf" as="font" crossorigin="anonymous">
+  
+    <link rel="preload" href="/resources/fonts/Lato/Lato-Bold.ttf" as="font" crossorigin="anonymous">
+  
+    <link rel="preload" href="/resources/fonts/Lato/Lato-BoldItalic.ttf" as="font" crossorigin="anonymous">
+  
+    <link rel="preload" href="/resources/fonts/Yellowtail/Yellowtail-Regular.ttf" as="font" crossorigin="anonymous">
   
   
-  <link rel="preload" href="/resources/scripts/lodashBundle.js" as="script" crossorigin="anonymous">
-
-  <link rel="preload" href="/resources/scripts/moment.min.js" as="script" >
-
-  <link rel="preload" href="/src/hg-app.js" as="script" crossorigin="anonymous">
-
+  
+    <link rel="preload" href="/resources/scripts/lodashBundle.js" as="script" crossorigin="anonymous">
+  
+    <link rel="preload" href="/resources/scripts/moment.min.js" as="script" >
+  
+    <link rel="preload" href="/src/hg-app.js" as="script" crossorigin="anonymous">
+  
 
   <link rel="preload" href="/src/styles/shared-styles.js" as="script" crossorigin="anonymous">
   <link rel="preload" href="/src/styles/ck-content.js" as="script" crossorigin="anonymous">
