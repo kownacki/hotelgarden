@@ -20,9 +20,9 @@ import {getSitemap} from './sitemap/hotelGardenSitemap';
 
 export const render = async (req: Request, res: Response) => {
   const path = req.path;
-  const seoConfig = await getClientConfig().then((config) => config.seo);
+  const seoConfig = (await getClientConfig()).seo;
   const eventsList = await getEventsList();
-  const promotedEventUid = await getPromotedEvent().then((promotedEvent) => promotedEvent.uid);
+  const promotedEventUid = (await getPromotedEvent()).uid;
 
   if (path === SITEMAP_PATH) {
     const sitemap = await getSitemap();
