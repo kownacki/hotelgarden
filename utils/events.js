@@ -1,6 +1,14 @@
 // to do don't use global moment
 // @ts-ignore
 const moment = window.moment;
+export const createNewEvent = (title, date, path) => {
+    return {
+        title,
+        date,
+        path,
+        public: false,
+    };
+};
 export const isEventToday = (event) => {
     return moment().isSame(event.date, 'day');
 };

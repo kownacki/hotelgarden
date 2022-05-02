@@ -31,10 +31,13 @@ export interface EventsListItem {
 
 export type EventsList = Record<EventUid, EventsListItem>;
 
-export interface DynamicPathPage {
+export interface DynamicPathPageBase {
+  path: string,
+}
+
+export interface DynamicPathPageEvent extends DynamicPathPageBase {
   date: string,
   image?: Image,
-  path: string,
   public: boolean,
   title: string,
 }

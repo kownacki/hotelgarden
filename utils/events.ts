@@ -1,8 +1,17 @@
-import {EventsList, EventsListItem, EventUid} from './types';
+import {DynamicPathPageEvent, EventsList, EventsListItem, EventUid} from './types';
 
 // to do don't use global moment
 // @ts-ignore
 const moment = window.moment;
+
+export const createNewEvent = (title: string, date: string, path: string): DynamicPathPageEvent => {
+  return {
+    title,
+    date,
+    path,
+    public: false,
+  };
+};
 
 export const isEventToday = (event: EventsListItem) => {
   return moment().isSame(event.date, 'day');

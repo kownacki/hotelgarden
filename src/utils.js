@@ -1,6 +1,8 @@
+import {collection, getDocs, query, where} from 'firebase/firestore';
 import {isElementVisible, isElementInProximity} from 'mk-frontend-web-utils/dom.js';
 import diacritics from '../resources/scripts/diacritics.js';
-import {createDbPath, updateInDb} from './utils/database.js';
+import {createNewEvent} from '../utils/events.js';
+import {createDbPath, db, updateInDb} from './utils/database.js';
 
 export const headerHeight = 59;
 
@@ -32,6 +34,19 @@ export const checkChildrenVisibility = _.throttle(100, (element) => {
 export const assignKeys = (field) => _.map.convert({cap: false})((item, key) => ({...item, [field]: key}));
 
 export const generateUid = () => `${Date.now()}${_.padCharsStart('0', 9,  _.random(1, 10**9 - 1))}`;
+
+export const isDynamicPathAvailable = async (path) => {
+  const dynamicPathPagesQuery = query(collection(db, 'dynamicPathPages'), where('path', '==', path));
+  return (await getDocs(dynamicPathPagesQuery)).empty;
+}
+
+export const addDynamicPathPage = async (data) => {
+  return updateInDb(createDbPath(`dynamicPathPages/${generateUid()}`), data);
+}
+
+export const addDynamicPathPageEvent = async (title, date, path) => {
+  return addDynamicPathPage(createNewEvent(title, date, path));
+};
 
 export const updateData = async (doc, path, data) => {
   return updateInDb(createDbPath(doc, path), data);

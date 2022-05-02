@@ -1,12 +1,11 @@
 import {LitElement, html, css} from 'lit';
 import '@material/mwc-button';
 import '@polymer/paper-dialog';
-import {collection, getDocs, query, where} from 'firebase/firestore';
+import {EVENTS_ROOT_PATH} from '../../../../utils/urlStructure.js';
 import '../../../edit/hg-cms-buttons-container.js';
 import '../../../edit/hg-date-picker.js';
 import sharedStyles from '../../../styles/shared-styles.js';
-import {createDbPath, db, getFromDb, updateInDb} from '../../../utils/database.js';
-import {hyphenate} from '../../../utils.js';
+import {addDynamicPathPageEvent, hyphenate, isDynamicPathAvailable} from '../../../utils.js';
 import './hg-events-add/hg-events-add-name.js';
 
 export class HgEventsAdd extends LitElement {
@@ -48,8 +47,7 @@ export class HgEventsAdd extends LitElement {
       if (this._address) {
         this._loading = true;
         const title = this._title;
-        const dynamicPathPagesQuery = query(collection(db, 'dynamicPathPages'), where('path', '==', this._address));
-        const addressTaken = !(await getDocs(dynamicPathPagesQuery)).empty;
+        const addressTaken = !(await isDynamicPathAvailable(this._address));
         // Avoid race condition. Title could change while db query was going. Only use result if it's still relevant.
         if (title === this._title) {
           this._addressTaken = addressTaken;
@@ -62,13 +60,13 @@ export class HgEventsAdd extends LitElement {
     const title = this._title;
     const date = this._date;
     const address = this._address;
-    if (!address || _.has(address, await getFromDb(createDbPath('events/events')))) {
+    if (!address || !(await isDynamicPathAvailable(address))) {
       alert(`Operacja nie powiodła się. Adres "${address}" jest zajęty lub nieprawidłowy.`);
       this._checkIfAddressTaken();
     } else {
       // todo transaction to avoid race condition
-      updateInDb(createDbPath('events/events', address), {title, date, public: false});
-      window.history.pushState(null, null, '/wydarzenia/' + address);
+      await addDynamicPathPageEvent(title, date, address);
+      window.history.pushState(null, null, `${EVENTS_ROOT_PATH}${address}`);
       this.dispatchEvent(new CustomEvent('location-changed', {composed: true, bubbles: true}));
     }
   };
@@ -116,7 +114,7 @@ export class HgEventsAdd extends LitElement {
           </hg-events-add-name>
           <div class="smaller-text">
             <p class="address">
-              Adres: <span class="address-url">hotelgarden.pl/wydarzenia/${this._address || '...'}</span>
+              Adres: <span class="address-url">hotelgarden.pl${EVENTS_ROOT_PATH}${this._address || '...'}</span>
             </p>
             <p class="address-info">
               ${this._loading ? 'Ładowanie...' : ''}
