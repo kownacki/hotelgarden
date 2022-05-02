@@ -31,19 +31,6 @@ export const checkChildrenVisibility = _.throttle(100, (element) => {
 
 export const assignKeys = (field) => _.map.convert({cap: false})((item, key) => ({...item, [field]: key}));
 
-export const splitEvents = (events) => [
-  _.flow([
-    _.filter(_.get('public')),
-    _.filter((event) => moment().isSameOrBefore(event.date, 'day')),
-    _.sortBy('date'),
-  ])(events),
-  _.flow([
-    _.filter(_.get('public')),
-    _.filter((event) => moment().isAfter(event.date, 'day')),
-    _.sortBy('date'),
-  ])(events)
-];
-
 export const generateUid = () => `${Date.now()}${_.padCharsStart('0', 9,  _.random(1, 10**9 - 1))}`;
 
 export const updateData = async (doc, path, data) => {

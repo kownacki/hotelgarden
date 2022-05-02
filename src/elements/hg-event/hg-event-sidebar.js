@@ -1,27 +1,25 @@
 import {LitElement, html, css} from 'lit';
 import {repeat} from 'lit/directives/repeat.js';
-import {splitEvents, assignKeys} from '../../utils.js';
+import {when} from 'lit/directives/when.js';
+import {sortBy} from 'lodash-es';
+import {isEventUpcoming} from '../../../utils/events.js';
 import sharedStyles from '../../styles/shared-styles.js';
 
 export class HgEventSidebar extends LitElement {
   static properties = {
     selected: String,
-    events: Object,
+    events: Array, // DynamicPathPage[]
     _upcoming: Array,
   };
   static styles = [sharedStyles, css`
     :host {
-      top: 0;
+      display: block;
       text-align: center;
       box-sizing: border-box;
-      min-width: 280px;
-      max-width: 280px;
     }
     .container {
       background: rgba(var(--primary-color-rgb), 10%);
       padding: 40px 20px;
-      position: sticky;
-      top: calc(20px + var(--headerHeight));
     }
     h2 {
       font-weight: 400;
@@ -58,23 +56,32 @@ export class HgEventSidebar extends LitElement {
       background: rgba(var(--accent-color-rgb), 70%);
     }
   `];
-  updated(changedProperties) {
+  willUpdate(changedProperties) {
     if (changedProperties.has('events')) {
-      this._upcoming = splitEvents(assignKeys('uid')(this.events))[0];
+      const publicAndUpcomingEvents = this.events
+        .filter((event) => event.public)
+        .filter((event) => isEventUpcoming((event)));
+      this._upcoming = sortBy(publicAndUpcomingEvents, 'date');
     }
   }
   render() {
     return html`
       <div class="container smaller-text">
-        ${_.isEmpty(this._upcoming) ? '' : html`<h2>Nadchodzące wydarzenia</h2>`}
+        ${when(
+          this._upcoming.length > 0,
+          () => html`<h2>Nadchodzące wydarzenia</h2>`
+        )}
         <nav>
-          ${_.isEmpty(this._upcoming) ? '' : html`
-            <ul>
-              ${repeat(this._upcoming, _.get('uid'), (event) => html`
-                <li ?selected=${this.selected === event.uid}><a href="/wydarzenia/${event.uid}">${event.title}</a></li>
-              `)}       
-            </ul>
-          `}
+          ${when(
+            this._upcoming.length > 0,
+            () => html`
+              <ul>
+                ${repeat(this._upcoming, (event) => event.path, (event) => html`
+                <li ?selected=${this.selected === event.path}><a href="/wydarzenia/${event.path}">${event.title}</a></li>
+              `)}
+              </ul>
+            `,
+          )}
           <a class="all" href="/wydarzenia">Wszystkie wydarzenia</a>
         </nav>
       </div>

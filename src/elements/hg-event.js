@@ -1,7 +1,9 @@
 import {LitElement, html, css} from 'lit';
+import {when} from 'lit/directives/when.js';
+import {collection, getDocs} from 'firebase/firestore';
 import {createEventJsonLd} from '../../utils/seo.js';
 import sharedStyles from '../styles/shared-styles.js';
-import {createDbPath, getFromDb, updateInDb, updateInObjectInDb} from '../utils/database.js';
+import {createDbPath, db, getFromDb, updateInDb, updateInObjectInDb} from '../utils/database.js';
 import {cleanTextForMetaDescription} from '../utils.js';
 import {ObjectDbSyncController} from '../utils/ObjectDbSyncController.js';
 import './hg-event/hg-event-content.js';
@@ -20,10 +22,11 @@ export class HgEvent extends LitElement {
   _eventDbSync;
   static properties = {
     eventData: Object, // EventData
-    eventsList: Object, // EventsList
     promotedEventData: Object, // EventData | undefined
     _content: String,
     _contentReady: Boolean,
+    _allDynamicPathPages: Array, // DynamicPathPage[]
+    _allDynamicPathPagesReady: Boolean,
   };
   static styles = [sharedStyles, css`
     :host {
@@ -34,23 +37,34 @@ export class HgEvent extends LitElement {
       padding: 20px 20px 40px;
     }
     .main {
+      flex: 1;
       box-sizing: border-box;
-      width: 720px;
+      max-width: 720px;
       padding: 0 60px;
+    }
+    .sidebar-container {
+      align-self: flex-start;
+      position: sticky;
+      top: calc(20px + var(--headerHeight));
+      width: 280px;
+      max-width: 100%;
     }
     @media all and (max-width: 959px) {
       :host {
-        display: block;
+        flex-direction: column;
+        align-items: center;
       }
       .main {
-        max-width: 720px;
-        width: auto;
+        width: 720px;
+        max-width: 100%;
         padding: 0;
         margin: auto;
       }
-      hg-event-sidebar {
-        display: block;
-        margin: 40px auto 0;
+      .sidebar-container {
+        align-self: auto;
+        top: 0;
+        margin-top: 40px;
+        min-width: auto;
       }
     }
   `];
@@ -70,6 +84,11 @@ export class HgEvent extends LitElement {
         this.eventData = {...this.eventData, event};
       },
     );
+    (async () => {
+      const dynamicPathPagesSnapshot = await getDocs(collection(db, 'dynamicPathPages'));
+      this._allDynamicPathPages = dynamicPathPagesSnapshot.docs.map((dynamicPathPage) => dynamicPathPage.data());
+      this._allDynamicPathPagesReady = true;
+    })();
   }
   async willUpdate(changedProperties) {
     if (changedProperties.has('eventData') && this.eventData.event) {
@@ -123,10 +142,18 @@ export class HgEvent extends LitElement {
           }
         </div>
       `}
-      <hg-event-sidebar
-        .selected=${this.eventData.uid}
-        .events=${this.eventsList}>
-      </hg-event-sidebar>
+      <div class="sidebar-container">
+        ${when(
+          this._allDynamicPathPagesReady,
+          () => html`
+            <hg-event-sidebar
+              .selected=${this.eventData.uid}
+              .events=${this._allDynamicPathPages}>
+            </hg-event-sidebar>
+          `,
+          () => html`<hg-page-loading></hg-page-loading>`,
+        )}
+      </div>
     `;
   }
 }
