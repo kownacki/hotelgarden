@@ -31,7 +31,7 @@ export interface EventsListItem {
 
 export type EventsList = Record<EventUid, EventsListItem>;
 
-export interface EventGeneralData {
+export interface DynamicPathPage {
   date: string,
   image?: Image,
   path: string,
