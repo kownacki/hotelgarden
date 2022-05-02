@@ -1,6 +1,6 @@
 import {PromiseTrigger} from '../../../../utils/general';
 import {EventsList} from '../../../../utils/types';
-import {listenToDb} from '../../listenToDb';
+import {listenToDoc} from '../../listenToDb';
 import {pingGoogleAboutSitemapChange} from '../../utils';
 import {createHotelGardenSitemap} from './createHotelGardenSitemap';
 
@@ -15,7 +15,7 @@ const updateSitemap = async (newSitemap: string) => {
   }
 }
 
-listenToDb<EventsList | undefined>('events/events', (events = {}) => {
+listenToDoc<EventsList | undefined>('events/events', (events = {}) => {
   updateSitemap(createHotelGardenSitemap(events));
 });
 

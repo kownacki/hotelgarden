@@ -1,7 +1,7 @@
 import {ClientConfig} from '../../../utils/types';
-import {listenToDb} from '../database';
+import {listenToDoc} from '../database';
 
-const [clientConfigReady, getClientConfigUnsafe] = listenToDb<ClientConfig>('_config/client');
+const [clientConfigReady, getClientConfigUnsafe] = listenToDoc<ClientConfig>('_config/client');
 
 export const getClientConfig = async () => {
   await clientConfigReady;

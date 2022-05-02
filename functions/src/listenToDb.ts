@@ -6,7 +6,7 @@ export type GetData<Data> = () => Data;
 export type Unsubscribe = () => void;
 export type ListenToDbReturn<Data> = [DataReady, GetData<Data>, Unsubscribe];
 
-export const listenToDb = <Data>(doc: string, onData?: (data: Data) => void): ListenToDbReturn<Data> => {
+export const listenToDoc = <Data>(doc: string, onData?: (data: Data) => void): ListenToDbReturn<Data> => {
   let data: Data;
   const dataReady = new PromiseTrigger();
 

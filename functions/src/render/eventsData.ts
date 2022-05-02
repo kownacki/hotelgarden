@@ -1,5 +1,5 @@
 import {EventUid, EventDbData, EventsList} from '../../../utils/types';
-import {listenToDb, DataReady, GetData, Unsubscribe} from '../database';
+import {listenToDoc, DataReady, GetData, Unsubscribe} from '../database';
 
 const eventsDbListeners: Record<EventUid, {dataReady: DataReady, getDataUnsafe: GetData<EventDbData | undefined>, unsubscribe: Unsubscribe}> = {};
 
@@ -15,13 +15,13 @@ const removeOldDbListeners = (newEvents: EventsList) => {
 const addNewDbListeners = (newEvents: EventsList) => {
   Object.keys(newEvents).forEach((eventUid) => {
     if (!eventsDbListeners[eventUid]) {
-      const [dataReady, getDataUnsafe, unsubscribe] = listenToDb<EventDbData | undefined>(`eventsData/${eventUid}`);
+      const [dataReady, getDataUnsafe, unsubscribe] = listenToDoc<EventDbData | undefined>(`eventsData/${eventUid}`);
       eventsDbListeners[eventUid] = {dataReady, getDataUnsafe, unsubscribe};
     }
   });
 };
 
-listenToDb<EventsList | undefined>('events/events', (events = {}) => {
+listenToDoc<EventsList | undefined>('events/events', (events = {}) => {
   removeOldDbListeners(events);
   addNewDbListeners(events);
 });

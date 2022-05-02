@@ -1,7 +1,7 @@
 import {PromotedEventDbData} from '../../../utils/types';
-import {listenToDb} from '../database';
+import {listenToDoc} from '../database';
 
-const [promotedEventReady, getPromotedEventUnsafe] = listenToDb<PromotedEventDbData | undefined>('events/promoted');
+const [promotedEventReady, getPromotedEventUnsafe] = listenToDoc<PromotedEventDbData | undefined>('events/promoted');
 
 export const getPromotedEvent = async () => {
   await promotedEventReady;

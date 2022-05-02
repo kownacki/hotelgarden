@@ -1,10 +1,10 @@
 import {mapValues} from 'lodash';
 import {Banner} from '../../../utils/types';
 import {PageUid, pagesStaticData} from '../../../utils/urlStructure';
-import {listenToDb} from '../database';
+import {listenToDoc} from '../database';
 
 const bannersListeners = mapValues(pagesStaticData, (pageStaticData, pageUid) => {
-  const [dataReady, getDataUnsafe] = listenToDb<Banner | undefined>(`banners/${pageUid}`);
+  const [dataReady, getDataUnsafe] = listenToDoc<Banner | undefined>(`banners/${pageUid}`);
   return {dataReady, getDataUnsafe};
 })
 

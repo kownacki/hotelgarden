@@ -1,10 +1,10 @@
 import {mapValues} from 'lodash';
 import {PageDbData} from '../../../utils/types';
 import {PageUid, pagesStaticData} from '../../../utils/urlStructure';
-import {listenToDb} from '../database';
+import {listenToDoc} from '../database';
 
 const pagesDbListeners = mapValues(pagesStaticData, (pageStaticData, pageUid) => {
-  const [dataReady, getDataUnsafe] = listenToDb<PageDbData | undefined>(`pages/${pageUid}`);
+  const [dataReady, getDataUnsafe] = listenToDoc<PageDbData | undefined>(`pages/${pageUid}`);
   return {dataReady, getDataUnsafe};
 })
 
