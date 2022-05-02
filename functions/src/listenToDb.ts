@@ -10,8 +10,8 @@ export const listenToDoc = <Data>(doc: string, onData?: (data: Data) => void): L
   let data: Data;
   const dataReady = new PromiseTrigger();
 
-  const unsubscribe = db.doc(doc).onSnapshot((doc) => {
-    data = doc.data() as Data;
+  const unsubscribe = db.doc(doc).onSnapshot((docSnapshot) => {
+    data = docSnapshot.data() as Data;
     dataReady.resolve();
     onData?.(data);
   });
@@ -19,6 +19,24 @@ export const listenToDoc = <Data>(doc: string, onData?: (data: Data) => void): L
   return [
     dataReady.promise,
     () => data,
+    unsubscribe,
+  ];
+};
+
+export const listenToCollection = <DocData>(collection: string, onData?: (docsData: DocData[]) => void): ListenToDbReturn<DocData[]> => {
+  let docsData: DocData[];
+  const dataReady = new PromiseTrigger();
+
+  const unsubscribe = db.collection(collection).onSnapshot((querySnapshot) => {
+    // Todo This is not optimised. Can only be used for small collections. Use docChanges if this is used for large collections
+    docsData = querySnapshot.docs.map((doc) => doc.data()) as DocData[];
+    dataReady.resolve();
+    onData?.(docsData);
+  });
+
+  return [
+    dataReady.promise,
+    () => docsData,
     unsubscribe,
   ];
 };

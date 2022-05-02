@@ -1,9 +1,15 @@
-import {EventsList} from '../../../utils/types';
-import {listenToDoc} from '../database';
+import {omit} from 'lodash';
+import {EventGeneralData, EventsList} from '../../../utils/types';
+import {listenToCollection} from '../database';
 
-const [eventsListReady, getEventsListUnsafe] = listenToDoc<EventsList | undefined>('events/events');
+const [eventsGeneralDataReady, getEventsGeneralDataUnsafe] = listenToCollection<EventGeneralData>('eventsAndNews');
 
 export const getEventsList = async () => {
-  await eventsListReady;
-  return getEventsListUnsafe() || {};
+  await eventsGeneralDataReady;
+  const eventsGeneralData = getEventsGeneralDataUnsafe();
+  const eventsList: EventsList = {}
+  eventsGeneralData.forEach((eventGeneralData) => {
+    eventsList[eventGeneralData.path] = omit(eventGeneralData, 'path');
+  });
+  return eventsList;
 }

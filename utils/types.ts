@@ -31,6 +31,14 @@ export interface EventsListItem {
 
 export type EventsList = Record<EventUid, EventsListItem>;
 
+export interface EventGeneralData {
+  date: string,
+  image?: Image,
+  path: string,
+  public: boolean,
+  title: string,
+}
+
 export interface EventData {
   uid: EventUid,
   event?: EventsListItem,
