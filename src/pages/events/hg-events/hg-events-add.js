@@ -1,10 +1,11 @@
 import {LitElement, html, css} from 'lit';
 import '@material/mwc-button';
 import '@polymer/paper-dialog';
+import {collection, getDocs, query, where} from 'firebase/firestore';
 import '../../../edit/hg-cms-buttons-container.js';
 import '../../../edit/hg-date-picker.js';
 import sharedStyles from '../../../styles/shared-styles.js';
-import {createDbPath, getFromDb, updateInDb} from '../../../utils/database.js';
+import {createDbPath, db, getFromDb, updateInDb} from '../../../utils/database.js';
 import {hyphenate} from '../../../utils.js';
 import './hg-events-add/hg-events-add-name.js';
 
@@ -47,11 +48,12 @@ export class HgEventsAdd extends LitElement {
       if (this._address) {
         this._loading = true;
         const title = this._title;
-        const dbResult = _.has(this._address, await getFromDb(createDbPath('events/events')));
-        this._loading = false;
+        const dynamicPathPagesQuery = query(collection(db, 'dynamicPathPages'), where('path', '==', this._address));
+        const addressTaken = !(await getDocs(dynamicPathPagesQuery)).empty;
         // Avoid race condition. Title could change while db query was going. Only use result if it's still relevant.
         if (title === this._title) {
-          this._addressTaken = dbResult;
+          this._addressTaken = addressTaken;
+          this._loading = false;
         }
       }
     });
