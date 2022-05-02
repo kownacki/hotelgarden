@@ -1,10 +1,9 @@
 import {LitElement, html, css} from 'lit';
 import {when} from 'lit/directives/when.js';
-import {collection, getDocs} from 'firebase/firestore';
 import {createEventJsonLd} from '../../utils/seo.js';
 import sharedStyles from '../styles/shared-styles.js';
-import {createDbPath, db, getFromDb, updateInDb, updateInObjectInDb} from '../utils/database.js';
-import {cleanTextForMetaDescription} from '../utils.js';
+import {createDbPath, getFromDb, updateInDb, updateInObjectInDb} from '../utils/database.js';
+import {cleanTextForMetaDescription, getAllDynamicPathPages} from '../utils.js';
 import {ObjectDbSyncController} from '../utils/ObjectDbSyncController.js';
 import './hg-event/hg-event-content.js';
 import './hg-event/hg-event-header.js';
@@ -85,8 +84,7 @@ export class HgEvent extends LitElement {
       },
     );
     (async () => {
-      const dynamicPathPagesSnapshot = await getDocs(collection(db, 'dynamicPathPages'));
-      this._allDynamicPathPages = dynamicPathPagesSnapshot.docs.map((dynamicPathPage) => dynamicPathPage.data());
+      this._allDynamicPathPages = await getAllDynamicPathPages();
       this._allDynamicPathPagesReady = true;
     })();
   }

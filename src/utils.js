@@ -35,6 +35,11 @@ export const assignKeys = (field) => _.map.convert({cap: false})((item, key) => 
 
 export const generateUid = () => `${Date.now()}${_.padCharsStart('0', 9,  _.random(1, 10**9 - 1))}`;
 
+export const getAllDynamicPathPages = async () => {
+  const dynamicPathPagesSnapshot = await getDocs(collection(db, 'dynamicPathPages'));
+  return dynamicPathPagesSnapshot.docs.map((dynamicPathPage) => dynamicPathPage.data());
+}
+
 export const isDynamicPathAvailable = async (path) => {
   const dynamicPathPagesQuery = query(collection(db, 'dynamicPathPages'), where('path', '==', path));
   return (await getDocs(dynamicPathPagesQuery)).empty;
