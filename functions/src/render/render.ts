@@ -12,7 +12,7 @@ import {
 import {createIndex} from '../createIndex';
 import {getBanner} from './banners';
 import {getClientConfig} from './config';
-import {getEventDbData} from './eventsData';
+import {getEventSeoData} from './eventsDataSeo';
 import {getEventsList} from './eventsList';
 import {getPageDbData} from './pagesData';
 import {getPromotedEvent} from './promotedEvent';
@@ -38,12 +38,13 @@ export const render = async (req: Request, res: Response) => {
     const index = createIndex(preloads, {title, metaDescription}, {eventsList, promotedEventUid, banner});
     res.status(200).send(index);
   } else if (isValidEventPath(path, eventsList)) {
-    const eventUid = getEventPermalink(path);
-    const event = eventsList[eventUid];
-    const title = createFullEventTitle(eventUid, seoConfig, eventsList);
-    const eventDbData = await getEventDbData(eventUid);
-    const metaDescription = eventDbData.seo?.description;
-    const jsonLd = createEventJsonLd(eventsList[eventUid]);
+    const permalink = getEventPermalink(path);
+    const event = eventsList[permalink];
+    const eventUid = event.uid;
+    const title = createFullEventTitle(permalink, seoConfig, eventsList);
+    const eventSeoData = (await getEventSeoData(eventUid)).seo;
+    const metaDescription = eventSeoData?.description;
+    const jsonLd = createEventJsonLd(event);
     const preloads: PreloadLinkAttrs[] = event.image ? [{href: event.image.url, as: 'image'}] : [];
     const index = createIndex(preloads, {title, metaDescription, jsonLd}, {eventsList, promotedEventUid});
     res.status(200).send(index);
