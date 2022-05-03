@@ -1,8 +1,9 @@
 import {PromiseTrigger} from '../../../../utils/general';
-import {EventsList} from '../../../../utils/types';
-import {listenToDoc} from '../../listenToDb';
+import {DynamicPathPageEvent} from '../../../../utils/types';
+import {listenToCollection} from '../../listenToDb';
 import {pingGoogleAboutSitemapChange} from '../../utils';
 import {createHotelGardenSitemap} from './createHotelGardenSitemap';
+import {convertDynamicPathPagesToEventsList} from '../../../../utils/events';
 
 let sitemap: string | undefined;
 const sitemapReady = new PromiseTrigger();
@@ -15,8 +16,15 @@ const updateSitemap = async (newSitemap: string) => {
   }
 }
 
-listenToDoc<EventsList | undefined>('events/events', (events = {}) => {
-  updateSitemap(createHotelGardenSitemap(events));
+listenToCollection<DynamicPathPageEvent>('dynamicPathPages', (dynamicPathPages) => {
+  const dynamicPathPagesWithUids = dynamicPathPages.map((documentSnapshot) => {
+    return {
+      ...documentSnapshot.data,
+      uid: documentSnapshot.id,
+    };
+  })
+  const eventsList = convertDynamicPathPagesToEventsList(dynamicPathPagesWithUids);
+  updateSitemap(createHotelGardenSitemap(eventsList));
 });
 
 export const getSitemap = async () => {
