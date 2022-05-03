@@ -33,7 +33,7 @@ export interface EventsListItem {
 export type EventsList = Record<EventUid, EventsListItem>;
 
 export interface DynamicPathPageBase {
-  path: string,
+  permalink: string,
 }
 
 export interface DynamicPathPageEvent extends DynamicPathPageBase {

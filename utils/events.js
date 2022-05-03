@@ -1,12 +1,9 @@
 import { omit } from 'lodash-es';
-// to do don't use global moment
-// @ts-ignore
-const moment = window.moment;
-export const createNewEvent = (title, date, path) => {
+export const createNewEvent = (title, date, permalink) => {
     return {
         title,
         date,
-        path,
+        permalink,
         public: false,
     };
 };
@@ -52,7 +49,7 @@ export const getPromotedEventData = (promotedEventUid, eventsList) => {
 export const convertDynamicPathPagesToEventsList = (dynamicPathPagesWithUids) => {
     const eventsList = {};
     dynamicPathPagesWithUids.forEach((dynamicPathPage) => {
-        eventsList[dynamicPathPage.path] = omit(dynamicPathPage, 'path');
+        eventsList[dynamicPathPage.permalink] = omit(dynamicPathPage, 'permalink');
     });
     return eventsList;
 };

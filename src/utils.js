@@ -52,8 +52,8 @@ export const removeDynamicPathPage = async (uid) => {
   return Promise.all([deleteMainPromise, deleteContentPromise, deleteSeoPromise]);
 }
 
-export const isDynamicPathAvailable = async (path) => {
-  const dynamicPathPagesQuery = query(collection(db, 'dynamicPathPages'), where('path', '==', path));
+export const isDynamicPathAvailable = async (permalink) => {
+  const dynamicPathPagesQuery = query(collection(db, 'dynamicPathPages'), where('permalink', '==', permalink));
   return (await getDocs(dynamicPathPagesQuery)).empty;
 }
 
@@ -61,8 +61,8 @@ export const addDynamicPathPage = async (data) => {
   return updateInDb(createDbPath(`dynamicPathPages/${generateUid()}`), data);
 }
 
-export const addDynamicPathPageEvent = async (title, date, path) => {
-  return addDynamicPathPage(createNewEvent(title, date, path));
+export const addDynamicPathPageEvent = async (title, date, permalink) => {
+  return addDynamicPathPage(createNewEvent(title, date, permalink));
 };
 
 export const updateData = async (doc, path, data) => {

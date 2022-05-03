@@ -78,7 +78,7 @@ export class HgEventSidebar extends LitElement {
               <ul>
                 ${repeat(this._upcoming, (event) => event.uid, (event) => html`
                 <li ?selected=${this.selected === event.uid}>
-                  <a href="/wydarzenia/${event.path}">${event.title}</a>
+                  <a href="/wydarzenia/${event.permalink}">${event.title}</a>
                 </li>
               `)}
               </ul>

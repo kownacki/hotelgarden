@@ -1,11 +1,11 @@
 import {omit} from 'lodash'
 import {DynamicPathPageEvent, DynamicPathPageEventWithUid, EventsList, EventsListItem, EventUid} from './types';
 
-export const createNewEvent = (title: string, date: string, path: string): DynamicPathPageEvent => {
+export const createNewEvent = (title: string, date: string, permalink: string): DynamicPathPageEvent => {
   return {
     title,
     date,
-    path,
+    permalink,
     public: false,
   };
 };
@@ -59,7 +59,7 @@ export const getPromotedEventData = (promotedEventUid: EventUid | null, eventsLi
 export const convertDynamicPathPagesToEventsList = (dynamicPathPagesWithUids: DynamicPathPageEventWithUid[]) => {
   const eventsList: EventsList = {};
   dynamicPathPagesWithUids.forEach((dynamicPathPage) => {
-    eventsList[dynamicPathPage.path] = omit(dynamicPathPage, 'path');
+    eventsList[dynamicPathPage.permalink] = omit(dynamicPathPage, 'permalink');
   });
   return eventsList;
 }

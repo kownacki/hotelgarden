@@ -88,7 +88,7 @@ export class HgEventsCard extends LitElement {
   `];
   render() {
     return html`
-      <a href="${EVENTS_ROOT_PATH}${this.event.path}">
+      <a href="${EVENTS_ROOT_PATH}${this.event.permalink}">
         <hg-image
           .src=${_.get('image.url', this.event)}
           .ready=${true}

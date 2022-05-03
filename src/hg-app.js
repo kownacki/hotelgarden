@@ -94,7 +94,7 @@ export class HgApp extends LitElement {
         uid: event.uid,
         event: {
           ...event,
-          path: eventUid,
+          permalink: eventUid,
         },
       },
       eventsList,
