@@ -11,10 +11,12 @@ export default class HgListOld extends LitElement {
   _firebaseAuth;
   static properties = {
     // flags
+    // todo use array as default flag
     array: Boolean,
     noGetItems: Boolean,
     addAtStart: Boolean,
     noAdd: Boolean,
+    noSwap: Boolean,
     vertical: Boolean,
     // required params
     path: DbPath,
@@ -130,7 +132,7 @@ export default class HgListOld extends LitElement {
             .getItemName=${this.getItemName}
             .first=${listIndex === 0}
             .last=${listIndex === _.size(this._list) - 1}
-            .noSwap=${!this._loggedIn || !this.array}
+            .noSwap=${this.noSwap || !this._loggedIn || !this.array}
             .noDelete=${!this._loggedIn}
             .vertical=${this.vertical}
             .disableEdit=${this._processing || this.editing}
