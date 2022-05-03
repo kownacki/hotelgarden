@@ -11,8 +11,6 @@ export default class HgListOld extends LitElement {
   _firebaseAuth;
   static properties = {
     // flags
-    // todo use array as default flag
-    array: Boolean,
     noGetItems: Boolean,
     addAtStart: Boolean,
     noAdd: Boolean,
@@ -102,13 +100,10 @@ export default class HgListOld extends LitElement {
       await this.onDelete(this.items[key]);
     }
     let newItems;
-    if (this.array) {
-      newItems = _.toArray(this.items);
-      newItems.splice(key, 1);
-      newItems = {...newItems};
-    } else {
-      newItems = _.omit(key, this.items);
-    }
+    newItems = _.toArray(this.items);
+    newItems.splice(key, 1);
+    newItems = {...newItems};
+
     if (!this.noBuiltInDelete) {
       await this.updateData('', {...newItems});
     }
@@ -128,14 +123,14 @@ export default class HgListOld extends LitElement {
     return html`
       ${(this.addAtStart ? _.reverse : _.identity)([
         !this._listNotEmpty && this.emptyTemplate ? this.emptyTemplate : '',
-        repeat(this._list || [], this.array ? (key) => _.get(`${key}.uid`, this.items) : _.identity, (key, listIndex) =>
+        repeat(this._list || [], (key) => _.get(`${key}.uid`, this.items), (key, listIndex) =>
           !_.get(key, this.items) ?  '' : html`<hg-list-old-item
             style="${this.calculateItemTop ? `top: ${this.calculateItemTop(listIndex + ((this._loggedIn && !this.noAdd) ? 1 : 0)) * 100}%` : ''}"
             .item=${this.items[key]}
             .getItemName=${this.getItemName}
             .first=${listIndex === 0}
             .last=${listIndex === _.size(this._list) - 1}
-            .noSwap=${this.noSwap || !this._loggedIn || !this.array}
+            .noSwap=${this.noSwap || !this._loggedIn}
             .noDelete=${!this._loggedIn}
             .vertical=${this.vertical}
             .disableEdit=${this._processing || this.editing}

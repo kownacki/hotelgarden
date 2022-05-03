@@ -59,7 +59,6 @@ export class HgIcons extends LitElement {
   render() {
     return html`
       <hg-list-old
-        .array=${true}
         .path=${createDbPath(`iconBlocks/${this.uid}`)}
         .getItemName=${() => 'ikonę'}
         .itemTemplate=${(icon, index, disableEdit) => html`

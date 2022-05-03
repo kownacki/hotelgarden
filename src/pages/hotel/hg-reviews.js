@@ -80,7 +80,6 @@ export class HgReviews extends LitElement {
     return html`
       <hg-intro-article .uid=${'reviews'}></hg-intro-article>
       <hg-list-old
-        .array=${true}
         .addAtStart=${true}
         .transform=${() => _.reverse}
         .path=${createDbPath('reviews/reviews')}

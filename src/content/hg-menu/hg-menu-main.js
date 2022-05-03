@@ -99,7 +99,6 @@ export class HgMenuMain extends LitElement {
         ${_.isEmpty(this.category.items) ? html`<div class="empty">Brak pozycji w kategorii</div>`: ''}
         <hg-list-old
           id="list"
-          .array=${true}
           .vertical=${true}
           .noGetItems=${true}
           .items=${_.get('items', this.category)}

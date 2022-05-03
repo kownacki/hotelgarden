@@ -21,7 +21,6 @@ export class HgEventsAndNewsList extends LitElement {
   render() {
     return html`
       <hg-list-old
-        .array=${true}
         .noAdd=${true}
         .noSwap=${true}
         .noGetItems=${true}

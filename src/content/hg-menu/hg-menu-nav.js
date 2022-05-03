@@ -47,7 +47,6 @@ export class HgMenuNav extends LitElement {
     return html`
       <hg-list-old
         id="list"
-        .array=${true}
         .vertical=${true}
         .noGetItems=${true},
         .items=${this.categories}
