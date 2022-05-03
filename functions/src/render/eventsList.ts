@@ -1,15 +1,11 @@
-import {omit} from 'lodash';
-import {DynamicPathPage, EventsList} from '../../../utils/types';
+import {DynamicPathPageEvent} from '../../../utils/types';
 import {listenToCollection} from '../database';
+import {convertDynamicPathPagesToEventsList} from '../../../utils/events';
 
-const [dynamicPathPagesReady, getDynamicPathPagesUnsafe] = listenToCollection<DynamicPathPage>('dynamicPathPages');
+const [dynamicPathPagesReady, getDynamicPathPagesUnsafe] = listenToCollection<DynamicPathPageEvent>('dynamicPathPages');
 
 export const getEventsList = async () => {
   await dynamicPathPagesReady;
-  const dynamicPathPage = getDynamicPathPagesUnsafe();
-  const eventsList: EventsList = {};
-  dynamicPathPage.forEach((dynamicPathPage) => {
-    eventsList[dynamicPathPage.path] = omit(dynamicPathPage, 'path');
-  });
-  return eventsList;
+  const dynamicPathPages = getDynamicPathPagesUnsafe();
+  return convertDynamicPathPagesToEventsList(dynamicPathPages);
 }

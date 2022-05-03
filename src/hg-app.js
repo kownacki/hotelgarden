@@ -3,9 +3,9 @@ import '@polymer/app-route/app-location.js';
 import {getEventUid, isEventPath, staticPathToPageUid} from '../utils/urlStructure.js';
 import './elements/hg-header.js';
 import './elements/hg-page.js';
-import {sleep, isProductionEnvironment} from './utils.js';
+import {sleep, isProductionEnvironment, getAllDynamicPathPages} from './utils.js';
 import {authDeferred, createDbPath, getFromDb} from './utils/database.js';
-import {getPromotedEventData} from '../utils/events.js';
+import {convertDynamicPathPagesToEventsList, getPromotedEventData} from '../utils/events.js';
 
 // For index.html !
 authDeferred.then(({auth, onAuthStateChanged}) => {
@@ -66,7 +66,7 @@ export class HgApp extends LitElement {
       };
     } else {
       return {
-        eventsList: getFromDb(createDbPath('events/events')),
+        eventsList: getAllDynamicPathPages().then((dynamicPathPages) => convertDynamicPathPagesToEventsList(dynamicPathPages)),
         promotedEventUid: getFromDb(createDbPath('events/promoted', 'uid')),
       };
     }

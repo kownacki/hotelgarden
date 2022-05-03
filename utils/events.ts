@@ -1,3 +1,4 @@
+import {omit} from 'lodash'
 import {DynamicPathPageEvent, EventsList, EventsListItem, EventUid} from './types';
 
 // to do don't use global moment
@@ -50,3 +51,11 @@ export const getPromotedEventData = (promotedEventUid: EventUid | null, eventsLi
     }
     : undefined;
 };
+
+export const convertDynamicPathPagesToEventsList = (dynamicPathPages: DynamicPathPageEvent[]) => {
+  const eventsList: EventsList = {};
+  dynamicPathPages.forEach((dynamicPathPage) => {
+    eventsList[dynamicPathPage.path] = omit(dynamicPathPage, 'path');
+  });
+  return eventsList;
+}
