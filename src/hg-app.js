@@ -91,8 +91,11 @@ export class HgApp extends LitElement {
     const event = eventsList[eventUid];
     return {
       eventData: {
-        uid: eventUid,
-        event,
+        uid: event.uid,
+        event: {
+          ...event,
+          path: eventUid,
+        },
       },
       eventsList,
       noBannerImage: !event,

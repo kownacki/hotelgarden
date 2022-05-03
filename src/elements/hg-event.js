@@ -90,12 +90,12 @@ export class HgEvent extends LitElement {
   }
   async willUpdate(changedProperties) {
     if (changedProperties.has('eventData') && this.eventData.event) {
-      this._eventDbSync.setPath(createDbPath('events/events', this.eventData.uid));
+      this._eventDbSync.setPath(createDbPath(`dynamicPathPages/${this.eventData.uid}`));
 
       const eventJsonLd = createEventJsonLd(this.eventData.event);
       this.dispatchEvent(new CustomEvent('set-json-ld', {detail: eventJsonLd}));
 
-      this._content = await getFromDb(createDbPath(`eventsContents/${this.eventData.uid}`, 'content'));
+      this._content = await getFromDb(createDbPath(`dynamicPathPages/${this.eventData.uid}/data/content`, 'content'));
       this.dispatchEvent(new CustomEvent('set-meta-description', {detail: this._content}));
       this._contentReady = true;
     }
@@ -106,9 +106,9 @@ export class HgEvent extends LitElement {
   }
   updateContent(text) {
     this._content = text;
-    updateInDb(createDbPath(`eventsContents/${this.eventData.uid}`, 'content'), text);
+    updateInDb(createDbPath(`dynamicPathPages/${this.eventData.uid}/data/content`, 'content'), text);
     const cleanedText = cleanTextForMetaDescription(text);
-    updateInDb(createDbPath(`eventsData/${this.eventData.uid}`, 'seo.description'), cleanedText);
+    updateInDb(createDbPath(`dynamicPathPages/${this.eventData.uid}/data/seo`, 'seo.description'), cleanedText);
     this.dispatchEvent(new CustomEvent('set-meta-description', {detail: cleanedText}));
   }
   render() {

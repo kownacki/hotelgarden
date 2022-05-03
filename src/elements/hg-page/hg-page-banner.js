@@ -52,7 +52,7 @@ export class HgPageBanner extends LitElement {
     if (changedProperties.has('path') || changedProperties.has('eventDataReady')) {
       // Check if it's still on an event page
       if (this.contentType === ContentType.EVENT && this.eventDataReady) {
-        this._objectDbSync.setPath(createDbPath('events/events', this.eventData.uid));
+        this._objectDbSync.setPath(createDbPath(`dynamicPathPages/${this.eventData.uid}`));
       }
     }
   }

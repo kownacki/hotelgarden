@@ -7,7 +7,7 @@ import sharedStyles from '../../styles/shared-styles.js';
 
 export class HgEventSidebar extends LitElement {
   static properties = {
-    selected: String,
+    selected: String, // EventUid
     events: Array, // DynamicPathPage[]
     _upcoming: Array,
   };
@@ -76,8 +76,10 @@ export class HgEventSidebar extends LitElement {
             this._upcoming.length > 0,
             () => html`
               <ul>
-                ${repeat(this._upcoming, (event) => event.path, (event) => html`
-                <li ?selected=${this.selected === event.path}><a href="/wydarzenia/${event.path}">${event.title}</a></li>
+                ${repeat(this._upcoming, (event) => event.uid, (event) => html`
+                <li ?selected=${this.selected === event.uid}>
+                  <a href="/wydarzenia/${event.path}">${event.title}</a>
+                </li>
               `)}
               </ul>
             `,
