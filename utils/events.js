@@ -39,7 +39,9 @@ export const getEventFormattedDate = (event) => {
     return event.date.split('-').reverse().join(' / ');
 };
 export const getPromotedEventData = (promotedEventUid, eventsList) => {
-    const promotedEvent = promotedEventUid && eventsList[promotedEventUid];
+    const promotedEvent = promotedEventUid && Object.values(eventsList).find((eventListItem) => {
+        return eventListItem.uid === promotedEventUid;
+    });
     return promotedEvent && isEventTodayOrUpcoming(promotedEvent)
         ? {
             uid: promotedEventUid,
@@ -47,9 +49,9 @@ export const getPromotedEventData = (promotedEventUid, eventsList) => {
         }
         : undefined;
 };
-export const convertDynamicPathPagesToEventsList = (dynamicPathPages) => {
+export const convertDynamicPathPagesToEventsList = (dynamicPathPagesWithUids) => {
     const eventsList = {};
-    dynamicPathPages.forEach((dynamicPathPage) => {
+    dynamicPathPagesWithUids.forEach((dynamicPathPage) => {
         eventsList[dynamicPathPage.path] = omit(dynamicPathPage, 'path');
     });
     return eventsList;

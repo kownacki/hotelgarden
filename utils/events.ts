@@ -1,5 +1,5 @@
 import {omit} from 'lodash'
-import {DynamicPathPageEvent, EventsList, EventsListItem, EventUid} from './types';
+import {DynamicPathPageEvent, DynamicPathPageEventWithUid, EventsList, EventsListItem, EventUid} from './types';
 
 export const createNewEvent = (title: string, date: string, path: string): DynamicPathPageEvent => {
   return {
@@ -45,7 +45,9 @@ export const getEventFormattedDate = (event: EventsListItem) => {
 }
 
 export const getPromotedEventData = (promotedEventUid: EventUid | null, eventsList: EventsList) => {
-  const promotedEvent = promotedEventUid && eventsList[promotedEventUid];
+  const promotedEvent = promotedEventUid && Object.values(eventsList).find((eventListItem) => {
+    return eventListItem.uid === promotedEventUid;
+  });
   return promotedEvent && isEventTodayOrUpcoming(promotedEvent)
     ? {
       uid: promotedEventUid as EventUid,
@@ -54,9 +56,9 @@ export const getPromotedEventData = (promotedEventUid: EventUid | null, eventsLi
     : undefined;
 };
 
-export const convertDynamicPathPagesToEventsList = (dynamicPathPages: DynamicPathPageEvent[]) => {
+export const convertDynamicPathPagesToEventsList = (dynamicPathPagesWithUids: DynamicPathPageEventWithUid[]) => {
   const eventsList: EventsList = {};
-  dynamicPathPages.forEach((dynamicPathPage) => {
+  dynamicPathPagesWithUids.forEach((dynamicPathPage) => {
     eventsList[dynamicPathPage.path] = omit(dynamicPathPage, 'path');
   });
   return eventsList;

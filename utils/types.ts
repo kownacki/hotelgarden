@@ -27,6 +27,7 @@ export interface EventsListItem {
   image?: Image,
   public: boolean,
   title: string,
+  uid: string,
 }
 
 export type EventsList = Record<EventUid, EventsListItem>;
@@ -40,6 +41,10 @@ export interface DynamicPathPageEvent extends DynamicPathPageBase {
   image?: Image,
   public: boolean,
   title: string,
+}
+
+export interface DynamicPathPageEventWithUid extends DynamicPathPageEvent {
+  uid: EventUid,
 }
 
 export interface EventData {
