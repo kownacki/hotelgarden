@@ -1,5 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import '@material/mwc-button';
+import {EVENTS_ROOT_PATH} from '../../../../utils/urlStructure';
 import '../../../elements/mkwc/hg-image.js';
 import sharedStyles from '../../../styles/shared-styles.js'
 
@@ -87,7 +88,7 @@ export class HgEventsCard extends LitElement {
   `];
   render() {
     return html`
-      <a href="/wydarzenia/${this.event.uid}">
+      <a href="${EVENTS_ROOT_PATH}${this.event.path}">
         <hg-image
           .src=${_.get('image.url', this.event)}
           .ready=${true}
