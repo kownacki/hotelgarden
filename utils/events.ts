@@ -1,10 +1,6 @@
 import {omit} from 'lodash'
 import {DynamicPathPageEvent, EventsList, EventsListItem, EventUid} from './types';
 
-// to do don't use global moment
-// @ts-ignore
-const moment = window.moment;
-
 export const createNewEvent = (title: string, date: string, path: string): DynamicPathPageEvent => {
   return {
     title,
@@ -15,10 +11,16 @@ export const createNewEvent = (title: string, date: string, path: string): Dynam
 };
 
 export const isEventToday = (event: EventsListItem) => {
+  // to do don't use global moment
+  // @ts-ignore
+  const moment = window.moment;
   return moment().isSame(event.date, 'day');
 };
 
 export const isEventUpcoming = (event: EventsListItem) => {
+  // to do don't use global moment
+  // @ts-ignore
+  const moment = window.moment;
   return moment().isBefore(event.date, 'day');
 };
 

@@ -7,5 +7,11 @@ const [dynamicPathPagesReady, getDynamicPathPagesUnsafe] = listenToCollection<Dy
 export const getEventsList = async () => {
   await dynamicPathPagesReady;
   const dynamicPathPages = getDynamicPathPagesUnsafe();
-  return convertDynamicPathPagesToEventsList(dynamicPathPages);
+  const dynamicPathPagesWithUids = dynamicPathPages.map((documentSnapshot) => {
+    return {
+      ...documentSnapshot.data,
+      uid: documentSnapshot.id,
+    };
+  })
+  return convertDynamicPathPagesToEventsList(dynamicPathPagesWithUids);
 }

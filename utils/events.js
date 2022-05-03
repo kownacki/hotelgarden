@@ -11,9 +11,15 @@ export const createNewEvent = (title, date, path) => {
     };
 };
 export const isEventToday = (event) => {
+    // to do don't use global moment
+    // @ts-ignore
+    const moment = window.moment;
     return moment().isSame(event.date, 'day');
 };
 export const isEventUpcoming = (event) => {
+    // to do don't use global moment
+    // @ts-ignore
+    const moment = window.moment;
     return moment().isBefore(event.date, 'day');
 };
 export const isEventTodayOrUpcoming = (event) => {
