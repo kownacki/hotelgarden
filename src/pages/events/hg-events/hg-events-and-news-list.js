@@ -1,45 +1,45 @@
 import {LitElement, html, css} from 'lit';
 import '../../../elements/hg-list-old.js';
+import {isEventPast, isEventTodayOrUpcoming} from '../../../../utils/events.js';
 import sharedStyles from '../../../styles/shared-styles.js';
-import {createDbPath, deleteImageInDb} from '../../../utils/database.js';
-import {FirebaseAuthController} from '../../../utils/FirebaseAuthController.js';
+import {deleteImageInDb} from '../../../utils/database.js';
+import {removeDynamicPathPage} from '../../../utils.js';
 import './hg-events-card.js';
 
 export class HgEventsAndNewsList extends LitElement {
-  _firebaseAuth;
   static properties = {
+    events: Array, // DynamicPathPage[]
+    noNonPublic: Boolean,
     past: Boolean,
     max: Number,
-    noNonPublic: Boolean,
-    _loggedIn: Boolean,
   };
   static styles = [sharedStyles, css`
     :host {
       display: block;
     }
   `];
-  constructor() {
-    super();
-    this._firebaseAuth = new FirebaseAuthController(this, (loggedIn) => {
-      this._loggedIn = loggedIn;
-    });
-  }
   render() {
     return html`
       <hg-list-old
+        .array=${true}
         .noAdd=${true}
+        .noSwap=${true}
+        .noGetItems=${true}
+        .noBuiltInDelete=${true}
+        .items=${this.events}
+        .ready=${true}
         .transform=${(items) => _.flow([
-          ...(this._loggedIn && !this.noNonPublic ? [] : [_.filter((key) => items[key].public)]),
-          _.filter((key) => moment()[!this.past ? 'isSameOrBefore' : 'isAfter'](items[key].date, 'day')),
+          ...(this.noNonPublic ? [_.filter((key) => items[key].public)] : []),
+          _.filter((key) => this.past ? isEventPast(items[key]) : isEventTodayOrUpcoming(items[key])),
           _.sortBy((key) => items[key].date),
           ...(!this.past ? [] : [_.reverse]),
           ...(!this.max ? [] : [_.take(this.max)]),
         ])}
-        .path=${createDbPath('events/events')}
         .emptyTemplate=${html`<p style="font-size: 20px">Brak ${!this.past ? 'nadchodzących' : 'minionych'} wydarzeń</p>`}
         .getItemName=${(item) => `wydarzenie "${item.title}"`}       
         .itemTemplate=${(event, uid) => html`<hg-events-card .event=${{uid, ...event}}></hg-events-card>`}
         .onDelete=${(event) => {
+          removeDynamicPathPage(event.uid);
           if (event.image) {
             deleteImageInDb(event.image.name);
           }

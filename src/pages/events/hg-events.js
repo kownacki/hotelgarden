@@ -1,9 +1,12 @@
 import {LitElement, html, css} from 'lit';
 import {until} from 'lit/directives/until.js';
+import {when} from 'lit/directives/when.js';
 import sharedStyles from '../../styles/shared-styles.js';
 import '../../content/hg-article/hg-intro-article.js';
 import '../../elements/hg-action-button.js';
+import '../../elements/hg-page/hg-page-loading.js';
 import {FirebaseAuthController} from '../../utils/FirebaseAuthController.js';
+import {getAllDynamicPathPages} from '../../utils.js';
 import './hg-events/hg-events-and-news-list.js';
 
 // todo add scrolling to dialogs
@@ -12,6 +15,8 @@ export class HgEvents extends LitElement {
   _firebaseAuth;
   static properties = {
     _loggedIn: Boolean,
+    _allDynamicPathPages: Array, // DynamicPathPage[]
+    _allDynamicPathPagesReady: Boolean,
   };
   static styles = [sharedStyles, css`
     :host {
@@ -35,6 +40,10 @@ export class HgEvents extends LitElement {
     this._firebaseAuth = new FirebaseAuthController(this, (loggedIn) => {
       this._loggedIn = loggedIn;
     });
+    (async () => {
+      this._allDynamicPathPages = await getAllDynamicPathPages();
+      this._allDynamicPathPagesReady = true;
+    })();
   }
   render() {
     return html`
@@ -43,14 +52,33 @@ export class HgEvents extends LitElement {
         return html`<hg-events-add></hg-events-add>`;
       }))}
       <h2>Nadchodzące wydarzenia</h2>
-      <hg-events-and-news-list></hg-events-and-news-list>
+      ${when(
+        this._allDynamicPathPagesReady,
+        () => html`
+            <hg-events-and-news-list
+              .events=${this._allDynamicPathPages}
+              .noNonPublic=${!this._loggedIn}>
+            </hg-events-and-news-list>
+          `,
+        () => html`<hg-page-loading></hg-page-loading>`,
+      )}
       <hg-action-button id="button" @click=${() => {
         this.shadowRoot.getElementById('past').hidden = false;
         this.shadowRoot.getElementById('button').hidden = true;
       }}>Pokaż minione wydarzenia</hg-action-button>
       <div id="past" hidden>
         <h2>Minione wydarzenia</h2>
-        <hg-events-and-news-list .past=${true}></hg-events-and-news-list>
+        ${when(
+          this._allDynamicPathPagesReady,
+          () => html`
+            <hg-events-and-news-list
+              .events=${this._allDynamicPathPages}
+              .noNonPublic=${!this._loggedIn}
+              .past=${true}>
+            </hg-events-and-news-list>
+          `,
+          () => html`<hg-page-loading></hg-page-loading>`,
+        )}
       </div>
     `;
   }

@@ -1,4 +1,4 @@
-import {collection, getDocs, query, where} from 'firebase/firestore';
+import {collection, doc, deleteDoc, getDocs, query, where} from 'firebase/firestore';
 import {isElementVisible, isElementInProximity} from 'mk-frontend-web-utils/dom.js';
 import diacritics from '../resources/scripts/diacritics.js';
 import {createNewEvent} from '../utils/events.js';
@@ -37,7 +37,19 @@ export const generateUid = () => `${Date.now()}${_.padCharsStart('0', 9,  _.rand
 
 export const getAllDynamicPathPages = async () => {
   const dynamicPathPagesSnapshot = await getDocs(collection(db, 'dynamicPathPages'));
-  return dynamicPathPagesSnapshot.docs.map((dynamicPathPage) => dynamicPathPage.data());
+  return dynamicPathPagesSnapshot.docs.map((dynamicPathPage) => {
+    return {
+      ...dynamicPathPage.data(),
+      uid: dynamicPathPage.id,
+    };
+  });
+}
+
+export const removeDynamicPathPage = async (uid) => {
+  const deleteMainPromise = deleteDoc(doc(db, 'dynamicPathPages', uid));
+  const deleteContentPromise = deleteDoc(doc(db, `dynamicPathPages/${uid}/data/content`));
+  const deleteSeoPromise = deleteDoc(doc(db, `dynamicPathPages/${uid}/data/seo`));
+  return Promise.all([deleteMainPromise, deleteContentPromise, deleteSeoPromise]);
 }
 
 export const isDynamicPathAvailable = async (path) => {

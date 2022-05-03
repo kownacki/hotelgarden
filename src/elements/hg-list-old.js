@@ -17,6 +17,7 @@ export default class HgListOld extends LitElement {
     addAtStart: Boolean,
     noAdd: Boolean,
     noSwap: Boolean,
+    noBuiltInDelete: Boolean,
     vertical: Boolean,
     // required params
     path: DbPath,
@@ -108,7 +109,9 @@ export default class HgListOld extends LitElement {
     } else {
       newItems = _.omit(key, this.items);
     }
-    await this.updateData('', {...newItems});
+    if (!this.noBuiltInDelete) {
+      await this.updateData('', {...newItems});
+    }
     this.items = newItems;
     this.dispatchEvent(new CustomEvent('item-deleted', {detail: key}));
     this._processing = false;
