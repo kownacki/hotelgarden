@@ -69,7 +69,7 @@ export const linksMap = keyBy(links, 'path');
 export const createFullUrl = (path) => {
     return path === '/' ? ROOT_URL : `${ROOT_URL}${path}`;
 };
-export const getEventUid = (path) => {
+export const getEventPermalink = (path) => {
     return path.replace(EVENTS_ROOT_PATH, '');
 };
 export const createEventPath = (eventUid) => {
@@ -82,7 +82,7 @@ export const isEventPath = (path) => {
     return path.startsWith(EVENTS_ROOT_PATH);
 };
 export const isValidEventPath = (path, eventsList) => {
-    return isEventPath(path) && Object.keys(eventsList).includes(getEventUid(path));
+    return isEventPath(path) && Object.keys(eventsList).includes(getEventPermalink(path));
 };
 export const isValidPath = (path, eventsList) => {
     return isValidStaticPath(path) || isValidEventPath(path, eventsList);

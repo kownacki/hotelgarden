@@ -1,4 +1,4 @@
-import { isEventPath, getEventUid, pagesStaticData, staticPathToPageUid } from './urlStructure';
+import { isEventPath, getEventPermalink, pagesStaticData, staticPathToPageUid } from './urlStructure';
 export const getDefaultTitle = (uid) => {
     return pagesStaticData[uid].name;
 };
@@ -19,7 +19,7 @@ export const getEventTitle = (event) => {
 const getPageOrEventTitle = (path, seoConfig, eventsList) => {
     let title;
     if (isEventPath(path)) {
-        const eventUid = getEventUid(path);
+        const eventUid = getEventPermalink(path);
         const event = eventsList[eventUid];
         title = getEventTitle(event);
     }

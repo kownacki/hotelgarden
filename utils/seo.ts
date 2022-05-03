@@ -1,5 +1,5 @@
 import {ClientConfigSeo, EventsList, EventsListItem, EventUid} from './types';
-import {isEventPath, getEventUid, PageUid, pagesStaticData, StaticPath, staticPathToPageUid} from './urlStructure';
+import {isEventPath, getEventPermalink, PageUid, pagesStaticData, StaticPath, staticPathToPageUid} from './urlStructure';
 
 export const getDefaultTitle = (uid: PageUid) => {
   return pagesStaticData[uid].name;
@@ -24,7 +24,7 @@ export const getEventTitle = (event: EventsListItem) => {
 const getPageOrEventTitle = (path: string, seoConfig: ClientConfigSeo, eventsList: EventsList) => {
   let title: string;
   if (isEventPath(path)) {
-    const eventUid = getEventUid(path);
+    const eventUid = getEventPermalink(path);
     const event = eventsList[eventUid];
     title = getEventTitle(event);
   } else {

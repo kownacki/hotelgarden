@@ -2,7 +2,7 @@ import {Request, Response} from 'firebase-functions';
 import {PreloadLinkAttrs} from '../../../utils/html';
 import {createFull404PageTitle, createFullPageTitle, createFullEventTitle, createEventJsonLd} from '../../../utils/seo';
 import {
-  getEventUid,
+  getEventPermalink,
   isValidStaticPath,
   isValidEventPath,
   StaticPath,
@@ -38,7 +38,7 @@ export const render = async (req: Request, res: Response) => {
     const index = createIndex(preloads, {title, metaDescription}, {eventsList, promotedEventUid, banner});
     res.status(200).send(index);
   } else if (isValidEventPath(path, eventsList)) {
-    const eventUid = getEventUid(path);
+    const eventUid = getEventPermalink(path);
     const event = eventsList[eventUid];
     const title = createFullEventTitle(eventUid, seoConfig, eventsList);
     const eventDbData = await getEventDbData(eventUid);

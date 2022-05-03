@@ -118,7 +118,7 @@ export const createFullUrl = (path: string) => {
   return path === '/' ? ROOT_URL : `${ROOT_URL}${path}`;
 }
 
-export const getEventUid = (path: string): EventUid => {
+export const getEventPermalink = (path: string): EventUid => {
   return path.replace(EVENTS_ROOT_PATH, '');
 };
 
@@ -135,7 +135,7 @@ export const isEventPath = (path: string) => {
 };
 
 export const isValidEventPath = (path: string, eventsList: EventsList) => {
-  return isEventPath(path) && Object.keys(eventsList).includes(getEventUid(path));
+  return isEventPath(path) && Object.keys(eventsList).includes(getEventPermalink(path));
 };
 
 export const isValidPath = (path: string, eventsList: EventsList) => {

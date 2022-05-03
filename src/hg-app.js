@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import '@polymer/app-route/app-location.js';
-import {getEventUid, isEventPath, staticPathToPageUid} from '../utils/urlStructure.js';
+import {getEventPermalink, isEventPath, staticPathToPageUid} from '../utils/urlStructure.js';
 import './elements/hg-header.js';
 import './elements/hg-page.js';
 import {sleep, isProductionEnvironment, getAllDynamicPathPages} from './utils.js';
@@ -122,7 +122,7 @@ export class HgApp extends LitElement {
         this._eventDataReady = undefined;
         this._noBannerImage = noBannerImage;
       } else {
-        const eventUid = getEventUid(this._path);
+        const eventUid = getEventPermalink(this._path);
         this._pageUid = undefined;
         this._eventDataReady = false;
         (async () => {
