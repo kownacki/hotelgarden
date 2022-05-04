@@ -2,7 +2,7 @@ import {LitElement, html, css} from 'lit';
 import {when} from 'lit/directives/when.js';
 import '../elements/hg-action-button.js';
 import '../elements/hg-page/hg-page-loading.js';
-import '../pages/events/hg-events/hg-events-and-news-list.js';
+import '../pages/hg-events/hg-events-and-news-list.js';
 import sharedStyles from '../styles/shared-styles.js';
 import {getAllDynamicPathPages, sleep} from '../utils.js';
 
