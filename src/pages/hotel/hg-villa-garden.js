@@ -3,7 +3,7 @@ import '../../content/hg-article/hg-intro-article.js';
 import '../../content/hg-links.js';
 import HgContent from '../../elements/hg-content.js';
 import {staticProp} from '../../utils.js';
-import '../rooms/hg-room.js';
+import './hg-rooms/hg-room.js';
 
 const VILLA_ROOM_INDEX = 3;
 

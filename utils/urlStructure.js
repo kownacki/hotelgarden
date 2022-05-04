@@ -45,9 +45,8 @@ export const links = [
     {
         name: 'Hotel',
         path: '/',
-        sublinks: ['landing', 'villa-garden', 'cuisine', 'surroundings', 'reviews'],
+        sublinks: ['landing', 'rooms', 'villa-garden', 'cuisine', 'surroundings', 'reviews'],
     },
-    pagesStaticData['rooms'],
     {
         name: 'Garden Bistro',
         path: '/garden-bistro',

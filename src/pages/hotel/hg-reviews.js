@@ -44,34 +44,27 @@ const configure = {
 
 export class HgReviews extends LitElement {
   static styles = css`
-    :host {
-      display: block;
-      max-width: 1200px;
-      padding: 40px 0;
-      margin: auto;
-    }
     hg-intro-article {
       display: none;
     }
     hg-list-old {
       display: flex;
       flex-wrap: wrap;
+      max-width: 1200px;
+      padding: 40px 0;
+      margin: auto;
       --columns: 3;
     }
     @media all and (max-width: 1279px) {
-      :host {
-        max-width: 800px;
-      }
       hg-list-old {
+        max-width: 800px;
         --columns: 2;
       }
     }
     @media all and (max-width: 839px) {
-      :host {
+      hg-list-old {
         width: 580px;
         max-width: 100%;
-      }
-      hg-list-old {
         --columns: 1;
       }
     }
