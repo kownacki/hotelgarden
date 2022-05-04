@@ -21,23 +21,23 @@ export const staticPathToPageUid = {
 };
 export const staticPaths = Object.keys(staticPathToPageUid);
 export const pagesStaticData = {
-    'landing': { name: 'O hotelu', path: '/', dir: 'hotel' },
-    'villa-garden': { name: 'Villa Garden', path: '/villa-garden', dir: 'hotel' },
+    '404': { name: 'Błąd 404 - strony nie znaleziono', path: NOT_FOUND_404, dir: '404' },
+    'banquet-halls': { name: 'Sale bankietowe', path: '/sale-bankietowe', dir: 'celebrations' },
+    'conference-halls': { name: 'Sale konferencyjne', path: '/sale-konferencyjne', dir: 'conferences' },
+    'conferences': { name: 'Konferencja w Gardenie', path: '/konferencje', dir: 'conferences' },
+    'contact': { name: 'Kontakt', path: '/kontakt', dir: 'contact' },
     'cuisine': { name: 'O naszej kuchni', path: '/kuchnia', dir: 'hotel' },
-    'surroundings': { name: 'Atrakcje okolicy', path: '/atrakcje-okolicy', dir: 'hotel' },
+    'events': { name: 'Wydarzenia', path: '/wydarzenia', dir: 'events' },
+    'family-parties': { name: 'Przyjęcia rodzinne', path: '/przyjecia-rodzinne', dir: 'celebrations' },
+    'gallery': { name: 'Galeria', path: '/galeria', dir: 'gallery' },
+    'landing': { name: 'O hotelu', path: '/', dir: 'hotel' },
+    'lunch': { name: 'Lunch', path: '/lunch', dir: 'restaurant' },
+    'restaurant': { name: 'O restauracji', path: '/garden-bistro', dir: 'restaurant' },
     'reviews': { name: 'Opinie ', path: '/opinie', dir: 'hotel' },
     'rooms': { name: 'Pokoje', path: '/pokoje', dir: 'rooms' },
-    'conferences': { name: 'Konferencja w Gardenie', path: '/konferencje', dir: 'conferences' },
-    'conference-halls': { name: 'Sale konferencyjne', path: '/sale-konferencyjne', dir: 'conferences' },
-    'restaurant': { name: 'O restauracji', path: '/garden-bistro', dir: 'restaurant' },
-    'lunch': { name: 'Lunch', path: '/lunch', dir: 'restaurant' },
+    'surroundings': { name: 'Atrakcje okolicy', path: '/atrakcje-okolicy', dir: 'hotel' },
+    'villa-garden': { name: 'Villa Garden', path: '/villa-garden', dir: 'hotel' },
     'weddings': { name: 'Wesela', path: '/wesela', dir: 'celebrations' },
-    'family-parties': { name: 'Przyjęcia rodzinne', path: '/przyjecia-rodzinne', dir: 'celebrations' },
-    'banquet-halls': { name: 'Sale bankietowe', path: '/sale-bankietowe', dir: 'celebrations' },
-    'gallery': { name: 'Galeria', path: '/galeria', dir: 'gallery' },
-    'events': { name: 'Wydarzenia', path: '/wydarzenia', dir: 'events' },
-    'contact': { name: 'Kontakt', path: '/kontakt', dir: 'contact' },
-    '404': { name: 'Błąd 404 - strony nie znaleziono', path: NOT_FOUND_404, dir: '404' },
 };
 export const pageUids = Object.keys(pagesStaticData);
 export const staticPathPageUids = pageUids.filter((pageUid) => pageUid !== '404');

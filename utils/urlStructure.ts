@@ -2,43 +2,43 @@ import {keyBy} from 'lodash';
 import {EventsList, EventUid} from './types';
 
 export type PageUid =
-  | 'landing'
-  | 'villa-garden'
+  | '404'
+  | 'banquet-halls'
+  | 'conference-halls'
+  | 'conferences'
+  | 'contact'
   | 'cuisine'
-  | 'surroundings'
+  | 'events'
+  | 'family-parties'
+  | 'gallery'
+  | 'landing'
+  | 'lunch'
+  | 'restaurant'
   | 'reviews'
   | 'rooms'
-  | 'restaurant'
-  | 'lunch'
-  | 'conferences'
-  | 'conference-halls'
-  | 'weddings'
-  | 'family-parties'
-  | 'banquet-halls'
-  | 'gallery'
-  | 'events'
-  | 'contact'
-  | '404';
+  | 'surroundings'
+  | 'villa-garden'
+  | 'weddings';
 
 export type StaticPathPageUid = Exclude<PageUid, '404'>;
 
 export type StaticPath =
   | '/'
-  | '/villa-garden'
-  | '/kuchnia'
   | '/atrakcje-okolicy'
+  | '/galeria'
+  | '/garden-bistro'
+  | '/konferencje'
+  | '/kontakt'
+  | '/kuchnia'
+  | '/lunch'
   | '/opinie'
   | '/pokoje'
-  | '/garden-bistro'
-  | '/lunch'
-  | '/konferencje'
-  | '/sale-konferencyjne'
-  | '/wesela'
   | '/przyjecia-rodzinne'
   | '/sale-bankietowe'
-  | '/galeria'
-  | '/wydarzenia'
-  | '/kontakt'
+  | '/sale-konferencyjne'
+  | '/villa-garden'
+  | '/wesela'
+  | '/wydarzenia';
 
 export const NOT_FOUND_404 = 'NOT_FOUND_404';
 
@@ -64,24 +64,30 @@ export const staticPathToPageUid: Record<StaticPath, StaticPathPageUid> = {
 
 export const staticPaths = Object.keys(staticPathToPageUid) as StaticPath[];
 
-export const pagesStaticData: Record<PageUid, {name: string, path: StaticPath | 'NOT_FOUND_404', dir: string}> = {
-  'landing': {name: 'O hotelu', path: '/', dir: 'hotel'},
-  'villa-garden': {name: 'Villa Garden', path: '/villa-garden', dir: 'hotel'},
+interface PageStaticData {
+  name: string,
+  path: StaticPath | 'NOT_FOUND_404',
+  dir: string
+}
+
+export const pagesStaticData: Record<PageUid, PageStaticData> = {
+  '404': {name: 'Błąd 404 - strony nie znaleziono', path: NOT_FOUND_404, dir: '404'},
+  'banquet-halls': {name: 'Sale bankietowe', path: '/sale-bankietowe', dir: 'celebrations'},
+  'conference-halls': {name: 'Sale konferencyjne', path: '/sale-konferencyjne', dir: 'conferences'},
+  'conferences': {name: 'Konferencja w Gardenie', path: '/konferencje', dir: 'conferences'},
+  'contact': {name: 'Kontakt', path: '/kontakt', dir: 'contact'},
   'cuisine': {name: 'O naszej kuchni', path: '/kuchnia', dir: 'hotel'},
-  'surroundings': {name: 'Atrakcje okolicy', path: '/atrakcje-okolicy', dir: 'hotel'},
+  'events': {name: 'Wydarzenia', path: '/wydarzenia', dir: 'events'},
+  'family-parties': {name: 'Przyjęcia rodzinne', path: '/przyjecia-rodzinne', dir: 'celebrations'},
+  'gallery': {name: 'Galeria', path: '/galeria', dir: 'gallery'},
+  'landing': {name: 'O hotelu', path: '/', dir: 'hotel'},
+  'lunch': {name: 'Lunch', path: '/lunch', dir: 'restaurant'},
+  'restaurant': {name: 'O restauracji', path: '/garden-bistro', dir: 'restaurant'},
   'reviews': {name: 'Opinie ', path: '/opinie', dir: 'hotel'},
   'rooms': {name: 'Pokoje', path: '/pokoje', dir: 'rooms'},
-  'conferences': {name: 'Konferencja w Gardenie', path: '/konferencje', dir: 'conferences'},
-  'conference-halls': {name: 'Sale konferencyjne', path: '/sale-konferencyjne', dir: 'conferences'},
-  'restaurant': {name: 'O restauracji', path: '/garden-bistro', dir: 'restaurant'},
-  'lunch': {name: 'Lunch', path: '/lunch', dir: 'restaurant'},
+  'surroundings': {name: 'Atrakcje okolicy', path: '/atrakcje-okolicy', dir: 'hotel'},
+  'villa-garden': {name: 'Villa Garden', path: '/villa-garden', dir: 'hotel'},
   'weddings': {name: 'Wesela', path: '/wesela', dir: 'celebrations'},
-  'family-parties': {name: 'Przyjęcia rodzinne', path: '/przyjecia-rodzinne', dir: 'celebrations'},
-  'banquet-halls': {name: 'Sale bankietowe', path: '/sale-bankietowe', dir: 'celebrations'},
-  'gallery': {name: 'Galeria', path: '/galeria', dir: 'gallery'},
-  'events': {name: 'Wydarzenia', path: '/wydarzenia', dir: 'events'},
-  'contact': {name: 'Kontakt', path: '/kontakt', dir: 'contact'},
-  '404': {name: 'Błąd 404 - strony nie znaleziono', path: NOT_FOUND_404, dir: '404'},
 };
 
 export const pageUids = Object.keys(pagesStaticData) as PageUid[];
