@@ -3,6 +3,7 @@ import '@material/mwc-button';
 import {EVENTS_ROOT_PATH} from '../../../utils/urlStructure.js';
 import '../../elements/mkwc/hg-image.js';
 import sharedStyles from '../../styles/shared-styles.js'
+import {DynamicPathPageType} from '../../utils.js';
 
 export class HgDynamicPathPageCard extends LitElement {
   static properties = {
@@ -20,7 +21,7 @@ export class HgDynamicPathPageCard extends LitElement {
     }
     .content {
       flex: 1;
-      padding: 40px;
+      padding: 30px;
     }
     a {
       color: var(--secondary-color);
@@ -37,11 +38,17 @@ export class HgDynamicPathPageCard extends LitElement {
       flex-direction: row-reverse;
       align-items: baseline;
     }
-    h3 {
+    .type-and-title {
       flex: 1;
+      margin: 0 20px 0 0;
+    }
+    .type {
+      margin-top: 10px;
+    }
+    h3 {
+      margin-top: 0;
       font-weight: 400;
       font-size: 24px;
-      margin: 0 20px 0 0;
     }
     .non-public {
       color: red;
@@ -84,6 +91,9 @@ export class HgDynamicPathPageCard extends LitElement {
       a {
         display: block;
       }
+      h3 {
+        font-size: 21px;
+      }
     }
   `];
   render() {
@@ -97,14 +107,18 @@ export class HgDynamicPathPageCard extends LitElement {
         <div class="content">
           <div class="header">
             <div class="date">${this.dynamicPathPage.date.split('-').reverse().join(' / ')}</div>
-            <h3>
-              ${this.dynamicPathPage.public ? '' : html`
-                <span class="non-public">Niepubliczne</span>&nbsp;
-              `}
-              ${this.dynamicPathPage.title}
-            </h3>
+            <div class="type-and-title">
+              <div class="type">
+                ${this.dynamicPathPage.type === DynamicPathPageType.EVENT ? 'Wydarzenie' : 'Aktualności'} 
+              </div>
+              <h3>
+                ${this.dynamicPathPage.public ? '' : html`
+                  <span class="non-public">Niepubliczne</span>&nbsp;
+                `}
+                ${this.dynamicPathPage.title}
+              </h3>
+            </div>
           </div>
-          <p>${this.dynamicPathPage.description}</p>
           <div class="more">Zobacz więcej <mwc-icon>add</mwc-icon></div>
         </div>
       </a>
