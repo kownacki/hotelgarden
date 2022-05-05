@@ -1,10 +1,5 @@
 import {omit} from 'lodash'
-import {
-  DynamicPathPageEvent,
-  DynamicPathPageEventWithUid, DynamicPathPageNews,
-  EventsList,
-  EventUid
-} from './types';
+import {DynamicPathPageEvent, DynamicPathPageEventWithUid, DynamicPathPageNews, EventsList, EventUid} from './types';
 import {isDatePast, isDateTodayOrPast, isDateTodayOrUpcoming, isDateUpcoming} from './general';
 
 export const createNewEvent = (title: string, startDate: string, endDate: string, permalink: string): DynamicPathPageEvent => {
@@ -54,11 +49,11 @@ export const getWhenEventHappens = (event: DynamicPathPageEvent) => {
     : isEventGoing(event)
       ? 'W trakcie'
       : 'Odbyło się';
-}
+};
 
 export const getFormattedSingleDate = (date: string) => {
   return date.split('-').reverse().join(' / ');
-}
+};
 
 export const getEventFormattedDate = (event: DynamicPathPageEvent) => {
   if (isEventSingleDay(event)) {
@@ -66,7 +61,11 @@ export const getEventFormattedDate = (event: DynamicPathPageEvent) => {
   } else {
     return `${getFormattedSingleDate(event.startDate)} — ${getFormattedSingleDate(event.endDate)}`;
   }
-}
+};
+
+export const getNewsFormattedDate = (news: DynamicPathPageNews) => {
+  return getFormattedSingleDate(news.publishDate);
+};
 
 export const getPromotedEventData = (promotedEventUid: EventUid | null, eventsList: EventsList) => {
   const promotedEvent = promotedEventUid && Object.values(eventsList).find((eventListItem) => {
@@ -87,4 +86,4 @@ export const convertDynamicPathPagesToEventsList = (dynamicPathPagesWithUids: Dy
     eventsList[dynamicPathPage.permalink] = omit(dynamicPathPage, 'permalink');
   });
   return eventsList;
-}
+};

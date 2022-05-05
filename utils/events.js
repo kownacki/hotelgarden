@@ -52,6 +52,9 @@ export const getEventFormattedDate = (event) => {
         return `${getFormattedSingleDate(event.startDate)} — ${getFormattedSingleDate(event.endDate)}`;
     }
 };
+export const getNewsFormattedDate = (news) => {
+    return getFormattedSingleDate(news.publishDate);
+};
 export const getPromotedEventData = (promotedEventUid, eventsList) => {
     const promotedEvent = promotedEventUid && Object.values(eventsList).find((eventListItem) => {
         return eventListItem.uid === promotedEventUid;

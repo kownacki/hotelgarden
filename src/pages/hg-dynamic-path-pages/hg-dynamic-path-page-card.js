@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import '@material/mwc-button';
-import {getEventFormattedDate} from '../../../utils/events.js';
+import {getEventFormattedDate, getNewsFormattedDate} from '../../../utils/events.js';
 import {EVENTS_ROOT_PATH} from '../../../utils/urlStructure.js';
 import '../../elements/mkwc/hg-image.js';
 import sharedStyles from '../../styles/shared-styles.js'
@@ -105,7 +105,12 @@ export class HgDynamicPathPageCard extends LitElement {
             <div class="type">
               ${this.dynamicPathPage.type === DynamicPathPageType.EVENT ? 'Wydarzenie' : 'Aktualności'}
             </div>
-            <div class="date">${getEventFormattedDate(this.dynamicPathPage)}</div>
+            <div class="date">
+              ${this.dynamicPathPage.type === DynamicPathPageType.EVENT
+                ? getEventFormattedDate(this.dynamicPathPage)
+                : getNewsFormattedDate(this.dynamicPathPage)
+              }
+            </div>
           </div>
           <div class="main">
             <h3>
