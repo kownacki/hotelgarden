@@ -56,6 +56,7 @@ export class HgDynamicPathPagesAddDialogContent extends LitElement {
         this._type,
         () => html`
           <hg-dynamic-path-pages-add-name
+            .label=${this._type === HgEventsAddType.EVENT ? 'Nazwa wydarzenia' : 'Nazwa aktualności'}
             @name-changed=${({detail: name}) => {
               this.dispatchEvent(new CustomEvent('title-changed', {detail: name}));
             }}>

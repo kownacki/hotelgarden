@@ -4,6 +4,7 @@ import '../../../../utils/fixes/mwc-textfield-fixed.js';
 
 export class HgDynamicPathPagesAddName extends LitElement {
   static properties = {
+    label: String,
   };
   static styles = [sharedStyles, css`
     :host {
@@ -19,7 +20,7 @@ export class HgDynamicPathPagesAddName extends LitElement {
   render() {
     return html`
       <mwc-textfield-fixed
-        .label=${'Nazwa wydarzenia'}
+        .label=${this.label}
         @value-change=${({detail: value}) => this._handleValueChange(value)}>
       </mwc-textfield-fixed>
     `;
