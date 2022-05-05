@@ -3,7 +3,7 @@ import '../../elements/hg-list-old.js';
 import {isEventPast, isEventGoingOrUpcoming} from '../../../utils/events.js';
 import sharedStyles from '../../styles/shared-styles.js';
 import {deleteImageInDb} from '../../utils/database.js';
-import {removeDynamicPathPage} from '../../utils.js';
+import {DynamicPathPageType, removeDynamicPathPage} from '../../utils.js';
 import './hg-dynamic-path-page-card.js';
 
 export class HgDynamicPathPagesList extends LitElement {
@@ -37,7 +37,10 @@ export class HgDynamicPathPagesList extends LitElement {
         .emptyTemplate=${html`
           <p style="font-size: 20px">Brak ${!this.past ? 'nadchodzących' : 'minionych'} wydarzeń</p>
         `}
-        .getItemName=${(item) => `wydarzenie "${item.title}"`}
+        .getItemName=${(dynamicPathPage) => {
+          const typeName = dynamicPathPage.type === DynamicPathPageType.EVENT ? 'wydarzenie' : 'aktualność';
+          return `${typeName} "${dynamicPathPage.title}"`;
+        }}
         .itemTemplate=${(dynamicPathPage, uid) => html`
           <hg-dynamic-path-page-card 
             .dynamicPathPage=${{uid, ...dynamicPathPage}}>
