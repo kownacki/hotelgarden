@@ -4,7 +4,7 @@ import {isEventPast, isEventTodayOrUpcoming} from '../../../utils/events.js';
 import sharedStyles from '../../styles/shared-styles.js';
 import {deleteImageInDb} from '../../utils/database.js';
 import {removeDynamicPathPage} from '../../utils.js';
-import './hg-event-card.js';
+import './hg-dynamic-path-page-card.js';
 
 export class HgDynamicPathPagesList extends LitElement {
   static properties = {
@@ -34,9 +34,15 @@ export class HgDynamicPathPagesList extends LitElement {
           ...(!this.past ? [] : [_.reverse]),
           ...(!this.max ? [] : [_.take(this.max)]),
         ])}
-        .emptyTemplate=${html`<p style="font-size: 20px">Brak ${!this.past ? 'nadchodzących' : 'minionych'} wydarzeń</p>`}
-        .getItemName=${(item) => `wydarzenie "${item.title}"`}       
-        .itemTemplate=${(event, uid) => html`<hg-event-card .event=${{uid, ...event}}></hg-event-card>`}
+        .emptyTemplate=${html`
+          <p style="font-size: 20px">Brak ${!this.past ? 'nadchodzących' : 'minionych'} wydarzeń</p>
+        `}
+        .getItemName=${(item) => `wydarzenie "${item.title}"`}
+        .itemTemplate=${(dynamicPathPage, uid) => html`
+          <hg-dynamic-path-page-card 
+            .dynamicPathPage=${{uid, ...dynamicPathPage}}>
+          </hg-dynamic-path-page-card>
+        `}
         .onDelete=${(event) => {
           removeDynamicPathPage(event.uid);
           if (event.image) {

@@ -4,9 +4,9 @@ import {EVENTS_ROOT_PATH} from '../../../utils/urlStructure.js';
 import '../../elements/mkwc/hg-image.js';
 import sharedStyles from '../../styles/shared-styles.js'
 
-export class HgEventCard extends LitElement {
+export class HgDynamicPathPageCard extends LitElement {
   static properties = {
-    event: Object,
+    dynamicPathPage: Object, // DynamicPathPageEvent || DynamicPathPageNews
   };
   static styles = [sharedStyles, css`
     :host {
@@ -88,22 +88,27 @@ export class HgEventCard extends LitElement {
   `];
   render() {
     return html`
-      <a href="${EVENTS_ROOT_PATH}${this.event.permalink}">
+      <a href="${EVENTS_ROOT_PATH}${this.dynamicPathPage.permalink}">
         <hg-image
-          .src=${_.get('image.url', this.event)}
+          .src=${_.get('image.url', this.dynamicPathPage)}
           .ready=${true}
           .fit=${'cover'}>
         </hg-image>
         <div class="content">
           <div class="header">
-            <div class="date">${this.event.date.split('-').reverse().join(' / ')}</div>
-            <h3>${this.event.public ? '' : html`<span class="non-public">Niepubliczne</span>&nbsp;`}${this.event.title}</h3>
+            <div class="date">${this.dynamicPathPage.date.split('-').reverse().join(' / ')}</div>
+            <h3>
+              ${this.dynamicPathPage.public ? '' : html`
+                <span class="non-public">Niepubliczne</span>&nbsp;
+              `}
+              ${this.dynamicPathPage.title}
+            </h3>
           </div>
-          <p>${this.event.description}</p>
+          <p>${this.dynamicPathPage.description}</p>
           <div class="more">Zobacz więcej <mwc-icon>add</mwc-icon></div>
         </div>
       </a>
     `;
   }
 }
-customElements.define('hg-event-card', HgEventCard);
+customElements.define('hg-dynamic-path-page-card', HgDynamicPathPageCard);
