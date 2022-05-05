@@ -48,8 +48,10 @@ export class HgEvents extends LitElement {
   render() {
     return html`
       <hg-intro-article .uid=${'events'}></hg-intro-article>
-      ${!this._loggedIn ? '' : until(import('./hg-events/hg-events-add.js').then(() => {
-        return html`<hg-events-add></hg-events-add>`;
+      ${!this._loggedIn ? '' : until(import('./hg-events/hg-dynamic-path-pages-add.js').then(() => {
+        return html`
+          <hg-dynamic-path-pages-add></hg-dynamic-path-pages-add>
+        `;
       }))}
       <h2>Nadchodzące wydarzenia</h2>
       ${when(

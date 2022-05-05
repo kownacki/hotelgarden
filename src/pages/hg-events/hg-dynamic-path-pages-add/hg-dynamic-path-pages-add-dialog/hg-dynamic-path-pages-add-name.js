@@ -1,8 +1,8 @@
 import {LitElement, html, css} from 'lit';
-import sharedStyles from '../../../styles/shared-styles.js';
-import '../../../utils/fixes/mwc-textfield-fixed.js';
+import sharedStyles from '../../../../styles/shared-styles.js';
+import '../../../../utils/fixes/mwc-textfield-fixed.js';
 
-export class HgEventsAddName extends LitElement {
+export class HgDynamicPathPagesAddName extends LitElement {
   static properties = {
   };
   static styles = [sharedStyles, css`
@@ -14,7 +14,7 @@ export class HgEventsAddName extends LitElement {
     }
   `];
   _handleValueChange(value) {
-    this.dispatchEvent(new CustomEvent('name-change', {detail: value}));
+    this.dispatchEvent(new CustomEvent('name-changed', {detail: value}));
   }
   render() {
     return html`
@@ -25,4 +25,4 @@ export class HgEventsAddName extends LitElement {
     `;
   }
 }
-customElements.define('hg-events-add-name', HgEventsAddName);
+customElements.define('hg-dynamic-path-pages-add-name', HgDynamicPathPagesAddName);

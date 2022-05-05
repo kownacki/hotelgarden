@@ -1,5 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import '@material/mwc-radio';
+import '../../elements/ui/hg-mwc-formfield-wrapper.js';
 import sharedStyles from '../../styles/shared-styles.js';
 import '../../utils/fixes/mwc-formfield-fixed.js';
 
@@ -22,8 +23,6 @@ export class HgContactFormSubjectSelect extends LitElement {
     }
     :host([invalid]) {
       color: var(--error-color);
-      --mdc-radio-unchecked-color: var(--error-color);
-      --mdc-theme-text-primary-on-background: var(--error-color);
     }
     .about-container {
       display: flex;
@@ -57,20 +56,24 @@ export class HgContactFormSubjectSelect extends LitElement {
       <div class="about-container">
         <div class="about">Dotyczy*:</div>
       </div>
-      <mwc-formfield-fixed .label=${'Noclegi'}>
-        <mwc-radio
-          name="subject"
-          .disabled=${this.disabled}
-          @click=${() => this._selectSubject(HgContactFormSubject.HOTEL)}>
-        </mwc-radio>
-      </mwc-formfield-fixed>
-      <mwc-formfield-fixed .label=${'Gastronomia'}>
-        <mwc-radio
-          name="subject"
-          .disabled=${this.disabled}
-          @click=${() => this._selectSubject(HgContactFormSubject.GASTRO)}>
-        </mwc-radio>
-      </mwc-formfield-fixed>
+      <hg-mwc-formfield-wrapper .invalid=${this.invalid}>
+        <mwc-formfield-fixed .label=${'Noclegi'}>
+          <mwc-radio
+            name="subject"
+            .disabled=${this.disabled}
+            @click=${() => this._selectSubject(HgContactFormSubject.HOTEL)}>
+          </mwc-radio>
+        </mwc-formfield-fixed>
+      </hg-mwc-formfield-wrapper>
+      <hg-mwc-formfield-wrapper .invalid=${this.invalid}>
+        <mwc-formfield-fixed .label=${'Gastronomia'}>
+          <mwc-radio
+            name="subject"
+            .disabled=${this.disabled}
+            @click=${() => this._selectSubject(HgContactFormSubject.GASTRO)}>
+          </mwc-radio>
+        </mwc-formfield-fixed>
+      </hg-mwc-formfield-wrapper>
     `;
   }
 }
