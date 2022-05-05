@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit';
-import '../../../../edit/hg-info-text.js';
-import '../../../../edit/hg-warning-text.js';
-import sharedStyles from '../../../../styles/shared-styles.js';
+import '../../../../../edit/hg-info-text.js';
+import '../../../../../edit/hg-warning-text.js';
+import sharedStyles from '../../../../../styles/shared-styles.js';
 import './hg-dynamic-path-pages-add-event/hg-dynamic-path-pages-add-event-date.js';
 
 export class HgDynamicPathPagesAddEvent extends LitElement {

@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit';
-import sharedStyles from '../../../../styles/shared-styles.js';
-import './hg-dynamic-path-pages-add-tip.js';
+import sharedStyles from '../../../../../styles/shared-styles.js';
+import '../hg-dynamic-path-pages-add-tip.js';
 
 export class HgDynamicPathPagesAddNews extends LitElement {
   static properties = {

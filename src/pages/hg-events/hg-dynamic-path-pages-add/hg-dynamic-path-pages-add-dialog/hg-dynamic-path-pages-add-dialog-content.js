@@ -2,10 +2,10 @@ import {LitElement, html, css} from 'lit';
 import {choose} from 'lit/directives/choose.js';
 import {when} from 'lit/directives/when.js';
 import sharedStyles from '../../../../styles/shared-styles.js';
+import './types/hg-dynamic-path-pages-add-event.js';
+import './types/hg-dynamic-path-pages-add-news.js';
 import './hg-dynamic-path-pages-add-address.js';
-import './hg-dynamic-path-pages-add-event.js';
 import './hg-dynamic-path-pages-add-name.js';
-import './hg-dynamic-path-pages-add-news.js';
 import {HgEventsAddType} from './hg-dynamic-path-pages-add-type-select.js';
 
 export class HgDynamicPathPagesAddDialogContent extends LitElement {

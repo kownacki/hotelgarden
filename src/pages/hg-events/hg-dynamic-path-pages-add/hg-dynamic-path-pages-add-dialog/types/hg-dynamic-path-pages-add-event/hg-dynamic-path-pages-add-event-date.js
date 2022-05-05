@@ -1,10 +1,10 @@
 import {LitElement, html, css} from 'lit';
 import {when} from 'lit/directives/when.js';
 import '@material/mwc-switch';
-import '../../../../../edit/hg-date-picker.js';
-import sharedStyles from '../../../../../styles/shared-styles.js';
-import '../../../../../utils/fixes/mwc-formfield-fixed.js';
-import {getTodayDate} from '../../../../../../utils/general.js';
+import '../../../../../../edit/hg-date-picker.js';
+import sharedStyles from '../../../../../../styles/shared-styles.js';
+import '../../../../../../utils/fixes/mwc-formfield-fixed.js';
+import {getTodayDate} from '../../../../../../../utils/general.js';
 
 export class HgDynamicPathPagesAddEventDate extends LitElement {
   static properties = {
