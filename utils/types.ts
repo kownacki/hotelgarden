@@ -24,6 +24,8 @@ export type EventUid = string;
 
 export interface EventsListItem {
   date: string,
+  startDate: string,
+  endDate: string,
   image?: Image,
   public: boolean,
   title: string,

@@ -2,7 +2,7 @@ import {LitElement, html, css} from 'lit';
 import {repeat} from 'lit/directives/repeat.js';
 import {when} from 'lit/directives/when.js';
 import {sortBy} from 'lodash-es';
-import {isEventUpcoming} from '../../../utils/events.js';
+import {isEventGoingOrUpcoming} from '../../../utils/events.js';
 import sharedStyles from '../../styles/shared-styles.js';
 
 export class HgEventSidebar extends LitElement {
@@ -60,7 +60,7 @@ export class HgEventSidebar extends LitElement {
     if (changedProperties.has('events')) {
       const publicAndUpcomingEvents = this.events
         .filter((event) => event.public)
-        .filter((event) => isEventUpcoming((event)));
+        .filter((event) => isEventGoingOrUpcoming((event)));
       this._upcoming = sortBy(publicAndUpcomingEvents, 'date');
     }
   }

@@ -21,9 +21,12 @@ export const isDateUpcoming = (date) => {
     const moment = window.moment;
     return moment().isBefore(date, 'day');
 };
+export const isDatePast = (date) => {
+    return !isDateToday(date) && !isDateUpcoming(date);
+};
 export const isDateTodayOrUpcoming = (date) => {
     return isDateToday(date) || isDateUpcoming(date);
 };
-export const isDatePast = (date) => {
-    return !isDateTodayOrUpcoming(date);
+export const isDateTodayOrPast = (date) => {
+    return isDateToday(date) || isDatePast(date);
 };

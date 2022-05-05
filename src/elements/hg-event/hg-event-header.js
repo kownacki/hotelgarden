@@ -13,23 +13,15 @@ export class HgEventHeader extends LitElement {
   };
   static styles = [sharedStyles, css`
     :host {
-      display: flex;
+      display: block;
     }
     .date {
-      font-size: 20px;
       color: var(--secondary-color);
       margin-bottom: 10px;
     }
     hg-event-edit {
+      display: block;
       margin-bottom: 10px;
-    }
-    @media all and (max-width: 599px) {
-      :host {
-        display: block;
-      }
-      hg-event-edit {
-        display: block;
-      }
     }
   `];
   constructor() {

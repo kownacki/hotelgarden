@@ -1,5 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import '@material/mwc-button';
+import {getEventFormattedDate} from '../../../utils/events.js';
 import {EVENTS_ROOT_PATH} from '../../../utils/urlStructure.js';
 import '../../elements/mkwc/hg-image.js';
 import sharedStyles from '../../styles/shared-styles.js'
@@ -35,15 +36,17 @@ export class HgDynamicPathPageCard extends LitElement {
     }
     .header {
       display: flex;
-      flex-direction: row-reverse;
       align-items: baseline;
-    }
-    .type-and-title {
-      flex: 1;
       margin: 0 20px 0 0;
     }
     .type {
-      margin-top: 10px;
+      flex: 1;
+      margin-bottom: 5px;
+    }
+    .date {
+      color: var(--primary-color);
+      font-size: 18px;
+      margin-bottom: 5px;
     }
     h3 {
       margin-top: 0;
@@ -54,11 +57,6 @@ export class HgDynamicPathPageCard extends LitElement {
       color: red;
       text-transform: uppercase;
     }
-    .date {
-      color: var(--primary-color);
-      font-size: 18px;
-      margin-bottom: 5px;
-    }
     .more {
       color: var(--primary-color);
       font-size: 18px;
@@ -68,15 +66,13 @@ export class HgDynamicPathPageCard extends LitElement {
       vertical-align: text-bottom;
     }
     @media all and (max-width: 839px) {
-      .header {
-        display: block;
-      }
-    }
-    @media all and (max-width: 839px) {
       hg-image {
         width: 200px;
         min-width: 200px;
         height: 250px;
+      }
+      .header {
+        flex-direction: column-reverse;
       }
     }
     @media all and (max-width: 599px) {
@@ -106,18 +102,18 @@ export class HgDynamicPathPageCard extends LitElement {
         </hg-image>
         <div class="content">
           <div class="header">
-            <div class="date">${this.dynamicPathPage.date.split('-').reverse().join(' / ')}</div>
-            <div class="type-and-title">
-              <div class="type">
-                ${this.dynamicPathPage.type === DynamicPathPageType.EVENT ? 'Wydarzenie' : 'Aktualności'} 
-              </div>
-              <h3>
-                ${this.dynamicPathPage.public ? '' : html`
-                  <span class="non-public">Niepubliczne</span>&nbsp;
-                `}
-                ${this.dynamicPathPage.title}
-              </h3>
+            <div class="type">
+              ${this.dynamicPathPage.type === DynamicPathPageType.EVENT ? 'Wydarzenie' : 'Aktualności'}
             </div>
+            <div class="date">${getEventFormattedDate(this.dynamicPathPage)}</div>
+          </div>
+          <div class="main">
+            <h3>
+              ${this.dynamicPathPage.public ? '' : html`
+                <span class="non-public">Niepubliczne</span>&nbsp;
+              `}
+              ${this.dynamicPathPage.title}
+            </h3>
           </div>
           <div class="more">Zobacz więcej <mwc-icon>add</mwc-icon></div>
         </div>

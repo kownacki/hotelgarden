@@ -3,10 +3,9 @@ import {
   DynamicPathPageEvent,
   DynamicPathPageEventWithUid, DynamicPathPageNews,
   EventsList,
-  EventsListItem,
   EventUid
 } from './types';
-import {isDatePast, isDateToday, isDateTodayOrUpcoming, isDateUpcoming} from './general';
+import {isDatePast, isDateTodayOrPast, isDateTodayOrUpcoming, isDateUpcoming} from './general';
 
 export const createNewEvent = (title: string, startDate: string, endDate: string, permalink: string): DynamicPathPageEvent => {
   return {
@@ -29,39 +28,51 @@ export const createNewNews = (title: string, publishDate: string, unpublishDate:
   };
 };
 
-export const isEventToday = (event: EventsListItem) => {
-  return isDateToday(event.date);
+export const isEventSingleDay = (event: DynamicPathPageEvent) => {
+  return event.startDate === event.endDate;
 };
 
-export const isEventUpcoming = (event: EventsListItem) => {
-  return isDateUpcoming(event.date);
+export const isEventGoing = (event: DynamicPathPageEvent) => {
+  return isDateTodayOrPast(event.startDate) && isDateTodayOrUpcoming(event.endDate);
 };
 
-export const isEventTodayOrUpcoming = (event: EventsListItem) => {
-  return isDateTodayOrUpcoming(event.date);
+export const isEventUpcoming = (event: DynamicPathPageEvent) => {
+  return isDateUpcoming(event.startDate);
 };
 
-export const isEventPast = (event: EventsListItem) => {
- return isDatePast(event.date);
+export const isEventPast = (event: DynamicPathPageEvent) => {
+  return isDatePast(event.endDate);
 };
 
-export const getWhenEventHappens = (event: EventsListItem) => {
+export const isEventGoingOrUpcoming = (event: DynamicPathPageEvent) => {
+  return isEventGoing(event) || isEventUpcoming(event)
+};
+
+export const getWhenEventHappens = (event: DynamicPathPageEvent) => {
   return isEventUpcoming(event)
     ? 'Odbędzie się'
-    : isEventToday(event)
-      ? 'Dzisiaj'
+    : isEventGoing(event)
+      ? 'W trakcie'
       : 'Odbyło się';
 }
 
-export const getEventFormattedDate = (event: EventsListItem) => {
-  return event.date.split('-').reverse().join(' / ');
+export const getFormattedSingleDate = (date: string) => {
+  return date.split('-').reverse().join(' / ');
+}
+
+export const getEventFormattedDate = (event: DynamicPathPageEvent) => {
+  if (isEventSingleDay(event)) {
+    return getFormattedSingleDate(event.startDate);
+  } else {
+    return `${getFormattedSingleDate(event.startDate)} — ${getFormattedSingleDate(event.endDate)}`;
+  }
 }
 
 export const getPromotedEventData = (promotedEventUid: EventUid | null, eventsList: EventsList) => {
   const promotedEvent = promotedEventUid && Object.values(eventsList).find((eventListItem) => {
     return eventListItem.uid === promotedEventUid;
   });
-  return promotedEvent && isEventTodayOrUpcoming(promotedEvent)
+  return promotedEvent && isEventGoingOrUpcoming(promotedEvent as unknown as DynamicPathPageEvent)
     ? {
       uid: promotedEventUid as EventUid,
       event: promotedEvent,

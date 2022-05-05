@@ -28,10 +28,14 @@ export const isDateUpcoming = (date: string) => {
   return moment().isBefore(date, 'day');
 };
 
+export const isDatePast = (date: string) => {
+  return !isDateToday(date) && !isDateUpcoming(date);
+};
+
 export const isDateTodayOrUpcoming = (date: string) => {
   return isDateToday(date) || isDateUpcoming(date);
 };
 
-export const isDatePast = (date: string) => {
-  return !isDateTodayOrUpcoming(date);
+export const isDateTodayOrPast = (date: string) => {
+  return isDateToday(date) || isDatePast(date);
 };

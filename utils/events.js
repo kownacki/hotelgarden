@@ -1,5 +1,5 @@
 import { omit } from 'lodash-es';
-import { isDatePast, isDateToday, isDateTodayOrUpcoming, isDateUpcoming } from './general';
+import { isDatePast, isDateTodayOrPast, isDateTodayOrUpcoming, isDateUpcoming } from './general';
 export const createNewEvent = (title, startDate, endDate, permalink) => {
     return {
         type: 'event',
@@ -19,33 +19,44 @@ export const createNewNews = (title, publishDate, unpublishDate, permalink) => {
         permalink,
     };
 };
-export const isEventToday = (event) => {
-    return isDateToday(event.date);
+export const isEventSingleDay = (event) => {
+    return event.startDate === event.endDate;
+};
+export const isEventGoing = (event) => {
+    return isDateTodayOrPast(event.startDate) && isDateTodayOrUpcoming(event.endDate);
 };
 export const isEventUpcoming = (event) => {
-    return isDateUpcoming(event.date);
-};
-export const isEventTodayOrUpcoming = (event) => {
-    return isDateTodayOrUpcoming(event.date);
+    return isDateUpcoming(event.startDate);
 };
 export const isEventPast = (event) => {
-    return isDatePast(event.date);
+    return isDatePast(event.endDate);
+};
+export const isEventGoingOrUpcoming = (event) => {
+    return isEventGoing(event) || isEventUpcoming(event);
 };
 export const getWhenEventHappens = (event) => {
     return isEventUpcoming(event)
         ? 'Odbędzie się'
-        : isEventToday(event)
-            ? 'Dzisiaj'
+        : isEventGoing(event)
+            ? 'W trakcie'
             : 'Odbyło się';
 };
+export const getFormattedSingleDate = (date) => {
+    return date.split('-').reverse().join(' / ');
+};
 export const getEventFormattedDate = (event) => {
-    return event.date.split('-').reverse().join(' / ');
+    if (isEventSingleDay(event)) {
+        return getFormattedSingleDate(event.startDate);
+    }
+    else {
+        return `${getFormattedSingleDate(event.startDate)} — ${getFormattedSingleDate(event.endDate)}`;
+    }
 };
 export const getPromotedEventData = (promotedEventUid, eventsList) => {
     const promotedEvent = promotedEventUid && Object.values(eventsList).find((eventListItem) => {
         return eventListItem.uid === promotedEventUid;
     });
-    return promotedEvent && isEventTodayOrUpcoming(promotedEvent)
+    return promotedEvent && isEventGoingOrUpcoming(promotedEvent)
         ? {
             uid: promotedEventUid,
             event: promotedEvent,
