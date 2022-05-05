@@ -19,7 +19,6 @@ export class HgDynamicPathPagesAddDialogContent extends LitElement {
     dialog: Element,
     // private
     _type: String, // HgEventsAddType
-    _date: Object, // {startDate: string, endDate?: string}
   };
   static styles = [sharedStyles, css`
     hg-dynamic-path-pages-add-type-select {

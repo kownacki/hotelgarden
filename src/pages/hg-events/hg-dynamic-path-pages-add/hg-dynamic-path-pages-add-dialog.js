@@ -59,6 +59,11 @@ export class HgDynamicPathPagesAddDialog extends LitElement {
       }));
     }
   };
+  updated(changedProperties) {
+    if (changedProperties.has('_type')) {
+      this.dialog?.notifyResize();
+    }
+  }
   render() {
     const addDisabled = !this._type || !this._dateCorrect || !this._address || this._addressTaken || this._typing || this._loading;
     return html`
