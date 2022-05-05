@@ -35,8 +35,8 @@ export class HgDynamicPathPagesAddAddress extends LitElement {
           this.showAddressInfo,
           () => when(
             this.addressTaken,
-            () => html`Adres wydarzenia <span style="color: red">zajęty</span>`,
-            () => html`Adres wydarzenia <span style="color: green">dostępny</span>`,
+            () => html`Adres <span style="color: red">zajęty</span>`,
+            () => html`Adres <span style="color: green">dostępny</span>`,
           )
         )}
       </p>

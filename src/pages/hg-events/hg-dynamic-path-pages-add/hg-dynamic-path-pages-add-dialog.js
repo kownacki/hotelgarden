@@ -64,6 +64,11 @@ export class HgDynamicPathPagesAddDialog extends LitElement {
       this.dialog?.notifyResize();
     }
   }
+  _resetInputValues() {
+    this._date = undefined;
+    this._title = undefined;
+    this._address = undefined;
+  }
   render() {
     const addDisabled = !this._type || !this._dateCorrect || !this._address || this._addressTaken || this._typing || this._loading;
     return html`
@@ -83,6 +88,7 @@ export class HgDynamicPathPagesAddDialog extends LitElement {
             .loading=${this._loading}
             @type-changed=${({detail: type}) => {
               this._type = type;
+              this._resetInputValues();
             }}
             @date-changed=${({detail: {startDate, endDate}}) => {
               this._date = {startDate, endDate};
