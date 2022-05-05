@@ -4,6 +4,7 @@ import '@polymer/paper-dialog';
 import '../edit/hg-cms-buttons-container.js';
 import '../elements/ui/hg-icon-button.js';
 import sharedStyles from '../styles/shared-styles.js';
+import './hg-warning-text.js';
 
 export class HgDeleteItem extends LitElement {
   static properties = {
@@ -15,18 +16,6 @@ export class HgDeleteItem extends LitElement {
     hg-icon-button {
       display: inline-block;
       background: white;
-    }
-    .warning {
-      display: flex;
-      color: var(--error-color);
-      padding: 10px;
-      background: var(--error-background-color);
-    }
-    mwc-icon {
-      margin-right: 10px;
-    }
-    .warning-text {
-      margin-top: 3px;
     }
   `];
   render() {
@@ -41,13 +30,9 @@ export class HgDeleteItem extends LitElement {
         <paper-dialog
           id="dialog"
           @opened-changed=${(event) => {this.opened = event.target.opened; this.dispatchEvent(new CustomEvent('opened-changed'))}}>
-          <div class="warning">
-            <mwc-icon>warning</mwc-icon>
-            <div class="warning-text">
-              Czy na pewno usunąć ${this.name}?
-              Usunięte dane nie mogą być przywrócone.
-            </div>
-          </div>
+          <hg-warning-text
+            .text=${`Czy na pewno usunąć ${this.name}? Usunięte dane nie mogą być przywrócone.`}>
+          </hg-warning-text>
           <div class="buttons">
             <hg-cms-buttons-container>
               <mwc-button
