@@ -1,7 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import {when} from 'lit/directives/when.js';
-import '@material/mwc-switch';
-import '../../../../edit/hg-date-range-picker.js';
+import '../../../../edit/hg-date-range-picker-with-switch.js';
 import sharedStyles from '../../../../styles/shared-styles.js';
 import {getTodayDate} from '../../../../../utils/general.js';
 
@@ -59,35 +58,26 @@ export class HgDynamicPathPagesAddDate extends LitElement {
     }
     const datesSet = this._multipleDays ? (this.startDate && this.endDate) : this.startDate;
     return html`
-      ${when(
-        !this.noSingleDay,
-        () => html`
-          <mwc-formfield-fixed .label=${this._multipleDays ? this.labels.multipleDays.switch : this.labels.singleDay.switch}>
-            <mwc-switch
-              id="multiple"
-              @click=${() => {
-                const switchElement = this.shadowRoot.getElementById('multiple');
-                this._multipleDays = switchElement.selected;
-              }}>
-            </mwc-switch>
-          </mwc-formfield-fixed>
-        `,
-      )}
-      <hg-date-range-picker
-        .singleDay=${!this._multipleDays}
+      <hg-date-range-picker-with-switch
+        .multipleDays=${this._multipleDays}
+        .noSwitch=${this.noSingleDay}
         .minStartDate=${minStartDate}
         .maxStartDate=${maxStartDate}
         .minEndDate=${minEndDate}
         .maxEndDate=${maxEndDate}
         .startDateLabel=${this._multipleDays ? this.labels.multipleDays.startDate : this.labels.singleDay.startDate}
         .endDateLabel=${this.labels.multipleDays.endDate}
+        .switchLabel=${this._multipleDays ? this.labels.multipleDays.switch : this.labels.singleDay.switch}
+        @multiple-days-changed=${({detail: multipleDays}) => {
+          this._multipleDays = multipleDays;
+        }}
         @start-date-changed=${({detail: date}) => {
           this.startDate = date;
         }}
         @end-date-changed=${({detail: date}) => {
           this.endDate = date;
         }}>
-      </hg-date-range-picker>
+      </hg-date-range-picker-with-switch>
       <p class="date-info smaller-text">
         ${when(!datesSet,
           () => 'Data jest wymagana',
