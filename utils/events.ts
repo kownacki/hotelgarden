@@ -1,6 +1,6 @@
 import {omit} from 'lodash'
 import {DynamicPathPageEvent, DynamicPathPageEventWithUid, DynamicPathPageNews, EventsList, EventUid} from './types';
-import {isDatePast, isDateTodayOrPast, isDateTodayOrUpcoming, isDateUpcoming} from './general';
+import {isDateEarlier, isDatePast, isDateTodayOrPast, isDateTodayOrUpcoming, isDateUpcoming} from './general';
 
 export const createNewEvent = (title: string, startDate: string, endDate: string, permalink: string): DynamicPathPageEvent => {
   return {
@@ -21,6 +21,11 @@ export const createNewNews = (title: string, publishDate: string, unpublishDate:
     unpublishDate,
     permalink,
   };
+};
+export const isEventDateRangeCorrect = (startDate: string, endDate: string) => {
+  return startDate && endDate
+    && !isDateEarlier(endDate, startDate)
+    && isDateTodayOrUpcoming(endDate);
 };
 
 export const isEventSingleDay = (event: DynamicPathPageEvent) => {

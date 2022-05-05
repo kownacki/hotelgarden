@@ -20,13 +20,16 @@ const labels = {
 
 export class HgEventDatePicker extends LitElement {
   static properties = {
+    // properties
+    multipleDays: Boolean,
     dateCorrect: Boolean,
-    // observables
     startDate: String,
     endDate: String,
-    _multipleDays: Boolean,
   };
   static styles = [sharedStyles, css`
+    :host {
+      display: block;
+    }
     mwc-formfield-fixed {
       display: block;
       margin-bottom: 20px;
@@ -36,43 +39,40 @@ export class HgEventDatePicker extends LitElement {
     }
   `];
   updated(changedProperties) {
-    if (changedProperties.has('startDate') || changedProperties.has('endDate') || changedProperties.has('_multipleDays')) {
-      const endDate = this._multipleDays ? this.endDate : this.startDate;
-      this.dispatchEvent(new CustomEvent('date-changed', {
-        detail: {
-          startDate: this.startDate,
-          endDate,
-        }
-      }));
+    if (changedProperties.has('startDate') || changedProperties.has('endDate') || changedProperties.has('multipleDays')) {
+      const newDate = this.getDate();
+      this.dispatchEvent(new CustomEvent('date-changed', {detail: newDate}));
     }
   }
-  willUpdate(changedProperties) {
-    if (changedProperties.has('noSingleDay')) {
-      if (this.noSingleDay) {
-        this._multipleDays = true;
-      }
-    }
+  getDate() {
+    const endDate = this.multipleDays ? this.endDate : this.startDate;
+    return {
+      startDate: this.startDate,
+      endDate,
+    };
   }
   render() {
     const todayDate = getTodayDate();
     let minStartDate;
     let minEndDate;
-    if (this._multipleDays) {
+    if (this.multipleDays) {
       minEndDate = todayDate;
     } else {
       minStartDate = todayDate;
     }
-    const datesSet = this._multipleDays ? (this.startDate && this.endDate) : this.startDate;
+    const datesSet = this.multipleDays ? (this.startDate && this.endDate) : this.startDate;
     return html`
       <hg-date-range-picker-with-switch
-        .multipleDays=${this._multipleDays}
+        .multipleDays=${this.multipleDays}
         .minStartDate=${minStartDate}
         .minEndDate=${minEndDate}
-        .startDateLabel=${this._multipleDays ? labels.multipleDays.startDate : labels.singleDay.startDate}
+        .startDateLabel=${this.multipleDays ? labels.multipleDays.startDate : labels.singleDay.startDate}
         .endDateLabel=${labels.multipleDays.endDate}
-        .switchLabel=${this._multipleDays ? labels.multipleDays.switch : labels.singleDay.switch}
+        .switchLabel=${this.multipleDays ? labels.multipleDays.switch : labels.singleDay.switch}
+        .startDate=${this.startDate}
+        .endDate=${this.endDate}
         @multiple-days-changed=${({detail: multipleDays}) => {
-          this._multipleDays = multipleDays;
+          this.multipleDays = multipleDays;
         }}
         @start-date-changed=${({detail: date}) => {
           this.startDate = date;
@@ -85,7 +85,7 @@ export class HgEventDatePicker extends LitElement {
         ${when(!datesSet,
           () => 'Data jest wymagana',
           () => when(!this.dateCorrect, () => {
-            return this._multipleDays
+            return this.multipleDays
               ? labels.multipleDays.error
               : labels.singleDay.error;
           })

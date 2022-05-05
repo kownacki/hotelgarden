@@ -1,9 +1,11 @@
 import {LitElement, html, css} from 'lit';
 import '@material/mwc-button';
 import '@polymer/paper-dialog';
+import {isEventDateRangeCorrect} from '../../../../utils/events.js';
+import {isDateSame} from '../../../../utils/general.js';
 import '../../../edit/hg-cms-buttons-container.js';
-import '../../../edit/hg-date-range-picker.js';
 import sharedStyles from '../../../styles/shared-styles.js';
+import '../../hg-event-date-picker.js';
 import '../../ui/hg-icon-button.js';
 
 export class HgEventEditDate extends LitElement {
@@ -11,11 +13,9 @@ export class HgEventEditDate extends LitElement {
     startDate: String,
     endDate: String,
     opened: {type: Boolean, reflect: true},
+    _dateCorrect: Boolean,
   };
   static styles = [sharedStyles, css`
-    hg-range-date-picker {
-      margin-bottom: 10px;
-    }
   `];
   render() {
     return html`
@@ -29,11 +29,16 @@ export class HgEventEditDate extends LitElement {
         <div>
           Zmień datę wydarzenia
         </div>
-        <hg-date-range-picker
+        <hg-event-date-picker
           id="picker"
+          .multipleDays=${!isDateSame(this.startDate, this.endDate)}
+          .dateCorrect=${this._dateCorrect}
           .startDate=${this.startDate}
-          .endDate=${this.endDate}>
-        </hg-date-range-picker>
+          .endDate=${this.endDate}
+          @date-changed=${({detail: {startDate, endDate}}) => {
+            this._dateCorrect = isEventDateRangeCorrect(startDate, endDate);
+          }}>
+        </hg-event-date-picker>
         <div class="buttons">
           <hg-cms-buttons-container>
             <mwc-button
@@ -43,15 +48,15 @@ export class HgEventEditDate extends LitElement {
             <mwc-button
               .raised=${true}
               .label=${'Zapisz'}
+              .disabled=${!this._dateCorrect}
               @click=${() => {
                 this.shadowRoot.getElementById('dialog').close();
                 const picker = this.shadowRoot.getElementById('picker');
-                const newStartDate = picker.startDate;
-                const newEndDate = picker.endDate;
+                const {startDate, endDate} = picker.getDate();
                 this.dispatchEvent(new CustomEvent('request-date-change', {
                   detail: {
-                    startDate: newStartDate,
-                    endDate: newEndDate,
+                    startDate,
+                    endDate,
                   },
                   composed: true,
                 }));

@@ -118,9 +118,9 @@ export class HgDynamicPathPage extends LitElement {
           <hg-event-header
             .eventData=${this.eventData}
             .promotedEventData=${this.promotedEventData}
-            @request-change=${({detail: {field, value}}) => {
+            @request-change=${async ({detail: {field, value}}) => {
               if (field === HgEventEditFields.DATE) {
-                this._eventDbSync.requestFieldUpdate('startDate', value.startDate);
+                await this._eventDbSync.requestFieldUpdate('startDate', value.startDate);
                 this._eventDbSync.requestFieldUpdate('endDate', value.endDate);
               } else if (field === HgEventEditFields.PUBLIC) {
                 this._eventDbSync.requestFieldUpdate('public', value);

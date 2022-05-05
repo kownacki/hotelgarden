@@ -1,5 +1,5 @@
 import { omit } from 'lodash-es';
-import { isDatePast, isDateTodayOrPast, isDateTodayOrUpcoming, isDateUpcoming } from './general';
+import { isDateEarlier, isDatePast, isDateTodayOrPast, isDateTodayOrUpcoming, isDateUpcoming } from './general';
 export const createNewEvent = (title, startDate, endDate, permalink) => {
     return {
         type: 'event',
@@ -18,6 +18,11 @@ export const createNewNews = (title, publishDate, unpublishDate, permalink) => {
         unpublishDate,
         permalink,
     };
+};
+export const isEventDateRangeCorrect = (startDate, endDate) => {
+    return startDate && endDate
+        && !isDateEarlier(endDate, startDate)
+        && isDateTodayOrUpcoming(endDate);
 };
 export const isEventSingleDay = (event) => {
     return event.startDate === event.endDate;

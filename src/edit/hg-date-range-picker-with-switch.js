@@ -36,6 +36,7 @@ export class HgDateRangePickerWithSwitch extends LitElement {
           <mwc-formfield-fixed .label=${this.switchLabel}>
             <mwc-switch
               id="multiple"
+              .selected=${this.multipleDays}
               @click=${() => {
                 const switchElement = this.shadowRoot.getElementById('multiple');
                 const multipleDays = switchElement.selected;
