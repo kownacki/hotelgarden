@@ -61,8 +61,8 @@ export const addDynamicPathPage = async (data) => {
   return updateInDb(createDbPath(`dynamicPathPages/${generateUid()}`), data);
 }
 
-export const addDynamicPathPageEvent = async (title, date, permalink) => {
-  return addDynamicPathPage(createNewEvent(title, date, permalink));
+export const addDynamicPathPageEvent = async (title, startDate, endDate, permalink) => {
+  return addDynamicPathPage(createNewEvent(title, startDate, endDate, permalink));
 };
 
 export const updateData = async (doc, path, data) => {

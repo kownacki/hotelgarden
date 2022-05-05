@@ -1,16 +1,21 @@
 import {LitElement, html, css} from 'lit';
-import '../../../../edit/hg-date-picker.js';
 import '../../../../edit/hg-info-text.js';
 import '../../../../edit/hg-warning-text.js';
 import sharedStyles from '../../../../styles/shared-styles.js';
+import './hg-dynamic-path-pages-add-event/hg-dynamic-path-pages-add-event-date.js';
 
 export class HgDynamicPathPagesAddEvent extends LitElement {
   static properties = {
-    date: String,
+    dateCorrect: Boolean,
+    // observables
+    date: Object, // {startDate: string, endDate?: string}
   };
   static styles = [sharedStyles, css`
     hg-info-text {
       margin-bottom: 10px;
+    }
+    mwc-formfield-fixed {
+      margin-bottom: 20px;
     }
   `];
   render() {
@@ -21,16 +26,14 @@ export class HgDynamicPathPagesAddEvent extends LitElement {
       <hg-warning-text
         .text=${'Zmiana nazwy wydarzenia po utworzeniu NIE będzie skutkować zmianą adresu URL.'}>
       </hg-warning-text>
-      <p class="smaller-text">
-        Wybierz datę wydarzenia
-      </p>
-      <hg-date-picker
-        id="picker"
+      <hg-dynamic-path-pages-add-event-date
+        .dateCorrect=${this.dateCorrect}
         @date-changed=${({detail: date}) => {
           this.date = date;
           this.dispatchEvent(new CustomEvent('date-changed', {detail: this.date}));
         }}>
-      </hg-date-picker>
+      </hg-dynamic-path-pages-add-event-date>
+      <div class="divider"></div>
     `;
   }
 }

@@ -1,5 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import {debounce} from 'lodash-es';
+import {isDateTodayOrUpcoming} from '../../../../utils/general.js';
 import '../../../elements/hg-dialog.js';
 import sharedStyles from '../../../styles/shared-styles.js';
 import {hyphenate, isDynamicPathAvailable} from '../../../utils.js';
@@ -16,7 +17,7 @@ export class HgDynamicPathPagesAddDialog extends LitElement {
     _title: String,
     _address: String,
     _addressTaken: Boolean,
-    _date: String,
+    _date: Object, // {startDate: string, endDate?: string}
     _dateCorrect: Boolean,
     _typing: Boolean,
     _loading: Boolean,
@@ -51,7 +52,8 @@ export class HgDynamicPathPagesAddDialog extends LitElement {
         detail: {
           type: this._type,
           title: this._title,
-          date: this._date,
+          startDate: this._date.startDate,
+          endDate: this._date.endDate,
           permalink: this._address,
         },
       }));
@@ -77,9 +79,11 @@ export class HgDynamicPathPagesAddDialog extends LitElement {
             @type-changed=${({detail: type}) => {
               this._type = type;
             }}
-            @date-changed=${({detail: date}) => {
-              this._date = date;
-              this._dateCorrect = this._date && this._date >= moment().format('YYYY-MM-DD');
+            @date-changed=${({detail: {startDate, endDate}}) => {
+              this._date = {startDate, endDate};
+              this._dateCorrect = startDate && endDate
+                && (startDate <= endDate)
+                && isDateTodayOrUpcoming(endDate);
             }}
             @title-changed=${({detail: title}) => {
               this._title = title;

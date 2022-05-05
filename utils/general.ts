@@ -7,6 +7,13 @@ export class PromiseTrigger {
   }
 }
 
+export const getTodayDate = () => {
+  // to do don't use global moment
+  // @ts-ignore
+  const moment = window.moment;
+  return moment().format('YYYY-MM-DD');
+}
+
 export const isDateToday = (date: string) => {
   // to do don't use global moment
   // @ts-ignore

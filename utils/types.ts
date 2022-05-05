@@ -37,7 +37,8 @@ export interface DynamicPathPageBase {
 }
 
 export interface DynamicPathPageEvent extends DynamicPathPageBase {
-  date: string,
+  startDate: string,
+  endDate: string,
   image?: Image,
   public: boolean,
   title: string,

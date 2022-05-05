@@ -19,7 +19,7 @@ export class HgDynamicPathPagesAddDialogContent extends LitElement {
     dialog: Element,
     // private
     _type: String, // HgEventsAddType
-    _date: String,
+    _date: Object, // {startDate: string, endDate?: string}
   };
   static styles = [sharedStyles, css`
     hg-dynamic-path-pages-add-type-select {
@@ -43,15 +43,11 @@ export class HgDynamicPathPagesAddDialogContent extends LitElement {
       ${choose(this._type, [
         [HgEventsAddType.EVENT, () => html`
           <hg-dynamic-path-pages-add-event
-            @date-changed=${({detail: date}) => {
-              this._date = date;
-              this.dispatchEvent(new CustomEvent('date-changed', {detail: this._date}));
+            .dateCorrect=${this.dateCorrect}
+            @date-changed=${({detail: {startDate, endDate}}) => {
+              this.dispatchEvent(new CustomEvent('date-changed', {detail: {startDate, endDate}}));
             }}>
           </hg-dynamic-path-pages-add-event>
-          <p class="date-info smaller-text">
-            ${when(!this._date, () => 'Data jest wymagana')}
-            ${when(this._date && !this.dateCorrect, () => 'Data nie może być miniona')}
-          </p>
         `],
         [HgEventsAddType.NEWS, () => html`
           <hg-dynamic-path-pages-add-news></hg-dynamic-path-pages-add-news>

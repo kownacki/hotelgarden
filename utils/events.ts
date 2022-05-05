@@ -2,10 +2,11 @@ import {omit} from 'lodash'
 import {DynamicPathPageEvent, DynamicPathPageEventWithUid, EventsList, EventsListItem, EventUid} from './types';
 import {isDatePast, isDateToday, isDateTodayOrUpcoming, isDateUpcoming} from './general';
 
-export const createNewEvent = (title: string, date: string, permalink: string): DynamicPathPageEvent => {
+export const createNewEvent = (title: string, startDate: string, endDate: string, permalink: string): DynamicPathPageEvent => {
   return {
     title,
-    date,
+    startDate,
+    endDate,
     permalink,
     public: false,
   };
@@ -54,6 +55,7 @@ export const getPromotedEventData = (promotedEventUid: EventUid | null, eventsLi
 export const convertDynamicPathPagesToEventsList = (dynamicPathPagesWithUids: DynamicPathPageEventWithUid[]) => {
   const eventsList: EventsList = {};
   dynamicPathPagesWithUids.forEach((dynamicPathPage) => {
+    // @ts-ignore
     eventsList[dynamicPathPage.permalink] = omit(dynamicPathPage, 'permalink');
   });
   return eventsList;
