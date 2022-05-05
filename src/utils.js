@@ -1,7 +1,7 @@
 import {collection, doc, deleteDoc, getDocs, query, where} from 'firebase/firestore';
 import {isElementVisible, isElementInProximity} from 'mk-frontend-web-utils/dom.js';
 import diacritics from '../resources/scripts/diacritics.js';
-import {createNewEvent} from '../utils/events.js';
+import {createNewEvent, createNewNews} from '../utils/events.js';
 import {createDbPath, db, updateInDb} from './utils/database.js';
 
 export const headerHeight = 59;
@@ -35,6 +35,11 @@ export const assignKeys = (field) => _.map.convert({cap: false})((item, key) => 
 
 export const generateUid = () => `${Date.now()}${_.padCharsStart('0', 9,  _.random(1, 10**9 - 1))}`;
 
+export const DynamicPathPageType = {
+  EVENT: 'event',
+  NEWS: 'news',
+};
+
 export const getAllDynamicPathPages = async () => {
   const dynamicPathPagesSnapshot = await getDocs(collection(db, 'dynamicPathPages'));
   return dynamicPathPagesSnapshot.docs.map((dynamicPathPage) => {
@@ -57,12 +62,16 @@ export const isDynamicPathAvailable = async (permalink) => {
   return (await getDocs(dynamicPathPagesQuery)).empty;
 }
 
-export const addDynamicPathPage = async (data) => {
+export const addDynamicPathPageToDb = async (data) => {
   return updateInDb(createDbPath(`dynamicPathPages/${generateUid()}`), data);
 }
 
-export const addDynamicPathPageEvent = async (title, startDate, endDate, permalink) => {
-  return addDynamicPathPage(createNewEvent(title, startDate, endDate, permalink));
+export const addDynamicPathPage = async (type, title, startDate, endDate, permalink) => {
+  if (type === DynamicPathPageType.EVENT) {
+    return addDynamicPathPageToDb(createNewEvent(title, startDate, endDate, permalink));
+  } else {
+    return addDynamicPathPageToDb(createNewNews(title, startDate, endDate, permalink));
+  }
 };
 
 export const updateData = async (doc, path, data) => {

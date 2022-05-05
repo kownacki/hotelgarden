@@ -1,9 +1,10 @@
 import {LitElement, html, css} from 'lit';
 import {choose} from 'lit/directives/choose.js';
 import sharedStyles from '../../../../styles/shared-styles.js';
+import {DynamicPathPageType} from '../../../../utils.js';
 import './types/hg-dynamic-path-pages-add-event.js';
 import './types/hg-dynamic-path-pages-add-news.js';
-import {HgEventsAddType} from './hg-dynamic-path-pages-add-type-select.js';
+import './hg-dynamic-path-pages-add-type-select.js';
 
 export class HgDynamicPathPagesAddDialogContent extends LitElement {
   static properties = {
@@ -15,7 +16,7 @@ export class HgDynamicPathPagesAddDialogContent extends LitElement {
     // observables
     dialog: Element,
     // private
-    _type: String, // HgEventsAddType
+    _type: String, // DynamicPathPageType
   };
   static styles = [sharedStyles, css`
     hg-dynamic-path-pages-add-type-select {
@@ -31,7 +32,7 @@ export class HgDynamicPathPagesAddDialogContent extends LitElement {
         }}>
       </hg-dynamic-path-pages-add-type-select>
       ${choose(this._type, [
-        [HgEventsAddType.EVENT, () => html`
+        [DynamicPathPageType.EVENT, () => html`
           <hg-dynamic-path-pages-add-event
             .address=${this.address}
             .addressTaken=${this.addressTaken}
@@ -46,7 +47,7 @@ export class HgDynamicPathPagesAddDialogContent extends LitElement {
             }}>
           </hg-dynamic-path-pages-add-event>
         `],
-        [HgEventsAddType.NEWS, () => html`
+        [DynamicPathPageType.NEWS, () => html`
           <hg-dynamic-path-pages-add-news
             .address=${this.address}
             .addressTaken=${this.addressTaken}

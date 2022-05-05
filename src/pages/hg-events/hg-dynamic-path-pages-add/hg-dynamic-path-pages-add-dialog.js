@@ -13,7 +13,7 @@ export class HgDynamicPathPagesAddDialog extends LitElement {
     // observables
     dialog: Element,
     // private
-    _type: String, // HgEventsAddType
+    _type: String, // DynamicPathPageType
     _title: String,
     _address: String,
     _addressTaken: Boolean,

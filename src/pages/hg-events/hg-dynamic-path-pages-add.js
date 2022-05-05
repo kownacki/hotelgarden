@@ -2,7 +2,7 @@ import {LitElement, html, css} from 'lit';
 import '@material/mwc-button';
 import {EVENTS_ROOT_PATH} from '../../../utils/urlStructure.js';
 import sharedStyles from '../../styles/shared-styles.js';
-import {addDynamicPathPageEvent} from '../../utils.js';
+import {addDynamicPathPage} from '../../utils.js';
 import './hg-dynamic-path-pages-add/hg-dynamic-path-pages-add-dialog.js';
 
 export class HgDynamicPathPagesAdd extends LitElement {
@@ -12,7 +12,8 @@ export class HgDynamicPathPagesAdd extends LitElement {
   `];
   async _addDynamicPathPage(type, title, startDate, endDate, permalink) {
     // todo transaction to avoid race condition
-    await addDynamicPathPageEvent(title, startDate, endDate, permalink);
+    console.log(type, title, startDate, endDate, permalink);
+    await addDynamicPathPage(type, title, startDate, endDate, permalink);
     window.history.pushState(null, null, `${EVENTS_ROOT_PATH}${permalink}`);
     this.dispatchEvent(new CustomEvent('location-changed', {composed: true, bubbles: true}));
   };

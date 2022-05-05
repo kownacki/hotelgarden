@@ -2,16 +2,12 @@ import {LitElement, html, css} from 'lit';
 import '@material/mwc-radio';
 import sharedStyles from '../../../../styles/shared-styles.js';
 import '../../../../utils/fixes/mwc-formfield-fixed.js';
-
-export const HgEventsAddType = {
-  EVENT: 'event',
-  NEWS: 'news',
-};
+import {DynamicPathPageType} from '../../../../utils.js';
 
 export class HgDynamicPathPagesAddTypeSelect extends LitElement {
   static properties = {
     // observables
-    selectedType: String, // HgEventsAddType
+    selectedType: String, // DynamicPathPageType
   };
   static styles = [sharedStyles, css`
     :host {
@@ -36,7 +32,7 @@ export class HgDynamicPathPagesAddTypeSelect extends LitElement {
         <mwc-formfield-fixed .label=${'Wydarzenie'}>
           <mwc-radio
             name="type"
-            @click=${() => this._selectType(HgEventsAddType.EVENT)}>
+            @click=${() => this._selectType(DynamicPathPageType.EVENT)}>
           </mwc-radio>
         </mwc-formfield-fixed>
         <div class="type-select-container-text smaller-text"
@@ -53,7 +49,7 @@ export class HgDynamicPathPagesAddTypeSelect extends LitElement {
         <mwc-formfield-fixed .label=${'Aktualność'}>
           <mwc-radio
             name="type"
-            @click=${() => this._selectType(HgEventsAddType.NEWS)}>
+            @click=${() => this._selectType(DynamicPathPageType.NEWS)}>
           </mwc-radio>
         </mwc-formfield-fixed>
         <div class="type-select-container-text smaller-text"

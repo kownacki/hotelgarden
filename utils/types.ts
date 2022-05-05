@@ -32,16 +32,24 @@ export interface EventsListItem {
 
 export type EventsList = Record<EventUid, EventsListItem>;
 
+export type DynamicPathPageType = 'event' | 'news';
+
 export interface DynamicPathPageBase {
+  type: DynamicPathPageType,
   permalink: string,
+  image?: Image,
+  title: string,
 }
 
 export interface DynamicPathPageEvent extends DynamicPathPageBase {
   startDate: string,
   endDate: string,
-  image?: Image,
   public: boolean,
-  title: string,
+}
+
+export interface DynamicPathPageNews extends DynamicPathPageBase {
+  publishDate: string,
+  unpublishDate: string,
 }
 
 export interface DynamicPathPageEventWithUid extends DynamicPathPageEvent {

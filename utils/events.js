@@ -2,11 +2,21 @@ import { omit } from 'lodash-es';
 import { isDatePast, isDateToday, isDateTodayOrUpcoming, isDateUpcoming } from './general';
 export const createNewEvent = (title, startDate, endDate, permalink) => {
     return {
+        type: 'event',
         title,
         startDate,
         endDate,
         permalink,
         public: false,
+    };
+};
+export const createNewNews = (title, publishDate, unpublishDate, permalink) => {
+    return {
+        type: 'news',
+        title,
+        publishDate,
+        unpublishDate,
+        permalink,
     };
 };
 export const isEventToday = (event) => {
