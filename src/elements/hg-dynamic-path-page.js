@@ -16,7 +16,7 @@ export const HgEventEditFields = {
   PROMOTED: 'promoted',
 };
 
-export class HgEvent extends LitElement {
+export class HgDynamicPathPage extends LitElement {
   _firebaseAuth;
   _eventDbSync;
   static properties = {
@@ -155,4 +155,4 @@ export class HgEvent extends LitElement {
     `;
   }
 }
-customElements.define('hg-event', HgEvent);
+customElements.define('hg-dynamic-path-page', HgDynamicPathPage);

@@ -6,7 +6,7 @@ import './hg-event-edit/hg-event-edit-date.js';
 import './hg-event-edit/hg-event-promote-switch.js';
 import './hg-event-edit/hg-event-public-switch.js';
 
-import {HgEventEditFields} from '../hg-event.js';
+import {HgEventEditFields} from '../hg-dynamic-path-page.js';
 
 export class HgEventEdit extends LitElement {
   static properties = {

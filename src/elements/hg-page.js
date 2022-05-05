@@ -144,9 +144,9 @@ export class HgPage extends LitElement {
         .initialPage=${this.initialPage}>
       </hg-page-banner>
       ${this.contentType === ContentType.EVENT
-        ? until(import('./hg-event.js').then(() => {
+        ? until(import('./hg-dynamic-path-page.js').then(() => {
           return (this.eventDataReady && this.promotedEventLoaded) ? html`
-            <hg-event
+            <hg-dynamic-path-page
               class="page"
               .eventData=${this.eventData}
               .eventsList=${this.eventsList}
@@ -157,7 +157,7 @@ export class HgPage extends LitElement {
               @set-json-ld=${({detail: jsonLd}) => {
                 this._handleSetJsonLd(jsonLd);
               }}>
-            </hg-event>
+            </hg-dynamic-path-page>
           ` : html`<hg-page-loading></hg-page-loading>`;
         }), html`<hg-page-loading></hg-page-loading>`)
         : html`
