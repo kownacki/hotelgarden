@@ -51,6 +51,10 @@ export const getWhenEventHappens = (event: DynamicPathPageEvent) => {
       : 'Odbyło się';
 };
 
+export const isNewsBeforePublish = (news: DynamicPathPageNews) => {
+  return isDateUpcoming(news.publishDate);
+};
+
 export const getFormattedSingleDate = (date: string) => {
   return date.split('-').reverse().join(' / ');
 };

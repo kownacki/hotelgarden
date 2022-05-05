@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit';
 import {when} from 'lit/directives/when.js';
 import '@material/mwc-button';
-import {getEventFormattedDate, getNewsFormattedDate} from '../../../utils/events.js';
+import {getEventFormattedDate, getNewsFormattedDate, isNewsBeforePublish} from '../../../utils/events.js';
 import {EVENTS_ROOT_PATH} from '../../../utils/urlStructure.js';
 import '../../elements/mkwc/hg-image.js';
 import sharedStyles from '../../styles/shared-styles.js'
@@ -117,10 +117,19 @@ export class HgDynamicPathPageCard extends LitElement {
           <div class="main">
             <h3>
               ${when(
-                this.dynamicPathPage.type === DynamicPathPageType.EVENT && !this.dynamicPathPage.public,
-                () => html`
-                  <span class="non-public">Niepubliczne</span>&nbsp;
-                `,
+                this.dynamicPathPage.type === DynamicPathPageType.EVENT,
+                () => when(
+                  !this.dynamicPathPage.public,
+                  () => html`
+                    <span class="non-public">Niepubliczne</span>&nbsp;
+                  `,
+                ),
+                () => when(
+                  isNewsBeforePublish(this.dynamicPathPage),
+                  () => html`
+                    <span class="non-public">Przed publikacją</span>&nbsp;
+                  `,
+                ),
               )}
               ${this.dynamicPathPage.title}
             </h3>

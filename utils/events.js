@@ -41,6 +41,9 @@ export const getWhenEventHappens = (event) => {
             ? 'W trakcie'
             : 'Odbyło się';
 };
+export const isNewsBeforePublish = (news) => {
+    return isDateUpcoming(news.publishDate);
+};
 export const getFormattedSingleDate = (date) => {
     return date.split('-').reverse().join(' / ');
 };
