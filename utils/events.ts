@@ -1,5 +1,6 @@
 import {omit} from 'lodash'
 import {DynamicPathPageEvent, DynamicPathPageEventWithUid, EventsList, EventsListItem, EventUid} from './types';
+import {isDatePast, isDateToday, isDateTodayOrUpcoming, isDateUpcoming} from './general';
 
 export const createNewEvent = (title: string, date: string, permalink: string): DynamicPathPageEvent => {
   return {
@@ -11,25 +12,19 @@ export const createNewEvent = (title: string, date: string, permalink: string): 
 };
 
 export const isEventToday = (event: EventsListItem) => {
-  // to do don't use global moment
-  // @ts-ignore
-  const moment = window.moment;
-  return moment().isSame(event.date, 'day');
+  return isDateToday(event.date);
 };
 
 export const isEventUpcoming = (event: EventsListItem) => {
-  // to do don't use global moment
-  // @ts-ignore
-  const moment = window.moment;
-  return moment().isBefore(event.date, 'day');
+  return isDateUpcoming(event.date);
 };
 
 export const isEventTodayOrUpcoming = (event: EventsListItem) => {
-  return isEventToday(event) || isEventUpcoming(event);
+  return isDateTodayOrUpcoming(event.date);
 };
 
 export const isEventPast = (event: EventsListItem) => {
- return !isEventTodayOrUpcoming(event);
+ return isDatePast(event.date);
 };
 
 export const getWhenEventHappens = (event: EventsListItem) => {

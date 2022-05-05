@@ -6,3 +6,25 @@ export class PromiseTrigger {
     this.promise = new Promise((resolve) => this.resolve = resolve);
   }
 }
+
+export const isDateToday = (date: string) => {
+  // to do don't use global moment
+  // @ts-ignore
+  const moment = window.moment;
+  return moment().isSame(date, 'day');
+};
+
+export const isDateUpcoming = (date: string) => {
+  // to do don't use global moment
+  // @ts-ignore
+  const moment = window.moment;
+  return moment().isBefore(date, 'day');
+};
+
+export const isDateTodayOrUpcoming = (date: string) => {
+  return isDateToday(date) || isDateUpcoming(date);
+};
+
+export const isDatePast = (date: string) => {
+  return !isDateTodayOrUpcoming(date);
+};

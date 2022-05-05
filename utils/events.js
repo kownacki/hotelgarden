@@ -1,4 +1,5 @@
 import { omit } from 'lodash-es';
+import { isDatePast, isDateToday, isDateTodayOrUpcoming, isDateUpcoming } from './general';
 export const createNewEvent = (title, date, permalink) => {
     return {
         title,
@@ -8,22 +9,16 @@ export const createNewEvent = (title, date, permalink) => {
     };
 };
 export const isEventToday = (event) => {
-    // to do don't use global moment
-    // @ts-ignore
-    const moment = window.moment;
-    return moment().isSame(event.date, 'day');
+    return isDateToday(event.date);
 };
 export const isEventUpcoming = (event) => {
-    // to do don't use global moment
-    // @ts-ignore
-    const moment = window.moment;
-    return moment().isBefore(event.date, 'day');
+    return isDateUpcoming(event.date);
 };
 export const isEventTodayOrUpcoming = (event) => {
-    return isEventToday(event) || isEventUpcoming(event);
+    return isDateTodayOrUpcoming(event.date);
 };
 export const isEventPast = (event) => {
-    return !isEventTodayOrUpcoming(event);
+    return isDatePast(event.date);
 };
 export const getWhenEventHappens = (event) => {
     return isEventUpcoming(event)
