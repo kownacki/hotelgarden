@@ -44,17 +44,11 @@ export class HgDynamicPathPagesAddDate extends LitElement {
   render() {
     const todayDate = getTodayDate();
     let minStartDate;
-    let maxStartDate;
     let minEndDate;
-    let maxEndDate;
     if (this._multipleDays) {
-      minStartDate = undefined;
-      maxStartDate = this.endDate ? this.endDate : undefined;
-      minEndDate = (this.startDate > todayDate) ? this.startDate : todayDate;
-      maxEndDate = undefined;
+      minEndDate = todayDate;
     } else {
       minStartDate = todayDate;
-      maxStartDate = undefined;
     }
     const datesSet = this._multipleDays ? (this.startDate && this.endDate) : this.startDate;
     return html`
@@ -62,9 +56,7 @@ export class HgDynamicPathPagesAddDate extends LitElement {
         .multipleDays=${this._multipleDays}
         .noSwitch=${this.noSingleDay}
         .minStartDate=${minStartDate}
-        .maxStartDate=${maxStartDate}
         .minEndDate=${minEndDate}
-        .maxEndDate=${maxEndDate}
         .startDateLabel=${this._multipleDays ? this.labels.multipleDays.startDate : this.labels.singleDay.startDate}
         .endDateLabel=${this.labels.multipleDays.endDate}
         .switchLabel=${this._multipleDays ? this.labels.multipleDays.switch : this.labels.singleDay.switch}

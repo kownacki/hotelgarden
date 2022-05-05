@@ -9,17 +9,32 @@ export const getTodayDate = () => {
     const moment = window.moment;
     return moment().format('YYYY-MM-DD');
 };
-export const isDateToday = (date) => {
+export const isDateSame = (date1, date2) => {
     // to do don't use global moment
     // @ts-ignore
     const moment = window.moment;
-    return moment().isSame(date, 'day');
+    return moment(date1).isSame(date2, 'day');
+};
+export const isDateEarlier = (date1, date2) => {
+    // to do don't use global moment
+    // @ts-ignore
+    const moment = window.moment;
+    return moment(date1).isBefore(date2, 'day');
+};
+export const isDateLater = (date1, date2) => {
+    return !isDateSame(date1, date2) && !isDateEarlier(date1, date2);
+};
+export const earlierDate = (date1, date2) => {
+    return isDateEarlier(date1, date2) ? date1 : date2;
+};
+export const laterDate = (date1, date2) => {
+    return isDateLater(date1, date2) ? date1 : date2;
+};
+export const isDateToday = (date) => {
+    return isDateSame(date, getTodayDate());
 };
 export const isDateUpcoming = (date) => {
-    // to do don't use global moment
-    // @ts-ignore
-    const moment = window.moment;
-    return moment().isBefore(date, 'day');
+    return isDateLater(date, getTodayDate());
 };
 export const isDatePast = (date) => {
     return !isDateToday(date) && !isDateUpcoming(date);
