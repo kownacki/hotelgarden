@@ -41,7 +41,7 @@ export class HgLunchEditDialog extends LitElement {
       <hg-dialog 
         id="dialog"
         .modal=${true}
-        @dialog-changed=${() => this.dialog = this.shadowRoot.getElementById('dialog').dialog}>
+        @dialog-changed=${({detail: dialog}) => this.dialog = dialog}>
         <div slot="header">
           Edytuj lunch ${this.dateString}
         </div>l

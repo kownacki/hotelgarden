@@ -75,7 +75,7 @@ export class HgDynamicPathPagesAddDialog extends LitElement {
       <hg-dialog
         id="dialog"
         .modal=${true}
-        @dialog-changed=${() => this.dialog = this.shadowRoot.getElementById('dialog').dialog}>
+        @dialog-changed=${({detail: dialog}) => this.dialog = dialog}>
         <div slot="header">
           Dodaj nowe wydarzenie lub aktualność
         </div>

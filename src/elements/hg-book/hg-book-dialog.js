@@ -74,7 +74,10 @@ export class HgBookDialog extends LitElement {
   }
   render() {
     return html`
-      <hg-dialog id="dialog" .noButtons=${true} @dialog-changed=${() => this.dialog = this.shadowRoot.getElementById('dialog').dialog}>
+      <hg-dialog
+        id="dialog"
+        .noButtons=${true}
+        @dialog-changed=${({detail: dialog}) => this.dialog = dialog}>
         <hg-text
           slot="header"
           .path=${createDbPath('texts/book', 'heading')}
