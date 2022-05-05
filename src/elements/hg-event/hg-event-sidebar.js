@@ -69,7 +69,7 @@ export class HgEventSidebar extends LitElement {
       <div class="container smaller-text">
         ${when(
           this._upcoming.length > 0,
-          () => html`<h2>Nadchodzące wydarzenia</h2>`
+          () => html`<h2>Nadchodzące wydarzenia i aktualności</h2>`
         )}
         <nav>
           ${when(

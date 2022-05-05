@@ -53,7 +53,7 @@ export class HgEvents extends LitElement {
           <hg-dynamic-path-pages-add></hg-dynamic-path-pages-add>
         `;
       }))}
-      <h2>Nadchodzące wydarzenia</h2>
+      <h2>Nadchodzące wydarzenia i aktualności</h2>
       ${when(
         this._allDynamicPathPagesReady,
         () => html`
