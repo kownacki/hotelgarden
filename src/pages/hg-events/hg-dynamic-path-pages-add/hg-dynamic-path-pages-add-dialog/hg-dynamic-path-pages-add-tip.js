@@ -3,7 +3,6 @@ import sharedStyles from '../../../../styles/shared-styles.js';
 
 export class HgDynamicPathPagesAddTip extends LitElement {
   static properties = {
-    date: String,
   };
   static styles = [sharedStyles, css`
     :host {
