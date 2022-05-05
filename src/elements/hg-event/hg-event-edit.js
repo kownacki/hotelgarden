@@ -53,9 +53,15 @@ export class HgEventEdit extends LitElement {
     return html`
       <div class="container cms">
         <hg-event-edit-date
-          .date=${this.eventData.event.date}
-          @request-date-change=${({detail: date}) => {
-            this.dispatchEvent(new CustomEvent('request-change', {detail: {field: HgEventEditFields.DATE, value: date}}));
+          .startDate=${this.eventData.event.startDate}
+          .endDate=${this.eventData.event.endDate}
+          @request-date-change=${({detail: {startDate, endDate}}) => {
+            this.dispatchEvent(new CustomEvent('request-change', {
+              detail: {
+                field: HgEventEditFields.DATE,
+                value: {startDate, endDate},
+              },
+            }));
           }}>
         </hg-event-edit-date>
         <div title=${this._getPublicSwitchTooltip()}>

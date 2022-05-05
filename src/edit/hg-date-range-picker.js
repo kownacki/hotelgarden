@@ -12,7 +12,7 @@ export class HgDateRangePicker extends LitElement {
     maxEndDate: String,
     startDateLabel: String,
     endDateLabel: String,
-    // observables
+    // observables / properties
     startDate: String,
     endDate: String,
   };
@@ -29,6 +29,7 @@ export class HgDateRangePicker extends LitElement {
     return html`
       <mwc-formfield-fixed .label=${this.startDateLabel}>
         <hg-date-picker
+          .date=${this.startDate}
           .min=${this.minStartDate}
           .max=${this.maxStartDate}
           @date-changed=${({detail: date}) => {
@@ -40,6 +41,7 @@ export class HgDateRangePicker extends LitElement {
       <div ?hidden=${this.singleDay}>
         <mwc-formfield-fixed .label=${this.endDateLabel}>
           <hg-date-picker
+            .date=${this.endDate}
             .min=${this.minEndDate}
             .max=${this.maxEndDate}
             @date-changed=${({detail: date}) => {

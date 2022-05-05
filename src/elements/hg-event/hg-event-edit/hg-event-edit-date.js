@@ -2,17 +2,18 @@ import {LitElement, html, css} from 'lit';
 import '@material/mwc-button';
 import '@polymer/paper-dialog';
 import '../../../edit/hg-cms-buttons-container.js';
-import '../../../edit/hg-date-picker.js';
+import '../../../edit/hg-date-range-picker.js';
 import sharedStyles from '../../../styles/shared-styles.js';
 import '../../ui/hg-icon-button.js';
 
 export class HgEventEditDate extends LitElement {
   static properties = {
-    date: String,
+    startDate: String,
+    endDate: String,
     opened: {type: Boolean, reflect: true},
   };
   static styles = [sharedStyles, css`
-    hg-date-picker {
+    hg-range-date-picker {
       margin-bottom: 10px;
     }
   `];
@@ -28,10 +29,11 @@ export class HgEventEditDate extends LitElement {
         <div>
           Zmień datę wydarzenia
         </div>
-        <hg-date-picker
+        <hg-date-range-picker
           id="picker"
-         .date=${this.date}>
-        </hg-date-picker>
+          .startDate=${this.startDate}
+          .endDate=${this.endDate}>
+        </hg-date-range-picker>
         <div class="buttons">
           <hg-cms-buttons-container>
             <mwc-button
@@ -43,8 +45,16 @@ export class HgEventEditDate extends LitElement {
               .label=${'Zapisz'}
               @click=${() => {
                 this.shadowRoot.getElementById('dialog').close();
-                const newDate = this.shadowRoot.getElementById('picker').picker.value;
-                this.dispatchEvent(new CustomEvent('request-date-change', {detail: newDate, composed: true}));
+                const picker = this.shadowRoot.getElementById('picker');
+                const newStartDate = picker.startDate;
+                const newEndDate = picker.endDate;
+                this.dispatchEvent(new CustomEvent('request-date-change', {
+                  detail: {
+                    startDate: newStartDate,
+                    endDate: newEndDate,
+                  },
+                  composed: true,
+                }));
               }}>
             </mwc-button>
           </hg-cms-buttons-container>
