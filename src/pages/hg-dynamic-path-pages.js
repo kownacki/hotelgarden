@@ -58,7 +58,7 @@ export class HgDynamicPathPages extends LitElement {
         this._allDynamicPathPagesReady,
         () => html`
             <hg-dynamic-path-pages-list
-              .events=${this._allDynamicPathPages}
+              .dynamicPathPages=${this._allDynamicPathPages}
               .noNonPublic=${!this._loggedIn}>
             </hg-dynamic-path-pages-list>
           `,
@@ -74,7 +74,7 @@ export class HgDynamicPathPages extends LitElement {
           this._allDynamicPathPagesReady,
           () => html`
             <hg-dynamic-path-pages-list
-              .events=${this._allDynamicPathPages}
+              .dynamicPathPages=${this._allDynamicPathPages}
               .noNonPublic=${!this._loggedIn}
               .past=${true}>
             </hg-dynamic-path-pages-list>

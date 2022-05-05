@@ -4,7 +4,7 @@ import {EVENTS_ROOT_PATH} from '../../../utils/urlStructure.js';
 import '../../elements/mkwc/hg-image.js';
 import sharedStyles from '../../styles/shared-styles.js'
 
-export class HgEventsCard extends LitElement {
+export class HgEventCard extends LitElement {
   static properties = {
     event: Object,
   };
@@ -106,4 +106,4 @@ export class HgEventsCard extends LitElement {
     `;
   }
 }
-customElements.define('hg-events-card', HgEventsCard);
+customElements.define('hg-event-card', HgEventCard);
