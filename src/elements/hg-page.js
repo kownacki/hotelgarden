@@ -27,7 +27,7 @@ const pagesModulesImports = {
   'family-parties': () => import('../pages/hg-family-parties.js'),
   'banquet-halls': () => import('../pages/hg-banquet-halls.js'),
   'gallery': () => import('../pages/hg-gallery.js'),
-  'events': () => import('../pages/hg-events.js'),
+  'dynamic-path-pages': () => import('../pages/hg-dynamic-path-pages.js'),
   'contact': () => import('../pages/hg-contact.js'),
   '404': () => import('../pages/hg-404.js'),
 };

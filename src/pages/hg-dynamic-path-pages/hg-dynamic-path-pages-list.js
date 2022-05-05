@@ -6,7 +6,7 @@ import {deleteImageInDb} from '../../utils/database.js';
 import {removeDynamicPathPage} from '../../utils.js';
 import './hg-events-card.js';
 
-export class HgEventsAndNewsList extends LitElement {
+export class HgDynamicPathPagesList extends LitElement {
   static properties = {
     events: Array, // DynamicPathPage[]
     noNonPublic: Boolean,
@@ -48,4 +48,4 @@ export class HgEventsAndNewsList extends LitElement {
     `;
   }
 }
-customElements.define('hg-events-and-news-list', HgEventsAndNewsList);
+customElements.define('hg-dynamic-path-pages-list', HgDynamicPathPagesList);

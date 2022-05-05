@@ -7,11 +7,11 @@ import '../elements/hg-action-button.js';
 import '../elements/hg-page/hg-page-loading.js';
 import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
 import {getAllDynamicPathPages} from '../utils.js';
-import './hg-events/hg-events-and-news-list.js';
+import './hg-dynamic-path-pages/hg-dynamic-path-pages-list.js';
 
 // todo add scrolling to dialogs
 
-export class HgEvents extends LitElement {
+export class HgDynamicPathPages extends LitElement {
   _firebaseAuth;
   static properties = {
     _loggedIn: Boolean,
@@ -48,7 +48,7 @@ export class HgEvents extends LitElement {
   render() {
     return html`
       <hg-intro-article .uid=${'events'}></hg-intro-article>
-      ${!this._loggedIn ? '' : until(import('./hg-events/hg-dynamic-path-pages-add.js').then(() => {
+      ${!this._loggedIn ? '' : until(import('./hg-dynamic-path-pages/hg-dynamic-path-pages-add.js').then(() => {
         return html`
           <hg-dynamic-path-pages-add></hg-dynamic-path-pages-add>
         `;
@@ -57,10 +57,10 @@ export class HgEvents extends LitElement {
       ${when(
         this._allDynamicPathPagesReady,
         () => html`
-            <hg-events-and-news-list
+            <hg-dynamic-path-pages-list
               .events=${this._allDynamicPathPages}
               .noNonPublic=${!this._loggedIn}>
-            </hg-events-and-news-list>
+            </hg-dynamic-path-pages-list>
           `,
         () => html`<hg-page-loading></hg-page-loading>`,
       )}
@@ -73,11 +73,11 @@ export class HgEvents extends LitElement {
         ${when(
           this._allDynamicPathPagesReady,
           () => html`
-            <hg-events-and-news-list
+            <hg-dynamic-path-pages-list
               .events=${this._allDynamicPathPages}
               .noNonPublic=${!this._loggedIn}
               .past=${true}>
-            </hg-events-and-news-list>
+            </hg-dynamic-path-pages-list>
           `,
           () => html`<hg-page-loading></hg-page-loading>`,
         )}
@@ -85,4 +85,4 @@ export class HgEvents extends LitElement {
     `;
   }
 }
-customElements.define('hg-events', HgEvents);
+customElements.define('hg-dynamic-path-pages', HgDynamicPathPages);

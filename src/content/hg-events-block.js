@@ -2,7 +2,7 @@ import {LitElement, html, css} from 'lit';
 import {when} from 'lit/directives/when.js';
 import '../elements/hg-action-button.js';
 import '../elements/hg-page/hg-page-loading.js';
-import '../pages/hg-events/hg-events-and-news-list.js';
+import '../pages/hg-dynamic-path-pages/hg-dynamic-path-pages-list.js';
 import sharedStyles from '../styles/shared-styles.js';
 import {getAllDynamicPathPages, sleep} from '../utils.js';
 
@@ -42,7 +42,7 @@ export class HgEventsBlock extends LitElement {
       ${when(
         this._allDynamicPathPagesReady,
         () => html`
-          <hg-events-and-news-list
+          <hg-dynamic-path-pages-list
             .events=${this._allDynamicPathPages}
             .noNonPublic=${true}
             .max=${2}
@@ -51,7 +51,7 @@ export class HgEventsBlock extends LitElement {
               await sleep(); // wait for styles to apply
               this.dispatchEvent(new CustomEvent('check-visibility', {composed: true}));
             }}>
-          </hg-events-and-news-list>
+          </hg-dynamic-path-pages-list>
         `,
         () => html`<hg-page-loading></hg-page-loading>`,
       )}

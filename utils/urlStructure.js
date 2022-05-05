@@ -16,10 +16,11 @@ export const staticPathToPageUid = {
     '/przyjecia-rodzinne': 'family-parties',
     '/sale-bankietowe': 'banquet-halls',
     '/galeria': 'gallery',
-    '/wydarzenia': 'events',
+    '/wydarzenia': 'dynamic-path-pages',
     '/kontakt': 'contact',
 };
 export const staticPaths = Object.keys(staticPathToPageUid);
+// todo dir should be renamed and checked where is used
 export const pagesStaticData = {
     '404': { name: 'Błąd 404 - strony nie znaleziono', path: NOT_FOUND_404, dir: '404' },
     'banquet-halls': { name: 'Sale bankietowe', path: '/sale-bankietowe', dir: 'celebrations' },
@@ -27,7 +28,7 @@ export const pagesStaticData = {
     'conferences': { name: 'Konferencja w Gardenie', path: '/konferencje', dir: 'conferences' },
     'contact': { name: 'Kontakt', path: '/kontakt', dir: 'contact' },
     'cuisine': { name: 'O naszej kuchni', path: '/kuchnia', dir: 'hotel' },
-    'events': { name: 'Wydarzenia', path: '/wydarzenia', dir: 'events' },
+    'dynamic-path-pages': { name: 'Wydarzenia', path: '/wydarzenia', dir: 'events' },
     'family-parties': { name: 'Przyjęcia rodzinne', path: '/przyjecia-rodzinne', dir: 'celebrations' },
     'gallery': { name: 'Galeria', path: '/galeria', dir: 'gallery' },
     'landing': { name: 'O hotelu', path: '/', dir: 'hotel' },
@@ -61,7 +62,7 @@ export const links = [
         sublinks: ['weddings', 'family-parties', 'banquet-halls'],
     },
     pagesStaticData['gallery'],
-    pagesStaticData['events'],
+    pagesStaticData['dynamic-path-pages'],
     pagesStaticData['contact'],
 ];
 export const linksMap = keyBy(links, 'path');
