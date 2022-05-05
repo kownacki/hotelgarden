@@ -1,9 +1,8 @@
 import {LitElement, html, css} from 'lit';
 import {when} from 'lit/directives/when.js';
 import '@material/mwc-switch';
-import '../../../../edit/hg-date-picker.js';
+import '../../../../edit/hg-date-range-picker.js';
 import sharedStyles from '../../../../styles/shared-styles.js';
-import '../../../../utils/fixes/mwc-formfield-fixed.js';
 import {getTodayDate} from '../../../../../utils/general.js';
 
 export class HgDynamicPathPagesAddDate extends LitElement {
@@ -74,26 +73,21 @@ export class HgDynamicPathPagesAddDate extends LitElement {
           </mwc-formfield-fixed>
         `,
       )}
-      <mwc-formfield-fixed .label=${this._multipleDays ? this.labels.multipleDays.startDate : this.labels.singleDay.startDate}>
-        <hg-date-picker
-          .min=${minStartDate}
-          .max=${maxStartDate}
-          @date-changed=${({detail: date}) => {
-            this.startDate = date;
-          }}>
-        </hg-date-picker>
-      </mwc-formfield-fixed>
-      <div ?hidden=${!this._multipleDays}>
-        <mwc-formfield-fixed .label=${this.labels.multipleDays.endDate}>
-          <hg-date-picker
-            .min=${minEndDate}
-            .max=${maxEndDate}
-            @date-changed=${({detail: date}) => {
-              this.endDate = date;
-            }}>
-          </hg-date-picker>
-        </mwc-formfield-fixed>
-      </div>
+      <hg-date-range-picker
+        .singleDay=${!this._multipleDays}
+        .minStartDate=${minStartDate}
+        .maxStartDate=${maxStartDate}
+        .minEndDate=${minEndDate}
+        .maxEndDate=${maxEndDate}
+        .startDateLabel=${this._multipleDays ? this.labels.multipleDays.startDate : this.labels.singleDay.startDate}
+        .endDateLabel=${this.labels.multipleDays.endDate}
+        @start-date-changed=${({detail: date}) => {
+          this.startDate = date;
+        }}
+        @end-date-changed=${({detail: date}) => {
+          this.endDate = date;
+        }}>
+      </hg-date-range-picker>
       <p class="date-info smaller-text">
         ${when(!datesSet,
           () => 'Data jest wymagana',
