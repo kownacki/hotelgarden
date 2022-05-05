@@ -1,4 +1,5 @@
 import {LitElement, html, css} from 'lit';
+import {when} from 'lit/directives/when.js';
 import '@material/mwc-button';
 import {getEventFormattedDate, getNewsFormattedDate} from '../../../utils/events.js';
 import {EVENTS_ROOT_PATH} from '../../../utils/urlStructure.js';
@@ -103,20 +104,24 @@ export class HgDynamicPathPageCard extends LitElement {
         <div class="content">
           <div class="header">
             <div class="type">
-              ${this.dynamicPathPage.type === DynamicPathPageType.EVENT ? 'Wydarzenie' : 'Aktualności'}
+              ${this.dynamicPathPage.type === DynamicPathPageType.EVENT 
+                ? 'Wydarzenie' 
+                : 'Aktualności'}
             </div>
             <div class="date">
               ${this.dynamicPathPage.type === DynamicPathPageType.EVENT
                 ? getEventFormattedDate(this.dynamicPathPage)
-                : getNewsFormattedDate(this.dynamicPathPage)
-              }
+                : getNewsFormattedDate(this.dynamicPathPage)}
             </div>
           </div>
           <div class="main">
             <h3>
-              ${this.dynamicPathPage.public ? '' : html`
-                <span class="non-public">Niepubliczne</span>&nbsp;
-              `}
+              ${when(
+                this.dynamicPathPage.type === DynamicPathPageType.EVENT && !this.dynamicPathPage.public,
+                () => html`
+                  <span class="non-public">Niepubliczne</span>&nbsp;
+                `,
+              )}
               ${this.dynamicPathPage.title}
             </h3>
           </div>
