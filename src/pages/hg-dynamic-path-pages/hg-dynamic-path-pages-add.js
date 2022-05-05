@@ -12,7 +12,6 @@ export class HgDynamicPathPagesAdd extends LitElement {
   `];
   async _addDynamicPathPage(type, title, startDate, endDate, permalink) {
     // todo transaction to avoid race condition
-    console.log(type, title, startDate, endDate, permalink);
     await addDynamicPathPage(type, title, startDate, endDate, permalink);
     window.history.pushState(null, null, `${EVENTS_ROOT_PATH}${permalink}`);
     this.dispatchEvent(new CustomEvent('location-changed', {composed: true, bubbles: true}));
