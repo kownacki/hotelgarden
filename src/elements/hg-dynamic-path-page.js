@@ -11,9 +11,14 @@ import './hg-event/hg-event-sidebar.js';
 import './hg-news/hg-news-header.js';
 import './hg-page/hg-page-loading.js';
 
-export const HgDynamicPathPageEditFields = {
+export const HgEventEditFields = {
   DATE: 'date',
   PUBLIC: 'public',
+  PROMOTED: 'promoted',
+};
+
+export const HgNewsEditFields = {
+  DATE: 'date',
   PROMOTED: 'promoted',
 };
 
@@ -125,12 +130,12 @@ export class HgDynamicPathPage extends LitElement {
                   .event=${this.dynamicPathPage}
                   .promotedEventData=${this.promotedEventData}
                   @request-change=${async ({detail: {field, value}}) => {
-                    if (field === HgDynamicPathPageEditFields.DATE) {
+                    if (field === HgEventEditFields.DATE) {
                       await this._dynamicPathPageDbSync.requestFieldUpdate('startDate', value.startDate);
                       this._dynamicPathPageDbSync.requestFieldUpdate('endDate', value.endDate);
-                    } else if (field === HgDynamicPathPageEditFields.PUBLIC) {
+                    } else if (field === HgEventEditFields.PUBLIC) {
                       this._dynamicPathPageDbSync.requestFieldUpdate('public', value);
-                    } else if (field === HgDynamicPathPageEditFields.PROMOTED) {
+                    } else if (field === HgEventEditFields.PROMOTED) {
                       this.updatePromoted(value);
                     }
                   }}>
@@ -138,7 +143,15 @@ export class HgDynamicPathPage extends LitElement {
               `,
               () => html`
                 <hg-news-header
-                  .news=${this.dynamicPathPage}>
+                  .news=${this.dynamicPathPage}
+                  @request-change=${async ({detail: {field, value}}) => {
+                    if (field === HgNewsEditFields.DATE) {
+                      await this._dynamicPathPageDbSync.requestFieldUpdate('publishDate', value.publishDate);
+                      this._dynamicPathPageDbSync.requestFieldUpdate('unpublishDate', value.unpublishDate);
+                    } else if (field === HgNewsEditFields.PROMOTED) {
+                      this.updatePromoted(value);
+                    }
+                  }}>
                 </hg-news-header>
               `,
             )}

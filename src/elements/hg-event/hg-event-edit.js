@@ -6,7 +6,7 @@ import './hg-event-edit/hg-event-edit-date.js';
 import './hg-event-edit/hg-event-promote-switch.js';
 import './hg-event-edit/hg-event-public-switch.js';
 
-import {HgDynamicPathPageEditFields} from '../hg-dynamic-path-page.js';
+import {HgEventEditFields} from '../hg-dynamic-path-page.js';
 
 export class HgEventEdit extends LitElement {
   static properties = {
@@ -58,7 +58,7 @@ export class HgEventEdit extends LitElement {
           @request-date-change=${({detail: {startDate, endDate}}) => {
             this.dispatchEvent(new CustomEvent('request-change', {
               detail: {
-                field: HgDynamicPathPageEditFields.DATE,
+                field: HgEventEditFields.DATE,
                 value: {startDate, endDate},
               },
             }));
@@ -68,7 +68,7 @@ export class HgEventEdit extends LitElement {
           <hg-event-public-switch
             .selected=${this.event.public}
             @public-changed=${({detail: publicValue}) => {
-              this.dispatchEvent(new CustomEvent('request-change', {detail: {field: HgDynamicPathPageEditFields.PUBLIC, value: publicValue}}));
+              this.dispatchEvent(new CustomEvent('request-change', {detail: {field: HgEventEditFields.PUBLIC, value: publicValue}}));
               this._closeAllSnackbars();
               if (publicValue) {
                 this.shadowRoot.getElementById('snackbar-public-true').show();
@@ -83,7 +83,7 @@ export class HgEventEdit extends LitElement {
             .selected=${isEventUpcoming(this.event) && this.promotedEventData?.uid === this.event.uid}
             .disabled=${isEventPast(this.event)}
             @promoted-changed=${({detail: promoted}) => {
-              this.dispatchEvent(new CustomEvent('request-change', {detail: {field: HgDynamicPathPageEditFields.PROMOTED, value: promoted}}));
+              this.dispatchEvent(new CustomEvent('request-change', {detail: {field: HgEventEditFields.PROMOTED, value: promoted}}));
               this._closeAllSnackbars();
               if (promoted) {
                 this.shadowRoot.getElementById('snackbar-promote-true').show();
