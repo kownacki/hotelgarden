@@ -1,4 +1,5 @@
-import {ClientConfigSeo, EventsList, EventsListItem, EventUid} from './types';
+import {DynamicPathPageType} from './events';
+import {ClientConfigSeo, DynamicPathPageEvent, DynamicPathPageNews, EventsList, EventsListItem, EventUid} from './types';
 import {isDynamicPath, getDynamicPathPagePermalink, PageUid, pagesStaticData, StaticPath, staticPathToPageUid} from './urlStructure';
 
 export const getDefaultTitle = (uid: PageUid) => {
@@ -54,7 +55,7 @@ export const createFull404PageTitle = (seoConfig: ClientConfigSeo) => {
   return appendSuffixToTitle(getDefaultTitle('404'), seoConfig);
 }
 
-export const createEventJsonLd = (event: EventsListItem) => {
+export const createEventJsonLd = (event: DynamicPathPageEvent) => {
   return JSON.stringify({
     '@context': 'http://schema.org/',
     '@type': 'Event',
@@ -71,6 +72,33 @@ export const createEventJsonLd = (event: EventsListItem) => {
       },
     },
     name: event.title,
-    startDate: event.date,
+    startDate: event.startDate,
+    endDate: event.endDate,
   });
+}
+
+export const createNewsJsonLd = (news: DynamicPathPageNews) => {
+  return JSON.stringify({
+    '@context': 'http://schema.org',
+    '@type': 'Article',
+    headline: news.title,
+    image: news.image?.url,
+    datePublished: news.publishDate,
+    author: {
+      '@type': 'Organization',
+      name: 'Hotel Garden',
+      logo: '/resources/images/original/logo.png',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Hotel Garden',
+      logo: '/resources/images/original/logo.png',
+    }
+  });
+}
+
+export const createDynamicPathPageJsonLd = (dynamicPathPage: DynamicPathPageEvent | DynamicPathPageNews) => {
+  return dynamicPathPage.type === DynamicPathPageType.EVENT
+    ? createEventJsonLd(dynamicPathPage as DynamicPathPageEvent)
+    : createNewsJsonLd(dynamicPathPage as DynamicPathPageNews);
 }

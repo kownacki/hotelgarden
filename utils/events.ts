@@ -2,6 +2,10 @@ import {omit} from 'lodash'
 import {DynamicPathPageEvent, DynamicPathPageEventWithUid, DynamicPathPageNews, EventsList, EventUid} from './types';
 import {isDateEarlier, isDatePast, isDateTodayOrPast, isDateTodayOrUpcoming, isDateUpcoming} from './general';
 
+export const DynamicPathPageType = {
+  EVENT: 'event',
+  NEWS: 'news',
+};
 export const createNewEvent = (title: string, startDate: string, endDate: string, permalink: string): DynamicPathPageEvent => {
   return {
     type: 'event',

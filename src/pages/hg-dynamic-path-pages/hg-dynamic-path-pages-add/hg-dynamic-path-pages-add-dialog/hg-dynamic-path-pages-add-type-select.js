@@ -1,8 +1,8 @@
 import {LitElement, html, css} from 'lit';
 import '@material/mwc-radio';
+import {DynamicPathPageType} from '../../../../../utils/events.js';
 import sharedStyles from '../../../../styles/shared-styles.js';
 import '../../../../utils/fixes/mwc-formfield-fixed.js';
-import {DynamicPathPageType} from '../../../../utils.js';
 
 export class HgDynamicPathPagesAddTypeSelect extends LitElement {
   static properties = {

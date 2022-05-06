@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit';
 import {choose} from 'lit/directives/choose.js';
+import {DynamicPathPageType} from '../../../../../utils/events.js';
 import sharedStyles from '../../../../styles/shared-styles.js';
-import {DynamicPathPageType} from '../../../../utils.js';
 import './types/hg-dynamic-path-pages-add-event.js';
 import './types/hg-dynamic-path-pages-add-news.js';
 import './hg-dynamic-path-pages-add-type-select.js';

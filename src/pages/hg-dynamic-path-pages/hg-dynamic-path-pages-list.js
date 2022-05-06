@@ -1,9 +1,9 @@
 import {LitElement, html, css} from 'lit';
 import '../../elements/hg-list-old.js';
-import {isEventPast, isEventGoingOrUpcoming} from '../../../utils/events.js';
+import {DynamicPathPageType, isEventPast, isEventGoingOrUpcoming} from '../../../utils/events.js';
 import sharedStyles from '../../styles/shared-styles.js';
 import {deleteImageInDb} from '../../utils/database.js';
-import {DynamicPathPageType, removeDynamicPathPage} from '../../utils.js';
+import {removeDynamicPathPage} from '../../utils.js';
 import './hg-dynamic-path-page-card.js';
 
 export class HgDynamicPathPagesList extends LitElement {

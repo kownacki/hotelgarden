@@ -1,5 +1,9 @@
 import { omit } from 'lodash-es';
 import { isDateEarlier, isDatePast, isDateTodayOrPast, isDateTodayOrUpcoming, isDateUpcoming } from './general';
+export const DynamicPathPageType = {
+    EVENT: 'event',
+    NEWS: 'news',
+};
 export const createNewEvent = (title, startDate, endDate, permalink) => {
     return {
         type: 'event',

@@ -1,9 +1,10 @@
 import {LitElement, html, css} from 'lit';
 import {when} from 'lit/directives/when.js';
-import {createEventJsonLd} from '../../utils/seo.js';
+import {DynamicPathPageType} from '../../utils/events.js';
+import {createDynamicPathPageJsonLd} from '../../utils/seo.js';
 import sharedStyles from '../styles/shared-styles.js';
 import {createDbPath, getFromDb, updateInDb, updateInObjectInDb} from '../utils/database.js';
-import {cleanTextForMetaDescription, DynamicPathPageType, getAllDynamicPathPages} from '../utils.js';
+import {cleanTextForMetaDescription, getAllDynamicPathPages} from '../utils.js';
 import {ObjectDbSyncController} from '../utils/ObjectDbSyncController.js';
 import './hg-event/hg-event-content.js';
 import './hg-event/hg-event-header.js';
@@ -98,7 +99,7 @@ export class HgDynamicPathPage extends LitElement {
     if (changedProperties.has('dynamicPathPage') && this.dynamicPathPage) {
       this._dynamicPathPageDbSync.setPath(createDbPath(`dynamicPathPages/${this.dynamicPathPage.uid}`));
 
-      const eventJsonLd = createEventJsonLd(this.dynamicPathPage);
+      const eventJsonLd = createDynamicPathPageJsonLd(this.dynamicPathPage);
       this.dispatchEvent(new CustomEvent('set-json-ld', {detail: eventJsonLd}));
 
       this._content = await getFromDb(createDbPath(`dynamicPathPages/${this.dynamicPathPage.uid}/data/content`, 'content'));

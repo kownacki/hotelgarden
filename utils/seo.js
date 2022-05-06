@@ -1,3 +1,4 @@
+import { DynamicPathPageType } from './events';
 import { isDynamicPath, getDynamicPathPagePermalink, pagesStaticData, staticPathToPageUid } from './urlStructure';
 export const getDefaultTitle = (uid) => {
     return pagesStaticData[uid].name;
@@ -62,6 +63,32 @@ export const createEventJsonLd = (event) => {
             },
         },
         name: event.title,
-        startDate: event.date,
+        startDate: event.startDate,
+        endDate: event.endDate,
     });
+};
+export const createNewsJsonLd = (news) => {
+    var _a;
+    return JSON.stringify({
+        '@context': 'http://schema.org',
+        '@type': 'Article',
+        headline: news.title,
+        image: (_a = news.image) === null || _a === void 0 ? void 0 : _a.url,
+        datePublished: news.publishDate,
+        author: {
+            '@type': 'Organization',
+            name: 'Hotel Garden',
+            logo: '/resources/images/original/logo.png',
+        },
+        publisher: {
+            '@type': 'Organization',
+            name: 'Hotel Garden',
+            logo: '/resources/images/original/logo.png',
+        }
+    });
+};
+export const createDynamicPathPageJsonLd = (dynamicPathPage) => {
+    return dynamicPathPage.type === DynamicPathPageType.EVENT
+        ? createEventJsonLd(dynamicPathPage)
+        : createNewsJsonLd(dynamicPathPage);
 };

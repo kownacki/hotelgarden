@@ -1,6 +1,6 @@
 import {Request, Response} from 'firebase-functions';
 import {PreloadLinkAttrs} from '../../../utils/html';
-import {createFull404PageTitle, createFullPageTitle, createFullEventTitle, createEventJsonLd} from '../../../utils/seo';
+import {createFull404PageTitle, createFullPageTitle, createFullEventTitle, createDynamicPathPageJsonLd} from '../../../utils/seo';
 import {
   getDynamicPathPagePermalink,
   isValidStaticPath,
@@ -39,13 +39,14 @@ export const render = async (req: Request, res: Response) => {
     res.status(200).send(index);
   } else if (isValidDynamicPath(path, eventsList)) {
     const permalink = getDynamicPathPagePermalink(path);
-    const event = eventsList[permalink];
-    const eventUid = event.uid;
+    const dynamicPathPage = eventsList[permalink];
+    const dynamicPathPageUid = dynamicPathPage.uid;
     const title = createFullEventTitle(permalink, seoConfig, eventsList);
-    const eventSeoData = (await getEventSeoData(eventUid)).seo;
-    const metaDescription = eventSeoData?.description;
-    const jsonLd = createEventJsonLd(event);
-    const preloads: PreloadLinkAttrs[] = event.image ? [{href: event.image.url, as: 'image'}] : [];
+    const dynamicPathPageSeoData = (await getEventSeoData(dynamicPathPageUid)).seo;
+    const metaDescription = dynamicPathPageSeoData?.description;
+    // @ts-ignore
+    const jsonLd = createDynamicPathPageJsonLd(dynamicPathPage);
+    const preloads: PreloadLinkAttrs[] = dynamicPathPage.image ? [{href: dynamicPathPage.image.url, as: 'image'}] : [];
     const index = createIndex(preloads, {title, metaDescription, jsonLd}, {eventsList, promotedEventUid});
     res.status(200).send(index);
   } else {

@@ -1,11 +1,10 @@
 import {LitElement, html, css} from 'lit';
 import {when} from 'lit/directives/when.js';
 import '@material/mwc-button';
-import {getEventFormattedDate, getNewsFormattedDate, isNewsBeforePublish} from '../../../utils/events.js';
+import {DynamicPathPageType, getEventFormattedDate, getNewsFormattedDate, isNewsBeforePublish} from '../../../utils/events.js';
 import {DYNAMIC_PATH_PAGES_ROOT_PATH} from '../../../utils/urlStructure.js';
 import '../../elements/mkwc/hg-image.js';
 import sharedStyles from '../../styles/shared-styles.js'
-import {DynamicPathPageType} from '../../utils.js';
 
 export class HgDynamicPathPageCard extends LitElement {
   static properties = {
