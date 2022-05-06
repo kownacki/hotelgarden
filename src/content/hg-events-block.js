@@ -44,7 +44,7 @@ export class HgEventsBlock extends LitElement {
         () => html`
           <hg-dynamic-path-pages-list
             .dynamicPathPages=${this._allDynamicPathPages}
-            .noNonPublic=${true}
+            .showHidden=${false}
             .max=${2}
             @events-changed=${async (event) => {
               this._eventsNotEmpty = !_.isEmpty(event.detail);

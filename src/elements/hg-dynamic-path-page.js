@@ -175,7 +175,7 @@ export class HgDynamicPathPage extends LitElement {
           () => html`
             <hg-event-sidebar
               .selected=${this.dynamicPathPage?.uid}
-              .events=${this._allDynamicPathPages}>
+              .dynamicPathPages=${this._allDynamicPathPages}>
             </hg-event-sidebar>
           `,
           () => html`<hg-page-loading></hg-page-loading>`,

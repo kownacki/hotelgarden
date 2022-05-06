@@ -2,14 +2,15 @@ import {LitElement, html, css} from 'lit';
 import {repeat} from 'lit/directives/repeat.js';
 import {when} from 'lit/directives/when.js';
 import {sortBy} from 'lodash-es';
-import {isEventGoingOrUpcoming} from '../../../utils/events.js';
+import {isDynamicPathPageArchived, isDynamicPathPageHidden} from '../../../utils/events.js';
+import {createDynamicPath} from '../../../utils/urlStructure.js';
 import sharedStyles from '../../styles/shared-styles.js';
 
 export class HgEventSidebar extends LitElement {
   static properties = {
     selected: String, // EventUid
-    events: Array, // DynamicPathPage[]
-    _upcoming: Array,
+    dynamicPathPages: Array, // DynamicPathPage[]
+    _currentDynamicPathPages: Array,
   };
   static styles = [sharedStyles, css`
     :host {
@@ -57,30 +58,36 @@ export class HgEventSidebar extends LitElement {
     }
   `];
   willUpdate(changedProperties) {
-    if (changedProperties.has('events')) {
-      const publicAndUpcomingEvents = this.events
-        .filter((event) => event.public)
-        .filter((event) => isEventGoingOrUpcoming((event)));
-      this._upcoming = sortBy(publicAndUpcomingEvents, 'date');
+    if (changedProperties.has('dynamicPathPages')) {
+      const currentDynamicPathPages = this.dynamicPathPages
+        .filter((dynamicPathPage) => !isDynamicPathPageHidden(dynamicPathPage))
+        .filter((dynamicPathPage) => !isDynamicPathPageArchived(dynamicPathPage));
+      this._currentDynamicPathPages = sortBy(currentDynamicPathPages, 'date');
     }
   }
   render() {
     return html`
       <div class="container smaller-text">
         ${when(
-          this._upcoming.length > 0,
+          this._currentDynamicPathPages.length > 0,
           () => html`<h2>Nadchodzące wydarzenia i aktualności</h2>`
         )}
         <nav>
           ${when(
-            this._upcoming.length > 0,
+            this._currentDynamicPathPages.length > 0,
             () => html`
               <ul>
-                ${repeat(this._upcoming, (event) => event.uid, (event) => html`
-                <li ?selected=${this.selected === event.uid}>
-                  <a href="/wydarzenia/${event.permalink}">${event.title}</a>
-                </li>
-              `)}
+                ${repeat(
+                  this._currentDynamicPathPages,
+                  (dynamicPathPage) => dynamicPathPage.uid,
+                  (dynamicPathPage) => html`
+                    <li ?selected=${this.selected === dynamicPathPage.uid}>
+                      <a href=${createDynamicPath(dynamicPathPage.permalink)}>
+                        ${dynamicPathPage.title}
+                      </a>
+                    </li>
+                  `,
+                )}
               </ul>
             `,
           )}

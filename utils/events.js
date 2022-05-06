@@ -56,6 +56,25 @@ export const isNewsBeforePublish = (news) => {
 export const isNewsAfterUnpublish = (news) => {
     return isDateTodayOrPast(news.unpublishDate);
 };
+export const isNewsBeingInPublish = (news) => {
+    return !isNewsBeforePublish(news) && !isNewsAfterUnpublish(news);
+};
+export const isDynamicPathPageHidden = (dynamicPathPage) => {
+    if (dynamicPathPage.type === DynamicPathPageType.EVENT) {
+        return !dynamicPathPage.public;
+    }
+    else {
+        return isNewsBeforePublish(dynamicPathPage);
+    }
+};
+export const isDynamicPathPageArchived = (dynamicPathPage) => {
+    if (dynamicPathPage.type === DynamicPathPageType.EVENT) {
+        return isEventPast(dynamicPathPage);
+    }
+    else {
+        return isNewsAfterUnpublish(dynamicPathPage);
+    }
+};
 export const getFormattedSingleDate = (date) => {
     return date.split('-').reverse().join(' / ');
 };

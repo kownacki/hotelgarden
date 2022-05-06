@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import '../../elements/hg-list-old.js';
-import {DynamicPathPageType, isEventPast, isEventGoingOrUpcoming} from '../../../utils/events.js';
+import {DynamicPathPageType, isDynamicPathPageArchived, isDynamicPathPageHidden} from '../../../utils/events.js';
 import sharedStyles from '../../styles/shared-styles.js';
 import {deleteImageInDb} from '../../utils/database.js';
 import {removeDynamicPathPage} from '../../utils.js';
@@ -9,8 +9,8 @@ import './hg-dynamic-path-page-card.js';
 export class HgDynamicPathPagesList extends LitElement {
   static properties = {
     dynamicPathPages: Array, // DynamicPathPage[]
-    noNonPublic: Boolean,
-    past: Boolean,
+    showHidden: Boolean,
+    archived: Boolean,
     max: Number,
   };
   static styles = [sharedStyles, css`
@@ -28,14 +28,14 @@ export class HgDynamicPathPagesList extends LitElement {
         .items=${this.dynamicPathPages}
         .ready=${true}
         .transform=${(items) => _.flow([
-          ...(this.noNonPublic ? [_.filter((key) => items[key].public)] : []),
-          _.filter((key) => this.past ? isEventPast(items[key]) : isEventGoingOrUpcoming(items[key])),
+          ...(this.showHidden ? [] : [_.filter((key) => !isDynamicPathPageHidden(items[key]))]),
+          _.filter((key) => this.archived ? isDynamicPathPageArchived(items[key]) : !isDynamicPathPageArchived(items[key])),
           _.sortBy((key) => items[key].date),
-          ...(!this.past ? [] : [_.reverse]),
+          ...(!this.archived ? [] : [_.reverse]),
           ...(!this.max ? [] : [_.take(this.max)]),
         ])}
         .emptyTemplate=${html`
-          <p style="font-size: 20px">Brak ${!this.past ? 'nadchodzących' : 'minionych'} wydarzeń</p>
+          <p style="font-size: 20px">Brak ${!this.archived ? 'nadchodzących' : 'minionych'} wydarzeń i aktualności</p>
         `}
         .getItemName=${(dynamicPathPage) => {
           const typeName = dynamicPathPage.type === DynamicPathPageType.EVENT ? 'wydarzenie' : 'aktualność';

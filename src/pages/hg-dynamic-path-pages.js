@@ -59,24 +59,24 @@ export class HgDynamicPathPages extends LitElement {
         () => html`
             <hg-dynamic-path-pages-list
               .dynamicPathPages=${this._allDynamicPathPages}
-              .noNonPublic=${!this._loggedIn}>
+              .showHidden=${this._loggedIn}>
             </hg-dynamic-path-pages-list>
           `,
         () => html`<hg-page-loading></hg-page-loading>`,
       )}
       <hg-action-button id="button" @click=${() => {
-        this.shadowRoot.getElementById('past').hidden = false;
+        this.shadowRoot.getElementById('archived').hidden = false;
         this.shadowRoot.getElementById('button').hidden = true;
-      }}>Pokaż minione wydarzenia</hg-action-button>
-      <div id="past" hidden>
-        <h2>Minione wydarzenia</h2>
+      }}>Archiwum wydarzeń i aktualności</hg-action-button>
+      <div id="archived" hidden>
+        <h2>Archiwum wydarzeń i aktualności</h2>
         ${when(
           this._allDynamicPathPagesReady,
           () => html`
             <hg-dynamic-path-pages-list
               .dynamicPathPages=${this._allDynamicPathPages}
-              .noNonPublic=${!this._loggedIn}
-              .past=${true}>
+              .showHidden=${this._loggedIn}
+              .archived=${true}>
             </hg-dynamic-path-pages-list>
           `,
           () => html`<hg-page-loading></hg-page-loading>`,
