@@ -7,25 +7,24 @@ export class PromiseTrigger {
   }
 }
 
+// In Poland
 export const getTodayDate = () => {
-  // to do don't use global moment
-  // @ts-ignore
-  const moment = window.moment;
-  return moment().format('YYYY-MM-DD');
+  const dateNow = new Date();
+  const locale = 'pl-PL';
+  const timeZone = 'Europe/Warsaw'
+  const year = dateNow.toLocaleString(locale, {year: 'numeric', timeZone});
+  const month = dateNow.toLocaleString(locale, {month: '2-digit', timeZone});
+  const day = dateNow.toLocaleString(locale, {day: '2-digit', timeZone});
+
+  return `${year}-${month}-${day}`;
 }
 
 export const isDateSame = (date1: string, date2: string) => {
-  // to do don't use global moment
-  // @ts-ignore
-  const moment = window.moment;
-  return moment(date1).isSame(date2, 'day');
+  return date1 === date2;
 };
 
 export const isDateEarlier = (date1: string, date2: string) => {
-  // to do don't use global moment
-  // @ts-ignore
-  const moment = window.moment;
-  return moment(date1).isBefore(date2, 'day');
+  return date1 < date2;
 };
 
 export const isDateLater = (date1: string, date2: string) => {
