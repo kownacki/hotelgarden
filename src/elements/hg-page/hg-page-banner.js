@@ -52,7 +52,7 @@ export class HgPageBanner extends LitElement {
     if (changedProperties.has('path') || changedProperties.has('dynamicPathPageReady')) {
       // Check if it's still on dynamic path page
       if (this.pageType === PageType.DYNAMIC_PATH && this.dynamicPathPageReady) {
-        this._objectDbSync.setPath(createDbPath(`dynamicPathPages/${this.dynamicPathPage.uid}`));
+        this._objectDbSync.setPath(createDbPath(`dynamicPathPages/${this.dynamicPathPage?.uid}`));
       }
     }
   }
