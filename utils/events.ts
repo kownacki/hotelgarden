@@ -64,6 +64,10 @@ export const isNewsBeforePublish = (news: DynamicPathPageNews) => {
   return isDateUpcoming(news.publishDate);
 };
 
+export const isNewsAfterUnpublish = (news: DynamicPathPageNews) => {
+  return isDateTodayOrPast(news.unpublishDate);
+};
+
 export const getFormattedSingleDate = (date: string) => {
   return date.split('-').reverse().join(' / ');
 };

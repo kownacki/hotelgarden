@@ -123,12 +123,14 @@ export class HgDynamicPathPageCard extends LitElement {
                     <span class="non-public">Niepubliczne</span>&nbsp;
                   `,
                 ),
-                () => when(
-                  isNewsBeforePublish(this.dynamicPathPage),
-                  () => html`
-                    <span class="non-public">Przed publikacją</span>&nbsp;
-                  `,
-                ),
+                () => html`
+                  ${when(
+                    isNewsBeforePublish(this.dynamicPathPage),
+                    () => html`
+                      <span class="non-public">Zaplanowana publikacja</span>&nbsp;
+                    `,
+                  )}
+                `,
               )}
               ${this.dynamicPathPage.title}
             </h3>

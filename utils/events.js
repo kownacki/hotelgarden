@@ -53,6 +53,9 @@ export const getWhenEventHappens = (event) => {
 export const isNewsBeforePublish = (news) => {
     return isDateUpcoming(news.publishDate);
 };
+export const isNewsAfterUnpublish = (news) => {
+    return isDateTodayOrPast(news.unpublishDate);
+};
 export const getFormattedSingleDate = (date) => {
     return date.split('-').reverse().join(' / ');
 };
