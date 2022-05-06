@@ -17,7 +17,7 @@ export class HgDynamicPathPagesAddDialog extends LitElement {
     _title: String,
     _address: String,
     _addressTaken: Boolean,
-    _date: Object, // {startDate: string, endDate?: string}
+    _date: Object, // {startDate: string, endDate: string} | {publishDate: string, unpublishDate: string}
     _dateCorrect: Boolean,
     _typing: Boolean,
     _loading: Boolean,
@@ -52,8 +52,7 @@ export class HgDynamicPathPagesAddDialog extends LitElement {
         detail: {
           type: this._type,
           title: this._title,
-          startDate: this._date.startDate,
-          endDate: this._date.endDate,
+          date: this._date,
           permalink: this._address,
         },
       }));
@@ -90,9 +89,13 @@ export class HgDynamicPathPagesAddDialog extends LitElement {
               this._type = type;
               this._resetInputValues();
             }}
-            @date-changed=${({detail: {startDate, endDate}}) => {
+            @date-changed-event=${({detail: {startDate, endDate}}) => {
               this._date = {startDate, endDate};
               this._dateCorrect = isEventDateRangeCorrect(startDate, endDate);
+            }}
+            @date-changed-news=${({detail: {publishDate, unpublishDate}}) => {
+              this._date = {publishDate, unpublishDate};
+              this._dateCorrect = isEventDateRangeCorrect(publishDate, unpublishDate);
             }}
             @title-changed=${({detail: title}) => {
               this._title = title;

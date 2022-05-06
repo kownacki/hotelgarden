@@ -43,7 +43,7 @@ export class HgDynamicPathPagesAddDialogContent extends LitElement {
               this.dispatchEvent(new CustomEvent('title-changed', {detail: name}));
             }}
             @date-changed=${({detail: {startDate, endDate}}) => {
-              this.dispatchEvent(new CustomEvent('date-changed', {detail: {startDate, endDate}}));
+              this.dispatchEvent(new CustomEvent('date-changed-event', {detail: {startDate, endDate}}));
             }}>
           </hg-dynamic-path-pages-add-event>
         `],
@@ -57,8 +57,8 @@ export class HgDynamicPathPagesAddDialogContent extends LitElement {
             @title-changed=${({detail: name}) => {
               this.dispatchEvent(new CustomEvent('title-changed', {detail: name}));
             }}
-            @date-changed=${({detail: {startDate, endDate}}) => {
-              this.dispatchEvent(new CustomEvent('date-changed', {detail: {startDate, endDate}}));
+            @date-changed=${({detail: {publishDate, unpublishDate}}) => {
+              this.dispatchEvent(new CustomEvent('date-changed-news', {detail: {publishDate, unpublishDate}}));
             }}>
           </hg-dynamic-path-pages-add-news>
         `],

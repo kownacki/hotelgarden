@@ -1,12 +1,11 @@
 import {LitElement, html, css} from 'lit';
 import '../../../../../edit/hg-info-text.js';
 import sharedStyles from '../../../../../styles/shared-styles.js';
-import {staticProp} from '../../../../../utils.js';
 import '../hg-dynamic-path-pages-add-address.js';
-import '../hg-dynamic-path-pages-add-date.js';
 import '../hg-dynamic-path-pages-add-name.js';
 import '../hg-dynamic-path-pages-add-permalink-warning.js';
 import '../hg-dynamic-path-pages-add-heading.js';
+import './hg-dynamic-path-pages-add-news/hg-dynamic-path-pages-add-news-date.js';
 
 export class HgDynamicPathPagesAddNews extends LitElement {
   static properties = {
@@ -15,8 +14,6 @@ export class HgDynamicPathPagesAddNews extends LitElement {
     dateCorrect: Boolean,
     typing: Boolean,
     loading: Boolean,
-    // observables
-    date: Object, // {startDate: string, endDate?: string}
   };
   static styles = [sharedStyles, css`
     hg-dynamic-path-pages-add-permalink-warning {
@@ -50,21 +47,12 @@ export class HgDynamicPathPagesAddNews extends LitElement {
       <hg-dynamic-path-pages-add-heading>
         Wybierz datę publikacji aktualności
       </hg-dynamic-path-pages-add-heading>
-      <hg-dynamic-path-pages-add-date
+      <hg-dynamic-path-pages-add-news-date
         .dateCorrect=${this.dateCorrect}
-        .noSingleDay=${true}
-        .labels=${staticProp({
-          multipleDays: {
-            startDate: 'Data rozpoczęcia publikacji',
-            endDate: 'Data zakończenia publikacji',
-            error: 'Data zakończenia publikacji nie może być miniona. Data zakończenia musi następować po dacie rozpoczęcia.',
-          },
-        })}
         @date-changed=${({detail: date}) => {
-          this.date = date;
-          this.dispatchEvent(new CustomEvent('date-changed', {detail: this.date}));
+          this.dispatchEvent(new CustomEvent('date-changed', {detail: date}));
         }}>
-      </hg-dynamic-path-pages-add-date>
+      </hg-dynamic-path-pages-add-news-date>
     `;
   }
 }

@@ -10,9 +10,9 @@ export class HgDynamicPathPagesAdd extends LitElement {
   };
   static styles = [sharedStyles, css`
   `];
-  async _addDynamicPathPage(type, title, startDate, endDate, permalink) {
+  async _addDynamicPathPage(type, title, date, permalink) {
     // todo transaction to avoid race condition
-    await addDynamicPathPage(type, title, startDate, endDate, permalink);
+    await addDynamicPathPage(type, title, date, permalink);
     window.history.pushState(null, null, `${EVENTS_ROOT_PATH}${permalink}`);
     this.dispatchEvent(new CustomEvent('location-changed', {composed: true, bubbles: true}));
   };
@@ -29,8 +29,8 @@ export class HgDynamicPathPagesAdd extends LitElement {
         </mwc-button>
         <hg-dynamic-path-pages-add-dialog
           id="dialog"
-          @add=${({detail: {type, title, startDate, endDate, permalink}}) => {
-            this._addDynamicPathPage(type, title, startDate, endDate, permalink);
+          @add=${({detail: {type, title, date, permalink}}) => {
+            this._addDynamicPathPage(type, title, date, permalink);
           }}>
         </hg-dynamic-path-pages-add-dialog>
       </div>

@@ -66,11 +66,11 @@ export const addDynamicPathPageToDb = async (data) => {
   return updateInDb(createDbPath(`dynamicPathPages/${generateUid()}`), data);
 }
 
-export const addDynamicPathPage = async (type, title, startDate, endDate, permalink) => {
+export const addDynamicPathPage = async (type, title, date, permalink) => {
   if (type === DynamicPathPageType.EVENT) {
-    return addDynamicPathPageToDb(createNewEvent(title, startDate, endDate, permalink));
+    return addDynamicPathPageToDb(createNewEvent(title, date.startDate, date.endDate, permalink));
   } else {
-    return addDynamicPathPageToDb(createNewNews(title, startDate, endDate, permalink));
+    return addDynamicPathPageToDb(createNewNews(title, date.publishDate, date.unpublishDate, permalink));
   }
 };
 
