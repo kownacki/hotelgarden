@@ -15,9 +15,9 @@ authDeferred.then(({auth, onAuthStateChanged}) => {
   });
 });
 
-export const ContentType = {
-  PAGE: 'page',
-  EVENT: 'event',
+export const PageType = {
+  STATIC_PATH: 'static',
+  DYNAMIC_PATH: 'dynamic',
 };
 
 export class HgApp extends LitElement {
@@ -25,11 +25,10 @@ export class HgApp extends LitElement {
   static properties = {
     _path: String,
     _initialPage: Boolean,
-    _contentType: String, // ContentType
-    _pageUid: String, // PageUid | EventUid (depending on content type)
-    _eventsList: Object, // EventsList | undefined
-    _eventData: Object, // EventData | undefined
-    _eventDataReady: Boolean,
+    _pageType: String, // PageType
+    _pageUid: String, // PageUid
+    _dynamicPathPage: Object, // DynamicPathPageEventWithUid | DynamicPathPageNewsWithUid | undefined
+    _dynamicPathPageReady: Boolean,
     _noBannerImage: Boolean,
     _promotedEventData: Object, // EventData | undefined
     _promotedEventLoaded: Boolean,
@@ -86,19 +85,12 @@ export class HgApp extends LitElement {
       noBannerImage: ['contact', 'gallery', '404'].includes(pageUid),
     };
   }
-  async _getEventData(eventUid, dataPromises) {
+  async _getDynamicPathPage(dynamicPathPagePermalink, dataPromises) {
     const eventsList = await this._getEventsList(dataPromises);
-    const event = eventsList[eventUid];
+    const dynamicPathPage = eventsList[dynamicPathPagePermalink];
     return {
-      eventData: {
-        uid: event.uid,
-        event: {
-          ...event,
-          permalink: eventUid,
-        },
-      },
-      eventsList,
-      noBannerImage: !event,
+      dynamicPathPage,
+      noBannerImage: !dynamicPathPage,
     };
   }
   willUpdate(changedProperties) {
@@ -106,7 +98,7 @@ export class HgApp extends LitElement {
       this._initialPage = false;
     }
     if (changedProperties.has('_path')) {
-      this._contentType = isEventPath(this._path) ? ContentType.EVENT : ContentType.PAGE;
+      this._pageType = isEventPath(this._path) ? PageType.DYNAMIC_PATH : PageType.STATIC_PATH;
       const dataPromises = this._getDataPromises(this._initialPage, window.initialData);
 
       (async () => {
@@ -114,22 +106,20 @@ export class HgApp extends LitElement {
         this._promotedEventLoaded = true;
       })();
 
-      if (this._contentType === ContentType.PAGE) {
+      if (this._pageType === PageType.STATIC_PATH) {
         const {pageUid, noBannerImage} = this._getPageData(this._path);
         this._pageUid = pageUid;
-        this._eventsList = undefined;
-        this._eventData = undefined;
-        this._eventDataReady = undefined;
+        this._dynamicPathPage = undefined;
+        this._dynamicPathPageReady = undefined;
         this._noBannerImage = noBannerImage;
       } else {
-        const eventUid = getEventPermalink(this._path);
+        const dynamicPathPagePermalink = getEventPermalink(this._path);
         this._pageUid = undefined;
-        this._eventDataReady = false;
+        this._dynamicPathPageReady = false;
         (async () => {
-          const {eventData, eventsList, noBannerImage} = await this._getEventData(eventUid, dataPromises);
-          this._eventsList = eventsList;
-          this._eventData = eventData;
-          this._eventDataReady = true;
+          const {dynamicPathPage, noBannerImage} = await this._getDynamicPathPage(dynamicPathPagePermalink, dataPromises);
+          this._dynamicPathPage = dynamicPathPage;
+          this._dynamicPathPageReady = true;
           this._noBannerImage = noBannerImage;
         })();
       }
@@ -166,11 +156,10 @@ export class HgApp extends LitElement {
       </hg-header>
       <hg-page
         .path=${this._path}
-        .contentType=${this._contentType}
+        .pageType=${this._pageType}
         .pageUid=${this._pageUid}
-        .eventData=${this._eventData}
-        .eventsList=${this._eventsList}
-        .eventDataReady=${this._eventDataReady}
+        .dynamicPathPage=${this._dynamicPathPage}
+        .dynamicPathPageReady=${this._dynamicPathPageReady}
         .promotedEventData=${this._promotedEventData}
         .promotedEventLoaded=${this._promotedEventLoaded}
         .noBannerImage=${this._noBannerImage}

@@ -9,7 +9,7 @@ import {DynamicPathPageType} from '../../utils.js';
 
 export class HgDynamicPathPageCard extends LitElement {
   static properties = {
-    dynamicPathPage: Object, // DynamicPathPageEvent || DynamicPathPageNews
+    dynamicPathPage: Object, // DynamicPathPageEventWithUid || DynamicPathPageNewsWithUid
   };
   static styles = [sharedStyles, css`
     :host {

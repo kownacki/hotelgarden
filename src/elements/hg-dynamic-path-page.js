@@ -10,7 +10,7 @@ import './hg-event/hg-event-header.js';
 import './hg-event/hg-event-sidebar.js';
 import './hg-page/hg-page-loading.js';
 
-export const HgEventEditFields = {
+export const HgDynamicPathPageEditFields = {
   DATE: 'date',
   PUBLIC: 'public',
   PROMOTED: 'promoted',
@@ -18,9 +18,9 @@ export const HgEventEditFields = {
 
 export class HgDynamicPathPage extends LitElement {
   _firebaseAuth;
-  _eventDbSync;
+  _dynamicPathPageDbSync;
   static properties = {
-    eventData: Object, // EventData
+    dynamicPathPage: Object, // DynamicPathPageEventWithUid | DynamicPathPageNewsWithUid
     promotedEventData: Object, // EventData | undefined
     _content: String,
     _contentReady: Boolean,
@@ -69,18 +69,18 @@ export class HgDynamicPathPage extends LitElement {
   `];
   constructor() {
     super();
-    this._eventDbSync = new ObjectDbSyncController(
+    this._dynamicPathPageDbSync = new ObjectDbSyncController(
       this,
       async () => {
-        return this.eventData.event;
+        return this.dynamicPathPage;
       },
       async (objectPath, dataPath, data) => {
         updateInObjectInDb(objectPath, dataPath, data);
         return data;
       },
       () => {},
-      (event) => {
-        this.eventData = {...this.eventData, event};
+      (dynamicPathPage) => {
+        this.dynamicPathPage = dynamicPathPage;
       },
     );
     (async () => {
@@ -89,64 +89,67 @@ export class HgDynamicPathPage extends LitElement {
     })();
   }
   async willUpdate(changedProperties) {
-    if (changedProperties.has('eventData') && this.eventData.event) {
-      this._eventDbSync.setPath(createDbPath(`dynamicPathPages/${this.eventData.uid}`));
+    if (changedProperties.has('dynamicPathPage') && this.dynamicPathPage) {
+      this._dynamicPathPageDbSync.setPath(createDbPath(`dynamicPathPages/${this.dynamicPathPage.uid}`));
 
-      const eventJsonLd = createEventJsonLd(this.eventData.event);
+      const eventJsonLd = createEventJsonLd(this.dynamicPathPage);
       this.dispatchEvent(new CustomEvent('set-json-ld', {detail: eventJsonLd}));
 
-      this._content = await getFromDb(createDbPath(`dynamicPathPages/${this.eventData.uid}/data/content`, 'content'));
+      this._content = await getFromDb(createDbPath(`dynamicPathPages/${this.dynamicPathPage.uid}/data/content`, 'content'));
       this.dispatchEvent(new CustomEvent('set-meta-description', {detail: this._content}));
       this._contentReady = true;
     }
   }
   updatePromoted(selected) {
     const promotedDbPath = createDbPath('events/promoted', 'uid');
-    updateInDb(promotedDbPath, selected ? this.eventData.uid : null);
+    updateInDb(promotedDbPath, selected ? this.dynamicPathPage.uid : null);
   }
   updateContent(text) {
     this._content = text;
-    updateInDb(createDbPath(`dynamicPathPages/${this.eventData.uid}/data/content`, 'content'), text);
+    updateInDb(createDbPath(`dynamicPathPages/${this.dynamicPathPage.uid}/data/content`, 'content'), text);
     const cleanedText = cleanTextForMetaDescription(text);
-    updateInDb(createDbPath(`dynamicPathPages/${this.eventData.uid}/data/seo`, 'seo.description'), cleanedText);
+    updateInDb(createDbPath(`dynamicPathPages/${this.dynamicPathPage.uid}/data/seo`, 'seo.description'), cleanedText);
     this.dispatchEvent(new CustomEvent('set-meta-description', {detail: cleanedText}));
   }
   render() {
     return html`
-      ${!this.eventData.event ? '' : html`
-        <div class="main">
-          <hg-event-header
-            .eventData=${this.eventData}
-            .promotedEventData=${this.promotedEventData}
-            @request-change=${async ({detail: {field, value}}) => {
-              if (field === HgEventEditFields.DATE) {
-                await this._eventDbSync.requestFieldUpdate('startDate', value.startDate);
-                this._eventDbSync.requestFieldUpdate('endDate', value.endDate);
-              } else if (field === HgEventEditFields.PUBLIC) {
-                this._eventDbSync.requestFieldUpdate('public', value);
-              } else if (field === HgEventEditFields.PROMOTED) {
-                this.updatePromoted(value);
-              }
-            }}>
-          </hg-event-header>
-          <div class="divider"></div>
-          ${this._contentReady
-            ? html`<hg-event-content
-              .content=${this._content}
-              @content-changed=${({detail: text}) => {
-                this.updateContent(text);
+      ${when(
+        this.dynamicPathPage,
+        () => html`
+          <div class="main">
+            <hg-event-header
+              .event=${this.dynamicPathPage}
+              .promotedEventData=${this.promotedEventData}
+              @request-change=${async ({detail: {field, value}}) => {
+                if (field === HgDynamicPathPageEditFields.DATE) {
+                  await this._dynamicPathPageDbSync.requestFieldUpdate('startDate', value.startDate);
+                  this._dynamicPathPageDbSync.requestFieldUpdate('endDate', value.endDate);
+                } else if (field === HgDynamicPathPageEditFields.PUBLIC) {
+                  this._dynamicPathPageDbSync.requestFieldUpdate('public', value);
+                } else if (field === HgDynamicPathPageEditFields.PROMOTED) {
+                  this.updatePromoted(value);
+                }
               }}>
-            </hg-event-content>`
-            : html`<hg-page-loading></hg-page-loading>`
-          }
-        </div>
-      `}
+            </hg-event-header>
+            <div class="divider"></div>
+            ${this._contentReady
+              ? html`<hg-event-content
+                .content=${this._content}
+                @content-changed=${({detail: text}) => {
+                  this.updateContent(text);
+                }}>
+              </hg-event-content>`
+              : html`<hg-page-loading></hg-page-loading>`
+            }
+          </div>
+        `,
+      )}
       <div class="sidebar-container">
         ${when(
           this._allDynamicPathPagesReady,
           () => html`
             <hg-event-sidebar
-              .selected=${this.eventData.uid}
+              .selected=${this.dynamicPathPage.uid}
               .events=${this._allDynamicPathPages}>
             </hg-event-sidebar>
           `,

@@ -1,5 +1,5 @@
 import {keyBy} from 'lodash';
-import {EventsList, EventUid} from './types';
+import {DynamicPathPagePermalink, EventsList, EventUid} from './types';
 
 export type PageUid =
   | '404'
@@ -124,7 +124,7 @@ export const createFullUrl = (path: string) => {
   return path === '/' ? ROOT_URL : `${ROOT_URL}${path}`;
 }
 
-export const getEventPermalink = (path: string): EventUid => {
+export const getEventPermalink = (path: string): DynamicPathPagePermalink => {
   return path.replace(EVENTS_ROOT_PATH, '');
 };
 

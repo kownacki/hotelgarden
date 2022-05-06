@@ -6,11 +6,11 @@ import './hg-event-edit/hg-event-edit-date.js';
 import './hg-event-edit/hg-event-promote-switch.js';
 import './hg-event-edit/hg-event-public-switch.js';
 
-import {HgEventEditFields} from '../hg-dynamic-path-page.js';
+import {HgDynamicPathPageEditFields} from '../hg-dynamic-path-page.js';
 
 export class HgEventEdit extends LitElement {
   static properties = {
-    eventData: Object, // EventData
+    event: Object, // DynamicPathPageEventWithUid
     promotedEventData: Object, // EventData | undefined
   };
   static styles = [sharedStyles, css`
@@ -53,12 +53,12 @@ export class HgEventEdit extends LitElement {
     return html`
       <div class="container cms">
         <hg-event-edit-date
-          .startDate=${this.eventData.event.startDate}
-          .endDate=${this.eventData.event.endDate}
+          .startDate=${this.event.startDate}
+          .endDate=${this.event.endDate}
           @request-date-change=${({detail: {startDate, endDate}}) => {
             this.dispatchEvent(new CustomEvent('request-change', {
               detail: {
-                field: HgEventEditFields.DATE,
+                field: HgDynamicPathPageEditFields.DATE,
                 value: {startDate, endDate},
               },
             }));
@@ -66,9 +66,9 @@ export class HgEventEdit extends LitElement {
         </hg-event-edit-date>
         <div title=${this._getPublicSwitchTooltip()}>
           <hg-event-public-switch
-            .selected=${this.eventData.event.public}
+            .selected=${this.event.public}
             @public-changed=${({detail: publicValue}) => {
-              this.dispatchEvent(new CustomEvent('request-change', {detail: {field: HgEventEditFields.PUBLIC, value: publicValue}}));
+              this.dispatchEvent(new CustomEvent('request-change', {detail: {field: HgDynamicPathPageEditFields.PUBLIC, value: publicValue}}));
               this._closeAllSnackbars();
               if (publicValue) {
                 this.shadowRoot.getElementById('snackbar-public-true').show();
@@ -78,12 +78,12 @@ export class HgEventEdit extends LitElement {
             }}>
           </hg-event-public-switch>
         </div>
-        <div title=${this._getPromoteSwitchTooltip(this.eventData.event)}>
+        <div title=${this._getPromoteSwitchTooltip(this.event)}>
           <hg-event-promote-switch
-            .selected=${isEventUpcoming(this.eventData.event) && this.promotedEventData?.uid === this.eventData.uid}
-            .disabled=${isEventPast(this.eventData.event)}
+            .selected=${isEventUpcoming(this.event) && this.promotedEventData?.uid === this.event.uid}
+            .disabled=${isEventPast(this.event)}
             @promoted-changed=${({detail: promoted}) => {
-              this.dispatchEvent(new CustomEvent('request-change', {detail: {field: HgEventEditFields.PROMOTED, value: promoted}}));
+              this.dispatchEvent(new CustomEvent('request-change', {detail: {field: HgDynamicPathPageEditFields.PROMOTED, value: promoted}}));
               this._closeAllSnackbars();
               if (promoted) {
                 this.shadowRoot.getElementById('snackbar-promote-true').show();

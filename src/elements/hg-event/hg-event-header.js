@@ -7,7 +7,7 @@ import {FirebaseAuthController} from '../../utils/FirebaseAuthController.js';
 export class HgEventHeader extends LitElement {
   _firebaseAuth;
   static properties = {
-    eventData: Object, // EventData
+    event: Object, // DynamicPathPageEventWithUid
     promotedEventData: Object, // EventData | undefined
     _loggedIn: Boolean,
   };
@@ -36,12 +36,12 @@ export class HgEventHeader extends LitElement {
   render() {
     return html`
       <div class="date">
-        ${this._getDateText(this.eventData.event)}
+        ${this._getDateText(this.event)}
       </div>
       ${!this._loggedIn ? '' : until(import('./hg-event-edit.js').then(() => {
         return html`
           <hg-event-edit
-            .eventData=${this.eventData}
+            .event=${this.event}
             .promotedEventData=${this.promotedEventData}
             @request-change=${({detail}) => {
               this.dispatchEvent(new CustomEvent('request-change', {detail}));

@@ -5,11 +5,9 @@ import {getDefaultTitle, appendSuffixToTitle, getEventTitle} from '../../utils/s
 import {createDbPath, getFromDb} from '../utils/database.js';
 import {setDocumentTitle, setMetaDescription, setStructuredData, scrollIntoView, sleep} from '../utils.js';
 import '../elements/hg-footer.js';
-import {ContentType} from '../hg-app.js';
+import {PageType} from '../hg-app.js';
 import './hg-page/hg-page-banner.js';
 import './hg-page/hg-page-loading.js';
-
-// todo put hg-event in elements
 
 // Use static strings as identifiers to correctly trigger rollup code-splitting
 const pagesModulesImports = {
@@ -55,11 +53,10 @@ const getContentElement = async (pageUid, config, handleSetMetaDescription, hand
 export class HgPage extends LitElement {
   static properties = {
     path: String,
-    contentType: String, // ContentType
+    pageType: String, // PageType
     pageUid: String, // PageUid
-    eventData: Object, // EventData | undefined
-    eventsList: Object, // EventsList | undefined
-    eventDataReady: Boolean,
+    dynamicPathPage: Object, // DynamicPathPageEventWithUid | DynamicPathPageNewsWithUid | undefined
+    dynamicPathPageReady: Boolean,
     promotedEventData: Object, // EventData | undefined
     promotedEventLoaded: Boolean,
     noBannerImage: {type: Boolean, reflect: true, attribute: 'no-banner-image'},
@@ -85,21 +82,21 @@ export class HgPage extends LitElement {
       this._config = await getFromDb(createDbPath('_config/client')) || {};
     })();
   }
-  _getEventTitle(eventData) {
-    return eventData.event
-      ? getEventTitle(eventData.event)
+  _getDynamicPathPageTitle(dynamicPathPage) {
+    return dynamicPathPage
+      ? getEventTitle(dynamicPathPage)
       : 'Nie znaleziono wydarzenia';
   }
   willUpdate(changedProperties) {
     if (changedProperties.has('path')) {
-      if (this.contentType === ContentType.PAGE) {
+      if (this.pageType === PageType.STATIC_PATH) {
         this._defaultTitle = getDefaultTitle(this.pageUid);
       }
     }
-    if (changedProperties.has('path') || changedProperties.has('eventDataReady')) {
-      // Check if it's still on an event page
-      if (this.contentType === ContentType.EVENT && this.eventDataReady) {
-        this._defaultTitle = this._getEventTitle(this.eventData);
+    if (changedProperties.has('path') || changedProperties.has('dynamicPathPageReady')) {
+      // Check if it's still on dynamic path page
+      if (this.pageType === PageType.DYNAMIC_PATH && this.dynamicPathPageReady) {
+        this._defaultTitle = this._getDynamicPathPageTitle(this.dynamicPathPage);
       }
     }
     if (changedProperties.has('_defaultTitle') || changedProperties.has('_config')) {
@@ -135,21 +132,20 @@ export class HgPage extends LitElement {
       }}></app-location>
       <hg-page-banner
         .path=${this.path}
-        .contentType=${this.contentType}
+        .pageType=${this.pageType}
         .pageUid=${this.pageUid}
-        .eventData=${this.eventData}
-        .eventDataReady=${this.eventDataReady}
+        .dynamicPathPage=${this.dynamicPathPage}
+        .dynamicPathPageReady=${this.dynamicPathPageReady}
         .defaultTitle=${this._defaultTitle}
         .noBannerImage=${this.noBannerImage}
         .initialPage=${this.initialPage}>
       </hg-page-banner>
-      ${this.contentType === ContentType.EVENT
+      ${this.pageType === PageType.DYNAMIC_PATH
         ? until(import('./hg-dynamic-path-page.js').then(() => {
-          return (this.eventDataReady && this.promotedEventLoaded) ? html`
+          return (this.dynamicPathPageReady && this.promotedEventLoaded) ? html`
             <hg-dynamic-path-page
               class="page"
-              .eventData=${this.eventData}
-              .eventsList=${this.eventsList}
+              .dynamicPathPage=${this.dynamicPathPage}
               .promotedEventData=${this.promotedEventData}
               @set-meta-description=${({detail: text}) => {
                 this._handleSetMetaDescription(text);
