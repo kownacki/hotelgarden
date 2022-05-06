@@ -3,11 +3,12 @@ import {when} from 'lit/directives/when.js';
 import {createEventJsonLd} from '../../utils/seo.js';
 import sharedStyles from '../styles/shared-styles.js';
 import {createDbPath, getFromDb, updateInDb, updateInObjectInDb} from '../utils/database.js';
-import {cleanTextForMetaDescription, getAllDynamicPathPages} from '../utils.js';
+import {cleanTextForMetaDescription, DynamicPathPageType, getAllDynamicPathPages} from '../utils.js';
 import {ObjectDbSyncController} from '../utils/ObjectDbSyncController.js';
 import './hg-event/hg-event-content.js';
 import './hg-event/hg-event-header.js';
 import './hg-event/hg-event-sidebar.js';
+import './hg-news/hg-news-header.js';
 import './hg-page/hg-page-loading.js';
 
 export const HgDynamicPathPageEditFields = {
@@ -117,20 +118,30 @@ export class HgDynamicPathPage extends LitElement {
         this.dynamicPathPage,
         () => html`
           <div class="main">
-            <hg-event-header
-              .event=${this.dynamicPathPage}
-              .promotedEventData=${this.promotedEventData}
-              @request-change=${async ({detail: {field, value}}) => {
-                if (field === HgDynamicPathPageEditFields.DATE) {
-                  await this._dynamicPathPageDbSync.requestFieldUpdate('startDate', value.startDate);
-                  this._dynamicPathPageDbSync.requestFieldUpdate('endDate', value.endDate);
-                } else if (field === HgDynamicPathPageEditFields.PUBLIC) {
-                  this._dynamicPathPageDbSync.requestFieldUpdate('public', value);
-                } else if (field === HgDynamicPathPageEditFields.PROMOTED) {
-                  this.updatePromoted(value);
-                }
-              }}>
-            </hg-event-header>
+            ${when(
+              this.dynamicPathPage.type === DynamicPathPageType.EVENT,
+              () => html`
+                <hg-event-header
+                  .event=${this.dynamicPathPage}
+                  .promotedEventData=${this.promotedEventData}
+                  @request-change=${async ({detail: {field, value}}) => {
+                    if (field === HgDynamicPathPageEditFields.DATE) {
+                      await this._dynamicPathPageDbSync.requestFieldUpdate('startDate', value.startDate);
+                      this._dynamicPathPageDbSync.requestFieldUpdate('endDate', value.endDate);
+                    } else if (field === HgDynamicPathPageEditFields.PUBLIC) {
+                      this._dynamicPathPageDbSync.requestFieldUpdate('public', value);
+                    } else if (field === HgDynamicPathPageEditFields.PROMOTED) {
+                      this.updatePromoted(value);
+                    }
+                  }}>
+                </hg-event-header>
+              `,
+              () => html`
+                <hg-news-header
+                  .news=${this.dynamicPathPage}>
+                </hg-news-header>
+              `,
+            )}
             <div class="divider"></div>
             ${this._contentReady
               ? html`<hg-event-content
