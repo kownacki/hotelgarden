@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import '@polymer/app-route/app-location.js';
-import {getEventPermalink, isEventPath, staticPathToPageUid} from '../utils/urlStructure.js';
+import {getDynamicPathPagePermalink, isDynamicPath, staticPathToPageUid} from '../utils/urlStructure.js';
 import './elements/hg-header.js';
 import './elements/hg-page.js';
 import {sleep, isProductionEnvironment, getAllDynamicPathPages} from './utils.js';
@@ -98,7 +98,7 @@ export class HgApp extends LitElement {
       this._initialPage = false;
     }
     if (changedProperties.has('_path')) {
-      this._pageType = isEventPath(this._path) ? PageType.DYNAMIC_PATH : PageType.STATIC_PATH;
+      this._pageType = isDynamicPath(this._path) ? PageType.DYNAMIC_PATH : PageType.STATIC_PATH;
       const dataPromises = this._getDataPromises(this._initialPage, window.initialData);
 
       (async () => {
@@ -113,7 +113,7 @@ export class HgApp extends LitElement {
         this._dynamicPathPageReady = undefined;
         this._noBannerImage = noBannerImage;
       } else {
-        const dynamicPathPagePermalink = getEventPermalink(this._path);
+        const dynamicPathPagePermalink = getDynamicPathPagePermalink(this._path);
         this._pageUid = undefined;
         this._dynamicPathPageReady = false;
         (async () => {

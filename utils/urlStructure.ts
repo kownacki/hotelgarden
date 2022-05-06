@@ -124,32 +124,32 @@ export const createFullUrl = (path: string) => {
   return path === '/' ? ROOT_URL : `${ROOT_URL}${path}`;
 }
 
-export const getEventPermalink = (path: string): DynamicPathPagePermalink => {
-  return path.replace(EVENTS_ROOT_PATH, '');
+export const getDynamicPathPagePermalink = (path: string): DynamicPathPagePermalink => {
+  return path.replace(DYNAMIC_PATH_PAGES_ROOT_PATH, '');
 };
 
-export const createEventPath = (eventUid: EventUid) => {
-  return `${EVENTS_ROOT_PATH}${eventUid}`;
+export const createDynamicPath = (eventUid: EventUid) => {
+  return `${DYNAMIC_PATH_PAGES_ROOT_PATH}${eventUid}`;
 }
 
 export const isValidStaticPath = (path: string) => {
   return staticPaths.includes(path as StaticPath)
 };
 
-export const isEventPath = (path: string) => {
-  return path.startsWith(EVENTS_ROOT_PATH);
+export const isDynamicPath = (path: string) => {
+  return path.startsWith(DYNAMIC_PATH_PAGES_ROOT_PATH);
 };
 
-export const isValidEventPath = (path: string, eventsList: EventsList) => {
-  return isEventPath(path) && Object.keys(eventsList).includes(getEventPermalink(path));
+export const isValidDynamicPath = (path: string, eventsList: EventsList) => {
+  return isDynamicPath(path) && Object.keys(eventsList).includes(getDynamicPathPagePermalink(path));
 };
 
 export const isValidPath = (path: string, eventsList: EventsList) => {
-  return isValidStaticPath(path) || isValidEventPath(path, eventsList);
+  return isValidStaticPath(path) || isValidDynamicPath(path, eventsList);
 };
 
 export const ROOT_URL = 'https://www.hotelgarden.pl';
-export const EVENTS_ROOT_PATH = '/wydarzenia/';
+export const DYNAMIC_PATH_PAGES_ROOT_PATH = '/wydarzenia/';
 export const SITEMAP_PATH = '/sitemap.xml';
 export const SITEMAP_URL = createFullUrl(SITEMAP_PATH);
 

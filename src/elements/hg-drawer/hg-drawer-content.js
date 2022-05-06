@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit';
-import {createEventPath, links} from '../../../utils/urlStructure.js';
+import {createDynamicPath, links} from '../../../utils/urlStructure.js';
 import {staticProp} from '../../utils.js';
 import './hg-drawer-close.js';
 import './hg-drawer-item.js';
@@ -53,7 +53,7 @@ export class HgDrawerContent extends LitElement {
             ? ''
             : html`<li class="event">
               <hg-drawer-item .link=${staticProp({
-                path: createEventPath(this.promotedEventData.uid),
+                path: createDynamicPath(this.promotedEventData.uid),
                 name: this.promotedEventData.event.title,
               })}>
               </hg-drawer-item>

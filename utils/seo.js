@@ -1,4 +1,4 @@
-import { isEventPath, getEventPermalink, pagesStaticData, staticPathToPageUid } from './urlStructure';
+import { isDynamicPath, getDynamicPathPagePermalink, pagesStaticData, staticPathToPageUid } from './urlStructure';
 export const getDefaultTitle = (uid) => {
     return pagesStaticData[uid].name;
 };
@@ -18,8 +18,8 @@ export const getEventTitle = (event) => {
 // path to page or event must be valid
 const getPageOrEventTitle = (path, seoConfig, eventsList) => {
     let title;
-    if (isEventPath(path)) {
-        const eventUid = getEventPermalink(path);
+    if (isDynamicPath(path)) {
+        const eventUid = getDynamicPathPagePermalink(path);
         const event = eventsList[eventUid];
         title = getEventTitle(event);
     }

@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit';
-import {isEventPath, staticPathToPageUid, pagesStaticData, links, createEventPath} from '../../utils/urlStructure.js';
+import {isDynamicPath, staticPathToPageUid, pagesStaticData, links, createDynamicPath} from '../../utils/urlStructure.js';
 import './ui/hg-icon-button.js';
 import './hg-header/hg-header-subnav.js';
 import './hg-header/hg-header-logo.js';
@@ -159,7 +159,7 @@ export class HgHeader extends LitElement {
             ${!this.promotedEventLoaded ? '' : html`
               ${!this.promotedEventData ? '' : html`
                 <li class="event">
-                  <a href=${createEventPath(this.promotedEventData.uid)}>
+                  <a href=${createDynamicPath(this.promotedEventData.uid)}>
                     ${this.promotedEventData.event.title}
                   </a>
                 </li>
@@ -169,7 +169,7 @@ export class HgHeader extends LitElement {
                   <a 
                     href="${link.path}"
                     ?selected=${link.path === this.selected
-                      || (link.path === '/wydarzenia' && (this.selected === '/wydarzenia' || isEventPath(this.selected)))
+                      || (link.path === '/wydarzenia' && (this.selected === '/wydarzenia' || isDynamicPath(this.selected)))
                       || _.includes(staticPathToPageUid[this.selected], link.sublinks)}>
                     ${link.name}
                   </a>

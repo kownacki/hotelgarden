@@ -1,5 +1,5 @@
 import {EventsList} from '../../../../utils/types';
-import {staticPaths, createFullUrl, createEventPath} from '../../../../utils/urlStructure';
+import {staticPaths, createFullUrl, createDynamicPath} from '../../../../utils/urlStructure';
 
 const getPublicEventsUids = (eventsList: EventsList) => {
   return Object.entries(eventsList)
@@ -13,7 +13,7 @@ const getPublicEventsUids = (eventsList: EventsList) => {
 
 export const getAllPublicUrls = (eventsList: EventsList) => {
   const publicEventsUids = getPublicEventsUids(eventsList);
-  const publicEventsPaths = publicEventsUids.map((eventUid) => createEventPath(eventUid));
+  const publicEventsPaths = publicEventsUids.map((eventUid) => createDynamicPath(eventUid));
 
   return [...staticPaths, ...publicEventsPaths]
     .map((path) => {

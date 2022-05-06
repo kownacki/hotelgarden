@@ -2,9 +2,9 @@ import {Request, Response} from 'firebase-functions';
 import {PreloadLinkAttrs} from '../../../utils/html';
 import {createFull404PageTitle, createFullPageTitle, createFullEventTitle, createEventJsonLd} from '../../../utils/seo';
 import {
-  getEventPermalink,
+  getDynamicPathPagePermalink,
   isValidStaticPath,
-  isValidEventPath,
+  isValidDynamicPath,
   StaticPath,
   staticPathToPageUid,
   SITEMAP_PATH,
@@ -37,8 +37,8 @@ export const render = async (req: Request, res: Response) => {
     const preloads: PreloadLinkAttrs[] = banner.image ? [{href: banner.image.url, as: 'image'}] : [];
     const index = createIndex(preloads, {title, metaDescription}, {eventsList, promotedEventUid, banner});
     res.status(200).send(index);
-  } else if (isValidEventPath(path, eventsList)) {
-    const permalink = getEventPermalink(path);
+  } else if (isValidDynamicPath(path, eventsList)) {
+    const permalink = getDynamicPathPagePermalink(path);
     const event = eventsList[permalink];
     const eventUid = event.uid;
     const title = createFullEventTitle(permalink, seoConfig, eventsList);
