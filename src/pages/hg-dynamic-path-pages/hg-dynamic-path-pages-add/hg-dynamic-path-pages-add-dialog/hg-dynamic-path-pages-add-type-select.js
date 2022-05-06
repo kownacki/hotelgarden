@@ -35,7 +35,7 @@ export class HgDynamicPathPagesAddTypeSelect extends LitElement {
             @click=${() => this._selectType(DynamicPathPageType.EVENT)}>
           </mwc-radio>
         </mwc-formfield-fixed>
-        <div class="type-select-container-text smaller-text"
+        <div class="type-select-container-text smaller-text">
           <ul>
             <li>Widoczne w Google jak najszybciej po opublikowaniu.</li>
             <li>Wyświetlane w Google wraz z pojedyńczą datą, w którą się odbywa lub z datą rozpoczęcia i zakończenia.</li>
@@ -52,7 +52,7 @@ export class HgDynamicPathPagesAddTypeSelect extends LitElement {
             @click=${() => this._selectType(DynamicPathPageType.NEWS)}>
           </mwc-radio>
         </mwc-formfield-fixed>
-        <div class="type-select-container-text smaller-text"
+        <div class="type-select-container-text smaller-text">
           <ul>
             <li>Widoczna w Google dopiero po dacie publikacji.</li>
             <li>Wyświetlana w Google razem z datą publikacji.</li>
