@@ -14,7 +14,7 @@ const updateSitemap = async (newSitemap: string) => {
     sitemapReady.resolve();
     await pingGoogleAboutSitemapChange();
   }
-}
+};
 
 listenToCollection<DynamicPathPageEvent>('dynamicPathPages', (dynamicPathPages) => {
   const dynamicPathPagesWithUids = dynamicPathPages.map((documentSnapshot) => {
@@ -30,4 +30,4 @@ listenToCollection<DynamicPathPageEvent>('dynamicPathPages', (dynamicPathPages) 
 export const getSitemap = async () => {
   await sitemapReady.promise;
   return sitemap;
-}
+};
