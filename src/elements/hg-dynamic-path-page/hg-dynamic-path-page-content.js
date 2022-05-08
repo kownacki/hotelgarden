@@ -1,9 +1,9 @@
 import {LitElement, html, css} from 'lit';
-import '../../../edit/hg-editable-text.js';
-import ckContent from '../../../styles/ck-content.js'
-import sharedStyles from '../../../styles/shared-styles.js';
+import '../../edit/hg-editable-text.js';
+import ckContent from '../../styles/ck-content.js'
+import sharedStyles from '../../styles/shared-styles.js';
 
-export class HgEventContent extends LitElement {
+export class HgDynamicPathPageContent extends LitElement {
   static properties = {
     content: String,
   };
@@ -24,4 +24,4 @@ export class HgEventContent extends LitElement {
     `;
   }
 }
-customElements.define('hg-event-content', HgEventContent);
+customElements.define('hg-dynamic-path-page-content', HgDynamicPathPageContent);

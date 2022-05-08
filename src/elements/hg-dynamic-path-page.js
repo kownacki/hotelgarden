@@ -6,7 +6,7 @@ import sharedStyles from '../styles/shared-styles.js';
 import {createDbPath, getFromDb, updateInDb, updateInObjectInDb} from '../utils/database.js';
 import {cleanTextForMetaDescription, getAllDynamicPathPages} from '../utils.js';
 import {ObjectDbSyncController} from '../utils/ObjectDbSyncController.js';
-import './hg-dynamic-path-page/event/hg-event-content.js';
+import './hg-dynamic-path-page/hg-dynamic-path-page-content.js';
 import './hg-dynamic-path-page/event/hg-event-header.js';
 import './hg-dynamic-path-page/event/hg-event-sidebar.js';
 import './hg-dynamic-path-page/news/hg-news-header.js';
@@ -159,12 +159,12 @@ export class HgDynamicPathPage extends LitElement {
             )}
             <div class="divider"></div>
             ${this._contentReady
-              ? html`<hg-event-content
+              ? html`<hg-dynamic-path-page-content
                 .content=${this._content}
                 @content-changed=${({detail: text}) => {
                   this.updateContent(text);
                 }}>
-              </hg-event-content>`
+              </hg-dynamic-path-page-content>`
               : html`<hg-page-loading></hg-page-loading>`
             }
           </div>
