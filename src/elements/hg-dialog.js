@@ -23,7 +23,6 @@ export class HgDialog extends LitElement {
       width: var(--hg-dialog-width);
       display: flex;
       flex-direction: column;
-      font-size: 18px;
       margin: 10px;
     }
     paper-dialog > * {

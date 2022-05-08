@@ -35,7 +35,7 @@ export class HgDynamicPathPagesAddNews extends LitElement {
           this.dispatchEvent(new CustomEvent('title-changed', {detail: name}));
         }}>
       </hg-dynamic-path-pages-add-name>
-      <div class="smaller-text">
+      <div>
         <hg-dynamic-path-pages-add-address
           .address=${this.address}
           .addressTaken=${this.addressTaken}

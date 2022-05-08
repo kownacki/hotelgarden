@@ -5,13 +5,10 @@ export class HgDynamicPathPagesAddHeading extends LitElement {
   static properties = {
   };
   static styles = [sharedStyles, css`
-    :host {
-      font-weight: 700;
-    }
   `];
   render() {
     return html`
-      <p class="smaller-text">
+      <p class="dialog-subheading">
         <slot></slot>
       </p>
     `;

@@ -1,19 +1,22 @@
 import {css} from 'lit';
 
 export default css`
-  body, :host {
+  body {
     font-size: 20px;
   }
   paper-dialog {
-    font-size: 18px;
     max-width: 840px;
     overflow-y: auto;
   }
-  .smaller-text {
+  paper-dialog, .smaller-text {
     font-size: 18px;
   }
   .bigger-text {
     font-size: 24px;
+  }
+  .dialog-subheading {
+    font-size: 20px;
+    font-weight: 700;
   }
   .vertically-spacious-text, .vertically-spacious-text p  {
     line-height: 1.6em !important;
@@ -90,14 +93,17 @@ export default css`
     --mdc-switch-selected-hover-handle-color: var(--mdc-theme-primary);
   }
   @media all and (max-width: 959px) {
-    body, :host, paper-dialog {
+    body {
       font-size: 18px;
     }
-    .smaller-text {
+    paper-dialog, .smaller-text {
       font-size: 17px;
     }
     .bigger-text {
       font-size: 22px;
+    }
+    .dialog-subheading {
+      font-size: 19px;
     }
     h1 {
       font-size: 40px;
@@ -120,14 +126,17 @@ export default css`
     }
   }
   @media all and (max-width: 599px) {
-    body, :host, paper-dialog  {
+    body  {
       font-size: 16px;
     }
-    .smaller-text {
+    paper-dialog, .smaller-text {
       font-size: 15px;
     }
     .bigger-text {
       font-size: 20px;
+    }
+    .dialog-subheading {
+      font-size: 17px;
     }
     h1 {
       font-size: 30px;
