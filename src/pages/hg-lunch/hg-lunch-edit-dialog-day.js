@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit';
 import '@material/mwc-switch';
 import '@material/mwc-textfield';
-import '@material/mwc-formfield';
+import '../../utils/fixes/mwc-formfield-fixed.js';
 import {getDayOfWeek, sleep} from '../../utils.js';
 import sharedStyles from '../../styles/shared-styles.js';
 
@@ -30,12 +30,9 @@ export class HgLunchEditDialogDay extends LitElement {
       line-height: 25px;
       font-weight: 700;
     }
-    mwc-formfield {
+    mwc-formfield-fixed {
       display: block;
       width: 250px;
-    }
-    mwc-switch {
-      margin-top: 5px;
     }
     #courses-collapse {
       overflow: hidden;
@@ -66,7 +63,7 @@ export class HgLunchEditDialogDay extends LitElement {
       .subheading {
         display: block;
       }
-      mwc-formfield {
+      mwc-formfield-fixed {
         margin-top: 20px;
       }
     }
@@ -112,12 +109,12 @@ export class HgLunchEditDialogDay extends LitElement {
     return html`
       <div class="subheading">
         <div class="day">${getDayOfWeek(this.day)}</div>
-        <mwc-formfield .label=${this._disabled ? 'Bez lunchu w ten dzień' : 'Lunch dostępny w ten dzień'}>
+        <mwc-formfield-fixed .label=${this._disabled ? 'Bez lunchu w ten dzień' : 'Lunch dostępny w ten dzień'}>
           <mwc-switch 
             .selected=${!_.get('disabled', this.lunches)}
             @click=${(event) => this._disabled = !event.target.selected}>
           </mwc-switch>
-        </mwc-formfield>
+        </mwc-formfield-fixed>
       </div>
       <div id="courses-collapse">
         <div class="courses" id="courses">
