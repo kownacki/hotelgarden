@@ -5,7 +5,7 @@ import './elements/hg-header.js';
 import './elements/hg-page.js';
 import {sleep, isProductionEnvironment, getAllDynamicPathPages} from './utils.js';
 import {authDeferred, createDbPath, getFromDb} from './utils/database.js';
-import {convertDynamicPathPagesToEventsList, getPromotedEventData} from '../utils/events.js';
+import {convertDynamicPathPagesToEventsList, getPromotedDynamicPathPageData} from '../utils/events.js';
 
 // For index.html !
 authDeferred.then(({auth, onAuthStateChanged}) => {
@@ -73,7 +73,7 @@ export class HgApp extends LitElement {
   async _getPromotedEventData(dataPromises) {
     const promotedEventUid = await dataPromises.promotedEventUid;
     const eventsList =  await dataPromises.eventsList;
-    return getPromotedEventData(promotedEventUid, eventsList);
+    return getPromotedDynamicPathPageData(promotedEventUid, eventsList);
   }
   async _getEventsList(dataPromises) {
     return await dataPromises.eventsList;

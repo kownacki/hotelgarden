@@ -88,6 +88,14 @@ export const isDynamicPathPageArchived = (dynamicPathPage: DynamicPathPageEvent 
   }
 };
 
+export const isDynamicPathPageCurrent = (dynamicPathPage: DynamicPathPageEvent | DynamicPathPageNews) => {
+  if (dynamicPathPage.type === DynamicPathPageType.EVENT) {
+    return isEventGoingOrUpcoming(dynamicPathPage as DynamicPathPageEvent);
+  } else {
+    return isNewsBeingInPublish(dynamicPathPage as DynamicPathPageNews);
+  }
+};
+
 export const getFormattedSingleDate = (date: string) => {
   return date.split('-').reverse().join(' / ');
 };
@@ -104,14 +112,14 @@ export const getNewsFormattedDate = (news: DynamicPathPageNews) => {
   return getFormattedSingleDate(news.publishDate);
 };
 
-export const getPromotedEventData = (promotedEventUid: EventUid | null, eventsList: EventsList) => {
-  const promotedEvent = promotedEventUid && Object.values(eventsList).find((eventListItem) => {
-    return eventListItem.uid === promotedEventUid;
+export const getPromotedDynamicPathPageData = (promotedDynamicPathPageUid: EventUid | null, eventsList: EventsList) => {
+  const promotedDynamicPathPage = promotedDynamicPathPageUid && Object.values(eventsList).find((eventListItem) => {
+    return eventListItem.uid === promotedDynamicPathPageUid;
   });
-  return promotedEvent && isEventGoingOrUpcoming(promotedEvent as unknown as DynamicPathPageEvent)
+  return promotedDynamicPathPage && isDynamicPathPageCurrent(promotedDynamicPathPage as unknown as DynamicPathPageEvent)
     ? {
-      uid: promotedEventUid as EventUid,
-      event: promotedEvent,
+      uid: promotedDynamicPathPageUid as EventUid,
+      event: promotedDynamicPathPage,
     }
     : undefined;
 };
