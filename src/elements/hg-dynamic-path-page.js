@@ -145,6 +145,7 @@ export class HgDynamicPathPage extends LitElement {
               () => html`
                 <hg-news-header
                   .news=${this.dynamicPathPage}
+                  .promotedEventData=${this.promotedEventData}
                   @request-change=${async ({detail: {field, value}}) => {
                     if (field === HgNewsEditFields.DATE) {
                       await this._dynamicPathPageDbSync.requestFieldUpdate('publishDate', value.publishDate);
