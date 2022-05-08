@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit';
 import sharedStyles from '../../../../styles/shared-styles.js';
 
-export class HgDynamicPathPagesAddHeading extends LitElement {
+export class HgDynamicPathPagesAddDialogSubheading extends LitElement {
   static properties = {
   };
   static styles = [sharedStyles, css`
@@ -14,4 +14,4 @@ export class HgDynamicPathPagesAddHeading extends LitElement {
     `;
   }
 }
-customElements.define('hg-dynamic-path-pages-add-heading', HgDynamicPathPagesAddHeading);
+customElements.define('hg-dynamic-path-pages-add-dialog-subheading', HgDynamicPathPagesAddDialogSubheading);

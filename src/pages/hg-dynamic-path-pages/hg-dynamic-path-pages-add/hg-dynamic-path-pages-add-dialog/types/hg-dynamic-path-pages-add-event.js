@@ -2,9 +2,9 @@ import {LitElement, html, css} from 'lit';
 import '../../../../../edit/hg-info-text.js';
 import sharedStyles from '../../../../../styles/shared-styles.js';
 import '../hg-dynamic-path-pages-add-address.js';
+import '../hg-dynamic-path-pages-add-dialog-subheading.js';
 import '../hg-dynamic-path-pages-add-name.js';
 import '../hg-dynamic-path-pages-add-permalink-warning.js';
-import '../hg-dynamic-path-pages-add-heading.js';
 import './hg-dynamic-path-pages-add-event/hg-dynamic-path-pages-add-event-date.js';
 
 export class HgDynamicPathPagesAddEvent extends LitElement {
@@ -28,9 +28,9 @@ export class HgDynamicPathPagesAddEvent extends LitElement {
   `];
   render() {
     return html`
-      <hg-dynamic-path-pages-add-heading>
+      <hg-dynamic-path-pages-add-dialog-subheading>
         Wybierz nazwę wydarzenia
-      </hg-dynamic-path-pages-add-heading>
+      </hg-dynamic-path-pages-add-dialog-subheading>
       <hg-info-text
         .text=${'Gdy dodajesz cykliczne wydarzenie, umieść w nazwie rok lub edycję wydarzenia. Np "Sylwester 2020", "Open Mic vol. V". Dzięki temu unikniesz konfliktu adresów URL, a twoje wydarzenie będzie łatwiej znaleźć.'}>
       </hg-info-text>
@@ -50,9 +50,9 @@ export class HgDynamicPathPagesAddEvent extends LitElement {
         </hg-dynamic-path-pages-add-address>
       </div>
       <div class="divider"></div>
-      <hg-dynamic-path-pages-add-heading>
+      <hg-dynamic-path-pages-add-dialog-subheading>
         Wybierz datę wydarzenia
-      </hg-dynamic-path-pages-add-heading>
+      </hg-dynamic-path-pages-add-dialog-subheading>
       <hg-dynamic-path-pages-add-event-date
         .dateCorrect=${this.dateCorrect}
         @date-changed=${({detail: date}) => {

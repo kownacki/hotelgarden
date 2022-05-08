@@ -2,9 +2,9 @@ import {LitElement, html, css} from 'lit';
 import '../../../../../edit/hg-info-text.js';
 import sharedStyles from '../../../../../styles/shared-styles.js';
 import '../hg-dynamic-path-pages-add-address.js';
+import '../hg-dynamic-path-pages-add-dialog-subheading.js';
 import '../hg-dynamic-path-pages-add-name.js';
 import '../hg-dynamic-path-pages-add-permalink-warning.js';
-import '../hg-dynamic-path-pages-add-heading.js';
 import './hg-dynamic-path-pages-add-news/hg-dynamic-path-pages-add-news-date.js';
 
 export class HgDynamicPathPagesAddNews extends LitElement {
@@ -25,9 +25,9 @@ export class HgDynamicPathPagesAddNews extends LitElement {
   `];
   render() {
     return html`
-      <hg-dynamic-path-pages-add-heading>
+      <hg-dynamic-path-pages-add-dialog-subheading>
         Wybierz nazwę aktualności
-      </hg-dynamic-path-pages-add-heading>
+      </hg-dynamic-path-pages-add-dialog-subheading>
       <hg-dynamic-path-pages-add-permalink-warning></hg-dynamic-path-pages-add-permalink-warning>
       <hg-dynamic-path-pages-add-name
         .label=${'Nazwa aktualności'}
@@ -44,9 +44,9 @@ export class HgDynamicPathPagesAddNews extends LitElement {
         </hg-dynamic-path-pages-add-address>
       </div>
       <div class="divider"></div>
-      <hg-dynamic-path-pages-add-heading>
+      <hg-dynamic-path-pages-add-dialog-subheading>
         Wybierz datę publikacji aktualności
-      </hg-dynamic-path-pages-add-heading>
+      </hg-dynamic-path-pages-add-dialog-subheading>
       <hg-dynamic-path-pages-add-news-date
         .dateCorrect=${this.dateCorrect}
         @date-changed=${({detail: date}) => {
