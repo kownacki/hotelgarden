@@ -55,7 +55,7 @@ export class HgEventsBlock extends LitElement {
         `,
         () => html`<hg-page-loading></hg-page-loading>`,
       )}
-      <hg-action-button .url=${'/wydarzenia'}>Wszystkie wydarzenia</hg-action-button>
+      <hg-action-button .url=${'/wydarzenia'}>Wszystkie wydarzenia i aktualności</hg-action-button>
     `;
   }
 }

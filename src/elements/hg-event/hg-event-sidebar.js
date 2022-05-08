@@ -91,7 +91,7 @@ export class HgEventSidebar extends LitElement {
               </ul>
             `,
           )}
-          <a class="all" href="/wydarzenia">Wszystkie wydarzenia</a>
+          <a class="all" href="/wydarzenia">Wszystkie wydarzenia i aktualności</a>
         </nav>
       </div>
     `;

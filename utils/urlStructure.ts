@@ -78,7 +78,7 @@ export const pagesStaticData: Record<PageUid, PageStaticData> = {
   'conferences': {name: 'Konferencja w Gardenie', path: '/konferencje', dir: 'conferences'},
   'contact': {name: 'Kontakt', path: '/kontakt', dir: 'contact'},
   'cuisine': {name: 'O naszej kuchni', path: '/kuchnia', dir: 'hotel'},
-  'dynamic-path-pages': {name: 'Wydarzenia', path: '/wydarzenia', dir: 'events'},
+  'dynamic-path-pages': {name: 'Wydarzenia i aktualności', path: '/wydarzenia', dir: 'events'},
   'family-parties': {name: 'Przyjęcia rodzinne', path: '/przyjecia-rodzinne', dir: 'celebrations'},
   'gallery': {name: 'Galeria', path: '/galeria', dir: 'gallery'},
   'landing': {name: 'O hotelu', path: '/', dir: 'hotel'},
