@@ -6,10 +6,10 @@ import sharedStyles from '../styles/shared-styles.js';
 import {createDbPath, getFromDb, updateInDb, updateInObjectInDb} from '../utils/database.js';
 import {cleanTextForMetaDescription, getAllDynamicPathPages} from '../utils.js';
 import {ObjectDbSyncController} from '../utils/ObjectDbSyncController.js';
-import './hg-dynamic-path-page/hg-dynamic-path-page-content.js';
 import './hg-dynamic-path-page/event/hg-event-header.js';
-import './hg-dynamic-path-page/event/hg-event-sidebar.js';
 import './hg-dynamic-path-page/news/hg-news-header.js';
+import './hg-dynamic-path-page/hg-dynamic-path-page-content.js';
+import './hg-dynamic-path-page/hg-dynamic-path-page-sidebar.js';
 import './hg-page/hg-page-loading.js';
 
 export const HgEventEditFields = {
@@ -174,10 +174,10 @@ export class HgDynamicPathPage extends LitElement {
         ${when(
           this._allDynamicPathPagesReady,
           () => html`
-            <hg-event-sidebar
+            <hg-dynamic-path-page-sidebar
               .selected=${this.dynamicPathPage?.uid}
               .dynamicPathPages=${this._allDynamicPathPages}>
-            </hg-event-sidebar>
+            </hg-dynamic-path-page-sidebar>
           `,
           () => html`<hg-page-loading></hg-page-loading>`,
         )}
