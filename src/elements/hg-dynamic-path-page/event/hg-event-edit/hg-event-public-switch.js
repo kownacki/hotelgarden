@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit';
 import '@material/mwc-switch';
-import sharedStyles from '../../../styles/shared-styles.js';
-import '../../../utils/fixes/mwc-formfield-fixed.js';
+import sharedStyles from '../../../../styles/shared-styles.js';
+import '../../../../utils/fixes/mwc-formfield-fixed.js';
 
 export class HgEventPublicSwitch extends LitElement {
   static properties = {

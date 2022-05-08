@@ -6,10 +6,10 @@ import sharedStyles from '../styles/shared-styles.js';
 import {createDbPath, getFromDb, updateInDb, updateInObjectInDb} from '../utils/database.js';
 import {cleanTextForMetaDescription, getAllDynamicPathPages} from '../utils.js';
 import {ObjectDbSyncController} from '../utils/ObjectDbSyncController.js';
-import './hg-event/hg-event-content.js';
-import './hg-event/hg-event-header.js';
-import './hg-event/hg-event-sidebar.js';
-import './hg-news/hg-news-header.js';
+import './hg-dynamic-path-page/event/hg-event-content.js';
+import './hg-dynamic-path-page/event/hg-event-header.js';
+import './hg-dynamic-path-page/event/hg-event-sidebar.js';
+import './hg-dynamic-path-page/news/hg-news-header.js';
 import './hg-page/hg-page-loading.js';
 
 export const HgEventEditFields = {

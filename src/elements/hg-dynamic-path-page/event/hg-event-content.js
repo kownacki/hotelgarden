@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit';
-import '../../edit/hg-editable-text.js';
-import ckContent from '../../styles/ck-content.js'
-import sharedStyles from '../../styles/shared-styles.js';
+import '../../../edit/hg-editable-text.js';
+import ckContent from '../../../styles/ck-content.js'
+import sharedStyles from '../../../styles/shared-styles.js';
 
 export class HgEventContent extends LitElement {
   static properties = {

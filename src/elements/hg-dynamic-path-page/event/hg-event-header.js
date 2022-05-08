@@ -1,8 +1,8 @@
 import {LitElement, html, css} from 'lit';
 import {until} from 'lit/directives/until.js';
-import {getWhenEventHappens, getEventFormattedDate} from '../../../utils/events.js';
-import sharedStyles from '../../styles/shared-styles.js';
-import {FirebaseAuthController} from '../../utils/FirebaseAuthController.js';
+import {getWhenEventHappens, getEventFormattedDate} from '../../../../utils/events.js';
+import sharedStyles from '../../../styles/shared-styles.js';
+import {FirebaseAuthController} from '../../../utils/FirebaseAuthController.js';
 
 export class HgEventHeader extends LitElement {
   _firebaseAuth;

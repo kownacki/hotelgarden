@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit';
 import '@material/mwc-snackbar';
-import sharedStyles from '../../styles/shared-styles.js';
-import {HgNewsEditFields} from '../hg-dynamic-path-page.js';
+import sharedStyles from '../../../styles/shared-styles.js';
+import {HgNewsEditFields} from '../../hg-dynamic-path-page.js';
 import './hg-news-edit/hg-news-edit-date.js';
 import './hg-news-edit/hg-news-promote-switch.js';
 

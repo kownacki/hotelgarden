@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit';
-import {isEventGoingOrUpcoming} from '../../../../utils/events.js';
-import sharedStyles from '../../../styles/shared-styles.js';
-import '../../hg-dynamic-path-page/hg-dynamic-path-page-promote-switch.js';
+import {isEventGoingOrUpcoming} from '../../../../../utils/events.js';
+import sharedStyles from '../../../../styles/shared-styles.js';
+import '../../hg-dynamic-path-page-promote-switch.js';
 
 export class HgEventPromoteSwitch extends LitElement {
   static properties = {

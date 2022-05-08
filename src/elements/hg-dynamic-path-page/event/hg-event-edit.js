@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit';
 import '@material/mwc-snackbar';
-import sharedStyles from '../../styles/shared-styles.js';
-import {HgEventEditFields} from '../hg-dynamic-path-page.js';
+import sharedStyles from '../../../styles/shared-styles.js';
+import {HgEventEditFields} from '../../hg-dynamic-path-page.js';
 import './hg-event-edit/hg-event-edit-date.js';
 import './hg-event-edit/hg-event-promote-switch.js';
 import './hg-event-edit/hg-event-public-switch.js';

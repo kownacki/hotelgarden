@@ -2,9 +2,9 @@ import {LitElement, html, css} from 'lit';
 import {repeat} from 'lit/directives/repeat.js';
 import {when} from 'lit/directives/when.js';
 import {sortBy} from 'lodash-es';
-import {isDynamicPathPageArchived, isDynamicPathPageHidden} from '../../../utils/events.js';
-import {createDynamicPath} from '../../../utils/urlStructure.js';
-import sharedStyles from '../../styles/shared-styles.js';
+import {isDynamicPathPageArchived, isDynamicPathPageHidden} from '../../../../utils/events.js';
+import {createDynamicPath} from '../../../../utils/urlStructure.js';
+import sharedStyles from '../../../styles/shared-styles.js';
 
 export class HgEventSidebar extends LitElement {
   static properties = {

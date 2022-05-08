@@ -1,8 +1,8 @@
 import {LitElement, html, css} from 'lit';
 import {until} from 'lit/directives/until.js';
-import {getNewsFormattedDate} from '../../../utils/events.js';
-import sharedStyles from '../../styles/shared-styles.js';
-import {FirebaseAuthController} from '../../utils/FirebaseAuthController.js';
+import {getNewsFormattedDate} from '../../../../utils/events.js';
+import sharedStyles from '../../../styles/shared-styles.js';
+import {FirebaseAuthController} from '../../../utils/FirebaseAuthController.js';
 
 export class HgNewsHeader extends LitElement {
   _firebaseAuth;

@@ -1,10 +1,10 @@
 import {LitElement, html, css} from 'lit';
 import '@material/mwc-button';
-import {isEventDateRangeCorrect} from '../../../../utils/events.js';
-import sharedStyles from '../../../styles/shared-styles.js';
-import '../../hg-dialog.js';
-import '../../hg-news-date-picker.js';
-import '../../ui/hg-icon-button.js';
+import {isEventDateRangeCorrect} from '../../../../../utils/events.js';
+import sharedStyles from '../../../../styles/shared-styles.js';
+import '../../../hg-dialog.js';
+import '../../../hg-news-date-picker.js';
+import '../../../ui/hg-icon-button.js';
 
 export class HgNewsEditDate extends LitElement {
   static properties = {
