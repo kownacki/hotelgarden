@@ -28,7 +28,7 @@ export class HgDynamicPathPage extends LitElement {
   _dynamicPathPageDbSync;
   static properties = {
     dynamicPathPage: Object, // DynamicPathPageEventWithUid | DynamicPathPageNewsWithUid
-    promotedEventData: Object, // EventData | undefined
+    promotedDynamicPathPage: Object, // DynamicPathPageEventWithUid | DynamicPathPageNewsWithUid | undefined
     _content: String,
     _contentReady: Boolean,
     _allDynamicPathPages: Array, // DynamicPathPage[]
@@ -129,7 +129,7 @@ export class HgDynamicPathPage extends LitElement {
               () => html`
                 <hg-event-header
                   .event=${this.dynamicPathPage}
-                  .promotedEventData=${this.promotedEventData}
+                  .promotedDynamicPathPage=${this.promotedDynamicPathPage}
                   @request-change=${async ({detail: {field, value}}) => {
                     if (field === HgEventEditFields.DATE) {
                       await this._dynamicPathPageDbSync.requestFieldUpdate('startDate', value.startDate);
@@ -145,7 +145,7 @@ export class HgDynamicPathPage extends LitElement {
               () => html`
                 <hg-news-header
                   .news=${this.dynamicPathPage}
-                  .promotedEventData=${this.promotedEventData}
+                  .promotedDynamicPathPage=${this.promotedDynamicPathPage}
                   @request-change=${async ({detail: {field, value}}) => {
                     if (field === HgNewsEditFields.DATE) {
                       await this._dynamicPathPageDbSync.requestFieldUpdate('publishDate', value.publishDate);

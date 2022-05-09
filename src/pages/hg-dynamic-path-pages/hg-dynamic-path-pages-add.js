@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import '@material/mwc-button';
-import {DYNAMIC_PATH_PAGES_ROOT_PATH} from '../../../utils/urlStructure.js';
+import {createDynamicPath} from '../../../utils/urlStructure.js';
 import sharedStyles from '../../styles/shared-styles.js';
 import {addDynamicPathPage} from '../../utils.js';
 import './hg-dynamic-path-pages-add/hg-dynamic-path-pages-add-dialog.js';
@@ -13,7 +13,7 @@ export class HgDynamicPathPagesAdd extends LitElement {
   async _addDynamicPathPage(type, title, date, permalink) {
     // todo transaction to avoid race condition
     await addDynamicPathPage(type, title, date, permalink);
-    window.history.pushState(null, null, `${DYNAMIC_PATH_PAGES_ROOT_PATH}${permalink}`);
+    window.history.pushState(null, null, createDynamicPath(permalink));
     this.dispatchEvent(new CustomEvent('location-changed', {composed: true, bubbles: true}));
   };
   render() {

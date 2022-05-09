@@ -72,8 +72,8 @@ export const createFullUrl = (path) => {
 export const getDynamicPathPagePermalink = (path) => {
     return path.replace(DYNAMIC_PATH_PAGES_ROOT_PATH, '');
 };
-export const createDynamicPath = (eventUid) => {
-    return `${DYNAMIC_PATH_PAGES_ROOT_PATH}${eventUid}`;
+export const createDynamicPath = (permalink) => {
+    return `${DYNAMIC_PATH_PAGES_ROOT_PATH}${permalink}`;
 };
 export const isValidStaticPath = (path) => {
     return staticPaths.includes(path);

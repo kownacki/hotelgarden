@@ -5,7 +5,7 @@ import './hg-drawer/hg-drawer-content.js';
 export class HgDrawer extends LitElement {
   static properties = {
     selected: String,
-    promotedEventData: Object, // EventData | undefined
+    promotedDynamicPathPage: Object, // DynamicPathPageEventWithUid | DynamicPathPageNewsWithUid | undefined
     // observables
     drawer: Element,
     _drawerOnceOpened: Boolean
@@ -32,7 +32,7 @@ export class HgDrawer extends LitElement {
           : html`
             <hg-drawer-content
               .selected=${this.selected}
-              .promotedEventData=${this.promotedEventData}
+              .promotedDynamicPathPage=${this.promotedDynamicPathPage}
               @close-drawer=${() => this.shadowRoot.getElementById('drawer').close()}>
             </hg-drawer-content>
           `}

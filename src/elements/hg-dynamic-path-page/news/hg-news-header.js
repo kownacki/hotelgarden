@@ -8,7 +8,7 @@ export class HgNewsHeader extends LitElement {
   _firebaseAuth;
   static properties = {
     news: Object, // DynamicPathPageNewsWithUid
-    promotedEventData: Object, // EventData | undefined
+    promotedDynamicPathPage: Object, // DynamicPathPageEventWithUid | DynamicPathPageNewsWithUid | undefined
     _loggedIn: Boolean,
   };
   static styles = [sharedStyles, css`
@@ -42,7 +42,7 @@ export class HgNewsHeader extends LitElement {
         return html`
           <hg-news-edit
             .news=${this.news}
-            .promotedEventData=${this.promotedEventData}
+            .promotedDynamicPathPage=${this.promotedDynamicPathPage}
             @request-change=${({detail}) => {
               this.dispatchEvent(new CustomEvent('request-change', {detail}));
             }}>

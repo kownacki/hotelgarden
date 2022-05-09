@@ -10,8 +10,8 @@ export class HgHeader extends LitElement {
     noBannerImage: {type: Boolean, reflect: true, attribute: 'no-banner-image'},
     scrolledDown: {type: Boolean, reflect: true, attribute: 'scrolled-down'},
     selected: String,
-    promotedEventData: Object, // EventData | undefined
-    promotedEventLoaded: Boolean,
+    promotedDynamicPathPage: Object, // DynamicPathPageEventWithUid | DynamicPathPageNewsWithUid | undefined
+    promotedDynamicPathPageLoaded: Boolean,
   };
   static styles = css`
     :host {
@@ -48,7 +48,7 @@ export class HgHeader extends LitElement {
       margin-right: 10px;
       padding: 10px 0;
     }
-    li.event {
+    li.promoted {
       padding: 0;
     }
     hg-header-subnav {
@@ -145,7 +145,7 @@ export class HgHeader extends LitElement {
   render() {
     return html`
       <header>
-        ${!this.promotedEventLoaded ? ''
+        ${!this.promotedDynamicPathPageLoaded ? ''
           : html`
             <hg-icon-button
               .size=${'normal'}
@@ -156,11 +156,11 @@ export class HgHeader extends LitElement {
         <hg-header-logo .scrolledDown=${this.scrolledDown} .noBannerImage=${this.noBannerImage}></hg-header-logo>
         <nav>
           <ul>
-            ${!this.promotedEventLoaded ? '' : html`
-              ${!this.promotedEventData ? '' : html`
-                <li class="event">
-                  <a href=${createDynamicPath(this.promotedEventData.uid)}>
-                    ${this.promotedEventData.event.title}
+            ${!this.promotedDynamicPathPageLoaded ? '' : html`
+              ${!this.promotedDynamicPathPage ? '' : html`
+                <li class="promoted">
+                  <a href=${createDynamicPath(this.promotedDynamicPathPage.permalink)}>
+                    ${this.promotedDynamicPathPage.title}
                   </a>
                 </li>
               `}

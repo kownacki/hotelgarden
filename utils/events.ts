@@ -1,5 +1,10 @@
-import {omit} from 'lodash'
-import {DynamicPathPageEvent, DynamicPathPageEventWithUid, DynamicPathPageNews, EventsList, EventUid} from './types';
+import {
+  DynamicPathPageEvent,
+  DynamicPathPageEventWithUid,
+  DynamicPathPageNews,
+  DynamicPathPageUid,
+  EventsList,
+} from './types';
 import {isDateEarlier, isDatePast, isDateTodayOrPast, isDateTodayOrUpcoming, isDateUpcoming} from './general';
 
 export const DynamicPathPageType = {
@@ -112,15 +117,13 @@ export const getNewsFormattedDate = (news: DynamicPathPageNews) => {
   return getFormattedSingleDate(news.publishDate);
 };
 
-export const getPromotedDynamicPathPageData = (promotedDynamicPathPageUid: EventUid | null, eventsList: EventsList) => {
+export const getPromotedDynamicPathPageData = (promotedDynamicPathPageUid: DynamicPathPageUid | null, eventsList: EventsList) => {
   const promotedDynamicPathPage = promotedDynamicPathPageUid && Object.values(eventsList).find((eventListItem) => {
     return eventListItem.uid === promotedDynamicPathPageUid;
   });
-  return promotedDynamicPathPage && isDynamicPathPageCurrent(promotedDynamicPathPage as unknown as DynamicPathPageEvent)
-    ? {
-      uid: promotedDynamicPathPageUid as EventUid,
-      event: promotedDynamicPathPage,
-    }
+  // @ts-ignore
+  return promotedDynamicPathPage && isDynamicPathPageCurrent(promotedDynamicPathPage)
+    ? promotedDynamicPathPage
     : undefined;
 };
 
@@ -128,7 +131,7 @@ export const convertDynamicPathPagesToEventsList = (dynamicPathPagesWithUids: Dy
   const eventsList: EventsList = {};
   dynamicPathPagesWithUids.forEach((dynamicPathPage) => {
     // @ts-ignore
-    eventsList[dynamicPathPage.permalink] = omit(dynamicPathPage, 'permalink');
+    eventsList[dynamicPathPage.permalink] = dynamicPathPage;
   });
   return eventsList;
 };

@@ -8,7 +8,7 @@ import './hg-news-edit/hg-news-promote-switch.js';
 export class HgNewsEdit extends LitElement {
   static properties = {
     news: Object, // DynamicPathPageNewsWithUid
-    promotedEventData: Object, // EventData | undefined
+    promotedDynamicPathPage: Object, // DynamicPathPageEventWithUid | DynamicPathPageNewsWithUid | undefined
   };
   static styles = [sharedStyles, css`
     .container {
@@ -52,7 +52,7 @@ export class HgNewsEdit extends LitElement {
         </hg-news-edit-date>
         <hg-news-promote-switch
           .news=${this.news}
-          .promotedEventData=${this.promotedEventData}
+          .promotedDynamicPathPage=${this.promotedDynamicPathPage}
           @promoted-changed=${({detail: promoted}) => {
             this.dispatchEvent(new CustomEvent('request-change', {
               detail: {

@@ -7,7 +7,7 @@ import './hg-drawer-item.js';
 export class HgDrawerContent extends LitElement {
   static properties = {
     selected: String,
-    promotedEventData: Object, // EventData | undefined
+    promotedDynamicPathPage: Object, // DynamicPathPageEventWithUid | DynamicPathPageNewsWithUid | undefined
   };
   static styles = css`
     :host {
@@ -49,12 +49,12 @@ export class HgDrawerContent extends LitElement {
       </div>
       <nav>
         <ul>
-          ${!this.promotedEventData
+          ${!this.promotedDynamicPathPage
             ? ''
-            : html`<li class="event">
+            : html`<li class="promoted">
               <hg-drawer-item .link=${staticProp({
-                path: createDynamicPath(this.promotedEventData.uid),
-                name: this.promotedEventData.event.title,
+                path: createDynamicPath(this.promotedDynamicPathPage.permalink),
+                name: this.promotedDynamicPathPage.title,
               })}>
               </hg-drawer-item>
             </li>`

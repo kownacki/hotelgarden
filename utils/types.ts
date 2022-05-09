@@ -20,6 +20,7 @@ export interface PageDbData {
 
 export type PagesDbData = Record<PageUid, PageDbData>;
 
+// todo check where it's actually EventUid and not DynamicPathPageUid
 export type EventUid = string;
 
 export interface EventsListItem {
@@ -33,6 +34,8 @@ export interface EventsListItem {
 }
 
 export type EventsList = Record<EventUid, EventsListItem>;
+
+export type DynamicPathPageUid = string;
 
 export type DynamicPathPageType = 'event' | 'news';
 
@@ -57,16 +60,11 @@ export interface DynamicPathPageNews extends DynamicPathPageBase {
 }
 
 export interface DynamicPathPageEventWithUid extends DynamicPathPageEvent {
-  uid: EventUid,
+  uid: DynamicPathPageUid,
 }
 
 export interface DynamicPathPageNewsWithUid extends DynamicPathPageNews {
-  uid: EventUid,
-}
-
-export interface EventData {
-  uid: EventUid,
-  event?: EventsListItem,
+  uid: DynamicPathPageUid,
 }
 
 export interface EventDbData {
@@ -78,7 +76,7 @@ export interface EventDbData {
 export type EventsDbData = Record<EventUid, EventDbData>;
 
 export interface PromotedEventDbData {
-  uid: EventUid | null,
+  uid: DynamicPathPageUid | null,
 }
 
 export interface Banner {

@@ -1,4 +1,3 @@
-import { omit } from 'lodash-es';
 import { isDateEarlier, isDatePast, isDateTodayOrPast, isDateTodayOrUpcoming, isDateUpcoming } from './general';
 export const DynamicPathPageType = {
     EVENT: 'event',
@@ -101,18 +100,16 @@ export const getPromotedDynamicPathPageData = (promotedDynamicPathPageUid, event
     const promotedDynamicPathPage = promotedDynamicPathPageUid && Object.values(eventsList).find((eventListItem) => {
         return eventListItem.uid === promotedDynamicPathPageUid;
     });
+    // @ts-ignore
     return promotedDynamicPathPage && isDynamicPathPageCurrent(promotedDynamicPathPage)
-        ? {
-            uid: promotedDynamicPathPageUid,
-            event: promotedDynamicPathPage,
-        }
+        ? promotedDynamicPathPage
         : undefined;
 };
 export const convertDynamicPathPagesToEventsList = (dynamicPathPagesWithUids) => {
     const eventsList = {};
     dynamicPathPagesWithUids.forEach((dynamicPathPage) => {
         // @ts-ignore
-        eventsList[dynamicPathPage.permalink] = omit(dynamicPathPage, 'permalink');
+        eventsList[dynamicPathPage.permalink] = dynamicPathPage;
     });
     return eventsList;
 };

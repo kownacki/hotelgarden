@@ -1,5 +1,5 @@
 import {keyBy} from 'lodash';
-import {DynamicPathPagePermalink, EventsList, EventUid} from './types';
+import {DynamicPathPagePermalink, EventsList} from './types';
 
 export type PageUid =
   | '404'
@@ -128,8 +128,8 @@ export const getDynamicPathPagePermalink = (path: string): DynamicPathPagePermal
   return path.replace(DYNAMIC_PATH_PAGES_ROOT_PATH, '');
 };
 
-export const createDynamicPath = (eventUid: EventUid) => {
-  return `${DYNAMIC_PATH_PAGES_ROOT_PATH}${eventUid}`;
+export const createDynamicPath = (permalink: DynamicPathPagePermalink) => {
+  return `${DYNAMIC_PATH_PAGES_ROOT_PATH}${permalink}`;
 }
 
 export const isValidStaticPath = (path: string) => {

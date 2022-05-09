@@ -2,7 +2,7 @@ import {LitElement, html, css} from 'lit';
 import {when} from 'lit/directives/when.js';
 import '@material/mwc-button';
 import {DynamicPathPageType, getEventFormattedDate, getNewsFormattedDate, isNewsBeforePublish} from '../../../utils/events.js';
-import {DYNAMIC_PATH_PAGES_ROOT_PATH} from '../../../utils/urlStructure.js';
+import {createDynamicPath} from '../../../utils/urlStructure.js';
 import '../../elements/mkwc/hg-image.js';
 import sharedStyles from '../../styles/shared-styles.js'
 
@@ -94,7 +94,7 @@ export class HgDynamicPathPageCard extends LitElement {
   `];
   render() {
     return html`
-      <a href="${DYNAMIC_PATH_PAGES_ROOT_PATH}${this.dynamicPathPage.permalink}">
+      <a href=${createDynamicPath(this.dynamicPathPage.permalink)}>
         <hg-image
           .src=${_.get('image.url', this.dynamicPathPage)}
           .ready=${true}

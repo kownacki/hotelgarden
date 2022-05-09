@@ -6,7 +6,7 @@ import '../../hg-dynamic-path-page-promote-switch.js';
 export class HgEventPromoteSwitch extends LitElement {
   static properties = {
     event: Object, // DynamicPathPageEventWithUid
-    promotedEventData: Object, // EventData | undefined
+    promotedDynamicPathPage: Object, // DynamicPathPageEventWithUid | DynamicPathPageNewsWithUid | undefined
   };
   static styles = [sharedStyles, css`
     :host {
@@ -24,7 +24,7 @@ export class HgEventPromoteSwitch extends LitElement {
     return html`
       <div title=${this._getPromoteSwitchTooltip(this.event)}>
         <hg-dynamic-path-page-promote-switch
-          .selected=${isEventGoingOrUpcoming(this.event) && this.promotedEventData?.uid === this.event.uid}
+          .selected=${isEventGoingOrUpcoming(this.event) && this.promotedDynamicPathPage?.uid === this.event.uid}
           .disabled=${!isEventGoingOrUpcoming(this.event)}
           @promoted-changed=${({detail: promoted}) => {
             this.dispatchEvent(new CustomEvent('promoted-changed', {detail: promoted}));

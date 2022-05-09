@@ -9,7 +9,7 @@ import './hg-event-edit/hg-event-public-switch.js';
 export class HgEventEdit extends LitElement {
   static properties = {
     event: Object, // DynamicPathPageEventWithUid
-    promotedEventData: Object, // EventData | undefined
+    promotedDynamicPathPage: Object, // DynamicPathPageEventWithUid | DynamicPathPageNewsWithUid | undefined
   };
   static styles = [sharedStyles, css`
     .container {
@@ -76,7 +76,7 @@ export class HgEventEdit extends LitElement {
         </div>
         <hg-event-promote-switch
           .event=${this.event}
-          .promotedEventData=${this.promotedEventData}
+          .promotedDynamicPathPage=${this.promotedDynamicPathPage}
           @promoted-changed=${({detail: promoted}) => {
             this.dispatchEvent(new CustomEvent('request-change', {
               detail: {

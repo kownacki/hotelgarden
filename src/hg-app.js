@@ -30,8 +30,8 @@ export class HgApp extends LitElement {
     _dynamicPathPage: Object, // DynamicPathPageEventWithUid | DynamicPathPageNewsWithUid | undefined
     _dynamicPathPageReady: Boolean,
     _noBannerImage: Boolean,
-    _promotedEventData: Object, // EventData | undefined
-    _promotedEventLoaded: Boolean,
+    _promotedDynamicPathPage: Object, // DynamicPathPageEventWithUid | DynamicPathPageNewsWithUid | undefined
+    _promotedDynamicPathPageLoaded: Boolean,
     _enableDrawer: Boolean,
   };
   static styles = css`
@@ -61,19 +61,19 @@ export class HgApp extends LitElement {
     if (initialPage) {
       return {
         eventsList: initialData.eventsList,
-        promotedEventUid: initialData.promotedEventUid,
+        promotedDynamicPathPageUid: initialData.promotedEventUid,
       };
     } else {
       return {
         eventsList: getAllDynamicPathPages().then((dynamicPathPages) => convertDynamicPathPagesToEventsList(dynamicPathPages)),
-        promotedEventUid: getFromDb(createDbPath('events/promoted', 'uid')),
+        promotedDynamicPathPageUid: getFromDb(createDbPath('events/promoted', 'uid')),
       };
     }
   }
-  async _getPromotedEventData(dataPromises) {
-    const promotedEventUid = await dataPromises.promotedEventUid;
-    const eventsList =  await dataPromises.eventsList;
-    return getPromotedDynamicPathPageData(promotedEventUid, eventsList);
+  async _getPromotedDynamicPathPage(dataPromises) {
+    const promotedDynamicPathPageUid = await dataPromises.promotedDynamicPathPageUid;
+    const eventsList = await dataPromises.eventsList;
+    return getPromotedDynamicPathPageData(promotedDynamicPathPageUid, eventsList);
   }
   async _getEventsList(dataPromises) {
     return await dataPromises.eventsList;
@@ -102,8 +102,8 @@ export class HgApp extends LitElement {
       const dataPromises = this._getDataPromises(this._initialPage, window.initialData);
 
       (async () => {
-        this._promotedEventData = await this._getPromotedEventData(dataPromises);
-        this._promotedEventLoaded = true;
+        this._promotedDynamicPathPage = await this._getPromotedDynamicPathPage(dataPromises);
+        this._promotedDynamicPathPageLoaded = true;
       })();
 
       if (this._pageType === PageType.STATIC_PATH) {
@@ -143,8 +143,8 @@ export class HgApp extends LitElement {
         id="header"
         .noBannerImage=${this._noBannerImage}
         .selected=${this._path}
-        .promotedEventData=${this._promotedEventData}
-        .promotedEventLoaded=${this._promotedEventLoaded}
+        .promotedDynamicPathPage=${this._promotedDynamicPathPage}
+        .promotedDynamicPathPageLoaded=${this._promotedDynamicPathPageLoaded}
         @open-drawer=${async () => {
           if (!this._drawer) {
             await import('./elements/hg-drawer.js');
@@ -160,17 +160,17 @@ export class HgApp extends LitElement {
         .pageUid=${this._pageUid}
         .dynamicPathPage=${this._dynamicPathPage}
         .dynamicPathPageReady=${this._dynamicPathPageReady}
-        .promotedEventData=${this._promotedEventData}
-        .promotedEventLoaded=${this._promotedEventLoaded}
+        .promotedDynamicPathPage=${this._promotedDynamicPathPage}
+        .promotedDynamicPathPageLoaded=${this._promotedDynamicPathPageLoaded}
         .noBannerImage=${this._noBannerImage}
         .initialPage=${this._initialPage}>
       </hg-page>
       <!--todo somehow prevent scrolling parent when on android -->
-      ${!this._promotedEventLoaded || !this._enableDrawer ? '' : html`
+      ${!this._promotedDynamicPathPageLoaded || !this._enableDrawer ? '' : html`
         <hg-drawer
           id="drawer"
           .selected=${this._path}
-          .promotedEventData=${this._promotedEventData}>
+          .promotedDynamicPathPage=${this._promotedDynamicPathPage}>
         </hg-drawer>
       `}
     `;

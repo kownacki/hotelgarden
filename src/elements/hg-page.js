@@ -57,8 +57,8 @@ export class HgPage extends LitElement {
     pageUid: String, // PageUid
     dynamicPathPage: Object, // DynamicPathPageEventWithUid | DynamicPathPageNewsWithUid | undefined
     dynamicPathPageReady: Boolean,
-    promotedEventData: Object, // EventData | undefined
-    promotedEventLoaded: Boolean,
+    promotedDynamicPathPage: Object, // DynamicPathPageEventWithUid | DynamicPathPageNewsWithUid | undefined
+    promotedDynamicPathPageLoaded: Boolean,
     noBannerImage: {type: Boolean, reflect: true, attribute: 'no-banner-image'},
     initialPage: Boolean,
     _defaultTitle: String,
@@ -142,11 +142,11 @@ export class HgPage extends LitElement {
       </hg-page-banner>
       ${this.pageType === PageType.DYNAMIC_PATH
         ? until(import('./hg-dynamic-path-page.js').then(() => {
-          return (this.dynamicPathPageReady && this.promotedEventLoaded) ? html`
+          return (this.dynamicPathPageReady && this.promotedDynamicPathPageLoaded) ? html`
             <hg-dynamic-path-page
               class="page"
               .dynamicPathPage=${this.dynamicPathPage}
-              .promotedEventData=${this.promotedEventData}
+              .promotedDynamicPathPage=${this.promotedDynamicPathPage}
               @set-meta-description=${({detail: text}) => {
                 this._handleSetMetaDescription(text);
               }}
