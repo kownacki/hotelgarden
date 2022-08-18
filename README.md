@@ -38,9 +38,9 @@ $ npm run build
 
 Before deploying:
 1. Install deps.
-2. Run `npm run firebase-login` if you're not logged in to firebase.
-3. Generate all files. 
-4. Build.
+2. Generate all files.
+3. Build.
+4. Run `npm run firebase-login` if you're not logged in to firebase.
 
 ```
 $ npm run deploy-hosting
@@ -50,8 +50,10 @@ $ npm run deploy-hosting
 
 Before deploying:
 1. Install deps in `functions/`.
-2. Run `npm run firebase-login` if you're not logged in to firebase.
+2. Run `npm run build` in `functions/`
+3. Run `npm run firebase-login` if you're not logged in to firebase.
 
+From root project directory:
 ```
-$ npm run deploy-hosting
+$ npm run deploy-functions
 ```
