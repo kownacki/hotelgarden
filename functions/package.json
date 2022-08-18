@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "firebase-admin": "^10.0.2",
-    "firebase-functions": "^3.20.1",
+    "firebase-functions": "^3.22.0",
     "lodash": "^4.17.21",
     "mk-firebase-functions-utils": "./mk-firebase-functions-utils-0.1.0.tgz",
     "mk-firebase-utils": "./mk-firebase-utils-0.1.0.tgz",
