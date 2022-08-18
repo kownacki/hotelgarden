@@ -156,11 +156,14 @@ export class HgContactForm extends LitElement {
         method="POST"
         @loading-changed=${async (event) => {
           this.loading = event.detail.value;
-          if (!this.loading) {
+          if (!this.loading && !this.error) {
             this.sent = true;
           }
         }}
-        @last-error-changed=${(event) => this.error = Boolean(event.detail.value)}>
+        @last-error-changed=${(event) => {
+          this.sent = false;
+          this.error = Boolean(event.detail.value);
+        }}>
       </iron-ajax>
     `;
   }
