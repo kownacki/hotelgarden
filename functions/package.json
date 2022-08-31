@@ -21,7 +21,7 @@
     "mk-firebase-functions-utils": "./mk-firebase-functions-utils-0.1.0.tgz",
     "mk-firebase-utils": "./mk-firebase-utils-0.1.0.tgz",
     "moment": "^2.29.3",
-    "moment-timezone": "^0.5.27",
+    "moment-timezone": "^0.5.35",
     "node-fetch": "^2.6.7",
     "serialize-javascript": "^6.0.0"
   },
