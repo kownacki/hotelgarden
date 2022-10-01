@@ -19,6 +19,7 @@ export const sendMessage = async (req: Request, res: Response) => {
   const config:AdminConfigSendMessage = await getFromDb(createDbPath('_config/admin', 'sendMessage'));
   const options = {
     mailOptions: {
+      from: config.mailOptions.from,
       to: config.mailOptions.to[body.subject],
       replyTo: body.email,
       subject: `${config.mailOptions.subject} | ${body.email}`,

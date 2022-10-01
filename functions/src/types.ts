@@ -22,6 +22,7 @@ export interface RequestWithBody<ReqBody> extends Request {
 
 export interface AdminConfigSendMessage {
   mailOptions: {
+    from: string,
     subject: string,
     to: {
       gastro: string | string[],

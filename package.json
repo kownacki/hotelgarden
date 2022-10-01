@@ -54,6 +54,7 @@
     "firebase-tools": "^10.6.0",
     "jsdoc": "^3.6.10",
     "lodash": "^4.17.21",
+    "mk-firebase-functions-utils": "git+https://github.com/kownacki/mk-firebase-functions-utils.git#master",
     "rollup": "^2.70.1",
     "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-delete": "^2.0.0",
