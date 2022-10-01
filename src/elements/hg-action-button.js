@@ -30,7 +30,7 @@ export class HgActionButton extends LitElement {
       color: white;
     }
     :host(:not([disabled]):hover) {
-      background: var(--accent-color-dark);
+      background: var(--accent-dark-color);
       cursor: pointer;
       /* remember to remove it when disabled */
     }

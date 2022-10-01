@@ -1,8 +1,7 @@
 import fs from 'fs';
 import _ from 'lodash/fp.js';
-// @ts-ignore
-import materialColors from 'material-colors';
 import { analyticsScript } from './generateIndex/analyticsScript.js';
+import { globalStyles } from './generateIndex/globalStyles.js';
 import { preRender } from './generateIndex/preRender.js';
 import { tawkToScript } from './generateIndex/tawkToScript.js';
 import { createPreloadLink } from './html.js';
@@ -94,49 +93,7 @@ const getIndexHtml = (production, preloads = false, { title, description, jsonLd
   ${preloads ? createPlaceholder('preloads') : ''}
   
   <style>
-    html, body {
-      height: 100%;
-    }
-    body {
-      margin: 0;
-      --primary-color: #847850;
-      --primary-color-rgb: 132, 120, 80;
-      --primary-color-filter: invert(52%) sepia(3%) saturate(4587%) hue-rotate(9deg) brightness(88%) contrast(88%);
-      --secondary-color: ${materialColors.grey['800']}; /* md-grey-800 */
-      --secondary-color-rgb: 117, 117, 117;
-      --accent-color: #4f6884;
-      --accent-color-dark: #324254;
-      --accent-color-rgb: 79, 104, 132;
-      --text-color: var(--secondary-color);
-      --placeholder-color: ${materialColors.grey['500']}; /* md-grey-500 */
-      --placeholder-color-rgb: 158, 158, 158;
-      --divider-color: rgba(0, 0, 0, 0.12);
-      --grey-text: rgba(0, 0, 0, 0.6);
-      --error-color: ${materialColors.red['800']}; /* md-red-800 */
-      --error-background-color: ${materialColors.red['100']}; /* md-red-100 */
-      --correct-color: ${materialColors.green['800']}; /* md-green-800 */
-      --logotype-color: #84979E;
-      --logotype-color-filter: invert(73%) sepia(6%) saturate(853%) hue-rotate(150deg) brightness(91%) contrast(79%);
-      --headerHeight: 60px;
-      --layer-header: 100;
-      --layer-header-1: 101;
-      --layer-profitroom: 999; /* Profitroom snippet layer*/
-      --layer-profitroom-1: 1000;
-      font-family: 'Lato', sans-serif;
-      color: var(--text-color);
-      /* MWC theming. See https://github.com/material-components/material-web/blob/master/docs/theming.md */
-      --mdc-theme-primary: var(--accent-color);
-      --mdc-theme-secondary: var(--primary-color);
-      /* Bug. See https://github.com/material-components/material-web/issues/2748 */
-      --mdc-switch-selected-pressed-handle-color: var(--mdc-theme-primary);
-      --mdc-switch-selected-focus-handle-color: var(--mdc-theme-primary);
-      --mdc-switch-selected-hover-handle-color: var(--mdc-theme-primary);
-      --mdc-switch-selected-track-color: var(--divider-color);
-      --mdc-switch-selected-pressed-track-color: var(--divider-color);
-      --mdc-switch-selected-focus-track-color: var(--divider-color);
-      --mdc-switch-selected-hover-track-color: var(--divider-color);
-    }
-
+    ${globalStyles}
     ${fontResources.map((fontResource) => fontResource.fontFace).join('')}
   </style>
 </head>

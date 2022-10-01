@@ -15,4 +15,3 @@ export const createLink = ({rel, href, as, crossorigin}: LinkAttrs) => {
 export const createPreloadLink = (attrs: PreloadLinkAttrs) => {
   return createLink({...attrs, rel: 'preload'});
 };
-

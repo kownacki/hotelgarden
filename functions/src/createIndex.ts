@@ -80,48 +80,88 @@ export const createIndex = (
   ${preloads}
   
   <style>
-    html, body {
-      height: 100%;
-    }
-    body {
-      margin: 0;
-      --primary-color: #847850;
-      --primary-color-rgb: 132, 120, 80;
-      --primary-color-filter: invert(52%) sepia(3%) saturate(4587%) hue-rotate(9deg) brightness(88%) contrast(88%);
-      --secondary-color: #424242; /* md-grey-800 */
-      --secondary-color-rgb: 117, 117, 117;
-      --accent-color: #4f6884;
-      --accent-color-dark: #324254;
-      --accent-color-rgb: 79, 104, 132;
-      --text-color: var(--secondary-color);
-      --placeholder-color: #9e9e9e; /* md-grey-500 */
-      --placeholder-color-rgb: 158, 158, 158;
-      --divider-color: rgba(0, 0, 0, 0.12);
-      --grey-text: rgba(0, 0, 0, 0.6);
-      --error-color: #c62828; /* md-red-800 */
-      --error-background-color: #ffcdd2; /* md-red-100 */
-      --correct-color: #2e7d32; /* md-green-800 */
-      --logotype-color: #84979E;
-      --logotype-color-filter: invert(73%) sepia(6%) saturate(853%) hue-rotate(150deg) brightness(91%) contrast(79%);
-      --headerHeight: 60px;
-      --layer-header: 100;
-      --layer-header-1: 101;
-      --layer-profitroom: 999; /* Profitroom snippet layer*/
-      --layer-profitroom-1: 1000;
-      font-family: 'Lato', sans-serif;
-      color: var(--text-color);
-      /* MWC theming. See https://github.com/material-components/material-web/blob/master/docs/theming.md */
-      --mdc-theme-primary: var(--accent-color);
-      --mdc-theme-secondary: var(--primary-color);
-      /* Bug. See https://github.com/material-components/material-web/issues/2748 */
-      --mdc-switch-selected-pressed-handle-color: var(--mdc-theme-primary);
-      --mdc-switch-selected-focus-handle-color: var(--mdc-theme-primary);
-      --mdc-switch-selected-hover-handle-color: var(--mdc-theme-primary);
-      --mdc-switch-selected-track-color: var(--divider-color);
-      --mdc-switch-selected-pressed-track-color: var(--divider-color);
-      --mdc-switch-selected-focus-track-color: var(--divider-color);
-      --mdc-switch-selected-hover-track-color: var(--divider-color);
-    }
+    
+  html, body {
+    height: 100%;
+  }
+  body {
+    margin: 0;
+
+    
+    --primary-color: #847850;
+    --primary-color-rgb: 132, 120, 80;
+    --primary-color-filter: invert(46%) sepia(43%) saturate(314%) hue-rotate(9deg) brightness(93%) contrast(91%);
+  
+    
+    --secondary-color: #424242;
+    --secondary-color-rgb: 66, 66, 66;
+    --secondary-color-filter: invert(23%) sepia(0%) saturate(2327%) hue-rotate(160deg) brightness(90%) contrast(84%);
+  
+    
+    --secondary-light-color: #757575;
+    --secondary-light-color-rgb: 117, 117, 117;
+    --secondary-light-color-filter: invert(49%) sepia(11%) saturate(14%) hue-rotate(96deg) brightness(91%) contrast(86%);
+  
+    
+    --accent-color: #4F6884;
+    --accent-color-rgb: 79, 104, 132;
+    --accent-color-filter: invert(40%) sepia(13%) saturate(1070%) hue-rotate(171deg) brightness(93%) contrast(92%);
+  
+    
+    --accent-dark-color: #3c4f64;
+    --accent-dark-color-rgb: 60, 79, 100;
+    --accent-dark-color-filter: invert(29%) sepia(18%) saturate(852%) hue-rotate(171deg) brightness(94%) contrast(90%);
+  
+    
+    --placeholder-color: #9e9e9e;
+    --placeholder-color-rgb: 158, 158, 158;
+    --placeholder-color-filter: invert(66%) sepia(1%) saturate(0%) hue-rotate(158deg) brightness(98%) contrast(80%);
+  
+    
+    --error-color: #c62828;
+    --error-color-rgb: 198, 40, 40;
+    --error-color-filter: invert(22%) sepia(100%) saturate(1763%) hue-rotate(344deg) brightness(91%) contrast(92%);
+  
+    
+    --error-background-color: #ffcdd2;
+    --error-background-color-rgb: 255, 205, 210;
+    --error-background-color-filter: invert(82%) sepia(13%) saturate(536%) hue-rotate(305deg) brightness(101%) contrast(102%);
+  
+    
+    --correct-color: #2e7d32;
+    --correct-color-rgb: 46, 125, 50;
+    --correct-color-filter: invert(37%) sepia(59%) saturate(560%) hue-rotate(74deg) brightness(92%) contrast(86%);
+  
+    
+    --logotype-color: #84979E;
+    --logotype-color-rgb: 132, 151, 158;
+    --logotype-color-filter: invert(62%) sepia(6%) saturate(745%) hue-rotate(150deg) brightness(94%) contrast(90%);
+  
+    --text-color: var(--secondary-color);
+    --divider-color: rgba(0, 0, 0, 0.12);
+    --grey-text: rgba(0, 0, 0, 0.6);
+
+    --headerHeight: 60px;
+    --layer-header: 100;
+    --layer-header-1: 101;
+    --layer-profitroom: 999; /* Profitroom snippet layer*/
+    --layer-profitroom-1: 1000;
+
+    font-family: 'Lato', sans-serif;
+    color: var(--text-color);
+
+    /* MWC theming. See https://github.com/material-components/material-web/blob/master/docs/theming.md */
+    --mdc-theme-primary: var(--accent-color);
+    --mdc-theme-secondary: var(--primary-color);
+    /* Bug. See https://github.com/material-components/material-web/issues/2748 */
+    --mdc-switch-selected-pressed-handle-color: var(--mdc-theme-primary);
+    --mdc-switch-selected-focus-handle-color: var(--mdc-theme-primary);
+    --mdc-switch-selected-hover-handle-color: var(--mdc-theme-primary);
+    --mdc-switch-selected-track-color: var(--divider-color);
+    --mdc-switch-selected-pressed-track-color: var(--divider-color);
+    --mdc-switch-selected-focus-track-color: var(--divider-color);
+    --mdc-switch-selected-hover-track-color: var(--divider-color);
+  }
 
     
   @font-face {

@@ -71,7 +71,7 @@ export default css`
     font-weight: 300;
   }
   .divider {
-    border-bottom: solid 1px rgba(var(--secondary-color-rgb), 30%);
+    border-bottom: solid 1px rgba(var(--secondary-light-color-rgb), 30%);
     margin-bottom: 20px;
   }
   .fixed-height-element {
