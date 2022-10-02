@@ -28,6 +28,7 @@ const pagesModulesImports = {
   'dynamic-path-pages': () => import('../pages/hg-dynamic-path-pages.js'),
   'contact': () => import('../pages/hg-contact.js'),
   '404': () => import('../pages/hg-404.js'),
+  'admin': () => import('../pages/hg-admin.js'),
 };
 
 const importPageModule = (pageUid) => {

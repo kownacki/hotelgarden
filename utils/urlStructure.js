@@ -18,6 +18,7 @@ export const staticPathToPageUid = {
     '/galeria': 'gallery',
     '/wydarzenia': 'dynamic-path-pages',
     '/kontakt': 'contact',
+    '/admin': 'admin',
 };
 export const staticPaths = Object.keys(staticPathToPageUid);
 // todo dir should be renamed and checked where is used
@@ -39,6 +40,7 @@ export const pagesStaticData = {
     'surroundings': { name: 'Atrakcje okolicy', path: '/atrakcje-okolicy', dir: 'hotel' },
     'villa-garden': { name: 'Villa Garden', path: '/villa-garden', dir: 'hotel' },
     'weddings': { name: 'Wesela', path: '/wesela', dir: 'celebrations' },
+    'admin': { name: 'Admin', path: '/admin', dir: 'admin' },
 };
 export const pageUids = Object.keys(pagesStaticData);
 export const staticPathPageUids = pageUids.filter((pageUid) => pageUid !== '404');
