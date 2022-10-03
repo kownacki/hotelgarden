@@ -1,4 +1,4 @@
-import { PRIMARY_COLOR, SECONDARY_COLOR, SECONDARY_LIGHT_COLOR, ACCENT_COLOR, ACCENT_DARK_COLOR, SURFACE_COLOR, PLACEHOLDER_COLOR, ERROR_COLOR, ERROR_BACKGROUND_COLOR, CORRECT_COLOR, LOGOTYPE_COLOR, } from '../config.js';
+import { PRIMARY_COLOR, SECONDARY_COLOR, SECONDARY_LIGHT_COLOR, ACCENT_COLOR, ACCENT_DARK_COLOR, TEXT_COLOR, SURFACE_COLOR, PLACEHOLDER_COLOR, ERROR_COLOR, ERROR_BACKGROUND_COLOR, CORRECT_COLOR, LOGOTYPE_COLOR, } from '../config.js';
 import { createColorCustomPropertySet } from '../css.js';
 export const globalStyles = `
   html, body {
@@ -12,13 +12,13 @@ export const globalStyles = `
     ${createColorCustomPropertySet('secondary-light-color', SECONDARY_LIGHT_COLOR)}
     ${createColorCustomPropertySet('accent-color', ACCENT_COLOR)}
     ${createColorCustomPropertySet('accent-dark-color', ACCENT_DARK_COLOR)}
+    ${createColorCustomPropertySet('text-color', TEXT_COLOR)}
     ${createColorCustomPropertySet('surface-color', SURFACE_COLOR)}
     ${createColorCustomPropertySet('placeholder-color', PLACEHOLDER_COLOR)}
     ${createColorCustomPropertySet('error-color', ERROR_COLOR)}
     ${createColorCustomPropertySet('error-background-color', ERROR_BACKGROUND_COLOR)}
     ${createColorCustomPropertySet('correct-color', CORRECT_COLOR)}
     ${createColorCustomPropertySet('logotype-color', LOGOTYPE_COLOR)}
-    --text-color: var(--secondary-color);
     --divider-color: rgba(0, 0, 0, 0.12);
     --grey-text: rgba(0, 0, 0, 0.6);
 
