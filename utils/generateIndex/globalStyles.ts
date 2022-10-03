@@ -4,11 +4,12 @@ import {
   SECONDARY_LIGHT_COLOR,
   ACCENT_COLOR,
   ACCENT_DARK_COLOR,
+  SURFACE_COLOR,
   PLACEHOLDER_COLOR,
   ERROR_COLOR,
   ERROR_BACKGROUND_COLOR,
   CORRECT_COLOR,
-  LOGOTYPE_COLOR, SURFACE_COLOR
+  LOGOTYPE_COLOR,
 } from '../config.js';
 import {createColorCustomPropertySet} from '../css.js';
 
