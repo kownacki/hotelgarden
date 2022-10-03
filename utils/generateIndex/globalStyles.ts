@@ -8,7 +8,7 @@ import {
   ERROR_COLOR,
   ERROR_BACKGROUND_COLOR,
   CORRECT_COLOR,
-  LOGOTYPE_COLOR
+  LOGOTYPE_COLOR, SURFACE_COLOR
 } from '../config.js';
 import {createColorCustomPropertySet} from '../css.js';
 
@@ -24,6 +24,7 @@ export const globalStyles = `
     ${createColorCustomPropertySet('secondary-light-color', SECONDARY_LIGHT_COLOR)}
     ${createColorCustomPropertySet('accent-color', ACCENT_COLOR)}
     ${createColorCustomPropertySet('accent-dark-color', ACCENT_DARK_COLOR)}
+    ${createColorCustomPropertySet('surface-color', SURFACE_COLOR)}
     ${createColorCustomPropertySet('placeholder-color', PLACEHOLDER_COLOR)}
     ${createColorCustomPropertySet('error-color', ERROR_COLOR)}
     ${createColorCustomPropertySet('error-background-color', ERROR_BACKGROUND_COLOR)}
