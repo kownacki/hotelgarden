@@ -49,7 +49,7 @@ export class HgMenuMain extends LitElement {
       text-transform: uppercase;
       text-align: center;
       color: white;
-      text-shadow: 0 0 6px var(--secondary-color);
+      text-shadow: 0 0 6px var(--text-color);
       margin: 0;
     }
     @media all and (max-width: 839px) {

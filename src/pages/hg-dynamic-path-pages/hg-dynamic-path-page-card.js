@@ -25,7 +25,7 @@ export class HgDynamicPathPageCard extends LitElement {
       padding: 30px;
     }
     a {
-      color: var(--secondary-color);
+      color: inherit;
       text-decoration: none;
       display: flex;
     }

@@ -37,7 +37,7 @@ export class HgDynamicPathPageSidebar extends LitElement {
     li a {
       display: block;
       padding: 8px;
-      color: var(--secondary-color);
+      color: inherit;
       text-decoration: none;
       transition: background-color 0.3s ease;
     }

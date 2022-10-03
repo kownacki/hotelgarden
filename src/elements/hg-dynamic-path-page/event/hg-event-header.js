@@ -16,7 +16,6 @@ export class HgEventHeader extends LitElement {
       display: block;
     }
     .date {
-      color: var(--secondary-color);
       margin-bottom: 10px;
     }
     hg-event-edit {

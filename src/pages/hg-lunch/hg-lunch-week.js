@@ -33,7 +33,7 @@ export class HgLunchWeek extends LitElement {
     }
     .today-or-tomorrow {
       font-weight: 400;
-      color: var(--secondary-color);
+      color: var(--text-color);
     }
     .item-content {
       padding: 20px 0;
