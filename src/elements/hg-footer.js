@@ -8,7 +8,9 @@ import './hg-text.js'
 export class HgFooter extends LitElement {
   static styles = [sharedStyles, ckContent, css`
     :host {
-      color: #949494;
+      --footer-text-color: #949494;
+      --footer-text-color-filter: invert(65%) sepia(0%) saturate(155%) hue-rotate(139deg) brightness(92%) contrast(95%);
+      color: var(--footer-text-color);
       display: block;
       background: var(--surface-dark-color);
       position: relative;
@@ -24,8 +26,12 @@ export class HgFooter extends LitElement {
       flex: 1;
     }
     .image {
-      margin: 10px;
+      margin: 15px 10px;
       text-align: center;
+    }
+    .image img {
+      width: 200px;
+      filter: var(--footer-text-color-filter);
     }
     hg-text {
       margin: 10px 0;
