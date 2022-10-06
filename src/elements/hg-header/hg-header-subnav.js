@@ -8,13 +8,14 @@ export class HgHeaderSubnav extends LitElement {
   };
   static styles = css`
     :host {
+      --background-color: rgba(var(--surface-color-rgb), 90%);
       display: block;
       width: 200px;
-      background: rgba(var(--surface-color-rgb), 90%);
+      background: var(--background-color);
     }
     :host::before {
       border-right: 7px solid transparent;
-      border-bottom: 7px solid rgba(var(--surface-color-rgb), 90%);
+      border-bottom: 7px solid var(--background-color);
       border-left: 7px solid transparent;
       content: '';
       top: -7px;
