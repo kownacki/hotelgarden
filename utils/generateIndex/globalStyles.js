@@ -32,8 +32,8 @@ export const globalStyles = `
     color: var(--text-color);
 
     /* MWC theming. See https://github.com/material-components/material-web/blob/master/docs/theming.md */
-    --mdc-theme-primary: var(--secondary-color);
-    --mdc-theme-secondary: var(--primary-color);
+    --mdc-theme-primary: var(--primary-color);
+    --mdc-theme-secondary: var(--secondary-color);
     /* Bug. See https://github.com/material-components/material-web/issues/2748 */
     --mdc-switch-selected-pressed-handle-color: var(--mdc-theme-primary);
     --mdc-switch-selected-focus-handle-color: var(--mdc-theme-primary);

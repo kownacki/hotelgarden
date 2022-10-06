@@ -91,62 +91,62 @@ export const createIndex = (
     
     --primary-color: #847850;
     --primary-color-rgb: 132, 120, 80;
-    --primary-color-filter: invert(44%) sepia(24%) saturate(564%) hue-rotate(9deg) brightness(101%) contrast(88%);
+    --primary-color-filter: invert(48%) sepia(20%) saturate(692%) hue-rotate(9deg) brightness(93%) contrast(84%);
   
     
     --secondary-color: #4F6884;
     --secondary-color-rgb: 79, 104, 132;
-    --secondary-color-filter: invert(43%) sepia(12%) saturate(1055%) hue-rotate(171deg) brightness(89%) contrast(98%);
+    --secondary-color-filter: invert(35%) sepia(69%) saturate(238%) hue-rotate(170deg) brightness(95%) contrast(87%);
   
     
     --secondary-dark-color: #3c4f64;
     --secondary-dark-color-rgb: 60, 79, 100;
-    --secondary-dark-color-filter: invert(26%) sepia(48%) saturate(362%) hue-rotate(171deg) brightness(92%) contrast(86%);
+    --secondary-dark-color-filter: invert(27%) sepia(17%) saturate(945%) hue-rotate(171deg) brightness(95%) contrast(87%);
   
     
     --text-color: #424242;
     --text-color-rgb: 66, 66, 66;
-    --text-color-filter: invert(26%) sepia(0%) saturate(0%) hue-rotate(318deg) brightness(101%) contrast(101%);
+    --text-color-filter: invert(16%) sepia(100%) saturate(0%) hue-rotate(179deg) brightness(106%) contrast(83%);
   
     
     --surface-color: #757575;
     --surface-color-rgb: 117, 117, 117;
-    --surface-color-filter: invert(48%) sepia(0%) saturate(0%) hue-rotate(175deg) brightness(96%) contrast(93%);
+    --surface-color-filter: invert(45%) sepia(13%) saturate(0%) hue-rotate(211deg) brightness(98%) contrast(96%);
   
     
     --surface-light-color: #f5f5f5;
     --surface-light-color-rgb: 245, 245, 245;
-    --surface-light-color-filter: invert(100%) sepia(0%) saturate(7430%) hue-rotate(288deg) brightness(119%) contrast(106%);
+    --surface-light-color-filter: invert(100%) sepia(87%) saturate(26%) hue-rotate(14deg) brightness(113%) contrast(92%);
   
     
     --surface-dark-color: #424242;
     --surface-dark-color-rgb: 66, 66, 66;
-    --surface-dark-color-filter: invert(26%) sepia(0%) saturate(0%) hue-rotate(318deg) brightness(101%) contrast(101%);
+    --surface-dark-color-filter: invert(16%) sepia(100%) saturate(0%) hue-rotate(179deg) brightness(106%) contrast(83%);
   
     
     --placeholder-color: #9e9e9e;
     --placeholder-color-rgb: 158, 158, 158;
-    --placeholder-color-filter: invert(69%) sepia(1%) saturate(0%) hue-rotate(18deg) brightness(92%) contrast(88%);
+    --placeholder-color-filter: invert(76%) sepia(0%) saturate(0%) hue-rotate(165deg) brightness(85%) contrast(84%);
   
     
     --error-color: #c62828;
     --error-color-rgb: 198, 40, 40;
-    --error-color-filter: invert(23%) sepia(53%) saturate(2515%) hue-rotate(339deg) brightness(102%) contrast(101%);
+    --error-color-filter: invert(32%) sepia(61%) saturate(3863%) hue-rotate(345deg) brightness(79%) contrast(94%);
   
     
     --error-background-color: #ffcdd2;
     --error-background-color-rgb: 255, 205, 210;
-    --error-background-color-filter: invert(80%) sepia(13%) saturate(953%) hue-rotate(308deg) brightness(107%) contrast(106%);
+    --error-background-color-filter: invert(90%) sepia(56%) saturate(880%) hue-rotate(287deg) brightness(111%) contrast(108%);
   
     
     --correct-color: #2e7d32;
     --correct-color-rgb: 46, 125, 50;
-    --correct-color-filter: invert(35%) sepia(50%) saturate(536%) hue-rotate(73deg) brightness(103%) contrast(99%);
+    --correct-color-filter: invert(35%) sepia(83%) saturate(434%) hue-rotate(73deg) brightness(93%) contrast(84%);
   
     
     --logotype-color: #84979E;
     --logotype-color-rgb: 132, 151, 158;
-    --logotype-color-filter: invert(64%) sepia(9%) saturate(506%) hue-rotate(150deg) brightness(91%) contrast(89%);
+    --logotype-color-filter: invert(63%) sepia(28%) saturate(176%) hue-rotate(150deg) brightness(89%) contrast(85%);
   
     --divider-color: rgba(0, 0, 0, 0.12);
     --grey-text: rgba(0, 0, 0, 0.6);
@@ -161,8 +161,8 @@ export const createIndex = (
     color: var(--text-color);
 
     /* MWC theming. See https://github.com/material-components/material-web/blob/master/docs/theming.md */
-    --mdc-theme-primary: var(--secondary-color);
-    --mdc-theme-secondary: var(--primary-color);
+    --mdc-theme-primary: var(--primary-color);
+    --mdc-theme-secondary: var(--secondary-color);
     /* Bug. See https://github.com/material-components/material-web/issues/2748 */
     --mdc-switch-selected-pressed-handle-color: var(--mdc-theme-primary);
     --mdc-switch-selected-focus-handle-color: var(--mdc-theme-primary);
