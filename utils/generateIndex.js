@@ -31,6 +31,7 @@ const placeholderEnding = '\}';
 const createPlaceholder = (name) => `${placeholderOpening}${name}${placeholderEnding}`;
 const namePrefix = 'hg';
 const faviconPath = '/resources/images/favicon.ico';
+const faviconDarkModePath = '/resources/images/favicon-dark-mode.ico';
 const fontsRootPath = '/resources/fonts/';
 const scriptsRootPath = '/resources/scripts/';
 const getFontResource = (path, { family, style, weight }) => {
@@ -79,7 +80,8 @@ const getIndexHtml = (production, preloads = false, { title, description, jsonLd
 
   <script type="application/ld+json">${jsonLd ? createPlaceholder('jsonLd') : ''}</script>
   
-  <link rel="shortcut icon" href="${faviconPath}">
+  <link rel="shortcut icon" href="${faviconPath}" media="(prefers-color-scheme: light)">
+  <link rel="shortcut icon" href="${faviconDarkModePath}" media="(prefers-color-scheme: dark)">
   ${'' /*todo don't use external sources */}
   <link href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" rel="stylesheet">
 

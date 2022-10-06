@@ -46,7 +46,8 @@ export const createIndex = (
 
   <script type="application/ld+json">${jsonLd}</script>
   
-  <link rel="shortcut icon" href="/resources/images/favicon.ico">
+  <link rel="shortcut icon" href="/resources/images/favicon.ico" media="(prefers-color-scheme: light)">
+  <link rel="shortcut icon" href="/resources/images/favicon-dark-mode.ico" media="(prefers-color-scheme: dark)">
   
   <link href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" rel="stylesheet">
 
@@ -90,62 +91,62 @@ export const createIndex = (
     
     --primary-color: #847850;
     --primary-color-rgb: 132, 120, 80;
-    --primary-color-filter: invert(46%) sepia(19%) saturate(698%) hue-rotate(9deg) brightness(98%) contrast(87%);
+    --primary-color-filter: invert(48%) sepia(48%) saturate(294%) hue-rotate(9deg) brightness(88%) contrast(88%);
   
     
     --secondary-color: #424242;
     --secondary-color-rgb: 66, 66, 66;
-    --secondary-color-filter: invert(25%) sepia(0%) saturate(22%) hue-rotate(231deg) brightness(91%) contrast(89%);
+    --secondary-color-filter: invert(24%) sepia(4%) saturate(19%) hue-rotate(343deg) brightness(98%) contrast(93%);
   
     
     --secondary-light-color: #757575;
     --secondary-light-color-rgb: 117, 117, 117;
-    --secondary-light-color-filter: invert(42%) sepia(17%) saturate(0%) hue-rotate(215deg) brightness(103%) contrast(77%);
+    --secondary-light-color-filter: invert(47%) sepia(1%) saturate(15%) hue-rotate(331deg) brightness(96%) contrast(85%);
   
     
     --accent-color: #4F6884;
     --accent-color-rgb: 79, 104, 132;
-    --accent-color-filter: invert(40%) sepia(28%) saturate(522%) hue-rotate(171deg) brightness(92%) contrast(91%);
+    --accent-color-filter: invert(40%) sepia(12%) saturate(1198%) hue-rotate(171deg) brightness(93%) contrast(88%);
   
     
     --accent-dark-color: #3c4f64;
     --accent-dark-color-rgb: 60, 79, 100;
-    --accent-dark-color-filter: invert(26%) sepia(10%) saturate(1919%) hue-rotate(171deg) brightness(94%) contrast(80%);
+    --accent-dark-color-filter: invert(29%) sepia(14%) saturate(962%) hue-rotate(171deg) brightness(96%) contrast(95%);
   
     
     --text-color: #424242;
     --text-color-rgb: 66, 66, 66;
-    --text-color-filter: invert(25%) sepia(0%) saturate(22%) hue-rotate(231deg) brightness(91%) contrast(89%);
+    --text-color-filter: invert(24%) sepia(4%) saturate(19%) hue-rotate(343deg) brightness(98%) contrast(93%);
   
     
     --surface-color: #f5f5f5;
     --surface-color-rgb: 245, 245, 245;
-    --surface-color-filter: invert(100%) sepia(37%) saturate(54%) hue-rotate(321deg) brightness(112%) contrast(92%);
+    --surface-color-filter: invert(98%) sepia(20%) saturate(55%) hue-rotate(298deg) brightness(113%) contrast(92%);
   
     
     --placeholder-color: #9e9e9e;
     --placeholder-color-rgb: 158, 158, 158;
-    --placeholder-color-filter: invert(74%) sepia(1%) saturate(1322%) hue-rotate(322deg) brightness(86%) contrast(84%);
+    --placeholder-color-filter: invert(75%) sepia(1%) saturate(233%) hue-rotate(52deg) brightness(85%) contrast(88%);
   
     
     --error-color: #c62828;
     --error-color-rgb: 198, 40, 40;
-    --error-color-filter: invert(23%) sepia(36%) saturate(6483%) hue-rotate(352deg) brightness(85%) contrast(81%);
+    --error-color-filter: invert(32%) sepia(54%) saturate(2318%) hue-rotate(341deg) brightness(79%) contrast(95%);
   
     
     --error-background-color: #ffcdd2;
     --error-background-color-rgb: 255, 205, 210;
-    --error-background-color-filter: invert(78%) sepia(23%) saturate(669%) hue-rotate(308deg) brightness(109%) contrast(105%);
+    --error-background-color-filter: invert(91%) sepia(7%) saturate(2752%) hue-rotate(240deg) brightness(106%) contrast(102%);
   
     
     --correct-color: #2e7d32;
     --correct-color-rgb: 46, 125, 50;
-    --correct-color-filter: invert(35%) sepia(75%) saturate(467%) hue-rotate(73deg) brightness(94%) contrast(84%);
+    --correct-color-filter: invert(36%) sepia(83%) saturate(413%) hue-rotate(74deg) brightness(92%) contrast(85%);
   
     
     --logotype-color: #84979E;
     --logotype-color-rgb: 132, 151, 158;
-    --logotype-color-filter: invert(62%) sepia(6%) saturate(743%) hue-rotate(150deg) brightness(95%) contrast(85%);
+    --logotype-color-filter: invert(59%) sepia(22%) saturate(222%) hue-rotate(150deg) brightness(96%) contrast(87%);
   
     --divider-color: rgba(0, 0, 0, 0.12);
     --grey-text: rgba(0, 0, 0, 0.6);
