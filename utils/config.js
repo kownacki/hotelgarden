@@ -15,4 +15,3 @@ export const PLACEHOLDER_COLOR = materialColors.grey['500'];
 export const ERROR_COLOR = materialColors.red['800'];
 export const ERROR_BACKGROUND_COLOR = materialColors.red['100'];
 export const CORRECT_COLOR = materialColors.green['800'];
-export const LOGOTYPE_COLOR = '#84979E';

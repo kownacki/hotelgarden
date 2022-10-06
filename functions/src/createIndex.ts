@@ -91,62 +91,57 @@ export const createIndex = (
     
     --primary-color: #2b5f57;
     --primary-color-rgb: 43, 95, 87;
-    --primary-color-filter: invert(32%) sepia(15%) saturate(1222%) hue-rotate(121deg) brightness(95%) contrast(93%);
+    --primary-color-filter: invert(29%) sepia(81%) saturate(279%) hue-rotate(121deg) brightness(90%) contrast(88%);
   
     
     --secondary-color: #E2A96A;
     --secondary-color-rgb: 226, 169, 106;
-    --secondary-color-filter: invert(79%) sepia(18%) saturate(1285%) hue-rotate(337deg) brightness(92%) contrast(91%);
+    --secondary-color-filter: invert(71%) sepia(53%) saturate(369%) hue-rotate(347deg) brightness(91%) contrast(95%);
   
     
     --secondary-dark-color: #da903f;
     --secondary-dark-color-rgb: 218, 144, 63;
-    --secondary-dark-color-filter: invert(83%) sepia(20%) saturate(7044%) hue-rotate(333deg) brightness(94%) contrast(81%);
+    --secondary-dark-color-filter: invert(73%) sepia(13%) saturate(2628%) hue-rotate(335deg) brightness(92%) contrast(84%);
   
     
     --text-color: #424242;
     --text-color-rgb: 66, 66, 66;
-    --text-color-filter: invert(22%) sepia(8%) saturate(14%) hue-rotate(9deg) brightness(99%) contrast(86%);
+    --text-color-filter: invert(23%) sepia(0%) saturate(184%) hue-rotate(156deg) brightness(100%) contrast(90%);
   
     
     --surface-color: #757575;
     --surface-color-rgb: 117, 117, 117;
-    --surface-color-filter: invert(48%) sepia(4%) saturate(6%) hue-rotate(346deg) brightness(92%) contrast(78%);
+    --surface-color-filter: invert(46%) sepia(5%) saturate(15%) hue-rotate(316deg) brightness(96%) contrast(81%);
   
     
     --surface-light-color: #f5f5f5;
     --surface-light-color-rgb: 245, 245, 245;
-    --surface-light-color-filter: invert(99%) sepia(89%) saturate(63%) hue-rotate(233deg) brightness(115%) contrast(92%);
+    --surface-light-color-filter: invert(100%) sepia(11%) saturate(2468%) hue-rotate(289deg) brightness(114%) contrast(92%);
   
     
     --surface-dark-color: #424242;
     --surface-dark-color-rgb: 66, 66, 66;
-    --surface-dark-color-filter: invert(22%) sepia(8%) saturate(14%) hue-rotate(9deg) brightness(99%) contrast(86%);
+    --surface-dark-color-filter: invert(23%) sepia(0%) saturate(184%) hue-rotate(156deg) brightness(100%) contrast(90%);
   
     
     --placeholder-color: #9e9e9e;
     --placeholder-color-rgb: 158, 158, 158;
-    --placeholder-color-filter: invert(70%) sepia(3%) saturate(10%) hue-rotate(318deg) brightness(90%) contrast(92%);
+    --placeholder-color-filter: invert(64%) sepia(0%) saturate(0%) hue-rotate(66deg) brightness(99%) contrast(98%);
   
     
     --error-color: #c62828;
     --error-color-rgb: 198, 40, 40;
-    --error-color-filter: invert(23%) sepia(36%) saturate(4128%) hue-rotate(343deg) brightness(103%) contrast(93%);
+    --error-color-filter: invert(26%) sepia(32%) saturate(4191%) hue-rotate(341deg) brightness(94%) contrast(96%);
   
     
     --error-background-color: #ffcdd2;
     --error-background-color-rgb: 255, 205, 210;
-    --error-background-color-filter: invert(90%) sepia(93%) saturate(480%) hue-rotate(287deg) brightness(103%) contrast(101%);
+    --error-background-color-filter: invert(73%) sepia(40%) saturate(263%) hue-rotate(307deg) brightness(110%) contrast(101%);
   
     
     --correct-color: #2e7d32;
     --correct-color-rgb: 46, 125, 50;
-    --correct-color-filter: invert(36%) sepia(97%) saturate(392%) hue-rotate(73deg) brightness(86%) contrast(81%);
-  
-    
-    --logotype-color: #84979E;
-    --logotype-color-rgb: 132, 151, 158;
-    --logotype-color-filter: invert(63%) sepia(16%) saturate(302%) hue-rotate(150deg) brightness(91%) contrast(88%);
+    --correct-color-filter: invert(34%) sepia(95%) saturate(381%) hue-rotate(74deg) brightness(93%) contrast(84%);
   
     --divider-color: rgba(0, 0, 0, 0.12);
     --grey-text: rgba(0, 0, 0, 0.6);

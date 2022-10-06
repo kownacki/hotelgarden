@@ -1,4 +1,4 @@
-import { PRIMARY_COLOR, SECONDARY_COLOR, SECONDARY_DARK_COLOR, TEXT_COLOR, SURFACE_COLOR, SURFACE_DARK_COLOR, PLACEHOLDER_COLOR, ERROR_COLOR, ERROR_BACKGROUND_COLOR, CORRECT_COLOR, LOGOTYPE_COLOR, SURFACE_LIGHT_COLOR, } from '../config.js';
+import { PRIMARY_COLOR, SECONDARY_COLOR, SECONDARY_DARK_COLOR, TEXT_COLOR, SURFACE_COLOR, SURFACE_LIGHT_COLOR, SURFACE_DARK_COLOR, PLACEHOLDER_COLOR, ERROR_COLOR, ERROR_BACKGROUND_COLOR, CORRECT_COLOR, } from '../config.js';
 import { createColorCustomPropertySet } from '../css.js';
 export const globalStyles = `
   html, body {
@@ -18,7 +18,6 @@ export const globalStyles = `
     ${createColorCustomPropertySet('error-color', ERROR_COLOR)}
     ${createColorCustomPropertySet('error-background-color', ERROR_BACKGROUND_COLOR)}
     ${createColorCustomPropertySet('correct-color', CORRECT_COLOR)}
-    ${createColorCustomPropertySet('logotype-color', LOGOTYPE_COLOR)}
     --divider-color: rgba(0, 0, 0, 0.12);
     --grey-text: rgba(0, 0, 0, 0.6);
 
