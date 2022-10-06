@@ -31,7 +31,7 @@ export class HgBanner extends LitElement {
       background: linear-gradient(to bottom,rgba(0,0,0,.4),transparent 45%);
      }
     .heading {
-      background: rgba(var(--surface-color-rgb), 0.5);
+      background: rgba(var(--surface-dark-color-rgb), 0.5);
       padding: 20px;
       width: 1000px;
       max-width: 100%;

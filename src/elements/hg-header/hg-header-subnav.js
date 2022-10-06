@@ -8,7 +8,7 @@ export class HgHeaderSubnav extends LitElement {
   };
   static styles = css`
     :host {
-      --background-color: rgba(var(--surface-color-rgb), 90%);
+      --background-color: rgba(var(--surface-color-rgb), 92.5%);
       display: block;
       width: 200px;
       background: var(--background-color);
@@ -35,12 +35,13 @@ export class HgHeaderSubnav extends LitElement {
     a {
       display: block;
       padding: 8px 16px;
-      color: white;
+      color: var(--on-surface-color);
       text-decoration: none;
       transition: background-color 0.3s ease;
     }
     a:hover, a[selected] {
       background: rgba(var(--primary-color-rgb), 90%);
+      color: white;
     }
   `;
   render() {

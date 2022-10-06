@@ -9,7 +9,7 @@ import {
   PLACEHOLDER_COLOR,
   ERROR_COLOR,
   ERROR_BACKGROUND_COLOR,
-  CORRECT_COLOR,
+  CORRECT_COLOR, ON_SURFACE_COLOR,
 } from '../config.js';
 import {createColorCustomPropertySet} from '../css.js';
 
@@ -27,6 +27,7 @@ export const globalStyles = `
     ${createColorCustomPropertySet('surface-color', SURFACE_COLOR)}
     ${createColorCustomPropertySet('surface-light-color', SURFACE_LIGHT_COLOR)}
     ${createColorCustomPropertySet('surface-dark-color', SURFACE_DARK_COLOR)}
+    ${createColorCustomPropertySet('on-surface-color', ON_SURFACE_COLOR)}
     ${createColorCustomPropertySet('placeholder-color', PLACEHOLDER_COLOR)}
     ${createColorCustomPropertySet('error-color', ERROR_COLOR)}
     ${createColorCustomPropertySet('error-background-color', ERROR_BACKGROUND_COLOR)}
