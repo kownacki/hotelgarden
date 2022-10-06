@@ -4,8 +4,8 @@ export const API_KEY = 'AIzaSyDvamIugzBC3k3WA52KpHeINrfDHfkvnSs';
 // HDTV resolution
 export const HDTV_WIDTH = 1920;
 export const HDTV_HEIGHT = 1080;
-export const PRIMARY_COLOR = '#847850';
-export const SECONDARY_COLOR = '#4F6884';
+export const PRIMARY_COLOR = colord('#234D47').lighten(0.05).toHex();
+export const SECONDARY_COLOR = '#E2A96A';
 export const SECONDARY_DARK_COLOR = colord(SECONDARY_COLOR).darken(0.1).toHex();
 export const TEXT_COLOR = materialColors.grey['800'];
 export const SURFACE_COLOR = materialColors.grey['600'];
