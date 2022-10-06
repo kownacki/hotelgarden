@@ -9,7 +9,7 @@ export class HgInfoText extends LitElement {
   static styles = [sharedStyles, css`
     :host {
       display: block;
-      background: var(--surface-color);
+      background: var(--surface-light-color);
     }
   `];
   render() {

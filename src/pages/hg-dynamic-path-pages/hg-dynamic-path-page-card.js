@@ -14,7 +14,7 @@ export class HgDynamicPathPageCard extends LitElement {
     :host {
       display: block;
       margin: 20px 0;
-      background: var(--surface-color);
+      background: var(--surface-light-color);
       transition: background 0.3s ease;
     }
     :host(:hover) {

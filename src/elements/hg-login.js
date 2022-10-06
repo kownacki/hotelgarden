@@ -13,7 +13,7 @@ export class HgLogin extends LitElement {
   };
   static styles = [sharedStyles, css`
     a {
-      color: var(--secondary-color);
+      color: var(--surface-dark-color);
       filter: brightness(120%);
       text-decoration: none;
     }

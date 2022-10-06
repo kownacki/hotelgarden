@@ -10,11 +10,11 @@ export class HgHeaderSubnav extends LitElement {
     :host {
       display: block;
       width: 200px;
-      background: rgba(var(--secondary-light-color-rgb), 90%);
+      background: rgba(var(--surface-color-rgb), 90%);
     }
     :host::before {
       border-right: 7px solid transparent;
-      border-bottom: 7px solid rgba(var(--secondary-light-color-rgb), 90%);
+      border-bottom: 7px solid rgba(var(--surface-color-rgb), 90%);
       border-left: 7px solid transparent;
       content: '';
       top: -7px;

@@ -26,7 +26,7 @@ export class HgLunchGenerate extends LitElement {
     a {
       text-decoration: none;
       font-weight: 700;
-      color: var(--accent-color);
+      color: var(--secondary-color);
     }
   `];
   render() {

@@ -26,7 +26,7 @@ export class HgLinks extends LitElement {
     }
     a {
       max-width: 600px;
-      background: var(--surface-color);
+      background: var(--surface-light-color);
       transition: background 0.3s ease;
       flex: 1;
       margin: 1px 1px 40px;

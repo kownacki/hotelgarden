@@ -48,13 +48,13 @@ export class HgDynamicPathPageSidebar extends LitElement {
     a.all {
       display: block;
       padding: 8px 16px;
-      background: rgba(var(--accent-color-rgb), 90%);
+      background: rgba(var(--secondary-color-rgb), 90%);
       color: white;
       text-decoration: none;
       transition: background-color 0.3s ease;
     }
     a.all:hover {
-      background: rgba(var(--accent-color-rgb), 70%);
+      background: rgba(var(--secondary-color-rgb), 70%);
     }
   `];
   willUpdate(changedProperties) {

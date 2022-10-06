@@ -10,7 +10,7 @@ export class HgFooter extends LitElement {
     :host {
       color: #949494;
       display: block;
-      background: var(--secondary-color);
+      background: var(--surface-dark-color);
       position: relative;
     }
     .container {

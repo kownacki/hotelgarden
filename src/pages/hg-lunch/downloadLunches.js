@@ -1,10 +1,10 @@
 import {getDayOfWeek, urlTo64Base, loadScript, sleep} from '../../utils.js';
-import {PRIMARY_COLOR, SECONDARY_COLOR, ACCENT_COLOR, TEXT_COLOR} from '../../../utils/config.js';
+import {PRIMARY_COLOR, SECONDARY_COLOR, TEXT_COLOR} from '../../../utils/config.js';
 
 const mainHeaderColor = PRIMARY_COLOR;
-const dayHeaderColor = ACCENT_COLOR;
+const dayHeaderColor = SECONDARY_COLOR;
 const textColor = TEXT_COLOR;
-const linesColor = SECONDARY_COLOR;
+const linesColor = TEXT_COLOR;
 
 const getHeader = (config, dateString) => ({
   text: [

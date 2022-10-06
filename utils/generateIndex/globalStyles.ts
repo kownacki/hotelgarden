@@ -1,16 +1,15 @@
 import {
   PRIMARY_COLOR,
   SECONDARY_COLOR,
-  SECONDARY_LIGHT_COLOR,
-  ACCENT_COLOR,
-  ACCENT_DARK_COLOR,
+  SECONDARY_DARK_COLOR,
   TEXT_COLOR,
   SURFACE_COLOR,
+  SURFACE_DARK_COLOR,
   PLACEHOLDER_COLOR,
   ERROR_COLOR,
   ERROR_BACKGROUND_COLOR,
   CORRECT_COLOR,
-  LOGOTYPE_COLOR,
+  LOGOTYPE_COLOR, SURFACE_LIGHT_COLOR,
 } from '../config.js';
 import {createColorCustomPropertySet} from '../css.js';
 
@@ -23,11 +22,11 @@ export const globalStyles = `
 
     ${createColorCustomPropertySet('primary-color', PRIMARY_COLOR)}
     ${createColorCustomPropertySet('secondary-color', SECONDARY_COLOR)}
-    ${createColorCustomPropertySet('secondary-light-color', SECONDARY_LIGHT_COLOR)}
-    ${createColorCustomPropertySet('accent-color', ACCENT_COLOR)}
-    ${createColorCustomPropertySet('accent-dark-color', ACCENT_DARK_COLOR)}
+    ${createColorCustomPropertySet('secondary-dark-color', SECONDARY_DARK_COLOR)}
     ${createColorCustomPropertySet('text-color', TEXT_COLOR)}
     ${createColorCustomPropertySet('surface-color', SURFACE_COLOR)}
+    ${createColorCustomPropertySet('surface-light-color', SURFACE_LIGHT_COLOR)}
+    ${createColorCustomPropertySet('surface-dark-color', SURFACE_DARK_COLOR)}
     ${createColorCustomPropertySet('placeholder-color', PLACEHOLDER_COLOR)}
     ${createColorCustomPropertySet('error-color', ERROR_COLOR)}
     ${createColorCustomPropertySet('error-background-color', ERROR_BACKGROUND_COLOR)}
@@ -46,7 +45,7 @@ export const globalStyles = `
     color: var(--text-color);
 
     /* MWC theming. See https://github.com/material-components/material-web/blob/master/docs/theming.md */
-    --mdc-theme-primary: var(--accent-color);
+    --mdc-theme-primary: var(--secondary-color);
     --mdc-theme-secondary: var(--primary-color);
     /* Bug. See https://github.com/material-components/material-web/issues/2748 */
     --mdc-switch-selected-pressed-handle-color: var(--mdc-theme-primary);
