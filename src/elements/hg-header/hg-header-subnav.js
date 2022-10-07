@@ -37,7 +37,6 @@ export class HgHeaderSubnav extends LitElement {
       padding: 8px 16px;
       color: var(--on-surface-color);
       text-decoration: none;
-      transition: background-color 0.3s ease;
     }
     a:hover, a[selected] {
       background: rgba(var(--primary-color-rgb), 90%);
