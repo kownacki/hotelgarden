@@ -1,4 +1,4 @@
-import { PRIMARY_COLOR, SECONDARY_COLOR, SECONDARY_DARK_COLOR, TEXT_COLOR, SURFACE_COLOR, SURFACE_LIGHT_COLOR, SURFACE_DARK_COLOR, PLACEHOLDER_COLOR, ERROR_COLOR, ERROR_BACKGROUND_COLOR, CORRECT_COLOR, ON_SURFACE_COLOR, } from '../config.js';
+import { PRIMARY_COLOR, SECONDARY_COLOR, SECONDARY_DARK_COLOR, TEXT_COLOR, SURFACE_COLOR, SURFACE_LIGHT_COLOR, SURFACE_DARK_COLOR, PLACEHOLDER_COLOR, ERROR_COLOR, ERROR_BACKGROUND_COLOR, CORRECT_COLOR, ON_SURFACE_COLOR, HEADER_HEIGHT, } from '../config.js';
 import { createColorCustomPropertySet } from '../css.js';
 export const globalStyles = `
   html, body {
@@ -22,7 +22,7 @@ export const globalStyles = `
     --divider-color: rgba(0, 0, 0, 0.12);
     --grey-text: rgba(0, 0, 0, 0.6);
 
-    --headerHeight: 60px;
+    --header-height: ${HEADER_HEIGHT}px;
     --layer-header: 100;
     --layer-header-1: 101;
     --layer-profitroom: 999; /* Profitroom snippet layer*/

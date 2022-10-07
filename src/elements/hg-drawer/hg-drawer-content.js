@@ -20,12 +20,12 @@ export class HgDrawerContent extends LitElement {
     }
     hg-drawer-close {
       display: block;
-      margin: calc((var(--headerHeight) - 44px) / 2);
+      margin: calc((var(--header-height) - 44px) / 2);
     }
     nav {
       display: block;
-      height: calc(100% - var(--headerHeight));
-      margin-top: var(--headerHeight);
+      height: calc(100% - var(--header-height));
+      margin-top: var(--header-height);
       overflow: auto;
     }
     ul {

@@ -1,6 +1,9 @@
 import materialColors from 'material-colors';
 import {colord} from 'colord';
+
 export const API_KEY = 'AIzaSyDvamIugzBC3k3WA52KpHeINrfDHfkvnSs';
+
+export const HEADER_HEIGHT = '60';
 
 // HDTV resolution
 export const HDTV_WIDTH = 1920;

@@ -9,7 +9,7 @@ import {
   PLACEHOLDER_COLOR,
   ERROR_COLOR,
   ERROR_BACKGROUND_COLOR,
-  CORRECT_COLOR, ON_SURFACE_COLOR,
+  CORRECT_COLOR, ON_SURFACE_COLOR, HEADER_HEIGHT,
 } from '../config.js';
 import {createColorCustomPropertySet} from '../css.js';
 
@@ -35,7 +35,7 @@ export const globalStyles = `
     --divider-color: rgba(0, 0, 0, 0.12);
     --grey-text: rgba(0, 0, 0, 0.6);
 
-    --headerHeight: 60px;
+    --header-height: ${HEADER_HEIGHT}px;
     --layer-header: 100;
     --layer-header-1: 101;
     --layer-profitroom: 999; /* Profitroom snippet layer*/
