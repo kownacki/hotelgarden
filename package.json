@@ -36,6 +36,7 @@
     "@polymer/app-route": "^3.0.2",
     "@polymer/iron-ajax": "^3.0.1",
     "@polymer/paper-dialog": "^3.0.1",
+    "date-fns": "^2.29.3",
     "firebase": "^9.6.10",
     "lit": "^2.2.2",
     "lodash-es": "^4.17.21",

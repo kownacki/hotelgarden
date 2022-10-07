@@ -1,3 +1,4 @@
+import {differenceInCalendarDays} from 'date-fns';
 import {
   DynamicPathPageEvent,
   DynamicPathPageEventWithUid,
@@ -116,6 +117,16 @@ export const getEventFormattedDate = (event: DynamicPathPageEvent) => {
 export const getNewsFormattedDate = (news: DynamicPathPageNews) => {
   return getFormattedSingleDate(news.publishDate);
 };
+
+export const getDynamicPathPageObsolityScore = (dynamicPathPage: DynamicPathPageEvent | DynamicPathPageNews) => {
+  return Math.abs(differenceInCalendarDays(
+    Date.now(),
+    new Date(dynamicPathPage.type === DynamicPathPageType.EVENT
+      ? (dynamicPathPage as DynamicPathPageEvent).startDate
+      : (dynamicPathPage as DynamicPathPageNews).publishDate
+    ),
+  ));
+}
 
 export const getPromotedDynamicPathPageData = (promotedDynamicPathPageUid: DynamicPathPageUid | null, eventsList: EventsList) => {
   const promotedDynamicPathPage = promotedDynamicPathPageUid && Object.values(eventsList).find((eventListItem) => {

@@ -2,7 +2,11 @@ import {LitElement, html, css} from 'lit';
 import {repeat} from 'lit/directives/repeat.js';
 import {when} from 'lit/directives/when.js';
 import {sortBy} from 'lodash-es';
-import {isDynamicPathPageArchived, isDynamicPathPageHidden} from '../../../utils/events.js';
+import {
+  getDynamicPathPageObsolityScore,
+  isDynamicPathPageArchived,
+  isDynamicPathPageHidden,
+} from '../../../utils/events.js';
 import {createDynamicPath} from '../../../utils/urlStructure.js';
 import sharedStyles from '../../styles/shared-styles.js';
 
@@ -62,7 +66,9 @@ export class HgDynamicPathPageSidebar extends LitElement {
       const currentDynamicPathPages = this.dynamicPathPages
         .filter((dynamicPathPage) => !isDynamicPathPageHidden(dynamicPathPage))
         .filter((dynamicPathPage) => !isDynamicPathPageArchived(dynamicPathPage));
-      this._currentDynamicPathPages = sortBy(currentDynamicPathPages, 'date');
+      this._currentDynamicPathPages = sortBy(currentDynamicPathPages, (dynamicPathPage) => {
+        return getDynamicPathPageObsolityScore(dynamicPathPage);
+      });
     }
   }
   render() {

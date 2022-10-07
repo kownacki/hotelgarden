@@ -1,6 +1,11 @@
 import {LitElement, html, css} from 'lit';
 import '../../elements/hg-list-old.js';
-import {DynamicPathPageType, isDynamicPathPageArchived, isDynamicPathPageHidden} from '../../../utils/events.js';
+import {
+  DynamicPathPageType,
+  getDynamicPathPageObsolityScore,
+  isDynamicPathPageArchived,
+  isDynamicPathPageHidden,
+} from '../../../utils/events.js';
 import sharedStyles from '../../styles/shared-styles.js';
 import {deleteImageInDb} from '../../utils/database.js';
 import {removeDynamicPathPage} from '../../utils.js';
@@ -30,8 +35,10 @@ export class HgDynamicPathPagesList extends LitElement {
         .transform=${(items) => _.flow([
           ...(this.showHidden ? [] : [_.filter((key) => !isDynamicPathPageHidden(items[key]))]),
           _.filter((key) => this.archived ? isDynamicPathPageArchived(items[key]) : !isDynamicPathPageArchived(items[key])),
-          _.sortBy((key) => items[key].date),
-          ...(!this.archived ? [] : [_.reverse]),
+          _.sortBy((key) => {
+            const item = items[key];
+            return getDynamicPathPageObsolityScore(item);
+          }),
           ...(!this.max ? [] : [_.take(this.max)]),
         ])}
         .emptyTemplate=${html`
