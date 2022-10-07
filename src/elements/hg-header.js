@@ -21,6 +21,7 @@ export class HgHeader extends LitElement {
       position: fixed;
       width: 100%;
       z-index: var(--layer-header);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
     }
     :host([scrolled-down]) {
       background: white;
@@ -33,8 +34,6 @@ export class HgHeader extends LitElement {
       align-self: flex-start;
       display: flex;
       flex: 1;
-      background: transparent;
-      transition: background-color 0.5s ease;
     }
     ul {
       margin: 0 0 0 10px;
