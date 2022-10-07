@@ -1,10 +1,11 @@
 import {LitElement, html, css, unsafeCSS} from 'lit';
+import {HEADER_HEIGHT} from '../../../utils/config.js';
 
 const CONTAINER_WIDTH = 170;
 const CONTAINER_WIDTH_SMALL = 120;
 
 const LOGOMARK_WIDTH = 150;
-const LOGOMARK_HEIGHT = 115;
+const LOGOMARK_HEIGHT = 115.5;
 
 const LOGOTYPE_WIDTH = 150;
 const LOGOTYPE_HEIGHT = 7;
@@ -30,7 +31,7 @@ export class HgHeaderLogo extends LitElement {
     .logomark {
       position: relative;
       top: 10px;
-      width: calc((${LOGOMARK_WIDTH} / ${CONTAINER_WIDTH}) * 100%);
+      width: calc((${CONTAINER_WIDTH - 2*10} / ${CONTAINER_WIDTH}) * 100%);
       padding: 10px calc((10 / ${CONTAINER_WIDTH}) * 100%) 0;
       margin: auto;
       transition: top 0.4s ease, width 0.4s ease;
@@ -38,7 +39,9 @@ export class HgHeaderLogo extends LitElement {
     }
     :host([scrolled-down]) .logomark {
       top: 0;
-      width: 50px;
+      ${unsafeCSS(`
+        width: ${LOGOMARK_WIDTH * ((HEADER_HEIGHT - 2*10) / LOGOMARK_HEIGHT)}px;
+      `)}
       padding: 10px calc((10 / ${CONTAINER_WIDTH}) * 100%);
       filter: var(--primary-color-filter);
     }
