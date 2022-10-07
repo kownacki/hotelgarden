@@ -45,7 +45,7 @@ export class HgHeaderLogo extends LitElement {
     .logotype {
       transition: top 0.2s ease, opacity 0.2s ease;
       filter: invert(100%) drop-shadow(0 0 5px rgba(0, 0, 0, 0.25));
-      padding: calc((${LOGOTYPE_HEIGHT} / ${CONTAINER_WIDTH}) * 100%) calc((10 / ${CONTAINER_WIDTH}) * 100%);
+      padding: calc((${LOGOTYPE_HEIGHT} / ${CONTAINER_WIDTH}) * 100%) calc((10 / ${CONTAINER_WIDTH}) * 100%) 10px;
       position: absolute;
       top: calc((105 / 95) * 100%);
       width: calc((${LOGOTYPE_WIDTH} / ${CONTAINER_WIDTH}) * 100%);
