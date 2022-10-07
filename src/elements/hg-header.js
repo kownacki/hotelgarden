@@ -20,6 +20,7 @@ export class HgHeader extends LitElement {
       top: 0;
       position: fixed;
       width: 100%;
+      min-height: var(--header-height);
       z-index: var(--layer-header);
       transition: background-color 0.3s ease, box-shadow 0.3s ease;
     }
