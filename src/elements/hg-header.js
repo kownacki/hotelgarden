@@ -45,7 +45,8 @@ export class HgHeader extends LitElement {
       position: relative;
       list-style-type: none;
       margin-right: 10px;
-      padding: 10px 0;
+      margin-top: 10px;
+      padding: 0 0 10px;
     }
     li.promoted {
       padding: 0;
