@@ -51,6 +51,7 @@ export class HgMosaic extends LitElement {
       .left, .right {
         float: none;
         width: 100%;
+        margin-right: 0;
       }
       .content {
         margin: 20px 0 40px;
