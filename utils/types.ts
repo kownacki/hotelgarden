@@ -12,6 +12,10 @@ export interface ClientConfig {
   seo: ClientConfigSeo,
 }
 
+export interface SitemapDbData {
+  sitemap?: string,
+}
+
 export interface PageDbData {
   seo?: {
     description?: string,

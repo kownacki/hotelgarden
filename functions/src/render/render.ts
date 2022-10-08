@@ -16,7 +16,9 @@ import {getEventSeoData} from './eventsDataSeo';
 import {getEventsList} from './eventsList';
 import {getPageDbData} from './pagesData';
 import {getPromotedEvent} from './promotedEvent';
-import {getSitemap} from './sitemap/hotelGardenSitemap';
+import {getSitemap} from './sitemap/getSitemap';
+
+import './sitemap/keepHotelGardenSitemapInSynch';
 
 export const render = async (req: Request, res: Response) => {
   const path = req.path;
