@@ -54,7 +54,7 @@
     "@types/material-colors": "^1.2.0",
     "colord": "^2.9.3",
     "es-dev-server": "^2.1.0",
-    "firebase-tools": "^11.13.0",
+    "firebase-tools": "^11.14.1",
     "hex-rgb": "^5.0.0",
     "hex-to-css-filter": "^5.4.0",
     "jsdoc": "^3.6.10",
