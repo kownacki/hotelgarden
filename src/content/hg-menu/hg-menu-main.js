@@ -16,6 +16,7 @@ export class HgMenuMain extends LitElement {
     category: Object,
     categoryIndex: Number,
     categories: Object,
+    enableEditing: Boolean,
   };
   static styles = [sharedStyles, css`
     :host {
@@ -103,6 +104,7 @@ export class HgMenuMain extends LitElement {
           .noGetItems=${true}
           .items=${_.get('items', this.category)}
           .path=${createDbPath(`menus/${this.uid}`, `${this.categoryIndex}.items`)}
+          .enableEditing=${this.enableEditing}
           .getItemName=${(item) => `pozycję${item.name ? ` "${item.name}"`: ''}`}
           .itemTemplate=${(item, index, disableEdit) => 
             html`<hg-menu-item .item=${item} .disableEdit=${disableEdit} .isRestaurantMenu=${true}></hg-menu-nav-item>

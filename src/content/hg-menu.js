@@ -1,16 +1,19 @@
 import {LitElement, html, css} from 'lit';
 import {createDbPath, getFromDb} from '../utils/database.js'
+import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
 import {scrollIntoView} from '../utils.js';
 import './hg-menu/hg-menu-main.js';
 import './hg-menu/hg-menu-nav.js';
 
 export class HgMenu extends LitElement {
+  _firebaseAuth;
   static properties = {
     categories: Object,
     uid: String,
     selectedCategory: Number,
     _compact: Boolean,
     _editing: {type: Boolean, reflect: true, attribute: 'editing'},
+    _loggedIn: Boolean,
   };
   static styles = css`
     :host {
@@ -51,6 +54,11 @@ export class HgMenu extends LitElement {
   `;
   constructor() {
     super();
+
+    this._firebaseAuth = new FirebaseAuthController(this, (loggedIn) => {
+      this._loggedIn = loggedIn;
+    });
+
     this.categories = {};
     this.selectedCategory = 0;
     this._compact = (window.innerWidth < 600);
@@ -71,6 +79,7 @@ export class HgMenu extends LitElement {
             .category=${_.get(category, this.categories)}
             .categoryIndex=${category}
             .categories=${this.categories}
+            .enableEditing=${this._loggedIn}
             @category-changed=${() => this.shadowRoot.getElementById('nav').requestUpdateNavItem()}
             @editing-changed=${(event) => this._editing = event.detail}>
           </hg-menu-main>
@@ -80,6 +89,7 @@ export class HgMenu extends LitElement {
           .uid=${this.uid}
           .selectedCategory=${this.selectedCategory}
           .categories=${this.categories}
+          .enableEditing=${this._loggedIn}
           @categories-changed=${(event) => this.categories = event.detail}
           @selected-category-changed=${(event) => {
             this.selectedCategory = event.detail;

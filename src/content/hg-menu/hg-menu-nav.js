@@ -8,6 +8,7 @@ export class HgMenuNav extends LitElement {
     uid: String,
     selectedCategory: Number,
     categories: Object,
+    enableEditing: Boolean,
   };
   static styles = css`
     hg-list-old {
@@ -51,6 +52,7 @@ export class HgMenuNav extends LitElement {
         .noGetItems=${true},
         .items=${this.categories}
         .path=${createDbPath('menus/' + this.uid)}
+        .enableEditing=${this.enableEditing}
         .getItemName=${(category) => `kategorię${category.name ? ` "${category.name}"`: ''} i wszystkie zawierające się w niej pozycje`}
         .itemTemplate=${(category, index) => html`
           <hg-menu-nav-item
