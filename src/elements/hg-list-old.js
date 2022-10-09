@@ -1,10 +1,17 @@
 import {LitElement, html, css} from 'lit';
 import {until} from 'lit/directives/until.js';
 import {repeat} from 'lit/directives/repeat.js';
+import {size} from 'lodash-es';
 import sharedStyles from '../styles/shared-styles.js'
 import {DbPath, updateInDb} from '../utils/database.js';
 import {array, generateUid} from '../utils.js';
 import './hg-list-old/hg-list-old-item.js';
+
+export const HgListOldItemsChangeType = {
+  ITEM_ADD: 'item-add',
+  ITEM_DELETE: 'item-delete',
+  ITEMS_SWAP: 'items-swap',
+};
 
 export default class HgListOld extends LitElement {
   static properties = {
@@ -72,21 +79,30 @@ export default class HgListOld extends LitElement {
     this.items[key][field] = data;
     this.processing = false;
   }
-  async deleteItem(key) {
+  async deleteItem(index) {
     this.processing = true;
     if (this.onDelete) {
-      await this.onDelete(this.items[key]);
+      await this.onDelete(this.items[index]);
     }
     let newItems;
     newItems = _.toArray(this.items);
-    newItems.splice(key, 1);
+    newItems.splice(index, 1);
     newItems = {...newItems};
 
     if (!this.noBuiltInDelete) {
       await this.updateData('', {...newItems});
     }
     this.items = newItems;
-    this.dispatchEvent(new CustomEvent('item-deleted', {detail: key}));
+    this.dispatchEvent(new CustomEvent('item-deleted', {detail: index}));
+    this.dispatchEvent(new CustomEvent('request-items-change', {
+      detail: {
+        type: HgListOldItemsChangeType.ITEM_DELETE,
+        newItems,
+        data: {
+          deletedIndex: index,
+        },
+      },
+    }));
     this.processing = false;
   }
   async swapItems(index1, index2) {
@@ -95,6 +111,18 @@ export default class HgListOld extends LitElement {
     await this.updateData('', {...newItems});
     this.items = newItems;
     this.dispatchEvent(new CustomEvent('items-swapped', {detail: [index1, index2]}));
+    this.dispatchEvent(new CustomEvent('request-items-change', {
+      detail: {
+        type: HgListOldItemsChangeType.ITEMS_SWAP,
+        newItems,
+        data: {
+          swappedIndexes: {
+            index1: Number(index1),
+            index2: Number(index2),
+          },
+        },
+      },
+    }));
     this.processing = false;
   }
   async addItem() {
@@ -102,10 +130,20 @@ export default class HgListOld extends LitElement {
     let newItem = {uid: generateUid()};
     newItem = this.onAdd ? await this.onAdd(newItem) : newItem;
     if (newItem) {
-      await this.updateData(String(_.size(this.items)), newItem);
+      await this.updateData(String(size(this.items)), newItem);
+      const newItems = {...this.items, [size(this.items)]: newItem};
       //todo use firebase.firestore.FieldValue.arrayUnion
-      this.items = _.set(_.size(this.items), newItem, this.items);
+      this.items = newItems;
       this.dispatchEvent(new CustomEvent('item-added'));
+      this.dispatchEvent(new CustomEvent('request-items-change', {
+        detail: {
+          type: HgListOldItemsChangeType.ITEM_ADD,
+          newItems,
+          data: {
+            newItem,
+          },
+        },
+      }));
     }
     this.processing = false;
   }
