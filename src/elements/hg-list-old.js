@@ -19,8 +19,11 @@ export default class HgListOld extends LitElement {
     addAtStart: Boolean,
     noAdd: Boolean,
     noSwap: Boolean,
-    noBuiltInDelete: Boolean,
     vertical: Boolean,
+    __noAddUpdate: Boolean,
+    __noDeleteUpdate: Boolean,
+    __noSwapUpdate: Boolean,
+    __noItemChangeUpdate: Boolean,
     // required params
     path: DbPath,
     itemTemplate: Function,
@@ -73,10 +76,21 @@ export default class HgListOld extends LitElement {
   updateData(field, data) {
     return updateInDb(this.path.extend(field), data);
   }
-  async updateItem(key, field, data) {
+  async updateItem(index, field, data) {
     this.processing = true;
-    await this.updateData(`${key}.${field}`, data);
-    this.items[key][field] = data;
+    if (!this.__noItemChangeUpdate) {
+      await this.updateData(`${index}.${field}`, data);
+    }
+    const updatedItem = {
+      ...this.items[index],
+      [field]: data,
+    };
+    this.dispatchEvent(new CustomEvent('request-item-update', {
+      detail: {
+        updatedItem,
+        index,
+      },
+    }));
     this.processing = false;
   }
   async deleteItem(index) {
@@ -89,7 +103,7 @@ export default class HgListOld extends LitElement {
     newItems.splice(index, 1);
     newItems = {...newItems};
 
-    if (!this.noBuiltInDelete) {
+    if (!this.__noDeleteUpdate) {
       await this.updateData('', {...newItems});
     }
     this.items = newItems;
@@ -107,7 +121,9 @@ export default class HgListOld extends LitElement {
   async swapItems(index1, index2) {
     this.processing = true;
     const newItems = array.swapItems(index1, index2, _.clone(this.items));
-    await this.updateData('', {...newItems});
+    if (!this.__noSwapUpdate) {
+      await this.updateData('', {...newItems});
+    }
     this.items = newItems;
     this.dispatchEvent(new CustomEvent('request-items-change', {
       detail: {
@@ -128,9 +144,11 @@ export default class HgListOld extends LitElement {
     let newItem = {uid: generateUid()};
     newItem = this.onAdd ? await this.onAdd(newItem) : newItem;
     if (newItem) {
-      await this.updateData(String(size(this.items)), newItem);
       const newItems = {...this.items, [size(this.items)]: newItem};
-      //todo use firebase.firestore.FieldValue.arrayUnion
+      if (!this.__noAddUpdate) {
+        await this.updateData(String(size(this.items)), newItem);
+        //todo use firebase.firestore.FieldValue.arrayUnion
+      }
       this.items = newItems;
       this.dispatchEvent(new CustomEvent('request-items-change', {
         detail: {
