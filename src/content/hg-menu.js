@@ -1,4 +1,5 @@
 import {LitElement, html, css} from 'lit';
+import {throttle, range, size} from 'lodash-es';
 import {createDbPath, getFromDb} from '../utils/database.js'
 import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
 import {scrollIntoView} from '../utils.js';
@@ -62,7 +63,10 @@ export class HgMenu extends LitElement {
     this.categories = {};
     this.selectedCategory = 0;
     this._compact = (window.innerWidth < 600);
-    window.addEventListener('resize', _.throttle(100, () => this._compact = (window.innerWidth < 600)));
+    window.addEventListener('resize', throttle(
+      () => this._compact = (window.innerWidth < 600),
+      100,
+    ));
   }
   async firstUpdated() {
     this.categories = await getFromDb(createDbPath(`menus/${this.uid}`));
@@ -71,19 +75,22 @@ export class HgMenu extends LitElement {
   render(){
     return html`
       <section>
-        ${_.map((category) => html`
+        ${(this._compact
+          ? range(0, size(this.categories))
+          : [this.selectedCategory]
+        ).map((categoryIndex) => html`
           <hg-menu-main
             id="main"
             .dataReady=${this._dataReady}
             .uid=${this.uid}
-            .category=${_.get(category, this.categories)}
-            .categoryIndex=${category}
+            .category=${this.categories[categoryIndex]}
+            .categoryIndex=${categoryIndex}
             .categories=${this.categories}
             .enableEditing=${this._loggedIn}
             @category-changed=${() => this.shadowRoot.getElementById('nav').requestUpdateNavItem()}
             @editing-changed=${(event) => this._editing = event.detail}>
           </hg-menu-main>
-        `, this._compact ? _.range(0, _.size(this.categories)) : [this.selectedCategory])}
+        `)}
         <hg-menu-nav
           id="nav"
           .uid=${this.uid}
