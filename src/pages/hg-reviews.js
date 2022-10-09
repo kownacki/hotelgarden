@@ -103,7 +103,6 @@ export class HgReviews extends LitElement {
     return html`
       <hg-intro-article .uid=${'reviews'}></hg-intro-article>
       <hg-list-old
-        .noGetItems=${true}
         .addAtStart=${true}
         .transform=${() => _.reverse}
         .items=${this._reviews}

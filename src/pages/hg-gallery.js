@@ -60,7 +60,6 @@ export class HgGallery extends LitElement {
       <hg-mosaic-list-old
         id="list"
         .path=${this._path}
-        .noGetItems=${true}
         .items=${this._items}
         .itemTemplate=${(item, index) => html`
           <hg-gallery-item

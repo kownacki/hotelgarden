@@ -82,7 +82,6 @@ export class HgIcons extends LitElement {
   render() {
     return html`
       <hg-list-old
-        .noGetItems=${true}
         .items=${this._icons}
         .path=${this._path}
         .enableEditing=${this._loggedIn}

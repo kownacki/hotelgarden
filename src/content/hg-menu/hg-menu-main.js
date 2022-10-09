@@ -101,7 +101,6 @@ export class HgMenuMain extends LitElement {
         <hg-list-old
           id="list"
           .vertical=${true}
-          .noGetItems=${true}
           .items=${_.get('items', this.category)}
           .path=${createDbPath(`menus/${this.uid}`, `${this.categoryIndex}.items`)}
           .enableEditing=${this.enableEditing}
