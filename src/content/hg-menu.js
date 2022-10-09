@@ -1,17 +1,22 @@
 import {LitElement, html, css} from 'lit';
+import {when} from 'lit/directives/when.js';
 import {throttle, range, size} from 'lodash-es';
-import {createDbPath, getFromDb} from '../utils/database.js'
+import {createDbPath, getFromDb, updateInObjectInDb, DbPath} from '../utils/database.js'
 import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
+import {ItemsDbSyncController} from '../utils/ItemsDbSyncController.js';
 import {scrollIntoView} from '../utils.js';
 import './hg-menu/hg-menu-main.js';
 import './hg-menu/hg-menu-nav.js';
 
 export class HgMenu extends LitElement {
   _firebaseAuth;
+  _categoriesDbSync;
   static properties = {
     // required params
     uid: String,
     // private
+    _path: DbPath,
+    _categoriesReady: Boolean,
     _categories: Object,
     _selectedCategory: Number,
     _compact: Boolean,
@@ -62,53 +67,72 @@ export class HgMenu extends LitElement {
       this._loggedIn = loggedIn;
     });
 
-    this._categories = {};
-    this._selectedCategory = 0;
+    this._categoriesDbSync = new ItemsDbSyncController(
+      this,
+      async (path) => await getFromDb(path) || {},
+      async (objectPath, dataPath, data) => {
+        updateInObjectInDb(objectPath, dataPath, data);
+        return data;
+      },
+      (categoriesReady) => this._categoriesReady = categoriesReady,
+      (categories) => {
+        this._categories = categories;
+        this._selectedCategory = 0;
+      },
+    );
+
     this._compact = (window.innerWidth < 600);
+
     window.addEventListener('resize', throttle(
       () => this._compact = (window.innerWidth < 600),
       100,
     ));
   }
-  async firstUpdated() {
-    this._categories = await getFromDb(createDbPath(`menus/${this.uid}`));
-    this._dataReady = true;
+  async willUpdate(changedProperties) {
+    if (changedProperties.has('uid')) {
+      this._path = createDbPath(`menus/${this.uid}`)
+      this._categoriesDbSync.setPath(this._path);
+    }
   }
   render(){
     return html`
       <section>
-        ${(this._compact
-          ? range(0, size(this._categories))
-          : [this._selectedCategory]
-        ).map((categoryIndex) => html`
-          <hg-menu-main
-            id="main"
-            .dataReady=${this._dataReady}
-            .uid=${this.uid}
-            .category=${this._categories[categoryIndex]}
-            .categoryIndex=${categoryIndex}
-            .categories=${this._categories}
-            .enableEditing=${this._loggedIn}
-            @category-changed=${() => this.shadowRoot.getElementById('nav').requestUpdateNavItem()}
-            @editing-changed=${(event) => this._editing = event.detail}>
-          </hg-menu-main>
-        `)}
-        <hg-menu-nav
-          id="nav"
-          .uid=${this.uid}
-          .selectedCategory=${this._selectedCategory}
-          .categories=${this._categories}
-          .enableEditing=${this._loggedIn}
-          @categories-changed=${(event) => this._categories = event.detail}
-          @selected-category-changed=${(event) => {
-            this._selectedCategory = event.detail;
-            scrollIntoView(this);
-            // update in case if selectedCategory index unchanged but category object did
-            // //todo think if more elegant solution
-            // this.shadowRoot.getElementById('main').requestUpdate();
-            // this.requestUpdate();
-          }}>
-        </hg-menu-nav>
+        ${when(
+          this._categoriesReady,
+          () => html`
+            ${(this._compact
+              ? range(0, size(this._categories))
+              : [this._selectedCategory]
+            ).map((categoryIndex) => html`
+              <hg-menu-main
+                id="main"
+                .uid=${this.uid}
+                .category=${this._categories[categoryIndex]}
+                .categoryIndex=${categoryIndex}
+                .categories=${this._categories}
+                .enableEditing=${this._loggedIn}
+                @category-changed=${() => this.shadowRoot.getElementById('nav').requestUpdateNavItem()}
+                @editing-changed=${(event) => this._editing = event.detail}>
+              </hg-menu-main>
+            `)}
+            <hg-menu-nav
+              id="nav"
+              .uid=${this.uid}
+              .selectedCategory=${this._selectedCategory}
+              .categories=${this._categories}
+              .enableEditing=${this._loggedIn}
+              @categories-changed=${(event) => this._categories = event.detail}
+              @selected-category-changed=${(event) => {
+                this._selectedCategory = event.detail;
+                scrollIntoView(this);
+                // update in case if selectedCategory index unchanged but category object did
+                // //todo think if more elegant solution
+                // this.shadowRoot.getElementById('main').requestUpdate();
+                // this.requestUpdate();
+              }}>
+            </hg-menu-nav>
+          `,
+        )}
       </section>
     `;
   }
