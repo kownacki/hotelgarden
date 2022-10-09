@@ -1,7 +1,7 @@
 import {LitElement, html, css, unsafeCSS} from 'lit';
 import '../../edit/hg-editable-text.js';
 import '../../elements/mkwc/hg-editable-image.js';
-import '../../elements/hg-list-old.js';
+import {HgListOldItemsChangeType} from '../../elements/hg-list-old.js';
 import sharedStyles from '../../styles/shared-styles.js'
 import {createDbPath, updateImageInDb} from '../../utils/database.js';
 import {updateData} from '../../utils.js';
@@ -108,7 +108,11 @@ export class HgMenuMain extends LitElement {
           .itemTemplate=${(item, index, disableEdit) => 
             html`<hg-menu-item .item=${item} .disableEdit=${disableEdit} .isRestaurantMenu=${true}></hg-menu-nav-item>
           `}
-          @item-added=${() => this.updateCategory()}
+          @request-items-change=${({detail: {type}}) => {
+            if (type === HgListOldItemsChangeType.ITEM_ADD) {
+              this.updateCategory()
+            }
+          }}
           @item-deleted=${() => this.updateCategory()}>
         </hg-list-old>
       `}

@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import {createDbPath, deleteImageInDb} from '../../utils/database.js';
-import '../../elements/hg-list-old.js';
+import {HgListOldItemsChangeType} from '../../elements/hg-list-old.js';
 import './hg-menu-nav-item.js';
 
 export class HgMenuNav extends LitElement {
@@ -61,7 +61,12 @@ export class HgMenuNav extends LitElement {
           </hg-menu-nav-item>
         `}
         .onDelete=${(item) => item.image ? deleteImageInDb(item.image.name) : null}
-        @item-added=${() => {this.updateCategories(); this.selectCategory(_.size(this.categories) - 1)}}
+        @request-items-change=${({detail: {type}}) => {
+          if (type === HgListOldItemsChangeType.ITEM_ADD) {
+            this.updateCategories();
+            this.selectCategory(_.size(this.categories) - 1);
+          }
+        }}
         @item-deleted=${(event) => {this.updateCategories(); this.reselectAfterDelete(Number(event.detail))}}
         @items-swapped=${(event) => {this.updateCategories(); this.reselectAfterSwapped(Number(event.detail[0]), Number(event.detail[1]))}}>
       </hg-list-old>

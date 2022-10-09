@@ -134,7 +134,6 @@ export default class HgListOld extends LitElement {
       const newItems = {...this.items, [size(this.items)]: newItem};
       //todo use firebase.firestore.FieldValue.arrayUnion
       this.items = newItems;
-      this.dispatchEvent(new CustomEvent('item-added'));
       this.dispatchEvent(new CustomEvent('request-items-change', {
         detail: {
           type: HgListOldItemsChangeType.ITEM_ADD,
