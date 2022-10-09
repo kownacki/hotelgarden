@@ -59,7 +59,7 @@ export default class HgListOld extends LitElement {
   `];
   updated(changedProperties) {
     if (changedProperties.has('editing')) {
-      this.dispatchEvent(new CustomEvent('editing-changed', {detail: this.editing, composed: true}));
+      this.dispatchEvent(new CustomEvent('editing-changed', {detail: this.editing}));
     }
     if (changedProperties.has('items')) {
       this.dispatchEvent(new CustomEvent('items-changed', {detail: this.items}));

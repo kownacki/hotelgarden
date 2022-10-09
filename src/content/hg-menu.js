@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit';
 import {when} from 'lit/directives/when.js';
 import {throttle, range, size} from 'lodash-es';
-import {createDbPath, getFromDb, updateInObjectInDb, DbPath} from '../utils/database.js'
+import {createDbPath, getFromDb, DbPath, updateDataOrImageInObjectInDb} from '../utils/database.js'
 import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
 import {ItemsDbSyncController} from '../utils/ItemsDbSyncController.js';
 import {scrollIntoView} from '../utils.js';
@@ -70,9 +70,12 @@ export class HgMenu extends LitElement {
     this._categoriesDbSync = new ItemsDbSyncController(
       this,
       async (path) => await getFromDb(path) || {},
-      async (objectPath, dataPath, data) => {
-        updateInObjectInDb(objectPath, dataPath, data);
-        return data;
+      async (path, index, {field, data}, oldItem, items) => {
+        const updatedData = await updateDataOrImageInObjectInDb(field, path, `${index}.${field}`, data, items);
+        return {
+          ...oldItem,
+          [field]: updatedData,
+        };
       },
       (categoriesReady) => this._categoriesReady = categoriesReady,
       (categories) => {
@@ -106,13 +109,16 @@ export class HgMenu extends LitElement {
             ).map((categoryIndex) => html`
               <hg-menu-main
                 id="main"
-                .uid=${this.uid}
                 .category=${this._categories[categoryIndex]}
                 .categoryIndex=${categoryIndex}
                 .categories=${this._categories}
                 .enableEditing=${this._loggedIn}
-                @category-changed=${() => this.shadowRoot.getElementById('nav').requestUpdateNavItem()}
-                @editing-changed=${(event) => this._editing = event.detail}>
+                @editing-changed=${({detail: editing}) => {
+                  this._editing = editing;
+                }}
+                @request-category-field-change=${({detail: {field, data}}) => {
+                  this._categoriesDbSync.requestItemUpdate(categoryIndex, {field, data});
+                }}>
               </hg-menu-main>
             `)}
             <hg-menu-nav
@@ -125,6 +131,7 @@ export class HgMenu extends LitElement {
               @selected-category-changed=${(event) => {
                 this._selectedCategory = event.detail;
                 scrollIntoView(this);
+                //!!!!
                 // update in case if selectedCategory index unchanged but category object did
                 // //todo think if more elegant solution
                 // this.shadowRoot.getElementById('main').requestUpdate();

@@ -29,7 +29,7 @@ export class HgDynamicPathPagesList extends LitElement {
       <hg-list-old
         .noAdd=${true}
         .noSwap=${true}
-        .noBuiltInDelete=${true}
+        .__noDeleteUpdate=${true}
         .items=${this.dynamicPathPages}
         .ready=${true}
         .enableEditing=${this.enableEditing}
