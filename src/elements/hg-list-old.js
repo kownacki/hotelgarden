@@ -93,7 +93,6 @@ export default class HgListOld extends LitElement {
       await this.updateData('', {...newItems});
     }
     this.items = newItems;
-    this.dispatchEvent(new CustomEvent('item-deleted', {detail: index}));
     this.dispatchEvent(new CustomEvent('request-items-change', {
       detail: {
         type: HgListOldItemsChangeType.ITEM_DELETE,

@@ -61,13 +61,16 @@ export class HgMenuNav extends LitElement {
           </hg-menu-nav-item>
         `}
         .onDelete=${(item) => item.image ? deleteImageInDb(item.image.name) : null}
-        @request-items-change=${({detail: {type}}) => {
+        @request-items-change=${({detail: {type, data}}) => {
           if (type === HgListOldItemsChangeType.ITEM_ADD) {
             this.updateCategories();
             this.selectCategory(_.size(this.categories) - 1);
           }
+          else if (type === HgListOldItemsChangeType.ITEM_DELETE) {
+            this.updateCategories();
+            this.reselectAfterDelete(Number(data.deletedIndex));
+          }
         }}
-        @item-deleted=${(event) => {this.updateCategories(); this.reselectAfterDelete(Number(event.detail))}}
         @items-swapped=${(event) => {this.updateCategories(); this.reselectAfterSwapped(Number(event.detail[0]), Number(event.detail[1]))}}>
       </hg-list-old>
     `;

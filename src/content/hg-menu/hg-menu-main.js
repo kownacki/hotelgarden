@@ -112,8 +112,10 @@ export class HgMenuMain extends LitElement {
             if (type === HgListOldItemsChangeType.ITEM_ADD) {
               this.updateCategory()
             }
+            else if (type === HgListOldItemsChangeType.ITEM_DELETE) {
+              this.updateCategory()
+            }
           }}
-          @item-deleted=${() => this.updateCategory()}>
         </hg-list-old>
       `}
     `;
