@@ -4,8 +4,9 @@ import '../content/hg-article/hg-intro-article.js';
 import '../elements/hg-list-old.js';
 import '../elements/hg-review.js';
 import '../content/hg-links.js';
+import {createDbPath, DbPath, getFromDb, updateInObjectInDb} from '../utils/database.js';
 import '../utils/fixes/mwc-formfield-fixed.js';
-import {createDbPath} from '../utils/database.js';
+import {ItemsDbSyncController} from '../utils/ItemsDbSyncController.js';
 import {pagesStaticData} from '../../utils/urlStructure.js';
 
 const reviewBlocks = ['landing', 'restaurant', 'weddings', 'family-parties'];
@@ -43,6 +44,12 @@ const configure = {
 };
 
 export class HgReviews extends LitElement {
+  _reviewsDbSync;
+  static properties = {
+    _path: DbPath,
+    _reviews: Object,
+    _reviewsReady: Boolean,
+  };
   static styles = css`
     hg-intro-article {
       display: none;
@@ -69,13 +76,30 @@ export class HgReviews extends LitElement {
       }
     }
   `;
+  constructor() {
+    super();
+    this._path = createDbPath('reviews/reviews');
+    this._reviewsDbSync = new ItemsDbSyncController(
+      this,
+      async (path) => await getFromDb(path) || {},
+      async (objectPath, dataPath, data) => {
+        updateInObjectInDb(objectPath, dataPath, data);
+        return data;
+      },
+      (reviewsReady) => this._reviewsReady = reviewsReady,
+      (reviews) => this._reviews = reviews,
+    );
+    this._reviewsDbSync.setPath(this._path);
+  }
   render() {
     return html`
       <hg-intro-article .uid=${'reviews'}></hg-intro-article>
       <hg-list-old
+        .noGetItems=${true}
         .addAtStart=${true}
         .transform=${() => _.reverse}
-        .path=${createDbPath('reviews/reviews')}
+        .items=${this._reviews}
+        .path=${this._path}
         .getItemName=${(item) => `opinię${item.heading ? ` "${item.heading}"`: ''}`}
         .itemTemplate=${(review, index, disableEdit) => html`
           <style>

@@ -1,19 +1,24 @@
 import {LitElement, html, css} from 'lit';
 import {until} from 'lit/directives/until.js';
-import {createDbPath} from '../utils/database.js';
+import {createDbPath, DbPath, getFromDb, updateInObjectInDb} from '../utils/database.js';
 import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
+import {ItemsDbSyncController} from '../utils/ItemsDbSyncController.js';
 import {sleep} from '../utils.js';
 import './hg-list-old.js';
 import './hg-icons/hg-icons-item.js';
 
 export class HgIcons extends LitElement {
-  _addDialog;
+  _iconsDbSync;
   _firebaseAuth;
+  _addDialog;
   static properties = {
     uid: String,
     empty: {type: Boolean, reflect: true},
     small: {type: Boolean, reflect: true},
     _loggedIn: Boolean,
+    _path: DbPath,
+    _icons: Object,
+    _iconsReady: Boolean,
   };
   static styles = css`
     :host {
@@ -52,14 +57,34 @@ export class HgIcons extends LitElement {
   `;
   constructor() {
     super();
+
     this._firebaseAuth = new FirebaseAuthController(this, (loggedIn) => {
       this._loggedIn = loggedIn;
     });
+
+    this._iconsDbSync = new ItemsDbSyncController(
+      this,
+      async (path) => await getFromDb(path) || {},
+      async (objectPath, dataPath, data) => {
+        updateInObjectInDb(objectPath, dataPath, data);
+        return data;
+      },
+      (iconsReady) => this._iconsReady = iconsReady,
+      (icons) => this._icons = icons,
+    );
+  }
+  async willUpdate(changedProperties) {
+    if (changedProperties.has('uid')) {
+      this._path = createDbPath(`iconBlocks/${this.uid}`)
+      this._iconsDbSync.setPath(this._path);
+    }
   }
   render() {
     return html`
       <hg-list-old
-        .path=${createDbPath(`iconBlocks/${this.uid}`)}
+        .noGetItems=${true}
+        .items=${this._icons}
+        .path=${this._path}
         .getItemName=${() => 'ikonę'}
         .itemTemplate=${(icon, index, disableEdit) => html`
           <hg-icons-item .small=${this.small} .icon=${icon} .disableEdit=${disableEdit}></hg-icons-item>

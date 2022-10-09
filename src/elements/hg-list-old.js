@@ -11,7 +11,6 @@ export default class HgListOld extends LitElement {
   _firebaseAuth;
   static properties = {
     // flags
-    noGetItems: Boolean,
     addAtStart: Boolean,
     noAdd: Boolean,
     noSwap: Boolean,
@@ -28,7 +27,6 @@ export default class HgListOld extends LitElement {
     configure: Object,
     emptyTemplate: Object,
     items: Object,
-    ready: Boolean,
     // observables
     editing: Boolean,
     // private
@@ -63,18 +61,6 @@ export default class HgListOld extends LitElement {
     }
     if (changedProperties.has('items')) {
       this.dispatchEvent(new CustomEvent('items-changed', {detail: this.items}));
-    }
-    if (changedProperties.has('ready')) {
-      this.dispatchEvent(new CustomEvent('ready-changed', {detail: this.ready}));
-    }
-    if (changedProperties.has('path')) {
-      if (this.path && !this.noGetItems) {
-        this.ready = false;
-        (async () => {
-          this.items = await getFromDb(this.path) || {};
-          this.ready = true;
-        })();
-      }
     }
     if (changedProperties.has('items') || changedProperties.has('transform')) {
       this._list = _.flow([
