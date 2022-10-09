@@ -1,4 +1,5 @@
 import {LitElement, html, css} from 'lit';
+import {size} from 'lodash-es';
 import {createDbPath, deleteImageInDb} from '../../utils/database.js';
 import {HgListOldItemsChangeType} from '../../elements/hg-list-old.js';
 import './hg-menu-nav-item.js';
@@ -24,7 +25,7 @@ export class HgMenuNav extends LitElement {
   };
   reselectAfterDelete(deletedIndex) {
     //todo think if more elegant solution to keep selected category correct
-    if (deletedIndex < this.selectedCategory || (deletedIndex === this.selectedCategory && deletedIndex === _.size(this.categories))) {
+    if (deletedIndex < this.selectedCategory || (deletedIndex === this.selectedCategory && deletedIndex === size(this.categories))) {
       this.selectCategory(this.selectedCategory - 1);
     } else {
       this.selectCategory(this.selectedCategory);
@@ -61,7 +62,7 @@ export class HgMenuNav extends LitElement {
         @request-items-change=${({detail: {type, data}}) => {
           if (type === HgListOldItemsChangeType.ITEM_ADD) {
             this.updateCategories();
-            this.selectCategory(_.size(this.categories) - 1);
+            this.selectCategory(size(this.categories) - 1);
           }
           else if (type === HgListOldItemsChangeType.ITEM_DELETE) {
             this.updateCategories();
