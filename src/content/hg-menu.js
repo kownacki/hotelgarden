@@ -9,9 +9,11 @@ import './hg-menu/hg-menu-nav.js';
 export class HgMenu extends LitElement {
   _firebaseAuth;
   static properties = {
-    categories: Object,
+    // required params
     uid: String,
-    selectedCategory: Number,
+    // private
+    _categories: Object,
+    _selectedCategory: Number,
     _compact: Boolean,
     _editing: {type: Boolean, reflect: true, attribute: 'editing'},
     _loggedIn: Boolean,
@@ -60,8 +62,8 @@ export class HgMenu extends LitElement {
       this._loggedIn = loggedIn;
     });
 
-    this.categories = {};
-    this.selectedCategory = 0;
+    this._categories = {};
+    this._selectedCategory = 0;
     this._compact = (window.innerWidth < 600);
     window.addEventListener('resize', throttle(
       () => this._compact = (window.innerWidth < 600),
@@ -69,23 +71,23 @@ export class HgMenu extends LitElement {
     ));
   }
   async firstUpdated() {
-    this.categories = await getFromDb(createDbPath(`menus/${this.uid}`));
+    this._categories = await getFromDb(createDbPath(`menus/${this.uid}`));
     this._dataReady = true;
   }
   render(){
     return html`
       <section>
         ${(this._compact
-          ? range(0, size(this.categories))
-          : [this.selectedCategory]
+          ? range(0, size(this._categories))
+          : [this._selectedCategory]
         ).map((categoryIndex) => html`
           <hg-menu-main
             id="main"
             .dataReady=${this._dataReady}
             .uid=${this.uid}
-            .category=${this.categories[categoryIndex]}
+            .category=${this._categories[categoryIndex]}
             .categoryIndex=${categoryIndex}
-            .categories=${this.categories}
+            .categories=${this._categories}
             .enableEditing=${this._loggedIn}
             @category-changed=${() => this.shadowRoot.getElementById('nav').requestUpdateNavItem()}
             @editing-changed=${(event) => this._editing = event.detail}>
@@ -94,12 +96,12 @@ export class HgMenu extends LitElement {
         <hg-menu-nav
           id="nav"
           .uid=${this.uid}
-          .selectedCategory=${this.selectedCategory}
-          .categories=${this.categories}
+          .selectedCategory=${this._selectedCategory}
+          .categories=${this._categories}
           .enableEditing=${this._loggedIn}
-          @categories-changed=${(event) => this.categories = event.detail}
+          @categories-changed=${(event) => this._categories = event.detail}
           @selected-category-changed=${(event) => {
-            this.selectedCategory = event.detail;
+            this._selectedCategory = event.detail;
             scrollIntoView(this);
             // update in case if selectedCategory index unchanged but category object did
             // //todo think if more elegant solution
