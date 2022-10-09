@@ -97,6 +97,18 @@ export default class HgListOld extends LitElement {
     this.dispatchEvent(new CustomEvent('items-swapped', {detail: [index1, index2]}));
     this._processing = false;
   }
+  async addItem() {
+    this._processing = true;
+    let newItem = {uid: generateUid()};
+    newItem = this.onAdd ? await this.onAdd(newItem) : newItem;
+    if (newItem) {
+      await this.updateData(String(_.size(this.items)), newItem);
+      //todo use firebase.firestore.FieldValue.arrayUnion
+      this.items = _.set(_.size(this.items), newItem, this.items);
+      this.dispatchEvent(new CustomEvent('item-added'));
+    }
+    this._processing = false;
+  }
   render() {
     return html`
       ${(this.addAtStart ? _.reverse : _.identity)([
@@ -125,18 +137,7 @@ export default class HgListOld extends LitElement {
             <div class="add-container">
               <hg-list-old-add
                 .disabled=${this._processing || this.editing}
-                @click=${async () => {
-                  this._processing = true;
-                  let newItem = {uid: generateUid()};
-                  newItem = this.onAdd ? await this.onAdd(newItem) : newItem;
-                  if (newItem) {
-                    await this.updateData(String(_.size(this.items)), newItem);
-                    //todo use firebase.firestore.FieldValue.arrayUnion  
-                    this.items = _.set(_.size(this.items), newItem, this.items);
-                    this.dispatchEvent(new CustomEvent('item-added'));
-                  }
-                  this._processing = false;
-                }}>
+                @click=${() => this.addItem()}>
               </hg-list-old-add>
             </div>
           `;
