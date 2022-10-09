@@ -59,7 +59,8 @@ export class HgDynamicPathPages extends LitElement {
         () => html`
             <hg-dynamic-path-pages-list
               .dynamicPathPages=${this._allDynamicPathPages}
-              .showHidden=${this._loggedIn}>
+              .showHidden=${this._loggedIn}
+              .enableEditing=${this._loggedIn}>
             </hg-dynamic-path-pages-list>
           `,
         () => html`<hg-page-loading></hg-page-loading>`,

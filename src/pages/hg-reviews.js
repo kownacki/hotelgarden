@@ -6,6 +6,7 @@ import '../elements/hg-review.js';
 import '../content/hg-links.js';
 import {createDbPath, DbPath, getFromDb, updateInObjectInDb} from '../utils/database.js';
 import '../utils/fixes/mwc-formfield-fixed.js';
+import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
 import {ItemsDbSyncController} from '../utils/ItemsDbSyncController.js';
 import {pagesStaticData} from '../../utils/urlStructure.js';
 
@@ -44,11 +45,13 @@ const configure = {
 };
 
 export class HgReviews extends LitElement {
+  _firebaseAuth;
   _reviewsDbSync;
   static properties = {
     _path: DbPath,
     _reviews: Object,
     _reviewsReady: Boolean,
+    _loggedIn: Boolean,
   };
   static styles = css`
     hg-intro-article {
@@ -78,6 +81,11 @@ export class HgReviews extends LitElement {
   `;
   constructor() {
     super();
+
+    this._firebaseAuth = new FirebaseAuthController(this, (loggedIn) => {
+      this._loggedIn = loggedIn;
+    });
+
     this._path = createDbPath('reviews/reviews');
     this._reviewsDbSync = new ItemsDbSyncController(
       this,
@@ -100,6 +108,7 @@ export class HgReviews extends LitElement {
         .transform=${() => _.reverse}
         .items=${this._reviews}
         .path=${this._path}
+        .enableEditing=${this._loggedIn}
         .getItemName=${(item) => `opinię${item.heading ? ` "${item.heading}"`: ''}`}
         .itemTemplate=${(review, index, disableEdit) => html`
           <style>

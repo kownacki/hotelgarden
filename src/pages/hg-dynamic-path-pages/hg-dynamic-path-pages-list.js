@@ -17,6 +17,7 @@ export class HgDynamicPathPagesList extends LitElement {
     showHidden: Boolean,
     archived: Boolean,
     max: Number,
+    enableEditing: Boolean,
   };
   static styles = [sharedStyles, css`
     :host {
@@ -32,6 +33,7 @@ export class HgDynamicPathPagesList extends LitElement {
         .noBuiltInDelete=${true}
         .items=${this.dynamicPathPages}
         .ready=${true}
+        .enableEditing=${this.enableEditing}
         .transform=${(items) => _.flow([
           ...(this.showHidden ? [] : [_.filter((key) => !isDynamicPathPageHidden(items[key]))]),
           _.filter((key) => this.archived ? isDynamicPathPageArchived(items[key]) : !isDynamicPathPageArchived(items[key])),

@@ -2,13 +2,11 @@ import {LitElement, html, css} from 'lit';
 import {until} from 'lit/directives/until.js';
 import {repeat} from 'lit/directives/repeat.js';
 import sharedStyles from '../styles/shared-styles.js'
-import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
-import {DbPath, getFromDb, updateInDb} from '../utils/database.js';
+import {DbPath, updateInDb} from '../utils/database.js';
 import {array, generateUid} from '../utils.js';
 import './hg-list-old/hg-list-old-item.js';
 
 export default class HgListOld extends LitElement {
-  _firebaseAuth;
   static properties = {
     // flags
     addAtStart: Boolean,
@@ -21,6 +19,7 @@ export default class HgListOld extends LitElement {
     itemTemplate: Function,
     getItemName: Function,
     // optional params
+    enableEditing: Boolean,
     transform: Function,
     onAdd: Function,
     onDelete: Function,
@@ -33,7 +32,6 @@ export default class HgListOld extends LitElement {
     _list: Array,
     _listNotEmpty: {type: Boolean, reflect: true, attribute: 'list-not-empty'},
     _processing: Boolean,
-    _loggedIn: Boolean,
   };
   static styles = [sharedStyles, css`
     :host {
@@ -49,12 +47,6 @@ export default class HgListOld extends LitElement {
       align-items: center;
     }
   `];
-  constructor() {
-    super();
-    this._firebaseAuth = new FirebaseAuthController(this, (loggedIn) => {
-      this._loggedIn = loggedIn;
-    });
-  }
   updated(changedProperties) {
     if (changedProperties.has('editing')) {
       this.dispatchEvent(new CustomEvent('editing-changed', {detail: this.editing, composed: true}));
@@ -111,16 +103,16 @@ export default class HgListOld extends LitElement {
         !this._listNotEmpty && this.emptyTemplate ? this.emptyTemplate : '',
         repeat(this._list || [], (key) => _.get(`${key}.uid`, this.items), (key, listIndex) =>
           !_.get(key, this.items) ?  '' : html`<hg-list-old-item
-            style="${this.calculateItemTop ? `top: ${this.calculateItemTop(listIndex + ((this._loggedIn && !this.noAdd) ? 1 : 0)) * 100}%` : ''}"
+            style="${this.calculateItemTop ? `top: ${this.calculateItemTop(listIndex + ((this.enableEditing && !this.noAdd) ? 1 : 0)) * 100}%` : ''}"
             .item=${this.items[key]}
             .getItemName=${this.getItemName}
             .first=${listIndex === 0}
             .last=${listIndex === _.size(this._list) - 1}
-            .noSwap=${this.noSwap || !this._loggedIn}
-            .noDelete=${!this._loggedIn}
+            .noSwap=${this.noSwap || !this.enableEditing}
+            .noDelete=${!this.enableEditing}
             .vertical=${this.vertical}
             .disableEdit=${this._processing || this.editing}
-            .configure=${this._loggedIn && this.configure}
+            .configure=${this.enableEditing && this.configure}
             @request-delete=${() => this.deleteItem(key)}
             @swap=${async (event) => this.swapItems(key, this._list[listIndex + event.detail])}
             @update=${(event) => this.updateItem(key, event.detail.path, event.detail.data)}
@@ -128,7 +120,7 @@ export default class HgListOld extends LitElement {
             ${this.itemTemplate(this.items[key], key, this._processing || this.editing)}
           </hg-list-old-item>`
         ),
-        (!this._loggedIn || this.noAdd) ? '' : until(import('./hg-list-old/hg-list-old-add.js').then(() => {
+        (!this.enableEditing || this.noAdd) ? '' : until(import('./hg-list-old/hg-list-old-add.js').then(() => {
           return html`
             <div class="add-container">
               <hg-list-old-add
