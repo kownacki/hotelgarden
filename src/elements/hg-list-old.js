@@ -109,7 +109,6 @@ export default class HgListOld extends LitElement {
     const newItems = array.swapItems(index1, index2, _.clone(this.items));
     await this.updateData('', {...newItems});
     this.items = newItems;
-    this.dispatchEvent(new CustomEvent('items-swapped', {detail: [index1, index2]}));
     this.dispatchEvent(new CustomEvent('request-items-change', {
       detail: {
         type: HgListOldItemsChangeType.ITEMS_SWAP,

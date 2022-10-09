@@ -70,8 +70,14 @@ export class HgMenuNav extends LitElement {
             this.updateCategories();
             this.reselectAfterDelete(Number(data.deletedIndex));
           }
+          else if (type === HgListOldItemsChangeType.ITEMS_SWAP) {
+            this.updateCategories();
+            this.reselectAfterSwapped(
+              data.swappedIndexes.index1,
+              data.swappedIndexes.index2,
+            );
+          }
         }}
-        @items-swapped=${(event) => {this.updateCategories(); this.reselectAfterSwapped(Number(event.detail[0]), Number(event.detail[1]))}}>
       </hg-list-old>
     `;
   }
