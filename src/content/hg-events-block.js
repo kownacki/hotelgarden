@@ -45,7 +45,7 @@ export class HgEventsBlock extends LitElement {
           <hg-dynamic-path-pages-list
             .dynamicPathPages=${this._allDynamicPathPages}
             .showHidden=${false}
-            .enableEditing=${false}
+            .showControls=${false}
             .max=${2}
             @events-changed=${async (event) => {
               this._eventsNotEmpty = !_.isEmpty(event.detail);

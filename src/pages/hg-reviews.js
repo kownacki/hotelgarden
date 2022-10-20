@@ -111,7 +111,7 @@ export class HgReviews extends LitElement {
         .transform=${() => _.reverse}
         .items=${this._reviews}
         .path=${this._path}
-        .enableEditing=${this._loggedIn}
+        .showControls=${this._loggedIn}
         .getItemName=${(item) => `opinię${item.heading ? ` "${item.heading}"`: ''}`}
         .itemTemplate=${(review, index, disableEdit) => html`
           <style>

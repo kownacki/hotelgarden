@@ -8,7 +8,7 @@ export class HgMenuNav extends LitElement {
   static properties = {
     selectedCategoryIndex: Number,
     categories: Object,
-    enableEditing: Boolean,
+    showControls: Boolean,
   };
   static styles = css`
     hg-list-old {
@@ -59,7 +59,7 @@ export class HgMenuNav extends LitElement {
         .__noItemChangeUpdate=${true}
         .vertical=${true}
         .items=${this.categories}
-        .enableEditing=${this.enableEditing}
+        .showControls=${this.showControls}
         .getItemName=${(category) => `kategorię${category.name ? ` "${category.name}"`: ''} i wszystkie zawierające się w niej pozycje`}
         .itemTemplate=${(category, index) => html`
           <hg-menu-nav-item

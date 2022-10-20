@@ -88,7 +88,7 @@ export class HgIcons extends LitElement {
       <hg-list-old
         .items=${this._icons}
         .path=${this._path}
-        .enableEditing=${this._loggedIn}
+        .showControls=${this._loggedIn}
         .getItemName=${() => 'ikonę'}
         .itemTemplate=${(icon, index, disableEdit) => html`
           <hg-icons-item .small=${this.small} .icon=${icon} .disableEdit=${disableEdit}></hg-icons-item>

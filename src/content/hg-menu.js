@@ -116,7 +116,7 @@ export class HgMenu extends LitElement {
                 .category=${this._categories[categoryIndex]}
                 .categoryIndex=${categoryIndex}
                 .categories=${this._categories}
-                .enableEditing=${this._loggedIn}
+                .showControls=${this._loggedIn}
                 @editing-changed=${({detail: editing}) => {
                   this._editing = editing;
                 }}
@@ -129,7 +129,7 @@ export class HgMenu extends LitElement {
               id="nav"
               .selectedCategoryIndex=${this._selectedCategoryIndex}
               .categories=${this._categories}
-              .enableEditing=${this._loggedIn}
+              .showControls=${this._loggedIn}
               @request-categories-change=${async ({detail: {newCategories, newSelectedCategoryIndex}}) => {
                 await this._categoriesDbSync.requestAllItemsUpdate(newCategories);
                 this._selectedCategoryIndex = newSelectedCategoryIndex;

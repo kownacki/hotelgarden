@@ -29,7 +29,7 @@ export default class HgListOld extends LitElement {
     itemTemplate: Function,
     getItemName: Function,
     // optional params
-    enableEditing: Boolean,
+    showControls: Boolean,
     transform: Function,
     onAdd: Function,
     onDelete: Function,
@@ -168,16 +168,16 @@ export default class HgListOld extends LitElement {
         !this._listNotEmpty && this.emptyTemplate ? this.emptyTemplate : '',
         repeat(this._list || [], (key) => _.get(`${key}.uid`, this.items), (key, listIndex) =>
           !_.get(key, this.items) ?  '' : html`<hg-list-old-item
-            style="${this.calculateItemTop ? `top: ${this.calculateItemTop(listIndex + ((this.enableEditing && !this.noAdd) ? 1 : 0)) * 100}%` : ''}"
+            style="${this.calculateItemTop ? `top: ${this.calculateItemTop(listIndex + ((this.showControls && !this.noAdd) ? 1 : 0)) * 100}%` : ''}"
             .item=${this.items[key]}
             .getItemName=${this.getItemName}
             .first=${listIndex === 0}
             .last=${listIndex === _.size(this._list) - 1}
-            .noSwap=${this.noSwap || !this.enableEditing}
-            .noDelete=${!this.enableEditing}
+            .noSwap=${this.noSwap || !this.showControls}
+            .noDelete=${!this.showControls}
             .vertical=${this.vertical}
             .disableEdit=${this.processing || this.editing}
-            .configure=${this.enableEditing && this.configure}
+            .configure=${this.showControls && this.configure}
             @request-delete=${() => this.deleteItem(key)}
             @swap=${async (event) => this.swapItems(key, this._list[listIndex + event.detail])}
             @update=${(event) => this.updateItem(key, event.detail.path, event.detail.data)}
@@ -185,7 +185,7 @@ export default class HgListOld extends LitElement {
             ${this.itemTemplate(this.items[key], key, this.processing || this.editing)}
           </hg-list-old-item>`
         ),
-        (!this.enableEditing || this.noAdd) ? '' : until(import('./hg-list-old/hg-list-old-add.js').then(() => {
+        (!this.showControls || this.noAdd) ? '' : until(import('./hg-list-old/hg-list-old-add.js').then(() => {
           return html`
             <div class="add-container">
               <hg-list-old-add

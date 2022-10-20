@@ -13,7 +13,7 @@ export class HgMenuMain extends LitElement {
     category: Object,
     categoryIndex: Number,
     categories: Object,
-    enableEditing: Boolean,
+    showControls: Boolean,
     // observables
     editing: Boolean,
   };
@@ -101,7 +101,7 @@ export class HgMenuMain extends LitElement {
           .__noItemChangeUpdate=${true}
           .vertical=${true}
           .items=${this.category.items}
-          .enableEditing=${this.enableEditing}
+          .showControls=${this.showControls}
           .getItemName=${(item) => `pozycję${item.name ? ` "${item.name}"`: ''}`}
           .itemTemplate=${(item, index, disableEdit) => 
             html`<hg-menu-item .item=${item} .disableEdit=${disableEdit} .isRestaurantMenu=${true}></hg-menu-nav-item>
