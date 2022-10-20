@@ -18,7 +18,7 @@ export class HgMenu extends LitElement {
     _path: DbPath,
     _categoriesReady: Boolean,
     _categories: Object,
-    _selectedCategory: Number,
+    _selectedCategoryIndex: Number,
     _compact: Boolean,
     _editing: {type: Boolean, reflect: true, attribute: 'editing'},
     _loggedIn: Boolean,
@@ -84,7 +84,6 @@ export class HgMenu extends LitElement {
       (categoriesReady) => this._categoriesReady = categoriesReady,
       (categories) => {
         this._categories = categories;
-        this._selectedCategory = 0;
       },
     );
 
@@ -99,9 +98,10 @@ export class HgMenu extends LitElement {
     if (changedProperties.has('uid')) {
       this._path = createDbPath(`menus/${this.uid}`)
       this._categoriesDbSync.setPath(this._path);
+      this._selectedCategoryIndex = 0;
     }
   }
-  render(){
+  render() {
     return html`
       <section>
         ${when(
@@ -109,7 +109,7 @@ export class HgMenu extends LitElement {
           () => html`
             ${(this._compact
               ? range(0, size(this._categories))
-              : [this._selectedCategory]
+              : [this._selectedCategoryIndex]
             ).map((categoryIndex) => html`
               <hg-menu-main
                 id="main"
@@ -127,19 +127,17 @@ export class HgMenu extends LitElement {
             `)}
             <hg-menu-nav
               id="nav"
-              .uid=${this.uid}
-              .selectedCategory=${this._selectedCategory}
+              .selectedCategoryIndex=${this._selectedCategoryIndex}
               .categories=${this._categories}
               .enableEditing=${this._loggedIn}
-              @categories-changed=${(event) => this._categories = event.detail}
-              @selected-category-changed=${(event) => {
-                this._selectedCategory = event.detail;
+              @request-categories-change=${async ({detail: {newCategories, newSelectedCategoryIndex}}) => {
+                await this._categoriesDbSync.requestAllItemsUpdate(newCategories);
+                this._selectedCategoryIndex = newSelectedCategoryIndex;
+                // !!!!   .onDelete=${(item) => item.image ? deleteImageInDb(item.image.name) : null}
+              }}
+              @request-selected-category-change=${({ detail: selectedCategoryIndex}) => {
+                this._selectedCategoryIndex = selectedCategoryIndex;
                 scrollIntoView(this);
-                //!!!!
-                // update in case if selectedCategory index unchanged but category object did
-                // //todo think if more elegant solution
-                // this.shadowRoot.getElementById('main').requestUpdate();
-                // this.requestUpdate();
               }}>
             </hg-menu-nav>
           `,

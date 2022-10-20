@@ -105,8 +105,8 @@ export default class HgListOld extends LitElement {
 
     if (!this.__noDeleteUpdate) {
       await this.updateData('', {...newItems});
+      this.items = newItems;
     }
-    this.items = newItems;
     this.dispatchEvent(new CustomEvent('request-items-change', {
       detail: {
         type: HgListOldItemsChangeType.ITEM_DELETE,
@@ -123,8 +123,8 @@ export default class HgListOld extends LitElement {
     const newItems = array.swapItems(index1, index2, _.clone(this.items));
     if (!this.__noSwapUpdate) {
       await this.updateData('', {...newItems});
+      this.items = newItems;
     }
-    this.items = newItems;
     this.dispatchEvent(new CustomEvent('request-items-change', {
       detail: {
         type: HgListOldItemsChangeType.ITEMS_SWAP,
@@ -148,8 +148,8 @@ export default class HgListOld extends LitElement {
       if (!this.__noAddUpdate) {
         await this.updateData(String(size(this.items)), newItem);
         //todo use firebase.firestore.FieldValue.arrayUnion
+        this.items = newItems;
       }
-      this.items = newItems;
       this.dispatchEvent(new CustomEvent('request-items-change', {
         detail: {
           type: HgListOldItemsChangeType.ITEM_ADD,
