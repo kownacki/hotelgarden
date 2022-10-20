@@ -4,7 +4,7 @@ import '../content/hg-article/hg-intro-article.js';
 import '../elements/hg-list-old.js';
 import '../elements/hg-review.js';
 import '../content/hg-links.js';
-import {createDbPath, DbPath, getFromDb, updateInObjectInDb} from '../utils/database.js';
+import {createDbPath, DbPath, getFromDb, updateInDb, updateInObjectInDb} from '../utils/database.js';
 import '../utils/fixes/mwc-formfield-fixed.js';
 import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
 import {ItemsDbSyncController} from '../utils/ItemsDbSyncController.js';
@@ -91,7 +91,11 @@ export class HgReviews extends LitElement {
       this,
       async (path) => await getFromDb(path) || {},
       async (objectPath, dataPath, data) => {
-        updateInObjectInDb(objectPath, dataPath, data);
+        await updateInObjectInDb(objectPath, dataPath, data);
+        return data;
+      },
+      async (path, data) => {
+        await updateInDb(path, data);
         return data;
       },
       (reviewsReady) => this._reviewsReady = reviewsReady,

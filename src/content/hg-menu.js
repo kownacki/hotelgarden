@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit';
 import {when} from 'lit/directives/when.js';
 import {throttle, range, size} from 'lodash-es';
-import {createDbPath, getFromDb, DbPath, updateDataOrImageInObjectInDb} from '../utils/database.js'
+import {createDbPath, getFromDb, DbPath, updateDataOrImageInObjectInDb, updateInDb} from '../utils/database.js'
 import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
 import {ItemsDbSyncController} from '../utils/ItemsDbSyncController.js';
 import {scrollIntoView} from '../utils.js';
@@ -76,6 +76,10 @@ export class HgMenu extends LitElement {
           ...oldItem,
           [field]: updatedData,
         };
+      },
+      async (path, data) => {
+        await updateInDb(path, data);
+        return data;
       },
       (categoriesReady) => this._categoriesReady = categoriesReady,
       (categories) => {

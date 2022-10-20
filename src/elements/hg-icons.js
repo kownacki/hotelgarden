@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import {until} from 'lit/directives/until.js';
-import {createDbPath, DbPath, getFromDb, updateInObjectInDb} from '../utils/database.js';
+import {createDbPath, DbPath, getFromDb, updateInDb, updateInObjectInDb} from '../utils/database.js';
 import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
 import {ItemsDbSyncController} from '../utils/ItemsDbSyncController.js';
 import {sleep} from '../utils.js';
@@ -66,7 +66,11 @@ export class HgIcons extends LitElement {
       this,
       async (path) => await getFromDb(path) || {},
       async (objectPath, dataPath, data) => {
-        updateInObjectInDb(objectPath, dataPath, data);
+        await updateInObjectInDb(objectPath, dataPath, data);
+        return data;
+      },
+      async (path, data) => {
+        await updateInDb(path, data);
         return data;
       },
       (iconsReady) => this._iconsReady = iconsReady,

@@ -1,7 +1,7 @@
 import {LitElement, html, css, unsafeCSS} from 'lit';
 import materialColors from 'material-colors';
 import sharedStyles from '../styles/shared-styles.js'
-import {createDbPath, DbPath, getFromDb, updateDataOrImageInObjectInDb} from '../utils/database.js';
+import {createDbPath, DbPath, getFromDb, updateDataOrImageInObjectInDb, updateInDb} from '../utils/database.js';
 import {ItemsDbSyncController} from '../utils/ItemsDbSyncController.js';
 import '../elements/mkwc/hg-editable-image.js';
 import '../edit/hg-editable-text.js';
@@ -108,6 +108,10 @@ export class HgInfographic extends LitElement {
           ...oldItem,
           [field]: updatedData,
         };
+      },
+      async (path, data) => {
+        await updateInDb(path, data);
+        return data;
       },
       (itemsReady) => this._itemsReady = itemsReady,
       (items) => this._items = items,

@@ -3,7 +3,15 @@ import {until} from 'lit/directives/until.js';
 import '../content/hg-article/hg-intro-article.js';
 import '../elements/hg-list-old/hg-mosaic-list-old.js'
 import '../elements/hg-window-slider.js';
-import {createDbPath, createImageInDb, deleteImageInDb, DbPath, getFromDb, updateImageInObjectInDb} from '../utils/database.js';
+import {
+  createDbPath,
+  createImageInDb,
+  deleteImageInDb,
+  DbPath,
+  getFromDb,
+  updateImageInObjectInDb,
+  updateInDb,
+} from '../utils/database.js';
 import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
 import {ItemsDbSyncController} from '../utils/ItemsDbSyncController.js';
 import './hg-gallery/hg-gallery-item.js';
@@ -43,6 +51,10 @@ export class HgGallery extends LitElement {
           ...oldItem,
           image: updatedImage,
         };
+      },
+      async (path, data) => {
+        await updateInDb(path, data);
+        return data;
       },
       (itemsReady) => this._itemsReady = itemsReady,
       (items) => this._items = items,

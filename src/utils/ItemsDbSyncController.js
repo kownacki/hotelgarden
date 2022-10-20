@@ -1,12 +1,28 @@
 import {DbSyncController} from 'mkwc/DbSyncController.js';
 
+const UpdateType = {
+  SINGLE_ITEM: 'SINGLE_ITEM',
+  ALL_ITEMS: 'ALL_ITEMS',
+};
+
 export class ItemsDbSyncController extends DbSyncController {
-  constructor(host, getItems, updateItem, onDataReadyChange, onDataChange, options) {
-    const updateItems = async (path, {index, newItemData}, items) => {
-      const oldItem = items[index];
-      const updatedItem = await updateItem(path, index, newItemData, oldItem, items);
-      return {...items, [index]: updatedItem};
+  constructor(host, getItems, updateItem, updateAllItems, onDataReadyChange, onDataChange, options) {
+    const updateDataSingleItem = async (path, index, newItemData, oldItems) => {
+      const oldItem = oldItems[index];
+      const updatedItem = await updateItem(path, index, newItemData, oldItem, oldItems);
+      return {...oldItems, [index]: updatedItem};
+    }
+    const updateDataAllItems = async (path, newItemsData) => {
+      return await updateAllItems(path, newItemsData);
     };
+    const updateItems = (path, {type, index, data}, items) => {
+      if (type === UpdateType.SINGLE_ITEM) {
+        return updateDataSingleItem(path, index, data, items)
+      }
+      // type === UpdateType.ALL_ITEMS
+      return updateDataAllItems(path, data);
+    };
+
     return super(
       host,
       getItems,
@@ -16,7 +32,10 @@ export class ItemsDbSyncController extends DbSyncController {
       options,
     );
   }
+  async requestAllItemsUpdate(newItems) {
+    return this.requestDataUpdate({type: UpdateType.ALL_ITEMS, data: newItems});
+  }
   async requestItemUpdate(index, newItemData) {
-    return this.requestDataUpdate({index, newItemData});
+    return this.requestDataUpdate({type: UpdateType.SINGLE_ITEM, index, data: newItemData});
   }
 }
