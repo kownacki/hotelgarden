@@ -64,17 +64,19 @@ export class HgIcons extends LitElement {
 
     this._iconsDbSync = new ItemsDbSyncController(
       this,
-      async (path) => await getFromDb(path) || {},
-      async (objectPath, dataPath, data) => {
-        await updateInObjectInDb(objectPath, dataPath, data);
-        return data;
+      {
+        getItems: async (path) => await getFromDb(path) || {},
+        updateItem: async (objectPath, dataPath, data) => {
+          await updateInObjectInDb(objectPath, dataPath, data);
+          return data;
+        },
+        updateAllItems: async (path, data) => {
+          await updateInDb(path, data);
+          return data;
+        },
+        onDataReadyChange: (iconsReady) => this._iconsReady = iconsReady,
+        onDataChange: (icons) => this._icons = icons,
       },
-      async (path, data) => {
-        await updateInDb(path, data);
-        return data;
-      },
-      (iconsReady) => this._iconsReady = iconsReady,
-      (icons) => this._icons = icons,
     );
   }
   async willUpdate(changedProperties) {

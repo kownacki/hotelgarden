@@ -69,21 +69,23 @@ export class HgMenu extends LitElement {
 
     this._categoriesDbSync = new ItemsDbSyncController(
       this,
-      async (path) => await getFromDb(path) || {},
-      async (path, index, {field, data}, oldItem, items) => {
-        const updatedData = await updateDataOrImageInObjectInDb(field, path, `${index}.${field}`, data, items);
-        return {
-          ...oldItem,
-          [field]: updatedData,
-        };
-      },
-      async (path, data) => {
-        await updateInDb(path, data);
-        return data;
-      },
-      (categoriesReady) => this._categoriesReady = categoriesReady,
-      (categories) => {
-        this._categories = categories;
+      {
+        getItems: async (path) => await getFromDb(path) || {},
+        updateItem: async (path, index, {field, data}, oldItem, items) => {
+          const updatedData = await updateDataOrImageInObjectInDb(field, path, `${index}.${field}`, data, items);
+          return {
+            ...oldItem,
+            [field]: updatedData,
+          };
+        },
+        updateAllItems: async (path, data) => {
+          await updateInDb(path, data);
+          return data;
+        },
+        onDataReadyChange: (categoriesReady) => this._categoriesReady = categoriesReady,
+        onDataChange: (categories) => {
+          this._categories = categories;
+        },
       },
     );
 

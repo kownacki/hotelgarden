@@ -78,16 +78,17 @@ export class HgDynamicPathPage extends LitElement {
     super();
     this._dynamicPathPageDbSync = new ObjectDbSyncController(
       this,
-      async () => {
-        return this.dynamicPathPage;
-      },
-      async (objectPath, dataPath, data) => {
-        updateInObjectInDb(objectPath, dataPath, data);
-        return data;
-      },
-      () => {},
-      (dynamicPathPage) => {
-        this.dynamicPathPage = dynamicPathPage;
+      {
+        getObject: async () => {
+          return this.dynamicPathPage;
+        },
+        updateField: async (objectPath, dataPath, data) => {
+          updateInObjectInDb(objectPath, dataPath, data);
+          return data;
+        },
+        onDataChange: (dynamicPathPage) => {
+          this.dynamicPathPage = dynamicPathPage;
+        },
       },
     );
     (async () => {

@@ -101,20 +101,22 @@ export class HgInfographic extends LitElement {
     super();
     this._itemsDbSync = new ItemsDbSyncController(
       this,
-      async (path) => await getFromDb(path) || {},
-      async (path, index, {field, data}, oldItem, items) => {
-        const updatedData = await updateDataOrImageInObjectInDb(field, path, `${index}.${field}`, data, items);
-        return {
-          ...oldItem,
-          [field]: updatedData,
-        };
+      {
+        getItems: async (path) => await getFromDb(path) || {},
+        updateItem: async (path, index, {field, data}, oldItem, items) => {
+          const updatedData = await updateDataOrImageInObjectInDb(field, path, `${index}.${field}`, data, items);
+          return {
+            ...oldItem,
+            [field]: updatedData,
+          };
+        },
+        updateAllItems: async (path, data) => {
+          await updateInDb(path, data);
+          return data;
+        },
+        onDataReadyChange: (itemsReady) => this._itemsReady = itemsReady,
+        onDataChange: (items) => this._items = items,
       },
-      async (path, data) => {
-        await updateInDb(path, data);
-        return data;
-      },
-      (itemsReady) => this._itemsReady = itemsReady,
-      (items) => this._items = items,
     );
   }
   async willUpdate(changedProperties) {

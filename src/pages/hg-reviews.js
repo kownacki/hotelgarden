@@ -89,17 +89,19 @@ export class HgReviews extends LitElement {
     this._path = createDbPath('reviews/reviews');
     this._reviewsDbSync = new ItemsDbSyncController(
       this,
-      async (path) => await getFromDb(path) || {},
-      async (objectPath, dataPath, data) => {
-        await updateInObjectInDb(objectPath, dataPath, data);
-        return data;
+      {
+        getItems: async (path) => await getFromDb(path) || {},
+        updateItem: async (objectPath, dataPath, data) => {
+          await updateInObjectInDb(objectPath, dataPath, data);
+          return data;
+        },
+        updateAllItems: async (path, data) => {
+          await updateInDb(path, data);
+          return data;
+        },
+        onDataReadyChange: (reviewsReady) => this._reviewsReady = reviewsReady,
+        onDataChange: (reviews) => this._reviews = reviews,
       },
-      async (path, data) => {
-        await updateInDb(path, data);
-        return data;
-      },
-      (reviewsReady) => this._reviewsReady = reviewsReady,
-      (reviews) => this._reviews = reviews,
     );
     this._reviewsDbSync.setPath(this._path);
   }

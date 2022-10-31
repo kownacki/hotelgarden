@@ -60,15 +60,17 @@ export class HgBookDialog extends LitElement {
     this._path = createDbPath('texts/book');
     this._objectDbSync = new ObjectDbSyncController(
       this,
-      async (path) => await getFromDb(path) || {},
-      async (objectPath, dataPath, {type, data}, oldData, object) => {
-        return updateDataOrImageInObjectInDb(type, objectPath, dataPath, data, object);
+      {
+        getObject: async (path) => await getFromDb(path) || {},
+        updateField: async (objectPath, dataPath, {type, data}, oldData, object) => {
+          return updateDataOrImageInObjectInDb(type, objectPath, dataPath, data, object);
+        },
+        onDataReadyChange: (ready) => this._dataReady = ready,
+        onDataChange: (data) => {
+          this._data = data;
+          this.dialog.notifyResize();
+        },
       },
-      (ready) => this._dataReady = ready,
-      (data) => {
-        this._data = data;
-        this.dialog.notifyResize();
-      }
     );
     this._objectDbSync.setPath(this._path);
   }

@@ -44,20 +44,22 @@ export class HgGallery extends LitElement {
     this._path = createDbPath('gallery/gallery');
     this._itemsDbSync = new ItemsDbSyncController(
       this,
-      async (path) => await getFromDb(path) || {},
-      async (path, index, file, oldItem, items) => {
-        const updatedImage = await updateImageInObjectInDb(path, `${index}.image`, file, items);
-        return {
-          ...oldItem,
-          image: updatedImage,
-        };
+      {
+        getItems: async (path) => await getFromDb(path) || {},
+        updateItem: async (path, index, file, oldItem, items) => {
+          const updatedImage = await updateImageInObjectInDb(path, `${index}.image`, file, items);
+          return {
+            ...oldItem,
+            image: updatedImage,
+          };
+        },
+        updateAllItems: async (path, data) => {
+          await updateInDb(path, data);
+          return data;
+        },
+        onDataReadyChange: (itemsReady) => this._itemsReady = itemsReady,
+        onDataChange: (items) => this._items = items,
       },
-      async (path, data) => {
-        await updateInDb(path, data);
-        return data;
-      },
-      (itemsReady) => this._itemsReady = itemsReady,
-      (items) => this._items = items,
     );
     this._itemsDbSync.setPath(this._path);
   }

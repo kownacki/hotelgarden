@@ -1,7 +1,7 @@
 import {DbSyncController} from 'mkwc/DbSyncController.js';
 
 export class ObjectDbSyncController extends DbSyncController {
-  constructor(host, getObject, updateField, onDataReadyChange, onDataChange, options) {
+  constructor(host, {getObject, updateField, ...restProps}, options) {
     const updateObject = async (path, {fieldPath, newFieldData}, object) => {
       const oldFieldData = _.get(fieldPath, object);
       const updatedFieldData = await updateField(path, fieldPath, newFieldData, oldFieldData, object);
@@ -10,10 +10,11 @@ export class ObjectDbSyncController extends DbSyncController {
     };
     return super(
       host,
-      getObject,
-      updateObject,
-      onDataReadyChange,
-      onDataChange,
+      {
+        getData: getObject,
+        updateData: updateObject,
+        ...restProps,
+      },
       options,
     );
   }

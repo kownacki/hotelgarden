@@ -24,21 +24,23 @@ export class HgPageBanner extends LitElement {
     super();
     this._objectDbSync = new ObjectDbSyncController(
       this,
-      async (path) => {
-        if (this.pageType === PageType.STATIC_PATH) {
-          return (this.initialPage ? window.initialData.banner : await getFromDb(path)) || {};
-        } else {
-          return {
-            image: this.dynamicPathPage?.image,
-            title: this.defaultTitle,
-          };
-        }
+      {
+        getObject: async (path) => {
+          if (this.pageType === PageType.STATIC_PATH) {
+            return (this.initialPage ? window.initialData.banner : await getFromDb(path)) || {};
+          } else {
+            return {
+              image: this.dynamicPathPage?.image,
+              title: this.defaultTitle,
+            };
+          }
+        },
+        updateField: async (objectPath, dataPath, {type, data}, oldData, object) => {
+          return updateDataOrImageInObjectInDb(type, objectPath, dataPath, data, object);
+        },
+        onDataReadyChange: (ready) => this._bannerReady = ready,
+        onDataChange: (bannerData) => this._bannerData = bannerData,
       },
-      async (objectPath, dataPath, {type, data}, oldData, object) => {
-        return updateDataOrImageInObjectInDb(type, objectPath, dataPath, data, object);
-      },
-      (ready) => this._bannerReady = ready,
-      (bannerData) => this._bannerData = bannerData,
     );
   }
   willUpdate(changedProperties) {

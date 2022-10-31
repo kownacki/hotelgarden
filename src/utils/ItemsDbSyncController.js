@@ -6,7 +6,7 @@ const UpdateType = {
 };
 
 export class ItemsDbSyncController extends DbSyncController {
-  constructor(host, getItems, updateItem, updateAllItems, onDataReadyChange, onDataChange, options) {
+  constructor(host, {getItems, updateItem, updateAllItems, ...restProps}, options) {
     const updateDataSingleItem = async (path, index, newItemData, oldItems) => {
       const oldItem = oldItems[index];
       const updatedItem = await updateItem(path, index, newItemData, oldItem, oldItems);
@@ -25,10 +25,11 @@ export class ItemsDbSyncController extends DbSyncController {
 
     return super(
       host,
-      getItems,
-      updateItems,
-      onDataReadyChange,
-      onDataChange,
+      {
+        getData: getItems,
+        updateData: updateItems,
+        ...restProps,
+      },
       options,
     );
   }
