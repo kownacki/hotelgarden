@@ -11,10 +11,12 @@ export class HgEditableImageWithSync extends HgEditableImage {
     super.firstUpdated(changedProperties);
     this._dbSync = new DbSyncController(
       this,
-      (path) => getFromDb(path),
-      (path, file, oldImage) => updateImageInDb(path, file, oldImage?.name),
-      (dataReady) => this.ready = dataReady,
-      (image) => this.src = image?.url,
+      {
+        getData: (path) => getFromDb(path),
+        updateData: (path, file, oldImage) => updateImageInDb(path, file, oldImage?.name),
+        onDataReadyChange: (dataReady) => this.ready = dataReady,
+        onDataChange: (image) => this.src = image?.url,
+      },
     );
     this.addEventListener('image-uploaded', ({detail: blob}) => {
       this._dbSync.requestDataUpdate(blob);

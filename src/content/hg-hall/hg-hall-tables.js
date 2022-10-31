@@ -49,21 +49,25 @@ export class HgHallTables extends LitElement {
     super();
     this._hallTablesObjectDbSync = new ObjectDbSyncController(
       this,
-      async (path) => await getFromDb(path) || {},
-      async (objectPath, dataPath, {type, data}, oldData, object) => {
-        return updateDataOrImageInObjectInDb(type, objectPath, dataPath, data, object);
+      {
+        getObject: async (path) => await getFromDb(path) || {},
+        updateField: async (objectPath, dataPath, {type, data}, oldData, object) => {
+          return updateDataOrImageInObjectInDb(type, objectPath, dataPath, data, object);
+        },
+        onDataReadyChange: (ready) => this._hallTablesReady = ready,
+        onDataChange: (hallTables) => this._hallTables = hallTables,
       },
-      (ready) => this._hallTablesReady = ready,
-      (hallTables) => this._hallTables = hallTables,
     );
     this._setOutsObjectDbSync = new ObjectDbSyncController(
       this,
-      async (path) => await getFromDb(path) || {},
-      async (objectPath, dataPath, {type, data}, oldData, object) => {
-        return updateDataOrImageInObjectInDb(type, objectPath, dataPath, data, object);
+      {
+        getObject: async (path) => await getFromDb(path) || {},
+        updateField: async (objectPath, dataPath, {type, data}, oldData, object) => {
+          return updateDataOrImageInObjectInDb(type, objectPath, dataPath, data, object);
+        },
+        onDataReadyChange: (ready) => this._setOutsReady = ready,
+        onDataChange: (setOuts) => this._setOuts = setOuts,
       },
-      (ready) => this._setOutsReady = ready,
-      (setOuts) => this._setOuts = setOuts,
     );
   }
   async willUpdate(changedProperties) {

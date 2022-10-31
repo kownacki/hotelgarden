@@ -1,7 +1,7 @@
 import {LitElement, html, css, unsafeCSS} from 'lit';
 import materialColors from 'material-colors';
 import sharedStyles from '../styles/shared-styles.js'
-import {createDbPath, DbPath, getFromDb, updateDataOrImageInObjectInDb} from '../utils/database.js';
+import {createDbPath, DbPath, getFromDb, updateDataOrImageInObjectInDb, updateInDb} from '../utils/database.js';
 import {ItemsDbSyncController} from '../utils/ItemsDbSyncController.js';
 import '../elements/mkwc/hg-editable-image.js';
 import '../edit/hg-editable-text.js';
@@ -101,16 +101,22 @@ export class HgInfographic extends LitElement {
     super();
     this._itemsDbSync = new ItemsDbSyncController(
       this,
-      async (path) => await getFromDb(path) || {},
-      async (path, index, {field, data}, oldItem, items) => {
-        const updatedData = await updateDataOrImageInObjectInDb(field, path, `${index}.${field}`, data, items);
-        return {
-          ...oldItem,
-          [field]: updatedData,
-        };
+      {
+        getItems: async (path) => await getFromDb(path) || {},
+        updateItem: async (path, index, {field, data}, oldItem, items) => {
+          const updatedData = await updateDataOrImageInObjectInDb(field, path, `${index}.${field}`, data, items);
+          return {
+            ...oldItem,
+            [field]: updatedData,
+          };
+        },
+        updateAllItems: async (path, data) => {
+          await updateInDb(path, data);
+          return data;
+        },
+        onDataReadyChange: (itemsReady) => this._itemsReady = itemsReady,
+        onDataChange: (items) => this._items = items,
       },
-      (itemsReady) => this._itemsReady = itemsReady,
-      (items) => this._items = items,
     );
   }
   async willUpdate(changedProperties) {

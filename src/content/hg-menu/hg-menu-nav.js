@@ -1,14 +1,14 @@
 import {LitElement, html, css} from 'lit';
-import {createDbPath, deleteImageInDb} from '../../utils/database.js';
-import '../../elements/hg-list-old.js';
+import {size} from 'lodash-es';
+import {getSelectedIndexAfterDelete, getSelectedIndexAfterItemSwap} from '../../../utils/list.js';
+import {HgListOldItemsChangeType} from '../../elements/hg-list-old.js';
 import './hg-menu-nav-item.js';
 
 export class HgMenuNav extends LitElement {
   static properties = {
-    uid: String,
-    selectedCategory: Number,
+    selectedCategoryIndex: Number,
     categories: Object,
-    enableEditing: Boolean,
+    showControls: Boolean,
   };
   static styles = css`
     hg-list-old {
@@ -18,53 +18,60 @@ export class HgMenuNav extends LitElement {
       position: sticky;
     }
   `;
-  selectCategory(index) {
-    this.selectedCategory = index;
-    this.dispatchEvent(new CustomEvent('selected-category-changed', {detail: index}));
+  _requestSelectedCategoryChange(index) {
+    this.dispatchEvent(new CustomEvent('request-selected-category-change', {detail: index}));
   };
-  reselectAfterDelete(deletedIndex) {
-    //todo think if more elegant solution to keep selected category correct
-    if (deletedIndex < this.selectedCategory || (deletedIndex === this.selectedCategory && deletedIndex === _.size(this.categories))) {
-      this.selectCategory(this.selectedCategory - 1);
-    } else {
-      this.selectCategory(this.selectedCategory);
+  _getNewSelectedCategoryIndex(newCategories, changeType, changeData) {
+    if (changeType === HgListOldItemsChangeType.ITEM_ADD) {
+      return size(newCategories) - 1;
     }
-  }
-  reselectAfterSwapped(index1, index2) {
-    if (index1 === this.selectedCategory) {
-      this.selectCategory(index2);
-    } else if (index2 === this.selectedCategory) {
-      this.selectCategory(index1);
+    else if (changeType === HgListOldItemsChangeType.ITEM_DELETE) {
+      const previousCategoriesSize = size(newCategories) + 1;
+      return getSelectedIndexAfterDelete(
+        Number(changeData.deletedIndex),
+        this.selectedCategoryIndex,
+        previousCategoriesSize,
+      );
     }
+    else if (changeType === HgListOldItemsChangeType.ITEMS_SWAP) {
+      return getSelectedIndexAfterItemSwap(
+        changeData.swappedIndexes.index1,
+        changeData.swappedIndexes.index2,
+        this.selectedCategoryIndex,
+      );
+    }
+    return this.selectedCategoryIndex;
   }
-  updateCategories() {
-    this.categories = this.shadowRoot.getElementById('list').items;
-    this.dispatchEvent(new CustomEvent('categories-changed', {detail: this.categories}));
-  }
-  requestUpdateNavItem() {
-    this.shadowRoot.getElementById('list').shadowRoot.querySelector('hg-menu-nav-item[selected]').requestUpdate();
+  _requestCategoriesChange(newCategories, newSelectedCategoryIndex) {
+    this.dispatchEvent(new CustomEvent('request-categories-change', {
+      detail: {
+        newCategories,
+        newSelectedCategoryIndex,
+      },
+    }));
   }
   render() {
     return html`
       <hg-list-old
-        id="list"
+        .__noAddUpdate=${true}
+        .__noDeleteUpdate=${true}
+        .__noSwapUpdate=${true}
+        .__noItemChangeUpdate=${true}
         .vertical=${true}
-        .noGetItems=${true},
         .items=${this.categories}
-        .path=${createDbPath('menus/' + this.uid)}
-        .enableEditing=${this.enableEditing}
+        .showControls=${this.showControls}
         .getItemName=${(category) => `kategorię${category.name ? ` "${category.name}"`: ''} i wszystkie zawierające się w niej pozycje`}
         .itemTemplate=${(category, index) => html`
           <hg-menu-nav-item
             .category=${category}
-            .selected=${this.selectedCategory === Number(index)}
-            @click=${() => this.selectCategory(Number(index))}>
+            .selected=${this.selectedCategoryIndex === Number(index)}
+            @click=${() => this._requestSelectedCategoryChange(Number(index))}>
           </hg-menu-nav-item>
         `}
-        .onDelete=${(item) => item.image ? deleteImageInDb(item.image.name) : null}
-        @item-added=${() => {this.updateCategories(); this.selectCategory(_.size(this.categories) - 1)}}
-        @item-deleted=${(event) => {this.updateCategories(); this.reselectAfterDelete(Number(event.detail))}}
-        @items-swapped=${(event) => {this.updateCategories(); this.reselectAfterSwapped(Number(event.detail[0]), Number(event.detail[1]))}}>
+        @request-items-change=${({detail: {newItems, type, data}}) => {
+          const newSelectedCategoryIndex = this._getNewSelectedCategoryIndex(newItems, type, data);
+          this._requestCategoriesChange(newItems, newSelectedCategoryIndex);
+        }}
       </hg-list-old>
     `;
   }

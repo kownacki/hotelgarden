@@ -1,16 +1,24 @@
 import {LitElement, html, css} from 'lit';
-import {createDbPath, getFromDb} from '../utils/database.js'
+import {when} from 'lit/directives/when.js';
+import {throttle, range, size} from 'lodash-es';
+import {createDbPath, getFromDb, DbPath, updateDataOrImageInObjectInDb, updateInDb} from '../utils/database.js'
 import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
+import {ItemsDbSyncController} from '../utils/ItemsDbSyncController.js';
 import {scrollIntoView} from '../utils.js';
 import './hg-menu/hg-menu-main.js';
 import './hg-menu/hg-menu-nav.js';
 
 export class HgMenu extends LitElement {
   _firebaseAuth;
+  _categoriesDbSync;
   static properties = {
-    categories: Object,
+    // required params
     uid: String,
-    selectedCategory: Number,
+    // private
+    _path: DbPath,
+    _categoriesReady: Boolean,
+    _categories: Object,
+    _selectedCategoryIndex: Number,
     _compact: Boolean,
     _editing: {type: Boolean, reflect: true, attribute: 'editing'},
     _loggedIn: Boolean,
@@ -59,47 +67,83 @@ export class HgMenu extends LitElement {
       this._loggedIn = loggedIn;
     });
 
-    this.categories = {};
-    this.selectedCategory = 0;
+    this._categoriesDbSync = new ItemsDbSyncController(
+      this,
+      {
+        getItems: async (path) => await getFromDb(path) || {},
+        updateItem: async (path, index, {field, data}, oldItem, items) => {
+          const updatedData = await updateDataOrImageInObjectInDb(field, path, `${index}.${field}`, data, items);
+          return {
+            ...oldItem,
+            [field]: updatedData,
+          };
+        },
+        updateAllItems: async (path, data) => {
+          await updateInDb(path, data);
+          return data;
+        },
+        onDataReadyChange: (categoriesReady) => this._categoriesReady = categoriesReady,
+        onDataChange: (categories) => {
+          this._categories = categories;
+        },
+      },
+    );
+
     this._compact = (window.innerWidth < 600);
-    window.addEventListener('resize', _.throttle(100, () => this._compact = (window.innerWidth < 600)));
+
+    window.addEventListener('resize', throttle(
+      () => this._compact = (window.innerWidth < 600),
+      100,
+    ));
   }
-  async firstUpdated() {
-    this.categories = await getFromDb(createDbPath(`menus/${this.uid}`));
-    this._dataReady = true;
+  async willUpdate(changedProperties) {
+    if (changedProperties.has('uid')) {
+      this._path = createDbPath(`menus/${this.uid}`)
+      this._categoriesDbSync.setPath(this._path);
+      this._selectedCategoryIndex = 0;
+    }
   }
-  render(){
+  render() {
     return html`
       <section>
-        ${_.map((category) => html`
-          <hg-menu-main
-            id="main"
-            .dataReady=${this._dataReady}
-            .uid=${this.uid}
-            .category=${_.get(category, this.categories)}
-            .categoryIndex=${category}
-            .categories=${this.categories}
-            .enableEditing=${this._loggedIn}
-            @category-changed=${() => this.shadowRoot.getElementById('nav').requestUpdateNavItem()}
-            @editing-changed=${(event) => this._editing = event.detail}>
-          </hg-menu-main>
-        `, this._compact ? _.range(0, _.size(this.categories)) : [this.selectedCategory])}
-        <hg-menu-nav
-          id="nav"
-          .uid=${this.uid}
-          .selectedCategory=${this.selectedCategory}
-          .categories=${this.categories}
-          .enableEditing=${this._loggedIn}
-          @categories-changed=${(event) => this.categories = event.detail}
-          @selected-category-changed=${(event) => {
-            this.selectedCategory = event.detail;
-            scrollIntoView(this);
-            // update in case if selectedCategory index unchanged but category object did
-            // //todo think if more elegant solution
-            // this.shadowRoot.getElementById('main').requestUpdate();
-            // this.requestUpdate();
-          }}>
-        </hg-menu-nav>
+        ${when(
+          this._categoriesReady,
+          () => html`
+            ${(this._compact
+              ? range(0, size(this._categories))
+              : [this._selectedCategoryIndex]
+            ).map((categoryIndex) => html`
+              <hg-menu-main
+                id="main"
+                .category=${this._categories[categoryIndex]}
+                .categoryIndex=${categoryIndex}
+                .categories=${this._categories}
+                .showControls=${this._loggedIn}
+                @editing-changed=${({detail: editing}) => {
+                  this._editing = editing;
+                }}
+                @request-category-field-change=${({detail: {field, data}}) => {
+                  this._categoriesDbSync.requestItemUpdate(categoryIndex, {field, data});
+                }}>
+              </hg-menu-main>
+            `)}
+            <hg-menu-nav
+              id="nav"
+              .selectedCategoryIndex=${this._selectedCategoryIndex}
+              .categories=${this._categories}
+              .showControls=${this._loggedIn}
+              @request-categories-change=${async ({detail: {newCategories, newSelectedCategoryIndex}}) => {
+                await this._categoriesDbSync.requestAllItemsUpdate(newCategories);
+                this._selectedCategoryIndex = newSelectedCategoryIndex;
+                // !!!!   .onDelete=${(item) => item.image ? deleteImageInDb(item.image.name) : null}
+              }}
+              @request-selected-category-change=${({ detail: selectedCategoryIndex}) => {
+                this._selectedCategoryIndex = selectedCategoryIndex;
+                scrollIntoView(this);
+              }}>
+            </hg-menu-nav>
+          `,
+        )}
       </section>
     `;
   }

@@ -1,10 +1,8 @@
 import {LitElement, html, css, unsafeCSS} from 'lit';
+import {isEmpty} from 'lodash-es';
 import '../../edit/hg-editable-text.js';
 import '../../elements/mkwc/hg-editable-image.js';
-import '../../elements/hg-list-old.js';
 import sharedStyles from '../../styles/shared-styles.js'
-import {createDbPath, updateImageInDb} from '../../utils/database.js';
-import {updateData} from '../../utils.js';
 import './hg-menu-item.js';
 
 const maxImageWidth = 700;
@@ -12,11 +10,12 @@ const maxImageHeight = 170;
 
 export class HgMenuMain extends LitElement {
   static properties = {
-    uid: String,
     category: Object,
     categoryIndex: Number,
     categories: Object,
-    enableEditing: Boolean,
+    showControls: Boolean,
+    // observables
+    editing: Boolean,
   };
   static styles = [sharedStyles, css`
     :host {
@@ -59,25 +58,18 @@ export class HgMenuMain extends LitElement {
       }
     }
   `];
-  updateCategory() {
-    this.category = _.set('items', this.shadowRoot.getElementById('list').items, this.category);
-    this.categories[this.categoryIndex] = this.category;
-  }
-  async updateName(data) {
-    await updateData('menus/' + this.uid, `${this.categoryIndex}.name`, data);
-    this.category.name = data;
-    this.dispatchEvent(new CustomEvent('category-changed'));
-  }
-  async updateImage(file) {
-    this.category.image = await updateImageInDb(createDbPath('menus/' + this.uid, `${this.categoryIndex}.image`), file, (_.get('image.name', this.category)));
-    //todo it fixes bug when switching to category without image after adding image but causes flickering
-    this.requestUpdate();
-    this.dispatchEvent(new CustomEvent('category-changed'));
+  _requestCategoryFieldChange(field, data) {
+    this.dispatchEvent(new CustomEvent('request-category-field-change', {
+      detail: {
+        field,
+        data,
+      },
+    }));
   }
   render() {
     // todo when setting name and switching to another item name stays
     return html`
-      ${_.isEmpty(this.categories) ? 'Brak kategorii' : html`
+      ${isEmpty(this.categories) ? 'Brak kategorii' : html`
         <header>
           <hg-editable-image
             .src=${this.category.image?.url}
@@ -85,7 +77,9 @@ export class HgMenuMain extends LitElement {
             .fit=${'cover'}
             .maxWidth=${maxImageWidth}
             .maxHeight=${maxImageHeight}
-            @image-uploaded=${({detail: blob}) => this.updateImage(blob)}>
+            @image-uploaded=${({detail: blob}) => {
+              this._requestCategoryFieldChange('image', blob);
+            }}>
           </hg-editable-image>
           <hg-editable-text
             .ready=${true}
@@ -93,24 +87,38 @@ export class HgMenuMain extends LitElement {
             class="name"
             id="name"
             .text=${this.category.name} 
-            @save=${(event) => this.updateName(event.detail)}>
+            @save=${({detail: name}) => {
+              this._requestCategoryFieldChange('name', name);
+            }}>
             <h3></h3>
           </hg-editable-text>
         </header>
-        ${_.isEmpty(this.category.items) ? html`<div class="empty">Brak pozycji w kategorii</div>`: ''}
+        ${isEmpty(this.category.items) ? html`<div class="empty">Brak pozycji w kategorii</div>`: ''}
         <hg-list-old
-          id="list"
+          .__noAddUpdate=${true}
+          .__noDeleteUpdate=${true}
+          .__noSwapUpdate=${true}
+          .__noItemChangeUpdate=${true}
           .vertical=${true}
-          .noGetItems=${true}
-          .items=${_.get('items', this.category)}
-          .path=${createDbPath(`menus/${this.uid}`, `${this.categoryIndex}.items`)}
-          .enableEditing=${this.enableEditing}
+          .items=${this.category.items}
+          .showControls=${this.showControls}
           .getItemName=${(item) => `pozycję${item.name ? ` "${item.name}"`: ''}`}
           .itemTemplate=${(item, index, disableEdit) => 
             html`<hg-menu-item .item=${item} .disableEdit=${disableEdit} .isRestaurantMenu=${true}></hg-menu-nav-item>
           `}
-          @item-added=${() => this.updateCategory()}
-          @item-deleted=${() => this.updateCategory()}>
+          @editing-changed=${({detail: editing}) => {
+            this.editing = editing;
+            this.dispatchEvent(new CustomEvent('editing-changed', {detail: editing}));
+          }}
+          @request-items-change=${({detail: {newItems}}) => {
+            this._requestCategoryFieldChange('items', newItems);
+          }}
+          @request-item-update=${({detail: {updatedItem, index}}) => {
+            this._requestCategoryFieldChange('items', { 
+              ...this.category.items,
+              [index]: updatedItem,
+            });
+          }}>
         </hg-list-old>
       `}
     `;

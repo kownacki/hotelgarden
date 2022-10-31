@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import {until} from 'lit/directives/until.js';
-import {createDbPath, DbPath, getFromDb, updateInObjectInDb} from '../utils/database.js';
+import {createDbPath, DbPath, getFromDb, updateInDb, updateInObjectInDb} from '../utils/database.js';
 import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
 import {ItemsDbSyncController} from '../utils/ItemsDbSyncController.js';
 import {sleep} from '../utils.js';
@@ -64,13 +64,19 @@ export class HgIcons extends LitElement {
 
     this._iconsDbSync = new ItemsDbSyncController(
       this,
-      async (path) => await getFromDb(path) || {},
-      async (objectPath, dataPath, data) => {
-        updateInObjectInDb(objectPath, dataPath, data);
-        return data;
+      {
+        getItems: async (path) => await getFromDb(path) || {},
+        updateItem: async (objectPath, dataPath, data) => {
+          await updateInObjectInDb(objectPath, dataPath, data);
+          return data;
+        },
+        updateAllItems: async (path, data) => {
+          await updateInDb(path, data);
+          return data;
+        },
+        onDataReadyChange: (iconsReady) => this._iconsReady = iconsReady,
+        onDataChange: (icons) => this._icons = icons,
       },
-      (iconsReady) => this._iconsReady = iconsReady,
-      (icons) => this._icons = icons,
     );
   }
   async willUpdate(changedProperties) {
@@ -82,10 +88,9 @@ export class HgIcons extends LitElement {
   render() {
     return html`
       <hg-list-old
-        .noGetItems=${true}
         .items=${this._icons}
         .path=${this._path}
-        .enableEditing=${this._loggedIn}
+        .showControls=${this._loggedIn}
         .getItemName=${() => 'ikonę'}
         .itemTemplate=${(icon, index, disableEdit) => html`
           <hg-icons-item .small=${this.small} .icon=${icon} .disableEdit=${disableEdit}></hg-icons-item>

@@ -4,7 +4,7 @@ import '../content/hg-article/hg-intro-article.js';
 import '../elements/hg-list-old.js';
 import '../elements/hg-review.js';
 import '../content/hg-links.js';
-import {createDbPath, DbPath, getFromDb, updateInObjectInDb} from '../utils/database.js';
+import {createDbPath, DbPath, getFromDb, updateInDb, updateInObjectInDb} from '../utils/database.js';
 import '../utils/fixes/mwc-formfield-fixed.js';
 import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
 import {ItemsDbSyncController} from '../utils/ItemsDbSyncController.js';
@@ -89,13 +89,19 @@ export class HgReviews extends LitElement {
     this._path = createDbPath('reviews/reviews');
     this._reviewsDbSync = new ItemsDbSyncController(
       this,
-      async (path) => await getFromDb(path) || {},
-      async (objectPath, dataPath, data) => {
-        updateInObjectInDb(objectPath, dataPath, data);
-        return data;
+      {
+        getItems: async (path) => await getFromDb(path) || {},
+        updateItem: async (objectPath, dataPath, data) => {
+          await updateInObjectInDb(objectPath, dataPath, data);
+          return data;
+        },
+        updateAllItems: async (path, data) => {
+          await updateInDb(path, data);
+          return data;
+        },
+        onDataReadyChange: (reviewsReady) => this._reviewsReady = reviewsReady,
+        onDataChange: (reviews) => this._reviews = reviews,
       },
-      (reviewsReady) => this._reviewsReady = reviewsReady,
-      (reviews) => this._reviews = reviews,
     );
     this._reviewsDbSync.setPath(this._path);
   }
@@ -103,12 +109,11 @@ export class HgReviews extends LitElement {
     return html`
       <hg-intro-article .uid=${'reviews'}></hg-intro-article>
       <hg-list-old
-        .noGetItems=${true}
         .addAtStart=${true}
         .transform=${() => _.reverse}
         .items=${this._reviews}
         .path=${this._path}
-        .enableEditing=${this._loggedIn}
+        .showControls=${this._loggedIn}
         .getItemName=${(item) => `opinię${item.heading ? ` "${item.heading}"`: ''}`}
         .itemTemplate=${(review, index, disableEdit) => html`
           <style>

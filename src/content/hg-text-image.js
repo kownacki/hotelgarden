@@ -94,12 +94,14 @@ export class HgTextImage extends LitElement {
     super();
     this._objectDbSync = new ObjectDbSyncController(
       this,
-      async (path) => await getFromDb(path) || {},
-      async (objectPath, dataPath, {type, data}, oldData, object) => {
-        return updateDataOrImageInObjectInDb(type, objectPath, dataPath, data, object);
+      {
+        getObject: async (path) => await getFromDb(path) || {},
+        updateField: async (objectPath, dataPath, {type, data}, oldData, object) => {
+          return updateDataOrImageInObjectInDb(type, objectPath, dataPath, data, object);
+        },
+        onDataReadyChange: (ready) => this._ready = ready,
+        onDataChange: (textImage) => this._textImage = textImage,
       },
-      (ready) => this._ready = ready,
-      (textImage) => this._textImage = textImage,
     );
   }
   async willUpdate(changedProperties) {

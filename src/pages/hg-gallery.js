@@ -3,7 +3,15 @@ import {until} from 'lit/directives/until.js';
 import '../content/hg-article/hg-intro-article.js';
 import '../elements/hg-list-old/hg-mosaic-list-old.js'
 import '../elements/hg-window-slider.js';
-import {createDbPath, createImageInDb, deleteImageInDb, DbPath, getFromDb, updateImageInObjectInDb} from '../utils/database.js';
+import {
+  createDbPath,
+  createImageInDb,
+  deleteImageInDb,
+  DbPath,
+  getFromDb,
+  updateImageInObjectInDb,
+  updateInDb,
+} from '../utils/database.js';
 import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
 import {ItemsDbSyncController} from '../utils/ItemsDbSyncController.js';
 import './hg-gallery/hg-gallery-item.js';
@@ -36,16 +44,22 @@ export class HgGallery extends LitElement {
     this._path = createDbPath('gallery/gallery');
     this._itemsDbSync = new ItemsDbSyncController(
       this,
-      async (path) => await getFromDb(path) || {},
-      async (path, index, file, oldItem, items) => {
-        const updatedImage = await updateImageInObjectInDb(path, `${index}.image`, file, items);
-        return {
-          ...oldItem,
-          image: updatedImage,
-        };
+      {
+        getItems: async (path) => await getFromDb(path) || {},
+        updateItem: async (path, index, file, oldItem, items) => {
+          const updatedImage = await updateImageInObjectInDb(path, `${index}.image`, file, items);
+          return {
+            ...oldItem,
+            image: updatedImage,
+          };
+        },
+        updateAllItems: async (path, data) => {
+          await updateInDb(path, data);
+          return data;
+        },
+        onDataReadyChange: (itemsReady) => this._itemsReady = itemsReady,
+        onDataChange: (items) => this._items = items,
       },
-      (itemsReady) => this._itemsReady = itemsReady,
-      (items) => this._items = items,
     );
     this._itemsDbSync.setPath(this._path);
   }
@@ -60,7 +74,6 @@ export class HgGallery extends LitElement {
       <hg-mosaic-list-old
         id="list"
         .path=${this._path}
-        .noGetItems=${true}
         .items=${this._items}
         .itemTemplate=${(item, index) => html`
           <hg-gallery-item
