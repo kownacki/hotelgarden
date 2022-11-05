@@ -119,9 +119,6 @@ export class HgMenu extends LitElement {
                 .categoryIndex=${categoryIndex}
                 .categories=${this._categories}
                 .showControls=${this._loggedIn}
-                @editing-changed=${({detail: editing}) => {
-                  this._editing = editing;
-                }}
                 @request-category-field-change=${({detail: {field, data}}) => {
                   this._categoriesDbSync.requestItemUpdate(categoryIndex, {field, data});
                 }}>
