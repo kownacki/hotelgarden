@@ -36,8 +36,6 @@ export default class HgListOld extends LitElement {
     configure: Object,
     emptyTemplate: Object,
     items: Object,
-    // observables
-    editing: Boolean,
     // private
     _list: Array,
     _listNotEmpty: {type: Boolean, reflect: true, attribute: 'list-not-empty'},
@@ -173,20 +171,24 @@ export default class HgListOld extends LitElement {
             .noSwap=${this.noSwap || !this.showControls}
             .noDelete=${!this.showControls}
             .vertical=${this.vertical}
-            .disableEdit=${this.processing || this.editing}
+            .disableEdit=${this.processing}
             .configure=${this.showControls && this.configure}
             @request-delete=${() => this.deleteItem(key)}
             @swap=${async (event) => this.swapItems(key, this._list[listIndex + event.detail])}
             @update=${(event) => this.updateItem(key, event.detail.path, event.detail.data)}
-            @show-controls-changed=${(event) => this.editing = event.detail}>
-            ${this.itemTemplate(this.items[key], key, this.processing || this.editing)}
+            @show-controls-changed=${({ detail: showEditableTextControls}) => {
+              // todo change this event name and variable in editable-text
+              this.dispatchEvent(new CustomEvent('editing-item-changed', {detail: showEditableTextControls}));
+            }}
+          >
+            ${this.itemTemplate(this.items[key], key, this.processing)}
           </hg-list-old-item>`
         ),
         (!this.showControls || this.noAdd) ? '' : until(import('./hg-list-old/hg-list-old-add.js').then(() => {
           return html`
             <div class="add-container">
               <hg-list-old-add
-                .disabled=${this.processing || this.editing}
+                .disabled=${this.processing}
                 @click=${() => this.addItem()}>
               </hg-list-old-add>
             </div>

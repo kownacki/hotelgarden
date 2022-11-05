@@ -20,7 +20,9 @@ export class HgMenu extends LitElement {
     _categories: Object,
     _selectedCategoryIndex: Number,
     _compact: Boolean,
-    _editing: {type: Boolean, reflect: true, attribute: 'editing'},
+    _isEditingCategoryName: Boolean,
+    _isEditingCategoryItemsText: Boolean,
+    _isEditing: {type: Boolean, reflect: true, attribute: 'is-editing'},
     _loggedIn: Boolean,
   };
   static styles = css`
@@ -40,7 +42,7 @@ export class HgMenu extends LitElement {
       min-width: 340px;
       transition: opacity 0.3s ease;
     }
-    :host([editing]) hg-menu-nav {
+    :host([is-editing]) hg-menu-nav {
       opacity: 50%;
       pointer-events: none;
     }
@@ -102,6 +104,9 @@ export class HgMenu extends LitElement {
       this._categoriesDbSync.setPath(this._path);
       this._selectedCategoryIndex = 0;
     }
+    if (changedProperties.has('_isEditingCategoryName') || changedProperties.has('_isEditingCategoryItemsText')) {
+      this._isEditing = this._isEditingCategoryName || this._isEditingCategoryItemsText;
+    }
   }
   render() {
     return html`
@@ -119,6 +124,12 @@ export class HgMenu extends LitElement {
                 .categoryIndex=${categoryIndex}
                 .categories=${this._categories}
                 .showControls=${this._loggedIn}
+                @editing-category-name-changed=${({ detail: isEditingCategoryName }) => {
+                  this._isEditingCategoryName = isEditingCategoryName;
+                }}
+                @editing-category-items-text-changed=${({ detail: isEditingCategoryItemsText }) => {
+                  this._isEditingCategoryItemsText = isEditingCategoryItemsText;
+                }}
                 @request-category-field-change=${({detail: {field, data}}) => {
                   this._categoriesDbSync.requestItemUpdate(categoryIndex, {field, data});
                 }}>

@@ -84,10 +84,14 @@ export class HgMenuMain extends LitElement {
             float
             class="name"
             id="name"
-            .text=${this.category.name} 
+            .text=${this.category.name}
+            @show-controls-changed=${({ detail: showEditableTextControls}) => {
+              this.dispatchEvent(new CustomEvent('editing-category-name-changed', {detail: showEditableTextControls}));
+            }}
             @save=${({detail: name}) => {
               this._requestCategoryFieldChange('name', name);
-            }}>
+            }}
+          >
             <h3></h3>
           </hg-editable-text>
         </header>
@@ -104,6 +108,9 @@ export class HgMenuMain extends LitElement {
           .itemTemplate=${(item, index, disableEdit) => 
             html`<hg-menu-item .item=${item} .disableEdit=${disableEdit} .isRestaurantMenu=${true}></hg-menu-nav-item>
           `}
+          @editing-item-changed=${({detail: isEditingItem}) => {
+            this.dispatchEvent(new CustomEvent('editing-category-items-text-changed', {detail: isEditingItem}));
+          }}
           @request-items-change=${({detail: {newItems}}) => {
             this._requestCategoryFieldChange('items', newItems);
           }}
