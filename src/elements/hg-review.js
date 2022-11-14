@@ -29,13 +29,16 @@ export class HgReview extends LitElement {
     .bottom {
       margin: 0;
     }
-    /* todo do I really have to set it? */
     .bottom hg-list-old-editable-text  {
-      display: inline;
+      display: inline-block;
     }
     .author {
+      display: inline-block;
       font-weight: 700;
       color: var(--primary-color);
+    }
+    .platform {
+      display: inline-block;
     }
     @media all and (max-width: 959px) {
       h3 {
