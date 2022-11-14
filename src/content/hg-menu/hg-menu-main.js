@@ -57,9 +57,10 @@ export class HgMenuMain extends LitElement {
       }
     }
   `];
-  _requestCategoryFieldChange(field, data) {
+  _requestCategoryFieldChange(type, field, data) {
     this.dispatchEvent(new CustomEvent('request-category-field-change', {
       detail: {
+        type,
         field,
         data,
       },
@@ -77,7 +78,7 @@ export class HgMenuMain extends LitElement {
             .maxWidth=${maxImageWidth}
             .maxHeight=${maxImageHeight}
             @image-uploaded=${({detail: blob}) => {
-              this._requestCategoryFieldChange('image', blob);
+              this._requestCategoryFieldChange('image', 'image', blob);
             }}>
           </hg-editable-image>
           <hg-editable-text
@@ -90,7 +91,7 @@ export class HgMenuMain extends LitElement {
               this.dispatchEvent(new CustomEvent('editing-category-name-changed', {detail: showEditableTextControls}));
             }}
             @save=${({detail: name}) => {
-              this._requestCategoryFieldChange('name', name);
+              this._requestCategoryFieldChange('data', 'name', name);
             }}
           >
             <h3></h3>
@@ -114,10 +115,10 @@ export class HgMenuMain extends LitElement {
             this.dispatchEvent(new CustomEvent('editing-category-items-text-changed', {detail: isEditingItem}));
           }}
           @request-items-change=${({detail: {newItems}}) => {
-            this._requestCategoryFieldChange('items', newItems);
+            this._requestCategoryFieldChange('data', 'items', newItems);
           }}
           @request-item-update=${({detail: {updatedItem, index}}) => {
-            this._requestCategoryFieldChange('items', { 
+            this._requestCategoryFieldChange('data', 'items', { 
               ...this.category.items,
               [index]: updatedItem,
             });

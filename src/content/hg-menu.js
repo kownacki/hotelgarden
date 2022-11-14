@@ -74,8 +74,8 @@ export class HgMenu extends LitElement {
       this,
       {
         getItems: async (path) => await getFromDb(path) || {},
-        updateItem: async (path, index, {field, data}, oldItem, items) => {
-          const updatedData = await updateDataOrImageInObjectInDb(field, path, `${index}.${field}`, data, items);
+        updateItem: async (path, index, {type, field, data}, oldItem, items) => {
+          const updatedData = await updateDataOrImageInObjectInDb(type, path, `${index}.${field}`, data, items);
           return {
             ...oldItem,
             [field]: updatedData,
@@ -136,8 +136,8 @@ export class HgMenu extends LitElement {
                 @editing-category-items-text-changed=${({ detail: isEditingCategoryItemsText }) => {
                   this._isEditingCategoryItemsText = isEditingCategoryItemsText;
                 }}
-                @request-category-field-change=${({detail: {field, data}}) => {
-                  this._categoriesDbSync.requestItemUpdate(categoryIndex, {field, data});
+                @request-category-field-change=${({detail: {type, field, data}}) => {
+                  this._categoriesDbSync.requestItemUpdate(categoryIndex, {type, field, data});
                 }}>
               </hg-menu-main>
             `)}
