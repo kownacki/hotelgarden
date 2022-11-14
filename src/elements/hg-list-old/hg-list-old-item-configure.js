@@ -16,6 +16,8 @@ export class HgListOldItemConfigure extends LitElement {
   static styles = [sharedStyles, css`
     hg-icon-button {
       background: white;
+      /* todo bug: icon has unwanted scrollbar */
+      overflow: hidden;
     }
     .buttons {
       margin-top: 10px;
