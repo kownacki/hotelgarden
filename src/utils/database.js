@@ -43,7 +43,7 @@ export const updateDataOrImageInObjectInDb = async (type, objectPath, dataPath, 
   if (type === 'image') {
     updatedData = await updateImageInObjectInDb(objectPath, dataPath, data, object);
   } else {
-    updateInObjectInDb(objectPath, dataPath, data);
+    await updateInObjectInDb(objectPath, dataPath, data);
     updatedData = data;
   }
   return updatedData;
