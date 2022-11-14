@@ -77,14 +77,13 @@ export default class HgListOld extends LitElement {
     if (!this.__noItemChangeUpdate) {
       await this.updateData(`${index}.${field}`, data);
     }
-    const updatedItem = {
-      ...this.items[index],
-      [field]: data,
-    };
+    // todo allow images
     this.dispatchEvent(new CustomEvent('request-item-update', {
       detail: {
-        updatedItem,
         index,
+        type: 'data',
+        field,
+        data,
       },
     }));
     this._internalDisableControls = false;

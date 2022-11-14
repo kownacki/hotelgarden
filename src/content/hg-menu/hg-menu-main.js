@@ -117,11 +117,8 @@ export class HgMenuMain extends LitElement {
           @request-items-change=${({detail: {newItems}}) => {
             this._requestCategoryFieldChange('data', 'items', newItems);
           }}
-          @request-item-update=${({detail: {updatedItem, index}}) => {
-            this._requestCategoryFieldChange('data', 'items', { 
-              ...this.category.items,
-              [index]: updatedItem,
-            });
+          @request-item-update=${({detail: {index, type, field, data}}) => {
+            this._requestCategoryFieldChange(type, `items.${index}.${field}`, data);
           }}>
         </hg-list-old>
       `}

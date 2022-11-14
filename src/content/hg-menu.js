@@ -125,7 +125,7 @@ export class HgMenu extends LitElement {
             ).map((categoryIndex) => html`
               <hg-menu-main
                 id="main"
-                .category=${this._categories[categoryIndex]}
+                .category=${this._categories[categoryIndex] || {}}
                 .categoryIndex=${categoryIndex}
                 .categories=${this._categories}
                 .showControls=${this._loggedIn}
@@ -148,6 +148,7 @@ export class HgMenu extends LitElement {
               .showControls=${this._loggedIn}
               .disableControls=${disableControls}
               @request-categories-change=${async ({detail: {newCategories, newSelectedCategoryIndex}}) => {
+                // todo bug when deleting last item. Remove '|| {}'
                 await this._categoriesDbSync.requestAllItemsUpdate(newCategories);
                 this._selectedCategoryIndex = newSelectedCategoryIndex;
                 // !!!!   .onDelete=${(item) => item.image ? deleteImageInDb(item.image.name) : null}
@@ -155,6 +156,9 @@ export class HgMenu extends LitElement {
               @request-selected-category-change=${({ detail: selectedCategoryIndex}) => {
                 this._selectedCategoryIndex = selectedCategoryIndex;
                 scrollIntoView(this);
+              }}
+              @request-category-field-change=${({detail: {categoryIndex, type, field, data}}) => {
+                this._categoriesDbSync.requestItemUpdate(categoryIndex, {type, field, data});
               }}>
             </hg-menu-nav>
           `,
