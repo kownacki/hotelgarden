@@ -20,6 +20,12 @@ export class HgReview extends LitElement {
     p {
       font-style: italic;
     }
+    .main-text-container {
+      margin: 20px 0;
+    }
+    .main-text {
+      margin: 0;
+    }
     .bottom {
       margin: 0;
     }
@@ -64,15 +70,17 @@ export class HgReview extends LitElement {
             .field=${'heading'}>
             <h3></h3>
           </hg-list-old-editable-text>
-          <hg-list-old-editable-text 
-            float 
-            multiline
-            id="text"
-            .disabled=${this.disableEdit && !this.shadowRoot.getElementById('text').showControls}
-            .item=${this.review} 
-            .field=${'text'}>
-            <p class="smaller-text"></p>
-          </hg-list-old-editable-text>
+          <div class="main-text-container">
+            <hg-list-old-editable-text
+              float
+              multiline
+              id="text"
+              .disabled=${this.disableEdit && !this.shadowRoot.getElementById('text').showControls}
+              .item=${this.review}
+              .field=${'text'}>
+              <p class="main-text smaller-text"></p>
+            </hg-list-old-editable-text>   
+          </div>
           <p class="bottom">
             <hg-list-old-editable-text 
               float 
