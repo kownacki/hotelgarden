@@ -69,20 +69,20 @@ export default class HgListOld extends LitElement {
       this.dispatchEvent(new CustomEvent('list-changed', {detail: this._list}));
     }
   }
-  updateData(field, data) {
-    return updateInDb(this.path.extend(field), data);
+  updateData(dataPath, data) {
+    return updateInDb(this.path.extend(dataPath), data);
   }
-  async updateItem(index, field, data) {
+  async updateItem(index, dataPath, data) {
     this._internalDisableControls = true;
     if (!this.__noItemChangeUpdate) {
-      await this.updateData(`${index}.${field}`, data);
+      await this.updateData(`${index}.${dataPath}`, data);
     }
     // todo allow images
     this.dispatchEvent(new CustomEvent('request-item-update', {
       detail: {
         index,
         type: 'data',
-        field,
+        dataPath,
         data,
       },
     }));

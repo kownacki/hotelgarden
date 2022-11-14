@@ -74,12 +74,12 @@ export class HgMenuNav extends LitElement {
       },
     }));
   }
-  _requestCategoryFieldChange(categoryIndex, type, field, data) {
+  _requestCategoryFieldChange(categoryIndex, type, dataPath, data) {
     this.dispatchEvent(new CustomEvent('request-category-field-change', {
       detail: {
         categoryIndex,
         type,
-        field,
+        dataPath,
         data,
       },
     }));
@@ -107,8 +107,8 @@ export class HgMenuNav extends LitElement {
           const newSelectedCategoryIndex = this._getNewSelectedCategoryIndex(newItems, type, data);
           this._requestCategoriesChange(newItems, newSelectedCategoryIndex, type, data);
         }}
-        @request-item-update=${({detail: {index, type, field, data}}) => {
-          this._requestCategoryFieldChange(index, type, field, data);
+        @request-item-update=${({detail: {index, type, dataPath, data}}) => {
+          this._requestCategoryFieldChange(index, type, dataPath, data);
         }}
         .configure=${configure}>
       </hg-list-old>

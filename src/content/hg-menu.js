@@ -83,9 +83,9 @@ export class HgMenu extends LitElement {
       this,
       {
         getItems: async (path) => await getFromDb(path) || {},
-        updateItem: async (path, index, {type, field, data}, oldItem, items) => {
-          const updatedData = await updateDataOrImageInObjectInDb(type, path, `${index}.${field}`, data, items);
-          return _.set(field, updatedData, oldItem);
+        updateItem: async (path, index, {type, dataPath, data}, oldItem, items) => {
+          const updatedData = await updateDataOrImageInObjectInDb(type, path, `${index}.${dataPath}`, data, items);
+          return _.set(dataPath, updatedData, oldItem);
         },
         updateAllItems: async (path, data) => {
           await updateInDb(path, data);
@@ -154,8 +154,8 @@ export class HgMenu extends LitElement {
                 @editing-category-items-text-changed=${({ detail: isEditingCategoryItemsText }) => {
                   this._isEditingCategoryItemsText = isEditingCategoryItemsText;
                 }}
-                @request-category-field-change=${({detail: {type, field, data}}) => {
-                  this._categoriesDbSync.requestItemUpdate(categoryIndex, {type, field, data});
+                @request-category-field-change=${({detail: {type, dataPath, data}}) => {
+                  this._categoriesDbSync.requestItemUpdate(categoryIndex, {type, dataPath, data});
                 }}>
               </hg-menu-main>
             `)}
@@ -180,8 +180,8 @@ export class HgMenu extends LitElement {
                 this._selectedCategoryIndex = selectedCategoryIndex;
                 scrollIntoView(this);
               }}
-              @request-category-field-change=${({detail: {categoryIndex, type, field, data}}) => {
-                this._categoriesDbSync.requestItemUpdate(categoryIndex, {type, field, data});
+              @request-category-field-change=${({detail: {categoryIndex, type, dataPath, data}}) => {
+                this._categoriesDbSync.requestItemUpdate(categoryIndex, {type, dataPath, data});
               }}>
             </hg-menu-nav>
           `,
