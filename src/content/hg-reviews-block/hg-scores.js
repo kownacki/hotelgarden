@@ -29,7 +29,7 @@ export class HgScores extends LitElement {
       justify-content: center;
       width: 100px;
       height: 100px;
-      background: var(--accent-color);
+      background: var(--secondary-color);
       color: white;
       padding: 10px;
       margin: auto;

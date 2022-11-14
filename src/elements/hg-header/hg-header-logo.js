@@ -1,4 +1,14 @@
-import {LitElement, html, css} from 'lit';
+import {LitElement, html, css, unsafeCSS} from 'lit';
+import {HEADER_HEIGHT} from '../../../utils/config.js';
+
+const CONTAINER_WIDTH = 170;
+const CONTAINER_WIDTH_SMALL = 120;
+
+const LOGOMARK_WIDTH = 150;
+const LOGOMARK_HEIGHT = 115.5;
+
+const LOGOTYPE_WIDTH = 150;
+const LOGOTYPE_HEIGHT = 7;
 
 export class HgHeaderLogo extends LitElement {
   static properties = {
@@ -11,7 +21,9 @@ export class HgHeaderLogo extends LitElement {
     }
     a {
       display: block;
-      width: 170px;
+      ${unsafeCSS(`
+        width: ${CONTAINER_WIDTH}px;
+      `)}
     }
     img {
       display: block;
@@ -19,28 +31,31 @@ export class HgHeaderLogo extends LitElement {
     .logomark {
       position: relative;
       top: 10px;
-      width: calc((80 / 170) * 100%);
-      padding: 12px 10px;
+      width: calc((${CONTAINER_WIDTH - 2*10} / ${CONTAINER_WIDTH}) * 100%);
+      padding: 10px calc((10 / ${CONTAINER_WIDTH}) * 100%) 0;
       margin: auto;
-      transition: top 0.3s ease, width 0.3s ease;
-      filter: drop-shadow(0 0 1px white);
+      transition: top 0.4s ease, width 0.4s ease;
+      filter: invert(100%) drop-shadow(0 0 8px rgba(0, 0, 0, 0.25));
     }
     :host([scrolled-down]) .logomark {
       top: 0;
-      width: 40px;
-      filter: none;
+      ${unsafeCSS(`
+        width: ${LOGOMARK_WIDTH * ((HEADER_HEIGHT - 2*10) / LOGOMARK_HEIGHT)}px;
+      `)}
+      padding: 10px calc((10 / ${CONTAINER_WIDTH}) * 100%);
+      filter: var(--primary-color-filter);
     }
     .logotype {
-      transition: top 0.3s ease, opacity 0.2s ease;
-      filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.25));
-      padding: 0 calc((10 / 170) * 100%) 10px;
+      transition: top 0.2s ease, opacity 0.2s ease;
+      filter: invert(100%) drop-shadow(0 0 5px rgba(0, 0, 0, 0.25));
+      padding: calc((${LOGOTYPE_HEIGHT} / ${CONTAINER_WIDTH}) * 100%) calc((10 / ${CONTAINER_WIDTH}) * 100%) 10px;
       position: absolute;
       top: calc((105 / 95) * 100%);
-      width: calc((150 / 170) * 100%);
+      width: calc((${LOGOTYPE_WIDTH} / ${CONTAINER_WIDTH}) * 100%);
       opacity: 100%;
     }
-    :host([no-banner-image]) .logotype {
-      filter: invert(100%) var(--logotype-color-filter);
+    :host([no-banner-image]) .logomark, :host([no-banner-image]) .logotype {
+      filter: var(--primary-color-filter);
     }
     :host([scrolled-down]) .logotype {
       pointer-events: none;
@@ -49,7 +64,9 @@ export class HgHeaderLogo extends LitElement {
     }
     @media all and (max-width: 1279px) {
       a {
-        width: 120px;
+        ${unsafeCSS(`
+          width: ${CONTAINER_WIDTH_SMALL}px;
+        `)
       }
     }
   `;

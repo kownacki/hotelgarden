@@ -28,6 +28,7 @@ const pagesModulesImports = {
   'dynamic-path-pages': () => import('../pages/hg-dynamic-path-pages.js'),
   'contact': () => import('../pages/hg-contact.js'),
   '404': () => import('../pages/hg-404.js'),
+  'admin': () => import('../pages/hg-admin.js'),
 };
 
 const importPageModule = (pageUid) => {
@@ -43,7 +44,6 @@ const getContentElement = async (pageUid, config, handleSetMetaDescription, hand
   return staticHtml`
     <hg-${unsafeStatic(pageUid)}
       id="page"
-      class="page"
       .config=${config}
       @set-meta-description=${({detail: text}) => handleSetMetaDescription(text)}>
     </hg-${unsafeStatic(pageUid)}>
@@ -140,30 +140,31 @@ export class HgPage extends LitElement {
         .noBannerImage=${this.noBannerImage}
         .initialPage=${this.initialPage}>
       </hg-page-banner>
-      ${this.pageType === PageType.DYNAMIC_PATH
-        ? until(import('./hg-dynamic-path-page.js').then(() => {
-          return (this.dynamicPathPageReady && this.promotedDynamicPathPageLoaded) ? html`
-            <hg-dynamic-path-page
-              class="page"
-              .dynamicPathPage=${this.dynamicPathPage}
-              .promotedDynamicPathPage=${this.promotedDynamicPathPage}
-              @set-meta-description=${({detail: text}) => {
-                this._handleSetMetaDescription(text);
-              }}
-              @set-json-ld=${({detail: jsonLd}) => {
-                this._handleSetJsonLd(jsonLd);
-              }}>
-            </hg-dynamic-path-page>
-          ` : html`<hg-page-loading></hg-page-loading>`;
-        }), html`<hg-page-loading></hg-page-loading>`)
-        : html`
-          ${!this.pageUid ? '' : until(getContentElement(
-            this.pageUid,
-            this._config,
-            (text) => this._handleSetMetaDescription(text),
-            (jsonLd) => this._handleSetJsonLd(jsonLd),
-          ), html`<hg-page-loading></hg-page-loading>`)}
-        `}
+      <div class="page">
+        ${this.pageType === PageType.DYNAMIC_PATH
+          ? until(import('./hg-dynamic-path-page.js').then(() => {
+            return (this.dynamicPathPageReady && this.promotedDynamicPathPageLoaded) ? html`
+              <hg-dynamic-path-page
+                .dynamicPathPage=${this.dynamicPathPage}
+                .promotedDynamicPathPage=${this.promotedDynamicPathPage}
+                @set-meta-description=${({detail: text}) => {
+                  this._handleSetMetaDescription(text);
+                }}
+                @set-json-ld=${({detail: jsonLd}) => {
+                  this._handleSetJsonLd(jsonLd);
+                }}>
+              </hg-dynamic-path-page>
+            ` : html`<hg-page-loading></hg-page-loading>`;
+          }), html`<hg-page-loading></hg-page-loading>`)
+          : html`
+            ${!this.pageUid ? '' : until(getContentElement(
+              this.pageUid,
+              this._config,
+              (text) => this._handleSetMetaDescription(text),
+              (jsonLd) => this._handleSetJsonLd(jsonLd),
+            ), html`<hg-page-loading></hg-page-loading>`)}
+          `}
+      </div>
       <hg-footer></hg-footer>
     `;
   }

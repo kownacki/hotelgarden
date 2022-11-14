@@ -21,7 +21,6 @@ export class HgLanding extends HgContent {
       <hg-intro-article .uid=${'landing'}></hg-intro-article>
       <hg-quote .uid=${'landing'}></hg-quote>
       <hg-content-icons .uid=${'landing'}></hg-content-icons>
-      <hg-events-block></hg-events-block>
       <hg-text-image .swap=${true} .uid=${'landing'} .buttons=${staticProp([{url: '/pokoje', text: 'Zobacz pokoje / Rezerwuj online'}])}></hg-text-image>
       <hg-mosaic .uid=${'landing'} .buttons=${staticProp({
         primary: [{url: '/wesela', text: 'Zobacz ofertę'}],
@@ -30,6 +29,7 @@ export class HgLanding extends HgContent {
       <hg-content-slider .uid=${'landing'}></hg-content-slider>
       <hg-reviews-block .uid=${'landing'} .scores=${true} .bookingScores=${_.get('bookingScores', this.config)}></hg-reviews-block>
       <hg-infographic .uid=${'landing'}></hg-infographic>
+      <hg-events-block></hg-events-block>
       <hg-map class="no-animation"></hg-map>
     `;
   }

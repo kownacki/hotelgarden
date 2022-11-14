@@ -18,7 +18,8 @@ export type PageUid =
   | 'rooms'
   | 'surroundings'
   | 'villa-garden'
-  | 'weddings';
+  | 'weddings'
+  | 'admin';
 
 export type StaticPathPageUid = Exclude<PageUid, '404'>;
 
@@ -38,7 +39,8 @@ export type StaticPath =
   | '/sale-konferencyjne'
   | '/villa-garden'
   | '/wesela'
-  | '/wydarzenia';
+  | '/wydarzenia'
+  | '/admin';
 
 export const NOT_FOUND_404 = 'NOT_FOUND_404';
 
@@ -60,6 +62,7 @@ export const staticPathToPageUid: Record<StaticPath, StaticPathPageUid> = {
   '/galeria': 'gallery',
   '/wydarzenia': 'dynamic-path-pages',
   '/kontakt': 'contact',
+  '/admin': 'admin',
 };
 
 export const staticPaths = Object.keys(staticPathToPageUid) as StaticPath[];
@@ -89,6 +92,7 @@ export const pagesStaticData: Record<PageUid, PageStaticData> = {
   'surroundings': {name: 'Atrakcje okolicy', path: '/atrakcje-okolicy', dir: 'hotel'},
   'villa-garden': {name: 'Villa Garden', path: '/villa-garden', dir: 'hotel'},
   'weddings': {name: 'Wesela', path: '/wesela', dir: 'celebrations'},
+  'admin': {name: 'Admin', path: '/admin', dir: 'admin'},
 };
 
 export const pageUids = Object.keys(pagesStaticData) as PageUid[];

@@ -34,8 +34,8 @@ export class HgMenuNav extends LitElement {
   };
   static styles = css`
     hg-list-old {
-      max-height: calc(100vh - var(--headerHeight));
-      top: var( --headerHeight);
+      max-height: calc(100vh - var(--header-height));
+      top: var( --header-height);
       overflow: auto;
       position: sticky;
     }

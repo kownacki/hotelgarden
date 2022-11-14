@@ -1,9 +1,10 @@
 import {LitElement, html, css} from 'lit';
 import '@material/mwc-button';
+import {HEADER_HEIGHT} from '../../utils/config.js';
 import '../edit/hg-cms-buttons-container.js';
 import sharedStyles from '../styles/shared-styles.js';
 import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
-import {headerHeight, moveOutFromShadowDom} from '../utils.js'
+import {moveOutFromShadowDom} from '../utils.js'
 
 export default class HgEditableText extends LitElement {
   _firebaseAuth;
@@ -154,7 +155,7 @@ export default class HgEditableText extends LitElement {
       //todo add also when changing location
       //todo multiple onbeforeunload overlapping
       window.onbeforeunload = !this.showControls ? null : () => {
-        window.scrollTo(0, this._editable.offsetTop - headerHeight - 10);
+        window.scrollTo(0, this._editable.offsetTop - HEADER_HEIGHT - 10);
         this._editable.focus();
         return '';
       };

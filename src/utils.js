@@ -1,10 +1,9 @@
 import {collection, doc, deleteDoc, getDocs, query, where} from 'firebase/firestore';
 import {isElementVisible, isElementInProximity} from 'mk-frontend-web-utils/dom.js';
 import diacritics from '../resources/scripts/diacritics.js';
+import {HEADER_HEIGHT} from '../utils/config.js';
 import {createNewEvent, createNewNews, DynamicPathPageType} from '../utils/events.js';
 import {createDbPath, db, updateInDb} from './utils/database.js';
-
-export const headerHeight = 59;
 
 export const isProductionEnvironment = () => {
   return window.environment === 'production';
@@ -136,7 +135,7 @@ export const moveOutFromShadowDom = async (contentsElement) => {
 };
 
 export const scrollIntoView = (element, scrollable = window) => {
-  const elementTopOffset = (scrollable === window ? headerHeight : 0) + 10;
+  const elementTopOffset = (scrollable === window ? HEADER_HEIGHT : 0) + 10;
   const elementBottomOffset = elementTopOffset + element.clientHeight;
   if (!isElementInProximity(element, -elementBottomOffset)) {
     element.scrollIntoView();

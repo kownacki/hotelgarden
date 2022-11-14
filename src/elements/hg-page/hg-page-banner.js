@@ -64,9 +64,9 @@ export class HgPageBanner extends LitElement {
       : {
         image: this._bannerData?.image,
         heading: this._bannerData?.title,
-      }
+      };
     const noBannerTextsEditing = this.pageType === PageType.STATIC_PATH
-      ? this.pageUid === '404'
+      ? this.pageUid === '404' || this.pageUid === 'admin'
       : !this.dynamicPathPage;
     return html`
       <hg-banner

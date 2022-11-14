@@ -335,7 +335,7 @@ export default css`
   .ck-content a {
     text-decoration: none;
     font-weight: 700;
-    color: var(--accent-color);
+    color: var(--secondary-color);
   }
   .ck-content a:hover {
     text-decoration: underline;

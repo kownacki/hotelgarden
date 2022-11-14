@@ -21,6 +21,7 @@ export class HgHeader extends LitElement {
       position: fixed;
       width: 100%;
       z-index: var(--layer-header);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
     }
     :host([scrolled-down]) {
       background: white;
@@ -30,11 +31,10 @@ export class HgHeader extends LitElement {
       display: flex;
     }
     nav {
+      min-height: var(--header-height);
       align-self: flex-start;
       display: flex;
       flex: 1;
-      background: transparent;
-      transition: background-color 0.5s ease;
     }
     ul {
       margin: 0 0 0 10px;
@@ -46,7 +46,8 @@ export class HgHeader extends LitElement {
       position: relative;
       list-style-type: none;
       margin-right: 10px;
-      padding: 10px 0;
+      margin-top: 10px;
+      padding: 0 0 10px;
     }
     li.promoted {
       padding: 0;
@@ -95,7 +96,7 @@ export class HgHeader extends LitElement {
     }
     hg-book-order-button {
       align-self: center;
-      margin: 9px 15px 9px auto;
+      margin: 0 15px 0 auto;
     }
     @media all and (max-width: 1279px) {
       li {
@@ -105,7 +106,7 @@ export class HgHeader extends LitElement {
         padding: 10px 7px;
       }
       hg-book-order-button {
-        margin: 9px 7px 9px auto;
+        margin: 0  7px 0 auto;
       }
       hg-header-logo {
         margin: 0 10px;
@@ -125,7 +126,7 @@ export class HgHeader extends LitElement {
         margin: 0;
       }
       hg-book-order-button {
-        margin: 9px 15px;
+        margin: 0 15px;
       }
       nav {
         flex: none;
@@ -134,7 +135,7 @@ export class HgHeader extends LitElement {
     }
     @media all and (max-width: 479px) {
       hg-book-order-button {
-        margin: 7px 5px 6px;
+        margin: 0 5px;
       }
     }
   `;

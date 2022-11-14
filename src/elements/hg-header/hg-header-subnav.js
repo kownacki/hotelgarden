@@ -8,13 +8,14 @@ export class HgHeaderSubnav extends LitElement {
   };
   static styles = css`
     :host {
+      --background-color: rgba(var(--surface-color-rgb), 92.5%);
       display: block;
       width: 200px;
-      background: rgba(var(--secondary-color-rgb), 90%);
+      background: var(--background-color);
     }
     :host::before {
       border-right: 7px solid transparent;
-      border-bottom: 7px solid rgba(var(--secondary-color-rgb), 90%);
+      border-bottom: 7px solid var(--background-color);
       border-left: 7px solid transparent;
       content: '';
       top: -7px;
@@ -34,12 +35,12 @@ export class HgHeaderSubnav extends LitElement {
     a {
       display: block;
       padding: 8px 16px;
-      color: white;
+      color: var(--on-surface-color);
       text-decoration: none;
-      transition: background-color 0.3s ease;
     }
     a:hover, a[selected] {
       background: rgba(var(--primary-color-rgb), 90%);
+      color: white;
     }
   `;
   render() {

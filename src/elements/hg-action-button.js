@@ -17,12 +17,12 @@ export class HgActionButton extends LitElement {
       --action-button-padding: 10px 20px;
     }
     :host(:not([low-emphasis])) {
-      background: var(--accent-color);
+      background: var(--secondary-color);
       border-color: rgba(255, 255, 255, 0.25);
       color: white;
     }
     :host([low-emphasis]) {
-      color: var(--accent-color);
+      color: var(--secondary-color);
     }
     :host([disabled]) {
       background: var(--divider-color);
@@ -30,7 +30,7 @@ export class HgActionButton extends LitElement {
       color: white;
     }
     :host(:not([disabled]):hover) {
-      background: var(--accent-color-dark);
+      background: var(--secondary-dark-color);
       cursor: pointer;
       /* remember to remove it when disabled */
     }

@@ -51,7 +51,7 @@ export class HgDynamicPathPage extends LitElement {
     .sidebar-container {
       align-self: flex-start;
       position: sticky;
-      top: calc(20px + var(--headerHeight));
+      top: calc(20px + var(--header-height));
       width: 280px;
       max-width: 100%;
     }

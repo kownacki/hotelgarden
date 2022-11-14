@@ -1,10 +1,10 @@
-import {html} from 'lit';
 import {getDayOfWeek, urlTo64Base, loadScript, sleep} from '../../utils.js';
+import {PRIMARY_COLOR, SECONDARY_COLOR, TEXT_COLOR} from '../../../utils/config.js';
 
-const bodyStyles = getComputedStyle(document.body);
-const primaryColor = bodyStyles.getPropertyValue('--primary-color').trim();
-const secondaryColor = bodyStyles.getPropertyValue('--secondary-color').trim();
-const accentColor = bodyStyles.getPropertyValue('--accent-color').trim();
+const mainHeaderColor = PRIMARY_COLOR;
+const dayHeaderColor = SECONDARY_COLOR;
+const textColor = TEXT_COLOR;
+const linesColor = TEXT_COLOR;
 
 const getHeader = (config, dateString) => ({
   text: [
@@ -55,7 +55,7 @@ const getBody = (lunches, weekLength, prices, img, columnGap) => [
       _.map.convert({cap: false})((column, index) =>
         [
           _.map((day) => getDay(_.get(day, lunches), prices, day), column),
-          (index === 0 && weekLength <= 5) ? ['\n', {image: img, width: 100, alignment: 'center'}] : '',
+          (index === 0 && weekLength <= 5) ? ['\n', {image: img, width: 150, alignment: 'center'}] : '',
           (index === 0 && weekLength === 7) ? ['\n', getPriceList(prices, columnGap, true)] : '',
         ],
         [
@@ -154,14 +154,14 @@ const generate = async (lunches, weekLength, config, dateString, decrementFontSi
     horizontalLine: {
       hLineWidth: (i) => i === 1 ? 1 : 0,
       vLineWidth: () => 0,
-      hLineColor: () => secondaryColor,
+      hLineColor: () => linesColor,
       paddingLeft: () => 0,
       paddingRight: () => 0,
       paddingTop: () => 0,
       paddingBottom: () => 10,
     },
     footer: {
-      hLineColor: () => secondaryColor,
+      hLineColor: () => linesColor,
       paddingLeft: () => 14,
       paddingRight: () => 14,
       paddingTop: () => 10,
@@ -205,12 +205,12 @@ const generate = async (lunches, weekLength, config, dateString, decrementFontSi
     defaultStyle: {
       font: 'Lato',
       fontSize: 15 * (1 - decrementFontSize),
-      color: secondaryColor,
+      color: textColor,
     },
     styles: {
       header: {
         fontSize: 35,
-        color: primaryColor,
+        color: mainHeaderColor,
         bold: true
       },
       subheader: {
@@ -218,7 +218,7 @@ const generate = async (lunches, weekLength, config, dateString, decrementFontSi
       },
       dayHeader: {
         fontSize: 20,
-        color: accentColor,
+        color: dayHeaderColor,
         alignment: 'center',
       },
       smaller: {

@@ -82,7 +82,7 @@ export class HgApp extends LitElement {
     const pageUid = this._getPageUid(path);
     return {
       pageUid,
-      noBannerImage: ['contact', 'gallery', '404'].includes(pageUid),
+      noBannerImage: ['contact', 'gallery', '404', 'admin'].includes(pageUid),
     };
   }
   async _getDynamicPathPage(dynamicPathPagePermalink, dataPromises) {

@@ -1,8 +1,8 @@
 import {LitElement, html, css} from 'lit';
-import '@material/mwc-button';
 import sharedStyles from '../styles/shared-styles.js';
 import {findInvalidInputs} from '../utils/form.js';
 import {sleep, scrollIntoView} from '../utils.js';
+import './hg-action-button.js';
 import './hg-contact-form/hg-contact-form-first-part.js';
 import './hg-contact-form/hg-contact-form-loading.js';
 import './hg-contact-form/hg-contact-form-second-part.js';
@@ -56,10 +56,10 @@ export class HgContactForm extends LitElement {
       display: flex;
       justify-content: flex-end;
     }
-    mwc-button {
-      padding: 7px 0;
+    hg-action-button {
+      margin: 7px 0;
     }
-    :host([loading]) mwc-button, :host([sent]) mwc-button, :host([error]) mwc-button {
+    :host([loading]) hg-action-button, :host([sent]) hg-action-button, :host([error]) hg-action-button {
       display: none;
     }
     .confirmation {
@@ -137,12 +137,10 @@ export class HgContactForm extends LitElement {
         <div class="required-info">* Pole jest wymagane</div>
       </div>
       <div class="controls">
-        <mwc-button
-          .raised=${true}
-          .label=${'Wyślij'}
-          .icon=${'send'}
+        <hg-action-button
           @click=${this._sendMessage}>
-        </mwc-button>
+          Wyślij
+        </hg-action-button>
         <hg-contact-form-loading ?hidden=${!this.loading}></hg-contact-form-loading>
       </div>
       <div class="confirmation">
