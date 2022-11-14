@@ -10,7 +10,7 @@ export default class HgEditableText extends LitElement {
   static properties = {
     text: String,
     ready: {type: Boolean, reflect: true},
-    disabled: Boolean,
+    disabled: {type: Boolean, reflect: true},
     showControls: Boolean,
     //todo rich and lessRich into one property
     rich: Boolean,
@@ -30,6 +30,7 @@ export default class HgEditableText extends LitElement {
     }
     :host(:not([ready])), :host([disabled]) {
       opacity: 50%;
+      pointer-events: none;
     }
     :host([multiline]) {
       height: 150px;
@@ -173,15 +174,13 @@ export default class HgEditableText extends LitElement {
         }
       }
     }
-    if (changedProperties.has('disabled')
-      || changedProperties.has('ready')
+    if (changedProperties.has('ready')
       || changedProperties.has('editingEnabled')
       || changedProperties.has('_editable')
       || changedProperties.has('_loggedIn')
     ) {
       if (this._editable) {
-        //todo empty textfield has height 0 when contenteditable set to false
-        this._editable.setAttribute('contenteditable', !this.disabled && this.ready && this._loggedIn && this.editingEnabled);
+        this._editable.setAttribute('contenteditable', this.ready && this._loggedIn && this.editingEnabled);
       }
     }
   }
