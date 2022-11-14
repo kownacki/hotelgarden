@@ -1,7 +1,15 @@
 import {LitElement, html, css} from 'lit';
 import {when} from 'lit/directives/when.js';
 import {throttle, range, size, toArray} from 'lodash-es';
-import {createDbPath, getFromDb, DbPath, updateDataOrImageInObjectInDb, updateInDb} from '../utils/database.js'
+import {HgListOldItemsChangeType} from '../elements/hg-list-old.js';
+import {
+  createDbPath,
+  getFromDb,
+  DbPath,
+  updateDataOrImageInObjectInDb,
+  updateInDb,
+  deleteImageInDb,
+} from '../utils/database.js'
 import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
 import {ItemsDbSyncController} from '../utils/ItemsDbSyncController.js';
 import {scrollIntoView} from '../utils.js';
@@ -160,11 +168,16 @@ export class HgMenu extends LitElement {
               .categories=${this._displayedCategories}
               .showControls=${this._loggedIn}
               .disableControls=${disableControls}
-              @request-categories-change=${async ({detail: {newCategories, newSelectedCategoryIndex}}) => {
+              @request-categories-change=${async ({detail: {newCategories, newSelectedCategoryIndex, changeType, changeData}}) => {
                 // todo bug when deleting last item. Remove '|| {}'
+                if (changeType === HgListOldItemsChangeType.ITEM_DELETE) {
+                  const deletedItem = this._displayedCategories[changeData.deletedIndex];
+                  if (deletedItem.image) {
+                    deleteImageInDb(deletedItem.image.name);
+                  }
+                }
                 await this._categoriesDbSync.requestAllItemsUpdate(newCategories);
                 this._selectedCategoryIndex = newSelectedCategoryIndex;
-                // !!!!   .onDelete=${(item) => item.image ? deleteImageInDb(item.image.name) : null}
               }}
               @request-selected-category-change=${({ detail: selectedCategoryIndex}) => {
                 this._selectedCategoryIndex = selectedCategoryIndex;

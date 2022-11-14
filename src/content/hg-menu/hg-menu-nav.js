@@ -64,11 +64,13 @@ export class HgMenuNav extends LitElement {
     }
     return this.selectedCategoryIndex;
   }
-  _requestCategoriesChange(newCategories, newSelectedCategoryIndex) {
+  _requestCategoriesChange(newCategories, newSelectedCategoryIndex, changeType, changeData) {
     this.dispatchEvent(new CustomEvent('request-categories-change', {
       detail: {
         newCategories,
         newSelectedCategoryIndex,
+        changeType,
+        changeData,
       },
     }));
   }
@@ -103,7 +105,7 @@ export class HgMenuNav extends LitElement {
         `}
         @request-items-change=${({detail: {newItems, type, data}}) => {
           const newSelectedCategoryIndex = this._getNewSelectedCategoryIndex(newItems, type, data);
-          this._requestCategoriesChange(newItems, newSelectedCategoryIndex);
+          this._requestCategoriesChange(newItems, newSelectedCategoryIndex, type, data);
         }}
         @request-item-update=${({detail: {index, type, field, data}}) => {
           this._requestCategoryFieldChange(index, type, field, data);
