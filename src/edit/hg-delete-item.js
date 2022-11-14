@@ -25,7 +25,9 @@ export class HgDeleteItem extends LitElement {
           .size=${'compact'}
           .icon=${'delete'}
           .disabled=${this.disabled}
-          @click=${() => this.shadowRoot.getElementById('dialog').open()}>
+          @click=${!this.disabled && (() => {
+            this.shadowRoot.getElementById('dialog').open();
+          })}>
         </hg-icon-button>
         <paper-dialog
           id="dialog"

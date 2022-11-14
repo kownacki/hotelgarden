@@ -12,7 +12,8 @@ export class HgListOldAdd extends LitElement {
       <hg-icon-button
         .size=${'large'}
         .icon=${'add'}
-        .disabled=${this.disabled}>
+        .disabled=${this.disabled}
+        @click=${(event) => this.disabled && event.stopImmediatePropagation()}>
       </hg-icon-button>
     `;
   }

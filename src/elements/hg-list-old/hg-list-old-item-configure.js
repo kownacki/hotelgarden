@@ -27,7 +27,9 @@ export class HgListOldItemConfigure extends LitElement {
           .size=${'compact'}
           .icon=${this.configure.icon}
           .disabled=${this.disabled}
-          @click=${() => this.shadowRoot.getElementById('dialog').open()}>
+          @click=${!this.disabled && (() => {
+            this.shadowRoot.getElementById('dialog').open();
+          })}>
         </hg-icon-button>
         <paper-dialog
           id="dialog"

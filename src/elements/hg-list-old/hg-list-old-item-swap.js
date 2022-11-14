@@ -16,7 +16,8 @@ export class HgListOldItemSwap extends LitElement {
       <hg-icon-button
         .size=${'compact'}
         .icon=${this.vertical ? 'swap_vert' : 'swap_horiz'}
-        .disabled=${this.disabled}>
+        .disabled=${this.disabled}
+        @click=${(event) => this.disabled && event.stopImmediatePropagation()}>
       </hg-icon-button>
     `;
   }
