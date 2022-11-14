@@ -1,10 +1,10 @@
 import {LitElement, html, css} from 'lit';
 import {when} from 'lit/directives/when.js';
-import {throttle, range, size} from 'lodash-es';
+import {throttle, range, size, toArray} from 'lodash-es';
 import {createDbPath, getFromDb, DbPath, updateDataOrImageInObjectInDb, updateInDb} from '../utils/database.js'
 import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
 import {ItemsDbSyncController} from '../utils/ItemsDbSyncController.js';
-import {scrollIntoView, sleep} from '../utils.js';
+import {scrollIntoView} from '../utils.js';
 import './hg-menu/hg-menu-main.js';
 import './hg-menu/hg-menu-nav.js';
 
@@ -18,6 +18,7 @@ export class HgMenu extends LitElement {
     _path: DbPath,
     _categoriesReady: Boolean,
     _categories: Object,
+    _displayedCategories: Object,
     _selectedCategoryIndex: Number,
     _compact: Boolean,
     _isEditingCategoryName: Boolean,
@@ -108,6 +109,18 @@ export class HgMenu extends LitElement {
       this._categoriesDbSync.setPath(this._path);
       this._selectedCategoryIndex = 0;
     }
+    if (changedProperties.has('_loggedIn')) {
+      this._selectedCategoryIndex = 0;
+    }
+    if (changedProperties.has('_loggedIn') || changedProperties.has('_categories')) {
+      this._displayedCategories = this._loggedIn
+        ? this._categories
+        : {
+          ...toArray(this._categories).filter((category) => {
+            return category.public;
+          })
+        };
+    }
     if (changedProperties.has('_isEditingCategoryName') || changedProperties.has('_isEditingCategoryItemsText')) {
       this._isEditing = this._isEditingCategoryName || this._isEditingCategoryItemsText;
     }
@@ -120,14 +133,14 @@ export class HgMenu extends LitElement {
           this._categoriesReady,
           () => html`
             ${(this._compact
-              ? range(0, size(this._categories))
+              ? range(0, size(this._displayedCategories))
               : [this._selectedCategoryIndex]
             ).map((categoryIndex) => html`
               <hg-menu-main
                 id="main"
-                .category=${this._categories[categoryIndex] || {}}
+                .category=${this._displayedCategories[categoryIndex] || {}}
                 .categoryIndex=${categoryIndex}
-                .categories=${this._categories}
+                .categories=${this._displayedCategories}
                 .showControls=${this._loggedIn}
                 .disableControls=${disableControls}
                 @editing-category-name-changed=${({ detail: isEditingCategoryName }) => {
@@ -144,7 +157,7 @@ export class HgMenu extends LitElement {
             <hg-menu-nav
               id="nav"
               .selectedCategoryIndex=${this._selectedCategoryIndex}
-              .categories=${this._categories}
+              .categories=${this._displayedCategories}
               .showControls=${this._loggedIn}
               .disableControls=${disableControls}
               @request-categories-change=${async ({detail: {newCategories, newSelectedCategoryIndex}}) => {

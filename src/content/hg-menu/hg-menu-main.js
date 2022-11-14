@@ -32,6 +32,11 @@ export class HgMenuMain extends LitElement {
       margin-bottom: 30px;
       position: relative;
     }
+    .non-public {
+      color: var(--error-color);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
     .empty {
       margin-bottom: 30px;
     }
@@ -97,6 +102,7 @@ export class HgMenuMain extends LitElement {
             <h3></h3>
           </hg-editable-text>
         </header>
+        ${!this.category.public ? html`<div class="non-public">Kategoria ukryta</div>`: ''}
         ${isEmpty(this.category.items) ? html`<div class="empty">Brak pozycji w kategorii</div>`: ''}
         <hg-list-old
           .__noAddUpdate=${true}
