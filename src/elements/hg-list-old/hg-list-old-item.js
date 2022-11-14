@@ -89,6 +89,7 @@ export class HgListOldItem extends LitElement {
               <hg-list-old-item-configure
                 .configure=${this.configure}
                 .item=${this.item}
+                .itemName=${this.getItemName(this.item)}
                 .disabled=${this.disableControls}
                 @opened-changed=${(event) => this._configureOpened = event.target.opened}>
               </hg-list-old-item-configure>

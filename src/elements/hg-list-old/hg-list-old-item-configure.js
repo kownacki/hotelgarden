@@ -9,6 +9,7 @@ export class HgListOldItemConfigure extends LitElement {
   static properties = {
     configure: Object,
     item: Object,
+    itemName: String,
     disabled: Boolean,
     opened: {type: Boolean, reflect: true},
   };
@@ -25,7 +26,7 @@ export class HgListOldItemConfigure extends LitElement {
       <div class="cms">
         <hg-icon-button
           .size=${'compact'}
-          .icon=${this.configure.icon}
+          .icon=${this.configure.getIcon(this, this.item)}
           .disabled=${this.disabled}
           @click=${!this.disabled && (() => {
             this.shadowRoot.getElementById('dialog').open();
@@ -40,7 +41,7 @@ export class HgListOldItemConfigure extends LitElement {
             }
             this.dispatchEvent(new CustomEvent('opened-changed'));
           }}>
-          ${this.configure.template(this.item)}
+          ${this.configure.template(this, this.item)}
           <div class="buttons">
             <hg-cms-buttons-container>
               <mwc-button
@@ -53,7 +54,7 @@ export class HgListOldItemConfigure extends LitElement {
                 @click=${() => {
                   this.shadowRoot.getElementById('dialog').close();
                   const field = this.configure.field;
-                  const newData = this.configure.getData(this);
+                  const newData = this.configure.getData(this, this.item);
                   this.item[field] = newData;
                   this.dispatchEvent(new CustomEvent('update', {detail: {path: field, data: newData}, composed: true}));
                 }}>

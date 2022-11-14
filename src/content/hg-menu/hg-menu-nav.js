@@ -1,8 +1,29 @@
 import {LitElement, html, css} from 'lit';
+import {when} from 'lit/directives/when.js';
 import {size} from 'lodash-es';
 import {getSelectedIndexAfterDelete, getSelectedIndexAfterItemSwap} from '../../../utils/list.js';
 import {HgListOldItemsChangeType} from '../../elements/hg-list-old.js';
 import './hg-menu-nav-item.js';
+
+const configure = {
+  getIcon: (that, category) => {
+    return category.public ? 'visibility_off' : 'visibility_on';
+  },
+  field: 'public',
+  getData: (that, category) => {
+    return !category.public;
+  },
+  setData: (that, category) => {},
+  template: (that, category) => html`
+    <div>
+      ${when(
+        category.public,
+        () => html`Czy na pewno chcesz ukryć ${that.itemName}?`,
+        () => html`Czy na pewno chcesz upublicznić ${that.itemName}?`,
+      )}
+    </div>
+  `
+};
 
 export class HgMenuNav extends LitElement {
   static properties = {
@@ -51,6 +72,16 @@ export class HgMenuNav extends LitElement {
       },
     }));
   }
+  _requestCategoryFieldChange(categoryIndex, type, field, data) {
+    this.dispatchEvent(new CustomEvent('request-category-field-change', {
+      detail: {
+        categoryIndex,
+        type,
+        field,
+        data,
+      },
+    }));
+  }
   render() {
     return html`
       <hg-list-old
@@ -74,6 +105,10 @@ export class HgMenuNav extends LitElement {
           const newSelectedCategoryIndex = this._getNewSelectedCategoryIndex(newItems, type, data);
           this._requestCategoriesChange(newItems, newSelectedCategoryIndex);
         }}
+        @request-item-update=${({detail: {index, type, field, data}}) => {
+          this._requestCategoryFieldChange(index, type, field, data);
+        }}
+        .configure=${configure}>
       </hg-list-old>
     `;
   }

@@ -15,7 +15,7 @@ const reviewBlocks = ['landing', 'restaurant', 'weddings', 'family-parties'];
 //todo implement vertical swap
 
 const configure = {
-  icon: 'settings',
+  getIcon: () => 'settings',
   field: 'display',
   getData: (that) => {
     const checkboxes = that.shadowRoot.getElementById('dialog').querySelectorAll('mwc-checkbox');
@@ -25,7 +25,7 @@ const configure = {
     const checkboxes = that.shadowRoot.getElementById('dialog').querySelectorAll('mwc-checkbox');
     return _.zip(checkboxes, reviewBlocks).map(([checkbox, reviewBlock]) => checkbox.checked = review.display.includes(reviewBlock));
   },
-  template: (review) => html`
+  template: (that, review) => html`
     <div>
       Wyświetlaj opinię "${review.heading}" w:
     </div>
