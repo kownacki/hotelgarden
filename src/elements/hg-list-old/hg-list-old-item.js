@@ -10,7 +10,7 @@ export class HgListOldItem extends LitElement {
     noSwap: Boolean,
     noDelete: Boolean,
     vertical: {type: Boolean, reflect: true},
-    disableEdit: Boolean,
+    disableControls: Boolean,
     opened: {type: Boolean, reflect: true},
     configure: Object,
     _deleteOpened: Boolean,
@@ -69,13 +69,13 @@ export class HgListOldItem extends LitElement {
       this.opened = this._deleteOpened || this._configureOpened;
     }
     // todo make wrapper element for slot allowing passing properties instead of this workaround
-    // if (changedProperties.has('disableEdit')) {
+    // if (changedProperties.has('disableControls')) {
     //   let slotted = this.querySelector('*');
     //   if (slotted) {
     //     while (slotted.tagName === 'SLOT') {
     //       slotted = slotted.assignedElements()[0];
     //     }
-    //     slotted.disableEdit = this.disableEdit;
+    //     slotted.disableControls = this.disableControls;
     //   }
     // }
   }
@@ -89,7 +89,7 @@ export class HgListOldItem extends LitElement {
               <hg-list-old-item-configure
                 .configure=${this.configure}
                 .item=${this.item}
-                .disabled=${this.disableEdit}
+                .disabled=${this.disableControls}
                 @opened-changed=${(event) => this._configureOpened = event.target.opened}>
               </hg-list-old-item-configure>
             `;
@@ -97,7 +97,7 @@ export class HgListOldItem extends LitElement {
           ${this.noDelete ? '' : until(import('../../edit/hg-delete-item.js').then(() => {
             return html`
               <hg-delete-item
-                .disabled=${this.disableEdit}
+                .disabled=${this.disableControls}
                 .name=${this.getItemName(this.item)}
                 @opened-changed=${(event) => this._deleteOpened = event.target.opened}>
               </hg-delete-item>
@@ -109,7 +109,7 @@ export class HgListOldItem extends LitElement {
             (this.first ? '' : html`
               <hg-list-old-item-swap
                 class="swap-left"
-                .disabled=${this.disableEdit}
+                .disabled=${this.disableControls}
                 .vertical=${this.vertical}
                 @click=${() => this.dispatchEvent(new CustomEvent('swap', {detail: -1}))}>
               </hg-list-old-item-swap>
@@ -117,7 +117,7 @@ export class HgListOldItem extends LitElement {
             (this.last ? '' : html`
               <hg-list-old-item-swap
                 class="swap-right"
-                .disabled=${this.disableEdit}
+                .disabled=${this.disableControls}
                 .vertical=${this.vertical}
                 @click=${() => this.dispatchEvent(new CustomEvent('swap', {detail: +1}))}>
               </hg-list-old-item-swap>

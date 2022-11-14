@@ -171,7 +171,7 @@ export default class HgListOld extends LitElement {
             .noSwap=${this.noSwap || !this.showControls}
             .noDelete=${!this.showControls}
             .vertical=${this.vertical}
-            .disableEdit=${this.processing}
+            .disableControls=${this.processing}
             .configure=${this.showControls && this.configure}
             @request-delete=${() => this.deleteItem(key)}
             @swap=${async (event) => this.swapItems(key, this._list[listIndex + event.detail])}
