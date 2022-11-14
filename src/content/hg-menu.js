@@ -4,7 +4,7 @@ import {throttle, range, size} from 'lodash-es';
 import {createDbPath, getFromDb, DbPath, updateDataOrImageInObjectInDb, updateInDb} from '../utils/database.js'
 import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
 import {ItemsDbSyncController} from '../utils/ItemsDbSyncController.js';
-import {scrollIntoView} from '../utils.js';
+import {scrollIntoView, sleep} from '../utils.js';
 import './hg-menu/hg-menu-main.js';
 import './hg-menu/hg-menu-nav.js';
 
@@ -24,6 +24,7 @@ export class HgMenu extends LitElement {
     _isEditingCategoryItemsText: Boolean,
     _isEditing: {type: Boolean, reflect: true, attribute: 'is-editing'},
     _loggedIn: Boolean,
+    _isUpdating: Boolean,
   };
   static styles = css`
     :host {
@@ -88,6 +89,9 @@ export class HgMenu extends LitElement {
         onDataChange: (categories) => {
           this._categories = categories;
         },
+        onIsUpdatingChange: (isUpdating) => {
+          this._isUpdating = isUpdating;
+        },
       },
     );
 
@@ -109,6 +113,7 @@ export class HgMenu extends LitElement {
     }
   }
   render() {
+    const disableControls = this._isEditing || this._isUpdating;
     return html`
       <section>
         ${when(
@@ -124,6 +129,7 @@ export class HgMenu extends LitElement {
                 .categoryIndex=${categoryIndex}
                 .categories=${this._categories}
                 .showControls=${this._loggedIn}
+                .disableControls=${disableControls}
                 @editing-category-name-changed=${({ detail: isEditingCategoryName }) => {
                   this._isEditingCategoryName = isEditingCategoryName;
                 }}
@@ -140,6 +146,7 @@ export class HgMenu extends LitElement {
               .selectedCategoryIndex=${this._selectedCategoryIndex}
               .categories=${this._categories}
               .showControls=${this._loggedIn}
+              .disableControls=${disableControls}
               @request-categories-change=${async ({detail: {newCategories, newSelectedCategoryIndex}}) => {
                 await this._categoriesDbSync.requestAllItemsUpdate(newCategories);
                 this._selectedCategoryIndex = newSelectedCategoryIndex;

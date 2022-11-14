@@ -30,6 +30,7 @@ export default class HgListOld extends LitElement {
     getItemName: Function,
     // optional params
     showControls: Boolean,
+    disableControls: Boolean,
     transform: Function,
     onAdd: Function,
     onDelete: Function,
@@ -39,7 +40,7 @@ export default class HgListOld extends LitElement {
     // private
     _list: Array,
     _listNotEmpty: {type: Boolean, reflect: true, attribute: 'list-not-empty'},
-    processing: Boolean,
+    _internalDisableControls: Boolean,
   };
   static styles = [sharedStyles, css`
     :host {
@@ -72,7 +73,7 @@ export default class HgListOld extends LitElement {
     return updateInDb(this.path.extend(field), data);
   }
   async updateItem(index, field, data) {
-    this.processing = true;
+    this._internalDisableControls = true;
     if (!this.__noItemChangeUpdate) {
       await this.updateData(`${index}.${field}`, data);
     }
@@ -86,10 +87,10 @@ export default class HgListOld extends LitElement {
         index,
       },
     }));
-    this.processing = false;
+    this._internalDisableControls = false;
   }
   async deleteItem(index) {
-    this.processing = true;
+    this._internalDisableControls = true;
     if (this.onDelete) {
       await this.onDelete(this.items[index]);
     }
@@ -111,10 +112,10 @@ export default class HgListOld extends LitElement {
         },
       },
     }));
-    this.processing = false;
+    this._internalDisableControls = false;
   }
   async swapItems(index1, index2) {
-    this.processing = true;
+    this._internalDisableControls = true;
     const newItems = array.swapItems(index1, index2, _.clone(this.items));
     if (!this.__noSwapUpdate) {
       await this.updateData('', {...newItems});
@@ -132,10 +133,10 @@ export default class HgListOld extends LitElement {
         },
       },
     }));
-    this.processing = false;
+    this._internalDisableControls = false;
   }
   async addItem() {
-    this.processing = true;
+    this._internalDisableControls = true;
     let newItem = {uid: generateUid()};
     newItem = this.onAdd ? await this.onAdd(newItem) : newItem;
     if (newItem) {
@@ -155,7 +156,7 @@ export default class HgListOld extends LitElement {
         },
       }));
     }
-    this.processing = false;
+    this._internalDisableControls = false;
   }
   render() {
     return html`
@@ -171,7 +172,7 @@ export default class HgListOld extends LitElement {
             .noSwap=${this.noSwap || !this.showControls}
             .noDelete=${!this.showControls}
             .vertical=${this.vertical}
-            .disableControls=${this.processing}
+            .disableControls=${this._internalDisableControls || this.disableControls}
             .configure=${this.showControls && this.configure}
             @request-delete=${() => this.deleteItem(key)}
             @swap=${async (event) => this.swapItems(key, this._list[listIndex + event.detail])}
@@ -181,14 +182,14 @@ export default class HgListOld extends LitElement {
               this.dispatchEvent(new CustomEvent('editing-item-changed', {detail: showEditableTextControls}));
             }}
           >
-            ${this.itemTemplate(this.items[key], key, this.processing)}
+            ${this.itemTemplate(this.items[key], key, this._internalDisableControls || this.disableControls)}
           </hg-list-old-item>`
         ),
         (!this.showControls || this.noAdd) ? '' : until(import('./hg-list-old/hg-list-old-add.js').then(() => {
           return html`
             <div class="add-container">
               <hg-list-old-add
-                .disabled=${this.processing}
+                .disabled=${this._internalDisableControls || this.disableControls}
                 @click=${() => this.addItem()}>
               </hg-list-old-add>
             </div>
