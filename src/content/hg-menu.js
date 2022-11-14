@@ -85,10 +85,7 @@ export class HgMenu extends LitElement {
         getItems: async (path) => await getFromDb(path) || {},
         updateItem: async (path, index, {type, field, data}, oldItem, items) => {
           const updatedData = await updateDataOrImageInObjectInDb(type, path, `${index}.${field}`, data, items);
-          return {
-            ...oldItem,
-            [field]: updatedData,
-          };
+          return _.set(field, updatedData, oldItem);
         },
         updateAllItems: async (path, data) => {
           await updateInDb(path, data);
