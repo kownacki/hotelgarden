@@ -14,7 +14,7 @@ export class HgLunchSet extends LitElement {
   `];
   render() {
     return html`
-      <hg-menu-item .disableEdit=${true} .item=${staticProp({name: 'I + II Danie', price: this.price})}></hg-menu-item>
+      <hg-menu-item .item=${staticProp({name: 'I + II Danie', price: this.price})}></hg-menu-item>
     `;
   }
 }

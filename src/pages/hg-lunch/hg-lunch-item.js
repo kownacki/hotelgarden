@@ -18,7 +18,7 @@ export class HgLunchItem extends LitElement {
   render() {
     return html`
       ${_.map((course) => html`
-        <hg-menu-item .disableEdit=${true} .item=${staticProp({
+        <hg-menu-item .item=${staticProp({
           name: `${{1: 'I', 2: 'II'}[course]} danie: ${_.get(`${course}.name`, this.lunch)}`, 
           description: _.get(`${course}.description`, this.lunch), 
           price: _.get(course, this.prices),

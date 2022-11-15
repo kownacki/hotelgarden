@@ -114,8 +114,13 @@ export class HgMenuMain extends LitElement {
           .showControls=${this.showControls}
           .disableControls=${this.disableControls}
           .getItemName=${(item) => `pozycję${item.name ? ` "${item.name}"`: ''}`}
-          .itemTemplate=${(item, index, disableEdit) => 
-            html`<hg-menu-item .item=${item} .disableEdit=${disableEdit} .isRestaurantMenu=${true}></hg-menu-nav-item>
+          .itemTemplate=${(item, index, disableEdit) => html`
+            <hg-menu-item
+              .item=${item}
+              .disableEdit=${disableEdit}
+              .editable=${true}
+              .isRestaurantMenu=${true}>
+              </hg-menu-nav-item>
           `}
           @editing-item-changed=${({detail: isEditingItem}) => {
             this.dispatchEvent(new CustomEvent('editing-category-items-text-changed', {detail: isEditingItem}));
