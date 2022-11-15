@@ -60,6 +60,10 @@ export class HgDynamicPathPagesList extends LitElement {
             deleteImageInDb(event.image.name);
           }
         }}
+        @request-items-change=${({detail: {newItems}}) => {
+          // todo refactor
+          this.dynamicPathPages = newItems;
+        }}
         @list-changed=${(event) => this.dispatchEvent(new CustomEvent('events-changed', {detail: event.detail}))}>
       </hg-list-old>
     `;
