@@ -72,18 +72,17 @@ export class HgMosaicListOld extends HgListOld {
     return Math.floor(tilesCount/10) * 4 + this.calculateHeightRemainder(tilesCount%10);
   }
   setMargin() {
-    const tilesCount = this._list.length + ((this._loggedIn && !this.noAdd) ? 1 : 0);
+    const tilesCount = this._list.length + ((this.showControls && !this.noAdd) ? 1 : 0);
     this.style = `margin-bottom: ${(this.calculateHeight(tilesCount) - 1) * 3/16 * 100}%`;
   }
   updated(changedProperties) {
     super.updated(changedProperties);
-    if ((changedProperties.has('_loggedIn') || changedProperties.has('noAdd') || changedProperties.has('_list')) && window.innerWidth > 839) {
+    if ((changedProperties.has('showControls') || changedProperties.has('noAdd') || changedProperties.has('_list')) && window.innerWidth > 839) {
       this.setMargin();
     }
   }
   constructor() {
     super();
-    this.array = true;
     this.addAtStart = true;
     this.transform = () => _.reverse;
     window.addEventListener('resize', _.throttle(100, () => {

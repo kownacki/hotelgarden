@@ -75,6 +75,7 @@ export class HgGallery extends LitElement {
         id="list"
         .path=${this._path}
         .items=${this._items}
+        .showControls=${this._loggedIn}
         .itemTemplate=${(item, index) => html`
           <hg-gallery-item
             .ready=${this._itemsReady}
