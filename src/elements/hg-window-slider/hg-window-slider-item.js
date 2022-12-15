@@ -1,7 +1,11 @@
 import {LitElement, html, css} from 'lit';
 import {IMAGE_COMPRESSION_QUALITY} from '../../../utils/config.js';
 import sharedStyles from '../../styles/shared-styles.js';
-import {HG_WINDOW_SLIDER_IMAGE_MAX_HEIGHT, HG_WINDOW_SLIDER_IMAGE_MAX_WIDTH} from '../hg-window-slider.js';
+import {
+  HG_WINDOW_SLIDER_IMAGE_FIT,
+  HG_WINDOW_SLIDER_IMAGE_MAX_HEIGHT,
+  HG_WINDOW_SLIDER_IMAGE_MAX_WIDTH,
+} from '../hg-window-slider.js';
 import '../mkwc/hg-editable-image.js';
 
 export class HgWindowSliderItem extends LitElement {
@@ -20,7 +24,7 @@ export class HgWindowSliderItem extends LitElement {
       <hg-editable-image
         .src=${this.image?.url}
         .ready=${this.ready}
-        .fit=${'contain'}
+        .fit=${HG_WINDOW_SLIDER_IMAGE_FIT}
         .maxWidth=${HG_WINDOW_SLIDER_IMAGE_MAX_WIDTH}
         .maxHeight=${HG_WINDOW_SLIDER_IMAGE_MAX_HEIGHT}
         .compressionQuality=${IMAGE_COMPRESSION_QUALITY}

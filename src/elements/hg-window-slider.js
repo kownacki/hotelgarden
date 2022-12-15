@@ -4,6 +4,7 @@ import './hg-slider.js';
 import './hg-window-slider/hg-window-slider-item.js';
 import './ui/hg-icon-button.js';
 
+export const HG_WINDOW_SLIDER_IMAGE_FIT = 'contain';
 export const HG_WINDOW_SLIDER_IMAGE_MAX_WIDTH = HDTV_WIDTH;
 export const HG_WINDOW_SLIDER_IMAGE_MAX_HEIGHT = HDTV_HEIGHT;
 
