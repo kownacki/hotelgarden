@@ -26,8 +26,8 @@ export class HgWindowSliderItem extends LitElement {
         .maxWidth=${maxImageWidth}
         .maxHeight=${maxImageHeight}
         .compressionQuality=${0.7}
-        @image-uploaded=${(event) => {
-          this.dispatchEvent(new CustomEvent('request-image-change', {detail: {index: this.image.index, file: event.detail}}));
+        @image-uploaded=${({detail: file}) => {
+          this.dispatchEvent(new CustomEvent('request-image-change', {detail: {index: this.image.index, file}}));
         }}>
       </hg-editable-image>
     `;

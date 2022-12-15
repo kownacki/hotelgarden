@@ -56,14 +56,14 @@ export class HgWindowSlider extends LitElement {
       <hg-slider
         id="slider"
         .selected=${this.selected}
-        @selected-changed=${(event) => this.selected = event.detail}
+        @selected-changed=${({detail: selected}) => this.selected = selected}
         .items=${this.images}
         .template=${(image) => html`
           <hg-window-slider-item
             .ready=${this.ready}
             .image=${image}
-            @request-image-change=${(event) => {
-              this.dispatchEvent(new CustomEvent('request-image-change', {detail: event.detail}));
+            @request-image-change=${({detail}) => {
+              this.dispatchEvent(new CustomEvent('request-image-change', {detail}));
             }}>
           </hg-window-slider-item>
         `}>

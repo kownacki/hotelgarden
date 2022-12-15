@@ -106,8 +106,8 @@ export class HgImageSlider extends LitElement {
         id="window-slider"
         .ready=${this.ready}
         .images=${_.map.convert({cap: false})((image, index) => ({index: Number(index), ...image}), this.images)}
-        @request-image-change=${async (event) => {
-          await this.updateImage(event.detail.index, event.detail.file);
+        @request-image-change=${async ({detail: {index, file}}) => {
+          await this.updateImage(index, file);
           this.requestUpdate();
           this.shadowRoot.getElementById('window-slider').requestUpdate();
         }}>
