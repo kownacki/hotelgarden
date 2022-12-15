@@ -5,6 +5,7 @@ export const HEADER_HEIGHT = 60;
 // HDTV resolution
 export const HDTV_WIDTH = 1920;
 export const HDTV_HEIGHT = 1080;
+export const IMAGE_COMPRESSION_QUALITY = 0.7;
 export const PRIMARY_COLOR = colord('#234D47').lighten(0.05).toHex();
 export const SECONDARY_COLOR = '#E2A96A';
 export const SECONDARY_DARK_COLOR = colord(SECONDARY_COLOR).darken(0.1).toHex();

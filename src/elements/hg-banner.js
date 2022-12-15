@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit';
-import {HDTV_WIDTH, HDTV_HEIGHT} from '../../utils/config.js';
+import {HDTV_WIDTH, HDTV_HEIGHT, IMAGE_COMPRESSION_QUALITY} from '../../utils/config.js';
 import '../edit/hg-editable-text.js';
 import '../elements/mkwc/hg-editable-image.js';
 import sharedStyles from '../styles/shared-styles.js';
@@ -74,7 +74,7 @@ export class HgBanner extends LitElement {
           .fit=${'cover'}
           .maxWidth=${maxImageWidth}
           .maxHeight=${maxImageHeight}
-          .compressionQuality=${0.7}
+          .compressionQuality=${IMAGE_COMPRESSION_QUALITY}
           @image-uploaded=${({detail: blob}) => {
             this.dispatchEvent(new CustomEvent('request-image-change', {detail: blob}));
           }}>
