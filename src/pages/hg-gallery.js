@@ -1,8 +1,13 @@
 import {LitElement, html, css} from 'lit';
 import {until} from 'lit/directives/until.js';
+import {IMAGE_COMPRESSION_QUALITY} from '../../utils/config.js';
 import '../content/hg-article/hg-intro-article.js';
 import '../elements/hg-list-old/hg-mosaic-list-old.js'
-import '../elements/hg-window-slider.js';
+import {
+  HG_WINDOW_SLIDER_IMAGE_FIT,
+  HG_WINDOW_SLIDER_IMAGE_MAX_HEIGHT,
+  HG_WINDOW_SLIDER_IMAGE_MAX_WIDTH,
+} from '../elements/hg-window-slider.js';
 import {
   createDbPath,
   createImageInDb,
@@ -88,9 +93,19 @@ export class HgGallery extends LitElement {
         .getItemName=${(item) => `obraz "${item.uid}"`}
         .onAdd=${async (newItem) => {
           const uploadResult = await this.shadowRoot.getElementById('upload').upload();
-          return uploadResult
-            ? {...newItem, image: await createImageInDb(uploadResult)}
-            : false;
+          if (uploadResult) {
+            const {fitAndCompress} = await import('mk-frontend-web-utils/fitAndCompress.js');
+            const fittedAndCompressedFile = await fitAndCompress(
+              HG_WINDOW_SLIDER_IMAGE_FIT,
+              HG_WINDOW_SLIDER_IMAGE_MAX_WIDTH,
+              HG_WINDOW_SLIDER_IMAGE_MAX_HEIGHT,
+              IMAGE_COMPRESSION_QUALITY,
+              uploadResult
+            );
+            return {...newItem, image: await createImageInDb(fittedAndCompressedFile)};
+          } else {
+            return false;
+          }
         }}
         .onDelete=${(item) => {
           deleteImageInDb(item.image.name);

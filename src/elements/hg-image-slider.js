@@ -1,10 +1,15 @@
 import {LitElement, html, css} from 'lit';
 import {until} from 'lit/directives/until.js';
+import {IMAGE_COMPRESSION_QUALITY} from '../../utils/config.js';
 import {DbPath, deleteImageInDb, getFromDb, updateInDb, updateImageInDb} from '../utils/database.js';
 import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
 import './hg-image-slider/hg-image-slider-item.js';
 import './hg-slider.js';
-import './hg-window-slider.js';
+import {
+  HG_WINDOW_SLIDER_IMAGE_FIT,
+  HG_WINDOW_SLIDER_IMAGE_MAX_WIDTH,
+  HG_WINDOW_SLIDER_IMAGE_MAX_HEIGHT,
+} from './hg-window-slider.js';
 
 //todo esc should close window
 export class HgImageSlider extends LitElement {
@@ -89,12 +94,23 @@ export class HgImageSlider extends LitElement {
           </hg-image-slider-item>
         `}>
       </hg-slider>`}
-      ${!this._loggedIn ? '' : until(import('./hg-image-upload-fab.js').then(() => {
+      ${!this._loggedIn ? '' : until(Promise.all([
+        import('mk-frontend-web-utils/fitAndCompress.js'),
+        import('./hg-image-upload-fab.js'),
+      ]).then((importPromises) => {
+        const {fitAndCompress} = importPromises[0];
         return html`
           <hg-image-upload-fab
             @upload=${async ({detail: file}) => {
+              const fittedAndCompressedFile = await fitAndCompress(
+                HG_WINDOW_SLIDER_IMAGE_FIT,
+                HG_WINDOW_SLIDER_IMAGE_MAX_WIDTH,
+                HG_WINDOW_SLIDER_IMAGE_MAX_HEIGHT,
+                IMAGE_COMPRESSION_QUALITY,
+                file
+              );
               const index = _.size(this.images);
-              await this.updateImage(index, file);
+              await this.updateImage(index, fittedAndCompressedFile);
               const contentSlider = this.shadowRoot.getElementById('content-slider');
               contentSlider.selected = (contentSlider.double && window.innerWidth >= 600) ? index - 1 : index;
               contentSlider.requestUpdate();
