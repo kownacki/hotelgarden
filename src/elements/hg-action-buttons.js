@@ -18,7 +18,13 @@ export class HgActionButtons extends LitElement {
   render() {
     return html`
       ${_.map((button) => html`
-        <hg-action-button .url=${button.url} @click=${button.click || null}>${button.text}</hg-action-button>
+        <hg-action-button
+          .newTab=${button.newTab}
+          .url=${button.url}
+          @click=${button.click || null}
+        >
+          ${button.text}
+        </hg-action-button>
       `, this.buttons)}
     `;
   }

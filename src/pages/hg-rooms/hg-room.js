@@ -4,16 +4,22 @@ import sharedStyles from '../../styles/shared-styles.js'
 import '../../content/hg-text-image.js'
 import '../../content/hg-content-icons.js';
 
+const BOOKING_URL_GARDEN = 'https://www.booking.com/hotel/pl/garden.pl.html';
+const BOOKING_URL_VILLA = 'https://www.booking.com/hotel/pl/villa-ogrodowa.html';
+
 const roomsConfig = [
   [
-    {location: 'hotelgarden', id: ROOM_ID.doubleClassic, text: 'Rezerwuj pokój (łóżka razem)'},
-    {location: 'hotelgarden', id: ROOM_ID.twin, text: 'Rezerwuj pokój (łóżka osobno)'}
+    {url: `${BOOKING_URL_GARDEN}#RD115791103`, text: 'Rezerwuj pokój', newTab: true},
   ],
-  [{location: 'hotelgarden', id: ROOM_ID.superior}],
-  [{location: 'villagarden', id: ROOM_ID.villaRoom}],
   [
-    {location: 'hotelgarden', id: ROOM_ID.tripleClassic, adults: 3, text: 'Rezerwuj pokój (3 osoby)'},
-    {location: 'hotelgarden', id: ROOM_ID.quadClassic, adults: 4, text: 'Rezerwuj pokój (4 osoby)'}
+    {url: `${BOOKING_URL_GARDEN}#RD115791108`, text: 'Rezerwuj pokój', newTab: true},
+  ],
+  [
+    {url: `${BOOKING_URL_VILLA}#RD355411801`, text: 'Rezerwuj pokój', newTab: true},
+  ],
+  [
+    {url: `${BOOKING_URL_GARDEN}#RD115791102`, text: 'Rezerwuj pokój (3 osoby)', newTab: true},
+    {url: `${BOOKING_URL_GARDEN}#RD115791109`, text: 'Rezerwuj pokój (4 osoby)', newTab: true},
   ],
 ];
 
@@ -45,9 +51,7 @@ export class HgRoom extends LitElement {
             'https://firebasestorage.googleapis.com/v0/b/pl-hotelgarden.appspot.com/o/icons%2Fpeople%2Fstanding-man.png?alt=media&token=f284442d-c273-480e-acd1-67a9bcb0463a'
           ])}
           .buttons=${[
-            ..._.map(
-              (room) => ({click: () => openProfitroom(room.location, room.id, room.adults), text: room.text || 'Rezerwuj pokój'}),
-            roomsConfig[this.index - 1]),
+            ...roomsConfig[this.index - 1],
             ...(this.extraButtons || []),
           ]}>
         </hg-text-image>
