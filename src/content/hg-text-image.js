@@ -16,7 +16,7 @@ export class HgTextImage extends LitElement {
   _objectDbSync;
   static properties = {
     uid: String,
-    buttons: Number,
+    buttons: Array,
     h3: {type: Boolean},
     noHeading: Boolean,
     swap: {type: Boolean, reflect: true},
