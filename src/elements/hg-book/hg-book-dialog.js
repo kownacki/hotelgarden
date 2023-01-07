@@ -12,6 +12,9 @@ import '../hg-text.js'
 const maxImageWidth = 600;
 const maxImageHeight = 180;
 
+const BOOKING_URL_GARDEN = 'https://www.booking.com/hotel/pl/garden.pl.html';
+const BOOKING_URL_VILLA = 'https://www.booking.com/hotel/pl/villa-ogrodowa.html';
+
 export class HgBookDialog extends LitElement {
   static properties = {
     dialog: Element,
@@ -116,7 +119,12 @@ export class HgBookDialog extends LitElement {
                 .ready=${this._dataReady}>
                 <div class="ck-content smaller-text"></div>
               </hg-text>
-              <hg-action-button @click=${() => openProfitroom(location.name)}>Wybierz</hg-action-button>
+              <hg-action-button
+                url=${location.name === 'hotelgarden' ? BOOKING_URL_GARDEN : BOOKING_URL_VILLA}
+                newTab=${true}
+              >
+                Wybierz
+              </hg-action-button>
             </div>
           `, [{name: 'villagarden'}, {name: 'hotelgarden'}])}     
         </div>
