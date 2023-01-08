@@ -1,25 +1,23 @@
 import {LitElement, html, css} from 'lit';
+import {HOTEL_GARDEN_BOOKING_URL, VILLA_GARDEN_BOOKING_URL} from '../../../utils/config.js';
 import {staticProp, ROOM_ID, openProfitroom} from '../../utils.js';
 import sharedStyles from '../../styles/shared-styles.js'
 import '../../content/hg-text-image.js'
 import '../../content/hg-content-icons.js';
 
-const BOOKING_URL_GARDEN = 'https://www.booking.com/hotel/pl/garden.pl.html';
-const BOOKING_URL_VILLA = 'https://www.booking.com/hotel/pl/villa-ogrodowa.html';
-
 const roomsConfig = [
   [
-    {url: `${BOOKING_URL_GARDEN}#RD115791103`, text: 'Rezerwuj pokój', newTab: true},
+    {url: `${HOTEL_GARDEN_BOOKING_URL}#RD115791103`, text: 'Rezerwuj pokój', newTab: true},
   ],
   [
-    {url: `${BOOKING_URL_GARDEN}#RD115791108`, text: 'Rezerwuj pokój', newTab: true},
+    {url: `${HOTEL_GARDEN_BOOKING_URL}#RD115791108`, text: 'Rezerwuj pokój', newTab: true},
   ],
   [
-    {url: `${BOOKING_URL_VILLA}#RD355411801`, text: 'Rezerwuj pokój', newTab: true},
+    {url: `${VILLA_GARDEN_BOOKING_URL}#RD355411801`, text: 'Rezerwuj pokój', newTab: true},
   ],
   [
-    {url: `${BOOKING_URL_GARDEN}#RD115791102`, text: 'Rezerwuj pokój (3 osoby)', newTab: true},
-    {url: `${BOOKING_URL_GARDEN}#RD115791109`, text: 'Rezerwuj pokój (4 osoby)', newTab: true},
+    {url: `${HOTEL_GARDEN_BOOKING_URL}#RD115791102`, text: 'Rezerwuj pokój (3 osoby)', newTab: true},
+    {url: `${HOTEL_GARDEN_BOOKING_URL}#RD115791109`, text: 'Rezerwuj pokój (4 osoby)', newTab: true},
   ],
 ];
 

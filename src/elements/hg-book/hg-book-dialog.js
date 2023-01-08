@@ -1,4 +1,5 @@
 import {LitElement, html, css, unsafeCSS} from 'lit';
+import {HOTEL_GARDEN_BOOKING_URL, VILLA_GARDEN_BOOKING_URL} from '../../../utils/config.js';
 import {createDbPath, getFromDb, updateDataOrImageInObjectInDb} from '../../utils/database.js';
 import {ObjectDbSyncController} from '../../utils/ObjectDbSyncController.js';
 import {openProfitroom} from '../../utils.js';
@@ -11,9 +12,6 @@ import '../hg-text.js'
 
 const maxImageWidth = 600;
 const maxImageHeight = 180;
-
-const BOOKING_URL_GARDEN = 'https://www.booking.com/hotel/pl/garden.pl.html';
-const BOOKING_URL_VILLA = 'https://www.booking.com/hotel/pl/villa-ogrodowa.html';
 
 export class HgBookDialog extends LitElement {
   static properties = {
@@ -120,7 +118,7 @@ export class HgBookDialog extends LitElement {
                 <div class="ck-content smaller-text"></div>
               </hg-text>
               <hg-action-button
-                url=${location.name === 'hotelgarden' ? BOOKING_URL_GARDEN : BOOKING_URL_VILLA}
+                url=${location.name === 'hotelgarden' ? HOTEL_GARDEN_BOOKING_URL : VILLA_GARDEN_BOOKING_URL}
                 newTab=${true}
               >
                 Wybierz

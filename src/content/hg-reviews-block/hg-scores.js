@@ -1,4 +1,5 @@
 import {LitElement, html, css} from 'lit';
+import {HOTEL_GARDEN_BOOKING_URL} from '../../../utils/config.js';
 import '../../elements/mkwc/hg-image.js';
 
 export class HgScores extends LitElement {
@@ -83,7 +84,7 @@ export class HgScores extends LitElement {
       </div>
       <div class="booking">
         <div>na</div>
-        <a href="https://www.booking.com/hotel/pl/garden">
+        <a href=${HOTEL_GARDEN_BOOKING_URL}>
           <hg-image
             .src=${'/resources/images/booking.png'}
             .ready=${true}
