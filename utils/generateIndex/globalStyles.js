@@ -25,8 +25,6 @@ export const globalStyles = `
     --header-height: ${HEADER_HEIGHT}px;
     --layer-header: 100;
     --layer-header-1: 101;
-    --layer-profitroom: 999; /* Profitroom snippet layer*/
-    --layer-profitroom-1: 1000;
 
     font-family: 'Lato', sans-serif;
     color: var(--text-color);
