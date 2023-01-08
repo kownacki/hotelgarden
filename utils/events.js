@@ -11,6 +11,7 @@ export const createNewEvent = (title, startDate, endDate, permalink) => {
         startDate,
         endDate,
         permalink,
+        contentImages: [],
         public: false,
     };
 };
@@ -21,6 +22,7 @@ export const createNewNews = (title, publishDate, unpublishDate, permalink) => {
         publishDate,
         unpublishDate,
         permalink,
+        contentImages: [],
     };
 };
 export const isEventDateRangeCorrect = (startDate, endDate) => {
