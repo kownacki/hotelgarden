@@ -151,24 +151,6 @@ export const detectMobile = () => navigator.userAgent.match(/Android/i)
   || navigator.userAgent.match(/BlackBerry/i)
   || navigator.userAgent.match(/Windows Phone/i);
 
-export const ROOM_ID = {
-  doubleClassic: 37985,
-  twin: 37987,
-  tripleClassic: 37984,
-  quadClassic: 37983,
-  superior: 37988,
-  villaRoom: 55463,
-};
-
-let profitroomLoaded = false;
-export const openProfitroom = async (location, roomId, adults = 2) => {
-  if (!profitroomLoaded) {
-    profitroomLoaded = true;
-    await loadScript('https://open.upperbooking.com/js/Booking.js?locale=pl');
-  }
-  window.Booking.OpenSite(location, {RoomID: roomId, adults, checkin: moment().format('YYYY-MM-DD'), checkout: moment().add(1, 'day').format('YYYY-MM-DD')});
-};
-
 export const setDocumentTitle = (title) => {
   document.title = title;
 }

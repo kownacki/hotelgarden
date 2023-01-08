@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import {HOTEL_GARDEN_BOOKING_URL, VILLA_GARDEN_BOOKING_URL} from '../../../utils/config.js';
-import {staticProp, ROOM_ID, openProfitroom} from '../../utils.js';
+import {staticProp} from '../../utils.js';
 import sharedStyles from '../../styles/shared-styles.js'
 import '../../content/hg-text-image.js'
 import '../../content/hg-content-icons.js';

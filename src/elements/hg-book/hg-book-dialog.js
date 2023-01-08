@@ -2,7 +2,6 @@ import {LitElement, html, css, unsafeCSS} from 'lit';
 import {HOTEL_GARDEN_BOOKING_URL, VILLA_GARDEN_BOOKING_URL} from '../../../utils/config.js';
 import {createDbPath, getFromDb, updateDataOrImageInObjectInDb} from '../../utils/database.js';
 import {ObjectDbSyncController} from '../../utils/ObjectDbSyncController.js';
-import {openProfitroom} from '../../utils.js';
 import sharedStyles from '../../styles/shared-styles.js';
 import ckContent from '../../styles/ck-content.js'
 import '../mkwc/hg-editable-image.js'
