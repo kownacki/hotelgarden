@@ -54,10 +54,10 @@ export class HgDynamicPathPagesList extends LitElement {
             .dynamicPathPage=${{uid, ...dynamicPathPage}}>
           </hg-dynamic-path-page-card>
         `}
-        .onDelete=${(event) => {
-          removeDynamicPathPage(event.uid);
-          if (event.image) {
-            deleteImageInDb(event.image.name);
+        .onDelete=${(dynamicPathPage) => {
+          removeDynamicPathPage(dynamicPathPage.uid);
+          if (dynamicPathPage.image) {
+            deleteImageInDb(dynamicPathPage.image.name);
           }
         }}
         @request-items-change=${({detail: {newItems}}) => {
