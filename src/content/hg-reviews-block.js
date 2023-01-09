@@ -103,10 +103,10 @@ export class HgReviewsBlock extends LitElement {
     })();
   }
   render() {
+    // <hg-scores .bookingScores=${this.bookingScores}></hg-scores>
     return html`
       <h2 class="content-heading">Nasi goście o nas</h2>
       <div class="container">
-        <!--<hg-scores .bookingScores=${this.bookingScores}></hg-scores>-->
         <hg-editable-image-with-sync
           .path=${createDbPath(`images/${this.uid}-reviews-block`)}
           .fit=${'cover'}
