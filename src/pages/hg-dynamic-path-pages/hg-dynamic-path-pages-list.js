@@ -59,6 +59,9 @@ export class HgDynamicPathPagesList extends LitElement {
           if (dynamicPathPage.image) {
             deleteImageInDb(dynamicPathPage.image.name);
           }
+          dynamicPathPage.contentImages.map((image) => {
+            deleteImageInDb(image.name);
+          });
         }}
         @request-items-change=${({detail: {newItems}}) => {
           // todo refactor
