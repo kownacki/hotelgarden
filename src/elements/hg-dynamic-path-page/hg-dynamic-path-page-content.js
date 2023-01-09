@@ -2,6 +2,7 @@ import {LitElement, html, css} from 'lit';
 import '../../edit/hg-editable-text.js';
 import ckContent from '../../styles/ck-content.js'
 import sharedStyles from '../../styles/shared-styles.js';
+import {createImageInDb} from '../../utils/database.js';
 
 export class HgDynamicPathPageContent extends LitElement {
   static properties = {
@@ -16,6 +17,11 @@ export class HgDynamicPathPageContent extends LitElement {
         .ready=${true}
         .rich=${true}
         .text=${this.content}
+        .uploadHandler=${async (file) => {
+          const image = await createImageInDb(file);
+          this.dispatchEvent(new CustomEvent('image-uploaded', {detail: {image}}));
+          return image.url;
+        }}
         @save=${({detail: text}) => {
           this.dispatchEvent(new CustomEvent('content-changed', {detail: text}));
         }}>

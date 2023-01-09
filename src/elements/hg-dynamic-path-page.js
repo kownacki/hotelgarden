@@ -162,6 +162,12 @@ export class HgDynamicPathPage extends LitElement {
             ${this._contentReady
               ? html`<hg-dynamic-path-page-content
                 .content=${this._content}
+                @image-uploaded=${({detail: {image}}) => {
+                  this._dynamicPathPageDbSync.requestFieldUpdate(
+                    'contentImages',
+                    [...this.dynamicPathPage.contentImages, image.name],
+                  );
+                }}
                 @content-changed=${({detail: text}) => {
                   this.updateContent(text);
                 }}>

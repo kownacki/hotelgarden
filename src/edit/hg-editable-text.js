@@ -6,6 +6,19 @@ import sharedStyles from '../styles/shared-styles.js';
 import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
 import {moveOutFromShadowDom} from '../utils.js'
 
+class UploadAdapter {
+  constructor(loader, uploadHandler) {
+    this.loader = loader;
+    this.uploadHandler = uploadHandler;
+  }
+
+  async upload() {
+    const file = await this.loader.file;
+    const url = await this.uploadHandler(file);
+    return {default: url};
+  }
+}
+
 export default class HgEditableText extends LitElement {
   _firebaseAuth;
   static properties = {
@@ -15,10 +28,11 @@ export default class HgEditableText extends LitElement {
     showControls: Boolean,
     //todo rich and lessRich into one property
     rich: Boolean,
-    richConfig: String, // 'mosaic' / 'intro' / default full
+    richConfig: String, // 'mosaic' / 'intro' / default 'full'
     multiline: {type: Boolean, reflect: true},
     float: {type: Boolean, reflect: true},
     editingEnabled: Boolean,
+    uploadHandler: Function, // (file: File) => string
     _editable: Element,
     _editor: Element,
     _editorSet: Boolean,
@@ -69,6 +83,7 @@ export default class HgEditableText extends LitElement {
   constructor() {
     super();
     this.editingEnabled = true;
+    this.richConfig = 'full';
     this._firebaseAuth = new FirebaseAuthController(this, (loggedIn) => {
       this._loggedIn = loggedIn;
     });
@@ -97,6 +112,7 @@ export default class HgEditableText extends LitElement {
     }
   }
   async setCkeditor() {
+    const uploadHandler = this.uploadHandler;
     await Promise.all([
       import('/node_modules/@ckeditor/ckeditor5-build-inline/build/ckeditor.js'),
       moveOutFromShadowDom(this._editable),
@@ -142,6 +158,14 @@ export default class HgEditableText extends LitElement {
             toolbar: ['bold', 'italic', 'link', 'undo', 'redo'],
           }
         : {}),
+        ...(this.richConfig === 'full'
+          ? {
+            extraPlugins: [function CustomUploadAdapterPlugin(editor) {
+              editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+                return new UploadAdapter(loader, uploadHandler);
+              };
+            }],
+          } : {}),
       }
     );
     this._editor.model.document.on('change:data', () => {
