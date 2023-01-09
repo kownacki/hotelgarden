@@ -50,7 +50,7 @@ export interface DynamicPathPageBase {
   permalink: DynamicPathPagePermalink,
   image?: Image,
   title: string,
-  contentImages: string[],
+  contentImages: Image[],
 }
 
 export interface DynamicPathPageEvent extends DynamicPathPageBase {
