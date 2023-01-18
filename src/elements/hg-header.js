@@ -49,9 +49,6 @@ export class HgHeader extends LitElement {
       margin-top: 10px;
       padding: 0 0 10px;
     }
-    li.promoted {
-      padding: 0;
-    }
     hg-header-subnav {
       position: absolute;
       top: 100%;
