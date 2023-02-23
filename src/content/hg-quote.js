@@ -32,6 +32,11 @@ export class HgQuote extends LitElement {
       background-size: 90px 90px;
       filter: opacity(6%);
     }
+    :host(:hover) hg-content-label {
+      top: -50px;
+      left: 20px;
+      display: block;
+    }
     p {
       font-style: italic;
     }
@@ -88,6 +93,7 @@ export class HgQuote extends LitElement {
         }}>
         <div class="author"></div>
       </hg-editable-text>
+      <hg-content-label .name=${'Cytat'}></hg-content-label>
     `;
   }
 }
