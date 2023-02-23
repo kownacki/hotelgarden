@@ -40,7 +40,7 @@ export class HgContentSlider extends LitElement {
   render() {
     return html`
       <hg-image-slider .double=${true} .path=${createDbPath(`contentSliders/${this.uid}`)}></hg-image-slider>      
-      <hg-content-label .name=${'Slider'}></hg-content-label>
+      <hg-content-label .name=${'Slider - dodaj przynajmniej 2 obrazy'}></hg-content-label>
     `;
   }
 }
