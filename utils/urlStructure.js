@@ -10,6 +10,8 @@ export const staticPathToPageUid = {
     '/pokoje': 'rooms',
     '/garden-bistro': 'restaurant',
     '/lunch': 'lunch',
+    '/summer-bar': 'summer-bar',
+    '/food-truck': 'food-truck',
     '/konferencje': 'conferences',
     '/sale-konferencyjne': 'conference-halls',
     '/wesela': 'weddings',
@@ -38,6 +40,8 @@ export const pagesStaticData = {
     'reviews': { name: 'Opinie ', path: '/opinie', dir: 'hotel' },
     'rooms': { name: 'Pokoje', path: '/pokoje', dir: 'rooms' },
     'surroundings': { name: 'Atrakcje okolicy', path: '/atrakcje-okolicy', dir: 'hotel' },
+    'summer-bar': { name: 'Summer Bar', path: '/summer-bar', dir: 'restaurant' },
+    'food-truck': { name: 'Food truck', path: '/food-truck', dir: 'restaurant' },
     'villa-garden': { name: 'Villa Garden', path: '/villa-garden', dir: 'hotel' },
     'weddings': { name: 'Wesela', path: '/wesela', dir: 'celebrations' },
     'admin': { name: 'Admin', path: '/admin', dir: 'admin' },
@@ -53,7 +57,7 @@ export const links = [
     {
         name: 'Garden Bistro',
         path: '/garden-bistro',
-        sublinks: ['restaurant', 'lunch'],
+        sublinks: ['restaurant', 'lunch', 'summer-bar', 'food-truck'],
     }, {
         name: 'Konferencje',
         path: '/konferencje',

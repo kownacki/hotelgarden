@@ -10,12 +10,14 @@ export type PageUid =
   | 'cuisine'
   | 'dynamic-path-pages'
   | 'family-parties'
+  | 'food-truck'
   | 'gallery'
   | 'landing'
   | 'lunch'
   | 'restaurant'
   | 'reviews'
   | 'rooms'
+  | 'summer-bar'
   | 'surroundings'
   | 'villa-garden'
   | 'weddings'
@@ -37,6 +39,8 @@ export type StaticPath =
   | '/przyjecia-rodzinne'
   | '/sale-bankietowe'
   | '/sale-konferencyjne'
+  | '/summer-bar'
+  | '/food-truck'
   | '/villa-garden'
   | '/wesela'
   | '/wydarzenia'
@@ -54,6 +58,8 @@ export const staticPathToPageUid: Record<StaticPath, StaticPathPageUid> = {
   '/pokoje': 'rooms',
   '/garden-bistro': 'restaurant',
   '/lunch': 'lunch',
+  '/summer-bar': 'summer-bar',
+  '/food-truck': 'food-truck',
   '/konferencje': 'conferences',
   '/sale-konferencyjne': 'conference-halls',
   '/wesela': 'weddings',
@@ -90,6 +96,8 @@ export const pagesStaticData: Record<PageUid, PageStaticData> = {
   'reviews': {name: 'Opinie ', path: '/opinie', dir: 'hotel'},
   'rooms': {name: 'Pokoje', path: '/pokoje', dir: 'rooms'},
   'surroundings': {name: 'Atrakcje okolicy', path: '/atrakcje-okolicy', dir: 'hotel'},
+  'summer-bar': {name: 'Summer Bar', path: '/summer-bar', dir: 'restaurant'},
+  'food-truck': {name: 'Food truck', path: '/food-truck', dir: 'restaurant'},
   'villa-garden': {name: 'Villa Garden', path: '/villa-garden', dir: 'hotel'},
   'weddings': {name: 'Wesela', path: '/wesela', dir: 'celebrations'},
   'admin': {name: 'Admin', path: '/admin', dir: 'admin'},
@@ -107,7 +115,7 @@ export const links = [
   {
     name: 'Garden Bistro',
     path: '/garden-bistro',
-    sublinks: ['restaurant', 'lunch'],
+    sublinks: ['restaurant', 'lunch', 'summer-bar', 'food-truck'],
   }, {
     name: 'Konferencje',
     path: '/konferencje',
