@@ -1,9 +1,10 @@
 import {LitElement, html, css, unsafeCSS} from 'lit';
 import '../edit/hg-editable-text.js';
 import '../elements/mkwc/hg-editable-image.js';
+import '../elements/hg-action-buttons.js';
+import '../elements/hg-content-label.js';
 import '../elements/hg-image-slider.js';
 import '../elements/hg-icon-info.js';
-import '../elements/hg-action-buttons.js';
 import ckContent from '../styles/ck-content.js'
 import sharedStyles from '../styles/shared-styles';
 import {createDbPath, DbPath, getFromDb, updateDataOrImageInObjectInDb} from '../utils/database.js';
@@ -38,9 +39,14 @@ export class HgTextImage extends LitElement {
       margin: 80px auto;
       padding: 0 20px;
       display: flex;
+      position: relative;
     }
     :host([swap]) {
       flex-direction: row-reverse;
+    }
+    :host(:hover) hg-content-label {
+      left: 20px;
+      display: block;
     }
     hg-editable-image, hg-image-slider {
       width: 50%;
@@ -161,6 +167,7 @@ export class HgTextImage extends LitElement {
         ])}
         ${_.isEmpty(this.buttons) ? '' : html`<hg-action-buttons .buttons=${this.buttons}></hg-action-buttons>`}
       </div>
+      <hg-content-label .name=${'Obraz i tekst'}></hg-content-label>
     `;
   }
 }
