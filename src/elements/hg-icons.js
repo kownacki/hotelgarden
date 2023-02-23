@@ -1,5 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import {until} from 'lit/directives/until.js';
+import {isEmpty} from 'lodash-es';
 import {
   createDbPath,
   DbPath,
@@ -19,7 +20,6 @@ export class HgIcons extends LitElement {
   _addDialog;
   static properties = {
     uid: String,
-    empty: {type: Boolean, reflect: true},
     small: {type: Boolean, reflect: true},
     _loggedIn: Boolean,
     _path: DbPath,
@@ -27,6 +27,7 @@ export class HgIcons extends LitElement {
     _iconsReady: Boolean,
     _isEditing: Boolean,
     _isUpdating: Boolean,
+    _isEmpty: {type: Boolean, reflect: true, attribute: 'is-empty'},
   };
   static styles = css`
     :host {
@@ -44,7 +45,7 @@ export class HgIcons extends LitElement {
       min-height: 60px;
       margin: 0 -15px;
     }
-    :host([empty]) {
+    :host([is-empty]) {
       background: rgba(var(--placeholder-color-rgb), 0.5);
     }
     @media all and (max-width: 959px) {
@@ -99,6 +100,9 @@ export class HgIcons extends LitElement {
       this._path = createDbPath(`iconBlocks/${this.uid}`)
       this._iconsDbSync.setPath(this._path);
     }
+    if (changedProperties.has('_icons')) {
+      this._isEmpty = isEmpty(this._icons);
+    }
   }
   render() {
     const showControls = this._loggedIn;
@@ -136,8 +140,7 @@ export class HgIcons extends LitElement {
         }}
         @request-item-update=${({detail: {index, type, dataPath, data}}) => {
           this._iconsDbSync.requestItemUpdate(index, {type, dataPath, data});
-        }}
-        @items-changed=${(event) => this.empty = _.isEmpty(event.detail)}>
+        }}>
       </hg-list-old>
       ${!this._loggedIn ? '' : until(import('./hg-icons/hg-icons-add.js').then(() => {
         return html`<hg-icons-add id="add"></hg-icons-add>`;
