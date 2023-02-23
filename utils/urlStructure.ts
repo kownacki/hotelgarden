@@ -90,7 +90,7 @@ export const pagesStaticData: Record<PageUid, PageStaticData> = {
   'cuisine': {name: 'O naszej kuchni', path: '/kuchnia', dir: 'hotel'},
   'dynamic-path-pages': {name: 'Wydarzenia i aktualności', path: '/wydarzenia', dir: 'events'},
   'family-parties': {name: 'Przyjęcia rodzinne', path: '/przyjecia-rodzinne', dir: 'celebrations'},
-  'food-truck': {name: 'Food truck', path: '/food-truck', dir: 'restaurant'},
+  'food-truck': {name: 'Food Truck', path: '/food-truck', dir: 'restaurant'},
   'gallery': {name: 'Galeria', path: '/galeria', dir: 'gallery'},
   'landing': {name: 'O hotelu', path: '/', dir: 'hotel'},
   'lunch': {name: 'Lunch', path: '/lunch', dir: 'restaurant'},
