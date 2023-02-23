@@ -3,6 +3,7 @@ import {DynamicPathPagePermalink, EventsList} from './types';
 
 export type PageUid =
   | '404'
+  | 'admin'
   | 'banquet-halls'
   | 'conference-halls'
   | 'conferences'
@@ -20,14 +21,15 @@ export type PageUid =
   | 'summer-bar'
   | 'surroundings'
   | 'villa-garden'
-  | 'weddings'
-  | 'admin';
+  | 'weddings';
 
 export type StaticPathPageUid = Exclude<PageUid, '404'>;
 
 export type StaticPath =
   | '/'
+  | '/admin'
   | '/atrakcje-okolicy'
+  | '/food-truck'
   | '/galeria'
   | '/garden-bistro'
   | '/konferencje'
@@ -40,35 +42,33 @@ export type StaticPath =
   | '/sale-bankietowe'
   | '/sale-konferencyjne'
   | '/summer-bar'
-  | '/food-truck'
   | '/villa-garden'
   | '/wesela'
-  | '/wydarzenia'
-  | '/admin';
+  | '/wydarzenia';
 
 export const NOT_FOUND_404 = 'NOT_FOUND_404';
 
 // All static paths are canonical
 export const staticPathToPageUid: Record<StaticPath, StaticPathPageUid> = {
   '/': 'landing',
-  '/villa-garden': 'villa-garden',
-  '/kuchnia': 'cuisine',
+  '/admin': 'admin',
   '/atrakcje-okolicy': 'surroundings',
+  '/food-truck': 'food-truck',
+  '/galeria': 'gallery',
+  '/garden-bistro': 'restaurant',
+  '/konferencje': 'conferences',
+  '/kontakt': 'contact',
+  '/kuchnia': 'cuisine',
+  '/lunch': 'lunch',
   '/opinie': 'reviews',
   '/pokoje': 'rooms',
-  '/garden-bistro': 'restaurant',
-  '/lunch': 'lunch',
-  '/summer-bar': 'summer-bar',
-  '/food-truck': 'food-truck',
-  '/konferencje': 'conferences',
-  '/sale-konferencyjne': 'conference-halls',
-  '/wesela': 'weddings',
   '/przyjecia-rodzinne': 'family-parties',
   '/sale-bankietowe': 'banquet-halls',
-  '/galeria': 'gallery',
+  '/sale-konferencyjne': 'conference-halls',
+  '/summer-bar': 'summer-bar',
+  '/villa-garden': 'villa-garden',
+  '/wesela': 'weddings',
   '/wydarzenia': 'dynamic-path-pages',
-  '/kontakt': 'contact',
-  '/admin': 'admin',
 };
 
 export const staticPaths = Object.keys(staticPathToPageUid) as StaticPath[];
@@ -82,6 +82,7 @@ interface PageStaticData {
 // todo dir should be renamed and checked where is used
 export const pagesStaticData: Record<PageUid, PageStaticData> = {
   '404': {name: 'Błąd 404 - strony nie znaleziono', path: NOT_FOUND_404, dir: '404'},
+  'admin': {name: 'Admin', path: '/admin', dir: 'admin'},
   'banquet-halls': {name: 'Sale bankietowe', path: '/sale-bankietowe', dir: 'celebrations'},
   'conference-halls': {name: 'Sale konferencyjne', path: '/sale-konferencyjne', dir: 'conferences'},
   'conferences': {name: 'Konferencja w Gardenie', path: '/konferencje', dir: 'conferences'},
@@ -89,18 +90,17 @@ export const pagesStaticData: Record<PageUid, PageStaticData> = {
   'cuisine': {name: 'O naszej kuchni', path: '/kuchnia', dir: 'hotel'},
   'dynamic-path-pages': {name: 'Wydarzenia i aktualności', path: '/wydarzenia', dir: 'events'},
   'family-parties': {name: 'Przyjęcia rodzinne', path: '/przyjecia-rodzinne', dir: 'celebrations'},
+  'food-truck': {name: 'Food truck', path: '/food-truck', dir: 'restaurant'},
   'gallery': {name: 'Galeria', path: '/galeria', dir: 'gallery'},
   'landing': {name: 'O hotelu', path: '/', dir: 'hotel'},
   'lunch': {name: 'Lunch', path: '/lunch', dir: 'restaurant'},
   'restaurant': {name: 'O restauracji', path: '/garden-bistro', dir: 'restaurant'},
   'reviews': {name: 'Opinie ', path: '/opinie', dir: 'hotel'},
   'rooms': {name: 'Pokoje', path: '/pokoje', dir: 'rooms'},
-  'surroundings': {name: 'Atrakcje okolicy', path: '/atrakcje-okolicy', dir: 'hotel'},
   'summer-bar': {name: 'Summer Bar', path: '/summer-bar', dir: 'restaurant'},
-  'food-truck': {name: 'Food truck', path: '/food-truck', dir: 'restaurant'},
+  'surroundings': {name: 'Atrakcje okolicy', path: '/atrakcje-okolicy', dir: 'hotel'},
   'villa-garden': {name: 'Villa Garden', path: '/villa-garden', dir: 'hotel'},
   'weddings': {name: 'Wesela', path: '/wesela', dir: 'celebrations'},
-  'admin': {name: 'Admin', path: '/admin', dir: 'admin'},
 };
 
 export const pageUids = Object.keys(pagesStaticData) as PageUid[];
