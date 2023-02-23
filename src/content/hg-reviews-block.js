@@ -1,7 +1,9 @@
 import {LitElement, html, css, unsafeCSS} from 'lit';
+import {when} from 'lit/directives/when.js';
 import '../elements/mkwc/hg-editable-image-with-sync.js';
 import sharedStyles from '../styles/shared-styles.js';
 import {createDbPath, getFromDb} from '../utils/database.js';
+import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
 import './hg-reviews-block/hg-reviews-slider.js';
 import './hg-reviews-block/hg-scores.js';
 
@@ -9,10 +11,12 @@ const maxImageWidth = 480;
 const maxImageHeight = 360;
 
 export class HgReviewsBlock extends LitElement {
+  _firebaseAuth;
   static properties = {
     uid: String,
     scores: {type: Boolean, reflect: true},
     bookingScores: Object,
+    _loggedIn: Boolean,
     _reviews: Array,
   };
   static styles = [sharedStyles, css`
@@ -45,6 +49,18 @@ export class HgReviewsBlock extends LitElement {
       max-width: 100%;
       height: var(--max-image-height);
       margin: 0 20px;
+    }
+    .manage-reviews-info {
+      margin-top: 30px;
+      text-align: center;
+    }
+    .manage-reviews-info a {
+      font-weight: 400;
+      color: var(--secondary-color);
+      text-decoration: none;
+    }
+    .manage-reviews-info a:hover {
+      text-decoration: underline;
     }
     hg-scores, hg-editable-image-with-sync {
       display: none;
@@ -97,6 +113,11 @@ export class HgReviewsBlock extends LitElement {
   `];
   constructor() {
     super();
+
+    this._firebaseAuth = new FirebaseAuthController(this, (loggedIn) => {
+      this._loggedIn = loggedIn;
+    });
+
     (async () => {
       const allReviews = await getFromDb(createDbPath('reviews/reviews'));
       this._reviews = _.reverse(_.filter((review) => _.includes(this.uid, review.display), _.toArray(allReviews)));
@@ -115,6 +136,14 @@ export class HgReviewsBlock extends LitElement {
         </hg-editable-image-with-sync>
         <hg-reviews-slider .reviews=${this._reviews}></hg-reviews-slider>
       </div>
+      ${when(
+        this._loggedIn,
+        () => html`
+          <div class="manage-reviews-info">
+            Zarządzaj opiniami <a href="/opinie" target="_blank">tutaj</a>
+          </div>
+        `,
+      )}
     `;
   }
 }
