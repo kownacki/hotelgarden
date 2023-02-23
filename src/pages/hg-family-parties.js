@@ -1,4 +1,4 @@
-import {LitElement, html, css} from 'lit';
+import {html, css} from 'lit';
 import sharedStyles from '../styles/shared-styles.js';
 import HgContent from '../elements/hg-content.js';
 import '../content/hg-article/hg-intro-article.js';

@@ -1,4 +1,4 @@
-import {LitElement, html, css} from 'lit';
+import {html} from 'lit';
 import {pagesStaticData} from '../../utils/urlStructure.js';
 import '../content/hg-article/hg-intro-article.js';
 import '../content/hg-content-icons.js';

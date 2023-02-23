@@ -1,4 +1,4 @@
-import {LitElement, html, css} from 'lit';
+import {html, css} from 'lit';
 import {until} from 'lit/directives/until.js';
 import '../content/hg-article/hg-intro-article.js';
 import '../content/hg-article.js';

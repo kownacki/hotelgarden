@@ -1,4 +1,4 @@
-import {LitElement, html, css} from 'lit';
+import {html, css} from 'lit';
 import '../content/hg-article.js';
 import '../content/hg-map.js';
 import '../elements/hg-contact-form.js';
