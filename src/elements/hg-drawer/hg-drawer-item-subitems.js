@@ -1,10 +1,13 @@
 import {LitElement, html, css} from 'lit';
 import {pagesStaticData} from '../../../utils/urlStructure.js';
+import {FirebaseAuthController} from '../../utils/FirebaseAuthController.js';
 
 export class HgDrawerItemSubItems extends LitElement {
+  _firebaseAuth;
   static properties = {
     links: Array,
     selectedPath: String,
+    _loggedIn: Boolean,
   };
   static styles = css`
     :host {
@@ -28,8 +31,21 @@ export class HgDrawerItemSubItems extends LitElement {
       color: white;
     }
   `;
+  constructor() {
+    super();
+    this._firebaseAuth = new FirebaseAuthController(this, (loggedIn) => {
+      this._loggedIn = loggedIn;
+    });
+  }
   render() {
+    // todo remove loggedIn check
     const links = this.links
+      .filter((link) => {
+        if (this._loggedIn) {
+          return true;
+        }
+        return link !== 'summer-bar' && link !== 'food-truck';
+      })
       .map((link) => pagesStaticData[link]);
 
     return html`

@@ -3,13 +3,16 @@ import {staticPathToPageUid, linksMap, pagesStaticData} from '../../utils/urlStr
 import '../elements/mkwc/hg-image.js';
 import sharedStyles from '../styles/shared-styles.js';
 import {createDbPath, getFromDb} from '../utils/database.js';
+import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
 
 export class HgLinks extends LitElement {
+  _firebaseAuth;
   static properties = {
     path: String,
     superpath: String,
     includeSuperpath: Boolean,
     _links: Array,
+    _loggedIn: Boolean,
   };
   static styles = [sharedStyles, css`
     :host {
@@ -64,26 +67,41 @@ export class HgLinks extends LitElement {
       }
     }
   `];
-  async firstUpdated() {
-    const links = linksMap[this.superpath].sublinks
-      .map((subLink) => {
-        return pagesStaticData[subLink];
-      })
-      .filter((subLinkData) => {
-        return subLinkData.path !== this.path;
-      })
-      .filter((subLinkData) => {
-        if (subLinkData.path === this.superpath) {
-          return this.includeSuperpath;
-        }
-        return true;
-      });
+  constructor() {
+    super();
+    this._firebaseAuth = new FirebaseAuthController(this, (loggedIn) => {
+      this._loggedIn = loggedIn;
+    });
+  }
+  async willUpdate(changedProperties) {
+    if (changedProperties.has('_loggedIn')) {
+      // todo remove loggedIn check
+      const links = linksMap[this.superpath].sublinks
+        .filter((subLink) => {
+          if (this._loggedIn) {
+            return true;
+          }
+          return subLink !== 'summer-bar' && subLink !== 'food-truck';
+        })
+        .map((subLink) => {
+          return pagesStaticData[subLink];
+        })
+        .filter((subLinkData) => {
+          return subLinkData.path !== this.path;
+        })
+        .filter((subLinkData) => {
+          if (subLinkData.path === this.superpath) {
+            return this.includeSuperpath;
+          }
+          return true;
+        });
 
-    const banners = await Promise.all(_.map(
-      (link) => getFromDb(createDbPath(`banners/${staticPathToPageUid[link.path]}`, 'image.url')),
-      links,
-    ));
-    this._links = _.map(([link, bannerImage]) => ({...link, image: bannerImage}), _.zip(links, banners));
+      const banners = await Promise.all(_.map(
+        (link) => getFromDb(createDbPath(`banners/${staticPathToPageUid[link.path]}`, 'image.url')),
+        links,
+      ));
+      this._links = _.map(([link, bannerImage]) => ({...link, image: bannerImage}), _.zip(links, banners));
+    }
   }
   render() {
     return html`
