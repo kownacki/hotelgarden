@@ -13,14 +13,14 @@ export class HgContentIcons extends LitElement {
       position: relative;
       display: block;
       margin: 60px auto;
-      padding: 0 10px;
+      padding: 0 20px;
       max-width: 1240px;
     }
     :host([small]) {
-      padding: 0 20px;
       margin: 40px auto;
     }
     :host(:hover) hg-content-label {
+      left: 20px;
       display: block;
     }
     @media (max-width: 959px) {
