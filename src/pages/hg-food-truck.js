@@ -15,7 +15,7 @@ export class HgFoodTruck extends HgContent {
     return html`
       <hg-intro-article .uid=${'food-truck'}></hg-intro-article>
       <hg-content-icons .uid=${'food-truck'}></hg-content-icons>
-      <h2 class="content-heading" id="menu">Menu</h2>
+      <h2 class="content-heading" id="menu">Menu Food Truck</h2>
       <hg-menu .uid=${'food-truck'}></hg-menu>
       <hg-content-slider .uid=${'food-truck'}></hg-content-slider>
       <hg-article .rich=${true} .uid=${'food-truck-extra1'}></hg-article>

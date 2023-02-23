@@ -15,7 +15,7 @@ export class HgSummerBar extends HgContent {
     return html`
       <hg-intro-article .uid=${'summer-bar'}></hg-intro-article>
       <hg-content-icons .uid=${'summer-bar'}></hg-content-icons>
-      <h2 class="content-heading" id="menu">Menu</h2>
+      <h2 class="content-heading" id="menu">Menu Summer Bar</h2>
       <hg-menu .uid=${'summer-bar'}></hg-menu>
       <hg-content-slider .uid=${'summer-bar'}></hg-content-slider>
       <hg-article .rich=${true} .uid=${'summer-bar-extra1'}></hg-article>
