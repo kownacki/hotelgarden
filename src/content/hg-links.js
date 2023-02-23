@@ -65,10 +65,20 @@ export class HgLinks extends LitElement {
     }
   `];
   async firstUpdated() {
-    const links = _.filter(
-      (link) => link.path !== this.path && (this.includeSuperpath ? true : link.path !== this.superpath),
-      _.map(_.get(_, pagesStaticData), linksMap[this.superpath].sublinks),
-    );
+    const links = linksMap[this.superpath].sublinks
+      .map((subLink) => {
+        return pagesStaticData[subLink];
+      })
+      .filter((subLinkData) => {
+        return subLinkData.path !== this.path;
+      })
+      .filter((subLinkData) => {
+        if (subLinkData.path === this.superpath) {
+          return this.includeSuperpath;
+        }
+        return true;
+      });
+
     const banners = await Promise.all(_.map(
       (link) => getFromDb(createDbPath(`banners/${staticPathToPageUid[link.path]}`, 'image.url')),
       links,
