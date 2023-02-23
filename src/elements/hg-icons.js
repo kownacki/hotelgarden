@@ -1,6 +1,12 @@
 import {LitElement, html, css} from 'lit';
 import {until} from 'lit/directives/until.js';
-import {createDbPath, DbPath, getFromDb, updateInDb, updateInObjectInDb} from '../utils/database.js';
+import {
+  createDbPath,
+  DbPath,
+  getFromDb,
+  updateDataOrImageInObjectInDb,
+  updateInDb,
+} from '../utils/database.js';
 import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
 import {ItemsDbSyncController} from '../utils/ItemsDbSyncController.js';
 import {sleep} from '../utils.js';
@@ -19,6 +25,8 @@ export class HgIcons extends LitElement {
     _path: DbPath,
     _icons: Object,
     _iconsReady: Boolean,
+    _isEditing: Boolean,
+    _isUpdating: Boolean,
   };
   static styles = css`
     :host {
@@ -66,16 +74,23 @@ export class HgIcons extends LitElement {
       this,
       {
         getItems: async (path) => await getFromDb(path) || {},
-        updateItem: async (objectPath, dataPath, data) => {
-          await updateInObjectInDb(objectPath, dataPath, data);
-          return data;
+        updateItem: async (path, index, {type, dataPath, data}, oldItem, items) => {
+          const updatedData = await updateDataOrImageInObjectInDb(type, path, `${index}.${dataPath}`, data, items);
+          return _.set(dataPath, updatedData, oldItem);
         },
         updateAllItems: async (path, data) => {
           await updateInDb(path, data);
           return data;
         },
-        onDataReadyChange: (iconsReady) => this._iconsReady = iconsReady,
-        onDataChange: (icons) => this._icons = icons,
+        onDataReadyChange: (iconsReady) => {
+          this._iconsReady = iconsReady;
+        },
+        onDataChange: (icons) => {
+          this._icons = icons;
+        },
+        onIsUpdatingChange: (isUpdating) => {
+          this._isUpdating = isUpdating;
+        },
       },
     );
   }
@@ -86,11 +101,18 @@ export class HgIcons extends LitElement {
     }
   }
   render() {
+    const showControls = this._loggedIn;
+    const disableControls = this._isEditing || this._isUpdating;
+
     return html`
       <hg-list-old
+        .__noAddUpdate=${true}
+        .__noDeleteUpdate=${true}
+        .__noSwapUpdate=${true}
+        .__noItemChangeUpdate=${true}
         .items=${this._icons}
-        .path=${this._path}
-        .showControls=${this._loggedIn}
+        .showControls=${showControls}
+        .disableControls=${disableControls}
         .getItemName=${() => 'ikonę'}
         .itemTemplate=${(icon, index, disableEdit) => html`
           <hg-icons-item .small=${this.small} .icon=${icon} .disableEdit=${disableEdit}></hg-icons-item>
@@ -105,6 +127,15 @@ export class HgIcons extends LitElement {
           return addResult 
             ? {...newItem, ...addResult}
             : false;
+        }}
+        @editing-item-changed=${({detail: isEditingItem}) => {
+          this._isEditing = isEditingItem;
+        }}
+        @request-items-change=${({detail: {newItems}}) => {
+          this._iconsDbSync.requestAllItemsUpdate(newItems);
+        }}
+        @request-item-update=${({detail: {index, type, dataPath, data}}) => {
+          this._iconsDbSync.requestItemUpdate(index, {type, dataPath, data});
         }}
         @items-changed=${(event) => this.empty = _.isEmpty(event.detail)}>
       </hg-list-old>

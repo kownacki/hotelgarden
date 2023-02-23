@@ -29,10 +29,10 @@ export class HgMenu extends LitElement {
     _displayedCategories: Object,
     _selectedCategoryIndex: Number,
     _compact: Boolean,
+    _loggedIn: Boolean,
     _isEditingCategoryName: Boolean,
     _isEditingCategoryItemsText: Boolean,
     _isEditing: {type: Boolean, reflect: true, attribute: 'is-editing'},
-    _loggedIn: Boolean,
     _isUpdating: Boolean,
   };
   static styles = css`
@@ -91,7 +91,9 @@ export class HgMenu extends LitElement {
           await updateInDb(path, data);
           return data;
         },
-        onDataReadyChange: (categoriesReady) => this._categoriesReady = categoriesReady,
+        onDataReadyChange: (categoriesReady) => {
+          this._categoriesReady = categoriesReady;
+        },
         onDataChange: (categories) => {
           this._categories = categories;
         },
@@ -131,7 +133,9 @@ export class HgMenu extends LitElement {
     }
   }
   render() {
+    const showControls = this._loggedIn;
     const disableControls = this._isEditing || this._isUpdating;
+
     return html`
       <section>
         ${when(
@@ -146,7 +150,7 @@ export class HgMenu extends LitElement {
                 .category=${this._displayedCategories[categoryIndex] || {}}
                 .categoryIndex=${categoryIndex}
                 .categories=${this._displayedCategories}
-                .showControls=${this._loggedIn}
+                .showControls=${showControls}
                 .disableControls=${disableControls}
                 @editing-category-name-changed=${({ detail: isEditingCategoryName }) => {
                   this._isEditingCategoryName = isEditingCategoryName;
@@ -163,7 +167,7 @@ export class HgMenu extends LitElement {
               id="nav"
               .selectedCategoryIndex=${this._selectedCategoryIndex}
               .categories=${this._displayedCategories}
-              .showControls=${this._loggedIn}
+              .showControls=${showControls}
               .disableControls=${disableControls}
               @request-categories-change=${async ({detail: {newCategories, newSelectedCategoryIndex, changeType, changeData}}) => {
                 // todo bug when deleting last item. Remove '|| {}'
