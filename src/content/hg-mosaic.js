@@ -1,7 +1,8 @@
 import {LitElement, html, css, unsafeCSS} from 'lit';
 import '../edit/hg-editable-text.js';
-import '../elements/mkwc/hg-editable-image.js';
 import '../elements/hg-action-buttons.js';
+import '../elements/hg-content-label.js';
+import '../elements/mkwc/hg-editable-image.js';
 import ckContent from '../styles/ck-content.js'
 import sharedStyles from '../styles/shared-styles';
 import {createDbPath, DbPath, getFromDb, updateDataOrImageInObjectInDb} from '../utils/database.js';
@@ -27,6 +28,13 @@ export class HgMosaic extends LitElement {
       margin: 60px auto;
       padding: 0 20px;
       display: block;
+      position: relative;
+    }
+    :host(:hover) hg-content-label {
+      left: 20px;
+      display: block;
+    }
+    .container {
       overflow: auto;
     }
     .left {
@@ -85,74 +93,77 @@ export class HgMosaic extends LitElement {
   }
   render() {
     return html`
-      <div class="left">
-        <hg-editable-image
-          .src=${this._mosaic?.primary?.image?.url}
-          .ready=${this._ready}
-          .maxWidth=${maxImageWidth}
-          .presize=${true}
-          @image-uploaded=${({detail: blob}) => {
-            this._objectDbSync.requestFieldUpdate('primary.image', {type: 'image', data: blob});
-          }}>
-        </hg-editable-image>
-      </div>
-      <div class="right">
-        <div class="content">
-          <hg-editable-text
+      <div class="container">
+        <div class="left">
+          <hg-editable-image
+            .src=${this._mosaic?.primary?.image?.url}
             .ready=${this._ready}
-            .text=${_.get('primary.heading', this._mosaic)}
-            @save=${({detail: text}) => {
-              this._objectDbSync.requestFieldUpdate('primary.heading', {type: 'data', data: text});
+            .maxWidth=${maxImageWidth}
+            .presize=${true}
+            @image-uploaded=${({detail: blob}) => {
+              this._objectDbSync.requestFieldUpdate('primary.image', {type: 'image', data: blob});
             }}>
-            <h2></h2>
-          </hg-editable-text>
-          <hg-editable-text
-            .ready=${this._ready}
-            multiline
-            .rich=${true}
-            .richConfig=${'mosaic'}
-            .text=${_.get('primary.text', this._mosaic)}
-            @save=${({detail: text}) => {
-              this._objectDbSync.requestFieldUpdate('primary.text', {type: 'data', data: text});
-            }}>
-            <div class="ck-content"></div>
-          </hg-editable-text>
-          ${!_.get('primary', this.buttons) ? '' : html`<hg-action-buttons .buttons=${this.buttons.primary}></hg-action-buttons>`}
+          </hg-editable-image>
         </div>
-        <hg-editable-image
-          .src=${this._mosaic?.secondary?.image?.url}
-          .ready=${this._ready}
-          .maxWidth=${maxImageWidth}
-          .presize=${true}
-          @image-uploaded=${({detail: blob}) => {
-            this._objectDbSync.requestFieldUpdate('secondary.image', {type: 'image', data: blob});
-          }}>
-        </hg-editable-image>
-      </div>
-      <div class="left">
-        <div class="content">
-           <hg-editable-text
+        <div class="right">
+          <div class="content">
+            <hg-editable-text
+              .ready=${this._ready}
+              .text=${_.get('primary.heading', this._mosaic)}
+              @save=${({detail: text}) => {
+                this._objectDbSync.requestFieldUpdate('primary.heading', {type: 'data', data: text});
+              }}>
+              <h2></h2>
+            </hg-editable-text>
+            <hg-editable-text
+              .ready=${this._ready}
+              multiline
+              .rich=${true}
+              .richConfig=${'mosaic'}
+              .text=${_.get('primary.text', this._mosaic)}
+              @save=${({detail: text}) => {
+                this._objectDbSync.requestFieldUpdate('primary.text', {type: 'data', data: text});
+              }}>
+              <div class="ck-content"></div>
+            </hg-editable-text>
+            ${!_.get('primary', this.buttons) ? '' : html`<hg-action-buttons .buttons=${this.buttons.primary}></hg-action-buttons>`}
+          </div>
+          <hg-editable-image
+            .src=${this._mosaic?.secondary?.image?.url}
             .ready=${this._ready}
-            .text=${_.get('secondary.heading', this._mosaic)}
-            @save=${({detail: text}) => {
-              this._objectDbSync.requestFieldUpdate('secondary.heading', {type: 'data', data: text});
+            .maxWidth=${maxImageWidth}
+            .presize=${true}
+            @image-uploaded=${({detail: blob}) => {
+              this._objectDbSync.requestFieldUpdate('secondary.image', {type: 'image', data: blob});
             }}>
-            <h2></h2>
-          </hg-editable-text>
-          <hg-editable-text
-            .ready=${this._ready}
-            multiline
-            .rich=${true}
-            .richConfig=${'mosaic'}
-            .text=${_.get('secondary.text', this._mosaic)}
-            @save=${({detail: text}) => {
-              this._objectDbSync.requestFieldUpdate('secondary.text', {type: 'data', data: text});
-            }}>
-            <div class="ck-content"></div>
-          </hg-editable-text>
-          ${!_.get('secondary', this.buttons) ? '' : html`<hg-action-buttons .buttons=${this.buttons.secondary}></hg-action-buttons>`}
+          </hg-editable-image>
+        </div>
+        <div class="left">
+          <div class="content">
+             <hg-editable-text
+              .ready=${this._ready}
+              .text=${_.get('secondary.heading', this._mosaic)}
+              @save=${({detail: text}) => {
+                this._objectDbSync.requestFieldUpdate('secondary.heading', {type: 'data', data: text});
+              }}>
+              <h2></h2>
+            </hg-editable-text>
+            <hg-editable-text
+              .ready=${this._ready}
+              multiline
+              .rich=${true}
+              .richConfig=${'mosaic'}
+              .text=${_.get('secondary.text', this._mosaic)}
+              @save=${({detail: text}) => {
+                this._objectDbSync.requestFieldUpdate('secondary.text', {type: 'data', data: text});
+              }}>
+              <div class="ck-content"></div>
+            </hg-editable-text>
+            ${!_.get('secondary', this.buttons) ? '' : html`<hg-action-buttons .buttons=${this.buttons.secondary}></hg-action-buttons>`}
+          </div>
         </div>
       </div>
+      <hg-content-label .name=${'Mozaika'}></hg-content-label>
     `;
   }
 }
