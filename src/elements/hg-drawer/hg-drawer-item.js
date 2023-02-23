@@ -1,5 +1,7 @@
 import {LitElement, html, css} from 'lit';
-import {isDynamicPath, pagesStaticData} from '../../../utils/urlStructure.js';
+import {when} from 'lit/directives/when.js';
+import {isDynamicPath} from '../../../utils/urlStructure.js';
+import './hg-drawer-item-subitems.js';
 
 export class HgDrawerItem extends LitElement {
   static properties = {
@@ -23,59 +25,44 @@ export class HgDrawerItem extends LitElement {
       color: var(--primary-color);
       padding: 15px 10px;
     }
-    .item > *, .sublink {
-      transition: background-color 0.3s ease, color 0.2s ease;
-    }
-    .item:hover, .sublink:hover {
+    .item:hover {
       cursor: pointer;
     }
-    .item[selected] > *, .sublink[selected] {
+    .item[selected] > * {
       background: var(--primary-color);
       color: white;
     }
-    .sublink {
-      padding: 10px 10px 10px 20px;
-    }
-    ul {
-      margin: 0 0 10px;
-      padding: 0;
-      display: none;
-    }
-    :host([opened]) ul {
-      display: block;
-    }
   `;
   render() {
+    const isSelected = (this.link.path === this.selected && !this.link.sublinks)
+      || (this.link.path === '/wydarzenia' && (this.selected === '/wydarzenia' || isDynamicPath(this.selected)));
     return html`
-      <div class="item"
-        ?selected=${(this.link.path === this.selected && !this.link.sublinks)
-          || (this.link.path === '/wydarzenia' && (this.selected === '/wydarzenia' || isDynamicPath(this.selected)))}>
-        ${this.link.sublinks 
+      <div class="item" ?selected=${isSelected}>
+        ${this.link.sublinks
           ? html`<div
               @click=${() => this.opened = !this.opened}>
               ${this.link.name}
             </div>`
           : html`
-            <a href="${this.link.path}" @click=${() => this.dispatchEvent(new CustomEvent('close-drawer', {composed: true}))}>
+            <a
+              href="${this.link.path}"
+              @click=${() => {
+                this.dispatchEvent(new CustomEvent('close-drawer', {composed: true}));
+              }}
+            >
               ${this.link.name}
             </a>
           `}
       </div>
-      ${!this.link.sublinks ? '' : html`
-        <ul>
-          ${_.map((sublink) => html`
-            <li>
-              <a 
-                class="sublink" 
-                href="${sublink.path}" 
-                ?selected=${sublink.path === this.selected}
-                @click=${() => this.dispatchEvent(new CustomEvent('close-drawer', {composed: true}))}>
-                ${sublink.name}
-              </a>
-            </li>
-          `, _.map(_.get(_, pagesStaticData), this.link.sublinks))}
-        </ul>
-      `}
+      ${when(
+        this.link.sublinks && this.opened,
+        () => html`
+          <hg-drawer-item-subitems 
+            .links=${this.link.sublinks}
+            .selectedPath=${this.selected}
+          />
+        `,
+      )}
     `;
   }
 }
