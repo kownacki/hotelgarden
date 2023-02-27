@@ -91,62 +91,62 @@ export const createIndex = (
     
     --primary-color: #2b5f57;
     --primary-color-rgb: 43, 95, 87;
-    --primary-color-filter: invert(32%) sepia(12%) saturate(1606%) hue-rotate(121deg) brightness(93%) contrast(91%);
+    --primary-color-filter: invert(30%) sepia(29%) saturate(666%) hue-rotate(121deg) brightness(95%) contrast(90%);
   
     
     --secondary-color: #E2A96A;
     --secondary-color-rgb: 226, 169, 106;
-    --secondary-color-filter: invert(96%) sepia(5%) saturate(6871%) hue-rotate(312deg) brightness(93%) contrast(89%);
+    --secondary-color-filter: invert(76%) sepia(18%) saturate(1212%) hue-rotate(342deg) brightness(95%) contrast(86%);
   
     
     --secondary-dark-color: #da903f;
     --secondary-dark-color-rgb: 218, 144, 63;
-    --secondary-dark-color-filter: invert(73%) sepia(10%) saturate(3139%) hue-rotate(339deg) brightness(90%) contrast(89%);
+    --secondary-dark-color-filter: invert(65%) sepia(100%) saturate(449%) hue-rotate(330deg) brightness(92%) contrast(85%);
   
     
     --text-color: #424242;
     --text-color-rgb: 66, 66, 66;
-    --text-color-filter: invert(22%) sepia(0%) saturate(1548%) hue-rotate(143deg) brightness(104%) contrast(90%);
+    --text-color-filter: invert(21%) sepia(24%) saturate(7%) hue-rotate(314deg) brightness(103%) contrast(88%);
   
     
     --surface-color: #D5D8D9;
     --surface-color-rgb: 213, 216, 217;
-    --surface-color-filter: invert(93%) sepia(2%) saturate(183%) hue-rotate(149deg) brightness(92%) contrast(95%);
+    --surface-color-filter: invert(92%) sepia(7%) saturate(72%) hue-rotate(149deg) brightness(98%) contrast(81%);
   
     
     --surface-light-color: #f5f5f5;
     --surface-light-color-rgb: 245, 245, 245;
-    --surface-light-color-filter: invert(100%) sepia(0%) saturate(2881%) hue-rotate(273deg) brightness(113%) contrast(92%);
+    --surface-light-color-filter: invert(100%) sepia(0%) saturate(4999%) hue-rotate(33deg) brightness(120%) contrast(92%);
   
     
     --surface-dark-color: #757575;
     --surface-dark-color-rgb: 117, 117, 117;
-    --surface-dark-color-filter: invert(47%) sepia(2%) saturate(31%) hue-rotate(322deg) brightness(96%) contrast(89%);
+    --surface-dark-color-filter: invert(45%) sepia(4%) saturate(7%) hue-rotate(315deg) brightness(100%) contrast(91%);
   
     
     --on-surface-color: #424242;
     --on-surface-color-rgb: 66, 66, 66;
-    --on-surface-color-filter: invert(22%) sepia(0%) saturate(1548%) hue-rotate(143deg) brightness(104%) contrast(90%);
+    --on-surface-color-filter: invert(21%) sepia(24%) saturate(7%) hue-rotate(314deg) brightness(103%) contrast(88%);
   
     
     --placeholder-color: #9e9e9e;
     --placeholder-color-rgb: 158, 158, 158;
-    --placeholder-color-filter: invert(56%) sepia(97%) saturate(0%) hue-rotate(134deg) brightness(91%) contrast(99%);
+    --placeholder-color-filter: invert(76%) sepia(4%) saturate(19%) hue-rotate(326deg) brightness(86%) contrast(76%);
   
     
     --error-color: #c62828;
     --error-color-rgb: 198, 40, 40;
-    --error-color-filter: invert(21%) sepia(57%) saturate(2655%) hue-rotate(342deg) brightness(105%) contrast(95%);
+    --error-color-filter: invert(20%) sepia(65%) saturate(3697%) hue-rotate(353deg) brightness(92%) contrast(79%);
   
     
     --error-background-color: #ffcdd2;
     --error-background-color-rgb: 255, 205, 210;
-    --error-background-color-filter: invert(83%) sepia(24%) saturate(458%) hue-rotate(307deg) brightness(97%) contrast(112%);
+    --error-background-color-filter: invert(83%) sepia(4%) saturate(1701%) hue-rotate(306deg) brightness(101%) contrast(105%);
   
     
     --correct-color: #2e7d32;
     --correct-color-rgb: 46, 125, 50;
-    --correct-color-filter: invert(36%) sepia(70%) saturate(446%) hue-rotate(74deg) brightness(94%) contrast(90%);
+    --correct-color-filter: invert(39%) sepia(39%) saturate(770%) hue-rotate(73deg) brightness(92%) contrast(90%);
   
     --divider-color: rgba(0, 0, 0, 0.12);
     --grey-text: rgba(0, 0, 0, 0.6);
@@ -154,8 +154,6 @@ export const createIndex = (
     --header-height: 60px;
     --layer-header: 100;
     --layer-header-1: 101;
-    --layer-profitroom: 999; /* Profitroom snippet layer*/
-    --layer-profitroom-1: 1000;
 
     font-family: 'Lato', sans-serif;
     color: var(--text-color);
@@ -308,39 +306,58 @@ export const createIndex = (
 
 
   
+<div id="fb-root"></div>
+
+<div id="fb-customer-chat" class="fb-customerchat">
+</div>
+
 <script type="text/javascript">
-  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-  let hgDialogOpened;
+  const fbRoot = document.getElementById('fb-root');
+  let isHgDialogOpen = false;
+  let isMessengerDialogOpen = false;
+
   const hideOrShowWidget = () => {
-    if (window.Tawk_API.toggleVisibility) {
-      if (window.loggedIn || hgDialogOpened || (window.pageYOffset === 0 && Tawk_API.isChatMinimized())) {
-        Tawk_API.hideWidget();
-      } else {
-        Tawk_API.showWidget();
-      }
+    if (window.loggedIn || isHgDialogOpen || (window.pageYOffset === 0 && !isMessengerDialogOpen)) {
+      fbRoot.style.display = 'none';
+    } else {
+      fbRoot.style.display = 'block';
     }
   };
   window.addEventListener('hg-dialog-opened-changed', (event) => {
-    hgDialogOpened = event.detail;
+    isHgDialogOpen = event.detail;
     hideOrShowWidget();
   });
-  Tawk_API.onLoad = () => {
-    hideOrShowWidget();
-    window.addEventListener('scroll', _.throttle(100, hideOrShowWidget));
-  };
+
   window.addEventListener('scroll', () => {
     if (!window.loggedIn) {
-      // Wait some time before loading TawkTo so other more important things can happen
+      // Wait some time before loading Messenger so other more important things can happen
       setTimeout(() => {
-        var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-        s1.defer=true;
-        s1.src='https://embed.tawk.to/5e5d63246d48ff250ad8e6f4/default';
-        s1.charset='UTF-8';
-        s1.setAttribute('crossorigin','*');
-        s0.parentNode.insertBefore(s1,s0);
+        window.fbAsyncInit = function() {
+          window.FB.init({
+            xfbml: true,
+            version: 'v16.0'
+          });
+          window.FB.Event.subscribe('customerchat.dialogShow', () => isMessengerDialogOpen = true);
+          window.FB.Event.subscribe('customerchat.dialogHide', () => isMessengerDialogOpen = false);
+          window.addEventListener('scroll', _.throttle(100, hideOrShowWidget));
+        };
+      
+        (function(d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) return;
+          js = d.createElement(s); js.id = id;
+          js.src = 'https://connect.facebook.net/pl_PL/sdk/xfbml.customerchat.js';
+          fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
       }, 2000);
     }
   }, {once: true});
+</script>
+
+<script>
+  var chatbox = document.getElementById('fb-customer-chat');
+  chatbox.setAttribute("page_id", "946632798797840");
+  chatbox.setAttribute("attribution", "biz_inbox");
 </script>
 
 
@@ -351,7 +368,7 @@ export const createIndex = (
     const style = document.getElementById('inline-style');
     style.innerHTML += '\\n' + sharedStyles.cssText + '\\n' + ckContent.cssText;
   </script>
-  </body>
+</body>
 </html>
 `;
 };

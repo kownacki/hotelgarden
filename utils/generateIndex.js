@@ -2,8 +2,8 @@ import fs from 'fs';
 import _ from 'lodash/fp.js';
 import { analyticsScript } from './generateIndex/analyticsScript.js';
 import { globalStyles } from './generateIndex/globalStyles.js';
+import { messengerScript } from './generateIndex/messengerScript.js';
 import { preRender } from './generateIndex/preRender.js';
-import { tawkToScript } from './generateIndex/tawkToScript.js';
 import { createPreloadLink } from './html.js';
 const noopTag = (strings, ...keys) => _.flow([_.zip, _.flatten, _.initial, _.map(String), _.join('')])(strings, keys);
 // to trigger syntax highlighting
@@ -115,7 +115,7 @@ const getIndexHtml = (production, preloads = false, { title, description, jsonLd
 
   ${jsResources.map((jsResource) => jsResource.script).join('')}
 
-  ${tawkToScript}
+  ${messengerScript}
 
   <style id="inline-style"></style>
   <script type="module">
@@ -124,7 +124,7 @@ const getIndexHtml = (production, preloads = false, { title, description, jsonLd
     const style = document.getElementById('inline-style');
     style.innerHTML += '\\n' + sharedStyles.cssText + '\\n' + ckContent.cssText;
   </script>
-  </body>
+</body>
 </html>
 `;
 fs.writeFileSync('index.html', getIndexHtml(false));
