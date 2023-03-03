@@ -5,7 +5,7 @@ import {serializeData} from './utils';
 export const createIndex = (
   preloads: CreateIndexPreloadsParam,
   {title, metaDescription, jsonLd}: CreateIndexSeoParam,
-  {eventsList, promotedEventUid, banner}: CreateIndexDataParam,
+  {eventsList, promotedEventUid, banner, introArticle}: CreateIndexDataParam,
 ) => {
   // @ts-ignore
   preloads = preloads.map((preloadLinkAttrs) => {
@@ -23,5 +23,7 @@ export const createIndex = (
   const promotedEventUidSerialized = serializeData(promotedEventUid);
   // @ts-ignore
   const bannerSerialized = serializeData(banner);
+  // @ts-ignore
+  const introArticleSerialized = serializeData(introArticle);
   return ``;
 };

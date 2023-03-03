@@ -67,7 +67,7 @@ const jsResources = [
     ${placeholderEnding}
   ` : ''}
  */
-const getIndexHtml = (production, preloads = false, { title, description, jsonLd } = {}, { eventsList, promotedEventUid, banner } = {}) => `
+const getIndexHtml = (production, preloads = false, { title, description, jsonLd } = {}, { eventsList, promotedEventUid, banner, introArticle } = {}) => `
 <!doctype html>
 <html lang="pl">
 <head>
@@ -110,6 +110,7 @@ const getIndexHtml = (production, preloads = false, { title, description, jsonLd
       eventsList: ${eventsList ? createPlaceholder('eventsListSerialized') : undefined},
       promotedEventUid: ${promotedEventUid ? createPlaceholder('promotedEventUidSerialized') : undefined},
       banner: ${banner ? createPlaceholder('bannerSerialized') : undefined},
+      introArticle: ${introArticle ? createPlaceholder('introArticleSerialized') : undefined},
     };
   </script>
 
@@ -128,6 +129,6 @@ const getIndexHtml = (production, preloads = false, { title, description, jsonLd
 </html>
 `;
 fs.writeFileSync('index.html', getIndexHtml(false));
-const indexWithPlaceholders = getIndexHtml(true, true, { title: true, description: true, jsonLd: true }, { eventsList: true, promotedEventUid: true, banner: true }).replace(/\\/g, '\\\\');
+const indexWithPlaceholders = getIndexHtml(true, true, { title: true, description: true, jsonLd: true }, { eventsList: true, promotedEventUid: true, banner: true, introArticle: true }).replace(/\\/g, '\\\\');
 const createIndexTemplate = fs.readFileSync('functions/src/createIndexTemplate.ts');
 fs.writeFileSync('functions/src/createIndex.ts', createIndexTemplate.toString().replace('\`\`', `\`${indexWithPlaceholders}\``));

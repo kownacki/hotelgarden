@@ -90,4 +90,8 @@ export interface Banner {
   subheading?: string,
 }
 
+export interface ArticleDbData {
+  text?: string,
+}
+
 export type BannersDbData = Record<PageUid, Banner>;

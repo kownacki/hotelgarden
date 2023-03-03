@@ -1,6 +1,6 @@
 import {Request} from 'firebase-functions';
 import {PreloadLinkAttrs} from '../../utils/html';
-import {EventsList, EventUid, Banner} from '../../utils/types';
+import {EventsList, EventUid, Banner, ArticleDbData} from '../../utils/types';
 
 export type CreateIndexPreloadsParam = PreloadLinkAttrs[];
 
@@ -14,6 +14,7 @@ export interface CreateIndexDataParam {
   eventsList: EventsList,
   promotedEventUid: EventUid | null,
   banner?: Banner,
+  introArticle?: ArticleDbData,
 }
 
 export interface RequestWithBody<ReqBody> extends Request {

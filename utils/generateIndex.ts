@@ -86,7 +86,7 @@ const getIndexHtml = (
   production: boolean,
   preloads: boolean = false,
   {title, description, jsonLd}: {title?: boolean, description?: boolean, jsonLd?: boolean} = {},
-  {eventsList, promotedEventUid, banner}: {eventsList?: boolean, promotedEventUid?: boolean, banner?: boolean} = {},
+  {eventsList, promotedEventUid, banner, introArticle}: {eventsList?: boolean, promotedEventUid?: boolean, banner?: boolean, introArticle?: boolean} = {},
 ) => `
 <!doctype html>
 <html lang="pl">
@@ -130,6 +130,7 @@ const getIndexHtml = (
       eventsList: ${eventsList ? createPlaceholder('eventsListSerialized') : undefined},
       promotedEventUid: ${promotedEventUid ? createPlaceholder('promotedEventUidSerialized') : undefined},
       banner: ${banner ? createPlaceholder('bannerSerialized') : undefined},
+      introArticle: ${introArticle ? createPlaceholder('introArticleSerialized') : undefined},
     };
   </script>
 
@@ -154,7 +155,7 @@ const indexWithPlaceholders = getIndexHtml(
   true,
   true,
   {title: true, description: true, jsonLd: true},
-  {eventsList: true, promotedEventUid: true, banner: true},
+  {eventsList: true, promotedEventUid: true, banner: true, introArticle: true},
 ).replace(/\\/g, '\\\\');
 
 const createIndexTemplate = fs.readFileSync('functions/src/createIndexTemplate.ts');

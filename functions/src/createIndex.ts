@@ -5,7 +5,7 @@ import {serializeData} from './utils';
 export const createIndex = (
   preloads: CreateIndexPreloadsParam,
   {title, metaDescription, jsonLd}: CreateIndexSeoParam,
-  {eventsList, promotedEventUid, banner}: CreateIndexDataParam,
+  {eventsList, promotedEventUid, banner, introArticle}: CreateIndexDataParam,
 ) => {
   // @ts-ignore
   preloads = preloads.map((preloadLinkAttrs) => {
@@ -23,6 +23,8 @@ export const createIndex = (
   const promotedEventUidSerialized = serializeData(promotedEventUid);
   // @ts-ignore
   const bannerSerialized = serializeData(banner);
+  // @ts-ignore
+  const introArticleSerialized = serializeData(introArticle);
   return `
 <!doctype html>
 <html lang="pl">
@@ -91,62 +93,62 @@ export const createIndex = (
     
     --primary-color: #2b5f57;
     --primary-color-rgb: 43, 95, 87;
-    --primary-color-filter: invert(30%) sepia(31%) saturate(651%) hue-rotate(121deg) brightness(96%) contrast(89%);
+    --primary-color-filter: invert(30%) sepia(55%) saturate(384%) hue-rotate(121deg) brightness(92%) contrast(89%);
   
     
     --secondary-color: #E2A96A;
     --secondary-color-rgb: 226, 169, 106;
-    --secondary-color-filter: invert(98%) sepia(39%) saturate(4277%) hue-rotate(306deg) brightness(92%) contrast(92%);
+    --secondary-color-filter: invert(99%) sepia(95%) saturate(3125%) hue-rotate(306deg) brightness(92%) contrast(92%);
   
     
     --secondary-dark-color: #da903f;
     --secondary-dark-color-rgb: 218, 144, 63;
-    --secondary-dark-color-filter: invert(76%) sepia(45%) saturate(2045%) hue-rotate(331deg) brightness(92%) contrast(84%);
+    --secondary-dark-color-filter: invert(89%) sepia(28%) saturate(5772%) hue-rotate(329deg) brightness(91%) contrast(87%);
   
     
     --text-color: #424242;
     --text-color-rgb: 66, 66, 66;
-    --text-color-filter: invert(22%) sepia(1%) saturate(0%) hue-rotate(106deg) brightness(95%) contrast(83%);
+    --text-color-filter: invert(23%) sepia(0%) saturate(1349%) hue-rotate(220deg) brightness(75%) contrast(74%);
   
     
     --surface-color: #D5D8D9;
     --surface-color-rgb: 213, 216, 217;
-    --surface-color-filter: invert(87%) sepia(3%) saturate(148%) hue-rotate(149deg) brightness(102%) contrast(89%);
+    --surface-color-filter: invert(91%) sepia(6%) saturate(82%) hue-rotate(149deg) brightness(101%) contrast(80%);
   
     
     --surface-light-color: #f5f5f5;
     --surface-light-color-rgb: 245, 245, 245;
-    --surface-light-color-filter: invert(100%) sepia(64%) saturate(12%) hue-rotate(316deg) brightness(111%) contrast(92%);
+    --surface-light-color-filter: invert(99%) sepia(7%) saturate(227%) hue-rotate(290deg) brightness(116%) contrast(92%);
   
     
     --surface-dark-color: #757575;
     --surface-dark-color-rgb: 117, 117, 117;
-    --surface-dark-color-filter: invert(46%) sepia(9%) saturate(20%) hue-rotate(333deg) brightness(96%) contrast(89%);
+    --surface-dark-color-filter: invert(54%) sepia(1%) saturate(1204%) hue-rotate(316deg) brightness(84%) contrast(93%);
   
     
     --on-surface-color: #424242;
     --on-surface-color-rgb: 66, 66, 66;
-    --on-surface-color-filter: invert(22%) sepia(1%) saturate(0%) hue-rotate(106deg) brightness(95%) contrast(83%);
+    --on-surface-color-filter: invert(23%) sepia(0%) saturate(1349%) hue-rotate(220deg) brightness(75%) contrast(74%);
   
     
     --placeholder-color: #9e9e9e;
     --placeholder-color-rgb: 158, 158, 158;
-    --placeholder-color-filter: invert(71%) sepia(5%) saturate(13%) hue-rotate(332deg) brightness(89%) contrast(85%);
+    --placeholder-color-filter: invert(68%) sepia(18%) saturate(11%) hue-rotate(350deg) brightness(91%) contrast(85%);
   
     
     --error-color: #c62828;
     --error-color-rgb: 198, 40, 40;
-    --error-color-filter: invert(22%) sepia(86%) saturate(2079%) hue-rotate(346deg) brightness(99%) contrast(90%);
+    --error-color-filter: invert(21%) sepia(37%) saturate(4911%) hue-rotate(347deg) brightness(104%) contrast(88%);
   
     
     --error-background-color: #ffcdd2;
     --error-background-color-rgb: 255, 205, 210;
-    --error-background-color-filter: invert(98%) sepia(21%) saturate(7282%) hue-rotate(288deg) brightness(118%) contrast(101%);
+    --error-background-color-filter: invert(80%) sepia(26%) saturate(467%) hue-rotate(308deg) brightness(104%) contrast(101%);
   
     
     --correct-color: #2e7d32;
     --correct-color-rgb: 46, 125, 50;
-    --correct-color-filter: invert(37%) sepia(68%) saturate(507%) hue-rotate(73deg) brightness(90%) contrast(84%);
+    --correct-color-filter: invert(36%) sepia(70%) saturate(484%) hue-rotate(74deg) brightness(92%) contrast(85%);
   
     --divider-color: rgba(0, 0, 0, 0.12);
     --grey-text: rgba(0, 0, 0, 0.6);
@@ -294,6 +296,7 @@ export const createIndex = (
       eventsList: ${eventsListSerialized},
       promotedEventUid: ${promotedEventUidSerialized},
       banner: ${bannerSerialized},
+      introArticle: ${introArticleSerialized},
     };
   </script>
 

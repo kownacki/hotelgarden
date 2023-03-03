@@ -10,6 +10,7 @@ import {
   SITEMAP_PATH,
 } from '../../../utils/urlStructure';
 import {createIndex} from '../createIndex';
+import {getArticle} from './articles';
 import {getBanner} from './banners';
 import {getClientConfig} from './config';
 import {getEventSeoData} from './eventsDataSeo';
@@ -35,9 +36,14 @@ export const render = async (req: Request, res: Response) => {
     const title = createFullPageTitle(pageUid, seoConfig);
     const pageDbData = await getPageDbData(pageUid);
     const banner = await getBanner(pageUid);
+    const introArticle = await getArticle(pageUid);
     const metaDescription = pageDbData.seo?.description;
     const preloads: PreloadLinkAttrs[] = banner.image ? [{href: banner.image.url, as: 'image'}] : [];
-    const index = createIndex(preloads, {title, metaDescription}, {eventsList, promotedEventUid, banner});
+    const index = createIndex(
+      preloads,
+      {title, metaDescription},
+      {eventsList, promotedEventUid, banner, introArticle}
+    );
     res.status(200).send(index);
   } else if (isValidDynamicPath(path, eventsList)) {
     const permalink = getDynamicPathPagePermalink(path);
