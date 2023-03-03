@@ -62,7 +62,7 @@ export class HgPage extends LitElement {
     promotedDynamicPathPage: Object, // DynamicPathPageEventWithUid | DynamicPathPageNewsWithUid | undefined
     promotedDynamicPathPageLoaded: Boolean,
     noBannerImage: {type: Boolean, reflect: true, attribute: 'no-banner-image'},
-    initialPage: Boolean,
+    isInitialPage: Boolean,
     _defaultTitle: String,
     _config: Object,
   };
@@ -103,7 +103,7 @@ export class HgPage extends LitElement {
     }
     if (changedProperties.has('_defaultTitle') || changedProperties.has('_config')) {
       //todo maybe add reloading config?
-      if (!this.initialPage && this._defaultTitle && this._config) {
+      if (!this.isInitialPage && this._defaultTitle && this._config) {
         const seoPageTitle = this._config.seo.urls?.[this.path]?.title;
         const fullTitle = appendSuffixToTitle(seoPageTitle || this._defaultTitle, this._config.seo);
         setDocumentTitle(fullTitle);
@@ -111,13 +111,13 @@ export class HgPage extends LitElement {
     }
   }
   _handleSetMetaDescription(text) {
-    if (!this.initialPage) {
+    if (!this.isInitialPage) {
       // todo on meta description change też się nie updatuje a powinno
       setMetaDescription(text);
     }
   }
   _handleSetJsonLd(jsonLd) {
-    if (!this.initialPage) {
+    if (!this.isInitialPage) {
       // todo on set structured data change też się nie updatuje a powinno
       setStructuredData(jsonLd);
     }
@@ -140,7 +140,7 @@ export class HgPage extends LitElement {
         .dynamicPathPageReady=${this.dynamicPathPageReady}
         .defaultTitle=${this._defaultTitle}
         .noBannerImage=${this.noBannerImage}
-        .initialPage=${this.initialPage}>
+        .isInitialPage=${this.isInitialPage}>
       </hg-page-banner>
       <div class="page">
         ${this.pageType === PageType.DYNAMIC_PATH

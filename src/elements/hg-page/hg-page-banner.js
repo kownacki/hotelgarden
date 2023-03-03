@@ -14,7 +14,7 @@ export class HgPageBanner extends LitElement {
     dynamicPathPageReady: Boolean,
     defaultTitle: String,
     noBannerImage: Boolean,
-    initialPage: Boolean,
+    isInitialPage: Boolean,
     _bannerData: Object, // {image, title} | {image, heading} | undefined
     _bannerReady: Boolean,
   };
@@ -27,7 +27,7 @@ export class HgPageBanner extends LitElement {
       {
         getObject: async (path) => {
           if (this.pageType === PageType.STATIC_PATH) {
-            return (this.initialPage ? window.initialData.banner : await getFromDb(path)) || {};
+            return (this.isInitialPage ? window.initialData.banner : await getFromDb(path)) || {};
           } else {
             return {
               image: this.dynamicPathPage?.image,

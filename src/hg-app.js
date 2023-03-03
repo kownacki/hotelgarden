@@ -24,7 +24,7 @@ export class HgApp extends LitElement {
   _drawer;
   static properties = {
     _path: String,
-    _initialPage: Boolean,
+    _isInitialPage: Boolean,
     _pageType: String, // PageType
     _pageUid: String, // PageUid
     _dynamicPathPage: Object, // DynamicPathPageEventWithUid | DynamicPathPageNewsWithUid | undefined
@@ -39,7 +39,7 @@ export class HgApp extends LitElement {
   constructor() {
     super();
     // In development there is no upfront data from server, so disable this option.
-    this._initialPage = isProductionEnvironment();
+    this._isInitialPage = isProductionEnvironment();
 
     const pathString = window.location.pathname;
     this._path = (pathString.slice(-1) === '/' && pathString.length !== 1) ? pathString.slice(0, -1) : pathString;
@@ -57,8 +57,8 @@ export class HgApp extends LitElement {
   _getPageUid(path) {
     return staticPathToPageUid[path] || '404';
   }
-  _getDataPromises(initialPage, initialData) {
-    if (initialPage) {
+  _getDataPromises(isInitialPage, initialData) {
+    if (isInitialPage) {
       return {
         eventsList: initialData.eventsList,
         promotedDynamicPathPageUid: initialData.promotedEventUid,
@@ -95,11 +95,11 @@ export class HgApp extends LitElement {
   }
   willUpdate(changedProperties) {
     if (changedProperties.has('_path') && changedProperties.get('_path') !== undefined) {
-      this._initialPage = false;
+      this._isInitialPage = false;
     }
     if (changedProperties.has('_path')) {
       this._pageType = isDynamicPath(this._path) ? PageType.DYNAMIC_PATH : PageType.STATIC_PATH;
-      const dataPromises = this._getDataPromises(this._initialPage, window.initialData);
+      const dataPromises = this._getDataPromises(this._isInitialPage, window.initialData);
 
       (async () => {
         this._promotedDynamicPathPage = await this._getPromotedDynamicPathPage(dataPromises);
@@ -163,7 +163,7 @@ export class HgApp extends LitElement {
         .promotedDynamicPathPage=${this._promotedDynamicPathPage}
         .promotedDynamicPathPageLoaded=${this._promotedDynamicPathPageLoaded}
         .noBannerImage=${this._noBannerImage}
-        .initialPage=${this._initialPage}>
+        .isInitialPage=${this._isInitialPage}>
       </hg-page>
       <!--todo somehow prevent scrolling parent when on android -->
       ${!this._promotedDynamicPathPageLoaded || !this._enableDrawer ? '' : html`
