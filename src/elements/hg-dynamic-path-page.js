@@ -83,7 +83,7 @@ export class HgDynamicPathPage extends LitElement {
           return this.dynamicPathPage;
         },
         updateField: async (objectPath, dataPath, data) => {
-          updateInObjectInDb(objectPath, dataPath, data);
+          await updateInObjectInDb(objectPath, dataPath, data);
           return data;
         },
         onDataChange: (dynamicPathPage) => {
