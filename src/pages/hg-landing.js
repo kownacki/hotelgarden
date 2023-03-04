@@ -1,4 +1,4 @@
-import {LitElement, html, css} from 'lit';
+import {html} from 'lit';
 import {staticProp} from '../utils.js';
 import HgContent from '../elements/hg-content.js';
 import '../content/hg-article/hg-intro-article.js';
@@ -15,10 +15,11 @@ import '../content/hg-map.js';
 export class HgLanding extends HgContent {
   static properties = {
     config: Object,
+    isInitialPage: Boolean,
   };
   render() {
     return html`
-      <hg-intro-article .uid=${'landing'}></hg-intro-article>
+      <hg-intro-article .uid=${'landing'} .isInitialPage=${this.isInitialPage}></hg-intro-article>
       <hg-quote .uid=${'landing'}></hg-quote>
       <hg-content-icons .uid=${'landing'}></hg-content-icons>
       <hg-text-image .swap=${true} .uid=${'landing'} .buttons=${staticProp([{url: '/pokoje', text: 'Zobacz pokoje / Rezerwuj online'}])}></hg-text-image>

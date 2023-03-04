@@ -11,9 +11,13 @@ import '../content/hg-reviews-block.js';
 import HgContent from '../elements/hg-content.js';
 
 export class HgFoodTruck extends HgContent {
+  static properties = {
+    config: Object,
+    isInitialPage: Boolean,
+  };
   render() {
     return html`
-      <hg-intro-article .uid=${'food-truck'}></hg-intro-article>
+      <hg-intro-article .uid=${'food-truck'} .isInitialPage=${this.isInitialPage}></hg-intro-article>
       <hg-content-icons .uid=${'food-truck'}></hg-content-icons>
       <h2 class="content-heading" id="menu">Menu Food Truck</h2>
       <hg-menu .uid=${'food-truck'}></hg-menu>

@@ -40,13 +40,14 @@ const importPageModule = (pageUid) => {
 let seconds = 0;
 setInterval(() => ++seconds, 1000);
 
-const getContentElement = async (pageUid, config, handleSetMetaDescription, handleSetJsonLd) => {
+const getContentElement = async (pageUid, config, isInitialPage, handleSetMetaDescription, handleSetJsonLd) => {
   await importPageModule(pageUid);
   handleSetJsonLd(''); //todo refactor when setting structured data for pages
   return staticHtml`
     <hg-${unsafeStatic(pageUid)}
       id="page"
       .config=${config}
+      .isInitialPage=${isInitialPage}
       @set-meta-description=${({detail: text}) => handleSetMetaDescription(text)}>
     </hg-${unsafeStatic(pageUid)}>
   `;
@@ -162,6 +163,7 @@ export class HgPage extends LitElement {
             ${!this.pageUid ? '' : until(getContentElement(
               this.pageUid,
               this._config,
+              this.isInitialPage,
               (text) => this._handleSetMetaDescription(text),
               (jsonLd) => this._handleSetJsonLd(jsonLd),
             ), html`<hg-page-loading></hg-page-loading>`)}

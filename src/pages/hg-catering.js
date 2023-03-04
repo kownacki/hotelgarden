@@ -9,9 +9,13 @@ import '../content/hg-reviews-block.js';
 import HgContent from '../elements/hg-content.js';
 
 export class HgCatering extends HgContent {
+  static properties = {
+    config: Object,
+    isInitialPage: Boolean,
+  };
   render() {
     return html`
-      <hg-intro-article .uid=${'catering'}></hg-intro-article>
+      <hg-intro-article .uid=${'catering'} .isInitialPage=${this.isInitialPage}></hg-intro-article>
       <hg-content-icons .uid=${'catering'}></hg-content-icons>
       <hg-mosaic .uid=${'catering'}></hg-mosaic>
       <hg-content-slider .uid=${'catering'}></hg-content-slider>

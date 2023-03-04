@@ -10,9 +10,13 @@ import HgContent from '../elements/hg-content.js';
 import {staticProp} from '../utils.js';
 
 export class HgCuisine extends HgContent {
+  static properties = {
+    config: Object,
+    isInitialPage: Boolean,
+  };
   render() {
     return html`
-      <hg-intro-article .uid=${'cuisine'}></hg-intro-article>
+      <hg-intro-article .uid=${'cuisine'} .isInitialPage=${this.isInitialPage}></hg-intro-article>
       <hg-content-icons .uid=${'cuisine'}></hg-content-icons>
       <hg-content-slider .uid=${'cuisine'}></hg-content-slider>
       <hg-mosaic .uid=${'cuisine'} .buttons=${staticProp({primary: [{url: `${pagesStaticData.restaurant.path}#menu`, text: 'Zobacz menu'}]})}></hg-mosaic>

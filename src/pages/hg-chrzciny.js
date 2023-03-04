@@ -11,9 +11,13 @@ import '../content/hg-contact-block.js';
 import '../content/hg-links.js';
 
 export class HgChrzciny extends HgContent {
+  static properties = {
+    config: Object,
+    isInitialPage: Boolean,
+  };
   render() {
     return html`
-      <hg-intro-article .uid=${'chrzciny'}></hg-intro-article>
+      <hg-intro-article .uid=${'chrzciny'} .isInitialPage=${this.isInitialPage}></hg-intro-article>
       <hg-quote .uid=${'chrzciny'}></hg-quote>
       <hg-content-icons .uid=${'chrzciny'}></hg-content-icons>
       <hg-content-slider .uid=${'chrzciny'}></hg-content-slider>

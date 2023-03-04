@@ -13,9 +13,13 @@ import '../content/hg-contact-block.js';
 import '../content/hg-links.js';
 
 export class HgWeddings extends HgContent {
+  static properties = {
+    config: Object,
+    isInitialPage: Boolean,
+  };
   render() {
     return html`
-      <hg-intro-article .uid=${'weddings'}></hg-intro-article>
+      <hg-intro-article .uid=${'weddings'} .isInitialPage=${this.isInitialPage}></hg-intro-article>
       <hg-quote .uid=${'weddings'}></hg-quote>
       <hg-content-icons .uid=${'weddings'}></hg-content-icons>
       <hg-content-slider .uid=${'weddings'}></hg-content-slider>

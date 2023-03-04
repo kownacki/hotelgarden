@@ -15,6 +15,7 @@ export class HgLunch extends HgContent {
   _firebaseAuth;
   static properties = {
     config: Object,
+    isInitialPage: Boolean,
     _prices: Object,
     _lunchesData: Object,
     _lunches: Object,
@@ -107,7 +108,7 @@ export class HgLunch extends HgContent {
   }
   render() {
     return html`
-      <hg-intro-article .uid=${'lunch'}></hg-intro-article>
+      <hg-intro-article .uid=${'lunch'} .isInitialPage=${this.isInitialPage}></hg-intro-article>
       <h2 class="content-heading" id="aktualny-lunch">Aktualne menu lunchowe ${this._lunchesData && this._lunchesData.current.dateString}</h2>
       ${!(this.config && this._lunches) ? '' : html`
         <hg-lunch-week 

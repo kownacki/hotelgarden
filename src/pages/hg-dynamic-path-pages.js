@@ -47,7 +47,7 @@ export class HgDynamicPathPages extends LitElement {
   }
   render() {
     return html`
-      <hg-intro-article .uid=${'events'}></hg-intro-article>
+      <hg-intro-article .uid=${'events'} .isInitialPage=${this.isInitialPage}></hg-intro-article>
       ${!this._loggedIn ? '' : until(import('./hg-dynamic-path-pages/hg-dynamic-path-pages-add.js').then(() => {
         return html`
           <hg-dynamic-path-pages-add></hg-dynamic-path-pages-add>

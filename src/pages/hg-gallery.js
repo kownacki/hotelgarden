@@ -70,7 +70,7 @@ export class HgGallery extends LitElement {
   }
   render() {
     return html`
-      <hg-intro-article .uid=${'gallery'}></hg-intro-article>
+      <hg-intro-article .uid=${'gallery'} .isInitialPage=${this.isInitialPage}></hg-intro-article>
       ${!this._loggedIn ? '' : until(import('mkwc/edit/mkwc-image-upload.js').then(() => {
         return html`
           <mkwc-image-upload id="upload"></mkwc-image-upload>

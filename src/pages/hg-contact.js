@@ -8,6 +8,10 @@ import {createDbPath, getFromDb, updateInDb} from '../utils/database.js';
 import {cleanTextForMetaDescription, staticProp} from '../utils.js';
 
 export class HgContact extends HgContent {
+  static properties = {
+    config: Object,
+    isInitialPage: Boolean,
+  };
   static styles = [super.styles, ckContent, css`
     hg-article {
       max-width: 1000px;

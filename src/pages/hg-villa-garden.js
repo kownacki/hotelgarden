@@ -8,9 +8,13 @@ import './hg-rooms/hg-room.js';
 const VILLA_ROOM_INDEX = 3;
 
 export class HgVillaGarden extends HgContent {
+  static properties = {
+    config: Object,
+    isInitialPage: Boolean,
+  };
   render() {
     return html`
-      <hg-intro-article .uid=${'villa-garden'}></hg-intro-article>
+      <hg-intro-article .uid=${'villa-garden'} .isInitialPage=${this.isInitialPage}></hg-intro-article>
       <hg-room 
         .index=${VILLA_ROOM_INDEX} 
         .extraButtons=${staticProp([{url: '/pokoje', text: 'Zobacz pozostałe pokoje'}])}>

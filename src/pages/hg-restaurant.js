@@ -13,9 +13,13 @@ import HgContent from '../elements/hg-content.js';
 import {staticProp} from '../utils.js';
 
 export class HgRestaurant extends HgContent {
+  static properties = {
+    config: Object,
+    isInitialPage: Boolean,
+  };
   render() {
     return html`
-      <hg-intro-article .uid=${'restaurant'}></hg-intro-article>
+      <hg-intro-article .uid=${'restaurant'} .isInitialPage=${this.isInitialPage}></hg-intro-article>
       <hg-content-icons .uid=${'grill-garden'}></hg-content-icons>
       <hg-text-image .uid=${'lunch'} .buttons=${staticProp([{url: '/lunch#aktualny-lunch', text: 'Przejdź do lunchy'}])}></hg-text-image>
       <h2 class="content-heading" id="menu">Menu Garden Bistro</h2>

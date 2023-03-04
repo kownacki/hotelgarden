@@ -107,7 +107,7 @@ export class HgReviews extends LitElement {
   }
   render() {
     return html`
-      <hg-intro-article .uid=${'reviews'}></hg-intro-article>
+      <hg-intro-article .uid=${'reviews'} .isInitialPage=${this.isInitialPage}></hg-intro-article>
       <hg-list-old
         .addAtStart=${true}
         .transform=${() => _.reverse}

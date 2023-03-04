@@ -7,6 +7,7 @@ import '../hg-article.js';
 export class HgIntroArticle extends LitElement {
   static properties = {
     uid: String,
+    isInitialPage: Boolean,
   };
   static styles = [sharedStyles, css`
     :host {
@@ -20,6 +21,7 @@ export class HgIntroArticle extends LitElement {
     }
   `];
   render() {
+    const initialArticle = this.isInitialPage && window.initialData.introArticle;
     return html`
       <div class="container">
         <hg-article
@@ -30,6 +32,7 @@ export class HgIntroArticle extends LitElement {
             'big-first-letter': true,
             'vertically-spacious-text': true,
           })}
+          .predefinedArticle=${initialArticle}
           @text-ready=${({detail: text}) => {
             this.dispatchEvent(new CustomEvent('set-meta-description', {detail: text, composed: true}));
           }}

@@ -11,9 +11,13 @@ import '../content/hg-reviews-block.js';
 import HgContent from '../elements/hg-content.js';
 
 export class HgSummerBar extends HgContent {
+  static properties = {
+    config: Object,
+    isInitialPage: Boolean,
+  };
   render() {
     return html`
-      <hg-intro-article .uid=${'summer-bar'}></hg-intro-article>
+      <hg-intro-article .uid=${'summer-bar'} .isInitialPage=${this.isInitialPage}></hg-intro-article>
       <hg-content-icons .uid=${'summer-bar'}></hg-content-icons>
       <h2 class="content-heading" id="menu">Menu Summer Bar</h2>
       <hg-menu .uid=${'summer-bar'}></hg-menu>

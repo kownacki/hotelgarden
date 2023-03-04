@@ -14,6 +14,7 @@ export default class HgArticle extends LitElement {
     rich: Boolean,
     richConfig: Boolean,
     classes: Object,
+    predefinedArticle: Object,
     _article: Object,
     _articleReady: Boolean,
   };
@@ -36,7 +37,7 @@ export default class HgArticle extends LitElement {
       this,
       {
         getObject: async (path) => {
-          return await getFromDb(path) || {};
+          return (this.predefinedArticle || await getFromDb(path)) || {};
         },
         updateField: async (objectPath, dataPath, data) => {
           await updateInObjectInDb(objectPath, dataPath, data);

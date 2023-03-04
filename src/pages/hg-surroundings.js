@@ -6,6 +6,10 @@ import '../content/hg-text-image.js';
 import '../content/hg-links.js';
 
 export class HgSurroundings extends HgContent {
+  static properties = {
+    config: Object,
+    isInitialPage: Boolean,
+  };
   static styles = [super.styles, css`
     hg-text-image {
       margin-bottom: 40px;
@@ -13,7 +17,7 @@ export class HgSurroundings extends HgContent {
   `];
   render() {
     return html`
-      <hg-intro-article .uid=${'surroundings'}></hg-intro-article>
+      <hg-intro-article .uid=${'surroundings'} .isInitialPage=${this.isInitialPage}></hg-intro-article>
       <hg-text-image .uid=${'surroundings'} .buttons=${staticProp([{url: '/grill-garden', text: 'Zobacz więcej'}])}></hg-text-image>
       ${_.map.convert({cap: false})((icon, index) => html`
         <hg-text-image 

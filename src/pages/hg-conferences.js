@@ -10,9 +10,13 @@ import '../content/hg-article.js';
 import '../content/hg-contact-block.js';
 
 export class HgConferences extends HgContent {
+  static properties = {
+    config: Object,
+    isInitialPage: Boolean,
+  };
   render() {
     return html`
-      <hg-intro-article .uid=${'conferences'}></hg-intro-article>
+      <hg-intro-article .uid=${'conferences'} .isInitialPage=${this.isInitialPage}></hg-intro-article>
       <hg-content-icons .uid=${'conferences'}></hg-content-icons>
       <hg-content-slider .uid=${'conferences'}></hg-content-slider>
       <hg-text-image .uid=${'conferences'} .buttons=${staticProp([{url: '#kontakt', text: 'Skontaktuj się z nami'}])}></hg-text-image>

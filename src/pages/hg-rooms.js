@@ -7,10 +7,14 @@ import sharedStyles from '../styles/shared-styles.js'
 import './hg-rooms/hg-room.js';
 
 export class HgRooms extends HgContent {
+  static properties = {
+    config: Object,
+    isInitialPage: Boolean,
+  };
   static styles = [super.styles, sharedStyles];
   render() {
     return html`
-      <hg-intro-article .uid=${'rooms'}></hg-intro-article>
+      <hg-intro-article .uid=${'rooms'} .isInitialPage=${this.isInitialPage}></hg-intro-article>
       <hg-content-icons .uid=${'rooms'}></hg-content-icons>
       ${_.map((index) => html`
         <hg-room .index=${index}></hg-room>

@@ -14,6 +14,10 @@ import '../content/hg-links.js';
 import {staticProp} from '../utils.js';
 
 export class HgFamilyParties extends HgContent {
+  static properties = {
+    config: Object,
+    isInitialPage: Boolean,
+  };
   static styles = [super.styles, sharedStyles, css`
     :host {
       display: block;
@@ -27,7 +31,7 @@ export class HgFamilyParties extends HgContent {
   `];
   render() {
     return html`
-      <hg-intro-article .uid=${'family-parties'}></hg-intro-article>
+      <hg-intro-article .uid=${'family-parties'} .isInitialPage=${this.isInitialPage}></hg-intro-article>
       ${_.map((type) => html`
         <div class="occasion divider">
           <hg-text-image

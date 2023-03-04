@@ -11,9 +11,13 @@ import '../content/hg-contact-block.js';
 import '../content/hg-links.js';
 
 export class HgKomunie extends HgContent {
+  static properties = {
+    config: Object,
+    isInitialPage: Boolean,
+  };
   render() {
     return html`
-      <hg-intro-article .uid=${'komunie'}></hg-intro-article>
+      <hg-intro-article .uid=${'komunie'} .isInitialPage=${this.isInitialPage}></hg-intro-article>
       <hg-quote .uid=${'komunie'}></hg-quote>
       <hg-content-icons .uid=${'komunie'}></hg-content-icons>
       <hg-content-slider .uid=${'komunie'}></hg-content-slider>
