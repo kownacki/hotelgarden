@@ -30,6 +30,8 @@ export class HgApp extends LitElement {
     _dynamicPathPage: Object, // DynamicPathPageEventWithUid | DynamicPathPageNewsWithUid | undefined
     _dynamicPathPageReady: Boolean,
     _noBannerImage: Boolean,
+    _isIntroArticleRemoved: Boolean,
+    _isIntroArticleHidden: Boolean,
     _promotedDynamicPathPage: Object, // DynamicPathPageEventWithUid | DynamicPathPageNewsWithUid | undefined
     _promotedDynamicPathPageLoaded: Boolean,
     _enableDrawer: Boolean,
@@ -83,6 +85,8 @@ export class HgApp extends LitElement {
     return {
       pageUid,
       noBannerImage: ['contact', 'gallery', '404', 'admin'].includes(pageUid),
+      isIntroArticleRemoved: ['contact', '404', 'admin'].includes(pageUid),
+      isIntroArticleHidden: ['reviews', 'gallery', 'dynamic-path-pages'].includes(pageUid),
     };
   }
   async _getDynamicPathPage(dynamicPathPagePermalink, dataPromises) {
@@ -107,11 +111,13 @@ export class HgApp extends LitElement {
       })();
 
       if (this._pageType === PageType.STATIC_PATH) {
-        const {pageUid, noBannerImage} = this._getPageData(this._path);
+        const {pageUid, noBannerImage, isIntroArticleRemoved, isIntroArticleHidden} = this._getPageData(this._path);
         this._pageUid = pageUid;
         this._dynamicPathPage = undefined;
         this._dynamicPathPageReady = undefined;
         this._noBannerImage = noBannerImage;
+        this._isIntroArticleRemoved = isIntroArticleRemoved;
+        this._isIntroArticleHidden = isIntroArticleHidden;
       } else {
         const dynamicPathPagePermalink = getDynamicPathPagePermalink(this._path);
         this._pageUid = undefined;
@@ -163,6 +169,8 @@ export class HgApp extends LitElement {
         .promotedDynamicPathPage=${this._promotedDynamicPathPage}
         .promotedDynamicPathPageLoaded=${this._promotedDynamicPathPageLoaded}
         .noBannerImage=${this._noBannerImage}
+        .isIntroArticleRemoved=${this._isIntroArticleRemoved}
+        .isIntroArticleHidden=${this._isIntroArticleHidden}
         .isInitialPage=${this._isInitialPage}>
       </hg-page>
       <!--todo somehow prevent scrolling parent when on android -->

@@ -1,5 +1,4 @@
 import {LitElement, html, css} from 'lit';
-import '../content/hg-article/hg-intro-article.js';
 import '../content/hg-links.js';
 import '../content/hg-text-image.js';
 import '../elements/hg-content.js';
@@ -18,7 +17,6 @@ export class HgSurroundings extends LitElement {
   `];
   render() {
     return html`
-      <hg-intro-article .uid=${'surroundings'} .isInitialPage=${this.isInitialPage}></hg-intro-article>
       <hg-content>
         <hg-text-image .uid=${'surroundings'} .buttons=${staticProp([{url: '/grill-garden', text: 'Zobacz więcej'}])}></hg-text-image>
         ${_.map.convert({cap: false})((icon, index) => html`

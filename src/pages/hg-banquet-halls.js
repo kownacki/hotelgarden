@@ -1,5 +1,4 @@
 import {LitElement, html} from 'lit';
-import '../content/hg-article/hg-intro-article.js';
 import '../content/hg-hall.js';
 import '../content/hg-links.js';
 import '../elements/hg-content.js';
@@ -13,7 +12,6 @@ export class HgBanquetHalls extends LitElement {
   static styles = sharedStyles;
   render() {
     return html`
-      <hg-intro-article .uid=${'banquet-halls'} .isInitialPage=${this.isInitialPage}></hg-intro-article>
       <hg-content>
         ${_.map.convert({cap: false})((uid, index) => html`
           <hg-hall id="${index + 1}" .uid=${uid}></hg-hall>

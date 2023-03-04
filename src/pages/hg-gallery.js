@@ -1,7 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import {until} from 'lit/directives/until.js';
 import {IMAGE_COMPRESSION_QUALITY} from '../../utils/config.js';
-import '../content/hg-article/hg-intro-article.js';
 import '../elements/hg-list-old/hg-mosaic-list-old.js'
 import {
   HG_WINDOW_SLIDER_IMAGE_FIT,
@@ -38,9 +37,6 @@ export class HgGallery extends LitElement {
       max-width: 1300px;
       padding: 0 0 1px;
     }
-    hg-intro-article {
-      display: none;
-    }
   `];
   constructor() {
     super();
@@ -71,7 +67,6 @@ export class HgGallery extends LitElement {
   }
   render() {
     return html`
-      <hg-intro-article .uid=${'gallery'} .isInitialPage=${this.isInitialPage}></hg-intro-article>
       ${!this._loggedIn ? '' : until(import('mkwc/edit/mkwc-image-upload.js').then(() => {
         return html`
           <mkwc-image-upload id="upload"></mkwc-image-upload>

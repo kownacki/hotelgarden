@@ -1,6 +1,5 @@
 import {LitElement, html} from 'lit';
 import '../content/hg-article.js';
-import '../content/hg-article/hg-intro-article.js';
 import '../content/hg-contact-block.js';
 import '../content/hg-content-icons.js';
 import '../content/hg-content-slider.js';
@@ -21,7 +20,6 @@ export class HgRestaurant extends LitElement {
   static styles = sharedStyles;
   render() {
     return html`
-      <hg-intro-article .uid=${'restaurant'} .isInitialPage=${this.isInitialPage}></hg-intro-article>
       <hg-content>
         <hg-content-icons .uid=${'grill-garden'}></hg-content-icons>
         <hg-text-image .uid=${'lunch'} .buttons=${staticProp([{url: '/lunch#aktualny-lunch', text: 'Przejdź do lunchy'}])}></hg-text-image>

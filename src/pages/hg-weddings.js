@@ -1,5 +1,4 @@
 import {LitElement, html} from 'lit';
-import '../content/hg-article/hg-intro-article.js';
 import '../content/hg-contact-block.js';
 import '../content/hg-content-icons.js';
 import '../content/hg-content-slider.js';
@@ -21,7 +20,6 @@ export class HgWeddings extends LitElement {
   static styles = sharedStyles;
   render() {
     return html`
-      <hg-intro-article .uid=${'weddings'} .isInitialPage=${this.isInitialPage}></hg-intro-article>
       <hg-content>
         <hg-quote .uid=${'weddings'}></hg-quote>
         <hg-content-icons .uid=${'weddings'}></hg-content-icons>

@@ -2,7 +2,6 @@ import {LitElement, html, css} from 'lit';
 import {until} from 'lit/directives/until.js';
 import {when} from 'lit/directives/when.js';
 import sharedStyles from '../styles/shared-styles.js';
-import '../content/hg-article/hg-intro-article.js';
 import '../elements/hg-action-button.js';
 import '../elements/hg-page/hg-page-loading.js';
 import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
@@ -14,6 +13,7 @@ import './hg-dynamic-path-pages/hg-dynamic-path-pages-list.js';
 export class HgDynamicPathPages extends LitElement {
   _firebaseAuth;
   static properties = {
+    isInitialPage: Boolean,
     _loggedIn: Boolean,
     _allDynamicPathPages: Array, // DynamicPathPage[]
     _allDynamicPathPagesReady: Boolean,
@@ -24,9 +24,6 @@ export class HgDynamicPathPages extends LitElement {
       display: block;
       margin: 40px auto;
       padding: 0 20px;
-    }
-    hg-intro-article {
-      display: none;
     }
     h2 {
       margin: 40px 0;
@@ -47,7 +44,6 @@ export class HgDynamicPathPages extends LitElement {
   }
   render() {
     return html`
-      <hg-intro-article .uid=${'events'} .isInitialPage=${this.isInitialPage}></hg-intro-article>
       ${!this._loggedIn ? '' : until(import('./hg-dynamic-path-pages/hg-dynamic-path-pages-add.js').then(() => {
         return html`
           <hg-dynamic-path-pages-add></hg-dynamic-path-pages-add>

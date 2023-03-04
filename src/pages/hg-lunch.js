@@ -1,6 +1,5 @@
 import {LitElement, html, css} from 'lit';
 import {until} from 'lit/directives/until.js';
-import '../content/hg-article/hg-intro-article.js';
 import '../content/hg-article.js';
 import '../content/hg-content-slider.js';
 import '../content/hg-links.js';
@@ -107,7 +106,6 @@ export class HgLunch extends LitElement {
   }
   render() {
     return html`
-      <hg-intro-article .uid=${'lunch'} .isInitialPage=${this.isInitialPage}></hg-intro-article>
       <hg-content>
         <div>
           <h2 class="content-heading" id="aktualny-lunch">Aktualne menu lunchowe ${this._lunchesData && this._lunchesData.current.dateString}</h2>

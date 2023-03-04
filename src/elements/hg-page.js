@@ -1,11 +1,14 @@
 import {LitElement, html, css} from 'lit';
 import {until} from 'lit/directives/until.js';
+import {when} from 'lit/directives/when.js';
 import {html as staticHtml, unsafeStatic} from 'lit/static-html.js';
 import {getDefaultTitle, appendSuffixToTitle, getEventTitle} from '../../utils/seo.js';
+import '../content/hg-article/hg-intro-article.js';
 import {createDbPath, getFromDb} from '../utils/database.js';
 import {setDocumentTitle, setMetaDescription, setStructuredData, scrollIntoView, sleep} from '../utils.js';
 import '../elements/hg-footer.js';
 import {PageType} from '../hg-app.js';
+import sharedStyles from '../styles/shared-styles.js';
 import './hg-page/hg-page-banner.js';
 import './hg-page/hg-page-loading.js';
 
@@ -63,11 +66,13 @@ export class HgPage extends LitElement {
     promotedDynamicPathPage: Object, // DynamicPathPageEventWithUid | DynamicPathPageNewsWithUid | undefined
     promotedDynamicPathPageLoaded: Boolean,
     noBannerImage: {type: Boolean, reflect: true, attribute: 'no-banner-image'},
+    isIntroArticleRemoved: Boolean,
+    isIntroArticleHidden: Boolean,
     isInitialPage: Boolean,
     _defaultTitle: String,
     _config: Object,
   };
-  static styles = css`
+  static styles = [sharedStyles, css`
     :host([no-banner-image]) {
       display: flex;
       flex-direction: column;
@@ -78,7 +83,7 @@ export class HgPage extends LitElement {
     :host([no-banner-image]) .page {
       flex: 1;
     }
-  `;
+  `];
   constructor() {
     super();
     (async () => {
@@ -160,13 +165,29 @@ export class HgPage extends LitElement {
             ` : html`<hg-page-loading></hg-page-loading>`;
           }), html`<hg-page-loading></hg-page-loading>`)
           : html`
-            ${!this.pageUid ? '' : until(getContentElement(
+            ${when(
               this.pageUid,
-              this._config,
-              this.isInitialPage,
-              (text) => this._handleSetMetaDescription(text),
-              (jsonLd) => this._handleSetJsonLd(jsonLd),
-            ), html`<hg-page-loading></hg-page-loading>`)}
+              () => html`
+                ${when(
+                  !this.isIntroArticleRemoved,
+                  () => html`
+                    <hg-intro-article
+                      .uid=${this.pageUid}
+                      .isInitialPage=${this.isInitialPage}
+                      ?hidden=${this.isIntroArticleHidden}
+                    >
+                    </hg-intro-article>
+                  `,
+                )}
+                ${until(getContentElement(
+                  this.pageUid,
+                  this._config,
+                  this.isInitialPage,
+                  (text) => this._handleSetMetaDescription(text),
+                  (jsonLd) => this._handleSetJsonLd(jsonLd),
+                ), html`<hg-page-loading></hg-page-loading>`)}
+              `,
+            )}
           `}
       </div>
       <hg-footer></hg-footer>

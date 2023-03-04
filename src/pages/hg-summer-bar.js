@@ -1,6 +1,5 @@
 import {LitElement, html} from 'lit';
 import '../content/hg-article.js';
-import '../content/hg-article/hg-intro-article.js';
 import '../content/hg-contact-block.js';
 import '../content/hg-content-icons.js';
 import '../content/hg-content-slider.js';
@@ -19,7 +18,6 @@ export class HgSummerBar extends LitElement {
   static styles = sharedStyles;
   render() {
     return html`
-      <hg-intro-article .uid=${'summer-bar'} .isInitialPage=${this.isInitialPage}></hg-intro-article>
       <hg-content>
         <hg-content-icons .uid=${'summer-bar'}></hg-content-icons>
         <h2 class="content-heading" id="menu">Menu Summer Bar</h2>

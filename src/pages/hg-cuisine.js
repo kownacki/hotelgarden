@@ -1,6 +1,5 @@
 import {LitElement, html} from 'lit';
 import {pagesStaticData} from '../../utils/urlStructure.js';
-import '../content/hg-article/hg-intro-article.js';
 import '../content/hg-content-icons.js';
 import '../content/hg-content-slider.js';
 import '../content/hg-links.js';
@@ -18,7 +17,6 @@ export class HgCuisine extends LitElement {
   static styles = sharedStyles;
   render() {
     return html`
-      <hg-intro-article .uid=${'cuisine'} .isInitialPage=${this.isInitialPage}></hg-intro-article>
       <hg-content>
         <hg-content-icons .uid=${'cuisine'}></hg-content-icons>
         <hg-content-slider .uid=${'cuisine'}></hg-content-slider>

@@ -1,6 +1,5 @@
 import {LitElement, html, css} from 'lit';
 import '@material/mwc-checkbox';
-import '../content/hg-article/hg-intro-article.js';
 import '../content/hg-links.js';
 import '../elements/hg-content.js';
 import '../elements/hg-list-old.js';
@@ -56,9 +55,6 @@ export class HgReviews extends LitElement {
     _loggedIn: Boolean,
   };
   static styles = [sharedStyles, css`
-    hg-intro-article {
-      display: none;
-    }
     hg-list-old {
       display: flex;
       flex-wrap: wrap;
@@ -109,7 +105,6 @@ export class HgReviews extends LitElement {
   }
   render() {
     return html`
-      <hg-intro-article .uid=${'reviews'} .isInitialPage=${this.isInitialPage}></hg-intro-article>
       <hg-content>
         <hg-list-old
           .addAtStart=${true}
