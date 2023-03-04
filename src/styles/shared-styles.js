@@ -41,6 +41,9 @@ export default css`
     float: left;
     margin: 0.25em 0.15em 0.15em 0;
   }
+  .big-first-letter {
+    min-height: 75px;
+  }
   p {
     line-height: 1.4em;
   }
