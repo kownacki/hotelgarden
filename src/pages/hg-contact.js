@@ -1,18 +1,18 @@
-import {html, css} from 'lit';
+import {LitElement, html, css} from 'lit';
 import '../content/hg-article.js';
 import '../content/hg-map.js';
 import '../elements/hg-contact-form.js';
-import HgContent from '../elements/hg-content.js';
 import ckContent from '../styles/ck-content.js';
-import {createDbPath, getFromDb, updateInDb} from '../utils/database.js';
+import sharedStyles from '../styles/shared-styles.js';
+import {createDbPath, updateInDb} from '../utils/database.js';
 import {cleanTextForMetaDescription, staticProp} from '../utils.js';
 
-export class HgContact extends HgContent {
+export class HgContact extends LitElement {
   static properties = {
     config: Object,
     isInitialPage: Boolean,
   };
-  static styles = [super.styles, ckContent, css`
+  static styles = [sharedStyles, ckContent, css`
     hg-article {
       max-width: 1000px;
     }
@@ -23,7 +23,6 @@ export class HgContact extends HgContent {
   render() {
     return html`
       <hg-article
-        class="no-animation"
         .rich=${true}
         .uid=${'contact'}
         .classes=${staticProp({'smaller-text': true})}
@@ -36,8 +35,8 @@ export class HgContact extends HgContent {
           this.dispatchEvent(new CustomEvent('set-meta-description', {detail: cleanedText, composed: true}));
         }}>
       </hg-article>
-      <hg-contact-form class="no-animation"></hg-contact-form>
-      <hg-map class="no-animation"></hg-map>
+      <hg-contact-form></hg-contact-form>
+      <hg-map></hg-map>
     `;
   }
 }

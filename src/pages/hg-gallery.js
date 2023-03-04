@@ -19,6 +19,7 @@ import {
 } from '../utils/database.js';
 import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
 import {ItemsDbSyncController} from '../utils/ItemsDbSyncController.js';
+import sharedStyles from '../styles/shared-styles.js';
 import './hg-gallery/hg-gallery-item.js';
 
 export class HgGallery extends LitElement {
@@ -29,7 +30,7 @@ export class HgGallery extends LitElement {
     _itemsReady: Boolean,
     _loggedIn: Boolean,
   };
-  static styles = css`
+  static styles = [sharedStyles, css`
     :host {
       display: block;
       margin: 40px auto;
@@ -40,7 +41,7 @@ export class HgGallery extends LitElement {
     hg-intro-article {
       display: none;
     }
-  `;
+  `];
   constructor() {
     super();
     this._firebaseAuth = new FirebaseAuthController(this, (loggedIn) => {

@@ -1,11 +1,11 @@
-import {LitElement, css} from 'lit';
+import {LitElement, css, html} from 'lit';
 import sharedStyles from '../styles/shared-styles.js';
-import {checkChildrenVisibility} from '../utils.js';
+import {checkElementsVisibility} from '../utils.js';
 
 export default class HgContent extends LitElement {
   static styles = [sharedStyles, css`
     /* Prevent bugs. Iphone adds style tag as host's last child. */
-    :host > :not(style):not(.no-animation) {
+    ::slotted(:not(style):not(.no-animation)) {
       transition-property: opacity, top;
       transition-duration: 0.5s;
       transition-timing-function: ease-in-out;
@@ -13,13 +13,16 @@ export default class HgContent extends LitElement {
       opacity: 0;
       position: relative;
     }
-    :host > .seen:not(.no-animation) {
+    ::slotted(.seen:not(.no-animation)) {
       opacity: 1;
       top: 0;
     }
   `];
   firstUpdated() {
-    this._checkChildrenVisibility = () => checkChildrenVisibility(this);
+    this._checkChildrenVisibility = () => {
+      const children = this.shadowRoot.children[0].assignedElements();
+      checkElementsVisibility(children);
+    };
     this._checkChildrenVisibility();
     addEventListener('DOMContentLoaded', this._checkChildrenVisibility);
     addEventListener('load', this._checkChildrenVisibility);
@@ -42,7 +45,11 @@ export default class HgContent extends LitElement {
       window.removeEventListener('resize', this._checkChildrenVisibility);
       window.removeEventListener('touchmove', this._checkChildrenVisibility);
     }
-    return super.disconnectedCallback();
+  }
+  render() {
+    return html`
+      <slot></slot>
+    `;
   }
 }
 customElements.define('hg-content', HgContent);

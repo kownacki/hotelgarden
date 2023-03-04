@@ -21,13 +21,13 @@ export const hyphenate = _.flow(
   _.join('-'),
 );
 
-export const checkChildrenVisibility = _.throttle(100, (element) => {
-  _.map((child) => {
+export const checkElementsVisibility = _.throttle(100, (elements) => {
+  elements.map((child) => {
     if (isElementVisible(child)) {
       child.classList.add('seen');
       child.seen = true;
     }
-  }, element.shadowRoot.children);
+  });
 });
 
 export const assignKeys = (field) => _.map.convert({cap: false})((item, key) => ({...item, [field]: key}));

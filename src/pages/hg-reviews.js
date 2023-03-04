@@ -1,9 +1,11 @@
 import {LitElement, html, css} from 'lit';
 import '@material/mwc-checkbox';
 import '../content/hg-article/hg-intro-article.js';
+import '../content/hg-links.js';
+import '../elements/hg-content.js';
 import '../elements/hg-list-old.js';
 import '../elements/hg-review.js';
-import '../content/hg-links.js';
+import sharedStyles from '../styles/shared-styles.js';
 import {createDbPath, DbPath, getFromDb, updateInDb, updateInObjectInDb} from '../utils/database.js';
 import '../utils/fixes/mwc-formfield-fixed.js';
 import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
@@ -53,7 +55,7 @@ export class HgReviews extends LitElement {
     _reviewsReady: Boolean,
     _loggedIn: Boolean,
   };
-  static styles = css`
+  static styles = [sharedStyles, css`
     hg-intro-article {
       display: none;
     }
@@ -78,7 +80,7 @@ export class HgReviews extends LitElement {
         --columns: 1;
       }
     }
-  `;
+  `];
   constructor() {
     super();
 
@@ -108,34 +110,36 @@ export class HgReviews extends LitElement {
   render() {
     return html`
       <hg-intro-article .uid=${'reviews'} .isInitialPage=${this.isInitialPage}></hg-intro-article>
-      <hg-list-old
-        .addAtStart=${true}
-        .transform=${() => _.reverse}
-        .items=${this._reviews}
-        .path=${this._path}
-        .showControls=${this._loggedIn}
-        .getItemName=${(item) => `opinię${item.heading ? ` "${item.heading}"`: ''}`}
-        .itemTemplate=${(review, index, disableEdit) => html`
-          <style>
-            hg-review {
-              text-align: center;
-              margin: 0 10px 20px;
-              padding: 0 20px;
-              height: 400px;
-            }
-            @media all and (max-width: 839px) {
+      <hg-content>
+        <hg-list-old
+          .addAtStart=${true}
+          .transform=${() => _.reverse}
+          .items=${this._reviews}
+          .path=${this._path}
+          .showControls=${this._loggedIn}
+          .getItemName=${(item) => `opinię${item.heading ? ` "${item.heading}"`: ''}`}
+          .itemTemplate=${(review, index, disableEdit) => html`
+            <style>
               hg-review {
-                height: auto;
-                margin: 10px 0;
-                padding: 20px;
+                text-align: center;
+                margin: 0 10px 20px;
+                padding: 0 20px;
+                height: 400px;
               }
-            }
-          </style>
-          <hg-review .review=${review} .editable=${true} .disableEdit=${disableEdit}></hg-review>
-        `}
-        .configure=${configure}>
-      </hg-list-old>
-      <hg-links .path=${'/opinie'} .superpath=${'/'}></hg-links>
+              @media all and (max-width: 839px) {
+                hg-review {
+                  height: auto;
+                  margin: 10px 0;
+                  padding: 20px;
+                }
+              }
+            </style>
+            <hg-review .review=${review} .editable=${true} .disableEdit=${disableEdit}></hg-review>
+          `}
+          .configure=${configure}>
+        </hg-list-old>
+        <hg-links .path=${'/opinie'} .superpath=${'/'}></hg-links>
+      </hg-content>
     `;
   }
 }
