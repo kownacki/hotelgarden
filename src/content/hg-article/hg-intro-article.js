@@ -1,11 +1,16 @@
-import {html, css} from 'lit';
+import {html, css, LitElement} from 'lit';
+import sharedStyles from '../../styles/shared-styles.js';
 import {createDbPath, updateInDb} from '../../utils/database.js';
-import {cleanTextForMetaDescription} from '../../utils.js';
-import HgArticle from '../hg-article.js';
+import {cleanTextForMetaDescription, staticProp} from '../../utils.js';
+import '../hg-article.js';
 
-export class HgIntroArticle extends HgArticle {
-  static styles = [super.styles, css`
+export class HgIntroArticle extends LitElement {
+  static properties = {
+    uid: String,
+  };
+  static styles = [sharedStyles, css`
     :host {
+      display: block;
       margin: 80px auto;
     }
     @media all and (max-width: 599px) {
@@ -14,22 +19,28 @@ export class HgIntroArticle extends HgArticle {
       }
     }
   `];
-  constructor() {
-    super();
-    this.richConfig = 'intro';
-    this.rich = true;
-  }
-  firstUpdated(changedProperties) {
-    super.firstUpdated(changedProperties);
-    this.shadowRoot.getElementById('text').classList.add('big-first-letter', 'vertically-spacious-text');
-    this.addEventListener('text-ready', ({detail: text}) => {
-      this.dispatchEvent(new CustomEvent('set-meta-description', {detail: text, composed: true}));
-    });
-    this.addEventListener('save', ({detail: text}) => {
-      const cleanedText = cleanTextForMetaDescription(text);
-      updateInDb(createDbPath(`pages/${this.uid}`, `seo.description`), cleanedText);
-      this.dispatchEvent(new CustomEvent('set-meta-description', {detail: cleanedText, composed: true}));
-    });
+  render() {
+    return html`
+      <div class="container">
+        <hg-article
+          .uid=${this.uid}
+          .richConfig="intro"
+          .rich=${true}
+          .classes=${staticProp({
+            'big-first-letter': true,
+            'vertically-spacious-text': true,
+          })}
+          @text-ready=${({detail: text}) => {
+            this.dispatchEvent(new CustomEvent('set-meta-description', {detail: text, composed: true}));
+          }}
+          @save=${({detail: text}) => {
+            const cleanedText = cleanTextForMetaDescription(text);
+            updateInDb(createDbPath(`pages/${this.uid}`, `seo.description`), cleanedText);
+            this.dispatchEvent(new CustomEvent('set-meta-description', {detail: cleanedText, composed: true}));
+          }}
+        ></hg-article>
+      </div>
+    `;
   }
 }
 customElements.define('hg-intro-article', HgIntroArticle);

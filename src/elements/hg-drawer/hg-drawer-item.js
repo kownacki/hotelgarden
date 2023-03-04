@@ -60,7 +60,7 @@ export class HgDrawerItem extends LitElement {
           <hg-drawer-item-subitems 
             .links=${this.link.sublinks}
             .selectedPath=${this.selected}
-          />
+          ></hg-drawer-item-subitems>
         `,
       )}
     `;
