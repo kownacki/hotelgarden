@@ -68,6 +68,24 @@ export const addDynamicPathPage = async (type, title, date, permalink) => {
   }
 };
 
+export const getAllMenuCategories = async () => {
+  const menuCategoriesSnapshot = await getDocs(collection(db, 'menu/categories/categories'));
+  return {...menuCategoriesSnapshot.docs.map((category) => {
+    return {
+      ...category.data(),
+      uid: category.id,
+    };
+  })};
+};
+
+export const addAllMenuCategory = async (uid) => {
+  await updateInDb(createDbPath(`menu/categories/categories/${uid}`), {});
+};
+
+export const deleteAllMenuCategory = async (uid) => {
+  await deleteDoc(doc(db, `menu/categories/categories/${uid}`));
+};
+
 export const updateData = async (doc, path, data) => {
   return updateInDb(createDbPath(doc, path), data);
 };

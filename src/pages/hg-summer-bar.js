@@ -17,11 +17,13 @@ export class HgSummerBar extends LitElement {
   };
   static styles = sharedStyles;
   render() {
+    const menuName = 'Menu Summer Bar';
+
     return html`
       <hg-content>
         <hg-content-icons .uid=${'summer-bar'}></hg-content-icons>
-        <h2 class="content-heading" id="menu">Menu Summer Bar</h2>
-        <hg-menu .uid=${'summer-bar'}></hg-menu>
+        <h2 class="content-heading" id="menu">${menuName}</h2>
+        <hg-menu .uid=${'summer-bar'} .menuName=${menuName}></hg-menu>
         <hg-content-slider .uid=${'summer-bar'}></hg-content-slider>
         <hg-article .rich=${true} .uid=${'summer-bar-extra1'}></hg-article>
         <hg-mosaic .uid=${'summer-bar'}></hg-mosaic>

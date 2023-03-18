@@ -1,8 +1,7 @@
 import {LitElement, html, css} from 'lit';
-import {when} from 'lit/directives/when.js';
 import '@material/mwc-icon';
-import '../../elements/mkwc/hg-image.js';
-import sharedStyles from '../../styles/shared-styles.js';
+import '../../../elements/mkwc/hg-image.js';
+import sharedStyles from '../../../styles/shared-styles.js';
 
 export class HgMenuNavItem extends LitElement {
   static properties = {
@@ -32,13 +31,6 @@ export class HgMenuNavItem extends LitElement {
       color: white;
       cursor: pointer;
     }
-    .non-public {
-      color: var(--error-color);
-      position: absolute;
-      bottom: 2px;
-      right: 2px;
-      text-shadow: 0 0 1px white;
-    }
     @media all and (max-width: 959px) {
       .name {
         font-size: 16px;
@@ -54,18 +46,6 @@ export class HgMenuNavItem extends LitElement {
       </hg-image>
       <div class="name">
         ${this.category.name}
-      </div>
-      <div class="non-public">
-        ${when(
-          !this.category.public,
-          () => html`
-            <mwc-icon
-              title="Ta kategoria jest ukryta. Nie będzie widoczna dla użytkowników."
-            >
-              visibility_off
-            </mwc-icon>&nbsp;
-          `,
-        )}
       </div>
     `;
   }

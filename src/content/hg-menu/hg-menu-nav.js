@@ -1,70 +1,50 @@
 import {LitElement, html, css} from 'lit';
 import {when} from 'lit/directives/when.js';
-import {size} from 'lodash-es';
-import {getSelectedIndexAfterDelete, getSelectedIndexAfterItemSwap} from '../../../utils/list.js';
-import {HgListOldItemsChangeType} from '../../elements/hg-list-old.js';
-import './hg-menu-nav-item.js';
+import {isEmpty} from 'lodash-es';
+import sharedStyles from '../../styles/shared-styles.js';
+import './hg-menu-nav/hg-menu-nav-all-categories.js';
+import './hg-menu-nav/hg-menu-nav-item.js';
+import './hg-menu-nav/hg-menu-nav-page-categories.js';
 
-const configure = {
-  getIcon: (that, category) => {
-    return category.public ? 'visibility_off' : 'visibility_on';
-  },
-  getData: (that, category) => {
-    return !category.public;
-  },
-  setData: (that, category) => {},
-  template: (that, category) => html`
-    <div>
-      ${when(
-        category.public,
-        () => html`Czy na pewno chcesz ukryć ${that.itemName}?`,
-        () => html`Czy na pewno chcesz upublicznić ${that.itemName}?`,
-      )}
-    </div>
-  `
+export const getCategoryName = (category) => {
+  return `kategorię${category.name ? ` "${category.name}"`: ''} i wszystkie zawierające się w niej pozycje`;
 };
 
 export class HgMenuNav extends LitElement {
   static properties = {
-    selectedCategoryIndex: Number,
-    categories: Object,
+    // { index: number, categoriesType: 'page' | 'all'}
+    selectedCategory: Object,
+    pageCategories: Object,
+    allCategories: Object,
+    menuName: String,
+    showAllCategories: Boolean,
     showControls: Boolean,
     disableControls: Boolean,
   };
-  static styles = css`
-    hg-list-old {
+  static styles = [sharedStyles, css`
+    .container {
       max-height: calc(100vh - var(--header-height));
       top: var( --header-height);
       overflow: auto;
       position: sticky;
     }
-  `;
-  _requestSelectedCategoryChange(index) {
-    this.dispatchEvent(new CustomEvent('request-selected-category-change', {detail: index}));
-  };
-  _getNewSelectedCategoryIndex(newCategories, changeType, changeData) {
-    if (changeType === HgListOldItemsChangeType.ITEM_ADD) {
-      return size(newCategories) - 1;
+    .categories-container {
+      margin-bottom: 10px;
     }
-    else if (changeType === HgListOldItemsChangeType.ITEM_DELETE) {
-      const previousCategoriesSize = size(newCategories) + 1;
-      return getSelectedIndexAfterDelete(
-        Number(changeData.deletedIndex),
-        this.selectedCategoryIndex,
-        previousCategoriesSize,
-      );
+    .categories-header {
+      margin-bottom: 10px;
     }
-    else if (changeType === HgListOldItemsChangeType.ITEMS_SWAP) {
-      return getSelectedIndexAfterItemSwap(
-        changeData.swappedIndexes.index1,
-        changeData.swappedIndexes.index2,
-        this.selectedCategoryIndex,
-      );
-    }
-    return this.selectedCategoryIndex;
+  `];
+  _requestSelectedCategoryChange(index, categoriesType) {
+    this.dispatchEvent(new CustomEvent('request-selected-category-change', {
+      detail: {
+        index,
+        categoriesType,
+      }
+    }));
   }
-  _requestCategoriesChange(newCategories, newSelectedCategoryIndex, changeType, changeData) {
-    this.dispatchEvent(new CustomEvent('request-categories-change', {
+  _requestPageCategoriesChange({newCategories, newSelectedCategoryIndex, changeType, changeData}) {
+    this.dispatchEvent(new CustomEvent('request-page-categories-change', {
       detail: {
         newCategories,
         newSelectedCategoryIndex,
@@ -73,6 +53,31 @@ export class HgMenuNav extends LitElement {
       },
     }));
   }
+  _requestAllCategoriesChange({newCategories, newSelectedCategoryIndex, changeType, changeData}) {
+    this.dispatchEvent(new CustomEvent('request-all-categories-change', {
+      detail: {
+        newCategories,
+        newSelectedCategoryIndex,
+        changeType,
+        changeData,
+      },
+    }));
+  }
+  _requestAddPageCategory(allCategoryIndex) {
+    this.dispatchEvent(new CustomEvent('request-add-page-category', {
+      detail: {
+        allCategoryIndex,
+      },
+    }));
+  }
+  _requestRemovePageCategory(index) {
+    this.dispatchEvent(new CustomEvent('request-remove-page-category', {
+      detail: {
+        index,
+      },
+    }));
+  }
+  // unused
   _requestCategoryFieldChange(categoryIndex, type, dataPath, data) {
     this.dispatchEvent(new CustomEvent('request-category-field-change', {
       detail: {
@@ -85,35 +90,54 @@ export class HgMenuNav extends LitElement {
   }
   render() {
     return html`
-      <hg-list-old
-        .__noAddUpdate=${true}
-        .__noDeleteUpdate=${true}
-        .__noSwapUpdate=${true}
-        .__noItemChangeUpdate=${true}
-        .vertical=${true}
-        .items=${this.categories}
-        .showControls=${this.showControls}
-        .disableControls=${this.disableControls}
-        .getItemName=${(category) => `kategorię${category.name ? ` "${category.name}"`: ''} i wszystkie zawierające się w niej pozycje`}
-        .itemTemplate=${(category, index) => html`
-          <hg-menu-nav-item
-            .category=${category}
-            .selected=${this.selectedCategoryIndex === Number(index)}
-            @click=${() => this._requestSelectedCategoryChange(Number(index))}>
-          </hg-menu-nav-item>
-        `}
-        .configure=${configure}
-        @request-items-change=${({detail: {newItems, type, data}}) => {
-          const newSelectedCategoryIndex = this._getNewSelectedCategoryIndex(newItems, type, data);
-          this._requestCategoriesChange(newItems, newSelectedCategoryIndex, type, data);
-        }}
-        @request-item-update=${({detail: {index, type, dataPath, data}}) => {
-          this._requestCategoryFieldChange(index, type, dataPath, data);
-        }}
-        @request-item-configure=${({detail: {index, data}}) => {
-          this._requestCategoryFieldChange(index, 'data', 'public', data);
-        }}>
-      </hg-list-old>
+      <div class="container">
+        <div class="categories-container">
+          ${when(this.showAllCategories, () => html`
+            <div class="categories-header">Kategorie w ${this.menuName}</div>
+          `)}
+          ${when(isEmpty(this.pageCategories), () => html`
+            <div class="smaller-text">Brak kategorii</div>
+          `)}
+          <hg-menu-nav-page-categories
+            .categories=${this.pageCategories}
+            .selectedCategoryIndex=${this.selectedCategory.categoriesType === 'page' ? this.selectedCategory.index : -1}
+            .showControls=${this.showControls}
+            .disableControls=${this.disableControls}
+            @request-selected-category-change=${({detail: {index}}) => {
+              this._requestSelectedCategoryChange(index, 'page');
+            }}
+            @request-categories-change=${({detail}) => {
+              this._requestPageCategoriesChange(detail);
+            }}
+            @request-remove-category=${({detail: {index}}) => {
+              this._requestRemovePageCategory(index);
+            }}>
+          </hg-menu-nav-page-categories>
+        </div>
+        ${when(this.showAllCategories, () => html`
+          <div class="categories-container">
+            <div class="categories-header">Pozostałe kategorie</div>
+            ${when(isEmpty(this.allCategories), () => html`
+              <div class="smaller-text">Brak kategorii</div>
+            `)}
+            <hg-menu-nav-all-categories
+              .categories=${this.allCategories}
+              .selectedCategoryIndex=${this.selectedCategory.categoriesType === 'all' ? this.selectedCategory.index : -1}
+              .showControls=${this.showControls}
+              .disableControls=${this.disableControls}
+              @request-selected-category-change=${({detail: {index}}) => {
+                this._requestSelectedCategoryChange(index, 'all');
+              }}
+              @request-categories-change=${({detail}) => {
+                this._requestAllCategoriesChange(detail);
+              }}
+              @request-add-page-category=${({detail: {allCategoryIndex}}) => {
+                this._requestAddPageCategory(allCategoryIndex);
+              }}>
+            </hg-menu-nav-all-categories>
+          </div>
+        `)}
+      </div>
     `;
   }
 }

@@ -33,8 +33,8 @@ export class ItemsDbSyncController extends DbSyncController {
       options,
     );
   }
-  async requestAllItemsUpdate(newItems) {
-    return this.requestDataUpdate({type: UpdateType.ALL_ITEMS, data: newItems});
+  async requestAllItemsUpdate(newItemsData) {
+    return this.requestDataUpdate({type: UpdateType.ALL_ITEMS, data: newItemsData});
   }
   async requestItemUpdate(index, newItemData) {
     return this.requestDataUpdate({type: UpdateType.SINGLE_ITEM, index, data: newItemData});

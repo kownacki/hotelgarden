@@ -5,8 +5,8 @@ export class HgListOldItem extends LitElement {
   static properties = {
     item: Object,
     getItemName: Function,
-    first: Boolean,
-    last: Boolean,
+    isFirst: Boolean,
+    isLast: Boolean,
     noSwap: Boolean,
     noDelete: Boolean,
     vertical: {type: Boolean, reflect: true},
@@ -112,7 +112,7 @@ export class HgListOldItem extends LitElement {
         </div>
         ${this.noSwap ? '' : until(import('./hg-list-old-item-swap.js').then(() => {
           return [
-            (this.first ? '' : html`
+            (this.isFirst ? '' : html`
               <hg-list-old-item-swap
                 class="swap-left"
                 .disabled=${this.disableControls}
@@ -120,7 +120,7 @@ export class HgListOldItem extends LitElement {
                 @click=${() => this.dispatchEvent(new CustomEvent('swap', {detail: -1}))}>
               </hg-list-old-item-swap>
             `),
-            (this.last ? '' : html`
+            (this.isLast ? '' : html`
               <hg-list-old-item-swap
                 class="swap-right"
                 .disabled=${this.disableControls}

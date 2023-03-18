@@ -17,11 +17,13 @@ export class HgFoodTruck extends LitElement {
   };
   static styles = sharedStyles;
   render() {
+    const menuName = 'Menu Food Truck';
+
     return html`
       <hg-content>
         <hg-content-icons .uid=${'food-truck'}></hg-content-icons>
-        <h2 class="content-heading" id="menu">Menu Food Truck</h2>
-        <hg-menu .uid=${'food-truck'}></hg-menu>
+        <h2 class="content-heading" id="menu">${menuName}</h2>
+        <hg-menu .uid=${'food-truck'} .menuName=${menuName}></hg-menu>
         <hg-content-slider .uid=${'food-truck'}></hg-content-slider>
         <hg-article .rich=${true} .uid=${'food-truck-extra1'}></hg-article>
         <hg-mosaic .uid=${'food-truck'}></hg-mosaic>

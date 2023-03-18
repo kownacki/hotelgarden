@@ -19,12 +19,14 @@ export class HgRestaurant extends LitElement {
   };
   static styles = sharedStyles;
   render() {
+    const menuName = 'Menu Garden Bistro';
+
     return html`
       <hg-content>
         <hg-content-icons .uid=${'grill-garden'}></hg-content-icons>
         <hg-text-image .uid=${'lunch'} .buttons=${staticProp([{url: '/lunch#aktualny-lunch', text: 'Przejdź do lunchy'}])}></hg-text-image>
-        <h2 class="content-heading" id="menu">Menu Garden Bistro</h2>
-        <hg-menu .uid=${'grill-garden'}></hg-menu>
+        <h2 class="content-heading" id="menu">${menuName}</h2>
+        <hg-menu .uid=${'garden-bistro'} .menuName=${menuName}></hg-menu>
         <hg-content-slider .uid=${'grill-garden'}></hg-content-slider>
         <hg-article .rich=${true} .uid=${'grill-garden-extra1'}></hg-article>
         <hg-mosaic .uid=${'grill-garden'}></hg-mosaic>

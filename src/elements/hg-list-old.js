@@ -2,22 +2,18 @@ import {LitElement, html, css} from 'lit';
 import {until} from 'lit/directives/until.js';
 import {repeat} from 'lit/directives/repeat.js';
 import {size} from 'lodash-es';
+import {listItemsChangeTypeMap} from '../../utils/list.js';
 import sharedStyles from '../styles/shared-styles.js'
 import {DbPath, updateInDb} from '../utils/database.js';
 import {array, generateUid} from '../utils.js';
 import './hg-list-old/hg-list-old-item.js';
-
-export const HgListOldItemsChangeType = {
-  ITEM_ADD: 'item-add',
-  ITEM_DELETE: 'item-delete',
-  ITEMS_SWAP: 'items-swap',
-};
 
 export default class HgListOld extends LitElement {
   static properties = {
     // flags
     addAtStart: Boolean,
     noAdd: Boolean,
+    noDelete: Boolean,
     noSwap: Boolean,
     vertical: Boolean,
     __noAddUpdate: Boolean,
@@ -104,7 +100,7 @@ export default class HgListOld extends LitElement {
     }
     this.dispatchEvent(new CustomEvent('request-items-change', {
       detail: {
-        type: HgListOldItemsChangeType.ITEM_DELETE,
+        type: listItemsChangeTypeMap.ITEM_REMOVE,
         newItems,
         data: {
           deletedIndex: index,
@@ -122,7 +118,7 @@ export default class HgListOld extends LitElement {
     }
     this.dispatchEvent(new CustomEvent('request-items-change', {
       detail: {
-        type: HgListOldItemsChangeType.ITEMS_SWAP,
+        type: listItemsChangeTypeMap.ITEMS_SWAP,
         newItems,
         data: {
           swappedIndexes: {
@@ -147,7 +143,7 @@ export default class HgListOld extends LitElement {
       }
       this.dispatchEvent(new CustomEvent('request-items-change', {
         detail: {
-          type: HgListOldItemsChangeType.ITEM_ADD,
+          type: listItemsChangeTypeMap.ITEM_INSERT,
           newItems,
           data: {
             newItem,
@@ -174,10 +170,10 @@ export default class HgListOld extends LitElement {
             style="${this.calculateItemTop ? `top: ${this.calculateItemTop(listIndex + ((this.showControls && !this.noAdd) ? 1 : 0)) * 100}%` : ''}"
             .item=${this.items[key]}
             .getItemName=${this.getItemName}
-            .first=${listIndex === 0}
-            .last=${listIndex === _.size(this._list) - 1}
+            .isFirst=${listIndex === 0}
+            .isLast=${listIndex === _.size(this._list) - 1}
             .noSwap=${this.noSwap || !this.showControls}
-            .noDelete=${!this.showControls}
+            .noDelete=${this.noDelete || !this.showControls}
             .vertical=${this.vertical}
             .disableControls=${this._internalDisableControls || this.disableControls}
             .configure=${this.showControls && this.configure}
