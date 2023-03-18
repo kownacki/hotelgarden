@@ -10,6 +10,7 @@ export class HgImageUploadFab extends LitElement {
       bottom: 20px;
       right: 20px;
       margin: 2px;
+      --mdc-fab-box-shadow: 0 0 20px rgba(255, 255, 255, 0.25);
     }
   `];
   render() {
