@@ -5,7 +5,12 @@ import '../elements/hg-content.js';
 import '../elements/hg-list-old.js';
 import '../elements/hg-review.js';
 import sharedStyles from '../styles/shared-styles.js';
-import {createDbPath, DbPath, getFromDb, updateInDb, updateInObjectInDb} from '../utils/database.js';
+import {
+  createDbPath,
+  DbPath,
+  getFromDb,
+  updateInObjectInDb,
+} from '../utils/database.js';
 import '../utils/fixes/mwc-formfield-fixed.js';
 import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
 import {ItemsDbSyncController} from '../utils/ItemsDbSyncController.js';
@@ -17,7 +22,6 @@ const reviewBlocks = ['landing', 'restaurant', 'summer-bar', 'food-truck', 'wedd
 
 const configure = {
   getIcon: () => 'settings',
-  field: 'display',
   getData: (that) => {
     const checkboxes = that.shadowRoot.getElementById('dialog').querySelectorAll('mwc-checkbox');
     return reviewBlocks.filter((reviewBlock, index) => checkboxes[index].checked);
@@ -89,13 +93,9 @@ export class HgReviews extends LitElement {
       this,
       {
         getItems: async (path) => await getFromDb(path) || {},
-        updateItem: async (objectPath, dataPath, data) => {
-          await updateInObjectInDb(objectPath, dataPath, data);
-          return data;
-        },
-        updateAllItems: async (path, data) => {
-          await updateInDb(path, data);
-          return data;
+        updateItem: async (path, index, {dataPath, data}, oldItem) => {
+          await updateInObjectInDb(path, `${index}.${dataPath}`, data);
+          return _.set(dataPath, data, oldItem);
         },
         onDataReadyChange: (reviewsReady) => this._reviewsReady = reviewsReady,
         onDataChange: (reviews) => this._reviews = reviews,
@@ -131,7 +131,10 @@ export class HgReviews extends LitElement {
             </style>
             <hg-review .review=${review} .editable=${true} .disableEdit=${disableEdit}></hg-review>
           `}
-          .configure=${configure}>
+          .configure=${configure}
+          @request-item-configure=${({detail: {index, data}}) => {
+            this._reviewsDbSync.requestItemUpdate(index, {dataPath: 'display', data});
+          }}>
         </hg-list-old>
         <hg-links .path=${'/opinie'} .superpath=${'/'}></hg-links>
       </hg-content>

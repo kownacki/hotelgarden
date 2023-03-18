@@ -9,7 +9,6 @@ const configure = {
   getIcon: (that, category) => {
     return category.public ? 'visibility_off' : 'visibility_on';
   },
-  field: 'public',
   getData: (that, category) => {
     return !category.public;
   },
@@ -103,6 +102,7 @@ export class HgMenuNav extends LitElement {
             @click=${() => this._requestSelectedCategoryChange(Number(index))}>
           </hg-menu-nav-item>
         `}
+        .configure=${configure}
         @request-items-change=${({detail: {newItems, type, data}}) => {
           const newSelectedCategoryIndex = this._getNewSelectedCategoryIndex(newItems, type, data);
           this._requestCategoriesChange(newItems, newSelectedCategoryIndex, type, data);
@@ -110,7 +110,9 @@ export class HgMenuNav extends LitElement {
         @request-item-update=${({detail: {index, type, dataPath, data}}) => {
           this._requestCategoryFieldChange(index, type, dataPath, data);
         }}
-        .configure=${configure}>
+        @request-item-configure=${({detail: {index, data}}) => {
+          this._requestCategoryFieldChange(index, 'data', 'public', data);
+        }}>
       </hg-list-old>
     `;
   }

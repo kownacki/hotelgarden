@@ -55,10 +55,10 @@ export class HgListOldItemConfigure extends LitElement {
                 .label=${'Zapisz'}
                 @click=${() => {
                   this.shadowRoot.getElementById('dialog').close();
-                  const field = this.configure.field;
                   const newData = this.configure.getData(this, this.item);
-                  this.item[field] = newData;
-                  this.dispatchEvent(new CustomEvent('update', {detail: {path: field, data: newData}, composed: true}));
+                  this.dispatchEvent(new CustomEvent('request-configure', {
+                    detail: {data: newData},
+                  }));
                 }}>
               </mwc-button>
             </hg-cms-buttons-container>

@@ -157,6 +157,14 @@ export default class HgListOld extends LitElement {
     }
     this._internalDisableControls = false;
   }
+  configureItem(index, data) {
+    this.dispatchEvent(new CustomEvent('request-item-configure', {
+      detail: {
+        index,
+        data,
+      },
+    }));
+  }
   render() {
     return html`
       ${(this.addAtStart ? _.reverse : _.identity)([
@@ -176,6 +184,7 @@ export default class HgListOld extends LitElement {
             @request-delete=${() => this.deleteItem(key)}
             @swap=${async (event) => this.swapItems(key, this._list[listIndex + event.detail])}
             @update=${(event) => this.updateItem(key, event.detail.path, event.detail.data)}
+            @request-configure=${({ detail: {data}}) => this.configureItem(key, data)}
             @show-controls-changed=${({ detail: showEditableTextControls}) => {
               // todo change this event name and variable in editable-text
               this.dispatchEvent(new CustomEvent('editing-item-changed', {detail: showEditableTextControls}));
