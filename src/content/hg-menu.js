@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import {when} from 'lit/directives/when.js';
-import {throttle, range, size, mapValues, toArray} from 'lodash-es';
+import {throttle, range, size, mapValues, toArray, pick} from 'lodash-es';
 import {
   getSelectedDoubleListIndexAfterChange,
   getSelectedIndexAfterChange,
@@ -20,6 +20,28 @@ import {ItemsDbSyncController} from '../utils/ItemsDbSyncController.js';
 import {addAllMenuCategory, deleteAllMenuCategory, getAllMenuCategories, scrollIntoView} from '../utils.js';
 import './hg-menu/hg-menu-main.js';
 import './hg-menu/hg-menu-nav.js';
+
+const getDisplayedPageCategories = (pageCategories, allCategories) => {
+  return mapValues(pageCategories, (pageCategory) => {
+    return Object.values(allCategories).find((category) => category.uid === pageCategory.uid);
+  });
+};
+
+const getDisplayedAllCategories = (pageCategories, allCategories) => {
+  return Object.values(allCategories)
+    .filter((category) => {
+      return !Object.values(pageCategories).find((pageCategory) => category.uid === pageCategory.uid);
+    })
+    .sort((categoryA, categoryB) => {
+      return (categoryA.name || '').toLowerCase() < (categoryB.name || '').toLowerCase() ? -1 : 1;
+    });
+};
+
+const getPageCategories = (displayedPageCategories) => {
+  return mapValues(displayedPageCategories, (displayedPageCategory) => {
+    return pick(displayedPageCategory, 'uid');
+  });
+};
 
 const getDoubleListIndex = (categoryIndex) => {
   return {
@@ -179,16 +201,8 @@ export class HgMenu extends LitElement {
     }
     if (changedProperties.has('_allCategories') || changedProperties.has('_pageCategories')) {
       if (this._allCategories && this._pageCategories) {
-        this._displayedPageCategories = mapValues(this._pageCategories, (pageCategory) => {
-          return Object.values(this._allCategories).find((category) => category.uid === pageCategory.uid);
-        });
-        this._displayedAllCategories = Object.values(this._allCategories)
-          .filter((category) => {
-            return !Object.values(this._pageCategories).find((pageCategory) => category.uid === pageCategory.uid);
-          })
-          .sort((categoryA, categoryB) => {
-            return (categoryA.name || '').toLowerCase() < (categoryB.name || '').toLowerCase() ? -1 : 1;
-          });
+        this._displayedPageCategories = getDisplayedPageCategories(this._pageCategories, this._allCategories);
+        this._displayedAllCategories = getDisplayedAllCategories(this._pageCategories, this._allCategories);
       }
     }
     if (changedProperties.has('_isEditingCategoryName') || changedProperties.has('_isEditingCategoryItemsText')) {
@@ -373,9 +387,12 @@ export class HgMenu extends LitElement {
                 };
                 scrollIntoView(this);
               }}
-              @request-page-categories-change=${async ({detail: {newCategories, newSelectedCategoryIndex, changeType, changeData}}) => {
+              @request-page-categories-change=${async (
+                {detail: {newCategories: newDisplayedCategories, newSelectedCategoryIndex, changeType, changeData}}
+              ) => {
                 if (changeType === listItemsChangeTypeMap.ITEMS_SWAP) {
-                  await this._pageCategoriesDbSync.requestAllItemsUpdate(newCategories);
+                  const newPageCategories = getPageCategories(newDisplayedCategories);
+                  await this._pageCategoriesDbSync.requestAllItemsUpdate(newPageCategories);
                   this._selectedCategory = {
                     index: newSelectedCategoryIndex,
                     categoriesType: 'page',
