@@ -1,6 +1,7 @@
 import {LitElement, html, css} from 'lit';
 import {when} from 'lit/directives/when.js';
 import {throttle, range, size, mapValues, toArray, pick} from 'lodash-es';
+import '@material/mwc-snackbar';
 import {
   getSelectedDoubleListIndexAfterChange,
   getSelectedIndexAfterChange,
@@ -17,7 +18,13 @@ import {
 } from '../utils/database.js'
 import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
 import {ItemsDbSyncController} from '../utils/ItemsDbSyncController.js';
-import {addAllMenuCategory, deleteAllMenuCategory, getAllMenuCategories, scrollIntoView} from '../utils.js';
+import {
+  addAllMenuCategory,
+  deleteAllMenuCategory,
+  getAllMenuCategories,
+  getMenusWithCategory,
+  scrollIntoView,
+} from '../utils.js';
 import './hg-menu/hg-menu-main.js';
 import './hg-menu/hg-menu-nav.js';
 
@@ -75,6 +82,7 @@ export class HgMenu extends LitElement {
     _displayedAllCategories: Object,
     // { index: number, categoriesType: 'page' | 'all'}
     _selectedCategory: Object,
+    _menusWithDeletedCategory: Array,
     _compact: Boolean,
     _loggedIn: Boolean,
     _isEditingCategoryName: Boolean,
@@ -406,7 +414,14 @@ export class HgMenu extends LitElement {
                   this.addAllCategory(changeData.newItem);
                 }
                 if (changeType === listItemsChangeTypeMap.ITEM_REMOVE) {
-                  this.deleteAllCategory(this._displayedAllCategories[changeData.deletedIndex].uid);
+                  const deletedCategoryUid = this._displayedAllCategories[changeData.deletedIndex].uid;
+                  const menusWithDeletedCategory = await getMenusWithCategory(deletedCategoryUid);
+                  if (menusWithDeletedCategory.length) {
+                    this._menusWithDeletedCategory = menusWithDeletedCategory;
+                    this.shadowRoot.getElementById('snackbar-cannot-remove-category').show();
+                  } else {
+                    this.deleteAllCategory(deletedCategoryUid);
+                  }
                 }
               }}
               @request-add-page-category=${({detail: {allCategoryIndex}}) => {
@@ -419,6 +434,11 @@ export class HgMenu extends LitElement {
           `,
         )}
       </section>
+      <mwc-snackbar
+        id="snackbar-cannot-remove-category"
+        .leading=${true}
+        .labelText=${`Nie można całkowicie usunać kategorii. Kategoria używana w menu na stronach: ${this._menusWithDeletedCategory?.join(', ')}. Najpierw usuń kategorię z wymienionych menu.`}>
+      </mwc-snackbar>
     `;
   }
 }

@@ -1,4 +1,5 @@
 import {collection, doc, deleteDoc, getDocs, query, where} from 'firebase/firestore';
+import {toArray} from 'lodash-es';
 import {isElementVisible, isElementInProximity} from 'mk-frontend-web-utils/dom.js';
 import diacritics from '../resources/scripts/diacritics.js';
 import {HEADER_HEIGHT} from '../utils/config.js';
@@ -66,6 +67,26 @@ export const addDynamicPathPage = async (type, title, date, permalink) => {
   } else {
     return addDynamicPathPageToDb(createNewNews(title, date.publishDate, date.unpublishDate, permalink));
   }
+};
+
+export const getAllMenuPages = async () => {
+  const menuPagesSnapshot = await getDocs(collection(db, 'menu/pages/pages'));
+  return menuPagesSnapshot.docs.map((page) => {
+    return {
+      categories: toArray(page.data()),
+      name: page.id,
+    };
+  });
+};
+
+export const getMenusWithCategory = async (categoryUid) => {
+  const menuPages = await getAllMenuPages();
+  return menuPages
+    .filter((menuPage) => {
+      return menuPage.categories.some((menuCategory) => menuCategory.uid === categoryUid);
+    }).map((menuPage) => {
+      return menuPage.name;
+    });
 };
 
 export const getAllMenuCategories = async () => {
