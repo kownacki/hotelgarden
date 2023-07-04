@@ -5,7 +5,11 @@ import './elements/hg-header.js';
 import './elements/hg-page.js';
 import {sleep, isProductionEnvironment, getAllDynamicPathPages} from './utils.js';
 import {authDeferred, createDbPath, getFromDb} from './utils/database.js';
+import * as db from './utils/database.js';
 import {convertDynamicPathPagesToEventsList, getPromotedDynamicPathPageData} from '../utils/events.js';
+
+// For using in console
+window.db = db;
 
 // For index.html !
 authDeferred.then(({auth, onAuthStateChanged}) => {
