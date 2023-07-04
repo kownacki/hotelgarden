@@ -393,10 +393,12 @@ export class HgMenu extends LitElement {
                 if (changeType === listItemsChangeTypeMap.ITEMS_SWAP) {
                   const newPageCategories = getPageCategories(newDisplayedCategories);
                   await this._pageCategoriesDbSync.requestAllItemsUpdate(newPageCategories);
-                  this._selectedCategory = {
-                    index: newSelectedCategoryIndex,
-                    categoriesType: 'page',
-                  };
+                  if (newSelectedCategoryIndex >= 0) {
+                    this._selectedCategory = {
+                      index: newSelectedCategoryIndex,
+                      categoriesType: 'page',
+                    };
+                  }
                 }
               }}
               @request-all-categories-change=${async ({detail: {newCategories, newSelectedCategoryIndex, changeType, changeData}}) => {
