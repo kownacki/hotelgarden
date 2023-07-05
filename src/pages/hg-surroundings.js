@@ -18,7 +18,7 @@ export class HgSurroundings extends LitElement {
   render() {
     return html`
       <hg-content>
-        <hg-text-image .uid=${'surroundings'} .buttons=${staticProp([{url: '/grill-garden', text: 'Zobacz więcej'}])}></hg-text-image>
+        <hg-text-image .uid=${'surroundings'} .buttons=${staticProp([{url: '/summer-bar', text: 'Zobacz więcej'}])}></hg-text-image>
         ${_.map.convert({cap: false})((icon, index) => html`
           <hg-text-image 
             .uid=${'surroundings-extra' + (index + 1)}
