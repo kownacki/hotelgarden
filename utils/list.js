@@ -36,6 +36,7 @@ export const getSelectedIndexAfterItemMove = (originIndex, destinationIndex, cur
     return resultSelectedIndex;
 };
 export const getSelectedIndexAfterChange = (currentSelectedIndex, listSizeAfterChange, changeType, changeData) => {
+    // todo also handle insert not at the end
     if (changeType === listItemsChangeTypeMap.ITEM_INSERT) {
         return listSizeAfterChange - 1;
     }

@@ -16,7 +16,7 @@ import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
 import {ItemsDbSyncController} from '../utils/ItemsDbSyncController.js';
 import {pagesStaticData} from '../../utils/urlStructure.js';
 
-const reviewBlocks = ['landing', 'restaurant', 'summer-bar', 'food-truck', 'weddings', 'family-parties'];
+const reviewBlocks = ['landing', 'restaurant', 'summer-bar', 'pizza-truck', 'weddings', 'family-parties'];
 
 //todo implement vertical swap
 

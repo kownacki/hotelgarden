@@ -11,10 +11,10 @@ export type PageUid =
   | 'cuisine'
   | 'dynamic-path-pages'
   | 'family-parties'
-  | 'food-truck'
   | 'gallery'
   | 'landing'
   | 'lunch'
+  | 'pizza-truck'
   | 'restaurant'
   | 'reviews'
   | 'rooms'
@@ -29,7 +29,6 @@ export type StaticPath =
   | '/'
   | '/admin'
   | '/atrakcje-okolicy'
-  | '/food-truck'
   | '/galeria'
   | '/garden-bistro'
   | '/konferencje'
@@ -37,6 +36,7 @@ export type StaticPath =
   | '/kuchnia'
   | '/lunch'
   | '/opinie'
+  | '/pizza-truck'
   | '/pokoje'
   | '/przyjecia-rodzinne'
   | '/sale-bankietowe'
@@ -53,7 +53,6 @@ export const staticPathToPageUid: Record<StaticPath, StaticPathPageUid> = {
   '/': 'landing',
   '/admin': 'admin',
   '/atrakcje-okolicy': 'surroundings',
-  '/food-truck': 'food-truck',
   '/galeria': 'gallery',
   '/garden-bistro': 'restaurant',
   '/konferencje': 'conferences',
@@ -61,6 +60,7 @@ export const staticPathToPageUid: Record<StaticPath, StaticPathPageUid> = {
   '/kuchnia': 'cuisine',
   '/lunch': 'lunch',
   '/opinie': 'reviews',
+  '/pizza-truck': 'pizza-truck',
   '/pokoje': 'rooms',
   '/przyjecia-rodzinne': 'family-parties',
   '/sale-bankietowe': 'banquet-halls',
@@ -90,11 +90,11 @@ export const pagesStaticData: Record<PageUid, PageStaticData> = {
   'cuisine': {name: 'O naszej kuchni', path: '/kuchnia', dir: 'hotel'},
   'dynamic-path-pages': {name: 'Wydarzenia i aktualności', path: '/wydarzenia', dir: 'events'},
   'family-parties': {name: 'Przyjęcia rodzinne', path: '/przyjecia-rodzinne', dir: 'celebrations'},
-  'food-truck': {name: 'Food Truck', path: '/food-truck', dir: 'restaurant'},
   'gallery': {name: 'Galeria', path: '/galeria', dir: 'gallery'},
   'landing': {name: 'O hotelu', path: '/', dir: 'hotel'},
-  'lunch': {name: 'Lunch', path: '/lunch', dir: 'restaurant'},
-  'restaurant': {name: 'O restauracji', path: '/garden-bistro', dir: 'restaurant'},
+  'lunch': {name: 'Oferta lunchowa', path: '/lunch', dir: 'restaurant'},
+  'pizza-truck': {name: 'Pizza Truck', path: '/pizza-truck', dir: 'restaurant'},
+  'restaurant': {name: 'Garden Bistro', path: '/garden-bistro', dir: 'restaurant'},
   'reviews': {name: 'Opinie ', path: '/opinie', dir: 'hotel'},
   'rooms': {name: 'Pokoje', path: '/pokoje', dir: 'rooms'},
   'summer-bar': {name: 'Summer Bar', path: '/summer-bar', dir: 'restaurant'},
@@ -113,9 +113,9 @@ export const links = [
     sublinks: ['landing', 'rooms', 'villa-garden', 'cuisine', 'surroundings', 'reviews'],
   },
   {
-    name: 'Garden Bistro',
+    name: 'Food & Drink',
     path: '/garden-bistro',
-    sublinks: ['restaurant', 'lunch', 'summer-bar', 'food-truck'],
+    sublinks: ['restaurant', 'lunch', 'summer-bar', 'pizza-truck'],
   }, {
     name: 'Konferencje',
     path: '/konferencje',

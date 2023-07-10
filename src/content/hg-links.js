@@ -81,7 +81,7 @@ export class HgLinks extends LitElement {
           if (this._loggedIn) {
             return true;
           }
-          return subLink !== 'summer-bar' && subLink !== 'food-truck';
+          return subLink !== 'summer-bar' && subLink !== 'pizza-truck';
         })
         .map((subLink) => {
           return pagesStaticData[subLink];
