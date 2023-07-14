@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit';
+import '@material/mwc-button';
 import {updateData, sleep} from '../../utils.js';
 import sharedStyles from '../../styles/shared-styles.js';
-import '../../elements/hg-action-button.js'
 import '../../edit/hg-delete-item.js';
 import './hg-lunch-edit-dialog.js';
 import './hg-lunch-generate.js';
@@ -43,10 +43,7 @@ export class HgLunchEdit extends LitElement {
     }
     .buttons {
       text-align: center;
-    }
-    hg-action-button, hg-lunch-generate {
-      margin: 4px;
-      text-align: center;
+      margin-bottom: 10px;
     }
   `];
   render() {
@@ -79,8 +76,10 @@ export class HgLunchEdit extends LitElement {
           .weekLength=${this.weekLength}>
         </hg-lunch-edit-dialog>
       `}
-      <div class="buttons">
-        <hg-action-button
+      <div class="buttons cms">
+        <mwc-button
+          .raised=${true}
+          .label=${'Edytuj'}
           @click=${async () => {
             this._enableDialog = false;
             await sleep();
@@ -88,9 +87,10 @@ export class HgLunchEdit extends LitElement {
             await sleep();
             this.shadowRoot.getElementById('dialog').dialog.open()
           }}>
-          Edytuj
-        </hg-action-button>
-        <hg-lunch-generate 
+        </mwc-button>
+      </div>
+      <div class="buttons">
+        <hg-lunch-generate
           .lunches=${this.lunches}
           .dateString=${this.lunchesData.dateString}
           .config=${this.config}
