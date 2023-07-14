@@ -36,6 +36,43 @@ export class HgLunchEditDialog extends LitElement {
       z-index: 104;
     }
   `];
+  async _saveLunch() {
+    const dialogElement = this.shadowRoot.getElementById('dialog');
+    const saveButtonElement = this.shadowRoot.getElementById('save-button');
+    const snackbarSuccessElement = this.shadowRoot.getElementById('snackbar-success');
+
+    try {
+      saveButtonElement.disabled = true;
+      let newLunches = {};
+      let firstUnfilledRequiredInput;
+      _.map((day) => {
+        const dayData = this.shadowRoot.getElementById(day).getData();
+        firstUnfilledRequiredInput = firstUnfilledRequiredInput || dayData.firstUnfilledRequiredInput;
+        newLunches = _.setWith(Object, String(day), dayData.values, newLunches);
+      }, _.range(1, this.weekLength+1));
+      if (firstUnfilledRequiredInput) {
+        firstUnfilledRequiredInput.focus();
+        firstUnfilledRequiredInput.reportValidity();
+        scrollIntoView(firstUnfilledRequiredInput, dialogElement.scrollable);
+      } else {
+        await updateData(this.doc, null, newLunches);
+        this.lunches = newLunches;
+        this.dispatchEvent(new CustomEvent('lunches-changed', {detail: newLunches, composed: true}));
+        dialogElement.dialog.close();
+        snackbarSuccessElement.show();
+        this._error = null;
+      }
+    }
+    catch (error) {
+      this._error = 'Zapisywanie nie powiodło się.';
+      await sleep(0);
+      dialogElement.scrollable.scrollBy(0, dialogElement.scrollable.scrollHeight);
+      throw error;
+    }
+    finally {
+      saveButtonElement.disabled = false;
+    }
+  }
   render() {
     return html`
       <hg-dialog 
@@ -65,38 +102,8 @@ export class HgLunchEditDialog extends LitElement {
         <hg-action-button
           slot="button"
           id="save-button"
-          @click=${async () => {
-            try {
-              this.shadowRoot.getElementById('save-button').disabled = true;
-              let newLunches = {};
-              let firstUnfilledRequiredInput;
-              _.map((day) => {
-                const dayData = this.shadowRoot.getElementById(day).getData();
-                firstUnfilledRequiredInput = firstUnfilledRequiredInput || dayData.firstUnfilledRequiredInput;
-                newLunches = _.setWith(Object, String(day), dayData.values, newLunches);
-              }, _.range(1, this.weekLength+1));
-              if (firstUnfilledRequiredInput) {
-                firstUnfilledRequiredInput.focus();
-                firstUnfilledRequiredInput.reportValidity();
-                scrollIntoView(firstUnfilledRequiredInput, this.shadowRoot.getElementById('dialog').scrollable);
-              } else {
-                await updateData(this.doc, null, newLunches);
-                this.lunches = newLunches;
-                this.dispatchEvent(new CustomEvent('lunches-changed', {detail: newLunches, composed: true}));
-                this.shadowRoot.getElementById('dialog').dialog.close();
-                this.shadowRoot.getElementById('snackbar-success').show();
-                this._error = null;
-              }
-            }
-            catch (error) {
-              this._error = 'Zapisywanie nie powiodło się.';
-              await sleep(0);
-              this.shadowRoot.getElementById('dialog').scrollable.scrollBy(0, this.shadowRoot.getElementById('dialog').scrollable.scrollHeight);
-              throw error;
-            }
-            finally {
-              this.shadowRoot.getElementById('save-button').disabled = false;
-            }
+          @click=${() => {
+            this._saveLunch();
           }}>
           Zapisz
         </hg-action-button>
