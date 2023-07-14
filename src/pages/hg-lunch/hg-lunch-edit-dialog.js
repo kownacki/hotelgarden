@@ -94,19 +94,22 @@ export class HgLunchEditDialog extends LitElement {
           <div class="required-info">* Pole jest wymagane</div>
           ${!this._error ? '' : html`<div class="message">${this._error}</div>`}
         </div>
-        <hg-action-button slot="button"
-          .lowEmphasis=${true}
-          @click=${() => this.shadowRoot.getElementById('dialog').dialog.close()}>
-          Anuluj
-        </hg-action-button>
-        <hg-action-button
+        <mwc-button
+          slot="button"
+          .label=${'Anuluj'}
+          @click=${() => {
+            this.shadowRoot.getElementById('dialog').dialog.close();
+          }}>
+        </mwc-button>
+        <mwc-button
           slot="button"
           id="save-button"
-          @click=${() => {
+          .raised=${true}
+          .label=${'Zapisz'}
+          @click=${async () => {
             this._saveLunch();
           }}>
-          Zapisz
-        </hg-action-button>
+        </mwc-button>
       </hg-dialog>
       <mwc-snackbar .leading=${true} id="snackbar-success" labelText="Menu lunchowe ${this.dateString} zostało zapisane."></mwc-snackbar>
     `;

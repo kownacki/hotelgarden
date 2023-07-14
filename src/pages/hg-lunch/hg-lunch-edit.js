@@ -48,54 +48,56 @@ export class HgLunchEdit extends LitElement {
   `];
   render() {
     return html`
-      <div class="top">
-        <div class="bigger-text">${this.isUpcoming ? 'Kolejne' : 'Aktualne'} Menu Lunchowe</div>
-        <div class="date">${this.lunchesData.dateString}</div>
-        <div class="status bigger-text">
-          ${_.isEmpty(this.lunches)
-            ? html`<div class="not-prepared">Nieprzygotowane</div>`
-            : html`
-              <div class="prepared">Przygotowane</div>
-              <hg-delete-item
-                .name=${`Menu Lunchowe ${this.lunchesData.dateString}`}
-                @request-delete=${(event) => {
-                  event.stopPropagation();
-                  updateData(this.lunchesData.doc, null, {});
-                  this.dispatchEvent(new CustomEvent('lunches-changed', {detail: {}}));
-                }}>
-              </hg-delete-item>
-            `}
+      <div class="cms">
+        <div class="top">
+          <div class="bigger-text">${this.isUpcoming ? 'Kolejne' : 'Aktualne'} Menu Lunchowe</div>
+          <div class="date">${this.lunchesData.dateString}</div>
+          <div class="status bigger-text">
+            ${_.isEmpty(this.lunches)
+              ? html`<div class="not-prepared">Nieprzygotowane</div>`
+              : html`
+                <div class="prepared">Przygotowane</div>
+                <hg-delete-item
+                  .name=${`Menu Lunchowe ${this.lunchesData.dateString}`}
+                  @request-delete=${(event) => {
+                    event.stopPropagation();
+                    updateData(this.lunchesData.doc, null, {});
+                    this.dispatchEvent(new CustomEvent('lunches-changed', {detail: {}}));
+                  }}>
+                </hg-delete-item>
+              `}
+          </div>
         </div>
-      </div>
-      ${!this._enableDialog ? '' : html`
-        <hg-lunch-edit-dialog
-          id="dialog"
-          .lunches=${this.lunches}
-          .doc=${this.lunchesData.doc}
-          .dateString=${this.lunchesData.dateString}
-          .weekLength=${this.weekLength}>
-        </hg-lunch-edit-dialog>
-      `}
-      <div class="buttons cms">
-        <mwc-button
-          .raised=${true}
-          .label=${'Edytuj'}
-          @click=${async () => {
-            this._enableDialog = false;
-            await sleep();
-            this._enableDialog = true;
-            await sleep();
-            this.shadowRoot.getElementById('dialog').dialog.open()
-          }}>
-        </mwc-button>
-      </div>
-      <div class="buttons">
-        <hg-lunch-generate
-          .lunches=${this.lunches}
-          .dateString=${this.lunchesData.dateString}
-          .config=${this.config}
-          .weekLength=${this.weekLength}>
-        </hg-lunch-generate>
+        ${!this._enableDialog ? '' : html`
+          <hg-lunch-edit-dialog
+            id="dialog"
+            .lunches=${this.lunches}
+            .doc=${this.lunchesData.doc}
+            .dateString=${this.lunchesData.dateString}
+            .weekLength=${this.weekLength}>
+          </hg-lunch-edit-dialog>
+        `}
+        <div class="buttons cms">
+          <mwc-button
+            .raised=${true}
+            .label=${'Edytuj'}
+            @click=${async () => {
+              this._enableDialog = false;
+              await sleep();
+              this._enableDialog = true;
+              await sleep();
+              this.shadowRoot.getElementById('dialog').dialog.open()
+            }}>
+          </mwc-button>
+        </div>
+        <div class="buttons">
+          <hg-lunch-generate
+            .lunches=${this.lunches}
+            .dateString=${this.lunchesData.dateString}
+            .config=${this.config}
+            .weekLength=${this.weekLength}>
+          </hg-lunch-generate>
+        </div>
       </div>
     `;
   }
