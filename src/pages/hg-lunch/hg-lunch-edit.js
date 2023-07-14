@@ -23,6 +23,8 @@ export class HgLunchEdit extends LitElement {
       text-align: center;
     }
     .status {
+      display: flex;
+      justify-content: center;
       margin-bottom: 20px;
     }
     .not-prepared {
@@ -32,9 +34,7 @@ export class HgLunchEdit extends LitElement {
       color: var(--correct-color);
     }
     hg-delete-item {
-      position: relative;
-      top: -2px;
-      margin-left: 5px;
+      margin: 2px 4px;
     }
     .date {
       font-size: 30px;
@@ -53,9 +53,9 @@ export class HgLunchEdit extends LitElement {
         <div class="date">${this.lunchesData.dateString}</div>
         <div class="status bigger-text">
           ${_.isEmpty(this.lunches)
-            ? html`<span class="not-prepared">Nieprzygotowane</span>`
+            ? html`<div class="not-prepared">Nieprzygotowane</div>`
             : html`
-              <span class="prepared">Przygotowane</span>
+              <div class="prepared">Przygotowane</div>
               <hg-delete-item
                 .name=${`Menu Lunchowe ${this.lunchesData.dateString}`}
                 @request-delete=${(event) => {
