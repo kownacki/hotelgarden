@@ -38,7 +38,7 @@
     "@polymer/paper-dialog": "^3.0.1",
     "date-fns": "^2.29.3",
     "firebase": "^9.6.10",
-    "lit": "^2.2.2",
+    "lit": "^2.7.6",
     "lodash-es": "^4.17.21",
     "material-colors": "^1.2.6",
     "mk-firebase-utils": "git+https://github.com/kownacki/mk-firebase-utils.git#master",
