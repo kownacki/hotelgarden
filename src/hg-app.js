@@ -20,8 +20,8 @@ authDeferred.then(({auth, onAuthStateChanged}) => {
 });
 
 export const PageType = {
-  STATIC_PATH: 'static',
-  DYNAMIC_PATH: 'dynamic',
+  STATIC_PATH: 'static-path',
+  DYNAMIC_PATH: 'dynamic-path',
 };
 
 export class HgApp extends LitElement {
