@@ -14,6 +14,7 @@ export type PageUid =
   | 'gallery'
   | 'landing'
   | 'lunch'
+  | 'outdoor-parties'
   | 'pizza-truck'
   | 'restaurant'
   | 'reviews'
@@ -31,6 +32,7 @@ export type StaticPath =
   | '/atrakcje-okolicy'
   | '/galeria'
   | '/garden-bistro'
+  | '/imprezy-plenerowe'
   | '/konferencje'
   | '/kontakt'
   | '/kuchnia'
@@ -55,6 +57,7 @@ export const staticPathToPageUid: Record<StaticPath, StaticPathPageUid> = {
   '/atrakcje-okolicy': 'surroundings',
   '/galeria': 'gallery',
   '/garden-bistro': 'restaurant',
+  '/imprezy-plenerowe': 'outdoor-parties',
   '/konferencje': 'conferences',
   '/kontakt': 'contact',
   '/kuchnia': 'cuisine',
@@ -91,6 +94,7 @@ export const pagesStaticData: Record<PageUid, PageStaticData> = {
   'dynamic-path-pages': {name: 'Wydarzenia i aktualności', path: '/wydarzenia', dir: 'events'},
   'family-parties': {name: 'Przyjęcia rodzinne', path: '/przyjecia-rodzinne', dir: 'celebrations'},
   'gallery': {name: 'Galeria', path: '/galeria', dir: 'gallery'},
+  'outdoor-parties': {name: 'Imprezy plenerowe', path: '/imprezy-plenerowe', dir: 'celebrations'},
   'landing': {name: 'O hotelu', path: '/', dir: 'hotel'},
   'lunch': {name: 'Oferta lunchowa', path: '/lunch', dir: 'restaurant'},
   'pizza-truck': {name: 'Pizza Truck', path: '/pizza-truck', dir: 'restaurant'},
@@ -123,7 +127,7 @@ export const links = [
   }, {
     name: 'Uroczystości',
     path: '/wesela',
-    sublinks: ['weddings', 'family-parties', 'banquet-halls'],
+    sublinks: ['weddings', 'family-parties', 'banquet-halls', 'outdoor-parties'],
   },
   pagesStaticData['gallery'],
   pagesStaticData['dynamic-path-pages'],

@@ -59,7 +59,7 @@ export class HgHeaderSubnav extends LitElement {
         if (this._loggedIn) {
           return true;
         }
-        return link !== 'pizza-truck';
+        return link !== 'pizza-truck' && link !== 'outdoor-parties';
       })
       .map((link) => pagesStaticData[link]);
     return html`

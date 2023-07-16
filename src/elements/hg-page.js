@@ -27,6 +27,7 @@ const pagesModulesImports = {
   'landing': () => import('../pages/hg-landing.js'),
   'lunch': () => import('../pages/hg-lunch.js'),
   'pizza-truck': () => import('../pages/hg-pizza-truck.js'),
+  'outdoor-parties': () => import('../pages/hg-outdoor-parties.js'),
   'restaurant': () => import('../pages/hg-restaurant.js'),
   'reviews': () => import('../pages/hg-reviews.js'),
   'rooms': () => import('../pages/hg-rooms.js'),
