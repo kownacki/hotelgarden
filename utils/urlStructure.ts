@@ -1,4 +1,4 @@
-import {keyBy} from 'lodash';
+import {keyBy, mapValues} from 'lodash';
 import {DynamicPathPagePermalink, EventsList} from './types';
 
 export type PageUid =
@@ -76,41 +76,60 @@ export const staticPathToPageUid: Record<StaticPath, StaticPathPageUid> = {
 
 export const staticPaths = Object.keys(staticPathToPageUid) as StaticPath[];
 
-interface PageStaticData {
+export interface PageStaticData {
+  uid: PageUid,
   name: string,
   path: StaticPath | 'NOT_FOUND_404',
-  dir: string
+  parentPageUid: PageUid,
 }
 
-// todo dir should be renamed and checked where is used
-export const pagesStaticData: Record<PageUid, PageStaticData> = {
-  '404': {name: 'Błąd 404 - strony nie znaleziono', path: NOT_FOUND_404, dir: '404'},
-  'admin': {name: 'Admin', path: '/admin', dir: 'admin'},
-  'banquet-halls': {name: 'Sale bankietowe', path: '/sale-bankietowe', dir: 'celebrations'},
-  'conference-halls': {name: 'Sale konferencyjne', path: '/sale-konferencyjne', dir: 'conferences'},
-  'conferences': {name: 'Konferencja w Gardenie', path: '/konferencje', dir: 'conferences'},
-  'contact': {name: 'Kontakt', path: '/kontakt', dir: 'contact'},
-  'cuisine': {name: 'O naszej kuchni', path: '/kuchnia', dir: 'hotel'},
-  'dynamic-path-pages': {name: 'Wydarzenia i aktualności', path: '/wydarzenia', dir: 'events'},
-  'family-parties': {name: 'Przyjęcia rodzinne', path: '/przyjecia-rodzinne', dir: 'celebrations'},
-  'gallery': {name: 'Galeria', path: '/galeria', dir: 'gallery'},
-  'outdoor-parties': {name: 'Imprezy plenerowe', path: '/imprezy-plenerowe', dir: 'celebrations'},
-  'landing': {name: 'O hotelu', path: '/', dir: 'hotel'},
-  'lunch': {name: 'Oferta lunchowa', path: '/lunch', dir: 'restaurant'},
-  'pizza-truck': {name: 'Pizza Truck', path: '/pizza-truck', dir: 'restaurant'},
-  'restaurant': {name: 'Garden Bistro', path: '/garden-bistro', dir: 'restaurant'},
-  'reviews': {name: 'Opinie ', path: '/opinie', dir: 'hotel'},
-  'rooms': {name: 'Pokoje', path: '/pokoje', dir: 'rooms'},
-  'summer-bar': {name: 'Summer Bar', path: '/summer-bar', dir: 'restaurant'},
-  'surroundings': {name: 'Atrakcje okolicy', path: '/atrakcje-okolicy', dir: 'hotel'},
-  'villa-garden': {name: 'Villa Garden', path: '/villa-garden', dir: 'hotel'},
-  'weddings': {name: 'Wesela', path: '/wesela', dir: 'celebrations'},
+type PageStaticDataWithoutUid = Omit<PageStaticData, 'uid'>;
+
+const pagesStaticDataWithoutUid: Record<PageUid, PageStaticDataWithoutUid> = {
+  '404': {name: 'Błąd 404 - strony nie znaleziono', path: NOT_FOUND_404, parentPageUid: '404'},
+  'admin': {name: 'Admin', path: '/admin', parentPageUid: 'admin'},
+  'banquet-halls': {name: 'Sale bankietowe', path: '/sale-bankietowe', parentPageUid: 'weddings'},
+  'conference-halls': {name: 'Sale konferencyjne', path: '/sale-konferencyjne', parentPageUid: 'conferences'},
+  'conferences': {name: 'Konferencja w Gardenie', path: '/konferencje', parentPageUid: 'conferences'},
+  'contact': {name: 'Kontakt', path: '/kontakt', parentPageUid: 'contact'},
+  'cuisine': {name: 'O naszej kuchni', path: '/kuchnia', parentPageUid: 'landing'},
+  'dynamic-path-pages': {name: 'Wydarzenia i aktualności', path: '/wydarzenia', parentPageUid: 'dynamic-path-pages'},
+  'family-parties': {name: 'Przyjęcia rodzinne', path: '/przyjecia-rodzinne', parentPageUid: 'weddings'},
+  'gallery': {name: 'Galeria', path: '/galeria', parentPageUid: 'gallery'},
+  'outdoor-parties': {name: 'Imprezy plenerowe', path: '/imprezy-plenerowe', parentPageUid: 'weddings'},
+  'landing': {name: 'O hotelu', path: '/', parentPageUid: 'landing'},
+  'lunch': {name: 'Oferta lunchowa', path: '/lunch', parentPageUid: 'restaurant'},
+  'pizza-truck': {name: 'Pizza Truck', path: '/pizza-truck', parentPageUid: 'restaurant'},
+  'restaurant': {name: 'Garden Bistro', path: '/garden-bistro', parentPageUid: 'restaurant'},
+  'reviews': {name: 'Opinie ', path: '/opinie', parentPageUid: 'landing'},
+  'rooms': {name: 'Pokoje', path: '/pokoje', parentPageUid: 'landing'},
+  'summer-bar': {name: 'Summer Bar', path: '/summer-bar', parentPageUid: 'restaurant'},
+  'surroundings': {name: 'Atrakcje okolicy', path: '/atrakcje-okolicy', parentPageUid: 'landing'},
+  'villa-garden': {name: 'Villa Garden', path: '/villa-garden', parentPageUid: 'landing'},
+  'weddings': {name: 'Wesela', path: '/wesela', parentPageUid: 'weddings'},
 };
+
+export const pagesStaticData: Record<PageUid, PageStaticData> = mapValues(
+  pagesStaticDataWithoutUid,
+  (pageStaticDataWithoutUid, key) => {
+    return {uid: key as PageUid, ...pageStaticDataWithoutUid};
+  },
+);
 
 export const pageUids = Object.keys(pagesStaticData) as PageUid[];
 export const staticPathPageUids = pageUids.filter((pageUid) => pageUid !== '404') as StaticPathPageUid[];
 
-export const links = [
+export type SingleNavigationItem = PageStaticData;
+
+export interface MultipleNavigationItem {
+  name: string,
+  path: StaticPath,
+  sublinks: PageUid[],
+}
+
+export type NavigationItem = SingleNavigationItem | MultipleNavigationItem;
+
+export const links: NavigationItem[] = [
   {
     name: 'Hotel',
     path: '/',

@@ -179,7 +179,7 @@ export class HgHeader extends LitElement {
             `}
           </ul>
           <hg-book-order-button
-            .order=${(staticPathToPageUid[this.selected] && (pagesStaticData[staticPathToPageUid[this.selected]].dir === 'restaurant'))
+            .order=${(staticPathToPageUid[this.selected] && (pagesStaticData[staticPathToPageUid[this.selected]].parentPageUid === 'restaurant'))
               ? 'restaurant'
               : null}>
           </hg-book-order-button>
