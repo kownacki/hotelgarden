@@ -15,6 +15,7 @@ export class HgContact extends LitElement {
   static styles = [sharedStyles, ckContent, css`
     hg-article {
       max-width: 1000px;
+      margin-bottom: 80px;
     }
     hg-contact-form {
       margin-bottom: 80px;
@@ -35,6 +36,7 @@ export class HgContact extends LitElement {
           this.dispatchEvent(new CustomEvent('set-meta-description', {detail: cleanedText, composed: true}));
         }}>
       </hg-article>
+      <h2 class="content-heading">Formularz kontaktowy</h2>
       <hg-contact-form></hg-contact-form>
       <hg-map></hg-map>
     `;
