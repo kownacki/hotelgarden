@@ -10,12 +10,18 @@ export class HgBanquetHalls extends LitElement {
     isInitialPage: Boolean,
   };
   static styles = sharedStyles;
+  _getHallsTemplate() {
+    return ['hall-banquet-1', 'hall-banquet-2', 'hall-banquet-3', 'hall-banquet-4', 'hall-banquet-5']
+      .map((uid, index) => {
+        return html`
+          <hg-hall id="${index + 1}" .uid=${uid}></hg-hall>
+        `;
+      });
+  }
   render() {
     return html`
       <hg-content>
-        ${_.map.convert({cap: false})((uid, index) => html`
-          <hg-hall id="${index + 1}" .uid=${uid}></hg-hall>
-        `, ['hall-banquet-1', 'hall-banquet-2', 'hall-banquet-3', 'hall-banquet-4', 'hall-banquet-5'])}
+        ${this._getHallsTemplate()}
         <hg-links .path=${'/sale-bankietowe'} .superpath=${'/wesela'} .includeSuperpath=${true}></hg-links>
       </hg-content>
     `;

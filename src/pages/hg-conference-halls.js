@@ -9,12 +9,18 @@ export class HgConferenceHalls extends LitElement {
     isInitialPage: Boolean,
   };
   static styles = sharedStyles;
+  _getHallsTemplate() {
+    return ['hall-conference-1', 'hall-conference-2', 'hall-conference-3', 'hall-conference-4']
+      .map((uid, index) => {
+        return html`
+          <hg-hall id="${index + 1}" .uid=${uid}></hg-hall>
+        `;
+      });
+  }
   render() {
     return html`
       <hg-content>
-        ${_.map.convert({cap: false})((uid, index) => html`
-        <hg-hall id="${index + 1}" .uid=${uid}></hg-hall>
-      `, ['hall-conference-1', 'hall-conference-2', 'hall-conference-3', 'hall-conference-4'])}
+        ${this._getHallsTemplate()}
       </hg-content>
     `;
   }
