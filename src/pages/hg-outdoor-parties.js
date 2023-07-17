@@ -6,6 +6,7 @@ import '../content/hg-content-slider.js';
 import '../content/hg-hall.js';
 import '../content/hg-links.js';
 import '../content/hg-mosaic.js';
+import '../content/hg-text-image.js';
 import '../elements/hg-content.js';
 import sharedStyles from '../styles/shared-styles.js';
 import {staticProp} from '../utils.js';
@@ -37,6 +38,7 @@ export class HgOutdoorParties extends LitElement {
           primary: [{url: '#kontakt', text: 'Skontaktuj się z nami'}],
         })}></hg-mosaic>
         <hg-content-slider .uid=${outdoorPartiesUid}></hg-content-slider>
+        <hg-text-image .uid=${outdoorPartiesUid}></hg-text-image>
         ${this._getHallsTemplate()}
         <hg-contact-block id="kontakt"></hg-contact-block>
         <hg-links .path=${pagesStaticData[outdoorPartiesUid].path} .superpath=${'/wesela'} .includeSuperpath=${true}></hg-links>
