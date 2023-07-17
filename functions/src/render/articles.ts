@@ -1,6 +1,6 @@
 import {mapValues} from 'lodash';
-import {ArticleDbData} from '../../../utils/types';
-import {PageUid, pagesStaticData} from '../../../utils/urlStructure';
+import {ArticleDbData} from '../../utils/types';
+import {PageUid, pagesStaticData} from '../../utils/urlStructure';
 import {listenToDoc} from '../database';
 
 const articlesListeners = mapValues(pagesStaticData, (pageStaticData, pageUid) => {

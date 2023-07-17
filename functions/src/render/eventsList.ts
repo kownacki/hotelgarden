@@ -1,6 +1,6 @@
-import {DynamicPathPageEvent} from '../../../utils/types';
+import {DynamicPathPageEvent} from '../../utils/types';
 import {listenToCollection} from '../database';
-import {convertDynamicPathPagesToEventsList} from '../../../utils/events';
+import {convertDynamicPathPagesToEventsList} from '../../utils/events';
 
 const [dynamicPathPagesReady, getDynamicPathPagesUnsafe] = listenToCollection<DynamicPathPageEvent>('dynamicPathPages');
 

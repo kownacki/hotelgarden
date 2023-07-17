@@ -1,4 +1,4 @@
-import {PromiseTrigger} from '../../utils/general';
+import {PromiseTrigger} from '../utils/general';
 import {db} from './database';
 
 export type DataReady = Promise<unknown>;

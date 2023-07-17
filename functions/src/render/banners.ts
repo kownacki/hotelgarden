@@ -1,6 +1,6 @@
 import {mapValues} from 'lodash';
-import {Banner} from '../../../utils/types';
-import {PageUid, pagesStaticData} from '../../../utils/urlStructure';
+import {Banner} from '../../utils/types';
+import {PageUid, pagesStaticData} from '../../utils/urlStructure';
 import {listenToDoc} from '../database';
 
 const bannersListeners = mapValues(pagesStaticData, (pageStaticData, pageUid) => {

@@ -1,4 +1,4 @@
-import {EventsList} from '../../../../utils/types';
+import {EventsList} from '../../../utils/types';
 import {createSitemap} from './createSitemap';
 import {getAllNonHiddenUrls} from './getAllNonHiddenUrls';
 

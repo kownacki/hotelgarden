@@ -1,6 +1,6 @@
-import {createPreloadLink} from '../../utils/html';
+import {createPreloadLink} from '../utils/html';
 import {CreateIndexDataParam, CreateIndexSeoParam, CreateIndexPreloadsParam} from './types';
-import {serializeData} from './utils';
+import {serializeData} from './utils/utils';
 
 export const createIndex = (
   preloads: CreateIndexPreloadsParam,

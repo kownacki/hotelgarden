@@ -1,6 +1,6 @@
 import {Request, Response} from 'firebase-functions';
-import {PreloadLinkAttrs} from '../../../utils/html';
-import {createFull404PageTitle, createFullPageTitle, createFullEventTitle, createDynamicPathPageJsonLd} from '../../../utils/seo';
+import {PreloadLinkAttrs} from '../../utils/html';
+import {createFull404PageTitle, createFullPageTitle, createFullEventTitle, createDynamicPathPageJsonLd} from '../../utils/seo';
 import {
   getDynamicPathPagePermalink,
   isValidStaticPath,
@@ -8,7 +8,7 @@ import {
   StaticPath,
   staticPathToPageUid,
   SITEMAP_PATH,
-} from '../../../utils/urlStructure';
+} from '../../utils/urlStructure';
 import {createIndex} from '../createIndex';
 import {getArticle} from './articles';
 import {getBanner} from './banners';

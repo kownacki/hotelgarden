@@ -1,4 +1,4 @@
-import {EventUid, EventDbData, DynamicPathPageEvent} from '../../../utils/types';
+import {EventUid, EventDbData, DynamicPathPageEvent} from '../../utils/types';
 import {listenToDoc, DataReady, GetData, Unsubscribe, listenToCollection} from '../database';
 
 const eventsDbListeners: Record<EventUid, {dataReady: DataReady, getDataUnsafe: GetData<EventDbData | undefined>, unsubscribe: Unsubscribe}> = {};

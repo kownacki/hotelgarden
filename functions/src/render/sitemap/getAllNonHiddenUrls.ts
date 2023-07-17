@@ -1,6 +1,6 @@
-import {isDynamicPathPageHidden} from '../../../../utils/events';
-import {EventsList} from '../../../../utils/types';
-import {staticPaths, createFullUrl, createDynamicPath} from '../../../../utils/urlStructure';
+import {isDynamicPathPageHidden} from '../../../utils/events';
+import {EventsList} from '../../../utils/types';
+import {staticPaths, createFullUrl, createDynamicPath} from '../../../utils/urlStructure';
 
 const getPublicEventsUids = (eventsList: EventsList) => {
   return Object.entries(eventsList)

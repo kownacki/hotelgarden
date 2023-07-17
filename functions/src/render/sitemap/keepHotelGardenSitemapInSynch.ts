@@ -1,8 +1,8 @@
-import {DynamicPathPageEvent} from '../../../../utils/types';
+import {DynamicPathPageEvent} from '../../../utils/types';
 import {listenToCollection} from '../../listenToDb';
-import {pingGoogleAboutSitemapChange} from '../../utils';
+import {pingGoogleAboutSitemapChange} from '../../utils/utils';
 import {createHotelGardenSitemap} from './createHotelGardenSitemap';
-import {convertDynamicPathPagesToEventsList} from '../../../../utils/events';
+import {convertDynamicPathPagesToEventsList} from '../../../utils/events';
 import {createDbPath, updateInDb} from '../../database';
 import {getSitemap} from './getSitemap';
 

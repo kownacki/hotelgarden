@@ -1,12 +1,11 @@
 import {Request, Response} from 'firebase-functions';
 import _ from 'lodash/fp';
-// @ts-ignore see https://github.com/microsoft/TypeScript/issues/33079
-import {sendMessage as mkSendMessage} from 'mk-firebase-functions-utils/sendMessage';
 import moment from 'moment';
 import 'moment-timezone';
-import {SendMessageRequestBody} from '../../../utils/sendMessage';
+import {SendMessageRequestBody} from '../../utils/sendMessage';
 import {createDbPath, generateDbUid, getFromDb, updateInDb} from '../database';
 import {RequestWithBody, AdminConfigSendMessage} from '../types';
+import {sendMessage as utilsSendMessage} from '../utils/sendMessage';
 
 moment.locale('pl');
 
@@ -35,7 +34,7 @@ export const sendMessage = async (req: Request, res: Response) => {
     mailTransport: config.mailTransport,
     maxMessageSize: MAX_MESSAGE_SIZE,
   };
-  await mkSendMessage(req, res, options);
+  await utilsSendMessage(req, res, options);
   await updateInDb(createDbPath(`sentMessages/${generateDbUid(timeAtFunctionStart)}`), {
     ..._.mapValues(_.replace(/\n/g, '\\n'), body),
     to: options.mailOptions.to,

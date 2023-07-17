@@ -1,4 +1,4 @@
-import {PromotedEventDbData} from '../../../utils/types';
+import {PromotedEventDbData} from '../../utils/types';
 import {listenToDoc} from '../database';
 
 const [promotedEventReady, getPromotedEventUnsafe] = listenToDoc<PromotedEventDbData | undefined>('events/promoted');
