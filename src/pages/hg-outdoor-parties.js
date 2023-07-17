@@ -3,6 +3,7 @@ import {pagesStaticData} from '../../utils/urlStructure.js';
 import '../content/hg-contact-block.js';
 import '../content/hg-content-icons.js';
 import '../content/hg-content-slider.js';
+import '../content/hg-hall.js';
 import '../content/hg-links.js';
 import '../content/hg-mosaic.js';
 import '../elements/hg-content.js';
@@ -15,6 +16,17 @@ export class HgOutdoorParties extends LitElement {
     isInitialPage: Boolean,
   };
   static styles = sharedStyles;
+  _getHallsTemplate() {
+    return html`
+      <h2 class="content-heading">Wybierz miejsce</h2>
+      ${['hall-outdoor-1', 'hall-outdoor-2', 'hall-outdoor-3', 'hall-outdoor-4']
+        .map((uid, index) => {
+          return html`
+            <hg-hall id="${index + 1}" .uid=${uid} .areSetOutsHidden=${true}></hg-hall>
+          `;
+      })}
+    `;
+  }
   render() {
     const outdoorPartiesUid = 'outdoor-parties';
 
@@ -25,6 +37,7 @@ export class HgOutdoorParties extends LitElement {
           primary: [{url: '#kontakt', text: 'Skontaktuj się z nami'}],
         })}></hg-mosaic>
         <hg-content-slider .uid=${outdoorPartiesUid}></hg-content-slider>
+        ${this._getHallsTemplate()}
         <hg-contact-block id="kontakt"></hg-contact-block>
         <hg-links .path=${pagesStaticData[outdoorPartiesUid].path} .superpath=${'/wesela'} .includeSuperpath=${true}></hg-links>
       </hg-content>
