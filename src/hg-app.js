@@ -88,8 +88,8 @@ export class HgApp extends LitElement {
     const pageUid = this._getPageUid(path);
     return {
       pageUid,
-      noBannerImage: ['contact', 'gallery', '404', 'admin'].includes(pageUid),
-      isIntroArticleRemoved: ['contact', '404', 'admin'].includes(pageUid),
+      noBannerImage: ['careers', 'contact', 'gallery', '404', 'admin'].includes(pageUid),
+      isIntroArticleRemoved: ['careers', 'contact', '404', 'admin'].includes(pageUid),
       isIntroArticleHidden: ['reviews', 'gallery', 'dynamic-path-pages'].includes(pageUid),
     };
   }

@@ -5,6 +5,7 @@ export type PageUid =
   | '404'
   | 'admin'
   | 'banquet-halls'
+  | 'careers'
   | 'conference-halls'
   | 'conferences'
   | 'contact'
@@ -40,6 +41,7 @@ export type StaticPath =
   | '/opinie'
   | '/pizza-truck'
   | '/pokoje'
+  | '/praca'
   | '/przyjecia-rodzinne'
   | '/sale-bankietowe'
   | '/sale-konferencyjne'
@@ -65,6 +67,7 @@ export const staticPathToPageUid: Record<StaticPath, StaticPathPageUid> = {
   '/opinie': 'reviews',
   '/pizza-truck': 'pizza-truck',
   '/pokoje': 'rooms',
+  '/praca': 'careers',
   '/przyjecia-rodzinne': 'family-parties',
   '/sale-bankietowe': 'banquet-halls',
   '/sale-konferencyjne': 'conference-halls',
@@ -89,6 +92,7 @@ const pagesStaticDataWithoutUid: Record<PageUid, PageStaticDataWithoutUid> = {
   '404': {name: 'Błąd 404 - strony nie znaleziono', path: NOT_FOUND_404, parentPageUid: '404'},
   'admin': {name: 'Admin', path: '/admin', parentPageUid: 'admin'},
   'banquet-halls': {name: 'Sale bankietowe', path: '/sale-bankietowe', parentPageUid: 'weddings'},
+  'careers': {name: 'Praca', path: '/praca', parentPageUid: 'landing'},
   'conference-halls': {name: 'Sale konferencyjne', path: '/sale-konferencyjne', parentPageUid: 'conferences'},
   'conferences': {name: 'Konferencja w Gardenie', path: '/konferencje', parentPageUid: 'conferences'},
   'contact': {name: 'Kontakt', path: '/kontakt', parentPageUid: 'contact'},
@@ -96,9 +100,9 @@ const pagesStaticDataWithoutUid: Record<PageUid, PageStaticDataWithoutUid> = {
   'dynamic-path-pages': {name: 'Wydarzenia i aktualności', path: '/wydarzenia', parentPageUid: 'dynamic-path-pages'},
   'family-parties': {name: 'Przyjęcia rodzinne', path: '/przyjecia-rodzinne', parentPageUid: 'weddings'},
   'gallery': {name: 'Galeria', path: '/galeria', parentPageUid: 'gallery'},
-  'outdoor-parties': {name: 'Imprezy plenerowe', path: '/imprezy-plenerowe', parentPageUid: 'weddings'},
   'landing': {name: 'O hotelu', path: '/', parentPageUid: 'landing'},
   'lunch': {name: 'Oferta lunchowa', path: '/lunch', parentPageUid: 'restaurant'},
+  'outdoor-parties': {name: 'Imprezy plenerowe', path: '/imprezy-plenerowe', parentPageUid: 'weddings'},
   'pizza-truck': {name: 'Pizza Truck', path: '/pizza-truck', parentPageUid: 'restaurant'},
   'restaurant': {name: 'Garden Bistro', path: '/garden-bistro', parentPageUid: 'restaurant'},
   'reviews': {name: 'Opinie ', path: '/opinie', parentPageUid: 'landing'},
@@ -133,7 +137,7 @@ export const links: NavigationItem[] = [
   {
     name: 'Hotel',
     path: '/',
-    sublinks: ['landing', 'rooms', 'villa-garden', 'cuisine', 'surroundings', 'reviews'],
+    sublinks: ['landing', 'rooms', 'villa-garden', 'cuisine', 'surroundings', 'reviews', 'careers'],
   },
   {
     name: 'Food & Drink',

@@ -17,6 +17,7 @@ const pagesModulesImports = {
   '404': () => import('../pages/hg-404.js'),
   'admin': () => import('../pages/hg-admin.js'),
   'banquet-halls': () => import('../pages/hg-banquet-halls.js'),
+  'careers': () => import('../pages/hg-careers.js'),
   'conference-halls': () => import('../pages/hg-conference-halls.js'),
   'conferences': () => import('../pages/hg-conferences.js'),
   'contact': () => import('../pages/hg-contact.js'),

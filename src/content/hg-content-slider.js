@@ -13,6 +13,7 @@ export class HgContentSlider extends LitElement {
       max-width: 1200px;
       margin: 100px auto;
       height: 350px;
+      position: relative;
     }
     :host(:hover) hg-content-label {
       display: block;
