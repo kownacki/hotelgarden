@@ -8,6 +8,7 @@ export const HG_CONTACT_FORM_FIRST_PART_FIELDS = ['name', 'company', 'phone', 'e
 
 export class HgContactFormFirstPart extends LitElement {
   static properties = {
+    noCompanyField: Boolean,
     checkValidity: Boolean,
     disabled: Boolean,
   };
@@ -39,6 +40,7 @@ export class HgContactFormFirstPart extends LitElement {
         .disabled=${this.disabled}>
       </hg-contact-form-textfield>
       <hg-contact-form-textfield
+        ?hidden=${this.noCompanyField}
         id="company"
         .label=${'Firma'}
         .disabled=${this.disabled}>

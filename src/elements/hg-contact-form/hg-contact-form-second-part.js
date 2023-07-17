@@ -1,5 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import 'mkwc/fixes/mwc-textarea-fixed.js';
+import {SendMessageRequestBodySubject} from '../../../utils/sendMessage.js';
 import sharedStyles from '../../styles/shared-styles.js';
 import {keepLabelAsterisk} from '../../utils/form.js';
 import './hg-contact-form-subject-select.js';
@@ -8,9 +9,9 @@ export const HG_CONTACT_FORM_SECOND_PART_FIELDS = ['subject', 'text'];
 
 export class HgContactFormSecondPart extends LitElement {
   static properties = {
-    disabled: Boolean,
+    preselectedSubject: Object, // SendMessageRequestBodySubject
     checkValidity: Boolean,
-    noSubjects: Boolean,
+    disabled: Boolean,
   };
   static styles = [sharedStyles, css`
     :host {
@@ -41,7 +42,7 @@ export class HgContactFormSecondPart extends LitElement {
         name: 'subject',
         value: subjectInput.selectedSubject,
         input: subjectInput,
-        valid: this.noSubjects || Boolean(subjectInput.selectedSubject),
+        valid: Boolean(this.preselectedSubject) || Boolean(subjectInput.selectedSubject),
         reportValidity: () => subjectInput.reportValidity(),
       },
       {
@@ -54,15 +55,18 @@ export class HgContactFormSecondPart extends LitElement {
     ];
   }
   render() {
+    const labelText = this.preselectedSubject === SendMessageRequestBodySubject.CAREERS
+      ? 'Napisz coś o sobie'
+      : 'Co możemy dla Państwa zrobić?';
     return html`
       <hg-contact-form-subject-select
-        ?hidden=${this.noSubjects}
+        ?hidden=${Boolean(this.preselectedSubject)}
         id="subject"
         disabled=${this.disabled}>
       </hg-contact-form-subject-select>
       <mwc-textarea-fixed
         id="text"
-        .label=${keepLabelAsterisk('Co możemy dla Państwa zrobić?', this.checkValidity)}
+        .label=${keepLabelAsterisk(labelText, this.checkValidity)}
         .required=${this.checkValidity}
         .validationMessage=${'Pole wymagane'}
         .maxLength=${1000}

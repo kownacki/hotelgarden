@@ -1,4 +1,5 @@
 import {LitElement, html, css} from 'lit';
+import {SendMessageRequestBodySubject} from '../../utils/sendMessage.js';
 import sharedStyles from '../styles/shared-styles.js';
 import {findInvalidInputs} from '../utils/form.js';
 import {sleep, scrollIntoView} from '../utils.js';
@@ -6,8 +7,6 @@ import './hg-action-button.js';
 import './hg-contact-form/hg-contact-form-first-part.js';
 import './hg-contact-form/hg-contact-form-loading.js';
 import './hg-contact-form/hg-contact-form-second-part.js';
-
-export {HgContactFormSubject} from './hg-contact-form/hg-contact-form-subject-select.js';
 
 export const HgContactFormField = {
   NAME: 'name',
@@ -20,7 +19,7 @@ export const HgContactFormField = {
 
 export class HgContactForm extends LitElement {
   static properties = {
-    preselectedSubject: {type: String, reflect: true, attribute: 'preselected-subject'}, // HgContactFormSubject
+    preselectedSubject: {type: String, reflect: true, attribute: 'preselected-subject'}, // SendMessageRequestBodySubject
     // observables
     sent: {type: Boolean, reflect: true},
     loading: {type: Boolean, reflect: true},
@@ -124,12 +123,13 @@ export class HgContactForm extends LitElement {
         <div class="parts">
           <hg-contact-form-first-part
             id="first-part"
+            .noCompanyField=${this.preselectedSubject === SendMessageRequestBodySubject.CAREERS}
             .checkValidity=${this._checkValidity}
             .disabled=${this.loading || this.sent || this.error}>
           </hg-contact-form-first-part>
           <hg-contact-form-second-part
             id="second-part"
-            .noSubjects=${Boolean(this.preselectedSubject)}
+            .preselectedSubject=${this.preselectedSubject}
             .checkValidity=${this._checkValidity}
             .disabled=${this.loading || this.sent || this.error}>
           </hg-contact-form-second-part>

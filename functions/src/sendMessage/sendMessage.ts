@@ -2,7 +2,7 @@ import {Request, Response} from 'firebase-functions';
 import _ from 'lodash/fp';
 import moment from 'moment';
 import 'moment-timezone';
-import {SendMessageRequestBody} from '../../utils/sendMessage';
+import {getSubjectLabel, SendMessageRequestBody, SendMessageRequestBodySubject} from '../../utils/sendMessage';
 import {createDbPath, generateDbUid, getFromDb, updateInDb} from '../database';
 import {RequestWithBody, AdminConfigSendMessage} from '../types';
 import {sendMessage as utilsSendMessage} from '../utils/sendMessage';
@@ -23,9 +23,12 @@ export const sendMessage = async (req: Request, res: Response) => {
       replyTo: body.email,
       subject: `${config.mailOptions.subject} | ${body.email}`,
       html: `
-        <p>Dotyczy: ${body.subject}</p>
+        <p>Dotyczy: ${getSubjectLabel(body.subject)}</p>
         <p>Imię i nazwisko: ${body.name}</p>
-        <p>Firma: ${body.company || 'Nie podano'}</p>
+        ${body.subject === SendMessageRequestBodySubject.CAREERS
+          ? ''
+          : `<p>Firma: ${body.company || 'Nie podano'}</p>`
+        }
         <p>Telefon: ${body.phone}</p>
         <p>Email: ${body.email}</p>
         <p>Wiadomość: ${_.replace(/\n/g, '<br>')(body.text)}</p>

@@ -1,19 +1,15 @@
 import {LitElement, html, css} from 'lit';
 import '@material/mwc-radio';
+import {SendMessageRequestBodySubject} from '../../../utils/sendMessage.js';
 import '../../elements/ui/hg-mwc-formfield-wrapper.js';
 import sharedStyles from '../../styles/shared-styles.js';
 import '../../utils/fixes/mwc-formfield-fixed.js';
-
-export const HgContactFormSubject = {
-  HOTEL: 'hotel',
-  GASTRO: 'gastro',
-};
 
 export class HgContactFormSubjectSelect extends LitElement {
   static properties = {
     disabled: Boolean,
     // observables
-    selectedSubject: String, // HgContactFormSubject
+    selectedSubject: String, // SendMessageRequestBodySubject
     invalid: {type: Boolean, reflect: true},
   };
   static styles = [sharedStyles, css`
@@ -61,7 +57,7 @@ export class HgContactFormSubjectSelect extends LitElement {
           <mwc-radio
             name="subject"
             .disabled=${this.disabled}
-            @click=${() => this._selectSubject(HgContactFormSubject.HOTEL)}>
+            @click=${() => this._selectSubject(SendMessageRequestBodySubject.HOTEL)}>
           </mwc-radio>
         </mwc-formfield-fixed>
       </hg-mwc-formfield-wrapper>
@@ -70,7 +66,7 @@ export class HgContactFormSubjectSelect extends LitElement {
           <mwc-radio
             name="subject"
             .disabled=${this.disabled}
-            @click=${() => this._selectSubject(HgContactFormSubject.GASTRO)}>
+            @click=${() => this._selectSubject(SendMessageRequestBodySubject.GASTRO)}>
           </mwc-radio>
         </mwc-formfield-fixed>
       </hg-mwc-formfield-wrapper>

@@ -1,5 +1,6 @@
 import {Request} from 'firebase-functions';
 import {PreloadLinkAttrs} from '../utils/html';
+import {SendMessageRequestBodySubject} from '../utils/sendMessage';
 import {EventsList, EventUid, Banner, ArticleDbData} from '../utils/types';
 
 export type CreateIndexPreloadsParam = PreloadLinkAttrs[];
@@ -25,10 +26,7 @@ export interface AdminConfigSendMessage {
   mailOptions: {
     from: string,
     subject: string,
-    to: {
-      gastro: string | string[],
-      hotel: string | string[],
-    },
+    to: Record<SendMessageRequestBodySubject, string | string[]>,
   },
   mailTransport: {
     auth: {
