@@ -32,8 +32,8 @@ export class HgLanding extends LitElement {
         <hg-reviews-block .uid=${'landing'} .scores=${true} .bookingScores=${_.get('bookingScores', this.config)}></hg-reviews-block>
         <hg-infographic .uid=${'landing'}></hg-infographic>
         <hg-events-block></hg-events-block>
+        <hg-map class="no-animation"></hg-map>
       </hg-content>
-      <hg-map></hg-map>
     `;
   }
 }

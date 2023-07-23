@@ -2,6 +2,7 @@ import {LitElement, html, css} from 'lit';
 import '../content/hg-article.js';
 import '../content/hg-map.js';
 import '../elements/hg-contact-form.js';
+import '../elements/hg-content.js';
 import ckContent from '../styles/ck-content.js';
 import sharedStyles from '../styles/shared-styles.js';
 import {createDbPath, updateInDb} from '../utils/database.js';
@@ -38,7 +39,9 @@ export class HgContact extends LitElement {
       </hg-article>
       <h2 class="content-heading">Formularz kontaktowy</h2>
       <hg-contact-form></hg-contact-form>
-      <hg-map></hg-map>
+      <hg-content>
+        <hg-map class="no-animation"></hg-map>
+      </hg-content>
     `;
   }
 }
