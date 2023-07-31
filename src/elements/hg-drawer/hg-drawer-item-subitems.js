@@ -44,7 +44,7 @@ export class HgDrawerItemSubItems extends LitElement {
         if (this._loggedIn) {
           return true;
         }
-        return link !== 'pizza-truck' && link !== 'outdoor-parties' && link !== 'careers';
+        return link !== 'pizza-truck' && link !== 'outdoor-parties';
       })
       .map((link) => pagesStaticData[link]);
 
