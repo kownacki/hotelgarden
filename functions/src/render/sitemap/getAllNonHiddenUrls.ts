@@ -1,6 +1,6 @@
 import {isDynamicPathPageHidden} from '../../../utils/events';
 import {EventsList} from '../../../utils/types';
-import {staticPaths, createFullUrl, createDynamicPath} from '../../../utils/urlStructure';
+import {createFullUrl, createDynamicPath, nonHiddenStaticPaths} from '../../../utils/urlStructure';
 
 const getPublicEventsUids = (eventsList: EventsList) => {
   return Object.entries(eventsList)
@@ -17,7 +17,7 @@ export const getAllNonHiddenUrls = (eventsList: EventsList) => {
   const nonHiddenEventsUids = getPublicEventsUids(eventsList);
   const nonHiddenEventsPaths = nonHiddenEventsUids.map((eventUid) => createDynamicPath(eventUid));
 
-  return [...staticPaths, ...nonHiddenEventsPaths]
+  return [...nonHiddenStaticPaths, ...nonHiddenEventsPaths]
     .map((path) => {
       return createFullUrl(path);
     });

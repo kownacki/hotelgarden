@@ -27,6 +27,9 @@ export const staticPathToPageUid = {
     '/wydarzenia': 'dynamic-path-pages',
 };
 export const staticPaths = Object.keys(staticPathToPageUid);
+export const nonHiddenStaticPaths = staticPaths.filter((staticPath) => {
+    return !HIDDEN_PAGES.includes(staticPathToPageUid[staticPath]);
+});
 const pagesStaticDataWithoutUid = {
     '404': { name: 'Błąd 404 - strony nie znaleziono', path: NOT_FOUND_404, parentPageUid: '404' },
     'admin': { name: 'Admin', path: '/admin', parentPageUid: 'admin' },

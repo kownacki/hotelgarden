@@ -83,6 +83,9 @@ export const staticPathToPageUid: Record<StaticPath, StaticPathPageUid> = {
 };
 
 export const staticPaths = Object.keys(staticPathToPageUid) as StaticPath[];
+export const nonHiddenStaticPaths = staticPaths.filter((staticPath) => {
+  return !HIDDEN_PAGES.includes(staticPathToPageUid[staticPath]);
+});
 
 export interface PageStaticData {
   uid: PageUid,
