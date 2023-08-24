@@ -16,14 +16,16 @@ export class HgCuisine extends LitElement {
   };
   static styles = sharedStyles;
   render() {
+    const cuisinePageUid = 'cuisine';
+
     return html`
       <hg-content>
-        <hg-content-icons .uid=${'cuisine'}></hg-content-icons>
-        <hg-content-slider .uid=${'cuisine'}></hg-content-slider>
-        <hg-mosaic .uid=${'cuisine'} .buttons=${staticProp({primary: [{url: `${pagesStaticData.restaurant.path}#menu`, text: 'Zobacz menu'}]})}></hg-mosaic>
+        <hg-content-icons .uid=${cuisinePageUid}></hg-content-icons>
+        <hg-content-slider .uid=${cuisinePageUid}></hg-content-slider>
+        <hg-mosaic .uid=${cuisinePageUid} .buttons=${staticProp({primary: [{url: `${pagesStaticData.restaurant.path}#menu`, text: 'Zobacz menu'}]})}></hg-mosaic>
         <hg-text-image .uid=${'lunch'} .buttons=${staticProp([{url: '/lunch#aktualny-lunch', text: 'Przejdź do lunchy'}])}></hg-text-image>
         <hg-text-image .swap=${true} .uid=${'cuisine-extra1'}></hg-text-image>
-        <hg-links .path=${'/kuchnia'} .superpath=${'/'}></hg-links>
+        <hg-links .pageUid=${cuisinePageUid} .excludedPages=${staticProp(['careers'])}></hg-links>
       </hg-content>
     `;
   }

@@ -1,12 +1,11 @@
 import {LitElement, html, css} from 'lit';
 import {FirebaseAuthController} from '../../utils/FirebaseAuthController.js';
-import {pagesStaticData} from '../../../utils/urlStructure.js';
 
 export class HgHeaderSubnav extends LitElement {
   _firebaseAuth;
   static properties = {
-    links: Array,
-    selected: String,
+    subitems: Array, // { name: string, path: string }[]
+    selectedSubitemIndex: Number,
     _loggedIn: Boolean,
   };
   static styles = css`
@@ -53,24 +52,19 @@ export class HgHeaderSubnav extends LitElement {
     });
   }
   render() {
-    // todo remove loggedIn check
-    const links = this.links
-      .filter((link) => {
-        if (this._loggedIn) {
-          return true;
-        }
-        return link !== 'pizza-truck' && link !== 'outdoor-parties';
-      })
-      .map((link) => pagesStaticData[link]);
     return html`
       <ul>
-        ${links.map((link) => html`
-          <li>
-            <a href="${link.path}" ?selected=${link.path === this.selected}>
-              ${link.name}
-            </a>
-          </li>
-        `)}
+        ${this.subitems.map((subitem, index) => {
+          const { path, name } = subitem;
+
+          return html`
+            <li>
+              <a href="${path}" ?selected=${index === this.selectedSubitemIndex}>
+                 ${name}
+              </a>
+            </li>
+          `;
+        })}
       </ul>
     `;
   }

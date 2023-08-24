@@ -1,4 +1,5 @@
 import {LitElement, html} from 'lit';
+import {pagesStaticData} from '../../utils/urlStructure.js';
 import '../content/hg-hall.js';
 import '../content/hg-links.js';
 import '../elements/hg-content.js';
@@ -19,10 +20,12 @@ export class HgBanquetHalls extends LitElement {
       });
   }
   render() {
+    const banquetHallsPageUid = 'banquet-halls';
+
     return html`
       <hg-content>
         ${this._getHallsTemplate()}
-        <hg-links .path=${'/sale-bankietowe'} .superpath=${'/wesela'} .includeSuperpath=${true}></hg-links>
+        <hg-links .pageUid=${banquetHallsPageUid} .isParentPageIncluded=${true}></hg-links>
       </hg-content>
     `;
   }

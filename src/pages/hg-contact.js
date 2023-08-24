@@ -23,10 +23,12 @@ export class HgContact extends LitElement {
     }
   `];
   render() {
+    const contactPageUid = 'contact';
+
     return html`
       <hg-article
         .rich=${true}
-        .uid=${'contact'}
+        .uid=${contactPageUid}
         .classes=${staticProp({'smaller-text': true})}
         @text-ready=${({detail: text}) => {
           this.dispatchEvent(new CustomEvent('set-meta-description', {detail: text, composed: true}));

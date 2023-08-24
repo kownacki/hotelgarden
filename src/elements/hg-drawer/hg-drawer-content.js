@@ -1,13 +1,22 @@
 import {LitElement, html, css} from 'lit';
-import {createDynamicPath, links} from '../../../utils/urlStructure.js';
-import {staticProp} from '../../utils.js';
+import {FirebaseAuthController} from '../../utils/FirebaseAuthController.js';
+import {
+  createDynamicPath,
+  DYNAMIC_PATH_PAGES_ROOT_PATH,
+  isDynamicPath,
+  mainNavigation,
+  pagesStaticData,
+  staticPathToPageUid,
+} from '../../../utils/urlStructure.js';
 import './hg-drawer-close.js';
 import './hg-drawer-item.js';
 
 export class HgDrawerContent extends LitElement {
+  _firebaseAuth;
   static properties = {
-    selected: String,
+    path: String,
     promotedDynamicPathPage: Object, // DynamicPathPageEventWithUid | DynamicPathPageNewsWithUid | undefined
+    _loggedIn: Boolean,
   };
   static styles = css`
     :host {
@@ -40,7 +49,15 @@ export class HgDrawerContent extends LitElement {
       border-bottom: none;
     }
   `;
+  constructor() {
+    super();
+    this._firebaseAuth = new FirebaseAuthController(this, (loggedIn) => {
+      this._loggedIn = loggedIn;
+    });
+  }
   render() {
+    const currentPageUid = staticPathToPageUid[this.path];
+
     return html`
       <div class="header">
         <hg-drawer-close
@@ -52,22 +69,51 @@ export class HgDrawerContent extends LitElement {
           ${!this.promotedDynamicPathPage
             ? ''
             : html`<li class="promoted">
-              <hg-drawer-item .link=${staticProp({
-                path: createDynamicPath(this.promotedDynamicPathPage.permalink),
-                name: this.promotedDynamicPathPage.title,
-              })}>
+              <hg-drawer-item
+                .path=${createDynamicPath(this.promotedDynamicPathPage.permalink)}
+                .name=${this.promotedDynamicPathPage.title}
+              >
               </hg-drawer-item>
             </li>`
           }
-          ${links.map((link) => html`
-            <li>
-              <hg-drawer-item 
-                .link=${link} 
-                .selected=${this.selected}
-                .opened=${_.some(['path', this.selected], link.sublinks)}>
-              </hg-drawer-item>        
-            </li>
-          `)}
+          ${mainNavigation.map((navigationItem) => {
+            const { pageUid, name, subpages } = navigationItem;
+            const { path } = pagesStaticData[pageUid];
+
+            const isSelected = (pageUid === currentPageUid && !subpages)
+              || (pageUid === 'dynamic-path-pages' && (this.path === DYNAMIC_PATH_PAGES_ROOT_PATH || isDynamicPath(this.path)));
+
+            // todo remove loggedIn check
+            const subitems = subpages && subpages
+              .filter((subpageUid) => {
+                if (this._loggedIn) {
+                  return true;
+                }
+                return subpageUid !== 'pizza-truck' && subpageUid !== 'outdoor-parties';
+              })
+              .map((subpageUid) => {
+                const { name, path } = pagesStaticData[subpageUid];
+                return { name, path };
+              });
+
+            const selectedSubitemIndex = (subitems || []).findIndex((subitem) => {
+              return subitem.path === this.path;
+            });
+            const isAnySubitemSelected = selectedSubitemIndex !== -1;
+
+            return html`
+              <li>
+                <hg-drawer-item
+                  .path=${path}
+                  .name=${name}
+                  .isSelected=${isSelected}
+                  .isOpened=${isAnySubitemSelected}
+                  .subitems=${subitems}
+                  .selectedSubitemIndex=${selectedSubitemIndex}>
+                </hg-drawer-item>        
+              </li>
+          `;
+          })}
         </ul>
       </nav>
     `;

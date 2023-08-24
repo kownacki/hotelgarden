@@ -105,6 +105,8 @@ export class HgLunch extends LitElement {
     }
   }
   render() {
+    const lunchPageUid = 'lunch';
+
     return html`
       <hg-content>
         <div>
@@ -150,8 +152,8 @@ export class HgLunch extends LitElement {
             }
           `}
         </div>
-        <hg-content-slider id="zdjecia" .uid=${'lunch'}></hg-content-slider>
-        <hg-links .path=${'/lunch'} .superpath=${'/garden-bistro'} .includeSuperpath=${true}></hg-links>
+        <hg-content-slider id="zdjecia" .uid=${lunchPageUid}></hg-content-slider>
+        <hg-links .pageUid=${lunchPageUid} .isParentPageIncluded=${true}></hg-links>
       </hg-content>
     `;
   }

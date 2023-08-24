@@ -17,19 +17,20 @@ export class HgSummerBar extends LitElement {
   };
   static styles = sharedStyles;
   render() {
+    const summerBarPageUid = 'summer-bar';
     const menuName = 'Menu Summer Bar';
 
     return html`
       <hg-content>
-        <hg-content-icons .uid=${'summer-bar'}></hg-content-icons>
+        <hg-content-icons .uid=${summerBarPageUid}></hg-content-icons>
         <h2 class="content-heading" id="menu">${menuName}</h2>
-        <hg-menu .uid=${'summer-bar'} .menuName=${menuName}></hg-menu>
-        <hg-content-slider .uid=${'summer-bar'}></hg-content-slider>
+        <hg-menu .uid=${summerBarPageUid} .menuName=${menuName}></hg-menu>
+        <hg-content-slider .uid=${summerBarPageUid}></hg-content-slider>
         <hg-article .rich=${true} .uid=${'summer-bar-extra1'}></hg-article>
-        <hg-mosaic .uid=${'summer-bar'}></hg-mosaic>
-        <hg-reviews-block .uid=${'summer-bar'}></hg-reviews-block>
+        <hg-mosaic .uid=${summerBarPageUid}></hg-mosaic>
+        <hg-reviews-block .uid=${summerBarPageUid}></hg-reviews-block>
         <hg-contact-block></hg-contact-block>
-        <hg-links .path=${'/summer-bar'} .superpath=${'/garden-bistro'} .includeSuperpath=${true}></hg-links>
+        <hg-links .pageUid=${summerBarPageUid} .isParentPageIncluded=${true}></hg-links>
       </hg-content>
     `;
   }

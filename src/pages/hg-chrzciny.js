@@ -1,4 +1,5 @@
 import {LitElement, html} from 'lit';
+import {pagesStaticData} from '../../utils/urlStructure.js';
 import '../content/hg-contact-block.js';
 import '../content/hg-content-icons.js';
 import '../content/hg-content-slider.js';
@@ -17,16 +18,18 @@ export class HgChrzciny extends LitElement {
   };
   static styles = sharedStyles;
   render() {
+    const chrzcinyPageUid = 'chrzciny';
+
     return html`
       <hg-content>
-        <hg-quote .uid=${'chrzciny'}></hg-quote>
-        <hg-content-icons .uid=${'chrzciny'}></hg-content-icons>
-        <hg-content-slider .uid=${'chrzciny'}></hg-content-slider>
-        <hg-mosaic .uid=${'chrzciny'}></hg-mosaic>
-        <hg-halls-block .uid=${'chrzciny'} .type=${'banquet'}></hg-halls-block>
-        <hg-reviews-block uid=${'chrzciny'}></hg-reviews-block>
+        <hg-quote .uid=${chrzcinyPageUid}></hg-quote>
+        <hg-content-icons .uid=${chrzcinyPageUid}></hg-content-icons>
+        <hg-content-slider .uid=${chrzcinyPageUid}></hg-content-slider>
+        <hg-mosaic .uid=${chrzcinyPageUid}></hg-mosaic>
+        <hg-halls-block .uid=${chrzcinyPageUid} .type=${'banquet'}></hg-halls-block>
+        <hg-reviews-block uid=${chrzcinyPageUid}></hg-reviews-block>
         <hg-contact-block></hg-contact-block>
-        <hg-links .path=${'/chrzciny'} .superpath=${'/wesela'} .includeSuperpath=${true}></hg-links>
+        <hg-links .pageUid=${chrzcinyPageUid} .isParentPageIncluded=${true}></hg-links>
       </hg-content>
     `;
   }

@@ -29,19 +29,19 @@ export class HgOutdoorParties extends LitElement {
     `;
   }
   render() {
-    const outdoorPartiesUid = 'outdoor-parties';
+    const outdoorPartiesPageUid = 'outdoor-parties';
 
     return html`
       <hg-content>
-        <hg-content-icons .uid=${outdoorPartiesUid}></hg-content-icons>
-        <hg-mosaic .uid=${outdoorPartiesUid} .buttons=${staticProp({
+        <hg-content-icons .uid=${outdoorPartiesPageUid}></hg-content-icons>
+        <hg-mosaic .uid=${outdoorPartiesPageUid} .buttons=${staticProp({
           primary: [{url: '#kontakt', text: 'Skontaktuj się z nami'}],
         })}></hg-mosaic>
-        <hg-content-slider .uid=${outdoorPartiesUid}></hg-content-slider>
-        <hg-text-image .uid=${outdoorPartiesUid}></hg-text-image>
+        <hg-content-slider .uid=${outdoorPartiesPageUid}></hg-content-slider>
+        <hg-text-image .uid=${outdoorPartiesPageUid}></hg-text-image>
         ${this._getHallsTemplate()}
         <hg-contact-block id="kontakt"></hg-contact-block>
-        <hg-links .path=${pagesStaticData[outdoorPartiesUid].path} .superpath=${'/wesela'} .includeSuperpath=${true}></hg-links>
+        <hg-links .pageUid=${outdoorPartiesPageUid} .isParentPageIncluded=${true}></hg-links>
       </hg-content>
     `;
   }

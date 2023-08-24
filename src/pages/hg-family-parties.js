@@ -29,6 +29,8 @@ export class HgFamilyParties extends LitElement {
     }
   `];
   render() {
+    const familyPartiesPageUid = 'family-parties';
+
     return html`
       <hg-content>
         ${_.map((type) => html`
@@ -40,10 +42,10 @@ export class HgFamilyParties extends LitElement {
             <hg-content-icons .small=${true} .uid=${'family-parties-' + type}></hg-content-icons>
           </div>
         `, ['chrzciny', 'komunie', 'funerals'])}
-        <hg-halls-block .uid=${'family-parties'} .type=${'banquet'}></hg-halls-block>
-        <hg-reviews-block uid=${'family-parties'}></hg-reviews-block>
+        <hg-halls-block .uid=${familyPartiesPageUid} .type=${'banquet'}></hg-halls-block>
+        <hg-reviews-block uid=${familyPartiesPageUid}></hg-reviews-block>
         <hg-contact-block id="kontakt"></hg-contact-block>
-        <hg-links .path=${'/przyjecia-rodzinne'} .superpath=${'/wesela'} .includeSuperpath=${true}></hg-links>
+        <hg-links .pageUid=${familyPartiesPageUid} .isParentPageIncluded=${true}></hg-links>
       </hg-content>
     `;
   }

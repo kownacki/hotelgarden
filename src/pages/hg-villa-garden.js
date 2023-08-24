@@ -14,13 +14,15 @@ export class HgVillaGarden extends LitElement {
   };
   static styles = sharedStyles;
   render() {
+    const villaGardenPageUid = 'villa-garden';
+
     return html`
       <hg-content>
         <hg-room 
           .index=${VILLA_ROOM_INDEX} 
           .extraButtons=${staticProp([{url: '/pokoje', text: 'Zobacz pozostałe pokoje'}])}>
         </hg-room>
-        <hg-links .path=${'/villa-garden'} .superpath=${'/'}></hg-links>
+        <hg-links .pageUid=${villaGardenPageUid} .excludedPages=${staticProp(['careers'])}></hg-links>
       </hg-content>
     `;
   }

@@ -1,5 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import '@material/mwc-checkbox';
+import {pagesStaticData} from '../../utils/urlStructure.js';
 import '../content/hg-links.js';
 import '../elements/hg-content.js';
 import '../elements/hg-list-old.js';
@@ -14,7 +15,7 @@ import {
 import '../utils/fixes/mwc-formfield-fixed.js';
 import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
 import {ItemsDbSyncController} from '../utils/ItemsDbSyncController.js';
-import {pagesStaticData} from '../../utils/urlStructure.js';
+import {staticProp} from '../utils.js';
 
 const reviewBlocks = ['landing', 'restaurant', 'summer-bar', 'pizza-truck', 'weddings', 'family-parties'];
 
@@ -104,6 +105,8 @@ export class HgReviews extends LitElement {
     this._reviewsDbSync.setPath(this._path);
   }
   render() {
+    const reviewsPageUid = 'reviews';
+
     return html`
       <hg-content>
         <hg-list-old
@@ -136,7 +139,7 @@ export class HgReviews extends LitElement {
             this._reviewsDbSync.requestItemUpdate(index, {dataPath: 'display', data});
           }}>
         </hg-list-old>
-        <hg-links .path=${'/opinie'} .superpath=${'/'}></hg-links>
+        <hg-links .pageUid=${reviewsPageUid} .excludedPages=${staticProp(['careers'])}></hg-links>
       </hg-content>
     `;
   }

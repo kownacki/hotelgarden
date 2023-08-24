@@ -152,7 +152,7 @@ export class HgApp extends LitElement {
       <hg-header
         id="header"
         .noBannerImage=${this._noBannerImage}
-        .selected=${this._path}
+        .path=${this._path}
         .promotedDynamicPathPage=${this._promotedDynamicPathPage}
         .promotedDynamicPathPageLoaded=${this._promotedDynamicPathPageLoaded}
         @open-drawer=${async () => {
@@ -181,7 +181,7 @@ export class HgApp extends LitElement {
       ${!this._promotedDynamicPathPageLoaded || !this._enableDrawer ? '' : html`
         <hg-drawer
           id="drawer"
-          .selected=${this._path}
+          .path=${this._path}
           .promotedDynamicPathPage=${this._promotedDynamicPathPage}>
         </hg-drawer>
       `}

@@ -19,20 +19,22 @@ export class HgWeddings extends LitElement {
   };
   static styles = sharedStyles;
   render() {
+    const weddingsPageUid = 'weddings';
+
     return html`
       <hg-content>
-        <hg-quote .uid=${'weddings'}></hg-quote>
-        <hg-content-icons .uid=${'weddings'}></hg-content-icons>
-        <hg-content-slider .uid=${'weddings'}></hg-content-slider>
-        <hg-mosaic .uid=${'weddings'} .buttons=${staticProp({
+        <hg-quote .uid=${weddingsPageUid}></hg-quote>
+        <hg-content-icons .uid=${weddingsPageUid}></hg-content-icons>
+        <hg-content-slider .uid=${weddingsPageUid}></hg-content-slider>
+        <hg-mosaic .uid=${weddingsPageUid} .buttons=${staticProp({
           primary: [{url: '#kontakt', text: 'Skontaktuj się z nami'}],
         })}></hg-mosaic>
-        <hg-text-image swap .uid=${'weddings'}></hg-text-image>
-        <hg-halls-block .uid=${'weddings'} .type=${'banquet'}></hg-halls-block>
-        <hg-reviews-block uid=${'weddings'}></hg-reviews-block>
+        <hg-text-image swap .uid=${weddingsPageUid}></hg-text-image>
+        <hg-halls-block .uid=${weddingsPageUid} .type=${'banquet'}></hg-halls-block>
+        <hg-reviews-block uid=${weddingsPageUid}></hg-reviews-block>
         <hg-content-slider .uid=${'weddings-2'}></hg-content-slider>
         <hg-contact-block id="kontakt"></hg-contact-block>
-        <hg-links .path=${'/wesela'} .superpath=${'/wesela'}></hg-links>
+        <hg-links .pageUid=${weddingsPageUid}></hg-links>
       </hg-content>
     `;
   }

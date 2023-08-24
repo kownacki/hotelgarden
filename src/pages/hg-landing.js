@@ -19,18 +19,20 @@ export class HgLanding extends LitElement {
   };
   static styles = sharedStyles;
   render() {
+    const landingPageUid = 'landing';
+
     return html`
       <hg-content>
-        <hg-quote .uid=${'landing'}></hg-quote>
-        <hg-content-icons .uid=${'landing'}></hg-content-icons>
-        <hg-text-image .swap=${true} .uid=${'landing'} .buttons=${staticProp([{url: '/pokoje', text: 'Zobacz pokoje / Rezerwuj online'}])}></hg-text-image>
-        <hg-mosaic .uid=${'landing'} .buttons=${staticProp({
+        <hg-quote .uid=${landingPageUid}></hg-quote>
+        <hg-content-icons .uid=${landingPageUid}></hg-content-icons>
+        <hg-text-image .swap=${true} .uid=${landingPageUid} .buttons=${staticProp([{url: '/pokoje', text: 'Zobacz pokoje / Rezerwuj online'}])}></hg-text-image>
+        <hg-mosaic .uid=${landingPageUid} .buttons=${staticProp({
           primary: [{url: '/wesela', text: 'Zobacz ofertę'}],
           secondary: [{url: '/sale-bankietowe', text: 'Zobacz sale'}],
         })}></hg-mosaic>
-        <hg-content-slider .uid=${'landing'}></hg-content-slider>
-        <hg-reviews-block .uid=${'landing'} .scores=${true} .bookingScores=${_.get('bookingScores', this.config)}></hg-reviews-block>
-        <hg-infographic .uid=${'landing'}></hg-infographic>
+        <hg-content-slider .uid=${landingPageUid}></hg-content-slider>
+        <hg-reviews-block .uid=${landingPageUid} .scores=${true} .bookingScores=${_.get('bookingScores', this.config)}></hg-reviews-block>
+        <hg-infographic .uid=${landingPageUid}></hg-infographic>
         <hg-events-block></hg-events-block>
         <hg-map class="no-animation"></hg-map>
       </hg-content>

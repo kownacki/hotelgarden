@@ -123,41 +123,46 @@ export const pagesStaticData: Record<PageUid, PageStaticData> = mapValues(
 export const pageUids = Object.keys(pagesStaticData) as PageUid[];
 export const staticPathPageUids = pageUids.filter((pageUid) => pageUid !== '404') as StaticPathPageUid[];
 
-export type SingleNavigationItem = PageStaticData;
-
-export interface MultipleNavigationItem {
+export interface NavigationItem {
+  pageUid: PageUid,
   name: string,
-  path: StaticPath,
-  sublinks: PageUid[],
+  subpages?: PageUid[],
 }
 
-export type NavigationItem = SingleNavigationItem | MultipleNavigationItem;
-
-export const links: NavigationItem[] = [
+export const mainNavigation: NavigationItem[] = [
   {
+    pageUid: 'landing',
     name: 'Hotel',
-    path: '/',
-    sublinks: ['landing', 'rooms', 'villa-garden', 'cuisine', 'surroundings', 'reviews', 'careers'],
+    subpages: ['landing', 'rooms', 'villa-garden', 'cuisine', 'surroundings', 'reviews', 'careers'],
   },
   {
+    pageUid: 'restaurant',
     name: 'Food & Drink',
-    path: '/garden-bistro',
-    sublinks: ['restaurant', 'lunch', 'summer-bar', 'pizza-truck'],
+    subpages: ['restaurant', 'lunch', 'summer-bar', 'pizza-truck'],
   }, {
+    pageUid: 'conferences',
     name: 'Konferencje',
-    path: '/konferencje',
-    sublinks: ['conferences', 'conference-halls'],
+    subpages: ['conferences', 'conference-halls'],
   }, {
+    pageUid: 'weddings',
     name: 'Uroczystości',
-    path: '/wesela',
-    sublinks: ['weddings', 'family-parties', 'banquet-halls', 'outdoor-parties'],
+    subpages: ['weddings', 'family-parties', 'banquet-halls', 'outdoor-parties'],
   },
-  pagesStaticData['gallery'],
-  pagesStaticData['dynamic-path-pages'],
-  pagesStaticData['contact'],
+  {
+    pageUid: 'gallery',
+    name: pagesStaticData['gallery'].name,
+  },
+  {
+    pageUid: 'dynamic-path-pages',
+    name: pagesStaticData['dynamic-path-pages'].name,
+  },
+  {
+    pageUid: 'contact',
+    name: pagesStaticData['contact'].name,
+  },
 ];
 
-export const linksMap = keyBy(links, 'path');
+export const mainNavigationByParentPageUid = keyBy(mainNavigation, 'pageUid');
 
 export const createFullUrl = (path: string) => {
   return path === '/' ? ROOT_URL : `${ROOT_URL}${path}`;

@@ -1,13 +1,15 @@
 import {LitElement, html, css} from 'lit';
 import {when} from 'lit/directives/when.js';
-import {isDynamicPath} from '../../../utils/urlStructure.js';
 import './hg-drawer-item-subitems.js';
 
 export class HgDrawerItem extends LitElement {
   static properties = {
-    link: Object,
-    opened: {type: Boolean, reflect: true},
-    selected: String,
+    path: String,
+    name: String,
+    isSelected: Boolean,
+    isOpened: {type: Boolean, reflect: true},
+    subitems: Array, // { name: string, path: string }[]
+    selectedSubitemIndex: Number,
   };
   static styles = css`
     /* todo arrow to bottom to show that this menu is dropdown */
@@ -34,33 +36,29 @@ export class HgDrawerItem extends LitElement {
     }
   `;
   render() {
-    const isSelected = (this.link.path === this.selected && !this.link.sublinks)
-      || (this.link.path === '/wydarzenia' && (this.selected === '/wydarzenia' || isDynamicPath(this.selected)));
     return html`
-      <div class="item" ?selected=${isSelected}>
-        ${this.link.sublinks
+      <div class="item" ?selected=${this.isSelected}>
+        ${this.subitems
           ? html`<div
-              @click=${() => this.opened = !this.opened}>
-              ${this.link.name}
+              @click=${() => this.isOpened = !this.isOpened}>
+              ${this.name}
             </div>`
           : html`
             <a
-              href="${this.link.path}"
+              href="${this.path}"
               @click=${() => {
                 this.dispatchEvent(new CustomEvent('close-drawer', {composed: true}));
               }}
             >
-              ${this.link.name}
+              ${this.name}
             </a>
           `}
       </div>
       ${when(
-        this.link.sublinks && this.opened,
+        this.subitems && this.isOpened,
         () => html`
-          <hg-drawer-item-subitems 
-            .links=${this.link.sublinks}
-            .selectedPath=${this.selected}
-          ></hg-drawer-item-subitems>
+          <hg-drawer-item-subitems .subitems=${this.subitems} .selectedSubitemIndex=${this.selectedSubitemIndex}>
+          </hg-drawer-item-subitems>
         `,
       )}
     `;

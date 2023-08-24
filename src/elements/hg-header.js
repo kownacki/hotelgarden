@@ -1,17 +1,27 @@
 import {LitElement, html, css} from 'lit';
-import {isDynamicPath, staticPathToPageUid, pagesStaticData, links, createDynamicPath} from '../../utils/urlStructure.js';
+import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
+import {
+  isDynamicPath,
+  staticPathToPageUid,
+  pagesStaticData,
+  mainNavigation,
+  createDynamicPath,
+  DYNAMIC_PATH_PAGES_ROOT_PATH,
+} from '../../utils/urlStructure.js';
 import './ui/hg-icon-button.js';
-import './hg-header/hg-header-subnav.js';
+import './hg-header/hg-header-item.js';
 import './hg-header/hg-header-logo.js';
 import './hg-book/hg-book-order-button.js';
 
 export class HgHeader extends LitElement {
+  _firebaseAuth;
   static properties = {
     noBannerImage: {type: Boolean, reflect: true, attribute: 'no-banner-image'},
-    scrolledDown: {type: Boolean, reflect: true, attribute: 'scrolled-down'},
-    selected: String,
+    path: String,
     promotedDynamicPathPage: Object, // DynamicPathPageEventWithUid | DynamicPathPageNewsWithUid | undefined
     promotedDynamicPathPageLoaded: Boolean,
+    _loggedIn: Boolean,
+    _scrolledDown: {type: Boolean, reflect: true, attribute: 'scrolled-down'},
   };
   static styles = css`
     :host {
@@ -43,40 +53,9 @@ export class HgHeader extends LitElement {
       align-items: center;
     }
     li {
-      position: relative;
       list-style-type: none;
       margin-right: 10px;
       margin-top: 10px;
-      padding: 0 0 10px;
-    }
-    hg-header-subnav {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      transition: visibility 0.3s, opacity 0.3s ease, margin 0.3s ease;
-      visibility: hidden;
-      opacity: 0;
-      margin: 10px 0 0;
-    }
-    li:hover hg-header-subnav {
-      visibility: visible;
-      opacity: 1.0;
-      margin: 0;
-    }
-    a {
-      text-align: center;
-      display: block;
-      padding: 10px;
-      font-weight: 400;
-      color: white;
-      text-decoration: none;
-      transition: background-color 0.3s ease, color 0.2s ease;
-    }
-    :host([scrolled-down]) a:not(:hover):not([selected]), :host([no-banner-image]) a:not(:hover):not([selected]) {
-      color: var(--primary-color);
-    }
-    a:hover, a[selected] {
-      background: rgba(var(--primary-color-rgb), 90%);
     }
     hg-icon-button {
       display: none;
@@ -98,9 +77,6 @@ export class HgHeader extends LitElement {
     @media all and (max-width: 1279px) {
       li {
         margin-right: 5px;
-      }
-      a {
-        padding: 10px 7px;
       }
       hg-book-order-button {
         margin: 0  7px 0 auto;
@@ -138,9 +114,14 @@ export class HgHeader extends LitElement {
   `;
   constructor() {
     super();
-    window.addEventListener('scroll', _.throttle(100, () => this.scrolledDown = window.pageYOffset > 0));
+    this._firebaseAuth = new FirebaseAuthController(this, (loggedIn) => {
+      this._loggedIn = loggedIn;
+    });
+    window.addEventListener('scroll', _.throttle(100, () => this._scrolledDown = window.pageYOffset > 0));
   }
   render() {
+    const currentPageUid = staticPathToPageUid[this.path];
+
     return html`
       <header>
         ${!this.promotedDynamicPathPageLoaded ? ''
@@ -151,35 +132,65 @@ export class HgHeader extends LitElement {
               @click=${() => this.dispatchEvent(new CustomEvent('open-drawer'))}>
             </hg-icon-button>
           `}
-        <hg-header-logo .scrolledDown=${this.scrolledDown} .noBannerImage=${this.noBannerImage}></hg-header-logo>
+        <hg-header-logo .scrolledDown=${this._scrolledDown} .noBannerImage=${this.noBannerImage}></hg-header-logo>
         <nav>
           <ul>
             ${!this.promotedDynamicPathPageLoaded ? '' : html`
               ${!this.promotedDynamicPathPage ? '' : html`
                 <li class="promoted">
-                  <a href=${createDynamicPath(this.promotedDynamicPathPage.permalink)}>
-                    ${this.promotedDynamicPathPage.title}
-                  </a>
+                  <hg-header-item
+                    .path=${createDynamicPath(this.promotedDynamicPathPage.permalink)}
+                    .name=${this.promotedDynamicPathPage.title}
+                    .noBannerImage=${this.noBannerImage}
+                    .scrolledDown=${this._scrolledDown}
+                  >
+                  </hg-header-item>
                 </li>
               `}
-              ${links.map((link) => html`
-                <li>
-                  <a 
-                    href="${link.path}"
-                    ?selected=${link.path === this.selected
-                      || (link.path === '/wydarzenia' && (this.selected === '/wydarzenia' || isDynamicPath(this.selected)))
-                      || _.includes(staticPathToPageUid[this.selected], link.sublinks)}>
-                    ${link.name}
-                  </a>
-                  ${!link.sublinks ? '' : html`
-                    <hg-header-subnav .links=${link.sublinks} .selected=${this.selected}></hg-header-subnav>
-                  `}
-                </li>
-              `)}
+              ${mainNavigation.map((navigationItem) => {
+                const { pageUid, name, subpages } = navigationItem;
+                const { path } = pagesStaticData[pageUid];
+
+                const isSelected = pageUid === currentPageUid
+                  || (pageUid === 'dynamic-path-pages' && (this.path === DYNAMIC_PATH_PAGES_ROOT_PATH || isDynamicPath(this.path)))
+                  || subpages?.includes(currentPageUid);
+
+                // todo remove loggedIn check
+                const subitems = subpages && subpages
+                  .filter((subpageUid) => {
+                    if (this._loggedIn) {
+                      return true;
+                    }
+                    return subpageUid !== 'pizza-truck' && subpageUid !== 'outdoor-parties';
+                  })
+                  .map((subpageUid) => {
+                    const { name, path } = pagesStaticData[subpageUid];
+                    return { name, path };
+                  });
+
+                const selectedSubitemIndex = (subitems || []).findIndex((subitem) => {
+                  return subitem.path === this.path;
+                });
+
+                return html`
+                  <li>
+                    <hg-header-item
+                      .path=${path}
+                      .name=${name}
+                      .isSelected=${isSelected}
+                      .subitems=${subitems}
+                      .selectedSubitemIndex=${selectedSubitemIndex}
+                      .noBannerImage=${this.noBannerImage}
+                      .scrolledDown=${this._scrolledDown}
+                    >
+                    </hg-header-item>
+                  </li>
+                `;
+              })}
             `}
           </ul>
           <hg-book-order-button
-            .order=${(staticPathToPageUid[this.selected] && (pagesStaticData[staticPathToPageUid[this.selected]].parentPageUid === 'restaurant'))
+            .order=${(staticPathToPageUid[this.path] && (pagesStaticData[staticPathToPageUid[this.path]].parentPageUid === 'restaurant'))
               ? 'restaurant'
               : null}>
           </hg-book-order-button>

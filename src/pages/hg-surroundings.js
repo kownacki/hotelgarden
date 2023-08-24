@@ -16,9 +16,11 @@ export class HgSurroundings extends LitElement {
     }
   `];
   render() {
+    const surroundingsPageUid = 'surroundings';
+
     return html`
       <hg-content>
-        <hg-text-image .uid=${'surroundings'} .buttons=${staticProp([{url: '/summer-bar', text: 'Zobacz więcej'}])}></hg-text-image>
+        <hg-text-image .uid=${surroundingsPageUid} .buttons=${staticProp([{url: '/summer-bar', text: 'Zobacz więcej'}])}></hg-text-image>
         ${_.map.convert({cap: false})((icon, index) => html`
           <hg-text-image 
             .uid=${'surroundings-extra' + (index + 1)}
@@ -34,7 +36,7 @@ export class HgSurroundings extends LitElement {
           </hg-text-image>
           ${index === 0 ? '' : html`<hg-content-icons .small=${true} .uid=${'surroundings-extra' + index}></hg-content-icons>`}
         `, [null, 'foot', 'foot', 'foot', 'car', 'car'])}
-        <hg-links .path=${'/atrakcje-okolicy'} .superpath=${'/'}></hg-links>
+        <hg-links .pageUid=${surroundingsPageUid} .excludedPages=${staticProp(['careers'])}></hg-links>
       </hg-content>
     `;
   }

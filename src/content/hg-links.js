@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit';
-import {staticPathToPageUid, linksMap, pagesStaticData} from '../../utils/urlStructure.js';
+import {mainNavigationByParentPageUid, pagesStaticData} from '../../utils/urlStructure.js';
 import '../elements/mkwc/hg-image.js';
 import sharedStyles from '../styles/shared-styles.js';
 import {createDbPath, getFromDb} from '../utils/database.js';
@@ -8,10 +8,11 @@ import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
 export class HgLinks extends LitElement {
   _firebaseAuth;
   static properties = {
-    path: String,
-    superpath: String,
-    includeSuperpath: Boolean,
-    _links: Array,
+    pageUid: String,
+    excludedPages: Array,
+    isParentPageIncluded: Boolean,
+    _pages: Array,
+    _bannersMap: Object,
     _loggedIn: Boolean,
   };
   static styles = [sharedStyles, css`
@@ -75,48 +76,67 @@ export class HgLinks extends LitElement {
   }
   async willUpdate(changedProperties) {
     if (changedProperties.has('_loggedIn')) {
+      const parentPageUid = pagesStaticData[this.pageUid].parentPageUid;
+      const parentPageSubpages = mainNavigationByParentPageUid[parentPageUid].subpages;
+
       // todo remove loggedIn check
-      const links = linksMap[this.superpath].sublinks
-        .filter((subLink) => {
+      const pages = parentPageSubpages
+        .filter((subpageUid) => {
           if (this._loggedIn) {
             return true;
           }
-          return subLink !== 'pizza-truck' && subLink !== 'outdoor-parties'
+          return subpageUid !== 'pizza-truck' && subpageUid !== 'outdoor-parties'
         })
-        .map((subLink) => {
-          return pagesStaticData[subLink];
+        .filter((subpageUid) => {
+          return !(this.excludedPages?.includes(subpageUid));
         })
-        .filter((subLinkData) => {
-          return subLinkData.path !== this.path;
-        })
-        .filter((subLinkData) => {
-          if (subLinkData.path === this.superpath) {
-            return this.includeSuperpath;
+        .filter((subpageUid) => {
+          if (subpageUid === parentPageUid) {
+            return this.isParentPageIncluded;
           }
           return true;
+        })
+        .filter((subpageUid) => {
+          return subpageUid !== this.pageUid;
         });
 
-      const banners = await Promise.all(_.map(
-        (link) => getFromDb(createDbPath(`banners/${staticPathToPageUid[link.path]}`, 'image.url')),
-        links,
-      ));
-      this._links = _.map(([link, bannerImage]) => ({...link, image: bannerImage}), _.zip(links, banners));
+      const banners = await Promise.all(
+        pages.map((pageUid) => {
+          return getFromDb(createDbPath(`banners/${pageUid}`, 'image.url')).then((img) => ({
+            pageUid,
+            img,
+          }));
+        }),
+      );
+
+      this._pages = pages;
+      this._bannersMap = banners.reduce((bannersMap, { pageUid, img}) => {
+        return {
+          ...bannersMap,
+          [pageUid]: img,
+        };
+      }, {});
     }
   }
   render() {
     return html`
       <h2 class="content-heading">Zobacz także</h2>
       <div class="links">
-        ${_.map((link) => html`
-          <a href="${link.path}">
-            <hg-image
-              .src=${link.image}
-              .ready=${true}
-              .fit=${'cover'}>
-            </hg-image>
-            <div class="name">${link.name}</div>
-          </a>
-        `, this._links)}
+        ${this._pages?.map((pageUid) => {
+          const { path, name } = pagesStaticData[pageUid];
+          const bannerImg = this._bannersMap[pageUid];
+          
+          return html`
+            <a href="${path}">
+              <hg-image
+                .src=${bannerImg}
+                .ready=${true}
+                .fit=${'cover'}>
+              </hg-image>
+              <div class="name">${name}</div>
+            </a>
+          `;
+        })}
       </div>
     `;
   }

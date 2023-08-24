@@ -16,12 +16,14 @@ export class HgConferences extends LitElement {
   };
   static styles = sharedStyles;
   render() {
+    const conferencesPageUid = 'conferences';
+
     return html`
       <hg-content>
-        <hg-content-icons .uid=${'conferences'}></hg-content-icons>
-        <hg-content-slider .uid=${'conferences'}></hg-content-slider>
-        <hg-text-image .uid=${'conferences'} .buttons=${staticProp([{url: '#kontakt', text: 'Skontaktuj się z nami'}])}></hg-text-image>
-        <hg-halls-block .uid=${'conferences'} .type=${'conference'}></hg-halls-block>
+        <hg-content-icons .uid=${conferencesPageUid}></hg-content-icons>
+        <hg-content-slider .uid=${conferencesPageUid}></hg-content-slider>
+        <hg-text-image .uid=${conferencesPageUid} .buttons=${staticProp([{url: '#kontakt', text: 'Skontaktuj się z nami'}])}></hg-text-image>
+        <hg-halls-block .uid=${conferencesPageUid} .type=${'conference'}></hg-halls-block>
         <h2 class="content-heading">Food & Beverages</h2>
         <hg-article .rich=${true} .richConfig=${'mosaic'} .uid=${'conferences-cuisine'}></hg-article>
         <hg-content-slider .uid=${'conferences-cuisine'}></hg-content-slider>
