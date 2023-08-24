@@ -1,16 +1,8 @@
 import {LitElement, html, css} from 'lit';
-import {
-  isDynamicPath,
-  staticPathToPageUid,
-  pagesStaticData,
-  mainNavigation,
-  createDynamicPath,
-  DYNAMIC_PATH_PAGES_ROOT_PATH,
-} from '../../utils/urlStructure.js';
+import {staticPathToPageUid, pagesStaticData} from '../../utils/urlStructure.js';
 import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
-import {getNavigationSubitems} from '../utils/navigation.js';
 import './ui/hg-icon-button.js';
-import './hg-header/hg-header-item.js';
+import './hg-header/hg-header-items.js';
 import './hg-header/hg-header-logo.js';
 import './hg-book/hg-book-order-button.js';
 
@@ -47,17 +39,6 @@ export class HgHeader extends LitElement {
       display: flex;
       flex: 1;
     }
-    ul {
-      margin: 0 0 0 10px;
-      padding: 0;
-      display: flex;
-      align-items: center;
-    }
-    li {
-      list-style-type: none;
-      margin-right: 10px;
-      margin-top: 10px;
-    }
     hg-icon-button {
       display: none;
       margin: 8px;
@@ -76,9 +57,6 @@ export class HgHeader extends LitElement {
       margin: 0 15px 0 auto;
     }
     @media all and (max-width: 1279px) {
-      li {
-        margin-right: 5px;
-      }
       hg-book-order-button {
         margin: 0  7px 0 auto;
       }
@@ -87,8 +65,9 @@ export class HgHeader extends LitElement {
       }
     }
     @media all and (max-width: 1099px) {
-      ul {
-        display: none;
+      nav {
+        flex: none;
+        margin-left: auto;
       }
       hg-icon-button {
         display: block;
@@ -101,10 +80,6 @@ export class HgHeader extends LitElement {
       }
       hg-book-order-button {
         margin: 0 15px;
-      }
-      nav {
-        flex: none;
-        margin-left: auto;
       }
     }
     @media all and (max-width: 479px) {
@@ -121,8 +96,6 @@ export class HgHeader extends LitElement {
     window.addEventListener('scroll', _.throttle(100, () => this._scrolledDown = window.pageYOffset > 0));
   }
   render() {
-    const currentPageUid = staticPathToPageUid[this.path];
-
     return html`
       <header>
         ${!this.promotedDynamicPathPageLoaded ? ''
@@ -135,50 +108,16 @@ export class HgHeader extends LitElement {
           `}
         <hg-header-logo .scrolledDown=${this._scrolledDown} .noBannerImage=${this.noBannerImage}></hg-header-logo>
         <nav>
-          <ul>
-            ${!this.promotedDynamicPathPageLoaded ? '' : html`
-              ${!this.promotedDynamicPathPage ? '' : html`
-                <li class="promoted">
-                  <hg-header-item
-                    .path=${createDynamicPath(this.promotedDynamicPathPage.permalink)}
-                    .name=${this.promotedDynamicPathPage.title}
-                    .noBannerImage=${this.noBannerImage}
-                    .scrolledDown=${this._scrolledDown}
-                  >
-                  </hg-header-item>
-                </li>
-              `}
-              ${mainNavigation.map((navigationItem) => {
-                const { pageUid, name, subpages } = navigationItem;
-                const { path } = pagesStaticData[pageUid];
-
-                const isSelected = pageUid === currentPageUid
-                  || (pageUid === 'dynamic-path-pages' && (this.path === DYNAMIC_PATH_PAGES_ROOT_PATH || isDynamicPath(this.path)))
-                  || subpages?.includes(currentPageUid);
-
-                const subitems = subpages && getNavigationSubitems(subpages, this._loggedIn);
-
-                const selectedSubitemIndex = (subitems || []).findIndex((subitem) => {
-                  return subitem.path === this.path;
-                });
-
-                return html`
-                  <li>
-                    <hg-header-item
-                      .path=${path}
-                      .name=${name}
-                      .isSelected=${isSelected}
-                      .subitems=${subitems}
-                      .selectedSubitemIndex=${selectedSubitemIndex}
-                      .noBannerImage=${this.noBannerImage}
-                      .scrolledDown=${this._scrolledDown}
-                    >
-                    </hg-header-item>
-                  </li>
-                `;
-              })}
-            `}
-          </ul>
+          ${!this.promotedDynamicPathPageLoaded ? '' : html`
+            <hg-header-items
+              .path=${this.path}
+              .promotedDynamicPathPage=${this.promotedDynamicPathPage}
+              .noBannerImage=${this.noBannerImage}
+              .scrolledDown=${this._scrolledDown}
+              .isLoggedIn=${this._loggedIn}
+            >
+            </hg-header-items>
+          `}
           <hg-book-order-button
             .order=${(staticPathToPageUid[this.path] && (pagesStaticData[staticPathToPageUid[this.path]].parentPageUid === 'restaurant'))
               ? 'restaurant'
