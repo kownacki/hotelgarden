@@ -18,6 +18,7 @@ export class HgHeader extends LitElement {
   };
   static styles = css`
     :host {
+      --hg-header-font-color: white;
       font-size: 16px;
       display: block;
       top: 0;
@@ -29,6 +30,9 @@ export class HgHeader extends LitElement {
     :host([scrolled-down]) {
       background: white;
       box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
+    }
+    :host([scrolled-down]), :host([no-banner-image]) {
+      --hg-header-font-color: var(--primary-color);
     }
     header {
       display: flex;
@@ -42,15 +46,12 @@ export class HgHeader extends LitElement {
     hg-icon-button {
       display: none;
       margin: 8px;
-      color: white;
+      color: var(--hg-header-font-color);
       position: absolute;
     }
     hg-header-logo {
       align-self: center;
       margin: 0 20px;
-    }
-    :host([scrolled-down]) hg-icon-button, :host([no-banner-image]) hg-icon-button {
-      color: var(--primary-color);
     }
     hg-book-order-button {
       align-self: center;
@@ -112,8 +113,6 @@ export class HgHeader extends LitElement {
             <hg-header-items
               .path=${this.path}
               .promotedDynamicPathPage=${this.promotedDynamicPathPage}
-              .noBannerImage=${this.noBannerImage}
-              .scrolledDown=${this._scrolledDown}
               .isLoggedIn=${this._loggedIn}
             >
             </hg-header-items>

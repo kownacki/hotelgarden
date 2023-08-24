@@ -10,8 +10,6 @@ export class HgHeaderItem extends LitElement {
     isSelected: Boolean,
     subitems: Array, // { name: string, path: string }[]
     selectedSubitemIndex: Number,
-    noBannerImage: {type: Boolean, reflect: true, attribute: 'no-banner-image'},
-    scrolledDown: {type: Boolean, reflect: true, attribute: 'scrolled-down'},
   };
   static styles = [sharedStyles, css`
     :host {
@@ -24,15 +22,13 @@ export class HgHeaderItem extends LitElement {
       display: block;
       padding: 10px;
       font-weight: 400;
-      color: white;
+      color: var(--hg-header-font-color);
       text-decoration: none;
       transition: background-color 0.3s ease, color 0.2s ease;
     }
     a:hover, a[selected] {
+      color: white;
       background: rgba(var(--primary-color-rgb), 90%);
-    }
-    :host([scrolled-down]) a:not(:hover):not([selected]), :host([no-banner-image]) a:not(:hover):not([selected]) {
-      color: var(--primary-color);
     }
     hg-header-subnav {
       position: absolute;

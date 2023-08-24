@@ -14,8 +14,6 @@ export class HgHeaderItems extends LitElement {
   static properties = {
     path: String,
     promotedDynamicPathPage: Object, // DynamicPathPageEventWithUid | DynamicPathPageNewsWithUid | undefined
-    noBannerImage: Boolean,
-    scrolledDown: Boolean,
     isLoggedIn: Boolean,
   };
   static styles = [sharedStyles, css`
@@ -51,8 +49,6 @@ export class HgHeaderItems extends LitElement {
             <hg-header-item
               .path=${createDynamicPath(this.promotedDynamicPathPage.permalink)}
               .name=${this.promotedDynamicPathPage.title}
-              .noBannerImage=${this.noBannerImage}
-              .scrolledDown=${this.scrolledDown}
             >
             </hg-header-item>
           </li>
@@ -79,8 +75,6 @@ export class HgHeaderItems extends LitElement {
                 .isSelected=${isSelected}
                 .subitems=${subitems}
                 .selectedSubitemIndex=${selectedSubitemIndex}
-                .noBannerImage=${this.noBannerImage}
-                .scrolledDown=${this.scrolledDown}
               >
               </hg-header-item>
             </li>
