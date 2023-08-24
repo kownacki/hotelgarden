@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit';
-import {mainNavigationByParentPageUid, pagesStaticData} from '../../utils/urlStructure.js';
+import {HIDDEN_PAGES, mainNavigationByParentPageUid, pagesStaticData} from '../../utils/urlStructure.js';
 import '../elements/mkwc/hg-image.js';
 import sharedStyles from '../styles/shared-styles.js';
 import {createDbPath, getFromDb} from '../utils/database.js';
@@ -82,10 +82,7 @@ export class HgLinks extends LitElement {
       // todo remove loggedIn check
       const pages = parentPageSubpages
         .filter((subpageUid) => {
-          if (this._loggedIn) {
-            return true;
-          }
-          return subpageUid !== 'pizza-truck' && subpageUid !== 'outdoor-parties'
+          return !HIDDEN_PAGES.includes(subpageUid) || this._loggedIn;
         })
         .filter((subpageUid) => {
           return !(this.excludedPages?.includes(subpageUid));

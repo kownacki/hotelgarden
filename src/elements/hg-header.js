@@ -7,6 +7,7 @@ import {
   mainNavigation,
   createDynamicPath,
   DYNAMIC_PATH_PAGES_ROOT_PATH,
+  HIDDEN_PAGES,
 } from '../../utils/urlStructure.js';
 import './ui/hg-icon-button.js';
 import './hg-header/hg-header-item.js';
@@ -158,10 +159,7 @@ export class HgHeader extends LitElement {
                 // todo remove loggedIn check
                 const subitems = subpages && subpages
                   .filter((subpageUid) => {
-                    if (this._loggedIn) {
-                      return true;
-                    }
-                    return subpageUid !== 'pizza-truck' && subpageUid !== 'outdoor-parties';
+                    return !HIDDEN_PAGES.includes(subpageUid) || this._loggedIn;
                   })
                   .map((subpageUid) => {
                     const { name, path } = pagesStaticData[subpageUid];

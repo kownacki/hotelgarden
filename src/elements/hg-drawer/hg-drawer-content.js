@@ -3,6 +3,7 @@ import {FirebaseAuthController} from '../../utils/FirebaseAuthController.js';
 import {
   createDynamicPath,
   DYNAMIC_PATH_PAGES_ROOT_PATH,
+  HIDDEN_PAGES,
   isDynamicPath,
   mainNavigation,
   pagesStaticData,
@@ -86,10 +87,7 @@ export class HgDrawerContent extends LitElement {
             // todo remove loggedIn check
             const subitems = subpages && subpages
               .filter((subpageUid) => {
-                if (this._loggedIn) {
-                  return true;
-                }
-                return subpageUid !== 'pizza-truck' && subpageUid !== 'outdoor-parties';
+                return !HIDDEN_PAGES.includes(subpageUid) || this._loggedIn;
               })
               .map((subpageUid) => {
                 const { name, path } = pagesStaticData[subpageUid];
