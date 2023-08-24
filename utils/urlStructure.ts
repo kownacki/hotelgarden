@@ -15,6 +15,7 @@ export type PageUid =
   | 'gallery'
   | 'landing'
   | 'lunch'
+  | 'oaza'
   | 'outdoor-parties'
   | 'pizza-truck'
   | 'restaurant'
@@ -27,7 +28,7 @@ export type PageUid =
 
 export type StaticPathPageUid = Exclude<PageUid, '404'>;
 
-export const HIDDEN_PAGES: StaticPathPageUid[] = ['pizza-truck', 'outdoor-parties'];
+export const HIDDEN_PAGES: StaticPathPageUid[] = ['pizza-truck', 'outdoor-parties', 'oaza'];
 
 export type StaticPath =
   | '/'
@@ -41,6 +42,7 @@ export type StaticPath =
   | '/kuchnia'
   | '/lunch'
   | '/opinie'
+  | '/oaza'
   | '/pizza-truck'
   | '/pokoje'
   | '/praca'
@@ -67,6 +69,7 @@ export const staticPathToPageUid: Record<StaticPath, StaticPathPageUid> = {
   '/kuchnia': 'cuisine',
   '/lunch': 'lunch',
   '/opinie': 'reviews',
+  '/oaza': 'oaza',
   '/pizza-truck': 'pizza-truck',
   '/pokoje': 'rooms',
   '/praca': 'careers',
@@ -104,6 +107,7 @@ const pagesStaticDataWithoutUid: Record<PageUid, PageStaticDataWithoutUid> = {
   'gallery': {name: 'Galeria', path: '/galeria', parentPageUid: 'gallery'},
   'landing': {name: 'O hotelu', path: '/', parentPageUid: 'landing'},
   'lunch': {name: 'Oferta lunchowa', path: '/lunch', parentPageUid: 'restaurant'},
+  'oaza': {name: 'Oaza', path: '/oaza', parentPageUid: 'restaurant'},
   'outdoor-parties': {name: 'Imprezy plenerowe', path: '/imprezy-plenerowe', parentPageUid: 'weddings'},
   'pizza-truck': {name: 'Pizza Truck', path: '/pizza-truck', parentPageUid: 'restaurant'},
   'restaurant': {name: 'Garden Bistro', path: '/garden-bistro', parentPageUid: 'restaurant'},
@@ -140,7 +144,7 @@ export const mainNavigation: NavigationItem[] = [
   {
     pageUid: 'restaurant',
     name: 'Food & Drink',
-    subpages: ['restaurant', 'lunch', 'summer-bar', 'pizza-truck'],
+    subpages: ['restaurant', 'lunch', 'summer-bar', 'pizza-truck', 'oaza'],
   }, {
     pageUid: 'conferences',
     name: 'Konferencje',
