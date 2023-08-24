@@ -1,5 +1,4 @@
 import {LitElement, html, css} from 'lit';
-import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
 import {
   isDynamicPath,
   staticPathToPageUid,
@@ -7,8 +6,9 @@ import {
   mainNavigation,
   createDynamicPath,
   DYNAMIC_PATH_PAGES_ROOT_PATH,
-  HIDDEN_PAGES,
 } from '../../utils/urlStructure.js';
+import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
+import {getNavigationSubitems} from '../utils/navigation.js';
 import './ui/hg-icon-button.js';
 import './hg-header/hg-header-item.js';
 import './hg-header/hg-header-logo.js';
@@ -156,15 +156,7 @@ export class HgHeader extends LitElement {
                   || (pageUid === 'dynamic-path-pages' && (this.path === DYNAMIC_PATH_PAGES_ROOT_PATH || isDynamicPath(this.path)))
                   || subpages?.includes(currentPageUid);
 
-                // todo remove loggedIn check
-                const subitems = subpages && subpages
-                  .filter((subpageUid) => {
-                    return !HIDDEN_PAGES.includes(subpageUid) || this._loggedIn;
-                  })
-                  .map((subpageUid) => {
-                    const { name, path } = pagesStaticData[subpageUid];
-                    return { name, path };
-                  });
+                const subitems = subpages && getNavigationSubitems(subpages, this._loggedIn);
 
                 const selectedSubitemIndex = (subitems || []).findIndex((subitem) => {
                   return subitem.path === this.path;

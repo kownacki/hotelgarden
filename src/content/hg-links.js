@@ -1,9 +1,10 @@
 import {LitElement, html, css} from 'lit';
-import {HIDDEN_PAGES, mainNavigationByParentPageUid, pagesStaticData} from '../../utils/urlStructure.js';
+import {mainNavigationByParentPageUid, pagesStaticData} from '../../utils/urlStructure.js';
 import '../elements/mkwc/hg-image.js';
 import sharedStyles from '../styles/shared-styles.js';
 import {createDbPath, getFromDb} from '../utils/database.js';
 import {FirebaseAuthController} from '../utils/FirebaseAuthController.js';
+import {omitForbiddenPages} from '../utils/navigation.js';
 
 export class HgLinks extends LitElement {
   _firebaseAuth;
@@ -79,11 +80,7 @@ export class HgLinks extends LitElement {
       const parentPageUid = pagesStaticData[this.pageUid].parentPageUid;
       const parentPageSubpages = mainNavigationByParentPageUid[parentPageUid].subpages;
 
-      // todo remove loggedIn check
-      const pages = parentPageSubpages
-        .filter((subpageUid) => {
-          return !HIDDEN_PAGES.includes(subpageUid) || this._loggedIn;
-        })
+      const pages = omitForbiddenPages(parentPageSubpages, this._loggedIn)
         .filter((subpageUid) => {
           return !(this.excludedPages?.includes(subpageUid));
         })

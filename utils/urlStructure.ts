@@ -126,9 +126,9 @@ export const pageUids = Object.keys(pagesStaticData) as PageUid[];
 export const staticPathPageUids = pageUids.filter((pageUid) => pageUid !== '404') as StaticPathPageUid[];
 
 export interface NavigationItem {
-  pageUid: PageUid,
+  pageUid: StaticPathPageUid,
   name: string,
-  subpages?: PageUid[],
+  subpages?: StaticPathPageUid[],
 }
 
 export const mainNavigation: NavigationItem[] = [

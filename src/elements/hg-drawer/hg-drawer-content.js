@@ -1,9 +1,9 @@
 import {LitElement, html, css} from 'lit';
 import {FirebaseAuthController} from '../../utils/FirebaseAuthController.js';
+import {getNavigationSubitems} from '../../utils/navigation.js';
 import {
   createDynamicPath,
   DYNAMIC_PATH_PAGES_ROOT_PATH,
-  HIDDEN_PAGES,
   isDynamicPath,
   mainNavigation,
   pagesStaticData,
@@ -84,15 +84,7 @@ export class HgDrawerContent extends LitElement {
             const isSelected = (pageUid === currentPageUid && !subpages)
               || (pageUid === 'dynamic-path-pages' && (this.path === DYNAMIC_PATH_PAGES_ROOT_PATH || isDynamicPath(this.path)));
 
-            // todo remove loggedIn check
-            const subitems = subpages && subpages
-              .filter((subpageUid) => {
-                return !HIDDEN_PAGES.includes(subpageUid) || this._loggedIn;
-              })
-              .map((subpageUid) => {
-                const { name, path } = pagesStaticData[subpageUid];
-                return { name, path };
-              });
+            const subitems = subpages && getNavigationSubitems(subpages, this._loggedIn);
 
             const selectedSubitemIndex = (subitems || []).findIndex((subitem) => {
               return subitem.path === this.path;
