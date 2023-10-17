@@ -1,0 +1,5 @@
+﻿{
+  "Description": "Plik weryfikujący własność domeny pakietu Microsoft 365— umieść go w katalogu głównym witryny internetowej",
+  "Domain": "hotelgarden.pl",
+  "Id": "bd875642-442b-4591-af53-6e056b7c002c"
+}
