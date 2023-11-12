@@ -38,7 +38,7 @@ export class HgEventsBlock extends LitElement {
   }
   render() {
     return html`
-      <h2 class="content-heading">Najbliższe wydarzenia</h2>
+      <h2 class="content-heading">Nadchodzące wydarzenia i aktualności</h2>
       ${when(
         this._allDynamicPathPagesReady,
         () => html`
