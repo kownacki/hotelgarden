@@ -7,6 +7,11 @@ let googleMapsLoaded = false;
 export class HgMap extends LitElement {
   static properties = {
     seen: Boolean,
+    lat: Number,
+    lng: Number,
+    href: String,
+    title: String,
+    street: String,
   };
   static styles = css`
     #map {
@@ -19,12 +24,9 @@ export class HgMap extends LitElement {
         googleMapsLoaded = true;
         await loadScript(`https://maps.googleapis.com/maps/api/js?key=${API_KEY}`);
       }
-      const lat = 51.210707;
-      const lng = 17.401097;
-      const position = {lat, lng};
+      const position = {lat: this.lat, lng: this.lng};
       const map = new google.maps.Map(this.shadowRoot.getElementById('map'), {zoom: 13, center: position, mapTypeControl: false});
       const marker = new google.maps.Marker({position, map});
-      const desktopHref = `https://www.google.com/maps/place/Hotel+%26+Restaurant+Garden/@${lat},${lng}z/data=!3m1!4b1!4m8!3m7!1s0x470fe2c41dc1ff81:0xd17fa908bb368c0c!5m2!4m1!1i2!8m2!3d51.210159!4d17.401491`;
       var infoWindow = new google.maps.InfoWindow({content: `
         <style>
           .container {
@@ -43,9 +45,9 @@ export class HgMap extends LitElement {
           }
         </style>
         <div class="container">
-          <h1>Hotel & Restaurant Garden</h1>
-          <p>ul. Podchorążych 2A<br>56-400 Oleśnica</p>
-          <a href="${desktopHref}" target="_blank">Nawiguj</a>   
+          <h1>${this.title}</h1>
+          <p>${this.street}<br>56-400 Oleśnica</p>
+          <a href="${this.href}" target="_blank">Nawiguj</a>
         </div>
       `});
       infoWindow.open(map, marker);

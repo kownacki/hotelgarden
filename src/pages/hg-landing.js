@@ -9,7 +9,7 @@ import '../content/hg-events-block.js';
 import '../content/hg-content-slider.js';
 import '../content/hg-reviews-block.js';
 import '../content/hg-infographic.js';
-import '../content/hg-map.js';
+import '../content/hg-map/hg-map-hotel-garden.js';
 import sharedStyles from '../styles/shared-styles.js';
 
 export class HgLanding extends LitElement {
@@ -34,7 +34,7 @@ export class HgLanding extends LitElement {
         <hg-reviews-block .uid=${landingPageUid} .scores=${true} .bookingScores=${_.get('bookingScores', this.config)}></hg-reviews-block>
         <hg-infographic .uid=${landingPageUid}></hg-infographic>
         <hg-events-block></hg-events-block>
-        <hg-map class="no-animation"></hg-map>
+        <hg-map-hotel-garden class="no-animation"></hg-map-hotel-garden>
       </hg-content>
     `;
   }

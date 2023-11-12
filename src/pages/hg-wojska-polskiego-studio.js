@@ -3,6 +3,7 @@ import '../content/hg-content-icons.js';
 import '../content/hg-links.js';
 import '../content/hg-map.js';
 import '../content/hg-text-image.js';
+import '../content/hg-map/hg-map-wojska-polskiego-studio.js';
 import '../elements/hg-content.js';
 import {staticProp} from '../utils.js';
 import sharedStyles from '../styles/shared-styles.js';
@@ -24,6 +25,7 @@ export class HgWojskaPolskiegoStudio extends LitElement {
         <hg-content-icons .uid=${pageUid}></hg-content-icons>
         <hg-room .index=${WOJSKA_POLSKIEGO_STUDIO_ROOM_INDEX}></hg-room>
         <hg-text-image .swap=${true} .uid=${pageUid}></hg-text-image>
+        <hg-map-wojska-polskiego-studio class="no-animation"></hg-map-wojska-polskiego-studio>
         <hg-links .pageUid=${pageUid} .excludedPages=${staticProp(['careers'])}></hg-links>
       </hg-content>
     `;
