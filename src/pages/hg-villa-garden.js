@@ -18,7 +18,7 @@ export class HgVillaGarden extends LitElement {
 
     return html`
       <hg-content>
-        <hg-room 
+        <hg-room
           .index=${VILLA_ROOM_INDEX} 
           .extraButtons=${staticProp([{url: '/pokoje', text: 'Zobacz pozostałe pokoje'}])}>
         </hg-room>

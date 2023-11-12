@@ -19,6 +19,7 @@ const roomsConfig = [
     {url: `${HOTEL_GARDEN_BOOKING_URL}#RD115791102`, text: 'Rezerwuj pokój (3 osoby)', newTab: true},
     {url: `${HOTEL_GARDEN_BOOKING_URL}#RD115791109`, text: 'Rezerwuj pokój (4 osoby)', newTab: true},
   ],
+  [],
 ];
 
 export class HgRoom extends LitElement {

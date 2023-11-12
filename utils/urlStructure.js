@@ -1,5 +1,5 @@
 import { keyBy, mapValues } from 'lodash-es';
-export const HIDDEN_PAGES = ['pizza-truck', 'outdoor-parties'];
+export const HIDDEN_PAGES = ['pizza-truck', 'outdoor-parties', 'wojska-polskiego-studio'];
 export const NOT_FOUND_404 = 'NOT_FOUND_404';
 // All static paths are canonical
 export const staticPathToPageUid = {
@@ -21,6 +21,7 @@ export const staticPathToPageUid = {
     '/przyjecia-rodzinne': 'family-parties',
     '/sale-bankietowe': 'banquet-halls',
     '/sale-konferencyjne': 'conference-halls',
+    '/studio-wojska-polskiego': 'wojska-polskiego-studio',
     '/summer-bar': 'summer-bar',
     '/villa-garden': 'villa-garden',
     '/wesela': 'weddings',
@@ -54,6 +55,7 @@ const pagesStaticDataWithoutUid = {
     'surroundings': { name: 'Atrakcje okolicy', path: '/atrakcje-okolicy', parentPageUid: 'landing' },
     'villa-garden': { name: 'Villa Garden', path: '/villa-garden', parentPageUid: 'landing' },
     'weddings': { name: 'Wesela', path: '/wesela', parentPageUid: 'weddings' },
+    'wojska-polskiego-studio': { name: 'Studio Wojska Polskiego', path: '/studio-wojska-polskiego', parentPageUid: 'landing' },
 };
 export const pagesStaticData = mapValues(pagesStaticDataWithoutUid, (pageStaticDataWithoutUid, key) => {
     return Object.assign({ uid: key }, pageStaticDataWithoutUid);
@@ -64,7 +66,7 @@ export const mainNavigation = [
     {
         pageUid: 'landing',
         name: 'Hotel',
-        subpages: ['landing', 'rooms', 'villa-garden', 'cuisine', 'surroundings', 'reviews', 'careers'],
+        subpages: ['landing', 'rooms', 'villa-garden', 'wojska-polskiego-studio', 'cuisine', 'surroundings', 'reviews', 'careers'],
     },
     {
         pageUid: 'restaurant',

@@ -37,6 +37,7 @@ const pagesModulesImports = {
   'surroundings': () => import('../pages/hg-surroundings.js'),
   'villa-garden': () => import('../pages/hg-villa-garden.js'),
   'weddings': () => import('../pages/hg-weddings.js'),
+  'wojska-polskiego-studio': () => import('../pages/hg-wojska-polskiego-studio.js'),
 };
 
 const importPageModule = (pageUid) => {
