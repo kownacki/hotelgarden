@@ -1,7 +1,5 @@
 import {LitElement, html} from 'lit';
-import '../content/hg-content-icons.js';
 import '../content/hg-links.js';
-import '../content/hg-map.js';
 import '../content/hg-text-image.js';
 import '../content/hg-map/hg-map-wojska-polskiego-studio.js';
 import '../elements/hg-content.js';
@@ -22,7 +20,6 @@ export class HgWojskaPolskiegoStudio extends LitElement {
 
     return html`
       <hg-content>
-        <hg-content-icons .uid=${pageUid}></hg-content-icons>
         <hg-room .index=${WOJSKA_POLSKIEGO_STUDIO_ROOM_INDEX}></hg-room>
         <hg-text-image .swap=${true} .uid=${pageUid}></hg-text-image>
         <hg-map-wojska-polskiego-studio class="no-animation"></hg-map-wojska-polskiego-studio>
