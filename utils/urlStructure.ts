@@ -29,7 +29,7 @@ export type PageUid =
 
 export type StaticPathPageUid = Exclude<PageUid, '404'>;
 
-export const HIDDEN_PAGES: StaticPathPageUid[] = ['pizza-truck', 'outdoor-parties', 'wojska-polskiego-studio'];
+export const HIDDEN_PAGES: StaticPathPageUid[] = ['pizza-truck', 'outdoor-parties'];
 
 export type StaticPath =
   | '/'
