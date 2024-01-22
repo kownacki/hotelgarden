@@ -12,7 +12,7 @@ export class HgBanquetHalls extends LitElement {
   };
   static styles = sharedStyles;
   _getHallsTemplate() {
-    return ['hall-banquet-1', 'hall-banquet-2', 'hall-banquet-3', 'hall-banquet-4', 'hall-banquet-5']
+    return ['hall-banquet-1', 'hall-banquet-2', 'hall-banquet-3', 'hall-banquet-4']
       .map((uid, index) => {
         return html`
           <hg-hall id="${index + 1}" .uid=${uid}></hg-hall>

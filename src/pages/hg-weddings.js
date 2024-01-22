@@ -29,7 +29,6 @@ export class HgWeddings extends LitElement {
         <hg-mosaic .uid=${weddingsPageUid} .buttons=${staticProp({
           primary: [{url: '#kontakt', text: 'Skontaktuj się z nami'}],
         })}></hg-mosaic>
-        <hg-text-image swap .uid=${weddingsPageUid}></hg-text-image>
         <hg-halls-block .uid=${weddingsPageUid} .type=${'banquet'}></hg-halls-block>
         <hg-reviews-block uid=${weddingsPageUid}></hg-reviews-block>
         <hg-content-slider .uid=${'weddings-2'}></hg-content-slider>
