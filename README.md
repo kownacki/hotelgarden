@@ -7,8 +7,15 @@ $ npm install
 ```
 
 ## Run for development
+
 ```
 $ npm run dev
+```
+
+## Build TS
+
+```
+$ npm run build-ts
 ```
 
 ## Generate files
