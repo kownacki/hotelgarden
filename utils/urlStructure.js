@@ -1,5 +1,5 @@
 import { keyBy, mapValues } from 'lodash-es';
-export const HIDDEN_PAGES = ['pizza-truck', 'outdoor-parties', 'summer-bar'];
+export const HIDDEN_PAGES = ['pizza-truck', 'outdoor-parties', 'summer-bar', 'wojska-polskiego-studio'];
 export const NOT_FOUND_404 = 'NOT_FOUND_404';
 // All static paths are canonical
 export const staticPathToPageUid = {
