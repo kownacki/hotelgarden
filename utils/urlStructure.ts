@@ -29,7 +29,7 @@ export type PageUid =
 
 export type StaticPathPageUid = Exclude<PageUid, '404'>;
 
-export const HIDDEN_PAGES: StaticPathPageUid[] = ['pizza-truck', 'outdoor-parties', 'summer-bar', 'wojska-polskiego-studio'];
+export const HIDDEN_PAGES: StaticPathPageUid[] = ['pizza-truck', 'outdoor-parties', 'summer-bar'];
 
 export type StaticPath =
   | '/'
@@ -50,7 +50,7 @@ export type StaticPath =
   | '/przyjecia-rodzinne'
   | '/sale-bankietowe'
   | '/sale-konferencyjne'
-  | '/studio-wojska-polskiego'
+  | '/mikroapartamenty-garden'
   | '/summer-bar'
   | '/villa-garden'
   | '/wesela'
@@ -78,7 +78,7 @@ export const staticPathToPageUid: Record<StaticPath, StaticPathPageUid> = {
   '/przyjecia-rodzinne': 'family-parties',
   '/sale-bankietowe': 'banquet-halls',
   '/sale-konferencyjne': 'conference-halls',
-  '/studio-wojska-polskiego': 'wojska-polskiego-studio',
+  '/mikroapartamenty-garden': 'wojska-polskiego-studio',
   '/summer-bar': 'summer-bar',
   '/villa-garden': 'villa-garden',
   '/wesela': 'weddings',
@@ -123,7 +123,7 @@ const pagesStaticDataWithoutUid: Record<PageUid, PageStaticDataWithoutUid> = {
   'surroundings': {name: 'Atrakcje okolicy', path: '/atrakcje-okolicy', parentPageUid: 'landing'},
   'villa-garden': {name: 'Villa Garden', path: '/villa-garden', parentPageUid: 'landing'},
   'weddings': {name: 'Wesela', path: '/wesela', parentPageUid: 'weddings'},
-  'wojska-polskiego-studio': {name: 'Studio Wojska Polskiego', path: '/studio-wojska-polskiego', parentPageUid: 'landing'},
+  'wojska-polskiego-studio': {name: 'Mikroapartamenty Garden', path: '/mikroapartamenty-garden', parentPageUid: 'landing'},
 };
 
 export const pagesStaticData: Record<PageUid, PageStaticData> = mapValues(

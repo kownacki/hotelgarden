@@ -4,8 +4,8 @@ export const HOTEL_GARDEN_MAP_HREF = `https://www.google.com/maps/place/Hotel+%2
 export const HOTEL_GARDEN_MAP_TITLE = 'Hotel & Restaurant Garden';
 export const HOTEL_GARDEN_MAP_STREET = 'ul. Podchorążych 2A';
 
-export const WOJSKA_POLSKIEGO_STUDIO_MAP_LAT = 51.2140679;
-export const WOJSKA_POLSKIEGO_STUDIO_MAP_LNG = 17.394222;
-export const WOJSKA_POLSKIEGO_STUDIO_MAP_HREF = `https://www.google.com/maps/place/Wojska+Polskiego+14B,+56-400+Ole%C5%9Bnica/@${WOJSKA_POLSKIEGO_STUDIO_MAP_LAT},${WOJSKA_POLSKIEGO_STUDIO_MAP_LNG},17z/data=!3m1!4b1!4m6!3m5!1s0x470fe2db5a8cf7ab:0xbfa45042a09350fd!8m2!3d51.2140679!4d17.394222!16s%2Fg%2F11f_j3r3b7`;
-export const WOJSKA_POLSKIEGO_STUDIO_MAP_TITLE = 'Wojska Polskiego Studio';
-export const WOJSKA_POLSKIEGO_STUDIO_MAP_STREET = 'Wojska Polskiego 14B';
+export const WOJSKA_POLSKIEGO_STUDIO_MAP_LAT = 51.2118958;
+export const WOJSKA_POLSKIEGO_STUDIO_MAP_LNG = 17.3992974;
+export const WOJSKA_POLSKIEGO_STUDIO_MAP_HREF = `https://www.google.pl/maps/place/Miko%C5%82aja+Kopernika+16B,+56-400+Ole%C5%9Bnica/@51.2118958,17.3992974,17z/data=!3m1!4b1!4m6!3m5!1s0x470fe2c15471cb47:0xa518863b68f684eb!8m2!3d51.2118958!4d17.4018723!16s%2Fg%2F11tgdgthz3?entry=ttu&g_ep=EgoyMDI1MDMyNS4xIKXMDSoASAFQAw%3D%3D`;
+export const WOJSKA_POLSKIEGO_STUDIO_MAP_TITLE = 'Mikroapartamenty Garden';
+export const WOJSKA_POLSKIEGO_STUDIO_MAP_STREET = 'Mikołaja Kopernika 16B';
